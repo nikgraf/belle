@@ -20,7 +20,9 @@
     "underscore": ">=1.8.2"
   },
   "scripts": {
-    "start": "babel --watch --source-maps-inline --out-dir='lib' src"
+    "start": "babel --watch --source-maps-inline --out-dir='lib' src",
+    "build": "babel --out-dir='lib' src",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel": "^4.7.12"
