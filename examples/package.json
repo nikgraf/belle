@@ -1,0 +1,32 @@
+{
+  "name": "belleExamples",
+  "version": "0.0.1",
+  "description": "Examples on how to use the belle components",
+  "author": {
+    "name": "Nik Graf",
+    "email": "nik@nikgraf.com",
+    "url": "http://www.nikgraf.com"
+  },
+  "main": "js/app.jsx",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nikgraf/belle.git"
+  },
+  "dependencies": {
+    "react": "=0.13.0",
+    "underscore": "=1.8.2"
+  },
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
+    "watchify": "^2.4.0"
+  },
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d ."
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}

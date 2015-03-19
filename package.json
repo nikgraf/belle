@@ -1,0 +1,29 @@
+{
+  "name": "belle",
+  "version": "0.0.1",
+  "description": "React Components with a great UX",
+  "author": {
+    "name": "Nik Graf",
+    "email": "nik@nikgraf.com",
+    "url": "http://www.nikgraf.com"
+  },  "main": "lib/index.js",
+  "keywords": [
+    "browser",
+    "react",
+    "ux",
+    "components",
+    "widget",
+    "javascript"
+  ],
+  "peerDependencies": {
+    "react": ">=0.13.0",
+    "underscore": ">=1.8.2"
+  },
+  "scripts": {
+    "start": "babel --watch --source-maps-inline --out-dir='lib' src"
+  },
+  "devDependencies": {
+    "babel": "^4.7.12"
+  },
+  "license": "MIT"
+}

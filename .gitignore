@@ -26,3 +26,13 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Browserify cache & build files
+bundle.js
+.bundle.js
+
+# Belle build with babel
+lib/
+
+# NPM debug
+npm-debug.log

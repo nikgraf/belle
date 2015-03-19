@@ -1,0 +1,21 @@
+textarea:focus {
+  outline: 0; /* To avoid default focus behaviour */
+  border-bottom: 1px #53C7F2 solid;
+}
+
+textarea:hover {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom: 1px #92D6EF solid;
+}
+
+html {
+  background: #F7F7F7;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222;
+}
