@@ -32,7 +32,7 @@ bundle.js
 .bundle.js
 
 # Belle build with babel
-lib/
+/lib/
 
 # NPM debug
 npm-debug.log
