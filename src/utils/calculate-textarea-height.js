@@ -17,6 +17,7 @@ export default function (textareaElement) {
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
     document.body.appendChild(hiddenTextarea);
+    hiddenTextarea.setAttribute('class', 'belle-input-helper');
   }
 
   const {style, verticalPadding} = calculateStyling(textareaElement);

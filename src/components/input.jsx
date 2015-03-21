@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
+import injectStyle, {removeStyle} from '../utils/inject-style';
 import {omit, extend} from 'underscore';
 
 /**
@@ -32,7 +33,21 @@ export default class Input extends Component {
   render() {
     let style = extend({}, defaultStyle, this.props.style);
     style.height = this.state.height;
-    return <textarea {...this.textareaProperties} style={style} onChange={this.onChange.bind(this)}/>;
+    return <textarea style={style}
+                     className={ `${this.props.className} ${this.styleId}` }
+                     onChange={this.onChange.bind(this)}
+                     {...this.textareaProperties}/>;
+  }
+
+  /**
+   * Generates the style-id & inject the focus & hover style.
+   *
+   * The style-id is based on React's unique DOM node id.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this.styleId = `style-id${id}`;
+    updatePseudoClassStyle(this.styleId, this.props);
   }
 
   /**
@@ -42,12 +57,17 @@ export default class Input extends Component {
     this.resize();
   }
 
+  componentWillUnmount() {
+    removeStyle(this.styleId);
+  }
+
   /**
    * Update the properties passed to the textarea and resize as with the new
    * properties the height might have changed.
    */
   componentWillReceiveProps(properties) {
     this.textareaProperties = sanitizeChildProperties(properties);
+    updatePseudoClassStyle(this.styleId, this.props);
     this.resize();
   }
 
@@ -97,7 +117,9 @@ export default class Input extends Component {
 Input.displayName = 'Belle Input';
 Input.propTypes = {
   minHeight: React.PropTypes.number,
-  maxHeight: React.PropTypes.number
+  maxHeight: React.PropTypes.number,
+  hoverStyle: React.PropTypes.object,
+  focusStyle: React.PropTypes.object
 };
 
 const defaultStyle = {
@@ -120,6 +142,15 @@ const defaultStyle = {
   boxSizing: 'border-box'
 };
 
+const defaultHoverStyle = {
+  borderBottom: '1px #92D6EF solid'
+};
+
+const defaultFocusStyle = {
+  outline: 0, // to avoid default focus behaviour
+  borderBottom: '1px #53C7F2 solid'
+};
+
 /**
  * Returns an object with properties that are relevant for the Input's textarea.
  *
@@ -127,9 +158,31 @@ const defaultStyle = {
  * not be passed down to the textarea, but made available through this component.
  */
 function sanitizeChildProperties(properties) {
-  let childProperties = omit(properties, ['valueLink', 'onChange', 'minHeight', 'maxHeight', 'style']);
+  let childProperties = omit(properties, [
+    'valueLink',
+    'onChange',
+    'minHeight',
+    'maxHeight',
+    'className',
+    'style',
+    'hoverStyle',
+    'focusStyle'
+  ]);
   if (typeof properties.valueLink == 'object') {
     childProperties.value = properties.valueLink.value;
   }
   return childProperties;
+}
+
+/**
+ * Update hover & focus style for the speficied styleId.
+ *
+ * @param styleId {string} - a unique id that exists as class attribute in the DOM
+ * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
+ */
+function updatePseudoClassStyle(styleId, properties) {
+  const hoverStyle = extend({}, defaultHoverStyle, properties.hoverStyle);
+  const focusStyle = extend({}, defaultFocusStyle, properties.focusStyle);
+  injectStyle(styleId, hoverStyle, 'hover');
+  injectStyle(styleId, focusStyle, 'focus');
 }
