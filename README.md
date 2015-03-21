@@ -52,4 +52,4 @@ inside like this `ln -s ../../ belle`.
 
 MIT
 
-This library also contains a copy of the React which is licensed under BSD.
+This library also contains a copy of the React Software which is licensed under BSD.
