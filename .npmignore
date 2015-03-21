@@ -7,8 +7,9 @@ node_modules
 bundle.js
 .bundle.js
 
-# Belle build with babel
-/lib/
+# Belle sources
+/src/
+/examples/
 
 # NPM debug
 npm-debug.log
