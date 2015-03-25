@@ -12,7 +12,7 @@ import {omit, extend} from 'underscore';
 export default class Card extends Component {
 
   constructor(properties) {
-    this.divProperties = omit(this.props, 'style');
+    this.divProperties = omit(properties, 'style');
     super(properties);
   }
 
@@ -20,7 +20,7 @@ export default class Card extends Component {
    * Update the divProperties based on the updated properties passed to the card.
    */
   componentWillReceiveProps(properties) {
-    this.divProperties = omit(this.props, 'style');
+    this.divProperties = omit(properties, 'style');
   }
 
   render() {
