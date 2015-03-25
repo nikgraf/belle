@@ -129,7 +129,7 @@ export default class ButtonDocumentation extends Component {
                 border: '1px solid red',
                 borderTop: '1px solid red',
                 color: 'red',
-                background: '#eee'
+                background: '#fff'
               }}>
         Follow
       </Button>
@@ -173,7 +173,7 @@ const customStyleCodeExample = `<Button primary={ true }
           border: '1px solid red',
           borderTop: '1px solid red',
           color: '#000',
-          background: '#eee'
+          background: '#fff'
         }}>
   Follow
 </Button>`;
