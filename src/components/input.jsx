@@ -57,6 +57,9 @@ export default class Input extends Component {
     this.resize();
   }
 
+  /**
+   * Remove a component's associated syles whenever it gets removed from the DOM.
+   */
   componentWillUnmount() {
     removeStyle(this.styleId);
   }
@@ -115,6 +118,7 @@ export default class Input extends Component {
 }
 
 Input.displayName = 'Belle Input';
+
 Input.propTypes = {
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,

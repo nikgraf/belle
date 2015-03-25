@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {Input, Card} from 'belle';
+import {Input, Card, Button} from 'belle';
 
 function conditionalInput (showInput) {
   if (showInput) {
@@ -32,6 +32,13 @@ class App extends Component {
   render() {
     return <div style={ {margin: '0 150px'} }>
       <h1>Belle Examples</h1>
+
+      <h2>Button</h2>
+
+      <Button>Press me …</Button>
+
+      <Button primary={ true }>Primary Button</Button>
+
 
       <h2>Input</h2>
 
