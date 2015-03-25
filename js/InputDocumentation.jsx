@@ -8,13 +8,13 @@ export default class ButtonDocumentation extends Component {
 
   render() {
     const code = `<!-- default input with a defaultValue -->
-<Input defaultValue="John Doe" />`;
+<Input defaultValue="Jane Doe" />`;
 
     return <Card>
 
       <h2 id="input" style={ {marginTop: 0, marginBottom: 40} }>Input</h2>
 
-      <Input defaultValue="John Doe" />
+      <Input defaultValue="Jane Doe" />
 
       <Code value={ code } style={ {marginTop: 40} } />
 
