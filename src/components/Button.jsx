@@ -166,7 +166,10 @@ const primaryActiveStyle = {
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
     'type',
-    'style'
+    'style',
+    'hoverStyle',
+    'focusStyle',
+    'activeStyle'
   ]);
   if ( contains(buttonTypes, properties.type) ) {
     childProperties.type = properties.type;
