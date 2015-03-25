@@ -77,7 +77,7 @@ export default class ButtonDocumentation extends Component {
             </p>
             <p>
               Works like React's built-in style property.
-              Becomes active once the button is the element focused on in the DOM.
+              Becomes active once the button is the element focused in the DOM.
             </p>
           </td>
         </tr>
@@ -98,6 +98,11 @@ export default class ButtonDocumentation extends Component {
           </td>
         </tr>
       </table>
+
+      <p>
+        Any other property valid for a HTML button like
+        <span style={ {color: 'grey'} }> style, onClick, …</span>
+      </p>
 
       <h3>More Examples</h3>
 
