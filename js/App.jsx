@@ -9,11 +9,22 @@ import InputDocumentation from './InputDocumentation';
 // export for http://fb.me/react-devtools
 window.React = React;
 
+const belleLogoStyle = {
+  height: 22,
+  width: 22,
+  background: '#53C7F2',
+  display: 'inline-block',
+  fontSize: 14,
+  borderRadius: '100%',
+  position: 'relative',
+  top: 1
+};
+
 class App extends Component {
 
   render() {
     return <div style={ {margin: '0 auto', width: 640 } }>
-      <h1>Belle Documentation</h1>
+      <h1><i style={ belleLogoStyle }></i> Belle Documentation</h1>
 
       <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
         <li><a href="#button">Button</a></li>
