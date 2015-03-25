@@ -110,7 +110,14 @@ export default class Input extends Component {
   }
 
   /**
-   * Set focus on this Input Component.
+   * Remove focus from this button
+   */
+  blur() {
+    React.findDOMNode(this).blur();
+  }
+
+  /**
+   * Set focus on this Input component
    */
   focus() {
     React.findDOMNode(this).focus();

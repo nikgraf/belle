@@ -66,8 +66,18 @@ export default class Button extends Component {
     </button>;
   }
 
+  /**
+   * Remove focus from this button
+   */
   blur() {
-    // TODO blur button
+    React.findDOMNode(this).blur();
+  }
+
+  /**
+   * Set focus on this Button component.
+   */
+  focus() {
+    React.findDOMNode(this).focus();
   }
 }
 
