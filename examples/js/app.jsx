@@ -39,7 +39,6 @@ class App extends Component {
 
       <Button primary={ true }>Primary Button</Button>
 
-
       <h2>Input</h2>
 
       {/* Common use case */}

@@ -5,6 +5,7 @@ import {omit, extend, contains} from 'underscore';
 import injectStyle, {removeStyle} from '../utils/inject-style';
 
 var computedStyle;
+const buttonTypes = ['button', 'submit', 'reset'];
 
 /**
  * Button component
@@ -85,7 +86,7 @@ Button.displayName = 'Belle Button';
 
 Button.propTypes = {
   primary: React.PropTypes.bool,
-  type: React.PropTypes.string
+  type: React.PropTypes.oneOf(buttonTypes)
 };
 
 const defaultStyle = {
@@ -167,7 +168,7 @@ function sanitizeChildProperties(properties) {
     'type',
     'style'
   ]);
-  if ( contains(['button', 'submit', 'reset'], properties.type) ) {
+  if ( contains(buttonTypes, properties.type) ) {
     childProperties.type = properties.type;
   } else {
     childProperties.type = 'button';
