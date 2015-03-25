@@ -15,7 +15,7 @@ export default class ButtonDocumentation extends Component {
 
       <Button>Follow</Button>
 
-      <Code value={ codeExample } style={ {marginTop: 40} } />
+      <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
       <h3>Properties</h3>
 
@@ -26,7 +26,7 @@ export default class ButtonDocumentation extends Component {
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              Boolean
+              <i>Boolean</i>
               <br />
               default: false</p>
             <p>If true the Button will be appear with the primary button styles</p>
@@ -38,7 +38,7 @@ export default class ButtonDocumentation extends Component {
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              String of 'button', 'submit', 'reset'
+              <i>String</i> of 'button', 'submit', 'reset'
               <br />
               default: 'buttom'
             </p>
@@ -49,17 +49,134 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            hoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the user hovers over the button with the cursor.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            focusStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is the element focused on in the DOM.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            activeStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is pressed by a user, but yet not release.
+            </p>
+          </td>
+        </tr>
       </table>
+
+      <h3>More Examples</h3>
+
+      <p>Primary button with custom styles</p>
+
+      <Button primary={ true }
+              style={{
+                marginRight: 10,
+                color: '#222',
+                border: '1px solid #222',
+                borderBottom: '1px solid #222',
+                borderRadius: 2,
+                background: '#fff'
+              }}
+              hoverStyle={{
+                border: '1px solid red',
+                borderBottom: '1px solid red',
+                color: 'red',
+                background: '#fff'
+              }}
+              focusStyle={{
+                border: '1px solid red',
+                borderBottom: '1px solid red',
+                color: 'red',
+                background: '#fff',
+                boxShadow: 'red 0px 0px 5px'
+              }}
+              activeStyle={{
+                border: '1px solid red',
+                borderTop: '1px solid red',
+                color: 'red',
+                background: '#eee'
+              }}>
+        Follow
+      </Button>
+
+      <Code value={ customStyleCodeExample } style={ {marginTop: 20} } />
+
 
     </Card>;
   }
 }
 
-const codeExample = `<!-- default button -->
+const basicCodeExample = `<!-- default button -->
 <Button>Follow</Button>
 
 <!-- primary button -->
 <Button primary={ true }>Follow</Button>`;
+
+const customStyleCodeExample = `<Button primary={ true }
+        style={{
+          marginRight: 10,
+          color: '#222',
+          border: '1px solid #222',
+          borderBottom: '1px solid #222',
+          borderRadius: 2,
+          background: '#fff'
+        }}
+        hoverStyle={{
+          border: '1px solid red',
+          borderBottom: '1px solid red',
+          color: '#red',
+          background: '#fff'
+        }}
+        focusStyle={{
+          border: '1px solid red',
+          borderBottom: '1px solid red',
+          color: '#red',
+          background: '#fff',
+          boxShadow: 'red 0px 0px 5px'
+        }}
+        activeStyle={{
+          border: '1px solid red',
+          borderTop: '1px solid red',
+          color: '#000',
+          background: '#eee'
+        }}>
+  Follow
+</Button>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
