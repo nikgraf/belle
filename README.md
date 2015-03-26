@@ -1,6 +1,6 @@
 # Belle
 
-React Components with a great User Experience.
+React Components with great User Experience.
 
 Notice: Keep in mind this library is early stage and might change a lot soon.
 

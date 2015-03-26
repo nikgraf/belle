@@ -8,7 +8,7 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 import {omit, extend} from 'underscore';
 
 /**
- * Input component with a great UX like autogrowing & handling states
+ * Input component with great UX like autogrowing & handling states
  *
  * Note on styling: Right now this component doen't allow to change style after
  * initialisation.

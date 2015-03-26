@@ -31,7 +31,7 @@ class App extends Component {
           <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF' }}><i style={ belleLogoStyle }></i> Belle</h1>
 
           <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
-            React Components with a great User Experience.
+            React Components with great User Experience.
           </p>
         </div>
       </div>
