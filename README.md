@@ -53,15 +53,16 @@ Every object someone interacts with has it's own little language. This language
 must be learned by everyone getting in touch with a new set of object. In order
 to provide a great experience the amount to learn should be reduced to a minimum.
 
-There a two major personalities to target. One is the developer. For him/her APIs
-should be provided in a consistent way through all components. The other and more
-important is the users of the components. Every color, animation or behavior should
-be aligned with the other components to provide a great experience.
+There are two major personalities to target with Belle. One is the developer.
+For him/her APIs should be provided in a consistent way through all components.
+The other and more important is the users of the components. Every color,
+animation or behavior should be aligned with the other components to provide
+a great experience.
 
 ### Encapsulate Styles
 
-There is no reason while a style designed one specific element should affect others.
-Yep in CSS styles are often defined by overwriting previous ones and introducing
+There is no reason while a style designed one specific element should affect
+others. In CSS styles are often defined by overwriting previous ones and introducing
 deeper and deeper nesting. Once nesting is introduced resolution of styles for one
 specific element is not a trivial task anymore. Due this managing CSS dependencies
 is hard. It is hard to predict how an application looks like after updating or
