@@ -85,19 +85,30 @@ provide an experience close to instant.
 
 ## Development
 
+You can install the development environment with
+
+```
+npm install
+```
+
+Note: In case you want to add a peerDependency please make sure it get's removed
+after running install since peerDependencies should not be in node_modules to
+make them work properly. React & Underscore are removed in the `postinstall`
+script which is defined in `package.json`.
+
 Whenever you change something in `src/` you can compile it during development with
 
 ```
 npm start
 ```
 
-To run the examples you should run `npm start` in the examples folder as well.
+### Run the examples or docs
+
+To run the examples or docs you should run `npm install` and `npm start` in the examples/docs folder as well.
 
 Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localhost.
-In order to make Belle available in the exampled you need to manually create a link
-inside like this `ln -s ../../ belle`.
 
-# Future Work
+## Future Work
 
 - Introduce some kind of styling configuration
 - Add disabled style to Input & Button
@@ -106,7 +117,7 @@ inside like this `ln -s ../../ belle`.
 - Make sure components don't break when rendered by the backend
 - Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, input of type number, input of type email, anchor?, code?
 
-# License
+## License
 
 MIT
 
