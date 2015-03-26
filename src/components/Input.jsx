@@ -79,12 +79,29 @@ export default class Input extends Component {
 
   /**
    * Update the height and provide the changeCallback for valueLink.
+   *
+   * In addition newline characters are replaced by spaces in the textarea value
+   * in case allowNewLine is set to false and newLine characters could be found.
    */
   onChange(event) {
 
-    if (!this.props.allowNewLine) {
-      this.setState({ textareaProperties: { value: event.target.value.replace(/[\r\n]/g, ' ')}});
-      this.forceUpdate(this.resize);
+    let value = event.target.value;
+
+    if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
+      value = event.target.value.replace(newLineRegex, ' ');
+
+      // controlled textarea must have value
+      if (this.state.textareaProperties.value) {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(this.resize);
+      // uncontrolled textarea must be updated with value, but then released again
+      } else {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(() => {
+          this.resize();
+          this.setState({ textareaProperties: { value: undefined } });
+        });
+      }
     }
 
     this.resize();
@@ -93,7 +110,7 @@ export default class Input extends Component {
     const valueLink = this.props.valueLink;
 
     if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = event => valueLink.requestChange(event.target.value);
+      changeCallback = event => valueLink.requestChange(value);
     }
 
     if (changeCallback) {
@@ -162,6 +179,7 @@ Input.propTypes = {
 
 Input.defaultProps = { allowNewLine: false };
 
+const newLineRegex = /[\r\n]/g;
 
 const defaultStyle = {
   /* normalize.css v3.0.1 */
