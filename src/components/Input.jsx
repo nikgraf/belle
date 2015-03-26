@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
-import injectStyle, {removeStyle} from '../utils/inject-style';
+import {injectStyles, removeStyle} from '../utils/inject-style';
 import {omit, extend} from 'underscore';
 
 /**
@@ -194,6 +194,17 @@ function sanitizeChildProperties(properties) {
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = extend({}, defaultHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, defaultFocusStyle, properties.focusStyle);
-  injectStyle(styleId, hoverStyle, 'hover');
-  injectStyle(styleId, focusStyle, 'focus');
+  const styles = [
+    {
+      id: styleId,
+      style: hoverStyle,
+      pseudoClass: 'hover'
+    },
+    {
+      id: styleId,
+      style: focusStyle,
+      pseudoClass: 'focus'
+    }
+  ]
+  injectStyles(styles);
 }

@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {omit, extend, contains} from 'underscore';
-import injectStyle, {removeStyle} from '../utils/inject-style';
+import {injectStyles, removeStyle} from '../utils/inject-style';
 
 var computedStyle;
 const buttonTypes = ['button', 'submit', 'reset'];
@@ -192,7 +192,22 @@ function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
   const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);
-  injectStyle(styleId, hoverStyle, 'hover');
-  injectStyle(styleId, focusStyle, 'focus');
-  injectStyle(styleId, activeStyle, 'active');
+  const styles = [
+    {
+      id: styleId,
+      style: hoverStyle,
+      pseudoClass: 'hover'
+    },
+    {
+      id: styleId,
+      style: focusStyle,
+      pseudoClass: 'focus'
+    },
+    {
+      id: styleId,
+      style: activeStyle,
+      pseudoClass: 'active'
+    }
+  ];
+  injectStyles(styles);
 }
