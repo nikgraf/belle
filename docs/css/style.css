@@ -8,3 +8,16 @@ body {
   font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
 }
+
+a, a:visited {
+  color: #888;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #aaa;
+}
+
+a:active {
+  color: #444;
+}
