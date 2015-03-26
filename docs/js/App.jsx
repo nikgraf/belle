@@ -26,7 +26,7 @@ class App extends Component {
 
   render() {
     return <div style={ {margin: '0 auto', width: 640 } }>
-      <h1 style={{ fontSize: 42 }}><i style={ belleLogoStyle }></i> Belle Documentation</h1>
+      <h1 style={{ fontSize: 42 }}><i style={ belleLogoStyle }></i> Belle</h1>
 
       <p style={{ fontSize: 28, marginTop: 50 }}>
         <i>

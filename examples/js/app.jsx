@@ -31,7 +31,7 @@ class App extends Component {
 
   render() {
     return <div style={ {margin: '0 150px'} }>
-      <h1>Belle Examples</h1>
+      <h1>Belle Playground</h1>
 
       <h2>Button</h2>
 
