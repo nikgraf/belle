@@ -32,7 +32,7 @@ export default class CardDocumentation extends Component {
       <p>Card with a full-width image</p>
 
       <Card style={{ borderTop: '1px solid #f2f2f2' }}>
-        <img src="/images/ngorongoro_caldera_small.jpg"
+        <img src="images/ngorongoro_caldera_small.jpg"
              width="560"
              style={{
                marginLeft: -40,
@@ -53,7 +53,7 @@ const basicCodeExample = `<!-- basic card example -->
 
 const imageCodeExample = `<!-- image card example -->
 <Card style={{ borderTop: '1px solid #f2f2f2' }}>
-  <img src="/images/ngorongoro_caldera_small.jpg"
+  <img src="images/ngorongoro_caldera_small.jpg"
        width="560"
        style={{
          marginLeft: -40,
