@@ -10,5 +10,8 @@ bundle.js
 # Belle build with babel
 /lib/
 
+# Belle docs after npm install
+/docs/css/googlecode.css
+
 # NPM debug
 npm-debug.log
