@@ -13,9 +13,10 @@
     "url": "http://github.com/nikgraf/belle.git"
   },
   "dependencies": {
+    "highlight.js": "=8.4.0",
     "react": "=0.13.1",
-    "underscore": "=1.8.2",
-    "highlight.js": "=8.4.0"
+    "uglify-js": "^2.4.17",
+    "underscore": "=1.8.2"
   },
   "devDependencies": {
     "babelify": "^5.0.4",
@@ -23,10 +24,13 @@
     "watchify": "^2.4.0"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js --extension=.jsx -v -d ."
+    "start": "watchify -o js/bundle.js --extension=.jsx -v -d .",
+    "build": "browserify --extension=.jsx . | uglifyjs -c > js/bundle.js"
   },
   "browserify": {
-    "extension": ["jsx"],
+    "extension": [
+      "jsx"
+    ],
     "transform": [
       "babelify"
     ]
