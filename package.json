@@ -25,7 +25,8 @@
   },
   "scripts": {
     "start": "watchify -o js/bundle.js --extension=.jsx -v -d .",
-    "build": "browserify --extension=.jsx . | uglifyjs -c > js/bundle.js"
+    "build": "browserify --extension=.jsx . | uglifyjs -c > js/bundle.js",
+    "postinstall": "cp node_modules/highlight.js/styles/googlecode.css css/googlecode.css && ln -snf ../../ node_modules/belle"
   },
   "browserify": {
     "extension": [
