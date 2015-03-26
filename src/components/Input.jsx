@@ -1,5 +1,7 @@
 "use strict";
 
+/* jslint browser: true */
+
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -23,9 +25,9 @@ import {omit, extend} from 'underscore';
 export default class Input extends Component {
 
   constructor(properties) {
-    this.textareaProperties = sanitizeChildProperties(properties);
     this.state = {
-      height: 'auto'
+      height: 'auto',
+      textareaProperties: sanitizeChildProperties(properties)
     };
     super(properties);
   }
@@ -37,7 +39,7 @@ export default class Input extends Component {
                      className={ `${this.props.className} ${this.styleId}` }
                      onChange={this.onChange.bind(this)}
                      onKeyDown={this.onKeyDown.bind(this)}
-                     {...this.textareaProperties}/>;
+                     {...this.state.textareaProperties}/>;
   }
 
   /**
@@ -70,7 +72,7 @@ export default class Input extends Component {
    * properties the height might have changed.
    */
   componentWillReceiveProps(properties) {
-    this.textareaProperties = sanitizeChildProperties(properties);
+    this.setState({ textareaProperties: sanitizeChildProperties(properties) });
     updatePseudoClassStyle(this.styleId, this.props);
     this.resize();
   }
@@ -79,6 +81,12 @@ export default class Input extends Component {
    * Update the height and provide the changeCallback for valueLink.
    */
   onChange(event) {
+
+    if (!this.props.allowNewLine) {
+      this.setState({ textareaProperties: { value: event.target.value.replace(/[\r\n]/g, ' ')}});
+      this.forceUpdate(this.resize);
+    }
+
     this.resize();
 
     let changeCallback = this.props.onChange;
@@ -96,6 +104,9 @@ export default class Input extends Component {
   /**
    * Prevent any newline (except allowNewLine is active) and passes the event to
    * the onKeyDown property.
+   *
+   * This is an optimization to avoid adding a newline char & removing it right
+   * away in the onChange callback.
    */
   onKeyDown(event) {
     if (!this.props.allowNewLine && event.key == 'Enter') {
@@ -121,7 +132,7 @@ export default class Input extends Component {
       height = this.props.maxHeight;
     }
 
-    this.setState({height});
+    this.setState({ height: height});
   }
 
   /**
