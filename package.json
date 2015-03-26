@@ -22,7 +22,8 @@
   "scripts": {
     "start": "babel --watch --source-maps-inline --out-dir='lib' src",
     "build": "babel --out-dir='lib' src",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "postpublish": "./scripts/publish_gh_pages.sh"
   },
   "devDependencies": {
     "babel": "^4.7.12"
