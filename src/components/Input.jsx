@@ -36,6 +36,7 @@ export default class Input extends Component {
     return <textarea style={style}
                      className={ `${this.props.className} ${this.styleId}` }
                      onChange={this.onChange.bind(this)}
+                     onKeyDown={this.onKeyDown.bind(this)}
                      {...this.textareaProperties}/>;
   }
 
@@ -80,15 +81,29 @@ export default class Input extends Component {
   onChange(event) {
     this.resize();
 
-    let changeCallback = this.props.onChange,
-        valueLink = this.props.valueLink;
+    let changeCallback = this.props.onChange;
+    const valueLink = this.props.valueLink;
 
     if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = ev => valueLink.requestChange(ev.target.value);
+      changeCallback = event => valueLink.requestChange(event.target.value);
     }
 
     if (changeCallback) {
       changeCallback(event);
+    }
+  }
+
+  /**
+   * Prevent any newline (except allowNewLine is active) and passes the event to
+   * the onKeyDown property.
+   */
+  onKeyDown(event) {
+    if (!this.props.allowNewLine && event.key == 'Enter') {
+      event.preventDefault();
+    }
+
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
     }
   }
 
@@ -130,8 +145,12 @@ Input.propTypes = {
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
   hoverStyle: React.PropTypes.object,
-  focusStyle: React.PropTypes.object
+  focusStyle: React.PropTypes.object,
+  allowNewLine: React.PropTypes.bool
 };
+
+Input.defaultProps = { allowNewLine: false };
+
 
 const defaultStyle = {
   /* normalize.css v3.0.1 */
@@ -172,6 +191,7 @@ function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
     'valueLink',
     'onChange',
+    'onKeyDown',
     'minHeight',
     'maxHeight',
     'className',
@@ -205,6 +225,6 @@ function updatePseudoClassStyle(styleId, properties) {
       style: focusStyle,
       pseudoClass: 'focus'
     }
-  ]
+  ];
   injectStyles(styles);
 }

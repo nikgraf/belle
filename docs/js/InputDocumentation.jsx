@@ -19,7 +19,10 @@ export default React.createClass({
 
       <h2 id="input" style={ {marginTop: 0, marginBottom: 40} }>Input</h2>
 
-      <Input defaultValue="Jane Doe" placeholder="Name" />
+      <Input defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
+
+      <Input defaultValue="This Input has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
+             allowNewLine={ true } />
 
       <Code value={ exampleCode } style={ {marginTop: 40} } />
 
@@ -160,7 +163,11 @@ export default React.createClass({
 });
 
 const exampleCode = `<!-- default input with a defaultValue -->
-<Input defaultValue="Jane Doe" />`;
+<Input defaultValue="Jane Doe" placeholder="Name"/>
+
+<!-- input with allowNewLine set to true -->
+<Input defaultValue="This Input has allowNewLine set to true. Just press 'Return' once editing the text."
+       allowNewLine={ true } />`;
 
 const advancedExampleCode = `<Input minHeight={ 120 }
        valueLink={ this.linkState('customInputValue') }
