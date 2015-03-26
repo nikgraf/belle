@@ -39,8 +39,8 @@ Checkout the examples app to learn about the implemented components.
 "Great UX starts with a good UI"
 
 With Belle I'm aiming to provide a library that follows a couple well established
-principles. While some of them might now be what you consider best practice today
-I hope they will become some day in the near future.
+principles. While some of them might not be what is consider best practice today
+I believe they will become some day in the near future.
 
 ### Easy to use
 
@@ -70,11 +70,11 @@ removing dependency.
 That's why with Belle styles should apply to the components themselves in the DOM.
 By doing so the visual appearance and business logic are combined in location.
 
-### Every interaction is followed up with feedback
+### Every Interaction is followed up with Feedback
 
-It's important to let people know how their behavior affects the system. It assures
-them that their input was acknowledged which provides them with a feeling of
-control over the system.
+Let people know how their behavior affects the system. It assures them that
+their input was acknowledged which provides them with a feeling of control over
+the system.
 
 ### High Performance
 
