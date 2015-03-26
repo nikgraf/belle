@@ -12,8 +12,8 @@ import {Card} from 'belle';
 window.React = React;
 
 const belleLogoStyle = {
-  height: 32,
-  width: 32,
+  height: 54,
+  width: 54,
   background: '#53C7F2',
   display: 'inline-block',
   fontSize: 14,
@@ -25,31 +25,34 @@ const belleLogoStyle = {
 class App extends Component {
 
   render() {
-    return <div style={ {margin: '0 auto', width: 640 } }>
-      <h1 style={{ fontSize: 42 }}><i style={ belleLogoStyle }></i> Belle</h1>
+    return <div>
+      <div style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
+        <div style={ {margin: '0 auto', width: 640 } }>
+          <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF' }}><i style={ belleLogoStyle }></i> Belle</h1>
 
-      <p style={{ fontSize: 28, marginTop: 50 }}>
-        <i>
-          <a href="http://facebook.github.io/react/">React</a> Components with a great User Experience.
-        </i>
-      </p>
-      <p><b>Notice:</b> Keep in mind this library is early stage and might change a lot soon.</p>
+          <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
+            React Components with a great User Experience.
+          </p>
+        </div>
+      </div>
 
+      <div style={ {margin: '0 auto', width: 640 } }>
+        <p><b>Notice:</b> Keep in mind this library is early stage and might change a lot soon.</p>
 
-      <h2 style={{ float: 'left' }}>Components</h2>
+        <h2 style={{ float: 'left' }}>Components</h2>
 
-      <ul style={ { listStyleType: 'none', paddingLeft: 10, paddingTop: 12, float: 'left' } }>
-        <li style={{ float: 'left', padding: '0 10px' }}><a href="#button">Button</a></li>
-        <li style={{ float: 'left', padding: '0 10px' }}><a href="#input">Input</a></li>
-        <li style={{ float: 'left', padding: '0 10px' }}><a href="#card">Card</a></li>
-      </ul>
+        <ul style={ { listStyleType: 'none', paddingLeft: 10, paddingTop: 12, float: 'left' } }>
+          <li style={{ float: 'left', padding: '0 10px' }}><a href="#button">Button</a></li>
+          <li style={{ float: 'left', padding: '0 10px' }}><a href="#input">Input</a></li>
+          <li style={{ float: 'left', padding: '0 10px' }}><a href="#card">Card</a></li>
+        </ul>
 
-      <div style={{ clear: 'left' }}></div>
+        <div style={{ clear: 'left' }}></div>
 
-      <ButtonDocumentation />
-      <InputDocumentation />
-      <CardDocumentation />
-
+        <ButtonDocumentation />
+        <InputDocumentation />
+        <CardDocumentation />
+      </div>
     </div>;
   }
 }
