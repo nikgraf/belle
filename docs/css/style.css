@@ -9,6 +9,10 @@ body {
   color: #222;
 }
 
+h3 {
+  margin-top: 80px;
+}
+
 a, a:visited {
   color: #888;
   text-decoration: none;
