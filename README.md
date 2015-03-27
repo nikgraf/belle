@@ -113,11 +113,11 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 ## Future Work
 
 - Introduce some kind of styling configuration
-- Add disabled style to Input & Button
-- Introduce preventing new line for Input
+- Add disabled style to TextInput & Button
 - Add share-bar to documentation
 - Make sure components don't break when rendered by the backend
-- Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, input of type number, input of type email, anchor?, code?
+- Make sure the components work great on Mobile
+- Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?
 
 ## License
 

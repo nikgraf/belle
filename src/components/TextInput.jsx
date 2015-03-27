@@ -8,7 +8,7 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 import {omit, extend} from 'underscore';
 
 /**
- * Input component with great UX like autogrowing & handling states
+ * TextInput component with great UX like autogrowing & handling states
  *
  * Note on styling: Right now this component doen't allow to change style after
  * initialisation.
@@ -22,7 +22,7 @@ import {omit, extend} from 'underscore';
  * - Andrey Popp: https://github.com/andreypopp/react-textarea-autosize
  * - Eugene: https://gist.github.com/eugene1g/5dbaa7d35d0c7d5c2c56
  */
-export default class Input extends Component {
+export default class TextInput extends Component {
 
   constructor(properties) {
     this.state = {
@@ -160,16 +160,16 @@ export default class Input extends Component {
   }
 
   /**
-   * Set focus on this Input component
+   * Set focus on this TextInput component
    */
   focus() {
     React.findDOMNode(this).focus();
   }
 }
 
-Input.displayName = 'Belle Input';
+TextInput.displayName = 'Belle TextInput';
 
-Input.propTypes = {
+TextInput.propTypes = {
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
   hoverStyle: React.PropTypes.object,
@@ -177,7 +177,7 @@ Input.propTypes = {
   allowNewLine: React.PropTypes.bool
 };
 
-Input.defaultProps = { allowNewLine: false };
+TextInput.defaultProps = { allowNewLine: false };
 
 const newLineRegex = /[\r\n]/g;
 
@@ -186,7 +186,7 @@ const defaultStyle = {
   font: 'inherit',
   margin: 0,
 
-  /* belle input style */
+  /* Belle TextInput style */
   overflow: 'hidden',
   resize: 'none',
   width: '100%',
@@ -211,7 +211,7 @@ const defaultFocusStyle = {
 };
 
 /**
- * Returns an object with properties that are relevant for the Input's textarea.
+ * Returns an object with properties that are relevant for the TextInput's textarea.
  *
  * As the height of the textarea needs to be calculated valueLink & onChange can
  * not be passed down to the textarea, but made available through this component.

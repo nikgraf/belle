@@ -3,11 +3,11 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {Input, Card, Button} from 'belle';
+import {TextInput, Card, Button} from 'belle';
 
-function conditionalInput (showInput) {
-  if (showInput) {
-    return <Input style={ {width: 250} } defaultValue="This Input can be removed." />;
+function conditionalTextInput (showTextInput) {
+  if (showTextInput) {
+    return <TextInput style={ {width: 250} } defaultValue="This TextInput can be removed." />;
   }
 }
 
@@ -18,14 +18,14 @@ class App extends Component {
 
   constructor(properties) {
     this.state = {
-      showInput: true
+      showTextInput: true
     };
     super(properties);
   }
 
-  _removeInput() {
+  _removeTextInput() {
     this.setState({
-      showInput: false
+      showTextInput: false
     });
   }
 
@@ -39,36 +39,36 @@ class App extends Component {
 
       <Button primary={ true }>Primary Button</Button>
 
-      <h2>Input</h2>
+      <h2>TextInput</h2>
 
       {/* Common use case */}
-      <Input style={ {width: 250} } defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+      <TextInput style={ {width: 250} } defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
       <br />
 
-      {/* Remove Input behaviour */}
-      {conditionalInput(this.state.showInput)}
+      {/* Remove TextInput behaviour */}
+      {conditionalTextInput(this.state.showTextInput)}
       <br />
-      <button type="button" onClick={this._removeInput.bind(this)}>Remove Input</button>
+      <button type="button" onClick={this._removeTextInput.bind(this)}>Remove TextInput</button>
 
-      {/* Empty Input */}
-      <Input style={ {width: 250} }/>
+      {/* Empty TextInput */}
+      <TextInput style={ {width: 250} }/>
       <br />
 
       {/* Not editable value */}
       <div style={ {width: 250} }>
-        <Input value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+        <TextInput value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
       </div>
       <br />
 
-      {/* Full width input */}
+      {/* Full width TextInput */}
       <div style={ {position: 'relative'} }>
-        <Input defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this"/>
+        <TextInput defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this"/>
       </div>
       <br />
 
-      {/* Input with placeholder & a minHeight & custom hoverStyle */}
+      {/* TextInput with placeholder & a minHeight & custom hoverStyle */}
       <div style={ {width: 250} }>
-        <Input minHeight={120}
+        <TextInput minHeight={120}
                placeholder="What is going on? Ohh, we provided a minHeight & a custom hoverStyle & focusStyle here."
                hoverStyle={ { borderBottom: '1px red solid' } }
                focusStyle={ { borderBottom: '1px brown solid' } } />
