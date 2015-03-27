@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import ButtonDocumentation from './ButtonDocumentation';
-import InputDocumentation from './InputDocumentation';
+import TextInputDocumentation from './TextInputDocumentation';
 import CardDocumentation from './CardDocumentation';
 import {Card} from 'belle';
 
@@ -43,14 +43,14 @@ class App extends Component {
 
         <ul style={ { listStyleType: 'none', paddingLeft: 10, paddingTop: 12, float: 'left' } }>
           <li style={{ float: 'left', padding: '0 10px' }}><a href="#button">Button</a></li>
-          <li style={{ float: 'left', padding: '0 10px' }}><a href="#input">Input</a></li>
+          <li style={{ float: 'left', padding: '0 10px' }}><a href="#text-input">TextInput</a></li>
           <li style={{ float: 'left', padding: '0 10px' }}><a href="#card">Card</a></li>
         </ul>
 
         <div style={{ clear: 'left' }}></div>
 
         <ButtonDocumentation />
-        <InputDocumentation />
+        <TextInputDocumentation />
         <CardDocumentation />
       </div>
     </div>;

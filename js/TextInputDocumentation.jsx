@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react/addons';
-import {Card, Input} from 'belle';
+import {Card, TextInput} from 'belle';
 import Code from './Code';
 
 export default React.createClass({
@@ -10,19 +10,19 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      customInputValue: 'What is going on? Ohh, we provided minHeight and custom styles. Please be so kind and add a little bit more text here.'
+      customTextInputValue: 'What is going on? Ohh, we provided minHeight and custom styles. Please be so kind and add a little bit more text here.'
     };
   },
 
   render() {
     return <Card>
 
-      <h2 id="input" style={ {marginTop: 0, marginBottom: 40} }>Input</h2>
+      <h2 id="text-input" style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
 
-      <Input defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
+      <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
 
-      <Input defaultValue="This Input has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
-             allowNewLine={ true } />
+      <TextInput defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
+                 allowNewLine={ true } />
 
       <Code value={ exampleCode } style={ {marginTop: 40} } />
 
@@ -57,7 +57,7 @@ export default React.createClass({
               optional</p>
             <p>
               Behaves like the defaultValue property of any React rendered input of type="text" or textarea.
-              The Input's field value is set and can be manipulated through the user interface.
+              The TextInput's field value is set and can be manipulated through the user interface.
             </p>
           </td>
         </tr>
@@ -73,7 +73,7 @@ export default React.createClass({
               optional</p>
             <p>
               Behaves like the value property of any React rendered input of type="text" or textarea.
-              The Input's field value is set and can <b>not</b> be manipulated through the user interface.
+              The TextInput's field value is set and can <b>not</b> be manipulated through the user interface.
             </p>
           </td>
         </tr>
@@ -88,7 +88,7 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              Once set the Input will always keep a minimum height. This can be useful to indicate
+              Once set the TextInput will always keep a minimum height. This can be useful to indicate
               to users that it is expected from them to provide a certain amount of text input.
             </p>
           </td>
@@ -136,8 +136,8 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <Input minHeight={ 120 }
-             valueLink={ this.linkState('customInputValue') }
+      <TextInput minHeight={ 120 }
+             valueLink={ this.linkState('customTextInputValue') }
              placeholder="Just fill in whatever you like :)"
              style={{
                border: '1px solid #C8C8C8',
@@ -154,7 +154,7 @@ export default React.createClass({
                boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
              }}/>
 
-      <p>Two-way data binding: { this.state.customInputValue }</p>
+      <p>Two-way data binding: { this.state.customTextInputValue }</p>
 
       <Code value={ advancedExampleCode } style={ {marginTop: 40} } />
 
@@ -162,15 +162,15 @@ export default React.createClass({
   }
 });
 
-const exampleCode = `<!-- default input with a defaultValue -->
-<Input defaultValue="Jane Doe" placeholder="Name"/>
+const exampleCode = `<!-- TextInput with a defaultValue -->
+<TextInput defaultValue="Jane Doe" placeholder="Name"/>
 
-<!-- input with allowNewLine set to true -->
-<Input defaultValue="This Input has allowNewLine set to true. Just press 'Return' once editing the text."
-       allowNewLine={ true } />`;
+<!-- TextInput with allowNewLine set to true -->
+<TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+           allowNewLine={ true } />`;
 
-const advancedExampleCode = `<Input minHeight={ 120 }
-       valueLink={ this.linkState('customInputValue') }
+const advancedExampleCode = `<TextInput minHeight={ 120 }
+       valueLink={ this.linkState('customTextInputValue') }
        placeholder="Just fill in whatever you like :)"
        style={{
          border: '1px solid #C8C8C8',
@@ -187,7 +187,7 @@ const advancedExampleCode = `<Input minHeight={ 120 }
          boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
        }}/>
 
-<p>Two-way data binding: { this.state.customInputValue }</p>`;
+<p>Two-way data binding: { this.state.customTextInputValue }</p>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
