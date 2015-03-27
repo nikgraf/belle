@@ -119,6 +119,10 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 - Make sure the components work great on Mobile
 - Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?
 
+## Special Thanks
+
+The implementation of the TextInput component was heavily inspired by implementations of [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github.com/eugene1g).
+
 ## License
 
 MIT
