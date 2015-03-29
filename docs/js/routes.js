@@ -7,6 +7,7 @@ import Base from './Base';
 import ButtonDocumentation from './ButtonDocumentation';
 import CardDocumentation from './CardDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
+import Home from './Home';
 
 var routes = (
   <Route name="app" path="/" handler={Base}>
@@ -14,7 +15,7 @@ var routes = (
     <Route name="component/text-input" handler={TextInputDocumentation}/>
     <Route name="component/card" handler={CardDocumentation}/>
 
-    <DefaultRoute handler={ButtonDocumentation}/>
+    <DefaultRoute handler={Home}/>
   </Route>
 );
 
