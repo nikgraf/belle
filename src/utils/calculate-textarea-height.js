@@ -39,7 +39,9 @@ function calculateStyling(node) {
   // calculate the computed style only once it's not in the cache
   if (!computedStyleCache[reactId]) {
 
-    let computedStyle = window.getComputedStyle(node),
+    // In order to work with legacy browsers the second paramter for pseudoClass
+    // has to be provided http://caniuse.com/#feat=getcomputedstyle
+    let computedStyle = window.getComputedStyle(node, null),
         verticalPadding = 0,
         stylesToCopy = [
           'line-height', 'padding-top', 'padding-bottom', 'font-size',
@@ -58,7 +60,7 @@ function calculateStyling(node) {
 
     // store the style & vertical padding inside the cache
     computedStyleCache[reactId] = {
-      style: stylesToCopy.map(styleName => `${styleName}:${computedStyle[styleName]}`).join(';'),
+      style: stylesToCopy.map(styleName => `${styleName}:${computedStyle.getPropertyValue(styleName)}`).join(';'),
       verticalPadding: verticalPadding
     };
   }
