@@ -27,7 +27,7 @@ export default class Base extends Component {
             scrolling="0"
             width="111px"
             height="30px"
-            style={ { float: 'right', marginTop: 205 } }>
+            style={ { float: 'right', marginTop: 207 } }>
           </iframe>
 
           <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}><i style={ belleLogoStyle }></i> Belle</h1>
