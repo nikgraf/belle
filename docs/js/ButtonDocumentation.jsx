@@ -9,7 +9,7 @@ export default class ButtonDocumentation extends Component {
   render() {
     return <Card>
 
-      <h2 id="button" style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
       <Button primary={ true } style={ {marginRight: 10} }>Follow</Button>
 

@@ -9,7 +9,7 @@ export default class CardDocumentation extends Component {
   render() {
     return <Card>
 
-      <h2 id="card" style={ {marginTop: 0, marginBottom: 40} }>Card</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Card</h2>
 
       <Card style={{ borderTop: '1px solid #f2f2f2' }}>
         Add any content here like paragraphs, images or other components …

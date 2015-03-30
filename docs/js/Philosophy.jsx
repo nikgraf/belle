@@ -7,7 +7,7 @@ export default class Philosophy extends Component {
 
   render() {
     return <Card>
-      <h2>Philosophy</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Philosophy</h2>
 
       <p><i>“Great UX starts with a good UI”</i></p>
 

@@ -8,7 +8,7 @@ export default class GettingStarted extends Component {
 
   render() {
     return <Card>
-      <h2>Getting Started</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Getting Started</h2>
 
       <p>
         Belle is available as <a href="http://npmjs.org">npm</a> package. Once you have npm you can install Belle in your project folder with:
