@@ -26,6 +26,10 @@ export default React.createClass({
 
       <Code value={ exampleCode } style={ {marginTop: 40} } />
 
+      <p style={{ marginTop: 40 }}>
+        <i>Note</i>: The TextInput automatically grows in height once the text becomes too long to fit in. Still every TextInput is just rendered as a simple HTML textarea.
+      </p>
+
       <h3>Properties</h3>
 
       <table>

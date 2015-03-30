@@ -15,10 +15,12 @@ export default class CardDocumentation extends Component {
         Add any content here like paragraphs, images or other components …
       </Card>
 
-      <i>Note</i>: The card is designed to work on non-white areas. To provide a
-      nice appearance on white areas please change the box-shadow or borders.
-
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+
+      <p style={{ marginTop: 40 }}>
+        <i>Note</i>: The card is designed to work on non-white areas. To provide a
+        nice appearance on white areas please change the box-shadow or borders.
+      </p>
 
       <h3>Properties</h3>
 
