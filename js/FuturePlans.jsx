@@ -7,7 +7,7 @@ export default class FuturePlans extends Component {
 
   render() {
     return <Card>
-      <h2>Future Plans</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Future Plans</h2>
 
       <ul>
         <li>Introduce some kind of styling configuration</li>

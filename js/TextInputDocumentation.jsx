@@ -17,7 +17,7 @@ export default React.createClass({
   render() {
     return <Card>
 
-      <h2 id="text-input" style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
 
       <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
 
