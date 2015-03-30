@@ -20,7 +20,7 @@ export default class Base extends Component {
   render() {
     return <div>
       <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 640 } }>
+        <div style={ {margin: '0 auto', width: 900, paddingLeft: 160 } }>
           <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}><i style={ belleLogoStyle }></i> Belle</h1>
 
           <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
@@ -29,26 +29,45 @@ export default class Base extends Component {
         </div>
       </header>
 
-      <div style={ {margin: '0 auto', width: 640, marginTop: 40 } }>
-        <p><b>Notice:</b> Keep in mind this library is early stage and might change a lot soon.</p>
+      <div style={ {margin: '0 auto', width: 900, marginTop: 40 } }>
+        <div style={ {float: 'left', width: 160 } }>
+          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+            <li>
+              <Link to="getting-started">Getting Started</Link>
+            </li>
+          </ul>
+          <span style={ { color: '#888', fontWeight: 'bold' } } >Components</span>
+          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+            <li style={{ paddingLeft: 10 }}>
+              <Link to="component/button">Button</Link>
+            </li>
+            <li style={{ paddingLeft: 10 }}>
+              <Link to="component/text-input">TextInput</Link>
+            </li>
+            <li style={{ paddingLeft: 10 }}>
+              <Link to="component/card">Card</Link>
+            </li>
 
-        <h2 style={{ float: 'left' }}>Components</h2>
+            <li style={{ marginTop: 12 }}>
+              <Link to="philosophy">Philosophy</Link>
+            </li>
+            <li style={{ marginTop: 12 }}>
+              <Link to="future-work">Future Plans</Link>
+            </li>
+            <li style={{ marginTop: 12 }}>
+              <a href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
+            </li>
+            <li style={{ marginTop: 12 }}>
+              <a href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
+            </li>
+          </ul>
+        </div>
 
-        <ul style={ { listStyleType: 'none', paddingLeft: 10, paddingTop: 12, float: 'left' } }>
-          <li style={{ float: 'left', padding: '0 10px' }}>
-            <Link to="component/button">Button</Link>
-          </li>
-          <li style={{ float: 'left', padding: '0 10px' }}>
-            <Link to="component/text-input">TextInput</Link>
-          </li>
-          <li style={{ float: 'left', padding: '0 10px' }}>
-            <Link to="component/card">Card</Link>
-          </li>
-        </ul>
+        <div style={ {float: 'left', width: 640 } }>
+          <p><b>Notice:</b> Keep in mind this library is early stage and might change a lot soon.</p>
 
-        <div style={{ clear: 'left' }}></div>
-
-        <RouteHandler/>
+          <RouteHandler/>
+        </div>
       </div>
     </div>;
   }
