@@ -80,7 +80,8 @@ export default class Base extends Component {
         <div style={{ clear: 'left' }}></div>
       </div>
       <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
-        <span style={{ paddingLeft: 160 }}>Made with
+        <span style={{ paddingLeft: 160 }}>
+          Built with
           <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
             &nbsp;&#x2764;&nbsp;
           </span>
