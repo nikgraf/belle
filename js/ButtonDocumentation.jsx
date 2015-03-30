@@ -17,6 +17,15 @@ export default class ButtonDocumentation extends Component {
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
+      <p style={{ marginTop: 40 }}>
+        <i>Note:</i> Belle's Button is rendered as normal HTML button and behaves exactly like it except for these two behaviours:
+      </p>
+
+      <ul>
+        <li>By default the button is of type="button" instead of "submit".</li>
+        <li>Once a user clicked on the button it will loose focus.</li>
+      </ul>
+
       <h3>Properties</h3>
 
       <table>
