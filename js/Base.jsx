@@ -18,8 +18,9 @@ const belleLogoStyle = {
 export default class Base extends Component {
 
   render() {
-    return <div>
-      <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
+    let header;
+    if (this.context.router.getCurrentPath() === '/') {
+      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
         <div style={ {margin: '0 auto', width: 800, paddingLeft: 160 } }>
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
@@ -30,13 +31,41 @@ export default class Base extends Component {
             style={ { float: 'right', marginTop: 207 } }>
           </iframe>
 
-          <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}><i style={ belleLogoStyle }></i> Belle</h1>
+          <Link style={{ display: 'inline' }} to="app">
+            <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              <i style={ belleLogoStyle }></i> Belle
+            </h1>
+          </Link>
 
           <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
             React Components with great User Experience
           </p>
         </div>
-      </header>
+      </header>;
+    } else {
+      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
+        <div style={ {margin: '0 auto', width: 800} }>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
+            frameBorder="0"
+            scrolling="0"
+            width="73px"
+            height="30px"
+            style={ { float: 'right', marginTop: 20 } }>
+          </iframe>
+
+          <Link style={{ display: 'inline' }} to="app">
+            <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              Belle
+            </h1>
+          </Link>
+        </div>
+      </header>;
+    }
+
+    return <div>
+
+      { header }
 
       <div style={ {margin: '0 auto', width: 800, marginTop: 40 } }>
         <div style={ {float: 'left', width: 160 } }>
@@ -83,8 +112,13 @@ export default class Base extends Component {
           <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
             &nbsp;&#x2764;&nbsp;
           </span>
-          all around the globe</span>
+          on Planet Earth :)
+        </span>
       </footer>
     </div>;
   }
 }
+
+Base.contextTypes = {
+  router: React.PropTypes.func
+};
