@@ -40,34 +40,34 @@ export default class Base extends Component {
 
       <div style={ {margin: '0 auto', width: 800, marginTop: 40 } }>
         <div style={ {float: 'left', width: 160 } }>
-          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+          <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
-              <Link to="getting-started">Getting Started</Link>
+              <Link style={{ display: 'block' }} to="getting-started">Getting Started</Link>
             </li>
           </ul>
           <span style={ { color: '#888', fontWeight: 'bold' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li style={{ paddingLeft: 10 }}>
-              <Link to="component/button">Button</Link>
+              <Link style={{ display: 'block' }} to="component/button">Button</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link to="component/text-input">TextInput</Link>
+              <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link to="component/card">Card</Link>
+              <Link style={{ display: 'block' }} to="component/card">Card</Link>
             </li>
 
             <li style={{ marginTop: 12 }}>
-              <Link to="philosophy">Philosophy</Link>
+              <Link style={{ display: 'block' }} to="philosophy">Philosophy</Link>
             </li>
             <li style={{ marginTop: 12 }}>
-              <Link to="future-work">Future Plans</Link>
+              <Link style={{ display: 'block' }} to="future-work">Future Plans</Link>
             </li>
             <li style={{ marginTop: 12 }}>
-              <a href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
+              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
             </li>
             <li style={{ marginTop: 12 }}>
-              <a href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
+              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
             </li>
           </ul>
         </div>
