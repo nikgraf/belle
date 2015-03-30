@@ -20,7 +20,16 @@ export default class Base extends Component {
   render() {
     return <div>
       <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 900, paddingLeft: 160 } }>
+        <div style={ {margin: '0 auto', width: 800, paddingLeft: 160 } }>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
+            frameBorder="0"
+            scrolling="0"
+            width="111px"
+            height="30px"
+            style={ { float: 'right', marginTop: 205 } }>
+          </iframe>
+
           <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}><i style={ belleLogoStyle }></i> Belle</h1>
 
           <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
@@ -29,7 +38,7 @@ export default class Base extends Component {
         </div>
       </header>
 
-      <div style={ {margin: '0 auto', width: 900, marginTop: 40 } }>
+      <div style={ {margin: '0 auto', width: 800, marginTop: 40 } }>
         <div style={ {float: 'left', width: 160 } }>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
@@ -68,7 +77,15 @@ export default class Base extends Component {
 
           <RouteHandler/>
         </div>
+        <div style={{ clear: 'left' }}></div>
       </div>
+      <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
+        <span style={{ paddingLeft: 160 }}>Made with
+          <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
+            &nbsp;&#x2764;&nbsp;
+          </span>
+          all around the globe</span>
+      </footer>
     </div>;
   }
 }
