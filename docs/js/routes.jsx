@@ -10,7 +10,6 @@ import ButtonDocumentation from './ButtonDocumentation';
 import CardDocumentation from './CardDocumentation';
 import GettingStarted from './GettingStarted';
 import FuturePlans from './FuturePlans';
-import Home from './Home';
 import Philosophy from './Philosophy';
 import TextInputDocumentation from './TextInputDocumentation';
 
