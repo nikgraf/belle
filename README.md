@@ -6,48 +6,52 @@ Notice: Keep in mind this library is early stage and might change a lot soon.
 
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
 
-## Getting started
+## Getting Started
 
-With [npm](http://npmjs.org) do:
+Belle is available as [npm](http://npmjs.org) package. Once you have npm you can install Belle in your project folder with:
 
 ```
 npm install belle
 ```
 
-Import & use the Belle components
+### Import & use Belle Components
+
+We recommend you get started with [React](https://facebook.github.io/react/) first. Once you have a simple application setup you can import any Belle component and use it right away. No stylesheets, font or any other prerequisite needed.
 
 ```
 "use strict";
 
 import React, {Component} from 'react';
-import {Input} from 'belle';
+import {TextInput} from 'belle';
 
 class App extends Component {
 
   render() {
-    return <div style={ {width: 250} }>
-      <Input defaultValue="Update me and see how the input grows …" />
-    </div>
+    return <div>
+      <TextInput defaultValue="Update here and see how the input grows …" />
+    </div>;
   }
 }
 
 React.render(<App/>, document.getElementById('body'));
 ```
 
-Checkout the examples app to learn about the implemented components.
+### Learn more
+
+In addition you can dig through the [documentation](http://nikgraf.github.io/belle/) to learn about how to modify Belle components.
 
 ## Philosophy
 
 "Great UX starts with a good UI"
 
 With Belle I'm aiming to provide a library that follows a couple well established
-principles. While some of them might not be what is consider best practice today
-I believe they will become some day in the near future.
+principles. While some of them might not be consider best practice today
+We believe they will become some day in the near future.
 
 ### Easy to use
 
 The most important attribute of any great experience is that there was no hassle to achieve
-your goals.
+the initial goals.
 
 ### Consistent Behavior
 
@@ -110,11 +114,10 @@ To run the examples or docs you should run `npm install` and `npm start` in the 
 
 Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localhost.
 
-## Future Work
+## Future Plans
 
 - Introduce some kind of styling configuration
 - Add disabled style to TextInput & Button
-- Add share-bar to documentation
 - Make sure components don't break when rendered by the backend
 - Make sure the components work great on Mobile
 - Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?
