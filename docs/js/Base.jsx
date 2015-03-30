@@ -73,8 +73,6 @@ export default class Base extends Component {
         </div>
 
         <div style={ {float: 'left', width: 640 } }>
-          <p><b>Notice:</b> Keep in mind this library is early stage and might change a lot soon.</p>
-
           <RouteHandler/>
         </div>
         <div style={{ clear: 'left' }}></div>

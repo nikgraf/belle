@@ -2,8 +2,6 @@
 
 React Components with great User Experience.
 
-Notice: Keep in mind this library is early stage and might change a lot soon.
-
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
 
 ## Getting Started
