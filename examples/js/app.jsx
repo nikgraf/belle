@@ -3,7 +3,33 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button} from 'belle';
+import {TextInput, Card, Button, style} from 'belle';
+import {extend} from 'underscore';
+
+style.button.defaultStyle = {
+  boxSizing: 'border-box',
+  borderRadius: 2,
+  cursor: 'pointer',
+  padding: '8px 12px 6px 12px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  background: 'red',
+  border: '1px solid #EFEFEF',
+  borderBottomColor: '#D0D0D0',
+  color: 'brown',
+  verticalAlign: 'bottom',
+  fontSize: 16,
+  lineHeight: '26px'
+};
+
+style.card.defaultStyle = extend(style.card.defaultStyle, {
+  background: '#ddd'
+});
+
+style.textInput.defaultStyle = extend(style.textInput.defaultStyle, {
+  color: 'blue'
+});
 
 function conditionalTextInput (showTextInput) {
   if (showTextInput) {

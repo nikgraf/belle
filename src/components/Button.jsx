@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {omit, extend, contains} from 'underscore';
+import style from '../style/button';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 
 var computedStyle;
@@ -21,10 +22,10 @@ export default class Button extends Component {
     // the computed styles are generated during initialization of the component
     // in order to reduce computation
     computedStyle = {
-      primary: extend({}, defaultStyle, primaryStyle),
-      primaryHover: extend({}, defaultHoverStyle, primaryHoverStyle),
-      primaryFocus: extend({}, defaultFocusStyle, primaryFocusStyle),
-      primaryActive: extend({}, defaultActiveStyle, primaryActiveStyle),
+      primary: extend({}, style.defaultStyle, style.primaryStyle),
+      primaryHover: extend({}, style.defaultHoverStyle, style.primaryHoverStyle),
+      primaryFocus: extend({}, style.defaultFocusStyle, style.primaryFocusStyle),
+      primaryActive: extend({}, style.defaultActiveStyle, style.primaryActiveStyle),
     };
     super(properties);
   }
@@ -56,10 +57,10 @@ export default class Button extends Component {
   }
 
   render() {
-    const baseStyle = this.props.primary ? computedStyle.primary : defaultStyle;
-    const style = extend({}, baseStyle, this.props.style);
+    const baseStyle = this.props.primary ? computedStyle.primary : style.defaultStyle;
+    const buttonStyle = extend({}, baseStyle, this.props.style);
 
-    return <button style={ style }
+    return <button style={ buttonStyle }
                    className={ `${this.props.className} ${this.styleId}` }
                    onClick={ this.blur.bind(this) }
                    {...this.childProperties}>
@@ -87,74 +88,6 @@ Button.displayName = 'Belle Button';
 Button.propTypes = {
   primary: React.PropTypes.bool,
   type: React.PropTypes.oneOf(buttonTypes)
-};
-
-const defaultStyle = {
-  boxSizing: 'border-box',
-  borderRadius: 2,
-  cursor: 'pointer',
-  padding: '8px 12px 6px 12px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  background: '#EFEFEF',
-  border: '1px solid #EFEFEF',
-  borderBottomColor: '#D0D0D0',
-  color: '#555',
-  verticalAlign: 'bottom',
-  fontSize: 16,
-  lineHeight: '26px'
-};
-
-const defaultHoverStyle = {
-  color: '#666',
-  background: '#F5F5F5',
-  border: '1px solid #F5F5F5',
-  borderBottomColor: '#D0D0D0'
-};
-
-const defaultFocusStyle = {
-  outline: 0, // avoid default focus behaviour
-  color: '#666',
-  background: '#F5F5F5',
-  border: '1px solid #F5F5F5',
-  borderBottomColor: '#D0D0D0'
-};
-
-const defaultActiveStyle = {
-  background: '#E8E8E8',
-  border: '1px solid #E8E8E8',
-  borderTopColor: '#CFCFCF',
-  color: '#5C5C5C'
-};
-
-const primaryStyle = {
-  background: '#53C7F2',
-  border: '1px solid #53C7F2',
-  borderBottomColor: '#3C9CC0',
-  color:'#FAFAFA',
-  verticalAlign: 'bottom'
-};
-
-const primaryHoverStyle = {
-  background: '#5FCDF5',
-  border: '1px solid #5FCDF5',
-  borderBottomColor: '#4FB4DA',
-  color: '#FFF'
-};
-
-const primaryFocusStyle = {
-  background: '#5FCDF5',
-  border: '1px solid #5FCDF5',
-  borderBottomColor: '#4FB4DA',
-  color: '#FFF'
-};
-
-const primaryActiveStyle = {
-  background: '#4DBEE8',
-  border: '1px solid #4DBEE8',
-  borderTopColor: '#3B97BA',
-  color: '#F5F5F5'
 };
 
 /**
@@ -186,9 +119,9 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing custom styles
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const baseHoverStyle = properties.primary ? computedStyle.primaryHover : defaultHoverStyle;
-  const baseFocusStyle = properties.primary ? computedStyle.primaryFocus : defaultFocusStyle;
-  const baseActiveStyle = properties.primary ? computedStyle.primaryActive : defaultActiveStyle;
+  const baseHoverStyle = properties.primary ? computedStyle.primaryHover : style.defaultHoverStyle;
+  const baseFocusStyle = properties.primary ? computedStyle.primaryFocus : style.defaultFocusStyle;
+  const baseActiveStyle = properties.primary ? computedStyle.primaryActive : style.defaultActiveStyle;
   const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
   const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);
