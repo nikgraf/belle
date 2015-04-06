@@ -7,8 +7,8 @@ import {omit, extend} from 'underscore';
 export default class Code extends Component {
 
   constructor(properties) {
-    this.childProperties = omit(properties, 'style');
     super(properties);
+    this.childProperties = omit(properties, 'style');
   }
 
   componentDidMount() {

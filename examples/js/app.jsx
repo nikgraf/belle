@@ -17,10 +17,10 @@ window.React = React;
 class App extends Component {
 
   constructor(properties) {
+    super(properties);
     this.state = {
       showTextInput: true
     };
-    super(properties);
   }
 
   _removeTextInput() {
