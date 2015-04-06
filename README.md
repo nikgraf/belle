@@ -16,22 +16,38 @@ npm install belle
 
 We recommend you get started with [React](https://facebook.github.io/react/) first. Once you have a simple application setup you can import any Belle component and use it right away. No stylesheets, font or any other prerequisite needed.
 
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="react-root"></div>
+  <!--
+    You can use browserify, webpack or similar tools
+    to compile & combine your JSX code
+  -->
+  <script src="bundle.js"></script>
+</body>
+</html>
+```
+
 ```javascript
-"use strict";
+var React = require('react');
+var belle = require('belle');
+TextInput = belle.TextInput;
 
-import React, {Component} from 'react';
-import {TextInput} from 'belle';
+var App = React.createClass({
 
-class App extends Component {
-
-  render() {
+  render: function () {
     return <div>
       <TextInput defaultValue="Update here and see how the input grows …" />
     </div>;
   }
 }
 
-React.render(<App/>, document.getElementById('body'));
+React.render(<App/>, document.getElementById('react-root'));
 ```
 
 ### Learn more
