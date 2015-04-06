@@ -35,7 +35,7 @@ export default class TextInput extends Component {
 
   render() {
     let textareaStyle = extend({}, style.defaultStyle, this.props.style);
-    style.height = this.state.height;
+    textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
                      className={ `${this.props.className} ${this.styleId}` }
                      onChange={ this.onChange.bind(this) }
