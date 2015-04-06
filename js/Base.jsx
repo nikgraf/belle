@@ -90,6 +90,9 @@ export default class Base extends Component {
               <Link style={{ display: 'block' }} to="philosophy">Philosophy</Link>
             </li>
             <li style={{ marginTop: 12 }}>
+              <Link style={{ display: 'block' }} to="configuration">Configuration</Link>
+            </li>
+            <li style={{ marginTop: 12 }}>
               <Link style={{ display: 'block' }} to="future-work">Future Plans</Link>
             </li>
             <li style={{ marginTop: 12 }}>
