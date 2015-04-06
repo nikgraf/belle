@@ -114,7 +114,6 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 ## Future Plans
 
-- Introduce some kind of styling configuration
 - Add disabled style to TextInput & Button
 - Make sure components don't break when rendered by the backend
 - Make sure the components work great on Mobile
