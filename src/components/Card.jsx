@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {omit, extend} from 'underscore';
+import style from '../style/card';
 
 /**
  * Card component with a light shadow.
@@ -24,21 +25,12 @@ export default class Card extends Component {
   }
 
   render() {
-    let style = extend({}, defaultStyle, this.props.style);
+    let divStyle = extend({}, style.defaultStyle, this.props.style);
 
-    return <div {...this.divProperties} style={ style }>
+    return <div {...this.divProperties} style={ divStyle }>
       { this.props.children }
     </div>;
   }
 }
 
 Card.displayName = 'Belle Card';
-
-const defaultStyle = {
-  marginBottom: 20,
-  padding: 40,
-  borderRadius: 2,
-  background: '#fff',
-  boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-  boxSizing: 'border-box'
-};

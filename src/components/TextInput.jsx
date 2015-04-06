@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {omit, extend} from 'underscore';
+import style from '../style/text-input';
 
 /**
  * TextInput component with great UX like autogrowing & handling states
@@ -33,13 +34,13 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let style = extend({}, defaultStyle, this.props.style);
-    style.height = this.state.height;
-    return <textarea style={style}
+    let textareaStyle = extend({}, style.defaultStyle, this.props.style);
+    textareaStyle.height = this.state.height;
+    return <textarea style={ textareaStyle }
                      className={ `${this.props.className} ${this.styleId}` }
-                     onChange={this.onChange.bind(this)}
-                     onKeyDown={this.onKeyDown.bind(this)}
-                     {...this.state.textareaProperties}/>;
+                     onChange={ this.onChange.bind(this) }
+                     onKeyDown={ this.onKeyDown.bind(this) }
+                     { ...this.state.textareaProperties }/>;
   }
 
   /**
@@ -181,35 +182,6 @@ TextInput.defaultProps = { allowNewLine: false };
 
 const newLineRegex = /[\r\n]/g;
 
-const defaultStyle = {
-  /* normalize.css v3.0.1 */
-  font: 'inherit',
-  margin: 0,
-
-  /* Belle TextInput style */
-  overflow: 'hidden',
-  resize: 'none',
-  width: '100%',
-  fontSize: 14,
-  paddingBottom: 5,
-  paddingTop: 7,
-  color: '#505050',
-  border: '0 #fff solid',
-  borderBottom: '1px #ccc solid',
-  background: 'none',
-  display: 'block',
-  boxSizing: 'border-box'
-};
-
-const defaultHoverStyle = {
-  borderBottom: '1px #92D6EF solid'
-};
-
-const defaultFocusStyle = {
-  outline: 0, // to avoid default focus behaviour
-  borderBottom: '1px #53C7F2 solid'
-};
-
 /**
  * Returns an object with properties that are relevant for the TextInput's textarea.
  *
@@ -241,8 +213,8 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, defaultHoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, defaultFocusStyle, properties.focusStyle);
+  const hoverStyle = extend({}, style.defaultHoverStyle, properties.hoverStyle);
+  const focusStyle = extend({}, style.defaultFocusStyle, properties.focusStyle);
   const styles = [
     {
       id: styleId,
