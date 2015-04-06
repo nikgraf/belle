@@ -22,8 +22,9 @@ export default class GettingStarted extends Component {
         We recommend you get started with <a href="https://facebook.github.io/react/">React</a> first. Once you have a simple application setup you can import any Belle component and use it right away. <b>No stylesheets, font or any other prerequisite needed.</b>
       </p>
 
-      <Code value={ usageExample } style={ {marginTop: 40} } />
+      <Code value={ usageExampleHtml } style={ {marginTop: 40} } />
 
+      <Code value={ usageExampleJavaScript } style={ {marginTop: 40} } />
 
       <h3>Learn more</h3>
 
@@ -37,17 +38,34 @@ export default class GettingStarted extends Component {
 
 const installCommand = `npm install belle`;
 
-const usageExample = `import React, {Component} from 'react';
-import {TextInput} from 'belle';
+const usageExampleHtml = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div id="react-root"></div>
+  <!--
+    You can use browserify, webpack or similar tools
+    to compile & combine your JSX code
+  -->
+  <script src="bundle.js"></script>
+</body>
+</html>
+`;
 
-class App extends Component {
+const usageExampleJavaScript = `var React = require('react');
+var belle = require('belle');
+TextInput = belle.TextInput;
 
-  render() {
+var App = React.createClass({
+
+  render: function () {
     return <div>
-      <TextInput defaultValue="Update this input here and see how it grows …" />
+      <TextInput defaultValue="Update here and see how the input grows …" />
     </div>;
   }
 }
 
-React.render(<App/>, document.getElementById('body'));
+React.render(<App/>, document.getElementById('react-root'));
 `;
