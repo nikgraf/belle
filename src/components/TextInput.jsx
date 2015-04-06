@@ -16,7 +16,7 @@ import style from '../style/text-input';
  *
  * Note on resizing:
  * If you fill a textarea only with spaces and the cursor reaches the right end
- * it won't break the line. This can leads to unexpected behaviour for the automatic
+ * it won't break the line. This leads to unexpected behaviour for the automatic
  * resizing.
  *
  * This component was highly inspired by the great work from these guys
