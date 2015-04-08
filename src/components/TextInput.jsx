@@ -120,7 +120,7 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Prevent any newline (except allowNewLine is active) and passes the event to
+   * Prevent any newline (except allowNewLine is active) and pass the event to
    * the onKeyDown property.
    *
    * This is an optimization to avoid adding a newline char & removing it right
