@@ -62,7 +62,7 @@ export default class Button extends Component {
 
     return <button style={ buttonStyle }
                    className={ `${this.props.className} ${this.styleId}` }
-                   onClick={ this.blur.bind(this) }
+                   onClick={ this.onClick.bind(this) }
                    {...this.childProperties}>
       { this.props.children }
     </button>;
@@ -80,6 +80,18 @@ export default class Button extends Component {
    */
   focus() {
     React.findDOMNode(this).focus();
+  }
+
+  /**
+   * Once a user clicks on the button it will loose focus. In addition the
+   * onClick event is passed to the onClick property.
+   */
+  onClick(event) {
+    this.blur();
+
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
   }
 }
 
