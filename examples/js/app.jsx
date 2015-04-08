@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, style} from 'belle';
+import {TextInput, Card, Button, Toggle, style} from 'belle';
 import {extend} from 'underscore';
 
 style.button.defaultStyle = {
@@ -59,6 +59,10 @@ class App extends Component {
     return <div style={ {margin: '0 150px'} }>
       <h1>Belle Playground</h1>
 
+      <h2>Toggle</h2>
+
+      <Toggle />
+
       <h2>Button</h2>
 
       <Button>Press me …</Button>
@@ -99,6 +103,15 @@ class App extends Component {
                hoverStyle={ { borderBottom: '1px red solid' } }
                focusStyle={ { borderBottom: '1px brown solid' } } />
       </div>
+
+
+      <br />
+
+      <label>
+        <input type="radio" value="true"/>
+        <input type="radio" value="false"/>
+        Test
+      </label>
 
       <br />
 
