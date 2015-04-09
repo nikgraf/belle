@@ -18,7 +18,6 @@ const buttonTypes = ['button', 'submit', 'reset'];
 export default class Button extends Component {
 
   constructor(properties) {
-    this.childProperties = sanitizeChildProperties(properties);
     // the computed styles are generated during initialization of the component
     // in order to reduce computation
     computedStyle = {
@@ -28,6 +27,7 @@ export default class Button extends Component {
       primaryActive: extend({}, style.defaultActiveStyle, style.primaryActiveStyle),
     };
     super(properties);
+    this.childProperties = sanitizeChildProperties(properties);
   }
 
   /**

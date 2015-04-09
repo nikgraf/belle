@@ -13,8 +13,8 @@ import style from '../style/card';
 export default class Card extends Component {
 
   constructor(properties) {
-    this.divProperties = omit(properties, 'style');
     super(properties);
+    this.divProperties = omit(properties, 'style');
   }
 
   /**
