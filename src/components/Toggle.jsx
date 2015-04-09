@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend} from "underscore";
+import {extend, omit, isUndefined} from "underscore";
 
 const toggleWidth = 60;
 const toggleHeight = 30;
@@ -79,6 +79,21 @@ const checkboxStyle = {
 }
 
 
+function sanitizeChildProperties(properties) {
+  let childProperties = omit(properties, [
+    'type',
+    'style',
+    'onChange',
+    'onFocus',
+    'onBlur',
+    'checked',
+    'defaultChecked'
+  ]);
+
+  return childProperties;
+}
+
+
 /**
  * Toggle component
  */
@@ -86,21 +101,35 @@ export default class Toggle extends Component {
 
   constructor(properties) {
     super(properties);
+    let checked = properties.defaultChecked ? properties.defaultChecked : false
+    checked = properties.checked ? properties.checked : checked
+    
+    this.childProperties = sanitizeChildProperties(properties);
+    
     this.state = {
-      value : true
+      value : checked
     };
   }
   
   onClick(){
-    this.setState( { value: !this.state.value } );
+    if(isUndefined(this.props.checked)){
+      this.setState( { value: !this.state.value } );
+    }
   }
   
   onFocus(){}
   
   onBlur(){}
   
-  onChange(){
+  _onChange(event){
+    if(isUndefined(this.props.checked)){
+      this.setState( { value: event.target.checked } );
+    }
     
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
+
   }
 
   render() {
@@ -119,10 +148,11 @@ export default class Toggle extends Component {
                 value={this.props.value}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
-                onChange={this.props.onChange}
-                defaultChecked={this.props.defaultChecked}
+                onChange={this._onChange.bind(this)}
+                checked={this.state.value}
                 style={ checkboxStyle}
-                type="checkbox" />
+                type="checkbox"
+                {...this.childProperties} />
             </div>;
   }
 }

@@ -62,6 +62,10 @@ class App extends Component {
       <h2>Toggle</h2>
 
       <Toggle />
+      <Toggle checked={true} />
+      <Toggle checked={false} />
+      <Toggle defaultChecked={true} />
+      <Toggle defaultChecked={false} />
 
       <h2>Button</h2>
 
