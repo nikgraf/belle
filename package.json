@@ -1,6 +1,6 @@
 {
   "name": "belle",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React Components with great UX",
   "author": {
     "name": "Nik Graf",
@@ -27,7 +27,7 @@
     "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/"
   },
   "devDependencies": {
-    "babel": "^5.0.8"
+    "babel": "^5.0.12"
   },
   "license": "MIT"
 }

@@ -1,6 +1,6 @@
 {
   "name": "belleExamples",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Playground for using Belle components",
   "author": {
     "name": "Nik Graf",
@@ -17,12 +17,14 @@
     "underscore": "=1.8.3"
   },
   "devDependencies": {
-    "babelify": "^6.0.1",
+    "babelify": "^6.0.2",
     "browserify": "^9.0.7",
     "watchify": "^3.1.0"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js --extension=.jsx -v -d ."
+    "start": "watchify -o js/bundle.js --extension=.jsx -v -d .",
+    "build": "browserify -o js/bundle.js --extension=.jsx .",
+    "postinstall": "ln -snf ../../ node_modules/belle"
   },
   "browserify": {
     "extension": ["jsx"],

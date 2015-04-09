@@ -26,11 +26,11 @@ import style from '../style/text-input';
 export default class TextInput extends Component {
 
   constructor(properties) {
+    super(properties);
     this.state = {
       height: 'auto',
       textareaProperties: sanitizeChildProperties(properties)
     };
-    super(properties);
   }
 
   render() {

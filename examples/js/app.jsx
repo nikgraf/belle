@@ -69,6 +69,14 @@ class App extends Component {
 
       <Button primary={ true }>Primary Button</Button>
 
+      <br />
+
+      <Button primary={ true } hoverStyle={{ color: 'blue' }}>Primary Button</Button>
+
+      <Button primary={ true } hoverStyle={{ color: 'red' }}>Primary Button</Button>
+
+      <Button primary={ true } hoverStyle={{ color: 'green' }}>Primary Button</Button>
+
       <h2>TextInput</h2>
 
       {/* Common use case */}

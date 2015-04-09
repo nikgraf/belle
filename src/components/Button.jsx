@@ -5,7 +5,6 @@ import {omit, extend, contains} from 'underscore';
 import style from '../style/button';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 
-var computedStyle;
 const buttonTypes = ['button', 'submit', 'reset'];
 
 /**
@@ -18,16 +17,8 @@ const buttonTypes = ['button', 'submit', 'reset'];
 export default class Button extends Component {
 
   constructor(properties) {
-    this.childProperties = sanitizeChildProperties(properties);
-    // the computed styles are generated during initialization of the component
-    // in order to reduce computation
-    computedStyle = {
-      primary: extend({}, style.defaultStyle, style.primaryStyle),
-      primaryHover: extend({}, style.defaultHoverStyle, style.primaryHoverStyle),
-      primaryFocus: extend({}, style.defaultFocusStyle, style.primaryFocusStyle),
-      primaryActive: extend({}, style.defaultActiveStyle, style.primaryActiveStyle),
-    };
     super(properties);
+    this.childProperties = sanitizeChildProperties(properties);
   }
 
   /**
@@ -57,7 +48,7 @@ export default class Button extends Component {
   }
 
   render() {
-    const baseStyle = this.props.primary ? computedStyle.primary : style.defaultStyle;
+    const baseStyle = this.props.primary ? style.primaryStyle : style.defaultStyle;
     const buttonStyle = extend({}, baseStyle, this.props.style);
 
     return <button style={ buttonStyle }
@@ -131,9 +122,9 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing custom styles
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const baseHoverStyle = properties.primary ? computedStyle.primaryHover : style.defaultHoverStyle;
-  const baseFocusStyle = properties.primary ? computedStyle.primaryFocus : style.defaultFocusStyle;
-  const baseActiveStyle = properties.primary ? computedStyle.primaryActive : style.defaultActiveStyle;
+  const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.defaultHoverStyle;
+  const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.defaultFocusStyle;
+  const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.defaultActiveStyle;
   const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
   const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);

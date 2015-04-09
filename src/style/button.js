@@ -3,35 +3,35 @@
 var buttonStyle = {
 
   defaultStyle: {
-    boxSizing: 'border-box',
-    borderRadius: 2,
-    cursor: 'pointer',
-    padding: '8px 12px 6px 12px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    display: 'inline-block',
     background: '#EFEFEF',
     border: '1px solid #EFEFEF',
     borderBottomColor: '#D0D0D0',
+    borderRadius: 2,
+    boxSizing: 'border-box',
     color: '#555',
-    verticalAlign: 'bottom',
+    cursor: 'pointer',
+    display: 'inline-block',
     fontSize: 16,
-    lineHeight: '26px'
+    lineHeight: '26px',
+    padding: '8px 12px 6px 12px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    verticalAlign: 'bottom'
   },
 
   defaultHoverStyle: {
-    color: '#666',
     background: '#F5F5F5',
     border: '1px solid #F5F5F5',
-    borderBottomColor: '#D0D0D0'
+    borderBottomColor: '#D0D0D0',
+    color: '#666'
   },
 
   defaultFocusStyle: {
-    outline: 0, // avoid default focus behaviour
-    color: '#666',
     background: '#F5F5F5',
     border: '1px solid #F5F5F5',
-    borderBottomColor: '#D0D0D0'
+    borderBottomColor: '#D0D0D0',
+    color: '#666',
+    outline: 0 // avoid default focus behaviour
   },
 
   defaultActiveStyle: {
@@ -45,7 +45,16 @@ var buttonStyle = {
     background: '#53C7F2',
     border: '1px solid #53C7F2',
     borderBottomColor: '#3C9CC0',
+    borderRadius: 2,
+    boxSizing: 'border-box',
     color:'#FAFAFA',
+    cursor: 'pointer',
+    display: 'inline-block',
+    fontSize: 16,
+    lineHeight: '26px',
+    padding: '8px 12px 6px 12px',
+    textAlign: 'center',
+    textDecoration: 'none',
     verticalAlign: 'bottom'
   },
 
@@ -60,7 +69,8 @@ var buttonStyle = {
     background: '#5FCDF5',
     border: '1px solid #5FCDF5',
     borderBottomColor: '#4FB4DA',
-    color: '#FFF'
+    color: '#FFF',
+    outline: 0 // avoid default focus behaviour
   },
 
   primaryActiveStyle: {
