@@ -23,7 +23,8 @@
   },
   "scripts": {
     "start": "watchify -o js/bundle.js --extension=.jsx -v -d .",
-    "build": "browserify -o js/bundle.js --extension=.jsx ."
+    "build": "browserify -o js/bundle.js --extension=.jsx .",
+    "postinstall": "ln -snf ../../ node_modules/belle"
   },
   "browserify": {
     "extension": ["jsx"],
