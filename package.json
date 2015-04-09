@@ -27,7 +27,7 @@
     "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/"
   },
   "devDependencies": {
-    "babel": "^5.0.8"
+    "babel": "^5.0.12"
   },
   "license": "MIT"
 }
