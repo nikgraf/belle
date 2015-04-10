@@ -18,7 +18,9 @@ export default class Button extends Component {
 
   constructor(properties) {
     super(properties);
-    this._childProperties = sanitizeChildProperties(properties);
+    this.state = {
+      childProperties: sanitizeChildProperties(properties)
+    };
   }
 
   /**
@@ -59,10 +61,10 @@ export default class Button extends Component {
   }
 
   /**
-   * Update the _childProperties based on the updated properties of the button.
+   * Update the childProperties based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this._childProperties = sanitizeChildProperties(properties);
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
     updatePseudoClassStyle(this.styleId, properties);
   }
 
@@ -73,7 +75,7 @@ export default class Button extends Component {
     return <button style={ buttonStyle }
                    className={ `${this.props.className} ${this.styleId}` }
                    onClick={ this._onClick.bind(this) }
-                   {...this._childProperties}>
+                   {...this.state.childProperties}>
       { this.props.children }
     </button>;
   }
