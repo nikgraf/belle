@@ -14,20 +14,21 @@ export default class Card extends Component {
 
   constructor(properties) {
     super(properties);
-    this.divProperties = omit(properties, 'style');
+    this._childProperties = omit(properties, 'style');
   }
 
   /**
-   * Update the divProperties based on the updated properties passed to the card.
+   * Update the _childProperties based on the updated properties passed to the
+   * card.
    */
   componentWillReceiveProps(properties) {
-    this.divProperties = omit(properties, 'style');
+    this._childProperties = omit(properties, 'style');
   }
 
   render() {
     let divStyle = extend({}, style.defaultStyle, this.props.style);
 
-    return <div {...this.divProperties} style={ divStyle }>
+    return <div {...this._childProperties} style={ divStyle }>
       { this.props.children }
     </div>;
   }
