@@ -6,7 +6,8 @@
     "name": "Nik Graf",
     "email": "nik@nikgraf.com",
     "url": "http://www.nikgraf.com"
-  },  "main": "lib/index.js",
+  },
+  "main": "lib/index.js",
   "keywords": [
     "browser",
     "react",
@@ -27,7 +28,8 @@
     "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/"
   },
   "devDependencies": {
-    "babel": "^5.0.12"
+    "babel": "^5.0.12",
+    "jest-cli": "^0.4.0"
   },
   "license": "MIT"
 }
