@@ -14,7 +14,9 @@ export default class Card extends Component {
 
   constructor(properties) {
     super(properties);
-    this._childProperties = omit(properties, 'style');
+    this.state = {
+      childProperties: omit(properties, 'style')
+    };
   }
 
   /**
@@ -22,13 +24,13 @@ export default class Card extends Component {
    * card.
    */
   componentWillReceiveProps(properties) {
-    this._childProperties = omit(properties, 'style');
+    this.setState({ childProperties: omit(properties, 'style') });
   }
 
   render() {
     let divStyle = extend({}, style.defaultStyle, this.props.style);
 
-    return <div {...this._childProperties} style={ divStyle }>
+    return <div {...this.state.childProperties} style={ divStyle }>
       { this.props.children }
     </div>;
   }
