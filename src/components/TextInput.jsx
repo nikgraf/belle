@@ -33,113 +33,10 @@ export default class TextInput extends Component {
     };
   }
 
-  render() {
-    let textareaStyle = extend({}, style.defaultStyle, this.props.style);
-    textareaStyle.height = this.state.height;
-    return <textarea style={ textareaStyle }
-                     className={ `${this.props.className} ${this.styleId}` }
-                     onChange={ this.onChange.bind(this) }
-                     onKeyDown={ this.onKeyDown.bind(this) }
-                     { ...this.state.textareaProperties }/>;
-  }
-
-  /**
-   * Generates the style-id & inject the focus & hover style.
-   *
-   * The style-id is based on React's unique DOM node id.
-   */
-  componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this.styleId = `style-id${id}`;
-    updatePseudoClassStyle(this.styleId, this.props);
-  }
-
-  /**
-   * Right after the component go injected into the DOM it should be resized.
-   */
-  componentDidMount() {
-    this.resize();
-  }
-
-  /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
-   */
-  componentWillUnmount() {
-    removeStyle(this.styleId);
-  }
-
-  /**
-   * Update the properties passed to the textarea and resize as with the new
-   * properties the height might have changed.
-   */
-  componentWillReceiveProps(properties) {
-    this.setState({ textareaProperties: sanitizeChildProperties(properties) });
-    updatePseudoClassStyle(this.styleId, this.props);
-    this.resize();
-  }
-
-  /**
-   * Update the height and provide the changeCallback for valueLink.
-   *
-   * In addition newline characters are replaced by spaces in the textarea value
-   * in case allowNewLine is set to false and newLine characters could be found.
-   */
-  onChange(event) {
-
-    let value = event.target.value;
-
-    if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
-      value = event.target.value.replace(newLineRegex, ' ');
-
-      // controlled textarea must have value
-      if (this.state.textareaProperties.value) {
-        this.setState({ textareaProperties: { value: value } });
-        this.forceUpdate(this.resize);
-      // uncontrolled textarea must be updated with value, but then released again
-      } else {
-        this.setState({ textareaProperties: { value: value } });
-        this.forceUpdate(() => {
-          this.resize();
-          this.setState({ textareaProperties: { value: undefined } });
-        });
-      }
-    }
-
-    this.resize();
-
-    let changeCallback = this.props.onChange;
-    const valueLink = this.props.valueLink;
-
-    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = event => valueLink.requestChange(value);
-    }
-
-    if (changeCallback) {
-      changeCallback(event);
-    }
-  }
-
-  /**
-   * Prevent any newline (except allowNewLine is active) and pass the event to
-   * the onKeyDown property.
-   *
-   * This is an optimization to avoid adding a newline char & removing it right
-   * away in the onChange callback.
-   */
-  onKeyDown(event) {
-    if (!this.props.allowNewLine && event.key == 'Enter') {
-      event.preventDefault();
-    }
-
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(event);
-    }
-  }
-
   /**
    * Calculate the height and store the new height in the state to trigger a render.
    */
-  resize() {
+  _resize() {
     let height = calculateTextareaHeight(React.findDOMNode(this));
 
     if (this.props.minHeight && this.props.minHeight > height) {
@@ -154,17 +51,106 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Remove focus from this button
+   * Prevent any newline (except allowNewLine is active) and pass the event to
+   * the onKeyDown property.
+   *
+   * This is an optimization to avoid adding a newline char & removing it right
+   * away in the onChange callback.
    */
-  blur() {
-    React.findDOMNode(this).blur();
+  _onKeyDown(event) {
+    if (!this.props.allowNewLine && event.key == 'Enter') {
+      event.preventDefault();
+    }
+
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
   }
 
   /**
-   * Set focus on this TextInput component
+   * Update the height and provide the changeCallback for valueLink.
+   *
+   * In addition newline characters are replaced by spaces in the textarea value
+   * in case allowNewLine is set to false and newLine characters could be found.
    */
-  focus() {
-    React.findDOMNode(this).focus();
+  _onChange(event) {
+
+    let value = event.target.value;
+
+    if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
+      value = event.target.value.replace(newLineRegex, ' ');
+
+      // controlled textarea must have value
+      if (this.state.textareaProperties.value) {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(this._resize);
+      // uncontrolled textarea must be updated with value, but then released again
+      } else {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(() => {
+          this._resize();
+          this.setState({ textareaProperties: { value: undefined } });
+        });
+      }
+    }
+
+    this._resize();
+
+    let changeCallback = this.props.onChange;
+    const valueLink = this.props.valueLink;
+
+    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
+      changeCallback = event => valueLink.requestChange(value);
+    }
+
+    if (changeCallback) {
+      changeCallback(event);
+    }
+  }
+
+  /**
+   * Generates the style-id & inject the focus & hover style.
+   *
+   * The style-id is based on React's unique DOM node id.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this._styleId = `style-id${id}`;
+    updatePseudoClassStyle(this._styleId, this.props);
+  }
+
+  /**
+   * Right after the component go injected into the DOM it should be resized.
+   */
+  componentDidMount() {
+    this._resize();
+  }
+
+  /**
+   * Remove a component's associated syles whenever it gets removed from the DOM.
+   */
+  componentWillUnmount() {
+    removeStyle(this._styleId);
+  }
+
+  /**
+   * Update the properties passed to the textarea and resize as with the new
+   * properties the height might have changed.
+   */
+  componentWillReceiveProps(properties) {
+    this.setState({ textareaProperties: sanitizeChildProperties(properties) });
+    updatePseudoClassStyle(this._styleId, this.props);
+    this._resize();
+  }
+
+  render() {
+    let textareaStyle = extend({}, style.defaultStyle, this.props.style);
+    textareaStyle.height = this.state.height;
+    return <textarea style={ textareaStyle }
+                     className={ `${this.props.className} ${this._styleId}` }
+                     onChange={ this._onChange.bind(this) }
+                     onKeyDown={ this._onKeyDown.bind(this) }
+                     { ...this.state.textareaProperties }/>;
   }
 }
 
