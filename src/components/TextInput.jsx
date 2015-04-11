@@ -34,6 +34,41 @@ export default class TextInput extends Component {
   }
 
   /**
+   * Generates the style-id & inject the focus & hover style.
+   *
+   * The style-id is based on React's unique DOM node id.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this._styleId = `style-id${id}`;
+    updatePseudoClassStyle(this._styleId, this.props);
+  }
+
+  /**
+   * Right after the component go injected into the DOM it should be resized.
+   */
+  componentDidMount() {
+    this._resize();
+  }
+
+  /**
+   * Remove a component's associated syles whenever it gets removed from the DOM.
+   */
+  componentWillUnmount() {
+    removeStyle(this._styleId);
+  }
+
+  /**
+   * Update the properties passed to the textarea and resize as with the new
+   * properties the height might have changed.
+   */
+  componentWillReceiveProps(properties) {
+    this.setState({ textareaProperties: sanitizeChildProperties(properties) });
+    updatePseudoClassStyle(this._styleId, this.props);
+    this._resize();
+  }
+
+  /**
    * Calculate the height and store the new height in the state to trigger a render.
    */
   _resize() {
@@ -106,41 +141,6 @@ export default class TextInput extends Component {
     if (changeCallback) {
       changeCallback(event);
     }
-  }
-
-  /**
-   * Generates the style-id & inject the focus & hover style.
-   *
-   * The style-id is based on React's unique DOM node id.
-   */
-  componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this._styleId = `style-id${id}`;
-    updatePseudoClassStyle(this._styleId, this.props);
-  }
-
-  /**
-   * Right after the component go injected into the DOM it should be resized.
-   */
-  componentDidMount() {
-    this._resize();
-  }
-
-  /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
-   */
-  componentWillUnmount() {
-    removeStyle(this._styleId);
-  }
-
-  /**
-   * Update the properties passed to the textarea and resize as with the new
-   * properties the height might have changed.
-   */
-  componentWillReceiveProps(properties) {
-    this.setState({ textareaProperties: sanitizeChildProperties(properties) });
-    updatePseudoClassStyle(this._styleId, this.props);
-    this._resize();
   }
 
   render() {

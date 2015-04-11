@@ -24,25 +24,6 @@ export default class Button extends Component {
   }
 
   /**
-   * Remove focus from this button
-   */
-  _blur() {
-    React.findDOMNode(this).blur();
-  }
-
-  /**
-   * Once a user clicks on the button it will loose focus. In addition the
-   * onClick event is passed to the onClick property.
-   */
-  _onClick(event) {
-    this._blur();
-
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-  }
-
-  /**
    * Generates the style-id & inject the focus, hover & active style.
    *
    * The style-id is based on React's unique DOM node id.
@@ -66,6 +47,25 @@ export default class Button extends Component {
   componentWillReceiveProps(properties) {
     this.setState({ childProperties: sanitizeChildProperties(properties) });
     updatePseudoClassStyle(this.styleId, properties);
+  }
+
+  /**
+   * Remove focus from this button
+   */
+  _blur() {
+    React.findDOMNode(this).blur();
+  }
+
+  /**
+   * Once a user clicks on the button it will loose focus. In addition the
+   * onClick event is passed to the onClick property.
+   */
+  _onClick(event) {
+    this._blur();
+
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
   }
 
   render() {
