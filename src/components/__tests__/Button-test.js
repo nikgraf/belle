@@ -2,34 +2,36 @@
 
 jest.dontMock('../Button');
 
-var React = require('react/addons');
-var Button = require('../Button');
+import React from 'react/addons';
 var TestUtils = React.addons.TestUtils;
 
-describe('Button', function() {
+// Babel can't deal with import yet
+var Button = require('../Button');
 
-  describe('without any properties', function() {
+describe('Button', () => {
+
+  describe('without any properties', () => {
 
     var button, buttonNode;
 
-    beforeEach(function() {
+    beforeEach(() => {
       button = TestUtils.renderIntoDocument(
         <Button>Follow</Button>
       );
       buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
     });
 
-    it('should come with default styles', function() {
+    it('should come with default styles', () => {
       expect(buttonNode.props.style).toBeDefined();
     });
 
-    it('should set the type to button by default', function() {
+    it('should set the type to button by default', () => {
       expect(buttonNode.props.type).toEqual('button');
     });
 
   });
 
-  it('should be able to bind onClick', function() {
+  it('should be able to bind onClick', () => {
 
     var wasClicked = false;
 
@@ -45,7 +47,7 @@ describe('Button', function() {
 
   });
 
-  it('should be able to provide a className', function() {
+  it('should be able to provide a className', () => {
     var button = TestUtils.renderIntoDocument(
       <Button className="test-me">Follow</Button>
     );
@@ -55,7 +57,7 @@ describe('Button', function() {
   });
 
 
-  it('should be able to adopt the style of the button', function() {
+  it('should be able to adopt the style of the button', () => {
     var button = TestUtils.renderIntoDocument(
       <Button style={{ color: '#F00' }}>Follow</Button>
     );
@@ -64,7 +66,7 @@ describe('Button', function() {
     expect(buttonNode.props.style.color).toEqual('#F00');
   });
 
-  it('should be able to use a primary button', function() {
+  it('should be able to use a primary button', () => {
     var defaultButton = TestUtils.renderIntoDocument(
       <Button>Follow</Button>
     );
