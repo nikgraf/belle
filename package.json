@@ -25,11 +25,19 @@
     "build": "babel --out-dir='lib' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/"
+    "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/",
+    "test": "jest lib/"
   },
   "devDependencies": {
+    "react": ">=0.13.0",
     "babel": "^5.0.12",
     "jest-cli": "^0.4.0"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "react",
+      "underscore"
+    ]
   },
   "license": "MIT"
 }

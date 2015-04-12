@@ -1,4 +1,15 @@
 {
   "esnext": true,
-  "globalstrict": true
+  "globalstrict": true,
+  "globals"   : {
+    /* Jest */
+    "jest"       : false,
+    "describe"   : false,
+    "it"         : false,
+    "before"     : false,
+    "beforeEach" : false,
+    "after"      : false,
+    "afterEach"  : false,
+    "expect"     : false
+  }
 }
