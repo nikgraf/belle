@@ -1,17 +1,17 @@
 "use strict";
 
-jest.dontMock('../Button');
-jest.dontMock('../../utils/inject-style');
+jest.dontMock('../lib/components/Button');
+jest.dontMock('../lib/utils/inject-style');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
-const injectStyle = require('../../utils/inject-style');
+const injectStyle = require('../lib/utils/inject-style');
 
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used here.
-const Button = require('../Button');
+const Button = require('../lib/components/Button');
 
 describe('Button', () => {
 

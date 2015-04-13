@@ -26,18 +26,22 @@
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
     "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/",
-    "test": "jest lib/"
+    "test": "cd tests && npm install && ln -snf ../lib lib && cd .. && jest tests/"
   },
   "devDependencies": {
-    "react": ">=0.13.0",
     "babel": "^5.0.12",
-    "jest-cli": "^0.4.0"
+    "babel-jest": "^5.0.1",
+    "jest-cli": "^0.4.0",
+    "react": ">=0.13.0"
   },
   "jest": {
     "unmockedModulePathPatterns": [
       "react",
       "underscore"
-    ]
+    ],
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": ["jsx", "js"],
+    "moduleFileExtensions": ["js", "json", "jsx"]
   },
   "license": "MIT"
 }
