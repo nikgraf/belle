@@ -122,6 +122,16 @@ Whenever you change something in `src/` you can compile it during development wi
 npm start
 ```
 
+### Tests
+
+Build Status: [ ![Codeship Status for nikgraf/belle](https://codeship.com/projects/7650fa30-c483-0132-3f11-46867e328226/status?branch=master)](https://codeship.com/projects/74133)
+
+In order to run the tests use
+
+```
+npm test
+```
+
 ### Run the examples or docs
 
 To run the examples or docs you should run `npm install` and `npm start` in the examples/docs folder as well.
