@@ -7,6 +7,10 @@
     "email": "nik@nikgraf.com",
     "url": "http://www.nikgraf.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nikgraf/belle.git"
+  },
   "main": "lib/index.js",
   "keywords": [
     "browser",
