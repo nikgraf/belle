@@ -1,0 +1,16 @@
+{
+  "name": "belle",
+  "version": "0.0.9",
+  "description": "Tests for Belle",
+  "author": {
+    "name": "Nik Graf",
+    "email": "nik@nikgraf.com",
+    "url": "http://www.nikgraf.com"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "react": ">=0.13.0",
+    "underscore": ">=1.8.2"
+  },
+  "license": "MIT"
+}
