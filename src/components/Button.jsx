@@ -18,7 +18,9 @@ export default class Button extends Component {
 
   constructor(properties) {
     super(properties);
-    this.childProperties = sanitizeChildProperties(properties);
+    this.state = {
+      childProperties: sanitizeChildProperties(properties)
+    };
   }
 
   /**
@@ -43,8 +45,27 @@ export default class Button extends Component {
    * Update the childProperties based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.childProperties = sanitizeChildProperties(properties);
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
     updatePseudoClassStyle(this.styleId, properties);
+  }
+
+  /**
+   * Remove focus from this button
+   */
+  _blur() {
+    React.findDOMNode(this).blur();
+  }
+
+  /**
+   * Once a user clicks on the button it will loose focus. In addition the
+   * onClick event is passed to the onClick property.
+   */
+  _onClick(event) {
+    this._blur();
+
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
   }
 
   render() {
@@ -53,36 +74,10 @@ export default class Button extends Component {
 
     return <button style={ buttonStyle }
                    className={ `${this.props.className} ${this.styleId}` }
-                   onClick={ this.onClick.bind(this) }
-                   {...this.childProperties}>
+                   onClick={ this._onClick.bind(this) }
+                   {...this.state.childProperties}>
       { this.props.children }
     </button>;
-  }
-
-  /**
-   * Remove focus from this button
-   */
-  blur() {
-    React.findDOMNode(this).blur();
-  }
-
-  /**
-   * Set focus on this Button component.
-   */
-  focus() {
-    React.findDOMNode(this).focus();
-  }
-
-  /**
-   * Once a user clicks on the button it will loose focus. In addition the
-   * onClick event is passed to the onClick property.
-   */
-  onClick(event) {
-    this.blur();
-
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
   }
 }
 
