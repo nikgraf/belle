@@ -109,7 +109,6 @@ export default class TextInput extends Component {
    * in case allowNewLine is set to false and newLine characters could be found.
    */
   _onChange(event) {
-
     let value = event.target.value;
 
     if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
@@ -127,9 +126,9 @@ export default class TextInput extends Component {
           this.setState({ textareaProperties: { value: undefined } });
         });
       }
+    } else {
+      this._resize();
     }
-
-    this._resize();
 
     let changeCallback = this.props.onChange;
     const valueLink = this.props.valueLink;
