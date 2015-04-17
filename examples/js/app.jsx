@@ -61,18 +61,26 @@ class App extends Component {
 
       <h2>Select</h2>
 
-      <select>
+      <select value="B">
         <option value="A">Apple</option>
         <option value="B">Banana</option>
         <option value="C">Cranberry</option>
       </select>
 
+      <span>Select</span>
       <Select>
         <Option value={ "vienna" }>Vienna</Option>
         <Option value={ "rome" }>Rome</Option>
       </Select>
 
+      <span>Select with value</span>
       <Select value="rome">
+        <Option value="vienna">Vienna</Option>
+        <Option value="rome">Rome</Option>
+      </Select>
+
+      <span>Select with defaultValue</span>
+      <Select defaultValue="rome">
         <Option value="vienna">Vienna</Option>
         <Option value="rome">Rome</Option>
       </Select>

@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, map, find, first} from 'underscore';
+import {omit, extend, map, find, first, isEmpty, isUndefined} from 'underscore';
 
 /**
  * Select component.
@@ -14,11 +14,10 @@ export default class Select extends Component {
     let selectedValue;
     if (this.props.value) {
       selectedValue = this.props.value;
-    } else {
-      const firstEntry = first(this.props.children);
-      if (firstEntry) {
-        selectedValue = firstEntry.props.value;
-      }
+    } else if (this.props.defaultValue) {
+      selectedValue = this.props.defaultValue;
+    } else if (!isEmpty(this.props.children)) {
+      selectedValue = first(this.props.children).props.value;
     }
 
     this.state = {
@@ -28,17 +27,29 @@ export default class Select extends Component {
   }
 
   _onChange (event) {
-    this.setState({
-      selectedValue: event.target.dataset.belleValue,
-      isOpen: false
-    });
+    if(isUndefined(this.props.value)) {
+      this.setState({
+        selectedValue: event.target.dataset.belleValue,
+        isOpen: false
+      });
+    } else {
+      this.setState({
+        isOpen: false
+      });
+    }
   }
 
   _onNativeChange (event) {
-    this.setState({
-      selectedValue: event.target.value,
-      isOpen: false
-    });
+    if(isUndefined(this.props.value)) {
+      this.setState({
+        selectedValue: event.target.value,
+        isOpen: false
+      });
+    } else {
+      this.setState({
+        isOpen: false
+      });
+    }
   }
 
   _toggleOpen () {
