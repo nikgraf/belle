@@ -61,6 +61,12 @@ class App extends Component {
 
       <h2>Select</h2>
 
+      <select>
+        <option value="A">Apple</option>
+        <option value="B">Banana</option>
+        <option value="C">Cranberry</option>
+      </select>
+
       <Select>
         <Option value={ "vienna" }>Vienna</Option>
         <Option value={ "rome" }>Rome</Option>

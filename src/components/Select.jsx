@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, map, find} from 'underscore';
+import {omit, extend, map, find, first} from 'underscore';
 
 /**
  * Select component.
@@ -10,15 +10,33 @@ export default class Select extends Component {
 
   constructor (properties) {
     super(properties);
+
+    let selectedValue;
+    if (this.props.value) {
+      selectedValue = this.props.value;
+    } else {
+      const firstEntry = first(this.props.children);
+      if (firstEntry) {
+        selectedValue = firstEntry.props.value;
+      }
+    }
+
     this.state = {
       isOpen: false,
-      selectedValue: this.props.value
+      selectedValue: selectedValue
     };
   }
 
   _onChange (event) {
     this.setState({
       selectedValue: event.target.dataset.belleValue,
+      isOpen: false
+    });
+  }
+
+  _onNativeChange (event) {
+    this.setState({
+      selectedValue: event.target.value,
       isOpen: false
     });
   }
@@ -50,7 +68,9 @@ export default class Select extends Component {
           }
         </ul>
 
-        <select value={ this.state.selectedValue } style={ { display: 'block' } }>
+        <select value={ this.state.selectedValue }
+                onChange={ this._onNativeChange.bind(this) }
+                style={ { display: 'block' } }>
           {
             map(this.props.children, (entry, index) => {
               return (
