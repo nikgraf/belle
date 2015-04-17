@@ -22,7 +22,8 @@ export default class Select extends Component {
 
     this.state = {
       isOpen: false,
-      selectedValue: selectedValue
+      selectedValue: selectedValue,
+      focusedOption: undefined
     };
   }
 
@@ -53,6 +54,13 @@ export default class Select extends Component {
     }
   }
 
+  _onMouseEnter (event) {
+    const entry = event.currentTarget.querySelector('[data-belle-value]');
+    this.setState({
+      focusedOption: entry.getAttribute('data-belle-value')
+    });
+  }
+
   _toggleOpen () {
     this.setState({ isOpen: !this.state.isOpen });
   }
@@ -64,25 +72,43 @@ export default class Select extends Component {
     const selectLabel = selectedEntry ? selectedEntry : "Choose a City";
 
     const drowdownStyle = {
-      display: this.state.isOpen ? 'block' : 'none'
+      display: this.state.isOpen ? 'block' : 'none',
+      listStyleType: 'none',
+      background: '#FFF',
+      padding: 0,
+      margin: 0
     };
 
     return (
       <div>
 
-        <div onClick={ this._toggleOpen.bind(this) }>{ selectLabel }</div>
+        <div onClick={ this._toggleOpen.bind(this) }
+             style={ { background: '#FFF', padding: 10 } }>
+          { selectLabel }
+        </div>
 
         <ul style={ drowdownStyle }>
           {
             map(this.props.children, (entry, index) => {
-              return <li onClick={ this._onChange.bind(this) } key={ index }>{ entry }</li>;
+              let entryStyle = { padding: 10 };
+              if (entry.props.value == this.state.focusedOption) {
+                extend(entryStyle, { background: '#DDD' });
+              }
+              return (
+                <li onClick={ this._onChange.bind(this) }
+                    key={ index }
+                    onMouseEnter={ this._onMouseEnter.bind(this) }
+                    style={ entryStyle }>
+                  { entry }
+                </li>
+              );
             })
           }
         </ul>
 
         <select value={ this.state.selectedValue }
                 onChange={ this._onNativeChange.bind(this) }
-                style={ { display: 'block' } }>
+                style={ { display: 'none' } }>
           {
             map(this.props.children, (entry, index) => {
               return (
