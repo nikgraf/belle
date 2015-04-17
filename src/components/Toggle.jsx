@@ -30,7 +30,7 @@ const toggleStyle = {
 const sliderStyle = {
   position: "relative",
   width: sliderWidth,
-  transition: "left .25s ease-in-out"
+  // transition: "left .25s ease-in-out"
 }
 
 const handleStyle = {
@@ -122,14 +122,26 @@ export default class Toggle extends Component {
       }
     };
   }
-  
-  onClick(){
-    if(isUndefined(this.props.checked)){
-      this.setState( { value: !this.state.value } );
+
+  componentDidUpdate(props, state) {
+    if (this.state.isDragging && !state.isDragging) {
+      console.log("addEventListener")
+      document.addEventListener('mousemove', this._onMouseMove.bind(this))
+      document.addEventListener('mouseup', this._onMouseUp.bind(this))
+    } else if (!this.state.isDragging) {
+      console.log("removeEventListener")
+      document.removeEventListener('mousemove', this._onMouseMove.bind(this))
+      document.removeEventListener('mouseup', this._onMouseUp.bind(this))
     }
-    React.findDOMNode(this.refs.belleToggle).focus();
   }
   
+  onClick(){
+    // if(isUndefined(this.props.checked)){
+    //   this.setState( { value: !this.state.value } );
+    // }
+    // React.findDOMNode(this.refs.belleToggle).focus();
+  }
+
   onFocus(){
     this.setState( { hasFocus : true } );
   }
@@ -149,19 +161,93 @@ export default class Toggle extends Component {
 
   }
 
-  render() {
-    const computedToggleStyle = extend( {}, toggleStyle, (this.state.hasFocus ? toggleFocusStyle : {}) );
-    const computedSliderStyle = extend( {}, sliderStyle, { left: this.state.value ? 0 : sliderOffset } );
+  _onMouseDown(e){
+    if (e.button !== 0) return
+    console.log("mouse down")
+
+    this._dragStart = e.pageX - (this.state.value ? 0 : sliderOffset);
+    console.log(e.pageX, (this.state.value ? 0 : sliderOffset));
+    console.log(this._dragStart);
+
+    this.setState({
+      isDragging: true,
+      hasFocus: true,
+      sliderOffset: (this.state.value ? 0 : sliderOffset)
+    });
+
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  _onMouseMove(e){
+    if (!this.state.isDragging) return
+    console.log("mouse move");
     
+    let difference = e.pageX - this._dragStart
+    if (difference < -handleWidth || difference > 0)
+      return false
+
+    console.log(e.pageX, this._dragStart)
+    console.log(difference)
+    this._dragEnd = difference
+
+    this.setState({
+      sliderOffset: difference
+    });
+    
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  _onMouseUp(e){
+    console.log("mouse up");
+    
+    if(this._dragEnd){
+      let state = this._dragEnd > -(handleWidth / 2);
+      this.setState( { isDragging: false, value: state } );
+      this._dragEnd = false
+    }else{
+      console.log("else")
+      this.setState( { isDragging: false } );
+    }
+
+    this._dragStart = false
+    
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  _onMouseLeave(e){
+    console.log("mouse leave")
+    this._onMouseUp(e);
+  }
+
+  render() {
+    // TODO: disable css transitions while dragging is active (this.state.isDragging)
+
+    const computedToggleStyle = extend( {}, toggleStyle, (this.state.hasFocus ? toggleFocusStyle : {}) );
+    var computedSliderStyle;
+
+    if(this.state.isDragging){
+      computedSliderStyle = extend( {}, sliderStyle, { left: this.state.sliderOffset } );
+    }else{
+      computedSliderStyle = extend( {}, sliderStyle, { left: this.state.value ? 0 : sliderOffset } );
+    }
+
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
-    return <div style={ computedToggleStyle }>
+
+    return <div style={ computedToggleStyle } onMouseLeave={ this._onMouseLeave.bind(this) }>
               <div className="react-toggle-slider" 
+                   ref="belleToggleSlider"
                    style={ computedSliderStyle } 
                    onClick={ this.onClick.bind(this) }>
                 <div className="react-toggle-track-check" style={ checkStyle }>{ computedTrueChoice }</div>
-                <div className="react-toggle-handle" style={ handleStyle }></div>
+                <div className="react-toggle-handle"
+                    ref="belleToggleHandle"
+                    style={ handleStyle }
+                    onMouseDown={ this._onMouseDown.bind(this) }/>
                 <div className="react-toggle-track-cross" style={ crossStyle }>{ computedFalseChoice }</div>
               </div>
               <input
