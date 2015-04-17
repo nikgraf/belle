@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, Toggle, style} from 'belle';
+import {TextInput, Card, Choice, Button, Toggle, style} from 'belle';
 import {extend} from 'underscore';
 
 style.button.defaultStyle = {
@@ -66,6 +66,11 @@ class App extends Component {
       <Toggle checked={false} />
       <Toggle defaultChecked={true} />
       <Toggle defaultChecked={false} />
+
+      <Toggle defaultChecked={ true }>
+        <Choice value={ true }>ja</Choice>
+        <Choice value={ false }>nein</Choice>
+      </Toggle>
 
       <h2>Button</h2>
 

@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend, omit, isUndefined} from "underscore";
+import {extend, omit, isUndefined, first, last} from "underscore";
 
 const toggleWidth = 60;
 const toggleHeight = 30;
@@ -112,6 +112,15 @@ export default class Toggle extends Component {
     this.state = {
       value : checked
     };
+    
+    if(!isUndefined(this.props.children)){
+      if(this.props.children.length !== 2){
+        console.warn("You must have 2 choices for each toggle.")
+      }
+      if(first(this.props.children).props.value == last(this.props.children).props.value){
+        console.warn("Your Choices must not have the same value.")
+      }
+    };
   }
   
   onClick(){
@@ -143,14 +152,17 @@ export default class Toggle extends Component {
   render() {
     const computedToggleStyle = extend( {}, toggleStyle, (this.state.hasFocus ? toggleFocusStyle : {}) );
     const computedSliderStyle = extend( {}, sliderStyle, { left: this.state.value ? 0 : sliderOffset } );
+    
+    const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
+    const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
     return <div style={ computedToggleStyle }>
               <div className="react-toggle-slider" 
                    style={ computedSliderStyle } 
                    onClick={ this.onClick.bind(this) }>
-                <div className="react-toggle-track-check" style={ checkStyle }>✔</div>
+                <div className="react-toggle-track-check" style={ checkStyle }>{ computedTrueChoice }</div>
                 <div className="react-toggle-handle" style={ handleStyle }></div>
-                <div className="react-toggle-track-cross" style={ crossStyle }>✘</div>
+                <div className="react-toggle-track-cross" style={ crossStyle }>{ computedFalseChoice }</div>
               </div>
               <input
                 ref="belleToggle"

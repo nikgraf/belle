@@ -4,6 +4,7 @@
 
 import Button from './components/Button';
 import Card from './components/Card';
+import Choice from './components/Choice';
 import TextInput from './components/TextInput';
 import Toggle from './components/Toggle';
 
@@ -14,6 +15,7 @@ import textInputStyle from './style/text-input';
 module.exports = {
   Button: Button,
   Card: Card,
+  Choice: Choice,
   TextInput: TextInput,
   Toggle: Toggle,
   style: {
