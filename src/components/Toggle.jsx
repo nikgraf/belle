@@ -78,6 +78,9 @@ const checkboxStyle = {
   width: 1
 }
 
+const toggleFocusStyle = {
+  boxShadow: "0 0 5px 0 rgba(0,0,255, .4)"
+}
 
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
@@ -115,11 +118,16 @@ export default class Toggle extends Component {
     if(isUndefined(this.props.checked)){
       this.setState( { value: !this.state.value } );
     }
+    React.findDOMNode(this.refs.belleToggle).focus();
   }
   
-  onFocus(){}
+  onFocus(){
+    this.setState( { hasFocus : true } );
+  }
   
-  onBlur(){}
+  onBlur(){
+    this.setState( { hasFocus : false } );
+  }
   
   _onChange(event){
     if(isUndefined(this.props.checked)){
@@ -133,9 +141,10 @@ export default class Toggle extends Component {
   }
 
   render() {
+    const computedToggleStyle = extend( {}, toggleStyle, (this.state.hasFocus ? toggleFocusStyle : {}) );
     const computedSliderStyle = extend( {}, sliderStyle, { left: this.state.value ? 0 : sliderOffset } );
 
-    return <div style={ toggleStyle }>
+    return <div style={ computedToggleStyle }>
               <div className="react-toggle-slider" 
                    style={ computedSliderStyle } 
                    onClick={ this.onClick.bind(this) }>
@@ -144,10 +153,11 @@ export default class Toggle extends Component {
                 <div className="react-toggle-track-cross" style={ crossStyle }>✘</div>
               </div>
               <input
+                ref="belleToggle"
                 name={this.props.name}
                 value={this.props.value}
-                onFocus={this.onFocus}
-                onBlur={this.onBlur}
+                onFocus={this.onFocus.bind(this)}
+                onBlur={this.onBlur.bind(this)}
                 onChange={this._onChange.bind(this)}
                 checked={this.state.value}
                 style={ checkboxStyle}
