@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {TextInput, Card, Button, Option, Select, style} from 'belle';
-import {extend} from 'underscore';
+import {extend, map} from 'underscore';
 
 style.button.defaultStyle = {
   boxSizing: 'border-box',
@@ -36,6 +36,16 @@ function conditionalTextInput (showTextInput) {
     return <TextInput style={ {width: 250} } defaultValue="This TextInput can be removed." />;
   }
 }
+
+const fruits = [
+  { value: "pineapple", content: (<span>🍍</span>) },
+  { value: "banana", content: (<span>🍌</span>) },
+  { value: "peach", content: (<span>🍑</span>) },
+  { value: "pear", content: (<span>🍐</span>) },
+  { value: "cherries", content: (<span>🍒</span>) }
+];
+
+
 
 // export for http://fb.me/react-devtools
 window.React = React;
@@ -83,6 +93,34 @@ class App extends Component {
       <Select defaultValue="rome">
         <Option value="vienna">Vienna</Option>
         <Option value="rome">Rome</Option>
+      </Select>
+
+      <span>Select from Data</span>
+      <Select>
+        {
+          map(fruits, (fruit, index) => {
+            return (
+              <Option value={ fruit.value }
+                      key={ index }>
+                { fruit.content }
+              </Option>
+            );
+          })
+        }
+      </Select>
+
+      <span>Select from Data with defaultValue</span>
+      <Select defaultValue={ fruits[2].value }>
+        {
+          map(fruits, (fruit, index) => {
+            return (
+              <Option value={ fruit.value }
+                      key={ index }>
+                { fruit.content }
+              </Option>
+            );
+          })
+        }
       </Select>
 
       <h2>Button</h2>

@@ -28,8 +28,9 @@ export default class Select extends Component {
 
   _onChange (event) {
     if(isUndefined(this.props.value)) {
+      const entry = event.currentTarget.querySelector('[data-belle-value]');
       this.setState({
-        selectedValue: event.target.dataset.belleValue,
+        selectedValue: entry.getAttribute('data-belle-value'),
         isOpen: false
       });
     } else {
