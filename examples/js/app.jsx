@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, style} from 'belle';
+import {TextInput, Card, Button, Option, Select, style} from 'belle';
 import {extend} from 'underscore';
 
 style.button.defaultStyle = {
@@ -58,6 +58,18 @@ class App extends Component {
   render() {
     return <div style={ {margin: '0 150px'} }>
       <h1>Belle Playground</h1>
+
+      <h2>Select</h2>
+
+      <Select>
+        <Option value={ "vienna" }>Vienna</Option>
+        <Option value={ "rome" }>Rome</Option>
+      </Select>
+
+      <Select value="rome">
+        <Option value="vienna">Vienna</Option>
+        <Option value="rome">Rome</Option>
+      </Select>
 
       <h2>Button</h2>
 
