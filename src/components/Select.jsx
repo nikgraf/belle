@@ -27,21 +27,19 @@ export default class Select extends Component {
     };
   }
 
-  _onChange (event) {
-    if(isUndefined(this.props.value)) {
-      const entry = event.currentTarget.querySelector('[data-belle-value]');
-      this.setState({
-        selectedValue: entry.getAttribute('data-belle-value'),
-        isOpen: false
-      });
-    } else {
-      this.setState({
-        isOpen: false
-      });
-    }
+  _onClick (event) {
+    const changeEvent = new Event('change', {
+      bubbles: true,
+      cancelable: false
+    });
+
+    const entry = event.currentTarget.querySelector('[data-belle-value]');
+    const select = React.findDOMNode(this.refs.belleNativeSelect);
+    select.value = entry.getAttribute('data-belle-value');
+    select.dispatchEvent(changeEvent);
   }
 
-  _onNativeChange (event) {
+  _onChange (event) {
     if(isUndefined(this.props.value)) {
       this.setState({
         selectedValue: event.target.value,
@@ -51,6 +49,10 @@ export default class Select extends Component {
       this.setState({
         isOpen: false
       });
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange(event);
     }
   }
 
@@ -95,7 +97,7 @@ export default class Select extends Component {
                 extend(entryStyle, { background: '#DDD' });
               }
               return (
-                <li onClick={ this._onChange.bind(this) }
+                <li onClick={ this._onClick.bind(this) }
                     key={ index }
                     onMouseEnter={ this._onMouseEnter.bind(this) }
                     style={ entryStyle }>
@@ -107,8 +109,9 @@ export default class Select extends Component {
         </ul>
 
         <select value={ this.state.selectedValue }
-                onChange={ this._onNativeChange.bind(this) }
-                style={ { display: 'none' } }>
+                onChange={ this._onChange.bind(this) }
+                style={ { display: 'none' } }
+                ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
               return (

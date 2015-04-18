@@ -77,14 +77,14 @@ class App extends Component {
         <option value="C">Cranberry</option>
       </select>
 
-      <span>Select</span>
-      <Select>
+      <span>Select with onChange</span>
+      <Select onChange={ (event) => console.log(event) }>
         <Option value={ "vienna" }>Vienna</Option>
         <Option value={ "rome" }>Rome</Option>
       </Select>
 
-      <span>Select with value</span>
-      <Select value="rome">
+      <span>Select with value & onChange</span>
+      <Select value="rome" onChange={ (event) => console.log(event) }>
         <Option value="vienna">Vienna</Option>
         <Option value="rome">Rome</Option>
       </Select>
@@ -109,8 +109,9 @@ class App extends Component {
         }
       </Select>
 
-      <span>Select from Data with defaultValue</span>
-      <Select defaultValue={ fruits[2].value }>
+      <span>Select from Data with defaultValue & onChange</span>
+      <Select defaultValue={ fruits[2].value }
+              onChange={ (event) => console.log(event) }>
         {
           map(fruits, (fruit, index) => {
             return (
