@@ -1,5 +1,7 @@
 "use strict";
 
+/* jslint browser: true */
+
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
@@ -25,13 +27,13 @@ const toggleStyle = {
   height: toggleHeight + 2,
   width: toggleWidth + 2,
   WebkitUserSelect: "none"
-}
+};
 
 const sliderStyle = {
   position: "relative",
   width: sliderWidth,
   transition: "left .25s ease-in-out"
-}
+};
 
 const handleStyle = {
   position: "absolute",
@@ -45,7 +47,7 @@ const handleStyle = {
   height: handleHeight,
   width: handleWidth,
   cursor: "pointer"
-}
+};
 
 const optionStyle = {
   display: "inline-block",
@@ -53,7 +55,7 @@ const optionStyle = {
   height: optionHeight,
   width: optionWidth,
   cursor: "pointer"
-}
+};
 
 const checkStyle = extend( {}, optionStyle, {
   backgroundColor: "#00ff00",
@@ -76,11 +78,11 @@ const checkboxStyle = {
   padding: 0,
   position: "absolute",
   width: 1
-}
+};
 
 const toggleFocusStyle = {
   boxShadow: "0 0 5px 0 rgba(0,0,255, .4)"
-}
+};
 
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
@@ -104,26 +106,26 @@ export default class Toggle extends Component {
 
   constructor(properties) {
     super(properties);
-    let checked = properties.defaultChecked ? properties.defaultChecked : false
-    checked = properties.checked ? properties.checked : checked
-    
+    let checked = properties.defaultChecked ? properties.defaultChecked : false;
+    checked = properties.checked ? properties.checked : checked;
+
     this.childProperties = sanitizeChildProperties(properties);
 
-    this._mouseMoveEvent  = this._onMouseMove.bind(this)
-    this._mouseUpEvent    = this._onMouseUp.bind(this)
+    this._mouseMoveEvent  = this._onMouseMove.bind(this);
+    this._mouseUpEvent    = this._onMouseUp.bind(this);
 
     this.state = {
       value : checked
     };
-    
+
     if(!isUndefined(this.props.children)){
       if(this.props.children.length !== 2){
-        console.warn("You must have 2 choices for each toggle.")
+        console.warn("You must have 2 choices for each toggle.");
       }
       if(first(this.props.children).props.value == last(this.props.children).props.value){
-        console.warn("Your Choices must not have the same value.")
+        console.warn("Your Choices must not have the same value.");
       }
-    };
+    }
   }
 
   _onClick(){
@@ -136,27 +138,28 @@ export default class Toggle extends Component {
   onFocus(){
     this.setState( { hasFocus : true } );
   }
-  
+
   onBlur(){
     this.setState( { hasFocus : false } );
   }
-  
+
   _onChange(event){
     if(isUndefined(this.props.checked)){
       this.setState( { value: event.target.checked } );
     }
-    
+
     if (this.props.onChange) {
       this.props.onChange(event);
     }
 
   }
-  _bindDocumentMouseEvents(){
+
+  _bindDocumentMouseEvents () {
     document.addEventListener('mousemove', this._mouseMoveEvent);
     document.addEventListener('mouseup', this._mouseUpEvent);
   }
 
-  _unbindDocumentMouseEvents(){
+  _unbindDocumentMouseEvents () {
     document.removeEventListener('mousemove', this._mouseMoveEvent);
     document.removeEventListener('mouseup', this._mouseUpEvent);
   }
@@ -176,7 +179,7 @@ export default class Toggle extends Component {
 
   _onMouseMove(e){
     if (!this.state.isDragging) return;
-    
+
     let difference = e.pageX - this._dragStart;
     if (difference < -handleWidth || difference > 0) return;
 
@@ -191,14 +194,14 @@ export default class Toggle extends Component {
 
     if(this._dragEnd){
       let state = this._dragEnd > -(handleWidth / 2);
-      
-      this.setState({ 
-        isDragging: false, 
-        value: state 
+
+      this.setState({
+        isDragging: false,
+        value: state
       });
 
       this._dragEnd = false;
-    }else{
+    } else {
       this.setState( { isDragging: false } );
     }
 
@@ -223,29 +226,40 @@ export default class Toggle extends Component {
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
-    return <div style={ computedToggleStyle } onMouseLeave={ this.state.isDragging ? this._onMouseLeave.bind(this) : null }>
-              <div className="react-toggle-slider" 
-                   ref="belleToggleSlider"
-                   style={ computedSliderStyle }>
-                <div className="react-toggle-track-check" style={ checkStyle } onClick={ this._onClick.bind(this) }>{ computedTrueChoice }</div>
-                <div className="react-toggle-handle"
-                    ref="belleToggleHandle"
-                    style={ handleStyle }
-                    onMouseDown={ this._onMouseDown.bind(this)}/>
-                <div className="react-toggle-track-cross" style={ crossStyle } onClick={ this._onClick.bind(this) }>{ computedFalseChoice }</div>
-              </div>
-              <input
-                ref="belleToggle"
-                name={this.props.name}
-                value={this.props.value}
-                onFocus={this.onFocus.bind(this)}
-                onBlur={this.onBlur.bind(this)}
-                onChange={this._onChange.bind(this)}
-                checked={this.state.value}
-                style={ checkboxStyle}
-                type="checkbox"
-                {...this.childProperties} />
-            </div>;
+    return (
+      <div style={ computedToggleStyle }
+           onMouseLeave={ this.state.isDragging ? this._onMouseLeave.bind(this) : null }>
+        <div className="react-toggle-slider"
+             ref="belleToggleSlider"
+             style={ computedSliderStyle }>
+          <div className="react-toggle-track-check"
+               style={ checkStyle }
+               onClick={ this._onClick.bind(this) }>
+            { computedTrueChoice }
+          </div>
+          <div className="react-toggle-handle"
+               ref="belleToggleHandle"
+               style={ handleStyle }
+               onMouseDown={ this._onMouseDown.bind(this)} />
+          <div className="react-toggle-track-cross"
+               style={ crossStyle }
+               onClick={ this._onClick.bind(this) }>
+            { computedFalseChoice }
+          </div>
+        </div>
+        <input
+          ref="belleToggle"
+          name={this.props.name}
+          value={this.props.value}
+          onFocus={this.onFocus.bind(this)}
+          onBlur={this.onBlur.bind(this)}
+          onChange={this._onChange.bind(this)}
+          checked={this.state.value}
+          style={ checkboxStyle}
+          type="checkbox"
+          {...this.childProperties} />
+      </div>
+    );
   }
 }
 
