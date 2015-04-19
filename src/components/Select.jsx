@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, map, find, first, isEmpty, isUndefined} from 'underscore';
+import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
 
 /**
  * Select component.
@@ -64,7 +64,81 @@ export default class Select extends Component {
   }
 
   _toggleOpen () {
-    this.setState({ isOpen: !this.state.isOpen });
+    const isOpen = !this.state.isOpen;
+    this.setState({ isOpen: isOpen });
+    // TODO make sure focus is still on the select after an option has been selected
+    if (isOpen) {
+      React.findDOMNode(this.refs.belleNativeSelect).focus();
+    }
+  }
+
+
+  _onKeyDown (event) {
+
+    if(this.props.children.length > 0) {
+
+      // Updates the state to set focus on the next option
+      // In case no option is active it should jump to the first.
+      // In case it is the last it should stop there.
+      if (event.key == 'ArrowDown') {
+        event.preventDefault();
+
+        if (this.state.focusedOption) {
+          const indexOfFocusedOption = findIndexOfFocusedOption(this);
+
+          if (hasNext(this.props.children, indexOfFocusedOption)) {
+            this.setState({
+              focusedOption: this.props.children[indexOfFocusedOption + 1].props.value,
+              isOpen: true
+            });
+          }
+        } else {
+          this.setState({
+            focusedOption: first(this.props.children).props.value,
+            isOpen: true
+          });
+        }
+      }
+
+      if (event.key == 'ArrowUp') {
+        event.preventDefault();
+
+        if (this.state.focusedOption) {
+          const indexOfFocusedOption2 = findIndexOfFocusedOption(this);
+
+          if (hasPrevious(this.props.children, indexOfFocusedOption2)) {
+            this.setState({
+              focusedOption: this.props.children[indexOfFocusedOption2 - 1].props.value,
+              isOpen: true
+            });
+          }
+        } else {
+          this.setState({
+            focusedOption: last(this.props.children).props.value,
+            isOpen: true
+          });
+        }
+      }
+
+      if (event.key == 'Enter' || event.key == ' ') {
+        event.preventDefault();
+
+        const changeEvent = new Event('change', {
+          bubbles: true,
+          cancelable: false
+        });
+
+        const select = React.findDOMNode(this.refs.belleNativeSelect);
+        select.value = this.state.focusedOption;
+        select.dispatchEvent(changeEvent);
+      }
+
+      if (event.key == 'Escape') {
+        event.preventDefault();
+
+        this.setState({ isOpen: false });
+      }
+    }
   }
 
   render () {
@@ -110,6 +184,7 @@ export default class Select extends Component {
 
         <select value={ this.state.selectedValue }
                 onChange={ this._onChange.bind(this) }
+                onKeyDown={ this._onKeyDown.bind(this) }
                 style={ { display: 'none' } }
                 ref="belleNativeSelect">
           {
@@ -129,3 +204,17 @@ export default class Select extends Component {
 }
 
 Select.displayName = 'Belle Select';
+
+const findIndexOfFocusedOption = (component) => {
+  return findIndex(component.props.children, (element) => {
+    return element.props.value === component.state.focusedOption;
+  });
+};
+
+const hasNext = (list, currentIndex) => {
+  return (currentIndex + 2 <= list.length);
+};
+
+const hasPrevious = (list, currentIndex) => {
+  return (currentIndex - 1 >= 0);
+};
