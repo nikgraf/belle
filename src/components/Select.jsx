@@ -72,70 +72,76 @@ export default class Select extends Component {
     }
   }
 
+  _onArrowDownKeyDown () {
+    if (this.state.focusedOption) {
+      const indexOfFocusedOption = findIndexOfFocusedOption(this);
+
+      if (hasNext(this.props.children, indexOfFocusedOption)) {
+        this.setState({
+          focusedOption: this.props.children[indexOfFocusedOption + 1].props.value
+        });
+      }
+    } else {
+      this.setState({
+        focusedOption: first(this.props.children).props.value
+      });
+    }
+  }
+
+  _onArrowUpKeyDown () {
+    if (this.state.focusedOption) {
+      const indexOfFocusedOption = findIndexOfFocusedOption(this);
+
+      if (hasPrevious(this.props.children, indexOfFocusedOption)) {
+        this.setState({
+          focusedOption: this.props.children[indexOfFocusedOption - 1].props.value
+        });
+      }
+    } else {
+      this.setState({
+        focusedOption: last(this.props.children).props.value
+      });
+    }
+  }
+
+  _onEnterKeyDown () {
+    const changeEvent = new Event('change', {
+      bubbles: true,
+      cancelable: false
+    });
+
+    const select = React.findDOMNode(this.refs.belleNativeSelect);
+    select.value = this.state.focusedOption;
+    select.dispatchEvent(changeEvent);
+  }
 
   _onKeyDown (event) {
 
     if(this.props.children.length > 0) {
 
-      // Updates the state to set focus on the next option
-      // In case no option is active it should jump to the first.
-      // In case it is the last it should stop there.
-      if (event.key == 'ArrowDown') {
+      if (!this.state.isOpen && event.key === 'ArrowDown' ||
+          !this.state.isOpen && event.key === 'ArrowUp' ||
+          !this.state.isOpen && event.key === ' ') {
         event.preventDefault();
-
-        if (this.state.focusedOption) {
-          const indexOfFocusedOption = findIndexOfFocusedOption(this);
-
-          if (hasNext(this.props.children, indexOfFocusedOption)) {
-            this.setState({
-              focusedOption: this.props.children[indexOfFocusedOption + 1].props.value,
-              isOpen: true
-            });
-          }
-        } else {
-          this.setState({
-            focusedOption: first(this.props.children).props.value,
-            isOpen: true
-          });
+        this.setState({ isOpen: true });
+      } else {
+        // Updates the state to set focus on the next option
+        // In case no option is active it should jump to the first.
+        // In case it is the last it should stop there.
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          this._onArrowDownKeyDown();
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          this._onArrowUpKeyDown();
+        } else if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          this._onEnterKeyDown();
         }
       }
 
-      if (event.key == 'ArrowUp') {
+      if (event.key === 'Escape') {
         event.preventDefault();
-
-        if (this.state.focusedOption) {
-          const indexOfFocusedOption2 = findIndexOfFocusedOption(this);
-
-          if (hasPrevious(this.props.children, indexOfFocusedOption2)) {
-            this.setState({
-              focusedOption: this.props.children[indexOfFocusedOption2 - 1].props.value,
-              isOpen: true
-            });
-          }
-        } else {
-          this.setState({
-            focusedOption: last(this.props.children).props.value,
-            isOpen: true
-          });
-        }
-      }
-
-      if (event.key == 'Enter' || event.key == ' ') {
-        event.preventDefault();
-
-        const changeEvent = new Event('change', {
-          bubbles: true,
-          cancelable: false
-        });
-
-        const select = React.findDOMNode(this.refs.belleNativeSelect);
-        select.value = this.state.focusedOption;
-        select.dispatchEvent(changeEvent);
-      }
-
-      if (event.key == 'Escape') {
-        event.preventDefault();
-
         this.setState({ isOpen: false });
       }
     }
@@ -185,7 +191,7 @@ export default class Select extends Component {
         <select value={ this.state.selectedValue }
                 onChange={ this._onChange.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                style={ { display: 'none' } }
+                style={ { display: 'block' } }
                 ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
