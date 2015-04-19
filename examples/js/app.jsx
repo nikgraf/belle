@@ -65,7 +65,8 @@ class App extends Component {
       <Toggle checked={true} />
       <Toggle checked={false} />
       <Toggle defaultChecked={true} />
-      <Toggle defaultChecked={false} />
+      <Toggle defaultChecked={false}
+              onChange={ (event) => console.log(event) } />
 
       <Toggle defaultChecked={ true }>
         <Choice value={ true }>ja</Choice>

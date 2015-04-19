@@ -128,11 +128,13 @@ export default class Toggle extends Component {
     }
   }
 
-  _onClick(){
-    if(isUndefined(this.props.checked)){
-      this.setState( { value: !this.state.value } );
-    }
-    React.findDOMNode(this.refs.belleToggle).focus();
+  _onClick(event){
+    const input = React.findDOMNode(this.refs.belleToggle);
+
+    const clickEvent = new MouseEvent('click', event.nativeEvent);
+    input.dispatchEvent(clickEvent);
+
+    input.focus();
   }
 
   onFocus(){
