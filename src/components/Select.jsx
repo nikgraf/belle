@@ -23,7 +23,7 @@ export default class Select extends Component {
     this.state = {
       isOpen: false,
       selectedValue: selectedValue,
-      focusedOption: undefined
+      focusedOption: selectedValue
     };
   }
 
