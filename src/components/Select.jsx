@@ -21,6 +21,7 @@ export default class Select extends Component {
     }
 
     this.state = {
+      isFocusedOn: false,
       isOpen: false,
       selectedValue: selectedValue,
       focusedOption: selectedValue
@@ -37,6 +38,9 @@ export default class Select extends Component {
     const select = React.findDOMNode(this.refs.belleNativeSelect);
     select.value = entry.getAttribute('data-belle-value');
     select.dispatchEvent(changeEvent);
+
+    // keep focus on select
+    React.findDOMNode(this.refs.belleNativeSelect).focus();
   }
 
   _onChange (event) {
@@ -56,6 +60,14 @@ export default class Select extends Component {
     }
   }
 
+  _onFocus (event) {
+    this.setState({ isFocusedOn: true });
+  }
+
+  _onBlur (event) {
+    this.setState({ isFocusedOn: false });
+  }
+
   _onMouseEnter (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
     this.setState({
@@ -66,7 +78,6 @@ export default class Select extends Component {
   _toggleOpen () {
     const isOpen = !this.state.isOpen;
     this.setState({ isOpen: isOpen });
-    // TODO make sure focus is still on the select after an option has been selected
     if (isOpen) {
       React.findDOMNode(this.refs.belleNativeSelect).focus();
     }
@@ -161,11 +172,17 @@ export default class Select extends Component {
       margin: 0
     };
 
+    const labelStyle = {
+      outline: this.state.isFocusedOn ? '1px solid blue' : 'none',
+      background: '#FFF',
+      padding: 10
+    };
+
     return (
       <div>
 
         <div onClick={ this._toggleOpen.bind(this) }
-             style={ { background: '#FFF', padding: 10 } }>
+             style={ labelStyle }>
           { selectLabel }
         </div>
 
@@ -190,6 +207,8 @@ export default class Select extends Component {
 
         <select value={ this.state.selectedValue }
                 onChange={ this._onChange.bind(this) }
+                onFocus={ this._onFocus.bind(this) }
+                onBlur={ this._onBlur.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
                 style={ selectStyle }
                 ref="belleNativeSelect">
