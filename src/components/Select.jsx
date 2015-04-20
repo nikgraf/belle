@@ -191,7 +191,7 @@ export default class Select extends Component {
         <select value={ this.state.selectedValue }
                 onChange={ this._onChange.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                style={ { display: 'block' } }
+                style={ selectStyle }
                 ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
@@ -224,3 +224,14 @@ const hasNext = (list, currentIndex) => {
 const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
 };
+
+const selectStyle = {
+  border: 0,
+  clip: "rect(0 0 0 0)",
+  height: 1,
+  margin: -1,
+  overflow: "hidden",
+  padding: 0,
+  position: "absolute",
+  width: 1
+}
