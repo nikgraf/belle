@@ -20,10 +20,9 @@ var toggleStyle = {
   toggle: {
     boxSizing: 'border-box',
     borderRadius: toggleHeight,
-    border: '1px solid #999',
     overflow: 'hidden',
-    height: toggleHeight + 2,
-    width: toggleWidth + 2,
+    height: toggleHeight,
+    width: toggleWidth,
     WebkitUserSelect: 'none'
   },
 
@@ -35,15 +34,15 @@ var toggleStyle = {
 
   handle: {
     position: 'absolute',
-    top: 0,
+    top: 3,
     left: '50%',
+    zIndex: 5,
     transform: 'translateX(-50%)',
     boxSizing: 'border-box',
     borderRadius: handleHeight,
-    border: '1px solid #999',
     backgroundColor: '#eee',
-    height: handleHeight,
-    width: handleWidth,
+    height: handleHeight - 6,
+    width: handleWidth - 6,
     cursor: 'pointer'
   },
 
@@ -52,7 +51,12 @@ var toggleStyle = {
     boxSizing: 'border-box',
     height: optionHeight,
     width: optionWidth,
-    cursor: 'pointer'
+    lineHeight: optionHeight + 'px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    color: '#FFF',
+    boxShadow: 'inset 0 0 2px rgba(0,0,0, 0.05)',
+    transition: 'opacity .25s ease-in-out'
   },
 
   checkbox: {
@@ -67,19 +71,20 @@ var toggleStyle = {
   },
 
   toggleFocus: {
-    boxShadow: '0 0 5px 0 rgba(0,0,255, .4)'
+    boxShadow: '0 0 5px 0 rgba(140, 175, 80, .4)'
   },
 };
 
 toggleStyle['check'] = extend( {}, toggleStyle.option, {
-  backgroundColor: '#00ff00',
-  borderRadius: '20px 0 0 20px'
+  backgroundColor: '#AED75F',
+  borderRadius: '20px 0 0 20px',
+  textIndent: -10
 });
 
 toggleStyle['cross'] = extend( {}, toggleStyle.option, {
   borderRadius: '0 20px 20px 0',
-  backgroundColor: '#ff0000',
-  textAlign: 'right'
+  backgroundColor: '#C9D1D4',
+  textIndent: 10
 });
 
 export default toggleStyle;

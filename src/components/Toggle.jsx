@@ -151,6 +151,9 @@ export default class Toggle extends Component {
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
+    const computedTrueChoiceStyle = extend( {}, style.check, (this.state.value ? {} : { opacity : 0 }) );
+    const computedFalseChoiceStyle = extend( {}, style.cross, (this.state.value ? { opacity : 0 } : {}) );
+
     return (
       <div style={ computedToggleStyle }
            onMouseLeave={ this.state.isDragging ? this._onMouseLeave.bind(this) : null }>
@@ -158,7 +161,7 @@ export default class Toggle extends Component {
              ref="belleToggleSlider"
              style={ computedSliderStyle }>
           <div className="react-toggle-track-check"
-               style={ style.check }
+               style={ computedTrueChoiceStyle }
                onClick={ this._onClick.bind(this) }>
             { computedTrueChoice }
           </div>
@@ -167,7 +170,7 @@ export default class Toggle extends Component {
                style={ style.handle }
                onMouseDown={ this._onMouseDown.bind(this)} />
           <div className="react-toggle-track-cross"
-               style={ style.cross }
+               style={ computedFalseChoiceStyle }
                onClick={ this._onClick.bind(this) }>
             { computedFalseChoice }
           </div>
