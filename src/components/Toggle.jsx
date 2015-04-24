@@ -5,84 +5,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
-
-const toggleWidth = 60;
-const toggleHeight = 30;
-
-const handleHeight = toggleHeight;
-const handleWidth = toggleHeight;
-
-const optionHeight = toggleHeight;
-const optionWidth = toggleWidth - handleWidth / 2;
-
-const sliderWidth = 2 * optionWidth;
-
-const sliderOffset = -(optionWidth - handleWidth / 2);
-
-const toggleStyle = {
-  boxSizing: "border-box",
-  borderRadius: toggleHeight,
-  border: "1px solid #999",
-  overflow: "hidden",
-  height: toggleHeight + 2,
-  width: toggleWidth + 2,
-  WebkitUserSelect: "none"
-};
-
-const sliderStyle = {
-  position: "relative",
-  width: sliderWidth,
-  transition: "left .25s ease-in-out"
-};
-
-const handleStyle = {
-  position: "absolute",
-  top: 0,
-  left: "50%",
-  transform: "translateX(-50%)",
-  boxSizing: "border-box",
-  borderRadius: handleHeight,
-  border: "1px solid #999",
-  backgroundColor: '#eee',
-  height: handleHeight,
-  width: handleWidth,
-  cursor: "pointer"
-};
-
-const optionStyle = {
-  display: "inline-block",
-  boxSizing: "border-box",
-  height: optionHeight,
-  width: optionWidth,
-  cursor: "pointer"
-};
-
-const checkStyle = extend( {}, optionStyle, {
-  backgroundColor: "#00ff00",
-  borderRadius: "20px 0 0 20px"
-});
-
-
-const crossStyle = extend( {}, optionStyle, {
-  borderRadius: "0 20px 20px 0",
-  backgroundColor: "#ff0000",
-  textAlign: "right"
-});
-
-const checkboxStyle = {
-  border: 0,
-  clip: "rect(0 0 0 0)",
-  height: 1,
-  margin: -1,
-  overflow: "hidden",
-  padding: 0,
-  position: "absolute",
-  width: 1
-};
-
-const toggleFocusStyle = {
-  boxShadow: "0 0 5px 0 rgba(0,0,255, .4)"
-};
+import style from '../style/toggle';
 
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
@@ -155,7 +78,7 @@ export default class Toggle extends Component {
     }
 
   }
-
+  // Just in case the mouse moves outside the Toggle component bind events to document instead of the Toggle itself
   _bindDocumentMouseEvents () {
     document.addEventListener('mousemove', this._mouseMoveEvent);
     document.addEventListener('mouseup', this._mouseUpEvent);
@@ -170,12 +93,12 @@ export default class Toggle extends Component {
     if (e.button !== 0) return;
 
     this._bindDocumentMouseEvents();
-    this._dragStart = e.pageX - (this.state.value ? 0 : sliderOffset);
+    this._dragStart = e.pageX - (this.state.value ? 0 : style.sliderOffset);
 
     this.setState({
       isDragging: true,
       hasFocus: true,
-      sliderOffset: (this.state.value ? 0 : sliderOffset)
+      sliderOffset: (this.state.value ? 0 : style.sliderOffset)
     });
   }
 
@@ -183,7 +106,7 @@ export default class Toggle extends Component {
     if (!this.state.isDragging) return;
 
     let difference = e.pageX - this._dragStart;
-    if (difference < -handleWidth || difference > 0) return;
+    if (difference < -style.handle.width || difference > 0) return;
 
     this._dragEnd = difference;
     this.setState({
@@ -195,7 +118,7 @@ export default class Toggle extends Component {
     this._unbindDocumentMouseEvents();
 
     if(this._dragEnd){
-      let state = this._dragEnd > -(handleWidth / 2);
+      let state = this._dragEnd > -(style.handle.width / 2);
 
       this.setState({
         isDragging: false,
@@ -216,13 +139,13 @@ export default class Toggle extends Component {
 
   render() {
 
-    const computedToggleStyle = extend( {}, toggleStyle, (this.state.hasFocus ? toggleFocusStyle : {}) );
+    const computedToggleStyle = extend( {}, style.toggle, (this.state.hasFocus ? style.toggleFocus : {}) );
     var computedSliderStyle;
 
     if(this.state.isDragging){
-      computedSliderStyle = extend( {}, sliderStyle, { left: this.state.sliderOffset, transition: "none" } );
+      computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset, transition: "none" } );
     }else{
-      computedSliderStyle = extend( {}, sliderStyle, { left: this.state.value ? 0 : sliderOffset } );
+      computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : style.sliderOffset } );
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
@@ -235,16 +158,16 @@ export default class Toggle extends Component {
              ref="belleToggleSlider"
              style={ computedSliderStyle }>
           <div className="react-toggle-track-check"
-               style={ checkStyle }
+               style={ style.check }
                onClick={ this._onClick.bind(this) }>
             { computedTrueChoice }
           </div>
           <div className="react-toggle-handle"
                ref="belleToggleHandle"
-               style={ handleStyle }
+               style={ style.handle }
                onMouseDown={ this._onMouseDown.bind(this)} />
           <div className="react-toggle-track-cross"
-               style={ crossStyle }
+               style={ style.cross }
                onClick={ this._onClick.bind(this) }>
             { computedFalseChoice }
           </div>
@@ -257,7 +180,7 @@ export default class Toggle extends Component {
           onBlur={this.onBlur.bind(this)}
           onChange={this._onChange.bind(this)}
           checked={this.state.value}
-          style={ checkboxStyle}
+          style={ style.checkbox}
           type="checkbox"
           {...this.childProperties} />
       </div>
