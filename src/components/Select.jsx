@@ -55,6 +55,14 @@ export default class Select extends Component {
   }
 
   /**
+   * In order to prevent loosing focus on the native select the onMouseDown
+   * event default behaviour is prevented.
+   */
+  _onMouseDownAtOption (event) {
+    event.preventDefault();
+  }
+
+  /**
    * After the user clicks on an Option a change event is dispatched on the
    * native select.
    *
@@ -65,8 +73,6 @@ export default class Select extends Component {
    * This is aligned with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
-    event.preventDefault();
-
     const changeEvent = new Event('change', {
       bubbles: true,
       cancelable: false
@@ -78,10 +84,6 @@ export default class Select extends Component {
     // So far only a changed value has been identified.
     select.value = entry.getAttribute('data-belle-value');
     select.dispatchEvent(changeEvent);
-
-    // TODO investigate on how to not loose the focus instead of setting it again
-    // Keep focus on native select to align the behaviour with the native select.
-    React.findDOMNode(this.refs.belleNativeSelect).focus();
   }
 
   /**
@@ -312,6 +314,7 @@ export default class Select extends Component {
               }
               return (
                 <li onClick={ this._onClickAtOption.bind(this) }
+                    onMouseDown={ this._onMouseDownAtOption.bind(this) }
                     key={ index }
                     onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                     style={ entryStyle }>
