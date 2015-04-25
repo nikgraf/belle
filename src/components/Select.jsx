@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
 
+
 /**
  * Select component.
  *
@@ -50,7 +51,7 @@ export default class Select extends Component {
       isFocusedOn: false,
       isOpen: false,
       selectedValue: selectedValue,
-      focusedOption: selectedValue
+      focusedOptionValue: selectedValue
     };
   }
 
@@ -103,6 +104,7 @@ export default class Select extends Component {
   _onChange (event) {
     if(isUndefined(this.props.value)) {
       this.setState({
+        focusedOptionValue: event.target.value,
         selectedValue: event.target.value,
         isOpen: false
       });
@@ -153,7 +155,7 @@ export default class Select extends Component {
   _onMouseEnterAtOption (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
     this.setState({
-      focusedOption: entry.getAttribute('data-belle-value')
+      focusedOptionValue: entry.getAttribute('data-belle-value')
     });
   }
 
@@ -179,17 +181,17 @@ export default class Select extends Component {
    * - Switch focus to the next option in case one option already has focus.
    */
   _onArrowDownKeyDown () {
-    if (this.state.focusedOption) {
+    if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
       if (hasNext(this.props.children, indexOfFocusedOption)) {
         this.setState({
-          focusedOption: this.props.children[indexOfFocusedOption + 1].props.value
+          focusedOptionValue: this.props.children[indexOfFocusedOption + 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOption: first(this.props.children).props.value
+        focusedOptionValue: first(this.props.children).props.value
       });
     }
   }
@@ -204,17 +206,17 @@ export default class Select extends Component {
    * - Switch focus to the previous option in case one option already has focus.
    */
   _onArrowUpKeyDown () {
-    if (this.state.focusedOption) {
+    if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
       if (hasPrevious(this.props.children, indexOfFocusedOption)) {
         this.setState({
-          focusedOption: this.props.children[indexOfFocusedOption - 1].props.value
+          focusedOptionValue: this.props.children[indexOfFocusedOption - 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOption: last(this.props.children).props.value
+        focusedOptionValue: last(this.props.children).props.value
       });
     }
   }
@@ -240,7 +242,7 @@ export default class Select extends Component {
     const select = React.findDOMNode(this.refs.belleNativeSelect);
     // TODO investigate if this is aligned with a natively dispatched change event
     // So far only a changed value has been identified.
-    select.value = this.state.focusedOption;
+    select.value = this.state.focusedOptionValue;
     select.dispatchEvent(changeEvent);
   }
 
@@ -325,7 +327,7 @@ export default class Select extends Component {
           {
             map(this.props.children, (entry, index) => {
               let entryStyle = { padding: 10 };
-              if (entry.props.value == this.state.focusedOption) {
+              if (entry.props.value == this.state.focusedOptionValue) {
                 extend(entryStyle, { background: '#DDD' });
               }
               return (
@@ -372,7 +374,7 @@ Select.displayName = 'Belle Select';
  */
 const findIndexOfFocusedOption = (component) => {
   return findIndex(component.props.children, (element) => {
-    return element.props.value === component.state.focusedOption;
+    return element.props.value === component.state.focusedOptionValue;
   });
 };
 
