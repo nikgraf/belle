@@ -63,6 +63,14 @@ export default class Select extends Component {
   }
 
   /**
+   * In order to prevent loosing focus on the native select the onMouseDown
+   * event default behaviour is prevented.
+   */
+  _onMouseDownAtSelectBox (event) {
+    event.preventDefault();
+  }
+
+  /**
    * After the user clicks on an Option a change event is dispatched on the
    * native select.
    *
@@ -87,7 +95,7 @@ export default class Select extends Component {
   }
 
   /**
-   * After a choice has been selected the selection area gets closed and the selection processed.
+   * After a choice has been selected the options area gets closed and the selection processed.
    *
    * Depending on the component's properties the value gets updated and the
    * provided change callback for onChange or valueLink is called.
@@ -131,7 +139,10 @@ export default class Select extends Component {
    * remove the visual indicator.
    */
   _onBlur (event) {
-    this.setState({ isFocusedOn: false });
+    this.setState({
+      isFocusedOn: false,
+      isOpen: false
+    });
   }
 
   /**
@@ -149,16 +160,17 @@ export default class Select extends Component {
   /**
    * Toggle the selection area of the component.
    */
-  _toggleOpen () {
-    const isOpen = !this.state.isOpen;
-    this.setState({ isOpen: isOpen });
-    if (isOpen) {
+  _toggleOptionsArea () {
+    if (this.state.isOpen) {
+      this.setState({ isOpen: false });
+    } else {
+      this.setState({ isOpen: true });
       React.findDOMNode(this.refs.belleNativeSelect).focus();
     }
   }
 
   /**
-   * Update focus for the options for an already open selection area.
+   * Update focus for the options for an already open options area.
    *
    * The user experience of HTML's native select is good and the goal here is to
    * achieve the same behaviour.
@@ -183,7 +195,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Update focus for the options for an already open selection area.
+   * Update focus for the options for an already open options area.
    *
    * The user experience of HTML's native select is good and the goal here is to
    * achieve the same behaviour.
@@ -209,7 +221,7 @@ export default class Select extends Component {
 
   /**
    * After the user pressed the `Enter` or `Space` key for an already open
-   * selection area the focused option is selected.
+   * options area the focused option is selected.
    *
    * Same as _onClickAtOption this dispatches a change event on the native select.
    *
@@ -236,12 +248,12 @@ export default class Select extends Component {
    * Manages the keyboard events.
    *
    * In case the Select is in focus, but closed ArrowDown, ArrowUp, Enter and
-   * Space will result in opening the selection area.
+   * Space will result in opening the options area.
    *
-   * In case the selection area is already open each key press will have
+   * In case the options area is already open each key press will have
    * different effects already documented in the related methods.
    *
-   * Pressing Escape will close the selection area.
+   * Pressing Escape will close the options area.
    */
   _onKeyDown (event) {
 
@@ -299,7 +311,8 @@ export default class Select extends Component {
     return (
       <div>
 
-        <div onClick={ this._toggleOpen.bind(this) }
+        <div onClick={ this._toggleOptionsArea.bind(this) }
+             onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
              style={ labelStyle }>
           { selectLabel }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
