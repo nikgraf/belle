@@ -3,8 +3,9 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, Option, Select, style} from 'belle';
-import {extend, map} from 'underscore';
+import {TextInput, Card, Button, style} from 'belle';
+import {extend} from 'underscore';
+import SelectPlayground from './SelectPlayground';
 
 style.button.defaultStyle = {
   boxSizing: 'border-box',
@@ -37,16 +38,6 @@ function conditionalTextInput (showTextInput) {
   }
 }
 
-const fruits = [
-  { value: "pineapple", content: (<span>🍍</span>) },
-  { value: "banana", content: (<span>🍌</span>) },
-  { value: "peach", content: (<span>🍑</span>) },
-  { value: "pear", content: (<span>🍐</span>) },
-  { value: "cherries", content: (<span>🍒</span>) }
-];
-
-
-
 // export for http://fb.me/react-devtools
 window.React = React;
 
@@ -69,60 +60,7 @@ class App extends Component {
     return <div style={ {margin: '0 150px'} }>
       <h1>Belle Playground</h1>
 
-      <h2>Select</h2>
-
-      <select value="B">
-        <option value="A">Apple</option>
-        <option value="B">Banana</option>
-        <option value="C">Cranberry</option>
-      </select>
-
-      <span>Select with onChange</span>
-      <Select onChange={ (event) => console.log(event) }>
-        <Option value={ "vienna" }>Vienna</Option>
-        <Option value={ "rome" }>Rome</Option>
-      </Select>
-
-      <span>Select with value & onChange</span>
-      <Select value="rome" onChange={ (event) => console.log(event) }>
-        <Option value="vienna">Vienna</Option>
-        <Option value="rome">Rome</Option>
-      </Select>
-
-      <span>Select with defaultValue</span>
-      <Select defaultValue="rome">
-        <Option value="vienna">Vienna</Option>
-        <Option value="rome">Rome</Option>
-      </Select>
-
-      <span>Select from Data</span>
-      <Select>
-        {
-          map(fruits, (fruit, index) => {
-            return (
-              <Option value={ fruit.value }
-                      key={ index }>
-                { fruit.content }
-              </Option>
-            );
-          })
-        }
-      </Select>
-
-      <span>Select from Data with defaultValue & onChange</span>
-      <Select defaultValue={ fruits[2].value }
-              onChange={ (event) => console.log(event) }>
-        {
-          map(fruits, (fruit, index) => {
-            return (
-              <Option value={ fruit.value }
-                      key={ index }>
-                { fruit.content }
-              </Option>
-            );
-          })
-        }
-      </Select>
+      <SelectPlayground />
 
       <h2>Button</h2>
 

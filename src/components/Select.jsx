@@ -12,7 +12,10 @@ export default class Select extends Component {
     super(properties);
 
     let selectedValue;
-    if (this.props.value) {
+
+    if (this.props.valueLink && typeof this.props.valueLink === 'object') {
+      selectedValue = this.props.valueLink.value;
+    } else if (this.props.value) {
       selectedValue = this.props.value;
     } else if (this.props.defaultValue) {
       selectedValue = this.props.defaultValue;
@@ -29,6 +32,8 @@ export default class Select extends Component {
   }
 
   _onClick (event) {
+    event.preventDefault();
+
     const changeEvent = new Event('change', {
       bubbles: true,
       cancelable: false
@@ -40,6 +45,7 @@ export default class Select extends Component {
     select.dispatchEvent(changeEvent);
 
     // keep focus on select
+    // TODO investigate on how to not loose the focus instead of setting it again
     React.findDOMNode(this.refs.belleNativeSelect).focus();
   }
 
@@ -55,8 +61,15 @@ export default class Select extends Component {
       });
     }
 
-    if (this.props.onChange) {
-      this.props.onChange(event);
+    let changeCallback = this.props.onChange;
+    const valueLink = this.props.valueLink;
+
+    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
+      changeCallback = event => valueLink.requestChange(event.target.value);
+    }
+
+    if (changeCallback) {
+      changeCallback(event);
     }
   }
 
