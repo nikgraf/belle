@@ -45,7 +45,8 @@ function calculateStyling(node) {
         verticalPadding = 0,
         stylesToCopy = [
           'line-height', 'padding-top', 'padding-bottom', 'font-size',
-          'font-weight', 'font-family', 'width', 'padding-left', 'padding-right'
+          'font-weight', 'font-family', 'width', 'padding-left', 'padding-right',
+          'border-width', 'box-sizing'
         ];
 
     // for a textarea with border-box, it's not necessary to subtract the padding
