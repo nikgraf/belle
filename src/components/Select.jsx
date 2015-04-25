@@ -298,7 +298,10 @@ export default class Select extends Component {
       listStyleType: 'none',
       background: '#FFF',
       padding: 0,
-      margin: 0
+      margin: 0,
+      position: 'absolute',
+      width: '100%',
+      zIndex: 10000
     };
 
     const labelStyle = {
@@ -309,7 +312,7 @@ export default class Select extends Component {
     };
 
     return (
-      <div>
+      <div style={ { position: 'relative' } } >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
