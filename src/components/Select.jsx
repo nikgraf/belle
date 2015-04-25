@@ -290,7 +290,8 @@ export default class Select extends Component {
     const labelStyle = {
       outline: this.state.isFocusedOn ? '1px solid blue' : 'none',
       background: '#FFF',
-      padding: 10
+      padding: 10,
+      position: 'relative'
     };
 
     return (
@@ -299,6 +300,7 @@ export default class Select extends Component {
         <div onClick={ this._toggleOpen.bind(this) }
              style={ labelStyle }>
           { selectLabel }
+          <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
 
         <ul style={ drowdownStyle }>
@@ -381,4 +383,28 @@ const selectStyle = {
   padding: 0,
   position: "absolute",
   width: 1
-}
+};
+
+const caretDownStyle = {
+  height: 0,
+  width: 0,
+  content: ' ',
+  position: 'absolute',
+  top: 20,
+  right: 10,
+  borderTop: '6px solid #666',
+  borderLeft: '5px solid transparent',
+  borderRight: '5px solid transparent'
+};
+
+const caretUpStyle = {
+  height: 0,
+  width: 0,
+  content: ' ',
+  position: 'absolute',
+  top: 20,
+  right: 10,
+  borderBottom: '6px solid #666',
+  borderLeft: '5px solid transparent',
+  borderRight: '5px solid transparent'
+};
