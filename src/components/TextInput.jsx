@@ -103,7 +103,7 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Update the height and provide the changeCallback for valueLink.
+   * Update the height and calls the provided change callback for onChange or valueLink.
    *
    * In addition newline characters are replaced by spaces in the textarea value
    * in case allowNewLine is set to false and newLine characters could be found.
