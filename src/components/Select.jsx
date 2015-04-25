@@ -5,9 +5,32 @@ import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} f
 
 /**
  * Select component.
+ *
+ * In its simplest form the select component behaves almost identical to the
+ * native HTML select which the exception that it comes with beautiful styles.
+ *
+ * Example:
+ *
+ *     <Select defaultValue="rome">
+ *       <Option value="vienna">Vienna</Option>
+ *       <Option value="rome">Rome</Option>
+ *     </Select>
+ *
+ * Under the hood this component is leveraging a native select tag to manage
+ * focus and provide you as developer with native select events.
+ *
+ * This component was inpired by:
+ * - Jet Watson: https://github.com/JedWatson/react-select
+ * - Instructure React Team: https://github.com/instructure-react/react-select-box
  */
 export default class Select extends Component {
 
+  /*
+   * Initialize the component based on the provided properties.
+   *
+   * By default the Select is closed & the focused option in case you open it
+   * will be the selected option.
+   */
   constructor (properties) {
     super(properties);
 
@@ -31,7 +54,17 @@ export default class Select extends Component {
     };
   }
 
-  _onClick (event) {
+  /**
+   * After the user clicks on an Option a change event is dispatched on the
+   * native select.
+   *
+   * Rather than just updating the state the philosophy of Belle dicdates to fire
+   * a change event from the native select in order to provide consistent event
+   * behaviour between selecting an option by mouse click, touch or key press.
+   *
+   * This is aligned with the behaviour of the native HTML select.
+   */
+  _onClickAtOption (event) {
     event.preventDefault();
 
     const changeEvent = new Event('change', {
@@ -41,14 +74,22 @@ export default class Select extends Component {
 
     const entry = event.currentTarget.querySelector('[data-belle-value]');
     const select = React.findDOMNode(this.refs.belleNativeSelect);
+    // TODO investigate if this is aligned with a natively dispatched change event
+    // So far only a changed value has been identified.
     select.value = entry.getAttribute('data-belle-value');
     select.dispatchEvent(changeEvent);
 
-    // keep focus on select
     // TODO investigate on how to not loose the focus instead of setting it again
+    // Keep focus on native select to align the behaviour with the native select.
     React.findDOMNode(this.refs.belleNativeSelect).focus();
   }
 
+  /**
+   * After a choice has been selected the selection area gets closed and the selection processed.
+   *
+   * Depending on the component's properties the value gets updated and the
+   * provided change callback for onChange or valueLink is called.
+   */
   _onChange (event) {
     if(isUndefined(this.props.value)) {
       this.setState({
@@ -73,21 +114,39 @@ export default class Select extends Component {
     }
   }
 
+  /**
+   * In order to inform the user which element in the document is active the
+   * component keeps track of when it is selected and depending on that provide
+   * a visual indicator.
+   */
   _onFocus (event) {
     this.setState({ isFocusedOn: true });
   }
 
+  /**
+   * In order to inform the user which element in the document is active the
+   * component keeps track of when it is de-selected and depending on that
+   * remove the visual indicator.
+   */
   _onBlur (event) {
     this.setState({ isFocusedOn: false });
   }
 
-  _onMouseEnter (event) {
+  /**
+   * In order to inform the user which Option is active the component keeps
+   * track of when an option is in focus of the user and depending on that
+   * provide a visual indicator.
+   */
+  _onMouseEnterAtOption (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
     this.setState({
       focusedOption: entry.getAttribute('data-belle-value')
     });
   }
 
+  /**
+   * Toggle the selection area of the component.
+   */
   _toggleOpen () {
     const isOpen = !this.state.isOpen;
     this.setState({ isOpen: isOpen });
@@ -96,6 +155,15 @@ export default class Select extends Component {
     }
   }
 
+  /**
+   * Update focus for the options for an already open selection area.
+   *
+   * The user experience of HTML's native select is good and the goal here is to
+   * achieve the same behaviour.
+   *
+   * - Focus on the first entry in case no options is focused on.
+   * - Switch focus to the next option in case one option already has focus.
+   */
   _onArrowDownKeyDown () {
     if (this.state.focusedOption) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
@@ -112,6 +180,15 @@ export default class Select extends Component {
     }
   }
 
+  /**
+   * Update focus for the options for an already open selection area.
+   *
+   * The user experience of HTML's native select is good and the goal here is to
+   * achieve the same behaviour.
+   *
+   * - Focus on the last entry in case no options is focused on.
+   * - Switch focus to the previous option in case one option already has focus.
+   */
   _onArrowUpKeyDown () {
     if (this.state.focusedOption) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
@@ -128,17 +205,42 @@ export default class Select extends Component {
     }
   }
 
-  _onEnterKeyDown () {
+  /**
+   * After the user pressed the `Enter` or `Space` key for an already open
+   * selection area the focused option is selected.
+   *
+   * Same as _onClickAtOption this dispatches a change event on the native select.
+   *
+   * Rather than just updating the state the philosophy of Belle dicdates to fire
+   * a change event from the native select in order to provide consistent event
+   * behaviour between selecting an option by mouse click, touch or key press.
+   *
+   * This is aligned with the behaviour of the native HTML select.
+   */
+  _onEnterOrSpaceKeyDown () {
     const changeEvent = new Event('change', {
       bubbles: true,
       cancelable: false
     });
 
     const select = React.findDOMNode(this.refs.belleNativeSelect);
+    // TODO investigate if this is aligned with a natively dispatched change event
+    // So far only a changed value has been identified.
     select.value = this.state.focusedOption;
     select.dispatchEvent(changeEvent);
   }
 
+  /**
+   * Manages the keyboard events.
+   *
+   * In case the Select is in focus, but closed ArrowDown, ArrowUp, Enter and
+   * Space will result in opening the selection area.
+   *
+   * In case the selection area is already open each key press will have
+   * different effects already documented in the related methods.
+   *
+   * Pressing Escape will close the selection area.
+   */
   _onKeyDown (event) {
 
     if(this.props.children.length > 0) {
@@ -160,7 +262,7 @@ export default class Select extends Component {
           this._onArrowUpKeyDown();
         } else if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          this._onEnterKeyDown();
+          this._onEnterOrSpaceKeyDown();
         }
       }
 
@@ -207,9 +309,9 @@ export default class Select extends Component {
                 extend(entryStyle, { background: '#DDD' });
               }
               return (
-                <li onClick={ this._onClick.bind(this) }
+                <li onClick={ this._onClickAtOption.bind(this) }
                     key={ index }
-                    onMouseEnter={ this._onMouseEnter.bind(this) }
+                    onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                     style={ entryStyle }>
                   { entry }
                 </li>
@@ -243,20 +345,33 @@ export default class Select extends Component {
 
 Select.displayName = 'Belle Select';
 
+/**
+ * Returns the index of the entry with a certain value from the component's
+ * children.
+ */
 const findIndexOfFocusedOption = (component) => {
   return findIndex(component.props.children, (element) => {
     return element.props.value === component.state.focusedOption;
   });
 };
 
+
+/**
+ * Returns true in case there one more element in the list.
+ */
 const hasNext = (list, currentIndex) => {
   return (currentIndex + 2 <= list.length);
 };
 
+/**
+ * Returns true in case there is one previous element in the list.
+ */
 const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
 };
 
+// TODO verify that this is the best way to hide the native select while keeping
+// allowing to focus on it
 const selectStyle = {
   border: 0,
   clip: "rect(0 0 0 0)",

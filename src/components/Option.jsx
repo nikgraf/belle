@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 /**
  * Option component.
  *
- * This component should be used together with Belle Select.
+ * This component should be used together with Belle's Select.
  */
 export default class Option extends Component {
 
