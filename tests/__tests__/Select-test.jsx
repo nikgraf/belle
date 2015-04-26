@@ -53,7 +53,7 @@ describe('Select', () => {
     );
 
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.SimulateNative.change(nativeSelect);
+    TestUtils.Simulate.change(nativeSelect);
 
     expect(wasCalled).toBeTruthy();
   });
@@ -69,10 +69,34 @@ describe('Select', () => {
     );
 
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.SimulateNative.change(nativeSelect);
+    TestUtils.Simulate.change(nativeSelect);
 
     expect(wasCalled).toBeTruthy();
   });
+
+  it('should dispatch a change event on the native select in case the user clicks on an option', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select defaultValue='rome' >
+        <Option value='rome'>Rome</Option>
+        <Option value='vienna'>Vienna</Option>
+      </Select>
+    );
+
+    // mock functions
+    window.Event = jest.genMockFunction();
+    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+    var nativeSelectNode = React.findDOMNode(nativeSelect);
+    nativeSelectNode.dispatchEvent = jest.genMockFunction();
+
+    // dispatch event on the vienna entry
+    const viennaOption = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li')[1];
+    TestUtils.Simulate.click(viennaOption);
+
+    expect(window.Event.mock.calls[0][0]).toBe('change');
+    expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
+    expect(nativeSelectNode.value).toBe('vienna');
+  });
+
 
   it('should change the selectedValue & focusedOptionValue on selection', () => {
     const select = TestUtils.renderIntoDocument(
@@ -83,10 +107,7 @@ describe('Select', () => {
     );
 
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    var nativeSelectNode = React.findDOMNode(nativeSelect);
-    nativeSelectNode.value = 'vienna';
-
-    TestUtils.SimulateNative.change(nativeSelect);
+    TestUtils.Simulate.change(nativeSelect, {target: {value: 'vienna'}});
 
     expect(select.state.selectedValue).toBe('vienna');
     expect(select.state.focusedOptionValue).toBe('vienna');
@@ -101,10 +122,7 @@ describe('Select', () => {
     );
 
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    var nativeSelectNode = React.findDOMNode(nativeSelect);
-    nativeSelectNode.value = 'vienna';
-
-    TestUtils.SimulateNative.change(nativeSelect);
+    TestUtils.Simulate.change(nativeSelect, {target: {value: 'vienna'}});
 
     expect(select.state.selectedValue).toBe('rome');
     expect(select.state.focusedOptionValue).toBe('rome');
