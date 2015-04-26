@@ -82,7 +82,7 @@ export default class Select extends Component {
    * This is aligned with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
-    const changeEvent = new Event('change', {
+    const changeEvent = new window.Event('change', {
       bubbles: true,
       cancelable: false
     });
@@ -234,7 +234,7 @@ export default class Select extends Component {
    * This is aligned with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
-    const changeEvent = new Event('change', {
+    const changeEvent = new window.Event('change', {
       bubbles: true,
       cancelable: false
     });

@@ -21,8 +21,8 @@ describe('Select', () => {
       </Select>
     );
 
-    expect(select.state.selectedValue).toEqual('vienna');
-    expect(select.state.focusedOptionValue).toEqual('vienna');
+    expect(select.state.selectedValue).toBe('vienna');
+    expect(select.state.focusedOptionValue).toBe('vienna');
   });
 
   it('should take the first option in case no value, defaultValue or valueLink is defined', () => {
@@ -33,8 +33,8 @@ describe('Select', () => {
       </Select>
     );
 
-    expect(select.state.selectedValue).toEqual('rome');
-    expect(select.state.focusedOptionValue).toEqual('rome');
+    expect(select.state.selectedValue).toBe('rome');
+    expect(select.state.focusedOptionValue).toBe('rome');
   });
 
   it('should be able to provide a valueLink', () => {
@@ -55,7 +55,7 @@ describe('Select', () => {
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
     TestUtils.SimulateNative.change(nativeSelect);
 
-    expect(wasCalled).toEqual(true);
+    expect(wasCalled).toBeTruthy();
   });
 
   it('should be able to provide a onChange callback', () => {
@@ -71,7 +71,7 @@ describe('Select', () => {
     const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
     TestUtils.SimulateNative.change(nativeSelect);
 
-    expect(wasCalled).toEqual(true);
+    expect(wasCalled).toBeTruthy();
   });
 
   it('should change the selectedValue & focusedOptionValue on selection', () => {
@@ -88,8 +88,8 @@ describe('Select', () => {
 
     TestUtils.SimulateNative.change(nativeSelect);
 
-    expect(select.state.selectedValue).toEqual('vienna');
-    expect(select.state.focusedOptionValue).toEqual('vienna');
+    expect(select.state.selectedValue).toBe('vienna');
+    expect(select.state.focusedOptionValue).toBe('vienna');
   });
 
   it('should not change the selectedValue & focusedOptionValue on selection in case props.value is provided', () => {
@@ -106,8 +106,108 @@ describe('Select', () => {
 
     TestUtils.SimulateNative.change(nativeSelect);
 
-    expect(select.state.selectedValue).toEqual('rome');
-    expect(select.state.focusedOptionValue).toEqual('rome');
+    expect(select.state.selectedValue).toBe('rome');
+    expect(select.state.focusedOptionValue).toBe('rome');
+  });
+
+  describe('manage key events', () => {
+
+    let select, nativeSelect;
+
+    beforeEach(() => {
+      select = TestUtils.renderIntoDocument(
+        <Select>
+          <Option value='rome'>Rome</Option>
+          <Option value='vienna'>Vienna</Option>
+          <Option value='berlin'>Berlin</Option>
+        </Select>
+      );
+      nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+    });
+
+    it('should open the options area by pressing ArrowDown', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing ArrowUp', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing Space', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    describe('when the options area is open', () => {
+
+      beforeEach(() => {
+        select.setState({ isOpen: true });
+      });
+
+      it('should close options area when pressing Escape', () => {
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Escape'});
+        expect(select.state.isOpen).toBeFalsy();
+      });
+
+      it('should focus on the next option when pressing ArrowDown', () => {
+        expect(select.state.focusedOptionValue).toBe('rome');
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+        expect(select.state.focusedOptionValue).toBe('vienna');
+      });
+
+      it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
+        select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+        expect(select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the previous option when pressing ArrowUp', () => {
+        select.setState({ focusedOptionValue: 'vienna' });
+        expect(select.state.focusedOptionValue).toBe('vienna');
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+        expect(select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
+        select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+        expect(select.state.focusedOptionValue).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Enter', () => {
+        select.setState({ focusedOptionValue: 'berlin' });
+
+        window.Event = jest.genMockFunction();
+        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+        var nativeSelectNode = React.findDOMNode(nativeSelect);
+        nativeSelectNode.dispatchEvent = jest.genMockFunction();
+
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Enter'});
+
+        expect(window.Event.mock.calls[0][0]).toBe('change');
+        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
+        expect(nativeSelectNode.value).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Space', () => {
+        select.setState({ focusedOptionValue: 'berlin' });
+
+        window.Event = jest.genMockFunction();
+        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+        var nativeSelectNode = React.findDOMNode(nativeSelect);
+        nativeSelectNode.dispatchEvent = jest.genMockFunction();
+
+        TestUtils.Simulate.keyDown(nativeSelect, {key: ' '});
+
+        expect(window.Event.mock.calls[0][0]).toBe('change');
+        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
+        expect(nativeSelectNode.value).toBe('berlin');
+      });
+
+    });
+
   });
 
 });
