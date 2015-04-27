@@ -55,6 +55,20 @@ export default class Select extends Component {
     };
   }
 
+  componentWillReceiveProps(properties) {
+    if (properties.valueLink && typeof properties.valueLink === 'object') {
+      this.setState({
+        selectedValue: properties.valueLink.value,
+        focusedOptionValue: properties.valueLink.value
+      });
+    } else if (this.props.value) {
+      this.setState({
+        selectedValue: properties.value,
+        focusedOptionValue: properties.value
+      });
+    }
+  }
+
   /**
    * In order to prevent loosing focus on the native select the onMouseDown
    * event default behaviour is prevented.

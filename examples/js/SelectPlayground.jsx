@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react/addons';
-import {Select, Option} from 'belle';
+import {Select, Option, Button} from 'belle';
 import {map} from 'underscore';
 
 const fruits = [
@@ -34,6 +34,12 @@ export default React.createClass({
           <option value="C">Cranberry</option>
         </select>
 
+        <h3>Native Select with complexObject as values</h3>
+        <select defaultValue={ {a: 1, b: 2} } onChange={ (event) => console.log(event.target.value) }>
+          <option value={ {a: 1, b: 2} }>Option A</option>
+          <option value={ {a: 3, c: 4} }>Option B</option>
+        </select>
+
         <h3>Select with onChange</h3>
         <Select onChange={ (event) => console.log(event) }>
           <Option value={ "vienna" }>Vienna</Option>
@@ -48,6 +54,15 @@ export default React.createClass({
 
         <h3>Select with defaultValue</h3>
         <Select defaultValue="rome">
+          <Option value="vienna">Vienna</Option>
+          <Option value="rome">Rome</Option>
+        </Select>
+
+        <h3>
+          Select with value
+          <Button onClick={ () => this.setState({ valueA: 'vienna' }) }>Change to Vienna</Button>
+        </h3>
+        <Select value={ this.state.valueA }>
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
