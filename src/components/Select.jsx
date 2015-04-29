@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
+import {injectStyles, removeStyle} from '../utils/inject-style';
 
 /**
  * Select component.
@@ -66,6 +67,24 @@ export default class Select extends Component {
         focusedOptionValue: properties.value
       });
     }
+  }
+
+  /**
+   * Generates the style-id & inject the focus & hover style.
+   *
+   * The style-id is based on React's unique DOM node id.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this._styleId = `style-id${id}`;
+    updatePseudoClassStyle(this._styleId, this.props);
+  }
+
+  /**
+   * Remove a component's associated syles whenever it gets removed from the DOM.
+   */
+  componentWillUnmount() {
+    removeStyle(this._styleId);
   }
 
   /**
@@ -314,7 +333,8 @@ export default class Select extends Component {
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ this.state.isFocusedOn ? focusedStyle : style }>
+             style={ this.state.isFocusedOn ? focusedStyle : style }
+             className={ `${this.props.className} ${this._styleId}` }>
           { selectLabel }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
@@ -401,6 +421,23 @@ function optionPropType(props, propName, componentName) {
 }
 
 /**
+ * Update hover style for the speficied styleId.
+ *
+ * @param styleId {string} - a unique id that exists as class attribute in the DOM
+ * @param properties {object} - the components properties optionally containing hoverStyle
+ */
+function updatePseudoClassStyle(styleId, properties) {
+  const styles = [
+    {
+      id: styleId,
+      style: hoverStyle,
+      pseudoClass: 'hover'
+    }
+  ];
+  injectStyles(styles);
+}
+
+/**
  * Returns true in case there one more element in the list.
  */
 const hasNext = (list, currentIndex) => {
@@ -426,6 +463,13 @@ const focusedStyle = {
   position: 'relative',
   borderBottom: '1px #53C7F2 solid',
   boxSizing: 'border-box',
+};
+
+const hoverStyle = {
+  padding: 10,
+  position: 'relative',
+  borderBottom: '1px #92D6EF solid',
+  boxSizing: 'border-box'
 };
 
 const optionsAreaStyle = {
