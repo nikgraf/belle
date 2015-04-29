@@ -307,48 +307,27 @@ export default class Select extends Component {
       return entry.props.value == this.state.selectedValue;
     });
     const selectLabel = selectedEntry ? selectedEntry : "Choose a City";
-
-    const drowdownStyle = {
-      display: this.state.isOpen ? 'block' : 'none',
-      listStyleType: 'none',
-      background: '#FFF',
-      padding: 0,
-      margin: 0,
-      position: 'absolute',
-      width: '100%',
-      zIndex: 10000
-    };
-
-    const labelStyle = {
-      outline: this.state.isFocusedOn ? '1px solid blue' : 'none',
-      background: '#FFF',
-      padding: 10,
-      position: 'relative'
-    };
+    const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
       <div style={ { position: 'relative' } } >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ labelStyle }>
+             style={ this.state.isFocusedOn ? focusedStyle : style }>
           { selectLabel }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
 
-        <ul style={ drowdownStyle }>
+        <ul style={ computedOptionsAreaStyle }>
           {
             map(this.props.children, (entry, index) => {
-              let entryStyle = { padding: 10 };
-              if (entry.props.value == this.state.focusedOptionValue) {
-                extend(entryStyle, { background: '#DDD' });
-              }
               return (
                 <li onClick={ this._onClickAtOption.bind(this) }
                     onMouseDown={ this._onMouseDownAtOption.bind(this) }
                     key={ index }
                     onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
-                    style={ entryStyle }>
+                    style={ entry.props.value == this.state.focusedOptionValue ? entryHoverStyle : entryStyle }>
                   { entry }
                 </li>
               );
@@ -361,7 +340,7 @@ export default class Select extends Component {
                 onFocus={ this._onFocus.bind(this) }
                 onBlur={ this._onBlur.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                style={ selectStyle }
+                style={ nativeSelectStyle }
                 ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
@@ -435,9 +414,37 @@ const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
 };
 
+const style = {
+  padding: 10,
+  position: 'relative',
+  borderBottom: '1px #ccc solid',
+  boxSizing: 'border-box'
+};
+
+const focusedStyle = {
+  padding: 10,
+  position: 'relative',
+  borderBottom: '1px #53C7F2 solid',
+  boxSizing: 'border-box',
+};
+
+const optionsAreaStyle = {
+  display: 'block',
+  listStyleType: 'none',
+  background: '#FFF',
+  padding: 0,
+  margin: 0,
+  position: 'absolute',
+  width: '100%',
+  zIndex: 10000,
+  boxSizing: 'border-box',
+  // TODO calculate position dynamically
+  top: 0
+};
+
 // TODO verify that this is the best way to hide the native select while keeping
 // allowing to focus on it
-const selectStyle = {
+const nativeSelectStyle = {
   border: 0,
   clip: "rect(0 0 0 0)",
   height: 1,
@@ -470,4 +477,13 @@ const caretUpStyle = {
   borderBottom: '6px solid #666',
   borderLeft: '5px solid transparent',
   borderRight: '5px solid transparent'
+};
+
+const entryStyle = {
+  padding: 10
+};
+
+const entryHoverStyle = {
+  padding: 10,
+  background: '#DDD'
 };
