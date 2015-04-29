@@ -61,7 +61,7 @@ export default class Select extends Component {
         selectedValue: properties.valueLink.value,
         focusedOptionValue: properties.valueLink.value
       });
-    } else if (this.props.value) {
+    } else if (properties.value) {
       this.setState({
         selectedValue: properties.value,
         focusedOptionValue: properties.value

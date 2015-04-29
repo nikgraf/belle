@@ -3,6 +3,7 @@
 jest.dontMock('../lib/components/Select');
 jest.dontMock('../lib/components/Option');
 
+import {extend} from 'underscore';
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
@@ -126,6 +127,46 @@ describe('Select', () => {
 
     expect(select.state.selectedValue).toBe('rome');
     expect(select.state.focusedOptionValue).toBe('rome');
+  });
+
+  describe('updating props', () => {
+
+    let select, nativeSelect;
+
+    beforeEach(() => {
+      select = TestUtils.renderIntoDocument(
+        <Select>
+          <Option value='rome'>Rome</Option>
+          <Option value='vienna'>Vienna</Option>
+        </Select>
+      );
+    });
+
+    it('should update it\'s state in case value is provided', () => {
+      const properties = extend({}, select.props, { value: 'vienna' });
+      select.componentWillReceiveProps(properties);
+
+      expect(select.state.selectedValue).toBe('vienna');
+    });
+
+    it('should update it\'s state in case value is provided', () => {
+      const valueLink = {
+        requestChange: () => {},
+        value: 'vienna'
+      };
+
+      const properties = extend({}, select.props, { valueLink: valueLink });
+      select.componentWillReceiveProps(properties);
+
+      expect(select.state.selectedValue).toBe('vienna');
+    });
+
+    it('should not update it\'s state in case defaultValue is updated', () => {
+      const properties = extend({}, select.props, { defaultValue: 'vienna' });
+      select.componentWillReceiveProps(properties);
+
+      expect(select.state.selectedValue).toBe('rome');
+    });
   });
 
   describe('manage key events', () => {
