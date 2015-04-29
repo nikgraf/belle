@@ -23,7 +23,12 @@ export default class Option extends Component {
 }
 
 Option.propTypes = {
-  value: React.PropTypes.any.isRequired
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.string,
+    React.PropTypes.number,
+    React.PropTypes.instanceOf(Date)
+  ]).isRequired
 };
 
 Option.displayName = 'Belle Option';
