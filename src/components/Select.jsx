@@ -3,7 +3,6 @@
 import React, {Component} from 'react';
 import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
 
-
 /**
  * Select component.
  *
@@ -382,6 +381,22 @@ export default class Select extends Component {
 
 Select.displayName = 'Belle Select';
 
+Select.propTypes = {
+  children: React.PropTypes.arrayOf(optionPropType).isRequired,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.string,
+    React.PropTypes.number,
+    React.PropTypes.instanceOf(Date)
+  ]),
+  defaultValue: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.string,
+    React.PropTypes.number,
+    React.PropTypes.instanceOf(Date)
+  ])
+};
+
 /**
  * Returns the index of the entry with a certain value from the component's
  * children.
@@ -392,6 +407,19 @@ const findIndexOfFocusedOption = (component) => {
   });
 };
 
+/**
+ * Verifies that the provided property is an Option component from Belle.
+ */
+function optionPropType(props, propName, componentName) {
+  const isOption = props[propName] &&
+    props[propName]._isReactElement &&
+    props[propName].type &&
+    props[propName].type.name === 'Option';
+
+  if (!isOption) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option component from Belle.`);
+  }
+}
 
 /**
  * Returns true in case there one more element in the list.
