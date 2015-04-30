@@ -36,7 +36,11 @@ var selectStyle = {
     position: 'absolute',
     width: '100%',
     zIndex: 10000,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    borderRadius: 2,
+    boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+    borderTop: '1px solid #f2f2f2',
+    top: 0
   },
 
   nativeSelectStyle: {
@@ -75,12 +79,14 @@ var selectStyle = {
   },
 
   entryStyle: {
-    padding: 10
+    padding: 10,
+    color: '#666'
   },
 
   entryHoverStyle: {
     padding: 10,
-    background: '#DDD'
+    background: '#F5F5F5',
+    color: '#666'
   }
 
 };
