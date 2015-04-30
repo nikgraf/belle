@@ -84,7 +84,7 @@ export default React.createClass({
         </h3>
         <div style={ { content: '', display: 'table', clear: 'both' } }>
           <TextInput style={ {width: 150, float: 'left' } } defaultValue="Lorem ipsum …" />
-          <div style={ { width: 150, float: 'left' } }>
+          <div style={ { width: 150, float: 'left', marginLeft: 16 } }>
             <Select>
               <Option value="vienna">Vienna</Option>
               <Option value="rome">Rome</Option>

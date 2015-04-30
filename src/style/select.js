@@ -6,7 +6,8 @@ var selectStyle = {
     padding: '7px 0 5px 0',
     position: 'relative',
     borderBottom: '1px #ccc solid',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    height: 34
   },
 
   focusedStyle: {
@@ -14,6 +15,7 @@ var selectStyle = {
     position: 'relative',
     borderBottom: '1px #53C7F2 solid',
     boxSizing: 'border-box',
+    height: 34
   },
 
   hoverStyle: {
@@ -59,8 +61,8 @@ var selectStyle = {
     width: 0,
     content: ' ',
     position: 'absolute',
-    top: 20,
-    right: 10,
+    top: 15,
+    right: 8,
     borderTop: '6px solid #666',
     borderLeft: '5px solid transparent',
     borderRight: '5px solid transparent'
@@ -71,8 +73,8 @@ var selectStyle = {
     width: 0,
     content: ' ',
     position: 'absolute',
-    top: 20,
-    right: 10,
+    top: 15,
+    right: 8,
     borderBottom: '6px solid #666',
     borderLeft: '5px solid transparent',
     borderRight: '5px solid transparent'
