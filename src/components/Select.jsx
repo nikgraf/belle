@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
 import {injectStyles, removeStyle} from '../utils/inject-style';
+import style from '../style/select';
 
 /**
  * Select component.
@@ -326,17 +327,17 @@ export default class Select extends Component {
       return entry.props.value == this.state.selectedValue;
     });
     const selectLabel = selectedEntry ? selectedEntry : "Choose a City";
-    const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
+    const computedOptionsAreaStyle = this.state.isOpen ? style.optionsAreaStyle : { display: 'none' };
 
     return (
-      <div style={ wrapperStyle } >
+      <div style={ style.wrapperStyle } >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ this.state.isFocusedOn ? focusedStyle : style }
+             style={ this.state.isFocusedOn ? style.focusedStyle : style.style }
              className={ `${this.props.className} ${this._styleId}` }>
           { selectLabel }
-          <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
+          <span style={ this.state.isOpen ? style.caretUpStyle : style.caretDownStyle }></span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }>
@@ -347,7 +348,7 @@ export default class Select extends Component {
                     onMouseDown={ this._onMouseDownAtOption.bind(this) }
                     key={ index }
                     onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
-                    style={ entry.props.value == this.state.focusedOptionValue ? entryHoverStyle : entryStyle }>
+                    style={ entry.props.value == this.state.focusedOptionValue ? style.entryHoverStyle : style.entryStyle }>
                   { entry }
                 </li>
               );
@@ -360,7 +361,7 @@ export default class Select extends Component {
                 onFocus={ this._onFocus.bind(this) }
                 onBlur={ this._onBlur.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                style={ nativeSelectStyle }
+                style={ style.nativeSelectStyle }
                 ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
@@ -430,7 +431,7 @@ function updatePseudoClassStyle(styleId, properties) {
   const styles = [
     {
       id: styleId,
-      style: hoverStyle,
+      style: style.hoverStyle,
       pseudoClass: 'hover'
     }
   ];
@@ -449,89 +450,4 @@ const hasNext = (list, currentIndex) => {
  */
 const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
-};
-
-const style = {
-  padding: 10,
-  position: 'relative',
-  borderBottom: '1px #ccc solid',
-  boxSizing: 'border-box'
-};
-
-const focusedStyle = {
-  padding: 10,
-  position: 'relative',
-  borderBottom: '1px #53C7F2 solid',
-  boxSizing: 'border-box',
-};
-
-const hoverStyle = {
-  padding: 10,
-  position: 'relative',
-  borderBottom: '1px #92D6EF solid',
-  boxSizing: 'border-box'
-};
-
-const wrapperStyle = {
-  position: 'relative'
-};
-
-const optionsAreaStyle = {
-  display: 'block',
-  listStyleType: 'none',
-  background: '#FFF',
-  padding: 0,
-  margin: 0,
-  position: 'absolute',
-  width: '100%',
-  zIndex: 10000,
-  boxSizing: 'border-box',
-  // TODO calculate position dynamically
-  top: 0
-};
-
-// TODO verify that this is the best way to hide the native select while keeping
-// allowing to focus on it
-const nativeSelectStyle = {
-  border: 0,
-  clip: "rect(0 0 0 0)",
-  height: 1,
-  margin: -1,
-  overflow: "hidden",
-  padding: 0,
-  position: "absolute",
-  width: 1
-};
-
-const caretDownStyle = {
-  height: 0,
-  width: 0,
-  content: ' ',
-  position: 'absolute',
-  top: 20,
-  right: 10,
-  borderTop: '6px solid #666',
-  borderLeft: '5px solid transparent',
-  borderRight: '5px solid transparent'
-};
-
-const caretUpStyle = {
-  height: 0,
-  width: 0,
-  content: ' ',
-  position: 'absolute',
-  top: 20,
-  right: 10,
-  borderBottom: '6px solid #666',
-  borderLeft: '5px solid transparent',
-  borderRight: '5px solid transparent'
-};
-
-const entryStyle = {
-  padding: 10
-};
-
-const entryHoverStyle = {
-  padding: 10,
-  background: '#DDD'
 };

@@ -10,6 +10,7 @@ import TextInput from './components/TextInput';
 
 import buttonStyle from './style/button';
 import cardStyle from './style/card';
+import selectStyle from './style/select';
 import textInputStyle from './style/text-input';
 
 module.exports = {
@@ -21,6 +22,7 @@ module.exports = {
   style: {
     button: buttonStyle,
     card: cardStyle,
+    select: selectStyle,
     textInput: textInputStyle
   }
 };
