@@ -3,26 +3,29 @@
 var selectStyle = {
 
   style: {
-    padding: '7px 0 5px 0',
-    position: 'relative',
     borderBottom: '1px #ccc solid',
     boxSizing: 'border-box',
-    height: 34
+    cursor: 'pointer',
+    height: 34,
+    padding: '7px 0 5px 0',
+    position: 'relative'
   },
 
   focusStyle: {
-    padding: '7px 0 5px 0',
-    position: 'relative',
     borderBottom: '1px #53C7F2 solid',
     boxSizing: 'border-box',
-    height: 34
+    cursor: 'pointer',
+    height: 34,
+    padding: '7px 0 5px 0',
+    position: 'relative'
   },
 
   hoverStyle: {
-    padding: '7px 0 5px 0',
-    position: 'relative',
     borderBottom: '1px #92D6EF solid',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    cursor: 'pointer',
+    padding: '7px 0 5px 0',
+    position: 'relative'
   },
 
   wrapperStyle: {
@@ -81,14 +84,16 @@ var selectStyle = {
   },
 
   entryStyle: {
-    padding: 10,
-    color: '#666'
+    color: '#666',
+    cursor: 'pointer',
+    padding: 10
   },
 
   entryHoverStyle: {
-    padding: 10,
     background: '#F5F5F5',
-    color: '#666'
+    color: '#666',
+    cursor: 'pointer',
+    padding: 10
   }
 
 };
