@@ -10,7 +10,7 @@ var selectStyle = {
     height: 34
   },
 
-  focusedStyle: {
+  focusStyle: {
     padding: '7px 0 5px 0',
     position: 'relative',
     borderBottom: '1px #53C7F2 solid',

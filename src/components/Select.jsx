@@ -68,6 +68,8 @@ export default class Select extends Component {
         focusedOptionValue: properties.value
       });
     }
+
+    updatePseudoClassStyle(this._styleId, properties);
   }
 
   /**
@@ -323,21 +325,30 @@ export default class Select extends Component {
   }
 
   render () {
+    const defaultStyle = extend({}, style.style, this.props.style);
+    const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
+    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
+    const nativeSelectStyle = extend({}, style.nativeSelectStyle, this.props.nativeSelectStyle);
+    const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
+    const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
+    const entryStyle = extend({}, style.entryStyle, this.props.entryStyle);
+    const entryHoverStyle = extend({}, style.entryHoverStyle, this.props.entryHoverStyle);
+
     const selectedEntry = find(this.props.children, (entry) => {
       return entry.props.value == this.state.selectedValue;
     });
-    const selectLabel = selectedEntry ? selectedEntry : "Choose a City";
-    const computedOptionsAreaStyle = this.state.isOpen ? style.optionsAreaStyle : { display: 'none' };
+    const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
-      <div style={ style.wrapperStyle } >
+      <div style={ wrapperStyle } >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ this.state.isFocusedOn ? style.focusedStyle : style.style }
+             style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
              className={ `${this.props.className} ${this._styleId}` }>
-          { selectLabel }
-          <span style={ this.state.isOpen ? style.caretUpStyle : style.caretDownStyle }></span>
+          { selectedEntry }
+          <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }>
@@ -348,7 +359,7 @@ export default class Select extends Component {
                     onMouseDown={ this._onMouseDownAtOption.bind(this) }
                     key={ index }
                     onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
-                    style={ entry.props.value == this.state.focusedOptionValue ? style.entryHoverStyle : style.entryStyle }>
+                    style={ entry.props.value == this.state.focusedOptionValue ? entryHoverStyle : entryStyle }>
                   { entry }
                 </li>
               );
@@ -361,7 +372,7 @@ export default class Select extends Component {
                 onFocus={ this._onFocus.bind(this) }
                 onBlur={ this._onBlur.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                style={ style.nativeSelectStyle }
+                style={ nativeSelectStyle }
                 ref="belleNativeSelect">
           {
             map(this.props.children, (entry, index) => {
@@ -428,10 +439,12 @@ function optionPropType(props, propName, componentName) {
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
+  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
+
   const styles = [
     {
       id: styleId,
-      style: style.hoverStyle,
+      style: hoverStyle,
       pseudoClass: 'hover'
     }
   ];

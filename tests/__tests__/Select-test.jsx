@@ -129,6 +129,19 @@ describe('Select', () => {
     expect(select.state.focusedOptionValue).toBe('rome');
   });
 
+  it('should be able to adopt the styles of a select', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select nativeSelectStyle={ { color: '#700' } }>
+        <Option value='rome'>Rome</Option>
+        <Option value='vienna'>Vienna</Option>
+      </Select>
+    );
+
+    const nativeSelectNode = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+
+    expect(nativeSelectNode.props.style.color).toBe('#700');
+  });
+
   describe('updating props', () => {
 
     let select, nativeSelect;

@@ -92,6 +92,14 @@ export default React.createClass({
           </div>
         </div>
 
+        <h3>Select with custom styles</h3>
+        <Select style={ { background: '#FFF', borderBottom: 0, padding: 8 } }
+                focusStyle={ { borderBottom: 0, padding: 8, background: '#FFF', border: '1px solid red' } }
+                hoverStyle={ { borderBottom: 0, padding: 8, background: '#DDD' } }>
+          <Option value="vienna">Vienna</Option>
+          <Option value="rome">Rome</Option>
+        </Select>
+
         <h3>Select from Data</h3>
         <Select>
           {
