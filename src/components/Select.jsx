@@ -329,7 +329,7 @@ export default class Select extends Component {
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
-      <div style={ { position: 'relative' } } >
+      <div style={ wrapperStyle } >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
@@ -470,6 +470,10 @@ const hoverStyle = {
   position: 'relative',
   borderBottom: '1px #92D6EF solid',
   boxSizing: 'border-box'
+};
+
+const wrapperStyle = {
+  position: 'relative'
 };
 
 const optionsAreaStyle = {
