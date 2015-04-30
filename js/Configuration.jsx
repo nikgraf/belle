@@ -111,6 +111,18 @@ const styleStructure = `style = {
   card: {
     defaultStyle: { … }
   },
+  select: {
+    style: { … },
+    focusStyle: { … },
+    hoverStyle: { … },
+    wrapperStyle: { … },
+    optionsAreaStyle: { … },
+    nativeSelectStyle: { … },
+    caretDownStyle: { … },
+    caretUpStyle: { … },
+    entryStyle: { … },
+    entryHoverStyle: { … }
+  },
   textInput: {
     defaultStyle: { … },
     defaultHoverStyle: { … },
