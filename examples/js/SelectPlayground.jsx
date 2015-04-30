@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react/addons';
-import {Select, Option, Button} from 'belle';
+import {TextInput, Select, Option, Button} from 'belle';
 import {map} from 'underscore';
 
 const fruits = [
@@ -78,6 +78,19 @@ export default React.createClass({
           <Option value={ new Date(2013, 2, 1, 1, 10) } >2013-02-01 01:10:00</Option>
           <Option value={ new Date(2015, 3, 1, 1, 20) } >2015-03-01 01:20:00</Option>
         </Select>
+
+        <h3>
+          Select after TextInput
+        </h3>
+        <div style={ { content: '', display: 'table', clear: 'both' } }>
+          <TextInput style={ {width: 150, float: 'left' } } defaultValue="Lorem ipsum …" />
+          <div style={ { width: 150, float: 'left' } }>
+            <Select>
+              <Option value="vienna">Vienna</Option>
+              <Option value="rome">Rome</Option>
+            </Select>
+          </div>
+        </div>
 
         <h3>Select from Data</h3>
         <Select>

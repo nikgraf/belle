@@ -3,21 +3,21 @@
 var selectStyle = {
 
   style: {
-    padding: 10,
+    padding: '7px 0 5px 0',
     position: 'relative',
     borderBottom: '1px #ccc solid',
     boxSizing: 'border-box'
   },
 
   focusedStyle: {
-    padding: 10,
+    padding: '7px 0 5px 0',
     position: 'relative',
     borderBottom: '1px #53C7F2 solid',
     boxSizing: 'border-box',
   },
 
   hoverStyle: {
-    padding: 10,
+    padding: '7px 0 5px 0',
     position: 'relative',
     borderBottom: '1px #92D6EF solid',
     boxSizing: 'border-box'
@@ -31,7 +31,7 @@ var selectStyle = {
     display: 'block',
     listStyleType: 'none',
     background: '#FFF',
-    padding: 0,
+    padding: '6px 0',
     margin: 0,
     position: 'absolute',
     width: '100%',
