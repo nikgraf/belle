@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import {TextInput, Card, Button, style} from 'belle';
 import {extend} from 'underscore';
+import SelectPlayground from './SelectPlayground';
 
 style.button.defaultStyle = {
   boxSizing: 'border-box',
@@ -58,6 +59,8 @@ class App extends Component {
   render() {
     return <div style={ {margin: '0 150px'} }>
       <h1>Belle Playground</h1>
+
+      <SelectPlayground />
 
       <h2>Button</h2>
 
