@@ -18,7 +18,7 @@ export default class SelectDocumentation extends Component {
   render() {
     return <Card>
 
-      <h2 style={ {marginTop: 0, marginBottom: 40} }>Select</h2>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Select & Option</h2>
 
       <Select>
         <Option value="berlin">Berlin</Option>

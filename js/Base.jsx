@@ -83,7 +83,7 @@ export default class Base extends Component {
               <Link style={{ display: 'block' }} to="component/card">Card</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/select">Select</Link>
+              <Link style={{ display: 'block' }} to="component/select">Select & Option</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
               <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
