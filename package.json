@@ -33,10 +33,10 @@
     "test": "cd tests && npm install && ln -snf ../lib lib && cd .. && jest tests/"
   },
   "devDependencies": {
-    "babel": "^5.0.12",
+    "babel": "^5.2.6",
     "babel-jest": "^5.0.1",
     "jest-cli": "^0.4.0",
-    "react": ">=0.13.0"
+    "react": ">=0.13.2"
   },
   "jest": {
     "unmockedModulePathPatterns": [
