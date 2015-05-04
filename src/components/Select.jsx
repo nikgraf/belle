@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, map, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
+import {omit, extend, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 
@@ -356,7 +356,7 @@ export default class Select extends Component {
 
         <ul style={ computedOptionsAreaStyle }>
           {
-            map(this.props.children, (entry, index) => {
+            React.Children.map(this.props.children, (entry, index) => {
               const option = React.addons.cloneWithProps(entry, {
                 _isHovered: entry.props.value == this.state.focusedOptionValue
               });
@@ -381,7 +381,7 @@ export default class Select extends Component {
                 style={ nativeSelectStyle }
                 ref="belleNativeSelect">
           {
-            map(this.props.children, (entry, index) => {
+            React.Children.map(this.props.children, (entry, index) => {
               return (
                 <option key={ index } value={ entry.props.value }>
                   { entry.props.value }
