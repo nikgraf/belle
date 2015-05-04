@@ -81,19 +81,6 @@ var selectStyle = {
     borderBottom: '6px solid #666',
     borderLeft: '5px solid transparent',
     borderRight: '5px solid transparent'
-  },
-
-  entryStyle: {
-    color: '#666',
-    cursor: 'pointer',
-    padding: 10
-  },
-
-  entryHoverStyle: {
-    background: '#F5F5F5',
-    color: '#666',
-    cursor: 'pointer',
-    padding: 10
   }
 
 };

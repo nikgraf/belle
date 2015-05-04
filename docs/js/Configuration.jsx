@@ -119,9 +119,7 @@ const styleStructure = `style = {
     optionsAreaStyle: { … },
     nativeSelectStyle: { … },
     caretDownStyle: { … },
-    caretUpStyle: { … },
-    entryStyle: { … },
-    entryHoverStyle: { … }
+    caretUpStyle: { … }
   },
   textInput: {
     defaultStyle: { … },
