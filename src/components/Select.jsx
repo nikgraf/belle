@@ -338,7 +338,7 @@ export default class Select extends Component {
     });
 
     const selectedOption = React.addons.cloneWithProps(selectedEntry, {
-      style: { padding: 0 }
+      isDisplayedAsSelected: true
     });
 
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
