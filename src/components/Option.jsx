@@ -1,6 +1,8 @@
 "use strict";
 
 import React, {Component} from 'react';
+import {extend} from 'underscore';
+import style from '../style/option';
 
 /**
  * Option component.
@@ -14,8 +16,22 @@ export default class Option extends Component {
   }
 
   render () {
+    const defaultStyle = extend({}, style.optionStyle, this.props.style);
+    const hoverStyle = extend({}, style.optionHoverStyle, this.props.hoverStyle);
+    const selectStyle = extend({}, style.optionSelectStyle, this.props.selectStyle);
+
+    let styleToDisplay;
+    if (this.props._isDisplayedAsSelected) {
+      styleToDisplay = selectStyle;
+    } else if (this.props._isHovered) {
+      styleToDisplay = hoverStyle;
+    } else {
+      styleToDisplay = defaultStyle;
+    }
+
     return (
-      <div data-belle-value={ this.props.value }>
+      <div data-belle-value={ this.props.value }
+           style={ styleToDisplay }>
         { this.props.children }
       </div>
     );
@@ -23,6 +39,10 @@ export default class Option extends Component {
 }
 
 Option.propTypes = {
+  style: React.PropTypes.object,
+  hoverStyle: React.PropTypes.object,
+  _isHovered: React.PropTypes.bool,
+  _isDisplayedAsSelected: React.PropTypes.bool,
   value: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string,
@@ -32,3 +52,8 @@ Option.propTypes = {
 };
 
 Option.displayName = 'Belle Option';
+
+Option.defaultProps = {
+  _isHovered: false,
+  _isDisplayedAsSelected: false
+};

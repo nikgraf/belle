@@ -332,12 +332,15 @@ export default class Select extends Component {
     const nativeSelectStyle = extend({}, style.nativeSelectStyle, this.props.nativeSelectStyle);
     const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
     const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
-    const entryStyle = extend({}, style.entryStyle, this.props.entryStyle);
-    const entryHoverStyle = extend({}, style.entryHoverStyle, this.props.entryHoverStyle);
 
     const selectedEntry = find(this.props.children, (entry) => {
       return entry.props.value == this.state.selectedValue;
     });
+
+    const selectedOption = React.addons.cloneWithProps(selectedEntry, {
+      _isDisplayedAsSelected: true
+    });
+
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
@@ -347,20 +350,23 @@ export default class Select extends Component {
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
              style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
              className={ `${this.props.className} ${this._styleId}` }>
-          { selectedEntry }
+          { selectedOption }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }>
           {
             map(this.props.children, (entry, index) => {
+              const option = React.addons.cloneWithProps(entry, {
+                _isHovered: entry.props.value == this.state.focusedOptionValue
+              });
+
               return (
                 <li onClick={ this._onClickAtOption.bind(this) }
                     onMouseDown={ this._onMouseDownAtOption.bind(this) }
                     key={ index }
-                    onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
-                    style={ entry.props.value == this.state.focusedOptionValue ? entryHoverStyle : entryStyle }>
-                  { entry }
+                    onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
+                  { option }
                 </li>
               );
             })
