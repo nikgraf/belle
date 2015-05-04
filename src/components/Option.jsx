@@ -21,9 +21,9 @@ export default class Option extends Component {
     const selectStyle = extend({}, style.optionSelectStyle, this.props.selectStyle);
 
     let styleToDisplay;
-    if (this.props.isDisplayedAsSelected) {
+    if (this.props._isDisplayedAsSelected) {
       styleToDisplay = selectStyle;
-    } else if (this.props.isHovered) {
+    } else if (this.props._isHovered) {
       styleToDisplay = hoverStyle;
     } else {
       styleToDisplay = defaultStyle;
@@ -41,7 +41,7 @@ export default class Option extends Component {
 Option.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
-  isHovered: React.PropTypes.bool,
+  _isHovered: React.PropTypes.bool,
   _isDisplayedAsSelected: React.PropTypes.bool,
   value: React.PropTypes.oneOfType([
     React.PropTypes.bool,
@@ -52,3 +52,8 @@ Option.propTypes = {
 };
 
 Option.displayName = 'Belle Option';
+
+Option.defaultProps = {
+  _isHovered: false,
+  _isDisplayedAsSelected: false
+};

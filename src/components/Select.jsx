@@ -338,7 +338,7 @@ export default class Select extends Component {
     });
 
     const selectedOption = React.addons.cloneWithProps(selectedEntry, {
-      isDisplayedAsSelected: true
+      _isDisplayedAsSelected: true
     });
 
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
@@ -358,7 +358,7 @@ export default class Select extends Component {
           {
             map(this.props.children, (entry, index) => {
               const option = React.addons.cloneWithProps(entry, {
-                isHovered: entry.props.value == this.state.focusedOptionValue
+                _isHovered: entry.props.value == this.state.focusedOptionValue
               });
 
               return (
