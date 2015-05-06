@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, find, first, isEmpty, isUndefined, findIndex, last} from 'underscore';
+import {omit, extend, find, first, isEmpty, isUndefined, findIndex, last, some} from 'underscore';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 
@@ -44,7 +44,7 @@ export default class Select extends Component {
       selectedValue = this.props.value;
     } else if (this.props.defaultValue) {
       selectedValue = this.props.defaultValue;
-    } else if (!isEmpty(this.props.children)) {
+    } else if (!isEmpty(this.props.children) && !some(this.props.children, isPlaceholder)) {
       selectedValue = first(this.props.children).props.value;
     }
 
@@ -333,13 +333,18 @@ export default class Select extends Component {
     const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
     const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
 
-    const selectedEntry = find(this.props.children, (entry) => {
-      return entry.props.value == this.state.selectedValue;
-    });
+    let selectedOptionOrPlaceholder;
+    if (this.state.selectedValue) {
+      const selectedEntry = find(this.props.children, (entry) => {
+        return entry.props.value == this.state.selectedValue;
+      });
 
-    const selectedOption = React.addons.cloneWithProps(selectedEntry, {
-      _isDisplayedAsSelected: true
-    });
+      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedEntry, {
+        _isDisplayedAsSelected: true
+      });
+    } else {
+      selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
+    }
 
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
@@ -350,25 +355,28 @@ export default class Select extends Component {
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
              style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
              className={ `${this.props.className} ${this._styleId}` }>
-          { selectedOption }
+          { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }>
           {
             React.Children.map(this.props.children, (entry, index) => {
-              const option = React.addons.cloneWithProps(entry, {
-                _isHovered: entry.props.value == this.state.focusedOptionValue
-              });
+              // filter out all non-Option Components
+              if (entry.type.name === 'Option') {
+                const option = React.addons.cloneWithProps(entry, {
+                  _isHovered: entry.props.value == this.state.focusedOptionValue
+                });
 
-              return (
-                <li onClick={ this._onClickAtOption.bind(this) }
-                    onMouseDown={ this._onMouseDownAtOption.bind(this) }
-                    key={ index }
-                    onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
-                  { option }
-                </li>
-              );
+                return (
+                  <li onClick={ this._onClickAtOption.bind(this) }
+                      onMouseDown={ this._onMouseDownAtOption.bind(this) }
+                      key={ index }
+                      onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
+                    { option }
+                  </li>
+                );
+              }
             })
           }
         </ul>
@@ -382,11 +390,25 @@ export default class Select extends Component {
                 ref="belleNativeSelect">
           {
             React.Children.map(this.props.children, (entry, index) => {
-              return (
-                <option key={ index } value={ entry.props.value }>
-                  { entry.props.value }
-                </option>
-              );
+              // filter out all non-Option Components
+
+              // TODO get the text form for option instead of value
+              if (entry.type.name === 'Option') {
+                return (
+                  <option key={ index } value={ entry.props.value }>
+                    { entry.props.value }
+                  </option>
+                );
+              } else if (entry.type.name === 'Placeholder') {
+                // TODO get the text form for option instead of value
+                return (
+                  <option key={ index }
+                          value
+                          hidden
+                          disabled>
+                  </option>
+                );
+              }
             })
           }
         </select>
@@ -399,7 +421,7 @@ export default class Select extends Component {
 Select.displayName = 'Belle Select';
 
 Select.propTypes = {
-  children: React.PropTypes.arrayOf(optionPropType).isRequired,
+  children: React.PropTypes.arrayOf(optionOrPlaceholderPropType).isRequired,
   value: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string,
@@ -425,16 +447,40 @@ const findIndexOfFocusedOption = (component) => {
 };
 
 /**
- * Verifies that the provided property is an Option component from Belle.
+ * Returns true if the provided property is a Placeholder component from Belle.
  */
-function optionPropType(props, propName, componentName) {
-  const isOption = props[propName] &&
-    props[propName]._isReactElement &&
-    props[propName].type &&
-    props[propName].type.name === 'Option';
+function isPlaceholder(reactElement) {
+  return reactElement._isReactElement &&
+    reactElement.type &&
+    reactElement.type.name === 'Placeholder';
+}
 
-  if (!isOption) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option component from Belle.`);
+/**
+ * Returns true if the provided property is a Option component from Belle.
+ */
+function isOption(reactElement) {
+  return reactElement._isReactElement &&
+    reactElement.type &&
+    reactElement.type.name === 'Option';
+}
+
+var placeholderCounter = 0;
+
+/**
+ * Verifies that the provided property is an Option or Placeholder component from Belle.
+ *
+ * In addition it checks that only one Placeholder component exists.
+ */
+function optionOrPlaceholderPropType(props, propName, componentName) {
+  if (props[propName] && !isOption(props[propName]) && !isPlaceholder(props[propName])) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
+  }
+
+  if (props[propName] && isPlaceholder(props[propName])) {
+    placeholderCounter++;
+  }
+  if (placeholderCounter > 1) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
 }
 

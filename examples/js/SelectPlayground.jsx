@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react/addons';
-import {TextInput, Select, Option, Button} from 'belle';
+import {Button, TextInput, Select, Option, Placeholder} from 'belle';
 import {map} from 'underscore';
 
 const fruits = [
@@ -38,6 +38,13 @@ export default React.createClass({
         <select defaultValue={ {a: 1, b: 2} } onChange={ (event) => console.log(event.target.value) }>
           <option value={ {a: 1, b: 2} }>Option A</option>
           <option value={ {a: 3, c: 4} }>Option B</option>
+        </select>
+
+        <h3>Native Select with empty option</h3>
+        <select defaultValue="">
+          <option value disabled hidden>Select me</option>
+          <option value="B">Banana</option>
+          <option value="C">Cranberry</option>
         </select>
 
         <h3>Select with onChange</h3>
@@ -108,6 +115,13 @@ export default React.createClass({
           <Option value="rome">Rome</Option>
           <Option value="san-francisco">San Francisco</Option>
           <Option value="tokyo">Tokyo</Option>
+          <Option value="vienna">Vienna</Option>
+        </Select>
+
+        <h3>Select with Placeholder</h3>
+        <Select>
+          <Option value="tokyo">Tokyo</Option>
+          <Placeholder>-- Select a City --</Placeholder>
           <Option value="vienna">Vienna</Option>
         </Select>
 
