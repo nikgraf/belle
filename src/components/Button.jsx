@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {omit, extend, contains} from 'underscore';
 import style from '../style/button';
-import addClass from '../utils/add-class';
+import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 
 const buttonTypes = ['button', 'submit', 'reset'];
@@ -74,7 +74,7 @@ export default class Button extends Component {
     const buttonStyle = extend({}, baseStyle, this.props.style);
 
     return <button style={ buttonStyle }
-                   className={ addClass(this.props.className, this.styleId) }
+                   className={ unionClassNames(this.props.className, this.styleId) }
                    onClick={ this._onClick.bind(this) }
                    {...this.state.childProperties}>
       { this.props.children }

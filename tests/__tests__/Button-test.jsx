@@ -2,6 +2,7 @@
 
 jest.dontMock('../lib/components/Button');
 jest.dontMock('../lib/utils/inject-style');
+jest.dontMock('../lib/utils/union-class-names');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
@@ -34,7 +35,7 @@ describe('Button', () => {
 
 
     it('should set the type to button by default', () => {
-      expect(buttonNode.props.type).toEqual('button');
+      expect(buttonNode.props.type).toBe('button');
     });
 
 
@@ -61,7 +62,7 @@ describe('Button', () => {
     // Simulate a click
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(button, 'button'));
 
-    expect(wasClicked).toEqual(true);
+    expect(wasClicked).toBeTruthy();
   });
 
 
@@ -71,7 +72,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.className).toEqual('test-me');
+    expect(buttonNode.props.className).toContain('test-me');
   });
 
 
@@ -81,7 +82,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.style.color).toEqual('#F00');
+    expect(buttonNode.props.style.color).toBe('#F00');
   });
 
 
@@ -105,13 +106,13 @@ describe('Button', () => {
       <Button type="submit">Submit</Button>
     );
     const submitButtonNode = TestUtils.findRenderedDOMComponentWithTag(submitButton, 'button');
-    expect(submitButtonNode.props.type).toEqual('submit');
+    expect(submitButtonNode.props.type).toBe('submit');
 
     const resetButton = TestUtils.renderIntoDocument(
       <Button type="reset">Submit</Button>
     );
     const resetButtonNode = TestUtils.findRenderedDOMComponentWithTag(resetButton, 'button');
-    expect(resetButtonNode.props.type).toEqual('reset');
+    expect(resetButtonNode.props.type).toBe('reset');
   });
 
 
