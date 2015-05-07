@@ -12,29 +12,29 @@ const Placeholder = require('../lib/components/Placeholder');
 describe('Placeholder', () => {
 
   it('should come with a set of default styles', () => {
-    const option = TestUtils.renderIntoDocument(
+    const placeholder = TestUtils.renderIntoDocument(
       <Placeholder>Please select a city</Placeholder>
     );
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
     expect(div.props.style.color).toBe('#666');
   });
 
   it('should be able to overwrite the default styles', () => {
-    const option = TestUtils.renderIntoDocument(
+    const placeholder = TestUtils.renderIntoDocument(
       <Placeholder style={ { color: '#F00'} }>Please select a city</Placeholder>
     );
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
     expect(div.props.style.color).toBe('#F00');
   });
 
   it('should be able to provide custom properties', () => {
-    const option = TestUtils.renderIntoDocument(
+    const placeholder = TestUtils.renderIntoDocument(
       <Placeholder data-custom="example">Please select a city</Placeholder>
     );
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
     expect(div.props['data-custom']).toBe('example');
   });
 
