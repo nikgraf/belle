@@ -38,4 +38,13 @@ describe('Option', () => {
     expect(div.props.style.background).toBe('#F5F5F5');
   });
 
+  it('should be able to provide custom properties', () => {
+    const option = TestUtils.renderIntoDocument(
+      <Option value='rome' data-custom="example">Rome</Option>
+    );
+
+    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    expect(div.props['data-custom']).toBe('example');
+  });
+
 });
