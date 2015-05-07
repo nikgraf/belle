@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, find, first, isEmpty, isUndefined, findIndex, last, some} from 'underscore';
+import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some} from 'underscore';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 
@@ -423,7 +423,7 @@ export default class Select extends Component {
 Select.displayName = 'Belle Select';
 
 Select.propTypes = {
-  children: React.PropTypes.arrayOf(optionOrPlaceholderPropType).isRequired,
+  children: validateArrayOfOptionsAndMaximumOnePlaceholder,
   value: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string,
@@ -466,23 +466,26 @@ function isOption(reactElement) {
     reactElement.type.name === 'Option';
 }
 
-var placeholderCounter = 0;
+
+/**
+ * Verifies that the children is an array containing only Options & at maximum
+ * one Placeholder.
+ */
+function validateArrayOfOptionsAndMaximumOnePlaceholder (props, propName, componentName) {
+  React.PropTypes.arrayOf(optionOrPlaceholderPropType).isRequired(props, propName, componentName);
+
+  const placeholders = filter(props[propName], isPlaceholder);
+  if (size(placeholders) > 1) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
+  }
+}
 
 /**
  * Verifies that the provided property is an Option or Placeholder component from Belle.
- *
- * In addition it checks that only one Placeholder component exists.
  */
 function optionOrPlaceholderPropType(props, propName, componentName) {
   if (props[propName] && !isOption(props[propName]) && !isPlaceholder(props[propName])) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
-  }
-
-  if (props[propName] && isPlaceholder(props[propName])) {
-    placeholderCounter++;
-  }
-  if (placeholderCounter > 1) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
 }
 
