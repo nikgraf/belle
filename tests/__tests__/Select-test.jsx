@@ -8,7 +8,7 @@ import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
-// is used here.
+// is used instead of import.
 const Select = require('../lib/components/Select');
 const Option = require('../lib/components/Option');
 
