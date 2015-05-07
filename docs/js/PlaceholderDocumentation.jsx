@@ -23,7 +23,8 @@ export default class PlaceholderDocumentation extends Component {
       <h3>Properties</h3>
 
       <p>
-        Documentation coming soon …
+        Any property valid for a HTML div like
+        <span style={ {color: 'grey'} }> style, id, className, …</span>
       </p>
 
     </Card>;
