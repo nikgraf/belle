@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {extend} from 'underscore';
+import {extend, omit} from 'underscore';
 import style from '../style/placeholder';
 
 /**
@@ -13,13 +13,16 @@ export default class Placeholder extends Component {
 
   constructor (properties) {
     super(properties);
+    this.state = {
+      childProperties: omit(properties, 'style')
+    };
   }
 
   render () {
     const computedStyle = extend({}, style.placeholderStyle, this.props.style);
 
     return (
-      <div style={ computedStyle }>
+      <div style={ computedStyle } {...this.state.childProperties}>
         { this.props.children }
       </div>
     );
