@@ -2,16 +2,14 @@
 
 jest.dontMock('../lib/components/Option');
 
-import {extend} from 'underscore';
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
-// is used here.
-const Select = require('../lib/components/Select');
+// is used instead of import.
 const Option = require('../lib/components/Option');
 
-describe('Select', () => {
+describe('Option', () => {
 
   it('should initialise _isHovered & _isDisplayedAsSelected during construction', () => {
     const option = TestUtils.renderIntoDocument(
@@ -38,6 +36,15 @@ describe('Select', () => {
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
     expect(div.props.style.background).toBe('#F5F5F5');
+  });
+
+  it('should be able to provide custom properties', () => {
+    const option = TestUtils.renderIntoDocument(
+      <Option value='rome' data-custom="example">Rome</Option>
+    );
+
+    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    expect(div.props['data-custom']).toBe('example');
   });
 
 });

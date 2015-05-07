@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {extend} from 'underscore';
+import {extend, omit} from 'underscore';
 import style from '../style/option';
 
 /**
@@ -13,6 +13,16 @@ export default class Option extends Component {
 
   constructor (properties) {
     super(properties);
+    const sanitizedProperties = omit(properties, [
+      'style',
+      'hoverStyle',
+      'value',
+      '_isHovered',
+      '_isDisplayedAsSelected'
+    ]);
+    this.state = {
+      childProperties: sanitizedProperties
+    };
   }
 
   render () {
@@ -31,7 +41,8 @@ export default class Option extends Component {
 
     return (
       <div data-belle-value={ this.props.value }
-           style={ styleToDisplay }>
+           style={ styleToDisplay }
+           {...this.state.childProperties}>
         { this.props.children }
       </div>
     );

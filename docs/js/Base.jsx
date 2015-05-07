@@ -76,16 +76,22 @@ export default class Base extends Component {
           </ul>
           <span style={ { color: '#888', fontWeight: 'bold' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
-            <li style={{ paddingLeft: 10 }}>
+            <li>
               <Link style={{ display: 'block' }} to="component/button">Button</Link>
             </li>
-            <li style={{ paddingLeft: 10 }}>
+            <li>
               <Link style={{ display: 'block' }} to="component/card">Card</Link>
             </li>
-            <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/select">Select & Option</Link>
+            <li>
+              <Link style={{ display: 'block' }} to="component/select">Select</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
+              <Link style={{ display: 'block' }} to="component/option">Option</Link>
+            </li>
+            <li style={{ paddingLeft: 10 }}>
+              <Link style={{ display: 'block' }} to="component/placeholder">Placeholder</Link>
+            </li>
+            <li>
               <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
             </li>
 

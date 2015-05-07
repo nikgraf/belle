@@ -2,15 +2,17 @@
 
 jest.dontMock('../lib/components/Select');
 jest.dontMock('../lib/components/Option');
+jest.dontMock('../lib/components/Placeholder');
 
 import {extend} from 'underscore';
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
-// is used here.
+// is used instead of import.
 const Select = require('../lib/components/Select');
 const Option = require('../lib/components/Option');
+const Placeholder = require('../lib/components/Placeholder');
 
 describe('Select', () => {
 
@@ -36,6 +38,45 @@ describe('Select', () => {
 
     expect(select.state.selectedValue).toBe('rome');
     expect(select.state.focusedOptionValue).toBe('rome');
+  });
+
+  it('should not have any option selected in case there is a Placeholder & no value, defaultValue or valueLink is defined', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select>
+        <Placeholder>Select a City</Placeholder>
+        <Option value='rome'>Rome</Option>
+        <Option value='vienna'>Vienna</Option>
+      </Select>
+    );
+
+    expect(select.state.selectedValue).toBeUndefined();
+    expect(select.state.focusedOptionValue).toBeUndefined();
+  });
+
+  it('should render the content of selected option', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select value='vienna'>
+        <Option value='rome'>Rome</Option>
+        <Option value='vienna'>Vienna</Option>
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Vienna');
+  });
+
+  it('should render the placeholder content', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select>
+        <Placeholder>Select a City</Placeholder>
+        <Option value='rome'>Rome</Option>
+        <Option value='vienna'>Vienna</Option>
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+
+    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
   });
 
   it('should be able to provide a valueLink', () => {
