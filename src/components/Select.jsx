@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some} from 'underscore';
+import addClass from '../utils/add-class';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 
@@ -356,7 +357,7 @@ export default class Select extends Component {
         <div onClick={ this._toggleOptionsArea.bind(this) }
              onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
              style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
-             className={ `${this.props.className} ${this._styleId}` }>
+             className={ addClass(this.props.className, this.styleId) }>
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>

@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
+import addClass from '../utils/add-class';
 import {omit, extend} from 'underscore';
 import style from '../style/text-input';
 
@@ -146,7 +147,7 @@ export default class TextInput extends Component {
     let textareaStyle = extend({}, style.defaultStyle, this.props.style);
     textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
-                     className={ `${this.props.className} ${this._styleId}` }
+                     className={ addClass(this.props.className, this.styleId) }
                      onChange={ this._onChange.bind(this) }
                      onKeyDown={ this._onKeyDown.bind(this) }
                      { ...this.state.textareaProperties }/>;
