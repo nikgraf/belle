@@ -11,7 +11,9 @@ import CardDocumentation from './CardDocumentation';
 import Configuration from './Configuration';
 import GettingStarted from './GettingStarted';
 import FuturePlans from './FuturePlans';
+import OptionDocumentation from './OptionDocumentation';
 import Philosophy from './Philosophy';
+import PlaceholderDocumentation from './PlaceholderDocumentation';
 import SelectDocumentation from './SelectDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
 
@@ -21,6 +23,8 @@ const routes = (
     <Route name="component/button" handler={ButtonDocumentation}/>
     <Route name="component/card" handler={CardDocumentation}/>
     <Route name="component/select" handler={SelectDocumentation}/>
+    <Route name="component/option" handler={OptionDocumentation}/>
+    <Route name="component/placeholder" handler={PlaceholderDocumentation}/>
     <Route name="component/text-input" handler={TextInputDocumentation}/>
     <Route name="configuration" handler={Configuration}/>
     <Route name="philosophy" handler={Philosophy}/>
