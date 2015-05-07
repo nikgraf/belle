@@ -29,4 +29,13 @@ describe('Placeholder', () => {
     expect(div.props.style.color).toBe('#F00');
   });
 
+  it('should be able to provide custom properties', () => {
+    const option = TestUtils.renderIntoDocument(
+      <Placeholder data-custom="example">Please select a city</Placeholder>
+    );
+
+    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
+    expect(div.props['data-custom']).toBe('example');
+  });
+
 });
