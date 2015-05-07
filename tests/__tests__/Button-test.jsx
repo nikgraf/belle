@@ -10,7 +10,7 @@ const injectStyle = require('../lib/utils/inject-style');
 
 
 // Babel would move an import in front of the jest.dontMock. That's why require
-// is used here.
+// is used instead of import.
 const Button = require('../lib/components/Button');
 
 describe('Button', () => {
