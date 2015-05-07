@@ -12,7 +12,7 @@ import style from '../style/card';
  */
 export default class Card extends Component {
 
-  constructor(properties) {
+  constructor (properties) {
     super(properties);
     this.state = {
       childProperties: omit(properties, 'style')
@@ -23,11 +23,11 @@ export default class Card extends Component {
    * Update the _childProperties based on the updated properties passed to the
    * card.
    */
-  componentWillReceiveProps(properties) {
+  componentWillReceiveProps (properties) {
     this.setState({ childProperties: omit(properties, 'style') });
   }
 
-  render() {
+  render () {
     let divStyle = extend({}, style.defaultStyle, this.props.style);
 
     return <div {...this.state.childProperties} style={ divStyle }>
