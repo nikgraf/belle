@@ -339,9 +339,11 @@ export default class Select extends Component {
         return entry.props.value == this.state.selectedValue;
       });
 
-      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedEntry, {
-        _isDisplayedAsSelected: true
-      });
+      if (selectedEntry) {
+        selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedEntry, {
+          _isDisplayedAsSelected: true
+        });
+      }
     } else {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
