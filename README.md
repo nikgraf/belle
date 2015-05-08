@@ -124,7 +124,8 @@ npm start
 
 ### Tests
 
-Build Status: [ ![Codeship Status for nikgraf/belle](https://codeship.com/projects/7650fa30-c483-0132-3f11-46867e328226/status?branch=master)](https://codeship.com/projects/74133)
+Build Status:
+[ ![Codeship Status for nikgraf/belle](https://codeship.com/projects/7650fa30-c483-0132-3f11-46867e328226/status?branch=master)](https://codeship.com/projects/74133)
 
 In order to run the tests use
 
