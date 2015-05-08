@@ -70,7 +70,7 @@ export default class Button extends Component {
   }
 
   render() {
-    const baseStyle = this.props.primary ? style.primaryStyle : style.defaultStyle;
+    const baseStyle = this.props.primary ? style.primaryStyle : style.style;
     const buttonStyle = extend({}, baseStyle, this.props.style);
 
     return <button style={ buttonStyle }
@@ -119,9 +119,9 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing custom styles
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.defaultHoverStyle;
-  const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.defaultFocusStyle;
-  const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.defaultActiveStyle;
+  const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.hoverStyle;
+  const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
+  const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.activeStyle;
   const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
   const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);

@@ -28,7 +28,7 @@ export default class Card extends Component {
   }
 
   render () {
-    let divStyle = extend({}, style.defaultStyle, this.props.style);
+    let divStyle = extend({}, style.style, this.props.style);
 
     return <div {...this.state.childProperties} style={ divStyle }>
       { this.props.children }

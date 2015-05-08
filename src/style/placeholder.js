@@ -2,7 +2,7 @@
 
 var placeholderStyle = {
 
-  placeholderStyle: {
+  style: {
     color: '#666',
     cursor: 'pointer',
     padding: 0

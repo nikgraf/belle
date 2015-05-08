@@ -2,7 +2,7 @@
 
 var buttonStyle = {
 
-  defaultStyle: {
+  style: {
     background: '#EFEFEF',
     border: '1px solid #EFEFEF',
     borderBottomColor: '#D0D0D0',
@@ -19,14 +19,14 @@ var buttonStyle = {
     verticalAlign: 'bottom'
   },
 
-  defaultHoverStyle: {
+  hoverStyle: {
     background: '#F5F5F5',
     border: '1px solid #F5F5F5',
     borderBottomColor: '#D0D0D0',
     color: '#666'
   },
 
-  defaultFocusStyle: {
+  focusStyle: {
     background: '#F5F5F5',
     border: '1px solid #F5F5F5',
     borderBottomColor: '#D0D0D0',
@@ -34,7 +34,7 @@ var buttonStyle = {
     outline: 0 // avoid default focus behaviour
   },
 
-  defaultActiveStyle: {
+  activeStyle: {
     background: '#E8E8E8',
     border: '1px solid #E8E8E8',
     borderTopColor: '#CFCFCF',
