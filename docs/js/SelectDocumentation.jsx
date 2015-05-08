@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Option, Select, TextInput} from 'belle';
+import {Card, Option, Select, Separator, TextInput} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
 
@@ -88,6 +88,19 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ formCodeExample } style={ {marginTop: 40} } />
 
+      <h3>Select with Separators</h3>
+
+      <Select>
+        <Separator>Asia</Separator>
+        <Option value="hong-kong">Hong Kong</Option>
+        <Option value="tokyo">Tokyo</Option>
+        <Separator>Europe</Separator>
+        <Option value="berlin">Berlin</Option>
+        <Option value="istanbul">Istanbul</Option>
+      </Select>
+
+      <Code value={ separatorCodeExample } style={ {marginTop: 40} } />
+
     </Card>;
   }
 }
@@ -145,3 +158,13 @@ const formCodeExample = `<!-- form consiting of an input & a select  -->
     </Select>
   </div>
 </div>`;
+
+const separatorCodeExample = `<!-- basic select example with separators -->
+<Select>
+  <Separator>Asia</Separator>
+  <Option value="hong-kong">Hong Kong</Option>
+  <Option value="tokyo">Tokyo</Option>
+  <Separator>Europe</Separator>
+  <Option value="berlin">Berlin</Option>
+  <Option value="istanbul">Istanbul</Option>
+</Select>`;
