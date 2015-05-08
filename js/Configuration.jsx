@@ -67,7 +67,7 @@ export default class Configuration extends Component {
 
 const overwriteCardStyleExample = `var belle = require('belle');
 
-belle.style.card.defaultStyle = {
+belle.style.card.style = {
   marginBottom: 20,
   padding: 20,
   borderRadius: 2,
@@ -81,7 +81,7 @@ belle.style.card.defaultStyle = {
 const extendButtonStyleExample = `var _ = require('underscore');
 var belle = require('belle');
 
-belle.style.button.defaultStyle = _.extend(belle.style.button.defaultStyle, {
+belle.style.button.style = _.extend(belle.style.button.style, {
   color: '#FFF',
   background: '#444',
   border: '1px solid #444',
@@ -89,7 +89,7 @@ belle.style.button.defaultStyle = _.extend(belle.style.button.defaultStyle, {
 });
 
 // extending hoverStyle works as well
-belle.style.button.defaultHoverStyle = _.extend(belle.style.button.defaultHoverStyle, {
+belle.style.button.hoverStyle = _.extend(belle.style.button.hoverStyle, {
   color: '#FFF',
   background: '#666',
   border: '1px solid #666',
@@ -99,17 +99,17 @@ belle.style.button.defaultHoverStyle = _.extend(belle.style.button.defaultHoverS
 
 const styleStructure = `style = {
   button: {
-    defaultStyle: { … },
-    defaultHoverStyle: { … },
-    defaultFocusStyle: { … },
-    defaultActiveStyle: { … },
+    style: { … },
+    hoverStyle: { … },
+    focusStyle: { … },
+    activeStyle: { … },
     primaryStyle: { … },
     primaryHoverStyle: { … },
     primaryFocusStyle: { … },
     primaryActiveStyle: { … }
   },
   card: {
-    defaultStyle: { … }
+    style: { … }
   },
   select: {
     style: { … },
@@ -122,20 +122,20 @@ const styleStructure = `style = {
     caretUpStyle: { … }
   },
   option: {
-    optionStyle: { … },
-    optionHoverStyle: { … },
-    optionSelectStyle: { … }
+    style: { … },
+    hoverStyle: { … },
+    selectStyle: { … }
   },
   placeholder: {
-    placeholderStyle: { … }
+    style: { … }
   },
   separator: {
-    separatorStyle: { … }
+    style: { … }
   },
   textInput: {
-    defaultStyle: { … },
-    defaultHoverStyle: { … },
-    defaultFocusStyle: { … }
+    style: { … },
+    hoverStyle: { … },
+    focusStyle: { … }
   }
 }
 `;
