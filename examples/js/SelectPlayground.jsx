@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react/addons';
-import {Button, TextInput, Select, Option, Placeholder} from 'belle';
+import {Button, TextInput, Select, Separator, Option, Placeholder} from 'belle';
 import {map} from 'underscore';
 
 const fruits = [
@@ -115,6 +115,21 @@ export default React.createClass({
           <Option value="rome">Rome</Option>
           <Option value="san-francisco">San Francisco</Option>
           <Option value="tokyo">Tokyo</Option>
+          <Option value="vienna">Vienna</Option>
+        </Select>
+
+        <h3>Select with Separators</h3>
+        <Select>
+          <Separator>Amerika</Separator>
+          <Option value="san-francisco">San Francisco</Option>
+          <Option value="vancouver">Vancouver</Option>
+          <Separator>Asia</Separator>
+          <Option value="hong-kong">Hong Kong</Option>
+          <Option value="tokyo">Tokyo</Option>
+          <Separator>Europe</Separator>
+          <Option value="berlin">Berlin</Option>
+          <Option value="istanbul">Istanbul</Option>
+          <Option value="rome">Rome</Option>
           <Option value="vienna">Vienna</Option>
         </Select>
 

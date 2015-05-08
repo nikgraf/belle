@@ -3,6 +3,7 @@
 jest.dontMock('../lib/components/Select');
 jest.dontMock('../lib/components/Option');
 jest.dontMock('../lib/components/Placeholder');
+jest.dontMock('../lib/components/Separator');
 
 import {extend} from 'underscore';
 import React from 'react/addons';
@@ -13,6 +14,7 @@ const TestUtils = React.addons.TestUtils;
 const Select = require('../lib/components/Select');
 const Option = require('../lib/components/Option');
 const Placeholder = require('../lib/components/Placeholder');
+const Separator = require('../lib/components/Separator');
 
 describe('Select', () => {
 
@@ -322,5 +324,109 @@ describe('Select', () => {
     });
 
   });
+
+  describe('manage key events when separators are present', () => {
+
+    let select, nativeSelect;
+
+    beforeEach(() => {
+      select = TestUtils.renderIntoDocument(
+        <Select>
+          <Separator>Italy</Separator>
+          <Option value='rome'>Rome</Option>
+          <Separator>Austria</Separator>
+          <Option value='vienna'>Vienna</Option>
+          <Separator>Germany</Separator>
+          <Option value='berlin'>Berlin</Option>
+        </Select>
+      );
+      nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+    });
+
+    it('should open the options area by pressing ArrowDown', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing ArrowUp', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing Space', () => {
+      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+      expect(select.state.isOpen).toBeTruthy();
+    });
+
+    describe('when the options area is open', () => {
+
+      beforeEach(() => {
+        select.setState({ isOpen: true });
+      });
+
+      it('should close options area when pressing Escape', () => {
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Escape'});
+        expect(select.state.isOpen).toBeFalsy();
+      });
+
+      it('should focus on the next option when pressing ArrowDown', () => {
+        expect(select.state.focusedOptionValue).toBe('rome');
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+        expect(select.state.focusedOptionValue).toBe('vienna');
+      });
+
+      it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
+        select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
+        expect(select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the previous option when pressing ArrowUp', () => {
+        select.setState({ focusedOptionValue: 'vienna' });
+        expect(select.state.focusedOptionValue).toBe('vienna');
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+        expect(select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
+        select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
+        expect(select.state.focusedOptionValue).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Enter', () => {
+        select.setState({ focusedOptionValue: 'berlin' });
+
+        window.Event = jest.genMockFunction();
+        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+        var nativeSelectNode = React.findDOMNode(nativeSelect);
+        nativeSelectNode.dispatchEvent = jest.genMockFunction();
+
+        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Enter'});
+
+        expect(window.Event.mock.calls[0][0]).toBe('change');
+        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
+        expect(nativeSelectNode.value).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Space', () => {
+        select.setState({ focusedOptionValue: 'berlin' });
+
+        window.Event = jest.genMockFunction();
+        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+        var nativeSelectNode = React.findDOMNode(nativeSelect);
+        nativeSelectNode.dispatchEvent = jest.genMockFunction();
+
+        TestUtils.Simulate.keyDown(nativeSelect, {key: ' '});
+
+        expect(window.Event.mock.calls[0][0]).toBe('change');
+        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
+        expect(nativeSelectNode.value).toBe('berlin');
+      });
+
+    });
+
+  });
+
 
 });

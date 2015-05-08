@@ -52,6 +52,7 @@ export default class Option extends Component {
 Option.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
+  selectStyle: React.PropTypes.object,
   _isHovered: React.PropTypes.bool,
   _isDisplayedAsSelected: React.PropTypes.bool,
   value: React.PropTypes.oneOfType([

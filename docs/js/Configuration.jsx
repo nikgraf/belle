@@ -121,6 +121,17 @@ const styleStructure = `style = {
     caretDownStyle: { … },
     caretUpStyle: { … }
   },
+  option: {
+    optionStyle: { … },
+    optionHoverStyle: { … },
+    optionSelectStyle: { … }
+  },
+  placeholder: {
+    placeholderStyle: { … }
+  },
+  separator: {
+    separatorStyle: { … }
+  },
   textInput: {
     defaultStyle: { … },
     defaultHoverStyle: { … },

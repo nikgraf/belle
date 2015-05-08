@@ -91,6 +91,9 @@ export default class Base extends Component {
             <li style={{ paddingLeft: 10 }}>
               <Link style={{ display: 'block' }} to="component/placeholder">Placeholder</Link>
             </li>
+            <li style={{ paddingLeft: 10 }}>
+              <Link style={{ display: 'block' }} to="component/separator">Separator</Link>
+            </li>
             <li>
               <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
             </li>

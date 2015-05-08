@@ -46,7 +46,7 @@ export default class Select extends Component {
     } else if (this.props.defaultValue) {
       selectedValue = this.props.defaultValue;
     } else if (!isEmpty(this.props.children) && !some(this.props.children, isPlaceholder)) {
-      selectedValue = first(this.props.children).props.value;
+      selectedValue = first(filter(this.props.children, isOption)).props.value;
     }
 
     this.state = {
@@ -220,14 +220,14 @@ export default class Select extends Component {
     if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
-      if (hasNext(this.props.children, indexOfFocusedOption)) {
+      if (hasNext(filter(this.props.children, isOption), indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: this.props.children[indexOfFocusedOption + 1].props.value
+          focusedOptionValue: filter(this.props.children, isOption)[indexOfFocusedOption + 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: first(this.props.children).props.value
+        focusedOptionValue: first(filter(this.props.children, isOption)).props.value
       });
     }
   }
@@ -245,14 +245,14 @@ export default class Select extends Component {
     if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
-      if (hasPrevious(this.props.children, indexOfFocusedOption)) {
+      if (hasPrevious(filter(this.props.children, isOption), indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: this.props.children[indexOfFocusedOption - 1].props.value
+          focusedOptionValue: filter(this.props.children, isOption)[indexOfFocusedOption - 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: last(this.props.children).props.value
+        focusedOptionValue: last(filter(this.props.children, isOption)).props.value
       });
     }
   }
@@ -295,7 +295,7 @@ export default class Select extends Component {
    */
   _onKeyDown (event) {
 
-    if(this.props.children.length > 0) {
+    if(filter(this.props.children, isOption).length > 0) {
 
       if (!this.state.isOpen && event.key === 'ArrowDown' ||
           !this.state.isOpen && event.key === 'ArrowUp' ||
@@ -366,7 +366,7 @@ export default class Select extends Component {
           {
             React.Children.map(this.props.children, (entry, index) => {
               // filter out all non-Option Components
-              if (entry.type.name === 'Option') {
+              if (isOption(entry)) {
                 const option = React.addons.cloneWithProps(entry, {
                   _isHovered: entry.props.value == this.state.focusedOptionValue
                 });
@@ -377,6 +377,12 @@ export default class Select extends Component {
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
                     { option }
+                  </li>
+                );
+              } else if (isSeparator(entry)) {
+                return (
+                  <li key={ index } >
+                    { entry }
                   </li>
                 );
               }
@@ -444,7 +450,7 @@ Select.propTypes = {
  * children.
  */
 const findIndexOfFocusedOption = (component) => {
-  return findIndex(component.props.children, (element) => {
+  return findIndex(filter(component.props.children, isOption), (element) => {
     return element.props.value === component.state.focusedOptionValue;
   });
 };
@@ -467,13 +473,22 @@ function isOption(reactElement) {
     reactElement.type.name === 'Option';
 }
 
+/**
+ * Returns true if the provided property is a Separator component from Belle.
+ */
+function isSeparator(reactElement) {
+  return reactElement._isReactElement &&
+    reactElement.type &&
+    reactElement.type.name === 'Separator';
+}
 
 /**
  * Verifies that the children is an array containing only Options & at maximum
  * one Placeholder.
  */
 function validateArrayOfOptionsAndMaximumOnePlaceholder (props, propName, componentName) {
-  React.PropTypes.arrayOf(optionOrPlaceholderPropType).isRequired(props, propName, componentName);
+  const error = React.PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(props, propName, componentName);
+  if (error) return error;
 
   const placeholders = filter(props[propName], isPlaceholder);
   if (size(placeholders) > 1) {
@@ -484,8 +499,12 @@ function validateArrayOfOptionsAndMaximumOnePlaceholder (props, propName, compon
 /**
  * Verifies that the provided property is an Option or Placeholder component from Belle.
  */
-function optionOrPlaceholderPropType(props, propName, componentName) {
-  if (props[propName] && !isOption(props[propName]) && !isPlaceholder(props[propName])) {
+function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) {
+  if (!(props[propName] &&
+        isOption(props[propName]) ||
+        isPlaceholder(props[propName]) ||
+        isSeparator(props[propName]))
+     ) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
   }
 }
