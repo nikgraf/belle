@@ -7,7 +7,7 @@ import {TextInput, Card, Button, style} from 'belle';
 import {extend} from 'underscore';
 import SelectPlayground from './SelectPlayground';
 
-style.button.defaultStyle = {
+style.button.style = {
   boxSizing: 'border-box',
   borderRadius: 2,
   cursor: 'pointer',
@@ -24,11 +24,11 @@ style.button.defaultStyle = {
   lineHeight: '26px'
 };
 
-style.card.defaultStyle = extend(style.card.defaultStyle, {
+style.card.style = extend(style.card.style, {
   background: '#ddd'
 });
 
-style.textInput.defaultStyle = extend(style.textInput.defaultStyle, {
+style.textInput.style = extend(style.textInput.style, {
   color: 'blue'
 });
 

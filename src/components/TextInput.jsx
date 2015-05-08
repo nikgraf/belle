@@ -144,7 +144,7 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let textareaStyle = extend({}, style.defaultStyle, this.props.style);
+    let textareaStyle = extend({}, style.style, this.props.style);
     textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
                      className={ unionClassNames(this.props.className, this._styleId) }
@@ -199,8 +199,8 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.defaultHoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.defaultFocusStyle, properties.focusStyle);
+  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
+  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
   const styles = [
     {
       id: styleId,

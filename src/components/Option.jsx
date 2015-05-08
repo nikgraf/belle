@@ -26,9 +26,9 @@ export default class Option extends Component {
   }
 
   render () {
-    const defaultStyle = extend({}, style.optionStyle, this.props.style);
-    const hoverStyle = extend({}, style.optionHoverStyle, this.props.hoverStyle);
-    const selectStyle = extend({}, style.optionSelectStyle, this.props.selectStyle);
+    const defaultStyle = extend({}, style.style, this.props.style);
+    const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
+    const selectStyle = extend({}, style.selectStyle, this.props.selectStyle);
 
     let styleToDisplay;
     if (this.props._isDisplayedAsSelected) {

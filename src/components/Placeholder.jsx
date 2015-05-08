@@ -19,7 +19,7 @@ export default class Placeholder extends Component {
   }
 
   render () {
-    const computedStyle = extend({}, style.placeholderStyle, this.props.style);
+    const computedStyle = extend({}, style.style, this.props.style);
 
     return (
       <div style={ computedStyle } {...this.state.childProperties}>

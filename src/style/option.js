@@ -2,20 +2,20 @@
 
 var optionStyle = {
 
-  optionStyle: {
+  style: {
     color: '#666',
     cursor: 'pointer',
     padding: 10
   },
 
-  optionHoverStyle: {
+  hoverStyle: {
     background: '#F5F5F5',
     color: '#666',
     cursor: 'pointer',
     padding: 10
   },
 
-  optionSelectStyle: {
+  selectStyle: {
     color: '#666',
     padding: 0
   }

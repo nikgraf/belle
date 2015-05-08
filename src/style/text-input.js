@@ -2,7 +2,7 @@
 
 var textInputStyle = {
 
-  defaultStyle: {
+  style: {
     /* normalize.css v3.0.1 */
     font: 'inherit',
     margin: 0,
@@ -21,11 +21,11 @@ var textInputStyle = {
     boxSizing: 'border-box'
   },
 
-  defaultHoverStyle: {
+  hoverStyle: {
     borderBottom: '1px #92D6EF solid'
   },
 
-  defaultFocusStyle: {
+  focusStyle: {
     outline: 0, // to avoid default focus behaviour
     borderBottom: '1px #53C7F2 solid'
   }
