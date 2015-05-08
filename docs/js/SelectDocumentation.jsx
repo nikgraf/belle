@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Option, Select, Separator, TextInput} from 'belle';
+import {Card, Option, Placeholder, Select, Separator, TextInput} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
 
@@ -21,6 +21,7 @@ export default class SelectDocumentation extends Component {
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Select</h2>
 
       <Select>
+        <Placeholder>Choose a City</Placeholder>
         <Option value="berlin">Berlin</Option>
         <Option value="tokyo">Tokyo</Option>
         <Option value="vienna">Vienna</Option>
@@ -101,12 +102,72 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ separatorCodeExample } style={ {marginTop: 40} } />
 
+      <h3>Select with various Option styles</h3>
+
+      <Select optionsAreaStyle={{ padding: 6 }}>
+        <Placeholder>Choose your next Vacation</Placeholder>
+        <Option value="santorini"
+                style={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  background: 'url(images/santorini_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px',
+                  backgroundColor: '#FFEE82'
+                }}
+                hoverStyle={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  background: 'url(images/santorini_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px',
+                  backgroundColor: '#FFE95D'
+                }} >
+          Santorini
+        </Option>
+        <Separator style={{ height: 4, padding: 0 }}></Separator>
+        <Option value="yosemite"
+                style={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  background: 'url(images/yosemite_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px'
+                }}
+                hoverStyle={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  backgroundColor: '#F5F5F5',
+                  background: 'url(images/yosemite_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px'
+                }} >
+          Yosemite
+        </Option>
+        <Separator style={{ height: 4, padding: 0 }}></Separator>
+        <Option value="croatia"
+                style={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  background: 'url(images/croatia_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px'
+                }}
+                hoverStyle={{
+                  padding: '15px 0 0 60px',
+                  height: 50,
+                  backgroundColor: '#F5F5F5',
+                  background: 'url(images/croatia_100.jpg) no-repeat',
+                  backgroundSize: '50px 50px'
+                }} >
+          Croatia
+        </Option>
+      </Select>
+
+      <Code value={ advancedStylingCodeExample } style={ {marginTop: 40} } />
+
     </Card>;
   }
 }
 
 const basicCodeExample = `<!-- basic select example -->
 <Select>
+  <Placeholder>Choose a City</Placeholder>
   <Option value="berlin">Berlin</Option>
   <Option value="tokyo">Tokyo</Option>
   <Option value="vienna">Vienna</Option>
@@ -167,4 +228,60 @@ const separatorCodeExample = `<!-- basic select example with separators -->
   <Separator>Europe</Separator>
   <Option value="berlin">Berlin</Option>
   <Option value="istanbul">Istanbul</Option>
+</Select>`;
+
+const advancedStylingCodeExample = `<!-- select example with more advanced styling -->
+<Select optionsAreaStyle={{ padding: 6 }}>
+  <Placeholder>Choose your next Vacation</Placeholder>
+  <Option value="santorini"
+          style={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            background: 'url(images/santorini_100.jpg) no-repeat',
+            backgroundSize: '50px 50px',
+            backgroundColor: '#FFEE82'
+          }}
+          hoverStyle={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            background: 'url(images/santorini_100.jpg) no-repeat',
+            backgroundSize: '50px 50px',
+            backgroundColor: '#FFE95D'
+          }} >
+    Santorini
+  </Option>
+  <Separator style={{ height: 4, padding: 0 }}></Separator>
+  <Option value="yosemite"
+          style={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            background: 'url(images/yosemite_100.jpg) no-repeat',
+            backgroundSize: '50px 50px'
+          }}
+          hoverStyle={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            backgroundColor: '#F5F5F5',
+            background: 'url(images/yosemite_100.jpg) no-repeat',
+            backgroundSize: '50px 50px'
+          }} >
+    Yosemite
+  </Option>
+  <Separator style={{ height: 4, padding: 0 }}></Separator>
+  <Option value="croatia"
+          style={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            background: 'url(images/croatia_100.jpg) no-repeat',
+            backgroundSize: '50px 50px'
+          }}
+          hoverStyle={{
+            padding: '15px 0 0 60px',
+            height: 50,
+            backgroundColor: '#F5F5F5',
+            background: 'url(images/croatia_100.jpg) no-repeat',
+            backgroundSize: '50px 50px'
+          }} >
+    Croatia
+  </Option>
 </Select>`;
