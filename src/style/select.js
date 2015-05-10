@@ -29,6 +29,7 @@ var selectStyle = {
   },
 
   wrapperStyle: {
+    boxSizing: 'border-box',
     position: 'relative'
   },
 
