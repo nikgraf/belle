@@ -50,7 +50,7 @@ var selectStyle = {
     top: 0
   },
 
-  caretDownStyle: {
+  caretToOpenStyle: {
     height: 0,
     width: 0,
     content: ' ',
@@ -62,7 +62,7 @@ var selectStyle = {
     borderRight: '5px solid transparent'
   },
 
-  caretUpStyle: {
+  caretToCloseStyle: {
     height: 0,
     width: 0,
     content: ' ',

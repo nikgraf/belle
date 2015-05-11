@@ -289,8 +289,8 @@ export default class Select extends Component {
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
-    const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
-    const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
+    const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
+    const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {
@@ -322,7 +322,7 @@ export default class Select extends Component {
              style={ this.state.isFocused ? focusStyle : defaultStyle }
              className={ unionClassNames(this.props.className, this._styleId) }>
           { selectedOptionOrPlaceholder }
-          <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
+          <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }></span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }>
