@@ -48,6 +48,7 @@ export default class Select extends Component {
 
     this.state = {
       isOpen: false,
+      isFocused: false,
       selectedValue: selectedValue,
       focusedOptionValue: selectedValue
     };
@@ -138,7 +139,19 @@ export default class Select extends Component {
    */
   _onBlur (event) {
     this.setState({
-      isOpen: false
+      isOpen: false,
+      isFocused: false
+    });
+  }
+
+  /**
+   * In order to inform the user which element in the document is active the
+   * component keeps track of when it's de-selected and depending on that
+   * close the optionsArea.
+   */
+  _onFocus (event) {
+    this.setState({
+      isFocused: true
     });
   }
 
@@ -301,11 +314,13 @@ export default class Select extends Component {
            tabIndex="0"
            onKeyDown={ this._onKeyDown.bind(this) }
            onBlur={ this._onBlur.bind( this) }
+           onFocus={ this._onFocus.bind( this) }
+           className={ this.props.wrapperClassName }
            ref="selectWrapper">
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
-             style={ defaultStyle }
-             className={ unionClassNames(this.props.className, this.styleId) }>
+             style={ this.state.isFocused ? focusStyle : defaultStyle }
+             className={ unionClassNames(this.props.className, this._styleId) }>
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
@@ -362,7 +377,9 @@ Select.propTypes = {
   valueLink: React.PropTypes.shape({
     value: React.PropTypes.string.isRequired,
     requestChange: React.PropTypes.func.isRequired
-  })
+  }),
+  className: React.PropTypes.string,
+  wrapperClassName: React.PropTypes.string
 };
 
 /**

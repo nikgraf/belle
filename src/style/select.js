@@ -29,6 +29,7 @@ var selectStyle = {
   },
 
   wrapperStyle: {
+    outline: 0, // to avoid default focus behaviour
     boxSizing: 'border-box',
     position: 'relative'
   },
