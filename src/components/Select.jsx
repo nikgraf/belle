@@ -91,14 +91,6 @@ export default class Select extends Component {
   }
 
   /**
-   * In order to prevent loosing focus on the native select the onMouseDown
-   * event default behaviour is prevented.
-   */
-  _onMouseDownAtOption (event) {
-    event.preventDefault();
-  }
-
-  /**
    * After the user clicks on an Option a change event is dispatched on the
    * native select.
    *
@@ -340,7 +332,6 @@ export default class Select extends Component {
 
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
-                      onMouseDown={ this._onMouseDownAtOption.bind(this) }
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
                     { option }
