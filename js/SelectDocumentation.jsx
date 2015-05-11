@@ -121,7 +121,7 @@ export default class SelectDocumentation extends Component {
                   backgroundSize: '50px 50px',
                   backgroundColor: '#FFE95D'
                 }} >
-          Santorini
+          Santorini (Special Deal)
         </Option>
         <Separator style={{ height: 4, padding: 0 }}></Separator>
         <Option value="yosemite"
@@ -248,7 +248,7 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
             backgroundSize: '50px 50px',
             backgroundColor: '#FFE95D'
           }} >
-    Santorini
+    Santorini (Special Deal)
   </Option>
   <Separator style={{ height: 4, padding: 0 }}></Separator>
   <Option value="yosemite"
