@@ -36,7 +36,7 @@ export default class Select extends Component {
 
     let selectedValue;
 
-    if (this.props.valueLink && typeof this.props.valueLink === 'object') {
+    if (this.props.valueLink) {
       selectedValue = this.props.valueLink.value;
     } else if (this.props.value) {
       selectedValue = this.props.value;
@@ -54,7 +54,7 @@ export default class Select extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    if (properties.valueLink && typeof properties.valueLink === 'object') {
+    if (properties.valueLink) {
       this.setState({
         selectedValue: properties.valueLink.value,
         focusedOptionValue: properties.valueLink.value
@@ -119,20 +119,15 @@ export default class Select extends Component {
       });
     }
 
-    let changeCallback = this.props.onChange;
-    const valueLink = this.props.valueLink;
-
-    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = event => valueLink.requestChange(event.target.value);
-    }
-
-    if (changeCallback) {
+    if (this.props.valueLink) {
+      this.props.valueLink.requestChange(value);
+    } else if (this.props.onChange) {
       // TODO investigate how to properly simulate a change event that includes
       // all the usual properties documented here:
       // https://facebook.github.io/react/docs/events.html
       const wrapperNode = React.findDOMNode(this);
       wrapperNode.value = value;
-      changeCallback({target: wrapperNode});
+      this.props.onChange({target: wrapperNode});
     }
   }
 
@@ -362,7 +357,12 @@ Select.propTypes = {
     React.PropTypes.string,
     React.PropTypes.number,
     React.PropTypes.instanceOf(Date)
-  ])
+  ]),
+  onChange: React.PropTypes.func,
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.string.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  })
 };
 
 /**
