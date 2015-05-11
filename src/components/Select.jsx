@@ -50,7 +50,6 @@ export default class Select extends Component {
     }
 
     this.state = {
-      isFocusedOn: false,
       isOpen: false,
       selectedValue: selectedValue,
       focusedOptionValue: selectedValue
@@ -100,14 +99,6 @@ export default class Select extends Component {
   }
 
   /**
-   * In order to prevent loosing focus on the native select the onMouseDown
-   * event default behaviour is prevented.
-   */
-  _onMouseDownAtSelectBox (event) {
-    event.preventDefault();
-  }
-
-  /**
    * After the user clicks on an Option a change event is dispatched on the
    * native select.
    *
@@ -118,17 +109,8 @@ export default class Select extends Component {
    * This is aligned with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
-    const changeEvent = new window.Event('change', {
-      bubbles: true,
-      cancelable: false
-    });
-
     const entry = event.currentTarget.querySelector('[data-belle-value]');
-    const select = React.findDOMNode(this.refs.belleNativeSelect);
-    // TODO investigate if this is aligned with a natively dispatched change event
-    // So far only a changed value has been identified.
-    select.value = entry.getAttribute('data-belle-value');
-    select.dispatchEvent(changeEvent);
+    this._triggerChange(entry.getAttribute('data-belle-value'));
   }
 
   /**
@@ -137,11 +119,11 @@ export default class Select extends Component {
    * Depending on the component's properties the value gets updated and the
    * provided change callback for onChange or valueLink is called.
    */
-  _onChange (event) {
+  _triggerChange (value) {
     if(isUndefined(this.props.value)) {
       this.setState({
-        focusedOptionValue: event.target.value,
-        selectedValue: event.target.value,
+        focusedOptionValue: value,
+        selectedValue: value,
         isOpen: false
       });
     } else {
@@ -158,17 +140,11 @@ export default class Select extends Component {
     }
 
     if (changeCallback) {
-      changeCallback(event);
+      // TODO investigate how to properly simulate a change event
+      const wrapperNode = React.findDOMNode(this);
+      wrapperNode.value = value;
+      changeCallback({target: wrapperNode});
     }
-  }
-
-  /**
-   * In order to inform the user which element in the document is active the
-   * component keeps track of when it is selected and depending on that provide
-   * a visual indicator.
-   */
-  _onFocus (event) {
-    this.setState({ isFocusedOn: true });
   }
 
   /**
@@ -178,7 +154,6 @@ export default class Select extends Component {
    */
   _onBlur (event) {
     this.setState({
-      isFocusedOn: false,
       isOpen: false
     });
   }
@@ -203,7 +178,6 @@ export default class Select extends Component {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true });
-      React.findDOMNode(this.refs.belleNativeSelect).focus();
     }
   }
 
@@ -270,16 +244,7 @@ export default class Select extends Component {
    * This is aligned with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
-    const changeEvent = new window.Event('change', {
-      bubbles: true,
-      cancelable: false
-    });
-
-    const select = React.findDOMNode(this.refs.belleNativeSelect);
-    // TODO investigate if this is aligned with a natively dispatched change event
-    // So far only a changed value has been identified.
-    select.value = this.state.focusedOptionValue;
-    select.dispatchEvent(changeEvent);
+    this._triggerChange(this.state.focusedOptionValue);
   }
 
   /**
@@ -330,7 +295,6 @@ export default class Select extends Component {
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
-    const nativeSelectStyle = extend({}, style.nativeSelectStyle, this.props.nativeSelectStyle);
     const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
     const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
 
@@ -352,11 +316,14 @@ export default class Select extends Component {
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
-      <div style={ wrapperStyle } >
+      <div style={ wrapperStyle }
+           tabIndex="0"
+           onKeyDown={ this._onKeyDown.bind(this) }
+           onBlur={ this._onBlur.bind( this) }
+           ref="selectWrapper">
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
-             onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
+             style={ defaultStyle }
              className={ unionClassNames(this.props.className, this.styleId) }>
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
@@ -389,38 +356,6 @@ export default class Select extends Component {
             })
           }
         </ul>
-
-        <select value={ this.state.selectedValue }
-                onChange={ this._onChange.bind(this) }
-                onFocus={ this._onFocus.bind(this) }
-                onBlur={ this._onBlur.bind(this) }
-                onKeyDown={ this._onKeyDown.bind(this) }
-                style={ nativeSelectStyle }
-                ref="belleNativeSelect">
-          {
-            React.Children.map(this.props.children, (entry, index) => {
-              // filter out all non-Option Components
-
-              // TODO get the text form for option instead of value
-              if (entry.type.name === 'Option') {
-                return (
-                  <option key={ index } value={ entry.props.value }>
-                    { entry.props.value }
-                  </option>
-                );
-              } else if (entry.type.name === 'Placeholder') {
-                // TODO get the text form for option instead of value
-                return (
-                  <option key={ index }
-                          value
-                          hidden
-                          disabled>
-                  </option>
-                );
-              }
-            })
-          }
-        </select>
 
       </div>
     );

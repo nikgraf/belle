@@ -47,6 +47,13 @@ export default React.createClass({
           <option value="C">Cranberry</option>
         </select>
 
+        <h3>Native Select with onChange</h3>
+        <select onChange={ (event) => console.log(event) }>
+          <option value="A">Apple</option>
+          <option value="B">Banana</option>
+          <option value="C">Cranberry</option>
+        </select>
+
         <h3>Select with onChange</h3>
         <Select onChange={ (event) => console.log(event) }>
           <Option value={ "vienna" }>Vienna</Option>
