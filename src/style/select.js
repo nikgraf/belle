@@ -29,6 +29,7 @@ var selectStyle = {
   },
 
   wrapperStyle: {
+    outline: 0, // to avoid default focus behaviour
     boxSizing: 'border-box',
     position: 'relative'
   },
@@ -47,17 +48,6 @@ var selectStyle = {
     boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
     borderTop: '1px solid #f2f2f2',
     top: 0
-  },
-
-  nativeSelectStyle: {
-    border: 0,
-    clip: "rect(0 0 0 0)",
-    height: 1,
-    margin: -1,
-    overflow: "hidden",
-    padding: 0,
-    position: "absolute",
-    width: 1
   },
 
   caretDownStyle: {

@@ -19,9 +19,6 @@ import style from '../style/select';
  *       <Option value="rome">Rome</Option>
  *     </Select>
  *
- * Under the hood this component is leveraging a native select tag to manage
- * focus and provide you as developer with native select events.
- *
  * This component was inpired by:
  * - Jet Watson: https://github.com/JedWatson/react-select
  * - Instructure React Team: https://github.com/instructure-react/react-select-box
@@ -31,15 +28,15 @@ export default class Select extends Component {
   /*
    * Initialize the component based on the provided properties.
    *
-   * By default the Select is closed & the focused option in case you open it
-   * will be the selected option.
+   * By default the Select is closed & the focused option in case the user opens
+   * it will be the selected option.
    */
   constructor (properties) {
     super(properties);
 
     let selectedValue;
 
-    if (this.props.valueLink && typeof this.props.valueLink === 'object') {
+    if (this.props.valueLink) {
       selectedValue = this.props.valueLink.value;
     } else if (this.props.value) {
       selectedValue = this.props.value;
@@ -50,15 +47,15 @@ export default class Select extends Component {
     }
 
     this.state = {
-      isFocusedOn: false,
       isOpen: false,
+      isFocused: false,
       selectedValue: selectedValue,
       focusedOptionValue: selectedValue
     };
   }
 
   componentWillReceiveProps(properties) {
-    if (properties.valueLink && typeof properties.valueLink === 'object') {
+    if (properties.valueLink) {
       this.setState({
         selectedValue: properties.valueLink.value,
         focusedOptionValue: properties.valueLink.value
@@ -92,56 +89,29 @@ export default class Select extends Component {
   }
 
   /**
-   * In order to prevent loosing focus on the native select the onMouseDown
-   * event default behaviour is prevented.
-   */
-  _onMouseDownAtOption (event) {
-    event.preventDefault();
-  }
-
-  /**
-   * In order to prevent loosing focus on the native select the onMouseDown
-   * event default behaviour is prevented.
-   */
-  _onMouseDownAtSelectBox (event) {
-    event.preventDefault();
-  }
-
-  /**
-   * After the user clicks on an Option a change event is dispatched on the
-   * native select.
+   * After the user clicks on an Option the state is changed & a change event is
+   * dispatched on this component.
    *
-   * Rather than just updating the state the philosophy of Belle dicdates to fire
-   * a change event from the native select in order to provide consistent event
-   * behaviour between selecting an option by mouse click, touch or key press.
-   *
-   * This is aligned with the behaviour of the native HTML select.
+   * The philosophy of Belle dicdates to fire a change event in order to be
+   * aligned with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
-    const changeEvent = new window.Event('change', {
-      bubbles: true,
-      cancelable: false
-    });
-
     const entry = event.currentTarget.querySelector('[data-belle-value]');
-    const select = React.findDOMNode(this.refs.belleNativeSelect);
-    // TODO investigate if this is aligned with a natively dispatched change event
-    // So far only a changed value has been identified.
-    select.value = entry.getAttribute('data-belle-value');
-    select.dispatchEvent(changeEvent);
+    this._triggerChange(entry.getAttribute('data-belle-value'));
   }
 
   /**
-   * After a choice has been selected the options area gets closed and the selection processed.
+   * After an option has been selected the options area gets closed and the
+   * selection processed.
    *
    * Depending on the component's properties the value gets updated and the
    * provided change callback for onChange or valueLink is called.
    */
-  _onChange (event) {
+  _triggerChange (value) {
     if(isUndefined(this.props.value)) {
       this.setState({
-        focusedOptionValue: event.target.value,
-        selectedValue: event.target.value,
+        focusedOptionValue: value,
+        selectedValue: value,
         isOpen: false
       });
     } else {
@@ -150,42 +120,44 @@ export default class Select extends Component {
       });
     }
 
-    let changeCallback = this.props.onChange;
-    const valueLink = this.props.valueLink;
-
-    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = event => valueLink.requestChange(event.target.value);
-    }
-
-    if (changeCallback) {
-      changeCallback(event);
+    if (this.props.valueLink) {
+      this.props.valueLink.requestChange(value);
+    } else if (this.props.onChange) {
+      // TODO investigate how to properly simulate a change event that includes
+      // all the usual properties documented here:
+      // https://facebook.github.io/react/docs/events.html
+      const wrapperNode = React.findDOMNode(this);
+      wrapperNode.value = value;
+      this.props.onChange({target: wrapperNode});
     }
   }
 
   /**
    * In order to inform the user which element in the document is active the
-   * component keeps track of when it is selected and depending on that provide
-   * a visual indicator.
-   */
-  _onFocus (event) {
-    this.setState({ isFocusedOn: true });
-  }
-
-  /**
-   * In order to inform the user which element in the document is active the
-   * component keeps track of when it is de-selected and depending on that
-   * remove the visual indicator.
+   * component keeps track of when it's de-selected and depending on that
+   * close the optionsArea.
    */
   _onBlur (event) {
     this.setState({
-      isFocusedOn: false,
-      isOpen: false
+      isOpen: false,
+      isFocused: false
+    });
+  }
+
+  /**
+   * In order to inform the user which element in the document is active the
+   * component keeps track of when it's de-selected and depending on that
+   * close the optionsArea.
+   */
+  _onFocus (event) {
+    this.setState({
+      isFocused: true
     });
   }
 
   /**
    * In order to inform the user which Option is active the component keeps
-   * track of when an option is in focus of the user and depending on that
+   * track of when an option is in focus by the user and depending on that
    * provide a visual indicator.
    */
   _onMouseEnterAtOption (event) {
@@ -196,14 +168,13 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the selection area of the component.
+   * Toggle the options area of the component.
    */
   _toggleOptionsArea () {
     if (this.state.isOpen) {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true });
-      React.findDOMNode(this.refs.belleNativeSelect).focus();
     }
   }
 
@@ -261,25 +232,13 @@ export default class Select extends Component {
    * After the user pressed the `Enter` or `Space` key for an already open
    * options area the focused option is selected.
    *
-   * Same as _onClickAtOption this dispatches a change event on the native select.
+   * Same as _onClickAtOption this update the state & dispatches a change event.
    *
-   * Rather than just updating the state the philosophy of Belle dicdates to fire
-   * a change event from the native select in order to provide consistent event
-   * behaviour between selecting an option by mouse click, touch or key press.
-   *
-   * This is aligned with the behaviour of the native HTML select.
+   * The philosophy of Belle dicdates to fire a change event in order to be
+   * aligned with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
-    const changeEvent = new window.Event('change', {
-      bubbles: true,
-      cancelable: false
-    });
-
-    const select = React.findDOMNode(this.refs.belleNativeSelect);
-    // TODO investigate if this is aligned with a natively dispatched change event
-    // So far only a changed value has been identified.
-    select.value = this.state.focusedOptionValue;
-    select.dispatchEvent(changeEvent);
+    this._triggerChange(this.state.focusedOptionValue);
   }
 
   /**
@@ -330,7 +289,6 @@ export default class Select extends Component {
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
-    const nativeSelectStyle = extend({}, style.nativeSelectStyle, this.props.nativeSelectStyle);
     const caretDownStyle = extend({}, style.caretDownStyle, this.props.caretDownStyle);
     const caretUpStyle = extend({}, style.caretUpStyle, this.props.caretUpStyle);
 
@@ -352,12 +310,17 @@ export default class Select extends Component {
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
 
     return (
-      <div style={ wrapperStyle } >
+      <div style={ wrapperStyle }
+           tabIndex="0"
+           onKeyDown={ this._onKeyDown.bind(this) }
+           onBlur={ this._onBlur.bind( this) }
+           onFocus={ this._onFocus.bind( this) }
+           className={ this.props.wrapperClassName }
+           ref="selectWrapper">
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
-             onMouseDown={ this._onMouseDownAtSelectBox.bind(this) }
-             style={ this.state.isFocusedOn ? focusStyle : defaultStyle }
-             className={ unionClassNames(this.props.className, this.styleId) }>
+             style={ this.state.isFocused ? focusStyle : defaultStyle }
+             className={ unionClassNames(this.props.className, this._styleId) }>
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretUpStyle : caretDownStyle }></span>
         </div>
@@ -373,7 +336,6 @@ export default class Select extends Component {
 
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
-                      onMouseDown={ this._onMouseDownAtOption.bind(this) }
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
                     { option }
@@ -389,38 +351,6 @@ export default class Select extends Component {
             })
           }
         </ul>
-
-        <select value={ this.state.selectedValue }
-                onChange={ this._onChange.bind(this) }
-                onFocus={ this._onFocus.bind(this) }
-                onBlur={ this._onBlur.bind(this) }
-                onKeyDown={ this._onKeyDown.bind(this) }
-                style={ nativeSelectStyle }
-                ref="belleNativeSelect">
-          {
-            React.Children.map(this.props.children, (entry, index) => {
-              // filter out all non-Option Components
-
-              // TODO get the text form for option instead of value
-              if (entry.type.name === 'Option') {
-                return (
-                  <option key={ index } value={ entry.props.value }>
-                    { entry.props.value }
-                  </option>
-                );
-              } else if (entry.type.name === 'Placeholder') {
-                // TODO get the text form for option instead of value
-                return (
-                  <option key={ index }
-                          value
-                          hidden
-                          disabled>
-                  </option>
-                );
-              }
-            })
-          }
-        </select>
 
       </div>
     );
@@ -442,7 +372,14 @@ Select.propTypes = {
     React.PropTypes.string,
     React.PropTypes.number,
     React.PropTypes.instanceOf(Date)
-  ])
+  ]),
+  onChange: React.PropTypes.func,
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.string.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  }),
+  className: React.PropTypes.string,
+  wrapperClassName: React.PropTypes.string
 };
 
 /**
