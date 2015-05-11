@@ -92,12 +92,12 @@ describe('Select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select valueLink={ valueLink } >
         <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value='vienna' className="vienna-option">Vienna</Option>
       </Select>
     );
 
-    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.Simulate.change(nativeSelect);
+    const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
+    TestUtils.Simulate.click(viennaOptionNode);
 
     expect(wasCalled).toBeTruthy();
   });
@@ -108,50 +108,26 @@ describe('Select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select onChange={ () => { wasCalled = true; } } >
         <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value='vienna' className="vienna-option">Vienna</Option>
       </Select>
     );
 
-    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.Simulate.change(nativeSelect);
+    const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
+    TestUtils.Simulate.click(viennaOptionNode);
 
     expect(wasCalled).toBeTruthy();
   });
 
-  it('should dispatch a change event on the native select in case the user clicks on an option', () => {
-    const select = TestUtils.renderIntoDocument(
-      <Select defaultValue='rome' >
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
-      </Select>
-    );
-
-    // mock functions
-    window.Event = jest.genMockFunction();
-    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    var nativeSelectNode = React.findDOMNode(nativeSelect);
-    nativeSelectNode.dispatchEvent = jest.genMockFunction();
-
-    // dispatch event on the vienna entry
-    const viennaOption = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li')[1];
-    TestUtils.Simulate.click(viennaOption);
-
-    expect(window.Event.mock.calls[0][0]).toBe('change');
-    expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
-    expect(nativeSelectNode.value).toBe('vienna');
-  });
-
-
   it('should change the selectedValue & focusedOptionValue on selection', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select defaultValue='rome' >
+      <Select defaultValue='rome'>
         <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value='vienna' className="vienna-option">Vienna</Option>
       </Select>
     );
 
-    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.Simulate.change(nativeSelect, {target: {value: 'vienna'}});
+    const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
+    TestUtils.Simulate.click(viennaOptionNode);
 
     expect(select.state.selectedValue).toBe('vienna');
     expect(select.state.focusedOptionValue).toBe('vienna');
@@ -161,12 +137,12 @@ describe('Select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select value='rome' >
         <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value='vienna' className="vienna-option">Vienna</Option>
       </Select>
     );
 
-    const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-    TestUtils.Simulate.change(nativeSelect, {target: {value: 'vienna'}});
+    const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
+    TestUtils.Simulate.click(viennaOptionNode);
 
     expect(select.state.selectedValue).toBe('rome');
     expect(select.state.focusedOptionValue).toBe('rome');
@@ -174,15 +150,14 @@ describe('Select', () => {
 
   it('should be able to adopt the styles of a select', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select nativeSelectStyle={ { color: '#700' } }>
+      <Select style={ { cursor: 'cross' } }>
         <Option value='rome'>Rome</Option>
         <Option value='vienna'>Vienna</Option>
       </Select>
     );
 
-    const nativeSelectNode = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-
-    expect(nativeSelectNode.props.style.color).toBe('#700');
+    const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    expect(selectedAreaNode.props.style.cursor).toBe('cross');
   });
 
   describe('updating props', () => {
@@ -225,112 +200,103 @@ describe('Select', () => {
     });
   });
 
-  describe('manage key events', () => {
+  function testKeyEvents(container) {
 
-    let select, nativeSelect;
+    it('should open the options area by pressing ArrowDown', () => {
+      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+      expect(container.select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing ArrowUp', () => {
+      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+      expect(container.select.state.isOpen).toBeTruthy();
+    });
+
+    it('should open the options area by pressing Space', () => {
+      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+      expect(container.select.state.isOpen).toBeTruthy();
+    });
+
+    describe('when the options area is open', () => {
+
+      beforeEach(() => {
+        container.select.setState({ isOpen: true });
+      });
+
+      it('should close options area when pressing Escape', () => {
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'Escape'});
+        expect(container.select.state.isOpen).toBeFalsy();
+      });
+
+      it('should focus on the next option when pressing ArrowDown', () => {
+        expect(container.select.state.focusedOptionValue).toBe('rome');
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+        expect(container.select.state.focusedOptionValue).toBe('vienna');
+      });
+
+      it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
+        container.select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+        expect(container.select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the previous option when pressing ArrowUp', () => {
+        container.select.setState({ focusedOptionValue: 'vienna' });
+        expect(container.select.state.focusedOptionValue).toBe('vienna');
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+        expect(container.select.state.focusedOptionValue).toBe('rome');
+      });
+
+      it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
+        container.select.setState({ focusedOptionValue: undefined });
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+        expect(container.select.state.focusedOptionValue).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Enter', () => {
+        container.select.setState({ focusedOptionValue: 'berlin' });
+        TestUtils.Simulate.keyDown(container.selectNode, {key: 'Enter'});
+        expect(container.select.state.selectedValue).toBe('berlin');
+      });
+
+      it('should select the focused option when pressing Space', () => {
+        container.select.setState({ focusedOptionValue: 'berlin' });
+        TestUtils.Simulate.keyDown(container.selectNode, {key: ' '});
+        expect(container.select.state.selectedValue).toBe('berlin');
+      });
+
+    });
+
+  }
+
+
+  describe('manage key events for simple list', () => {
+
+    // in order to ensure no references are lost a container object is used
+    var container = {};
 
     beforeEach(() => {
-      select = TestUtils.renderIntoDocument(
+      container.select = TestUtils.renderIntoDocument(
         <Select>
           <Option value='rome'>Rome</Option>
           <Option value='vienna'>Vienna</Option>
           <Option value='berlin'>Berlin</Option>
         </Select>
       );
-      nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+      container.selectNode = React.findDOMNode(container.select);
     });
 
-    it('should open the options area by pressing ArrowDown', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    it('should open the options area by pressing ArrowUp', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    it('should open the options area by pressing Space', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    describe('when the options area is open', () => {
-
-      beforeEach(() => {
-        select.setState({ isOpen: true });
-      });
-
-      it('should close options area when pressing Escape', () => {
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Escape'});
-        expect(select.state.isOpen).toBeFalsy();
-      });
-
-      it('should focus on the next option when pressing ArrowDown', () => {
-        expect(select.state.focusedOptionValue).toBe('rome');
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-        expect(select.state.focusedOptionValue).toBe('vienna');
-      });
-
-      it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
-        select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-        expect(select.state.focusedOptionValue).toBe('rome');
-      });
-
-      it('should focus on the previous option when pressing ArrowUp', () => {
-        select.setState({ focusedOptionValue: 'vienna' });
-        expect(select.state.focusedOptionValue).toBe('vienna');
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-        expect(select.state.focusedOptionValue).toBe('rome');
-      });
-
-      it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
-        select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-        expect(select.state.focusedOptionValue).toBe('berlin');
-      });
-
-      it('should select the focused option when pressing Enter', () => {
-        select.setState({ focusedOptionValue: 'berlin' });
-
-        window.Event = jest.genMockFunction();
-        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-        var nativeSelectNode = React.findDOMNode(nativeSelect);
-        nativeSelectNode.dispatchEvent = jest.genMockFunction();
-
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Enter'});
-
-        expect(window.Event.mock.calls[0][0]).toBe('change');
-        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
-        expect(nativeSelectNode.value).toBe('berlin');
-      });
-
-      it('should select the focused option when pressing Space', () => {
-        select.setState({ focusedOptionValue: 'berlin' });
-
-        window.Event = jest.genMockFunction();
-        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-        var nativeSelectNode = React.findDOMNode(nativeSelect);
-        nativeSelectNode.dispatchEvent = jest.genMockFunction();
-
-        TestUtils.Simulate.keyDown(nativeSelect, {key: ' '});
-
-        expect(window.Event.mock.calls[0][0]).toBe('change');
-        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
-        expect(nativeSelectNode.value).toBe('berlin');
-      });
-
-    });
+    testKeyEvents(container);
 
   });
 
   describe('manage key events when separators are present', () => {
 
-    let select, nativeSelect;
+    // in order to ensure no references are lost a container object is used
+    var container = {};
 
     beforeEach(() => {
-      select = TestUtils.renderIntoDocument(
+      container.select = TestUtils.renderIntoDocument(
         <Select>
           <Separator>Italy</Separator>
           <Option value='rome'>Rome</Option>
@@ -340,93 +306,11 @@ describe('Select', () => {
           <Option value='berlin'>Berlin</Option>
         </Select>
       );
-      nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
+      container.selectNode = React.findDOMNode(container.select);
     });
 
-    it('should open the options area by pressing ArrowDown', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    it('should open the options area by pressing ArrowUp', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    it('should open the options area by pressing Space', () => {
-      TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-      expect(select.state.isOpen).toBeTruthy();
-    });
-
-    describe('when the options area is open', () => {
-
-      beforeEach(() => {
-        select.setState({ isOpen: true });
-      });
-
-      it('should close options area when pressing Escape', () => {
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Escape'});
-        expect(select.state.isOpen).toBeFalsy();
-      });
-
-      it('should focus on the next option when pressing ArrowDown', () => {
-        expect(select.state.focusedOptionValue).toBe('rome');
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-        expect(select.state.focusedOptionValue).toBe('vienna');
-      });
-
-      it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
-        select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowDown'});
-        expect(select.state.focusedOptionValue).toBe('rome');
-      });
-
-      it('should focus on the previous option when pressing ArrowUp', () => {
-        select.setState({ focusedOptionValue: 'vienna' });
-        expect(select.state.focusedOptionValue).toBe('vienna');
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-        expect(select.state.focusedOptionValue).toBe('rome');
-      });
-
-      it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
-        select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'ArrowUp'});
-        expect(select.state.focusedOptionValue).toBe('berlin');
-      });
-
-      it('should select the focused option when pressing Enter', () => {
-        select.setState({ focusedOptionValue: 'berlin' });
-
-        window.Event = jest.genMockFunction();
-        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-        var nativeSelectNode = React.findDOMNode(nativeSelect);
-        nativeSelectNode.dispatchEvent = jest.genMockFunction();
-
-        TestUtils.Simulate.keyDown(nativeSelect, {key: 'Enter'});
-
-        expect(window.Event.mock.calls[0][0]).toBe('change');
-        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
-        expect(nativeSelectNode.value).toBe('berlin');
-      });
-
-      it('should select the focused option when pressing Space', () => {
-        select.setState({ focusedOptionValue: 'berlin' });
-
-        window.Event = jest.genMockFunction();
-        const nativeSelect = TestUtils.findRenderedDOMComponentWithTag(select, 'select');
-        var nativeSelectNode = React.findDOMNode(nativeSelect);
-        nativeSelectNode.dispatchEvent = jest.genMockFunction();
-
-        TestUtils.Simulate.keyDown(nativeSelect, {key: ' '});
-
-        expect(window.Event.mock.calls[0][0]).toBe('change');
-        expect(nativeSelectNode.dispatchEvent.mock.calls.length).toBe(1);
-        expect(nativeSelectNode.value).toBe('berlin');
-      });
-
-    });
+    testKeyEvents(container);
 
   });
-
 
 });
