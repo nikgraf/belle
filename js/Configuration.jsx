@@ -118,8 +118,8 @@ const styleStructure = `style = {
     wrapperStyle: { … },
     optionsAreaStyle: { … },
     nativeSelectStyle: { … },
-    caretDownStyle: { … },
-    caretUpStyle: { … }
+    caretToOpenStyle: { … },
+    caretToCloseStyle: { … }
   },
   option: {
     style: { … },
