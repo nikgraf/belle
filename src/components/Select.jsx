@@ -19,9 +19,6 @@ import style from '../style/select';
  *       <Option value="rome">Rome</Option>
  *     </Select>
  *
- * Under the hood this component is leveraging a native select tag to manage
- * focus and provide you as developer with native select events.
- *
  * This component was inpired by:
  * - Jet Watson: https://github.com/JedWatson/react-select
  * - Instructure React Team: https://github.com/instructure-react/react-select-box
@@ -31,8 +28,8 @@ export default class Select extends Component {
   /*
    * Initialize the component based on the provided properties.
    *
-   * By default the Select is closed & the focused option in case you open it
-   * will be the selected option.
+   * By default the Select is closed & the focused option in case the user opens
+   * it will be the selected option.
    */
   constructor (properties) {
     super(properties);
@@ -91,14 +88,11 @@ export default class Select extends Component {
   }
 
   /**
-   * After the user clicks on an Option a change event is dispatched on the
-   * native select.
+   * After the user clicks on an Option the state is changed & a change event is
+   * dispatched on this component.
    *
-   * Rather than just updating the state the philosophy of Belle dicdates to fire
-   * a change event from the native select in order to provide consistent event
-   * behaviour between selecting an option by mouse click, touch or key press.
-   *
-   * This is aligned with the behaviour of the native HTML select.
+   * The philosophy of Belle dicdates to fire a change event in order to be
+   * aligned with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
@@ -106,7 +100,8 @@ export default class Select extends Component {
   }
 
   /**
-   * After a choice has been selected the options area gets closed and the selection processed.
+   * After an option has been selected the options area gets closed and the
+   * selection processed.
    *
    * Depending on the component's properties the value gets updated and the
    * provided change callback for onChange or valueLink is called.
@@ -132,7 +127,9 @@ export default class Select extends Component {
     }
 
     if (changeCallback) {
-      // TODO investigate how to properly simulate a change event
+      // TODO investigate how to properly simulate a change event that includes
+      // all the usual properties documented here:
+      // https://facebook.github.io/react/docs/events.html
       const wrapperNode = React.findDOMNode(this);
       wrapperNode.value = value;
       changeCallback({target: wrapperNode});
@@ -141,8 +138,8 @@ export default class Select extends Component {
 
   /**
    * In order to inform the user which element in the document is active the
-   * component keeps track of when it is de-selected and depending on that
-   * remove the visual indicator.
+   * component keeps track of when it's de-selected and depending on that
+   * close the optionsArea.
    */
   _onBlur (event) {
     this.setState({
@@ -152,7 +149,7 @@ export default class Select extends Component {
 
   /**
    * In order to inform the user which Option is active the component keeps
-   * track of when an option is in focus of the user and depending on that
+   * track of when an option is in focus by the user and depending on that
    * provide a visual indicator.
    */
   _onMouseEnterAtOption (event) {
@@ -163,7 +160,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the selection area of the component.
+   * Toggle the options area of the component.
    */
   _toggleOptionsArea () {
     if (this.state.isOpen) {
@@ -227,13 +224,10 @@ export default class Select extends Component {
    * After the user pressed the `Enter` or `Space` key for an already open
    * options area the focused option is selected.
    *
-   * Same as _onClickAtOption this dispatches a change event on the native select.
+   * Same as _onClickAtOption this update the state & dispatches a change event.
    *
-   * Rather than just updating the state the philosophy of Belle dicdates to fire
-   * a change event from the native select in order to provide consistent event
-   * behaviour between selecting an option by mouse click, touch or key press.
-   *
-   * This is aligned with the behaviour of the native HTML select.
+   * The philosophy of Belle dicdates to fire a change event in order to be
+   * aligned with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
     this._triggerChange(this.state.focusedOptionValue);
