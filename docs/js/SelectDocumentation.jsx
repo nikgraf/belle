@@ -41,6 +41,51 @@ export default class SelectDocumentation extends Component {
         Documentation coming soon …
       </p>
 
+      <table>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            shouldPositionOptions
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>bool</i>
+              <br />
+              optional</p>
+            <p>
+              This one is by default true. If set to true the options area is
+              repositioned after opening it to position the focusedOption right
+              on top of the already selected one. By default it also finds the
+              right entry in case the optionsArea has a maxHeight and scrolling
+              is active. If set to false it is not repositioned.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            positionOptions
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>function(this)</i>
+              <br />
+              optional
+            </p>
+            <p>
+              A function called after the user opens the optionsArea.
+              The function's purpose is to reposition the options area to
+              improve the user experience.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+      <p>
+        More documentation on properties coming soon …
+      </p>
+
       <h3>More Examples</h3>
 
       <p>Select from a dynamic data set including a defaultValue & onChange callback</p>
@@ -161,8 +206,26 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ advancedStylingCodeExample } style={ {marginTop: 40} } />
 
+      <h3>Select with a custom positionOptions function</h3>
+
+      <Select positionOptions={ positionOptions }>
+        <Placeholder>Choose a City</Placeholder>
+        <Option value="berlin">Berlin</Option>
+        <Option value="tokyo">Tokyo</Option>
+        <Option value="vienna">Vienna</Option>
+      </Select>
+
+      <Code value={ positionOptionsCodeExample } style={ {marginTop: 40} } />
+
+      <Code value={ positionOptionsSelectCodeExample } style={ {marginTop: 40} } />
+
     </Card>;
   }
+}
+
+function positionOptions (selectComponent) {
+  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
+  optionsAreaNode.style.top = '35px';
 }
 
 const basicCodeExample = `<!-- basic select example -->
@@ -285,3 +348,30 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
     Croatia
   </Option>
 </Select>`;
+
+const positionOptionsCodeExample = `<!-- custom positionOptions function in your JS code -->
+function positionOptions (selectComponent) {
+  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
+  optionsAreaNode.style.top = '35px';
+}`;
+
+const positionOptionsSelectCodeExample = `<!-- select with a custom positionOptions function -->
+<Select positionOptions={ positionOptions }>
+  <Placeholder>Choose a City</Placeholder>
+  <Option value="berlin">Berlin</Option>
+  <Option value="tokyo">Tokyo</Option>
+  <Option value="vienna">Vienna</Option>
+</Select>`;
+
+const propertyNameStyle = {
+  padding: '0 20px 0 0',
+  textAlign: 'left',
+  verticalAlign: 'top',
+  color: 'grey'
+};
+
+const propertyDescriptionStyle = {
+  padding: 0,
+  textAlign: 'left',
+  verticalAlign: 'top'
+};
