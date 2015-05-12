@@ -93,66 +93,7 @@ export default class Select extends Component {
    */
   componentDidUpdate(previousProperties, previousState) {
     if (!previousState.isOpen && this.state.isOpen) {
-      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
-      const optionsAreaStyle = window.getComputedStyle(optionsAreaNode, null);
-      const optionsAreaWidth = parseFloat(optionsAreaStyle.getPropertyValue('width'));
-
-      // In case of a placeholder no option is focused on initially
-      let option;
-
-      if (this.state.selectedValue) {
-        option = optionsAreaNode.children[findIndexOfSelectedOption(this)];
-      } else {
-        option = optionsAreaNode.children[0];
-      }
-
-      const optionsAreaHeight = parseFloat(optionsAreaStyle.getPropertyValue('height'));
-
-      // In order to work with legacy browsers the second paramter for pseudoClass
-      // has to be provided http://caniuse.com/#feat=getcomputedstyle
-      const optionStyle = window.getComputedStyle(option.children[0], null);
-      const optionPaddingTop = parseFloat(optionStyle.getPropertyValue('padding-top'));
-      const optionPaddingLeft = parseFloat(optionStyle.getPropertyValue('padding-top'));
-
-      const selectedWrapperNode = React.findDOMNode(this.refs.selectedWrapper);
-      const selectedWrapperStyle = window.getComputedStyle(selectedWrapperNode, null);
-      const selectedWrapperPaddingTop = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
-      const selectedWrapperPaddingLeft = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
-
-      const newTop = option.offsetTop + optionPaddingTop - selectedWrapperPaddingTop;
-      const newLeft = option.offsetLeft + optionPaddingLeft;
-
-      // Top positioning
-      if (optionsAreaHeight < optionsAreaNode.scrollHeight) {
-        if(newTop + optionsAreaHeight > optionsAreaNode.scrollHeight) {
-          // In case scrolling is not enough the box needs to be moved more to
-          // the top to match the same position.
-          const maxScrollTop = optionsAreaNode.scrollHeight - optionsAreaHeight;
-          optionsAreaNode.scrollTop = maxScrollTop;
-          optionsAreaNode.style.top = `-${newTop - maxScrollTop}px`;
-        } else {
-          optionsAreaNode.scrollTop = newTop;
-        }
-      } else {
-        optionsAreaNode.style.top = `-${newTop}px`;
-      }
-
-      // Left positioning
-      optionsAreaNode.style.left = `-${newLeft}px`;
-
-      // Increasing the width
-      //
-      // Pro:
-      // - It gives a option in the optionsArea the same width
-      // as in the selectedWrapper.
-      // - There is space to keep the text of the option on the exact same pixel
-      // when opening. The optionsArea is symetric in relation to the
-      // selectedWrapper.
-      //
-      // Con:
-      // - Adding the padding could cause issue with design as it gets wider than
-      // the original field.
-      optionsAreaNode.style.width = `${optionsAreaWidth + newLeft * 2}px`;
+      repositionOptionsArea(this);
     }
   }
 
@@ -562,3 +503,72 @@ const hasNext = (list, currentIndex) => {
 const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
 };
+
+/**
+ * Repositions to the optionsArea to position the focusedOption right on top
+ * of the selected one.
+ *
+ * @param selectComponent {object} - the Select component itself accessible with `this`
+ */
+function repositionOptionsArea(selectComponent) {
+  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
+  const optionsAreaStyle = window.getComputedStyle(optionsAreaNode, null);
+  const optionsAreaWidth = parseFloat(optionsAreaStyle.getPropertyValue('width'));
+
+  // In case of a placeholder no option is focused on initially
+  let option;
+
+  if (selectComponent.state.selectedValue) {
+    option = optionsAreaNode.children[findIndexOfSelectedOption(selectComponent)];
+  } else {
+    option = optionsAreaNode.children[0];
+  }
+
+  const optionsAreaHeight = parseFloat(optionsAreaStyle.getPropertyValue('height'));
+
+  // In order to work with legacy browsers the second paramter for pseudoClass
+  // has to be provided http://caniuse.com/#feat=getcomputedstyle
+  const optionStyle = window.getComputedStyle(option.children[0], null);
+  const optionPaddingTop = parseFloat(optionStyle.getPropertyValue('padding-top'));
+  const optionPaddingLeft = parseFloat(optionStyle.getPropertyValue('padding-top'));
+
+  const selectedWrapperNode = React.findDOMNode(selectComponent.refs.selectedWrapper);
+  const selectedWrapperStyle = window.getComputedStyle(selectedWrapperNode, null);
+  const selectedWrapperPaddingTop = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
+  const selectedWrapperPaddingLeft = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
+
+  const newTop = option.offsetTop + optionPaddingTop - selectedWrapperPaddingTop;
+  const newLeft = option.offsetLeft + optionPaddingLeft;
+
+  // Top positioning
+  if (optionsAreaHeight < optionsAreaNode.scrollHeight) {
+    if(newTop + optionsAreaHeight > optionsAreaNode.scrollHeight) {
+      // In case scrolling is not enough the box needs to be moved more to
+      // the top to match the same position.
+      const maxScrollTop = optionsAreaNode.scrollHeight - optionsAreaHeight;
+      optionsAreaNode.scrollTop = maxScrollTop;
+      optionsAreaNode.style.top = `-${newTop - maxScrollTop}px`;
+    } else {
+      optionsAreaNode.scrollTop = newTop;
+    }
+  } else {
+    optionsAreaNode.style.top = `-${newTop}px`;
+  }
+
+  // Left positioning
+  optionsAreaNode.style.left = `-${newLeft}px`;
+
+  // Increasing the width
+  //
+  // Pro:
+  // - It gives a option in the optionsArea the same width
+  // as in the selectedWrapper.
+  // - There is space to keep the text of the option on the exact same pixel
+  // when opening. The optionsArea is symetric in relation to the
+  // selectedWrapper.
+  //
+  // Con:
+  // - Adding the padding could cause issue with design as it gets wider than
+  // the original field.
+  optionsAreaNode.style.width = `${optionsAreaWidth + newLeft * 2}px`;
+}
