@@ -206,8 +206,26 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ advancedStylingCodeExample } style={ {marginTop: 40} } />
 
+      <h3>Select with a custom positionOptions function</h3>
+
+      <Select positionOptions={ positionOptions }>
+        <Placeholder>Choose a City</Placeholder>
+        <Option value="berlin">Berlin</Option>
+        <Option value="tokyo">Tokyo</Option>
+        <Option value="vienna">Vienna</Option>
+      </Select>
+
+      <Code value={ positionOptionsCodeExample } style={ {marginTop: 40} } />
+
+      <Code value={ positionOptionsSelectCodeExample } style={ {marginTop: 40} } />
+
     </Card>;
   }
+}
+
+function positionOptions (selectComponent) {
+  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
+  optionsAreaNode.style.top = '35px';
 }
 
 const basicCodeExample = `<!-- basic select example -->
@@ -329,6 +347,20 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
           }} >
     Croatia
   </Option>
+</Select>`;
+
+const positionOptionsCodeExample = `<!-- custom positionOptions function in your JS code -->
+function positionOptions (selectComponent) {
+  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
+  optionsAreaNode.style.top = '35px';
+}`;
+
+const positionOptionsSelectCodeExample = `<!-- select with a custom positionOptions function -->
+<Select positionOptions={ positionOptions }>
+  <Placeholder>Choose a City</Placeholder>
+  <Option value="berlin">Berlin</Option>
+  <Option value="tokyo">Tokyo</Option>
+  <Option value="vienna">Vienna</Option>
 </Select>`;
 
 const propertyNameStyle = {
