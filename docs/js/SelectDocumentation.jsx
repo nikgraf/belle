@@ -41,6 +41,51 @@ export default class SelectDocumentation extends Component {
         Documentation coming soon …
       </p>
 
+      <table>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            shouldPositionOptions
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>bool</i>
+              <br />
+              optional</p>
+            <p>
+              This one is by default true. If set to true the options area is
+              repositioned after opening it to position the focusedOption right
+              on top of the already selected one. By default it also finds the
+              right entry in case the optionsArea has a maxHeight and scrolling
+              is active. If set to false it is not repositioned.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            positionOptions
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>function(this)</i>
+              <br />
+              optional
+            </p>
+            <p>
+              A function called after the user opens the optionsArea.
+              The function's purpose is to reposition the options area to
+              improve the user experience.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+      <p>
+        More documentation on properties coming soon …
+      </p>
+
       <h3>More Examples</h3>
 
       <p>Select from a dynamic data set including a defaultValue & onChange callback</p>
@@ -285,3 +330,16 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
     Croatia
   </Option>
 </Select>`;
+
+const propertyNameStyle = {
+  padding: '0 20px 0 0',
+  textAlign: 'left',
+  verticalAlign: 'top',
+  color: 'grey'
+};
+
+const propertyDescriptionStyle = {
+  padding: 0,
+  textAlign: 'left',
+  verticalAlign: 'top'
+};

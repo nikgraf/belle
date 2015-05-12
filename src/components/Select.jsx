@@ -19,6 +19,9 @@ import style from '../style/select';
  *       <Option value="rome">Rome</Option>
  *     </Select>
  *
+ * For more advanced examples please see:
+ * nikgraf.github.io/belle/#/component/select
+ *
  * This component was inpired by:
  * - Jet Watson: https://github.com/JedWatson/react-select
  * - Instructure React Team: https://github.com/instructure-react/react-select-box
