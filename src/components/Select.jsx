@@ -92,15 +92,41 @@ export default class Select extends Component {
   }
 
   /**
-   * Changes the position of the optionsArea to match the initial select when
-   * opening the optionsArea.
+   * In case shouldPositionOptions is active the scrollTop position is stored
+   * to be applied later on. The optionsArea is hidden to make sure it is
+   * not displayed beofre repositioned.
+   */
+  componentWillUpdate(nextProperties, nextState) {
+    if (nextProperties.shouldPositionOptions) {
+      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+      this.cachedOptionsAreaScrollTop = optionsAreaNode.scrollTop;
+      optionsAreaNode.style.display = 'none';
+    }
+  }
+
+  /**
+   * In case shouldPositionOptions is active when opening the optionsArea it is
+   * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (this.props.shouldPositionOptions && !previousState.isOpen && this.state.isOpen) {
-      if(this.props.positionOptions) {
-        this.props.positionOptions(this);
+    if (this.props.shouldPositionOptions) {
+      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+
+      // the optionsArea was just opened
+      if (!previousState.isOpen && this.state.isOpen) {
+        if(this.props.positionOptions) {
+          this.props.positionOptions(this);
+        } else {
+          repositionOptionsArea(this);
+        }
+      // restore the old scrollTop position
       } else {
-        repositionOptionsArea(this);
+        optionsAreaNode.scrollTop = this.cachedOptionsAreaScrollTop;
+      }
+
+      if (this.state.isOpen) {
+        const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
+        optionsAreaNode.style.display = optionsAreaStyle.display;
       }
     }
   }
