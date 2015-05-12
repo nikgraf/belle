@@ -89,11 +89,16 @@ export default class Select extends Component {
   }
 
   /**
-   * Changes the position of the optionsArea to match the initial select.
+   * Changes the position of the optionsArea to match the initial select when
+   * opening the optionsArea.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (!previousState.isOpen && this.state.isOpen) {
-      repositionOptionsArea(this);
+    if (this.props.shouldPositionOptions && !previousState.isOpen && this.state.isOpen) {
+      if(this.props.positionOptions) {
+        this.props.positionOptions(this);
+      } else {
+        repositionOptionsArea(this);
+      }
     }
   }
 
@@ -389,7 +394,13 @@ Select.propTypes = {
     requestChange: React.PropTypes.func.isRequired
   }),
   className: React.PropTypes.string,
-  wrapperClassName: React.PropTypes.string
+  wrapperClassName: React.PropTypes.string,
+  shouldPositionOptions: React.PropTypes.bool,
+  positionOptions: React.PropTypes.func
+};
+
+Select.defaultProps = {
+  shouldPositionOptions: true
 };
 
 /**
