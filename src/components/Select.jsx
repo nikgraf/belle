@@ -135,8 +135,8 @@ export default class Select extends Component {
    * After the user clicks on an Option the state is changed & a change event is
    * dispatched on this component.
    *
-   * The philosophy of Belle dicdates to fire a change event in order to be
-   * aligned with the behaviour of the native HTML select.
+   * Belle's philosophy dicdates to fire a change event in order to be aligned
+   * with the behaviour of the native HTML select.
    */
   _onClickAtOption (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
@@ -277,8 +277,8 @@ export default class Select extends Component {
    *
    * Same as _onClickAtOption this update the state & dispatches a change event.
    *
-   * The philosophy of Belle dicdates to fire a change event in order to be
-   * aligned with the behaviour of the native HTML select.
+   * Belle's philosophy dicdates to fire a change event in order to be aligned
+   * with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
     this._triggerChange(this.state.focusedOptionValue);
