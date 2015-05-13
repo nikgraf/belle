@@ -86,7 +86,10 @@ Button.displayName = 'Belle Button';
 
 Button.propTypes = {
   primary: React.PropTypes.bool,
-  type: React.PropTypes.oneOf(buttonTypes)
+  type: React.PropTypes.oneOf(buttonTypes),
+  style: React.PropTypes.object,
+  focusStyle: React.PropTypes.object,
+  hoverStyle: React.PropTypes.object
 };
 
 /**
