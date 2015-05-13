@@ -84,6 +84,23 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            onChange
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Function</i>
+              <br />
+              optional</p>
+            <p>
+              Behaves like the onChange property of any React rendered input of type="text" or textarea.
+              Any time the value in the TextInput changes onChange is trigger passing on a change event.
+              This change event contains a property 'value'.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             minHeight
           </td>
           <td style={ propertyDescriptionStyle }>
