@@ -53,7 +53,11 @@ export default class Select extends Component {
       isOpen: false,
       isFocused: false,
       selectedValue: selectedValue,
-      focusedOptionValue: selectedValue
+      focusedOptionValue: selectedValue,
+      selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
+      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
+      optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+      caretProperties: sanitizePropertiesForCaret(properties.caretProps)
     };
   }
 
@@ -61,12 +65,20 @@ export default class Select extends Component {
     if (properties.valueLink) {
       this.setState({
         selectedValue: properties.valueLink.value,
-        focusedOptionValue: properties.valueLink.value
+        focusedOptionValue: properties.valueLink.value,
+        selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
+        wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
+        optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+        caretProperties: sanitizePropertiesForCaret(properties.caretProps)
       });
     } else if (properties.value) {
       this.setState({
         selectedValue: properties.value,
-        focusedOptionValue: properties.value
+        focusedOptionValue: properties.value,
+        selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
+        wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
+        optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+        caretProperties: sanitizePropertiesForCaret(properties.caretProps)
       });
     }
 
@@ -185,6 +197,10 @@ export default class Select extends Component {
       isOpen: false,
       isFocused: false
     });
+
+    if (this.props.wrapperProperties && this.props.wrapperProperties.onBlur) {
+      this.props.wrapperProperties.onBlur(event);
+    }
   }
 
   /**
@@ -196,6 +212,10 @@ export default class Select extends Component {
     this.setState({
       isFocused: true
     });
+
+    if (this.props.wrapperProperties && this.props.wrapperProperties.onFocus) {
+      this.props.wrapperProperties.onFocus(event);
+    }
   }
 
   /**
@@ -213,11 +233,15 @@ export default class Select extends Component {
   /**
    * Toggle the options area of the component.
    */
-  _toggleOptionsArea () {
+  _toggleOptionsArea (event) {
     if (this.state.isOpen) {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true });
+    }
+
+    if (this.props.onClick) {
+      this.props.onClick(event);
     }
   }
 
@@ -325,6 +349,10 @@ export default class Select extends Component {
         this.setState({ isOpen: false });
       }
     }
+
+    if (this.props.wrapperProperties && this.props.wrapperProperties.onKeyDown) {
+      this.props.wrapperProperties.onKeyDown(event);
+    }
   }
 
   render () {
@@ -351,26 +379,32 @@ export default class Select extends Component {
     }
 
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
+    const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
+    const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
     return (
       <div style={ wrapperStyle }
-           tabIndex="0"
+           tabIndex={ tabIndex }
            onKeyDown={ this._onKeyDown.bind(this) }
            onBlur={ this._onBlur.bind( this) }
            onFocus={ this._onFocus.bind( this) }
-           className={ this.props.wrapperClassName }
-           ref="wrapper">
+           ref="wrapper"
+           {...this.state.wrapperProperties} >
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              style={ this.state.isFocused ? focusStyle : defaultStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
-             ref="selectedOptionWrapper">
+             ref="selectedOptionWrapper"
+             {...this.state.selectedOptionWrapperProperties} >
           { selectedOptionOrPlaceholder }
-          <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }></span>
+          <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }
+                {...this.state.caretProperties}>
+          </span>
         </div>
 
         <ul style={ computedOptionsAreaStyle }
-            ref="optionsArea">
+            ref="optionsArea"
+            {...this.state.optionsAreaProperties} >
           {
             React.Children.map(this.props.children, (entry, index) => {
               // filter out all non-Option Components
@@ -424,7 +458,6 @@ Select.propTypes = {
     requestChange: React.PropTypes.func.isRequired
   }),
   className: React.PropTypes.string,
-  wrapperClassName: React.PropTypes.string,
   shouldPositionOptions: React.PropTypes.bool,
   positionOptions: React.PropTypes.func,
   style: React.PropTypes.object,
@@ -433,7 +466,10 @@ Select.propTypes = {
   wrapperStyle: React.PropTypes.object,
   optionsAreaStyle: React.PropTypes.object,
   caretToOpenStyle: React.PropTypes.object,
-  caretToCloseStyle: React.PropTypes.object
+  caretToCloseStyle: React.PropTypes.object,
+  wrapperProps: React.PropTypes.object,
+  optionsAreaProps: React.PropTypes.object,
+  caretProps: React.PropTypes.object
 };
 
 Select.defaultProps = {
@@ -551,6 +587,68 @@ const hasNext = (list, currentIndex) => {
 const hasPrevious = (list, currentIndex) => {
   return (currentIndex - 1 >= 0);
 };
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizePropertiesForSelectedOptionWrapper(properties) {
+  return omit(properties, [
+    'onClick',
+    'style',
+    'className',
+    'ref',
+    'shouldPositionOptions',
+    'positionOptions',
+    'focusStyle',
+    'hoverStyle',
+    'wrapperStyle',
+    'optionsAreaStyle',
+    'caretToOpenStyle',
+    'caretToCloseStyle',
+    'value',
+    'defaultValue',
+    'onChange',
+    'valueLink'
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizePropertiesForWrapper(wrapperProperties) {
+  return omit(wrapperProperties, [
+    'style',
+    'ref',
+    'tabIndex',
+    'onKeyDown',
+    'onBlur',
+    'onFocus'
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizePropertiesForOptionsArea(optionsAreaProperties) {
+  return omit(optionsAreaProperties, [
+    'style',
+    'ref'
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizePropertiesForCaret(caretProperties) {
+  return omit(caretProperties, [
+    'style',
+    'ref'
+  ]);
+}
 
 /**
  * Repositions to the optionsArea to position the focusedOption right on top
