@@ -9,6 +9,7 @@ import Placeholder from './components/Placeholder';
 import Select from './components/Select';
 import Separator from './components/Separator';
 import TextInput from './components/TextInput';
+import Rating from './components/Rating';
 
 import buttonStyle from './style/button';
 import cardStyle from './style/card';
@@ -26,6 +27,7 @@ module.exports = {
   Select: Select,
   Separator: Separator,
   TextInput: TextInput,
+  Rating: Rating,
   style: {
     button: buttonStyle,
     card: cardStyle,
