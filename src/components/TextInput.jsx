@@ -159,6 +159,7 @@ TextInput.displayName = 'Belle TextInput';
 TextInput.propTypes = {
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
+  style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   allowNewLine: React.PropTypes.bool
