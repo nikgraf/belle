@@ -358,12 +358,13 @@ export default class Select extends Component {
            onKeyDown={ this._onKeyDown.bind(this) }
            onBlur={ this._onBlur.bind( this) }
            onFocus={ this._onFocus.bind( this) }
-           className={ this.props.wrapperClassName }>
+           className={ this.props.wrapperClassName }
+           ref="wrapper">
 
         <div onClick={ this._toggleOptionsArea.bind(this) }
              style={ this.state.isFocused ? focusStyle : defaultStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
-             ref="selectedWrapper">
+             ref="selectedOptionWrapper">
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }></span>
         </div>
@@ -573,12 +574,12 @@ function repositionOptionsArea(selectComponent) {
   const optionPaddingTop = parseFloat(optionStyle.getPropertyValue('padding-top'));
   const optionPaddingLeft = parseFloat(optionStyle.getPropertyValue('padding-top'));
 
-  const selectedWrapperNode = React.findDOMNode(selectComponent.refs.selectedWrapper);
-  const selectedWrapperStyle = window.getComputedStyle(selectedWrapperNode, null);
-  const selectedWrapperPaddingTop = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
-  const selectedWrapperPaddingLeft = parseFloat(selectedWrapperStyle.getPropertyValue('padding-top'));
+  const selectedOptionWrapperNode = React.findDOMNode(selectComponent.refs.selectedOptionWrapper);
+  const selectedOptionWrapperStyle = window.getComputedStyle(selectedOptionWrapperNode, null);
+  const selectedOptionWrapperPaddingTop = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
+  const selectedOptionWrapperPaddingLeft = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
 
-  const newTop = option.offsetTop + optionPaddingTop - selectedWrapperPaddingTop;
+  const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop;
   const newLeft = option.offsetLeft + optionPaddingLeft;
 
   // Top positioning
@@ -611,10 +612,10 @@ function repositionOptionsArea(selectComponent) {
   //
   // Pro:
   // - It gives a option in the optionsArea the same width
-  // as in the selectedWrapper.
+  // as in the selectedOptionWrapper.
   // - There is space to keep the text of the option on the exact same pixel
   // when opening. The optionsArea is symetric in relation to the
-  // selectedWrapper.
+  // selectedOptionWrapper.
   //
   // Con:
   // - Adding the padding could cause issue with design as it gets wider than
