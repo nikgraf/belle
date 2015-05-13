@@ -119,7 +119,8 @@ export default class SelectDocumentation extends Component {
         <div style={ { width: 150,
                        float: 'left',
                        marginLeft: 16 } }>
-          <Select optionsAreaStyle={ { height: 160,
+          <Select defaultValue="tokyo"
+                  optionsAreaStyle={ { height: 160,
                                        overflow: 'scroll' } }>
             <Option value="berlin">Berlin</Option>
             <Option value="hong-kong">Hong Kong</Option>
@@ -270,7 +271,8 @@ const formCodeExample = `<!-- form consiting of an input & a select  -->
   <div style={ { width: 150,
                  float: 'left',
                  marginLeft: 16 } }>
-    <Select optionsAreaStyle={ { height: 160,
+    <Select defaultValue="tokyo"
+            optionsAreaStyle={ { height: 160,
                                  overflow: 'scroll' } }>
       <Option value="berlin">Berlin</Option>
       <Option value="hong-kong">Hong Kong</Option>
