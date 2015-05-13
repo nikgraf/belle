@@ -556,13 +556,14 @@ function repositionOptionsArea(selectComponent) {
   const optionsAreaWidth = parseFloat(optionsAreaStyle.getPropertyValue('width'));
 
   // In case of a placeholder no option is focused on initially
-  let option;
+  let option, optionIndex;
 
   if (selectComponent.state.selectedValue) {
-    option = optionsAreaNode.children[findIndexOfSelectedOption(selectComponent)];
+    optionIndex = findIndexOfSelectedOption(selectComponent);
   } else {
-    option = optionsAreaNode.children[0];
+    optionIndex = 0;
   }
+  option = optionsAreaNode.children[optionIndex];
 
   const optionsAreaHeight = parseFloat(optionsAreaStyle.getPropertyValue('height'));
 
@@ -589,7 +590,15 @@ function repositionOptionsArea(selectComponent) {
       optionsAreaNode.scrollTop = maxScrollTop;
       optionsAreaNode.style.top = `-${newTop - maxScrollTop}px`;
     } else {
-      optionsAreaNode.scrollTop = newTop;
+      // in case it's the first entry scrolling is not used to respect the
+      // optionsArea's paddingTop
+      if (optionIndex === 0) {
+        const optionsAreaPaddingTop = parseFloat(optionsAreaStyle.getPropertyValue('padding-top'));
+        optionsAreaNode.scrollTop = 0;
+        optionsAreaNode.style.top = `-${newTop}px`;
+      } else {
+        optionsAreaNode.scrollTop = newTop;
+      }
     }
   } else {
     optionsAreaNode.style.top = `-${newTop}px`;
