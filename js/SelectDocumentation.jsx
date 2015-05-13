@@ -45,11 +45,181 @@ export default class SelectDocumentation extends Component {
 
         <tr>
           <td style={ propertyNameStyle }>
+            valueLink
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Value Reference</i>
+              <br />
+              optional</p>
+            <p>
+              Behaves like the valueLink poperty of a native select-tag.
+              ValueLink allows to enable two-way data binding between a state property and the value in
+              the user interface.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            defaultValue
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>String, Boolean, Number, Date</i>
+              <br />
+              optional</p>
+            <p>
+              Behaves like the defaultValue poperty of a native select-tag.
+              The Option with the same value is initially used as selected and can be manipulated through the user interface.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            value
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>String, Boolean, Number, Date</i>
+              <br />
+              optional</p>
+            <p>
+              Behaves like the value poperty of a native select-tag.
+              The Option with the same value is initially used as selected and can <b>not</b> be manipulated through the user interface.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            onChange
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Function</i>
+              <br />
+              optional</p>
+            <p>
+              Behaves like the onChange poperty of a native select-tag.
+              Behaves like the onChange property of any React rendered input of type="text" or textarea.
+              Any time an Option is selected onChange is trigger passing on the change event.
+              This change event contains a property 'value'.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            hoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the user hovers over the select with the cursor.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            focusStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the select is the element focused in the DOM.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            wrapperStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the div-tag wrapped around the component.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            optionsAreaStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the div-tag wrapped around the options.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            caretToOpenStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the caret when the options to select
+              from are not visible.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            caretToCloseStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the caret when the options to select
+              from are visible.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             shouldPositionOptions
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>bool</i>
+              <i>Boolean</i>
               <br />
               optional</p>
             <p>
@@ -83,7 +253,8 @@ export default class SelectDocumentation extends Component {
       </table>
 
       <p>
-        More documentation on properties coming soon …
+        Any other property valid for a Div element like
+        <span style={ {color: 'grey'} }> style, onClick, …</span>
       </p>
 
       <h3>Internal HTML Structure</h3>
