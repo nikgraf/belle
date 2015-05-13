@@ -87,12 +87,6 @@ export default React.createClass({
           <Option value="rome">Rome</Option>
         </Select>
 
-        <h3>Select with Date values</h3>
-        <Select onChange={ (event) => console.log(event.target.value) }>
-          <Option value={ new Date(2013, 2, 1, 1, 10) } >2013-02-01 01:10:00</Option>
-          <Option value={ new Date(2015, 3, 1, 1, 20) } >2015-03-01 01:20:00</Option>
-        </Select>
-
         <h3>
           Select after TextInput
         </h3>

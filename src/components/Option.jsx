@@ -59,8 +59,7 @@ Option.propTypes = {
   value: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string,
-    React.PropTypes.number,
-    React.PropTypes.instanceOf(Date)
+    React.PropTypes.number
   ]).isRequired
 };
 

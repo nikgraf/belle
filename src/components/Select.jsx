@@ -449,8 +449,7 @@ Select.propTypes = {
   defaultValue: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.string,
-    React.PropTypes.number,
-    React.PropTypes.instanceOf(Date)
+    React.PropTypes.number
   ]),
   onChange: React.PropTypes.func,
   valueLink: React.PropTypes.shape({
