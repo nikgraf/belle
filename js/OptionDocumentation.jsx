@@ -30,13 +30,13 @@ export default class OptionDocumentation extends Component {
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>String</i>
+              <i>String, Boolean, Number</i>
               <br />
               required</p>
             <p>
               The value to be set in case this Option is selected. The value must be
-              unique for all Options within one Select. It can be of type Boolean, String
-              Number or Data.
+              unique for all Options within one Select. It can be of type Boolean, String or
+              Number.
             </p>
           </td>
         </tr>

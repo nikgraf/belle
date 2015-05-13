@@ -66,7 +66,7 @@ export default class SelectDocumentation extends Component {
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>String, Boolean, Number, Date</i>
+              <i>String, Boolean, Number</i>
               <br />
               optional</p>
             <p>
@@ -561,7 +561,7 @@ const htmlStructure = `<div ref="wrapper"
     <li>
       <Option /> or <Separator />
     </li>
-    more entries …
+    … more entries …
   </ul>
 </div>`;
 
