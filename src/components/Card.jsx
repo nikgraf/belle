@@ -15,7 +15,7 @@ export default class Card extends Component {
   constructor (properties) {
     super(properties);
     this.state = {
-      childProperties: omit(properties, 'style')
+      childProperties: sanitizeChildProperties(properties)
     };
   }
 
@@ -24,7 +24,7 @@ export default class Card extends Component {
    * card.
    */
   componentWillReceiveProps (properties) {
-    this.setState({ childProperties: omit(properties, 'style') });
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
   render () {
@@ -37,3 +37,10 @@ export default class Card extends Component {
 }
 
 Card.displayName = 'Belle Card';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style']);
+}

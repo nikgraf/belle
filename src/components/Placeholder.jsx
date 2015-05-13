@@ -14,8 +14,16 @@ export default class Placeholder extends Component {
   constructor (properties) {
     super(properties);
     this.state = {
-      childProperties: omit(properties, 'style')
+      childProperties: sanitizeChildProperties(properties)
     };
+  }
+
+  /**
+   * Update the childProperties based on the updated properties passed to the
+   * Placeholder.
+   */
+  componentWillReceiveProps (properties) {
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
   render () {
@@ -34,3 +42,10 @@ Placeholder.propTypes = {
 };
 
 Placeholder.displayName = 'Belle Placeholder';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style']);
+}

@@ -13,16 +13,17 @@ export default class Option extends Component {
 
   constructor (properties) {
     super(properties);
-    const sanitizedProperties = omit(properties, [
-      'style',
-      'hoverStyle',
-      'value',
-      '_isHovered',
-      '_isDisplayedAsSelected'
-    ]);
     this.state = {
-      childProperties: sanitizedProperties
+      childProperties: sanitizeChildProperties(properties)
     };
+  }
+
+  /**
+   * Update the childProperties based on the updated properties passed to the
+   * Option.
+   */
+  componentWillReceiveProps (properties) {
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
   render () {
@@ -69,3 +70,16 @@ Option.defaultProps = {
   _isHovered: false,
   _isDisplayedAsSelected: false
 };
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, [
+    'style',
+    'hoverStyle',
+    'value',
+    '_isHovered',
+    '_isDisplayedAsSelected'
+  ]);
+}

@@ -65,7 +65,7 @@ export default class TextInput extends Component {
    */
   componentWillReceiveProps(properties) {
     this.setState({ textareaProperties: sanitizeChildProperties(properties) });
-    updatePseudoClassStyle(this._styleId, this.props);
+    updatePseudoClassStyle(this._styleId, properties);
     this._resize();
   }
 
