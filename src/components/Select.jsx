@@ -426,7 +426,14 @@ Select.propTypes = {
   className: React.PropTypes.string,
   wrapperClassName: React.PropTypes.string,
   shouldPositionOptions: React.PropTypes.bool,
-  positionOptions: React.PropTypes.func
+  positionOptions: React.PropTypes.func,
+  style: React.PropTypes.object,
+  focusStyle: React.PropTypes.object,
+  hoverStyle: React.PropTypes.object,
+  wrapperStyle: React.PropTypes.object,
+  optionsAreaStyle: React.PropTypes.object,
+  caretToOpenStyle: React.PropTypes.object,
+  caretToCloseStyle: React.PropTypes.object
 };
 
 Select.defaultProps = {
