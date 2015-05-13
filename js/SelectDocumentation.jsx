@@ -250,11 +250,64 @@ export default class SelectDocumentation extends Component {
           </td>
         </tr>
 
+        <tr>
+          <td style={ propertyNameStyle }>
+            wrapperProps
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This object allows to provide any kind of valid properties for a
+              div tag. I allows to extend the div wrapping the whole select
+              component.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            optionsAreaProps
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This object allows to provide any kind of valid properties for a
+              ul tag. I allows to extend the ul wrapping the available options.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            caretProps
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This object allows to provide any kind of valid properties for a
+              span tag.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <p>
         Any other property valid for a Div element like
-        <span style={ {color: 'grey'} }> style, onClick, …</span>
+        <span style={ {color: 'grey'} }> style, onClick, …</span><br />
+        The properties will directly applied to the wrapper for the selected
+        option.
       </p>
 
       <h3>Internal HTML Structure</h3>
