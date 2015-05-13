@@ -86,6 +86,15 @@ export default class SelectDocumentation extends Component {
         More documentation on properties coming soon …
       </p>
 
+      <h3>Internal HTML Structure</h3>
+
+      <p>
+        This should help developer to understand how the Select is structured
+        in order to use the API
+      </p>
+
+      <Code value={ htmlStructure } style={ {marginTop: 40} } />
+
       <h3>More Examples</h3>
 
       <p>Select from a dynamic data set including a defaultValue & onChange callback</p>
@@ -364,6 +373,26 @@ const positionOptionsSelectCodeExample = `<!-- select with a custom positionOpti
   <Option value="tokyo">Tokyo</Option>
   <Option value="vienna">Vienna</Option>
 </Select>`;
+
+const htmlStructure = `<div ref="wrapper"
+     tabIndex="0"
+     style={ wrapperStyle }>
+  <div ref="selectedOptionWrapper"
+       style={ style }>
+    <Option /> or <Placeholder />
+    <span style={ caretToCloseStyle or caretToOpenStyle } />
+  </div>
+  <ul ref="optionsArea"
+      style={ optionsAreaStyle }>
+    <li>
+      <Option /> or <Separator />
+    </li>
+    <li>
+      <Option /> or <Separator />
+    </li>
+    more entries …
+  </ul>
+</div>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
