@@ -38,7 +38,7 @@ export default class Base extends Component {
           </Link>
 
           <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
-            React Components with great User Experience
+            Configurable React Components with great User Experience
           </p>
         </div>
       </header>;
