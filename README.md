@@ -1,6 +1,6 @@
 # Belle
 
-React Components with great User Experience.
+Configurable React Components with great UX.
 
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
 
