@@ -1,6 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
+import {omit} from 'underscore';
 
 export default class Column extends Component {
 
@@ -9,6 +10,11 @@ export default class Column extends Component {
     this.state = {
       viewport: this._retrieve_viewport()
     };
+    this.childProperties = omit(properties, [
+      'style',
+      'smallScreenStyle',
+      'mediumScreenStyle'
+    ]);
   }
 
   componentDidMount () {
@@ -19,8 +25,15 @@ export default class Column extends Component {
     window.removeEventListener('resize', this._resize_mixin_callback.bind(this));
   }
 
+  componentWillReceiveProps(properties) {
+    this.childProperties = omit(properties, [
+      'style',
+      'smallScreenStyle',
+      'mediumScreenStyle'
+    ]);
+  }
+
   _resize_mixin_callback () {
-    console.log('wee');
     this.setState({
         viewport: this._retrieve_viewport()
     });
@@ -38,7 +51,7 @@ export default class Column extends Component {
     const style = (this.state.viewport.width <= 480) ? this.props.smallScreenStyle : this.props.mediumScreenStyle;
 
     return (
-      <div style={ style }>
+      <div style={ style } {...this.childProperties}>
         { this.props.children }
       </div>
     );
