@@ -44,7 +44,7 @@ var buttonStyle = {
   primaryStyle: {
     background: '#53C7F2',
     border: '1px solid #53C7F2',
-    borderBottomColor: '#3C9CC0',
+    borderBottomColor: '#3995B7',
     borderRadius: 2,
     boxSizing: 'border-box',
     color:'#FAFAFA',
@@ -76,7 +76,7 @@ var buttonStyle = {
   primaryActiveStyle: {
     background: '#4DBEE8',
     border: '1px solid #4DBEE8',
-    borderTopColor: '#3B97BA',
+    borderTopColor: '#3587A7',
     color: '#F5F5F5'
   }
 };
