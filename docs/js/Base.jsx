@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
+import Column from './Column';
 
 const belleLogoStyle = {
   height: 54,
@@ -20,16 +21,9 @@ export default class Base extends Component {
   render() {
     let header;
     if (this.context.router.getCurrentPath() === '/') {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 800, paddingLeft: 160 } }>
-          <iframe
-            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
-            frameBorder="0"
-            scrolling="0"
-            width="120px"
-            height="30px"
-            style={ { float: 'right', marginTop: 207 } }>
-          </iframe>
+      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%', marginBottom: 40} }>
+        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+                mediumScreenStyle={{margin: '0 auto', width: 800, paddingLeft: 160 }}>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
@@ -37,14 +31,24 @@ export default class Base extends Component {
             </h1>
           </Link>
 
-          <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
-            Configurable React Components with great User Experience
+          <p style={{ fontSize: 22, marginTop: -10, paddingBottom: 20, color: '#FEFEFE'}}>
+            Configurable React Components with great UX
           </p>
-        </div>
+
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
+            frameBorder="0"
+            scrolling="0"
+            width="120px"
+            height="30px"
+            style={ { marginBottom: 20 } }>
+          </iframe>
+        </Column>
       </header>;
     } else {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 800} }>
+      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%', marginBottom: 40} }>
+        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+                mediumScreenStyle={{margin: '0 auto', width: 800}}>
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
@@ -59,7 +63,7 @@ export default class Base extends Component {
               Belle
             </h1>
           </Link>
-        </div>
+        </Column>
       </header>;
     }
 
@@ -67,8 +71,11 @@ export default class Base extends Component {
 
       { header }
 
-      <div style={ {margin: '0 auto', width: 800, marginTop: 40 } }>
-        <div style={ {float: 'left', width: 160 } }>
+      <Column smallScreenStyle={{ width: '100%' }}
+              mediumScreenStyle={{margin: '0 auto', width: 800 }}>
+
+        <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
+                mediumScreenStyle={{ float: 'left', width: 160 }}>
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
               <Link style={{ display: 'block' }} to="getting-started">Getting Started</Link>
@@ -114,13 +121,14 @@ export default class Base extends Component {
               <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
             </li>
           </ul>
-        </div>
+        </Column>
 
-        <div style={ {float: 'left', width: 640 } }>
+        <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
+                mediumScreenStyle={{ float: 'left', width: 640 }}>
           <RouteHandler/>
-        </div>
+        </Column>
         <div style={{ clear: 'left' }}></div>
-      </div>
+      </Column>
       <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
         <span style={{ paddingLeft: 160 }}>
           Built with
