@@ -30,3 +30,15 @@ a:hover {
 a:active {
   color: #444;
 }
+
+.navigation a, .navigation a:visited {
+  color: #0A202D;
+}
+
+.navigation a:hover {
+  color: #34A1CA;
+}
+
+.navigation a:active {
+  color: #444;
+}

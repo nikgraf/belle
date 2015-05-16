@@ -21,7 +21,7 @@ export default class Base extends Component {
   render() {
     let header;
     if (this.context.router.getCurrentPath() === '/') {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%', marginBottom: 40} }>
+      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 800, paddingLeft: 160 }}>
 
@@ -46,7 +46,7 @@ export default class Base extends Component {
         </Column>
       </header>;
     } else {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%', marginBottom: 40} }>
+      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 800}}>
           <iframe
@@ -75,50 +75,53 @@ export default class Base extends Component {
               mediumScreenStyle={{margin: '0 auto', width: 800 }}>
 
         <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
-                mediumScreenStyle={{ float: 'left', width: 160 }}>
+                mediumScreenStyle={{ float: 'left', width: 160 }}
+                className="navigation">
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
-              <Link style={{ display: 'block' }} to="getting-started">Getting Started</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="getting-started">Getting Started</Link>
             </li>
           </ul>
-          <span style={ { color: '#888', fontWeight: 'bold' } } >Components</span>
+          <span style={ { color: '#738088', fontWeight: '300' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
-              <Link style={{ display: 'block' }} to="component/button">Button</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/button">Button</Link>
             </li>
             <li>
-              <Link style={{ display: 'block' }} to="component/card">Card</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/card">Card</Link>
             </li>
             <li>
-              <Link style={{ display: 'block' }} to="component/select">Select</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/select">Select</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/option">Option</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/option">Option</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/placeholder">Placeholder</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/placeholder">Placeholder</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/separator">Separator</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/separator">Separator</Link>
             </li>
             <li>
-              <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="component/text-input">TextInput</Link>
             </li>
-
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="philosophy">Philosophy</Link>
+          </ul>
+          <span style={ { color: '#738088', fontWeight: '300' } } >General</span>
+          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="philosophy">Philosophy</Link>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="configuration">Configuration</Link>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="configuration">Configuration</Link>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="future-work">Future Plans</Link>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="future-work">Future Plans</Link>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
+            <li>
+              <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
+            <li>
+              <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
             </li>
           </ul>
         </Column>
