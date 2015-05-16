@@ -33,13 +33,11 @@ export default class CardDocumentation extends Component {
 
       <p>Card with a full-width image</p>
 
-      <Card style={{ borderTop: '1px solid #f2f2f2' }}>
+      <Card style={{ borderTop: '1px solid #f2f2f2',
+                     width: 304,
+                     padding: '20px 0' }}>
         <img src="images/ngorongoro_caldera_small.jpg"
-             width="560"
-             style={{
-               marginLeft: -40,
-               marginRight: -40
-             }}/>
+             width="100%" />
       </Card>
 
       <Code value={ imageCodeExample } style={ {marginTop: 40} } />
@@ -54,11 +52,9 @@ const basicCodeExample = `<!-- basic card example -->
 </Card>`;
 
 const imageCodeExample = `<!-- image card example -->
-<Card style={{ borderTop: '1px solid #f2f2f2' }}>
+<Card style={{ borderTop: '1px solid #f2f2f2',
+               width: 304,
+               padding: '20px 0' }}>
   <img src="images/ngorongoro_caldera_small.jpg"
-       width="560"
-       style={{
-         marginLeft: -40,
-         marginRight: -40
-       }}/>
+       width="100%" />
 </Card>`;
