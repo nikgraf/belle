@@ -49,7 +49,7 @@ export default class Base extends Component {
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
             scrolling="0"
-            width="73px"
+            width="78px"
             height="30px"
             style={ { float: 'right', marginTop: 20 } }>
           </iframe>
