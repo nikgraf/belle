@@ -41,4 +41,5 @@ Code.propTypes = {
 const defaultStyle = {
   fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
   background: '#F5F5F5',
+  whiteSpace: 'pre-wrap'
 };
