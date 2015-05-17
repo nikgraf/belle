@@ -23,7 +23,7 @@ export default class Base extends Component {
     if (this.context.router.getCurrentPath() === '/') {
       header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 800, paddingLeft: 160 }}>
+                mediumScreenStyle={{margin: '0 auto', width: 820, paddingLeft: 160 }}>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
@@ -48,7 +48,7 @@ export default class Base extends Component {
     } else {
       header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 800}}>
+                mediumScreenStyle={{margin: '0 auto', width: 820}}>
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
@@ -72,7 +72,7 @@ export default class Base extends Component {
       { header }
 
       <Column smallScreenStyle={{ width: '100%' }}
-              mediumScreenStyle={{margin: '0 auto', width: 800 }}>
+              mediumScreenStyle={{margin: '0 auto', width: 820 }}>
 
         <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
                 mediumScreenStyle={{ float: 'left', width: 160 }}
@@ -82,7 +82,7 @@ export default class Base extends Component {
               <Link style={{ display: 'block', padding: '3px 0' }} to="getting-started">Getting Started</Link>
             </li>
           </ul>
-          <span style={ { color: '#738088', fontWeight: '300' } } >Components</span>
+          <span style={ { color: '#738088' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="component/button">Button</Link>
@@ -106,7 +106,7 @@ export default class Base extends Component {
               <Link style={{ display: 'block', padding: '4px 0' }} to="component/text-input">TextInput</Link>
             </li>
           </ul>
-          <span style={ { color: '#738088', fontWeight: '300' } } >General</span>
+          <span style={ { color: '#738088' } } >General</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="philosophy">Philosophy</Link>
@@ -127,19 +127,20 @@ export default class Base extends Component {
         </Column>
 
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
-                mediumScreenStyle={{ float: 'left', width: 640 }}>
+                mediumScreenStyle={{ float: 'left', width: 660 }}>
           <RouteHandler/>
         </Column>
         <div style={{ clear: 'left' }}></div>
       </Column>
       <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
-        <span style={{ paddingLeft: 160 }}>
+        <Column smallScreenStyle={{}}
+                mediumScreenStyle={{ paddingLeft: 160 }}>
           Built with
           <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
             &nbsp;&#x2764;&nbsp;
           </span>
           on Planet Earth :)
-        </span>
+        </Column>
       </footer>
     </div>;
   }
