@@ -1,13 +1,12 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card} from 'belle';
 import Code from './Code';
 
 export default class GettingStarted extends Component {
 
   render() {
-    return <Card>
+    return <div>
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Getting Started</h2>
 
       <p>
@@ -32,7 +31,7 @@ export default class GettingStarted extends Component {
         In addition you can dig through the <a href="http://nikgraf.github.io/belle/">documentation</a> to learn about how to modify Belle components.
       </p>
 
-    </Card>;
+    </div>;
   }
 }
 

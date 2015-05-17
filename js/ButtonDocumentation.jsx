@@ -1,13 +1,13 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Button} from 'belle';
+import {Button} from 'belle';
 import Code from './Code';
 
 export default class ButtonDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
@@ -151,7 +151,7 @@ export default class ButtonDocumentation extends Component {
       <Code value={ customStyleCodeExample } style={ {marginTop: 20} } />
 
 
-    </Card>;
+    </div>;
   }
 }
 

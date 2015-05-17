@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react/addons';
-import {Card, TextInput} from 'belle';
+import {TextInput} from 'belle';
 import Code from './Code';
 
 export default React.createClass({
@@ -15,7 +15,7 @@ export default React.createClass({
   },
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
 
@@ -179,7 +179,7 @@ export default React.createClass({
 
       <Code value={ advancedExampleCode } style={ {marginTop: 40} } />
 
-    </Card>;
+    </div>;
   }
 });
 

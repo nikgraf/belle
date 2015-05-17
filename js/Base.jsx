@@ -4,10 +4,19 @@ import React, {Component} from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
+import ViewportMixin from './mixin/viewport';
 
-export default class Base extends Component {
+export default React.createClass({
+
+  mixins: [ViewportMixin],
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   render() {
+    const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
+
     let header;
     if (this.context.router.getCurrentPath() === '/') {
       header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
@@ -137,7 +146,9 @@ export default class Base extends Component {
 
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
                 mediumScreenStyle={{ float: 'left', width: 660 }}>
-          <RouteHandler/>
+          <Card style={ cardContentStyle }>
+            <RouteHandler/>
+          </Card>
         </Column>
         <div style={{ clear: 'left' }}></div>
       </Column>
@@ -153,8 +164,4 @@ export default class Base extends Component {
       </footer>
     </div>;
   }
-}
-
-Base.contextTypes = {
-  router: React.PropTypes.func
-};
+});

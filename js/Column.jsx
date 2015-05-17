@@ -1,29 +1,26 @@
 "use strict";
 
-import React, {Component} from 'react';
+import React from 'react';
 import {omit} from 'underscore';
+import ViewportMixin from './mixin/viewport';
 
-export default class Column extends Component {
+export default React.createClass({
 
-  constructor(properties) {
-    super(properties);
-    this.state = {
-      viewport: this._retrieve_viewport()
-    };
+  mixins: [ViewportMixin],
+
+  propTypes: {
+    smallScreenStyle: React.PropTypes.object.isRequired,
+    mediumScreenStyle: React.PropTypes.object.isRequired
+  },
+
+  getInitialState(properties) {
     this.childProperties = omit(properties, [
       'style',
       'smallScreenStyle',
       'mediumScreenStyle'
     ]);
-  }
-
-  componentDidMount () {
-    window.addEventListener('resize', this._resize_mixin_callback.bind(this));
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this._resize_mixin_callback.bind(this));
-  }
+    return {};
+  },
 
   componentWillReceiveProps(properties) {
     this.childProperties = omit(properties, [
@@ -31,23 +28,9 @@ export default class Column extends Component {
       'smallScreenStyle',
       'mediumScreenStyle'
     ]);
-  }
-
-  _resize_mixin_callback () {
-    this.setState({
-        viewport: this._retrieve_viewport()
-    });
-  }
-
-  _retrieve_viewport () {
-    return {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
-    }
-  }
+  },
 
   render() {
-
     const style = (this.state.viewport.width <= 480) ? this.props.smallScreenStyle : this.props.mediumScreenStyle;
 
     return (
@@ -56,9 +39,4 @@ export default class Column extends Component {
       </div>
     );
   }
-}
-
-Column.propTypes = {
-  smallScreenStyle: React.PropTypes.object.isRequired,
-  mediumScreenStyle: React.PropTypes.object.isRequired
-};
+});

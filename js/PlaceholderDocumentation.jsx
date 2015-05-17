@@ -1,14 +1,14 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Option, Placeholder, Select} from 'belle';
+import {Option, Placeholder, Select} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
 
 export default class PlaceholderDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Placeholder</h2>
 
@@ -27,7 +27,7 @@ export default class PlaceholderDocumentation extends Component {
         <span style={ {color: 'grey'} }> style, id, className, …</span>
       </p>
 
-    </Card>;
+    </div>;
   }
 }
 
