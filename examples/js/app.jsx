@@ -5,7 +5,10 @@
 import React, {Component} from 'react';
 import {TextInput, Card, Button, style} from 'belle';
 import {extend} from 'underscore';
+import ButtonPlayground from './ButtonPlayground';
+import CardPlayground from './CardPlayground';
 import SelectPlayground from './SelectPlayground';
+import TextInputPlayground from './TextInputPlayground';
 
 style.button.style = {
   boxSizing: 'border-box',
@@ -32,29 +35,10 @@ style.textInput.style = extend(style.textInput.style, {
   color: 'blue'
 });
 
-function conditionalTextInput (showTextInput) {
-  if (showTextInput) {
-    return <TextInput style={ {width: 250} } defaultValue="This TextInput can be removed." />;
-  }
-}
-
 // export for http://fb.me/react-devtools
 window.React = React;
 
 class App extends Component {
-
-  constructor(properties) {
-    super(properties);
-    this.state = {
-      showTextInput: true
-    };
-  }
-
-  _removeTextInput() {
-    this.setState({
-      showTextInput: false
-    });
-  }
 
   render() {
     return <div style={ {margin: '0 150px'} }>
@@ -62,63 +46,11 @@ class App extends Component {
 
       <SelectPlayground />
 
-      <h2>Button</h2>
+      <ButtonPlayground />
 
-      <Button>Press me …</Button>
+      <TextInputPlayground />
 
-      <Button primary={ true }>Primary Button</Button>
-
-      <br />
-
-      <Button primary={ true } hoverStyle={{ color: 'blue' }}>Primary Button</Button>
-
-      <Button primary={ true } hoverStyle={{ color: 'red' }}>Primary Button</Button>
-
-      <Button primary={ true } hoverStyle={{ color: 'green' }}>Primary Button</Button>
-
-      <h2>TextInput</h2>
-
-      {/* Common use case */}
-      <TextInput style={ {width: 250} } defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-      <br />
-
-      {/* Remove TextInput behaviour */}
-      {conditionalTextInput(this.state.showTextInput)}
-      <br />
-      <button type="button" onClick={this._removeTextInput.bind(this)}>Remove TextInput</button>
-
-      {/* Empty TextInput */}
-      <TextInput style={ {width: 250} }/>
-      <br />
-
-      {/* Not editable value */}
-      <div style={ {width: 250} }>
-        <TextInput value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-      </div>
-      <br />
-
-      {/* Full width TextInput */}
-      <div style={ {position: 'relative'} }>
-        <TextInput defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this"/>
-      </div>
-      <br />
-
-      {/* TextInput with placeholder & a minHeight & custom hoverStyle */}
-      <div style={ {width: 250} }>
-        <TextInput minHeight={120}
-               placeholder="What is going on? Ohh, we provided a minHeight & a custom hoverStyle & focusStyle here."
-               hoverStyle={ { borderBottom: '1px red solid' } }
-               focusStyle={ { borderBottom: '1px brown solid' } } />
-      </div>
-
-      <br />
-
-      <h2>Card</h2>
-
-      <Card><p>Looks nice!</p></Card>
-
-      <Card style={ { color: '#2994BB' }} data-custom-attribute={'custom'}>What about another font color?</Card>
-
+      <CardPlayground />
     </div>;
   }
 }
