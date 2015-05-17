@@ -5,17 +5,6 @@ import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
 
-const belleLogoStyle = {
-  height: 54,
-  width: 54,
-  background: '#53C7F2',
-  display: 'inline-block',
-  fontSize: 14,
-  borderRadius: '100%',
-  position: 'relative',
-  top: 1
-};
-
 export default class Base extends Component {
 
   render() {
@@ -26,12 +15,22 @@ export default class Base extends Component {
                 mediumScreenStyle={{margin: '0 auto', width: 820, paddingLeft: 160 }}>
 
           <Link style={{ display: 'inline' }} to="app">
-            <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
-              <i style={ belleLogoStyle }></i> Belle
+            <h1 style={{ fontSize: 52, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              <svg version="1.1"
+                   viewBox="0 0 80 80"
+                   style={{ width: 50,
+                            height: 50,
+                            position: 'relative',
+                            top: 3,
+                            marginRight: 12 }}>
+                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
+                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
+              </svg>
+              Belle
             </h1>
           </Link>
 
-          <p style={{ fontSize: 22, marginTop: -10, paddingBottom: 20, color: '#FEFEFE'}}>
+          <p style={{ fontSize: 22, marginTop: 0, paddingBottom: 26, color: '#FEFEFE'}}>
             Configurable React Components with great UX
           </p>
 
@@ -60,6 +59,16 @@ export default class Base extends Component {
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              <svg version="1.1"
+                   viewBox="0 0 80 80"
+                   style={{ width: 22,
+                            height: 22,
+                            position: 'relative',
+                            top: 2,
+                            marginRight: 6 }}>
+                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
+                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
+              </svg>
               Belle
             </h1>
           </Link>
