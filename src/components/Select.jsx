@@ -417,8 +417,9 @@ export default class Select extends Component {
             React.Children.map(this.props.children, (entry, index) => {
               // filter out all non-Option Components
               if (isOption(entry)) {
+                const isHovered = entry.props.value == this.state.focusedOptionValue;
                 const option = React.addons.cloneWithProps(entry, {
-                  _isHovered: entry.props.value == this.state.focusedOptionValue
+                  _isHovered: isHovered
                 });
 
                 return (
