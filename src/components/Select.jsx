@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some} from 'underscore';
+import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some, uniqueId} from 'underscore';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -57,7 +57,8 @@ export default class Select extends Component {
       selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
-      caretProperties: sanitizePropertiesForCaret(properties.caretProps)
+      caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
     };
   }
 
@@ -69,7 +70,8 @@ export default class Select extends Component {
         selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
         wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
         optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
-        caretProperties: sanitizePropertiesForCaret(properties.caretProps)
+        caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+        selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
       });
     } else if (properties.value) {
       this.setState({
@@ -78,7 +80,8 @@ export default class Select extends Component {
         selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
         wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
         optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
-        caretProperties: sanitizePropertiesForCaret(properties.caretProps)
+        caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+        selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
       });
     }
 
@@ -395,6 +398,9 @@ export default class Select extends Component {
              style={ this.state.isFocused ? focusStyle : defaultStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"
+             role="button"
+             aria-expanded={ this.state.isOpen }
+             id={ this.state.selectedOptionWrapperId }
              {...this.state.selectedOptionWrapperProperties} >
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }
@@ -403,6 +409,8 @@ export default class Select extends Component {
         </div>
 
         <ul style={ computedOptionsAreaStyle }
+            role="listbox"
+            aria-labelledby={ this.state.selectedOptionWrapperId }
             ref="optionsArea"
             {...this.state.optionsAreaProperties} >
           {
@@ -416,13 +424,16 @@ export default class Select extends Component {
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
                       key={ index }
-                      onMouseEnter={ this._onMouseEnterAtOption.bind(this) } >
+                      onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
+                      role="option"
+                      aria-selected={ isHovered }>
                     { option }
                   </li>
                 );
               } else if (isSeparator(entry)) {
                 return (
-                  <li key={ index } >
+                  <li key={ index }
+                      role="presentation">
                     { entry }
                   </li>
                 );
@@ -608,7 +619,10 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'value',
     'defaultValue',
     'onChange',
-    'valueLink'
+    'valueLink',
+    'role',
+    'aria-expanded',
+    'id'
   ]);
 }
 
@@ -634,7 +648,9 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
 function sanitizePropertiesForOptionsArea(optionsAreaProperties) {
   return omit(optionsAreaProperties, [
     'style',
-    'ref'
+    'ref',
+    'aria-labelledby',
+    'role'
   ]);
 }
 

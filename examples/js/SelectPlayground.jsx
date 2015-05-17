@@ -72,6 +72,12 @@ export default React.createClass({
           <Option value="rome">Rome</Option>
         </Select>
 
+        <h3>Select with an ID (for proper aria labeling)</h3>
+        <Select defaultValue="rome" id="test-id-5">
+          <Option value="vienna">Vienna</Option>
+          <Option value="rome">Rome</Option>
+        </Select>
+
         <h3>
           Select with value
           <Button onClick={ () => this.setState({ valueA: 'vienna' }) }>Change to Vienna</Button>
