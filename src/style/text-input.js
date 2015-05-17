@@ -7,6 +7,9 @@ var textInputStyle = {
     font: 'inherit',
     margin: 0,
 
+    /* Reset the default borderRadius for Mobile Safari */
+    borderRadius: 0,
+
     /* Belle TextInput style */
     overflow: 'hidden',
     resize: 'none',
