@@ -57,25 +57,12 @@ export default class Button extends Component {
     React.findDOMNode(this).blur();
   }
 
-  /**
-   * Once a user clicks on the button it will loose focus. In addition the
-   * onClick event is passed to the onClick property.
-   */
-  _onClick(event) {
-    this._blur();
-
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-  }
-
   render() {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
     const buttonStyle = extend({}, baseStyle, this.props.style);
 
     return <button style={ buttonStyle }
                    className={ unionClassNames(this.props.className, this.styleId) }
-                   onClick={ this._onClick.bind(this) }
                    {...this.state.childProperties}>
       { this.props.children }
     </button>;
@@ -92,6 +79,11 @@ Button.propTypes = {
   hoverStyle: React.PropTypes.object
 };
 
+Button.defaultProps = {
+  primary: false,
+  type: 'button'
+};
+
 /**
  * Returns an object with properties that are relevant for the button element.
  *
@@ -101,17 +93,11 @@ Button.propTypes = {
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
     'className',
-    'type',
     'style',
     'hoverStyle',
     'focusStyle',
     'activeStyle'
   ]);
-  if ( contains(buttonTypes, properties.type) ) {
-    childProperties.type = properties.type;
-  } else {
-    childProperties.type = 'button';
-  }
   return childProperties;
 }
 
