@@ -28,7 +28,7 @@ export default class GettingStarted extends Component {
       <h3>Learn more</h3>
 
       <p>
-        In addition you can dig through the <a href="http://nikgraf.github.io/belle/">documentation</a> to learn about how to modify Belle components.
+        In addition you can dig through the documentation to learn about how to modify Belle components.
       </p>
 
     </div>;
