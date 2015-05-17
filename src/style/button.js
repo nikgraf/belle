@@ -16,7 +16,11 @@ var buttonStyle = {
     padding: '8px 12px 6px 12px',
     textAlign: 'center',
     textDecoration: 'none',
-    verticalAlign: 'bottom'
+    verticalAlign: 'bottom',
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none'
   },
 
   hoverStyle: {
@@ -55,7 +59,11 @@ var buttonStyle = {
     padding: '8px 12px 6px 12px',
     textAlign: 'center',
     textDecoration: 'none',
-    verticalAlign: 'bottom'
+    verticalAlign: 'bottom',
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none'
   },
 
   primaryHoverStyle: {
