@@ -20,7 +20,9 @@ var buttonStyle = {
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
     MsUserSelect: 'none',
-    userSelect: 'none'
+    userSelect: 'none',
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation'
   },
 
   hoverStyle: {
@@ -63,7 +65,9 @@ var buttonStyle = {
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
     MsUserSelect: 'none',
-    userSelect: 'none'
+    userSelect: 'none',
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation'
   },
 
   primaryHoverStyle: {
