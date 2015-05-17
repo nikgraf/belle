@@ -42,7 +42,7 @@ describe('Select', () => {
     expect(select.state.focusedOptionValue).toBe('rome');
   });
 
-  it('should not have any option selected in case there is a Placeholder & no value, defaultValue or valueLink is defined', () => {
+  it('should not have any option selected, but focusedOn the first in case there is a Placeholder & no value, defaultValue or valueLink is defined', () => {
     const select = TestUtils.renderIntoDocument(
       <Select>
         <Placeholder>Select a City</Placeholder>
@@ -52,7 +52,7 @@ describe('Select', () => {
     );
 
     expect(select.state.selectedValue).toBeUndefined();
-    expect(select.state.focusedOptionValue).toBeUndefined();
+    expect(select.state.focusedOptionValue).toBe('rome');
   });
 
   it('should render the content of selected option', () => {

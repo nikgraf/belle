@@ -37,23 +37,29 @@ export default class Select extends Component {
   constructor (properties) {
     super(properties);
 
-    let selectedValue;
+    let selectedValue, focusedOptionValue;
 
     if (this.props.valueLink) {
       selectedValue = this.props.valueLink.value;
+      focusedOptionValue = selectedValue;
     } else if (this.props.value) {
       selectedValue = this.props.value;
+      focusedOptionValue = selectedValue;
     } else if (this.props.defaultValue) {
       selectedValue = this.props.defaultValue;
+      focusedOptionValue = selectedValue;
     } else if (!isEmpty(this.props.children) && !some(this.props.children, isPlaceholder)) {
       selectedValue = first(filter(this.props.children, isOption)).props.value;
+      focusedOptionValue = selectedValue;
+    } else if (!isEmpty(this.props.children)) {
+      focusedOptionValue = first(filter(this.props.children, isOption)).props.value;
     }
 
     this.state = {
       isOpen: false,
       isFocused: false,
       selectedValue: selectedValue,
-      focusedOptionValue: selectedValue,
+      focusedOptionValue: focusedOptionValue,
       selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
