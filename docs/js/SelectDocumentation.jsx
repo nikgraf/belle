@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Option, Placeholder, Select, Separator, TextInput} from 'belle';
+import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
 
@@ -16,7 +16,7 @@ const fruits = [
 export default class SelectDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Select</h2>
 
@@ -451,7 +451,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ positionOptionsSelectCodeExample } style={ {marginTop: 40} } />
 
-    </Card>;
+    </div>;
   }
 }
 

@@ -7,7 +7,7 @@ import Code from './Code';
 export default class CardDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Card</h2>
 
@@ -42,7 +42,7 @@ export default class CardDocumentation extends Component {
 
       <Code value={ imageCodeExample } style={ {marginTop: 40} } />
 
-    </Card>;
+    </div>;
   }
 }
 

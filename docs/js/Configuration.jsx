@@ -1,13 +1,13 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Button} from 'belle';
+import {Button, Card} from 'belle';
 import Code from './Code';
 
 export default class Configuration extends Component {
 
   render() {
-    return <Card>
+    return <div>
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Configuration</h2>
 
       <p>
@@ -61,7 +61,7 @@ export default class Configuration extends Component {
 
       <Code value={ styleStructure } style={ {marginTop: 40} } />
 
-    </Card>;
+    </div>;
   }
 }
 

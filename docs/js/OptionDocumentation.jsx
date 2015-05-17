@@ -1,14 +1,14 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Option, Select} from 'belle';
+import {Option, Select} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
 
 export default class OptionDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Option</h2>
 
@@ -66,7 +66,7 @@ export default class OptionDocumentation extends Component {
         <span style={ {color: 'grey'} }> style, id, className, …</span>
       </p>
 
-    </Card>;
+    </div>;
   }
 }
 
