@@ -1,5 +1,4 @@
 html {
-  background: #F7F7F7;
   box-sizing: border-box;
 }
 
@@ -12,6 +11,7 @@ body {
   line-height: 1.6;
   font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
+  background: #0A202D;
 }
 
 h3 {

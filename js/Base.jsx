@@ -85,7 +85,7 @@ export default React.createClass({
       </header>;
     }
 
-    return <div>
+    return <div style={{ background: '#F7F7F7' }}>
 
       { header }
 
@@ -152,7 +152,7 @@ export default React.createClass({
         </Column>
         <div style={{ clear: 'left' }}></div>
       </Column>
-      <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
+      <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, paddingBottom: 60 }}>
         <Column smallScreenStyle={{}}
                 mediumScreenStyle={{ paddingLeft: 160 }}>
           Built with
