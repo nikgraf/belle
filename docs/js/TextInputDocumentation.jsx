@@ -209,19 +209,19 @@ export default React.createClass({
                  valueLink={ this.linkState('customTextInputValue') }
                  placeholder="Just fill in whatever you like :)"
                  style={{
-               border: '1px solid #C8C8C8',
-               padding: 10,
-               width: 280,
-               borderRadius: 3,
-               boxShadow: 'inset 0 1px 2px #CCC'
-             }}
+                   border: '1px solid #C8C8C8',
+                   padding: 10,
+                   width: 280,
+                   borderRadius: 3,
+                   boxShadow: 'inset 0 1px 2px #CCC'
+                 }}
                  hoverStyle={{
-               border: '1px solid #6C6C6C'
-             }}
+                   border: '1px solid #6C6C6C'
+                 }}
                  focusStyle={{
-               borderColor: '#53C7F2',
-               boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
-             }}/>
+                   borderColor: '#53C7F2',
+                   boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
+                 }}/>
 
       <p>Two-way data binding: { this.state.customTextInputValue }</p>
 
