@@ -45,9 +45,16 @@ var buttonStyle = {
   },
 
   disabledStyle: {
-    background: '#000000',
-    color: '#ffffff',
-    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD',
+    background: '#EFEFEF',
+    color: '#9A9A9A',
+    boxShadow: '0 1px 0px #D0D0D0',
+    cursor: 'not-allowed'
+  },
+
+  disabledHoverStyle: {
+    background: '#EFEFEF',
+    color: '#B5B5B5',
+    boxShadow: '0 1px 0px #D0D0D0',
     cursor: 'not-allowed'
   },
 
@@ -99,6 +106,13 @@ var buttonStyle = {
     boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD',
     cursor: 'not-allowed'
   },
+
+  primaryDisabledHoverStyle: {
+    background: '#EFEFEF',
+    color: '#B5B5B5',
+    boxShadow: '0 1px 0px #D0D0D0',
+    cursor: 'not-allowed'
+  }
 };
 
 export default buttonStyle;

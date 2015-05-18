@@ -11,9 +11,9 @@ let styleElement,
 /**
  * Injects a style tag and adds the passed style for the provided pseudoClass.
  */
-export default function (styleId, style, pseudoClass) {
+export default function (styleId, style, pseudoClass, disabled) {
   injectStyleTag();
-  updateStore(styleId, style, pseudoClass);
+  updateStore(styleId, style, pseudoClass, disabled);
   updateStyling();
 }
 
@@ -37,7 +37,7 @@ export default function (styleId, style, pseudoClass) {
 export function injectStyles(styles) {
   injectStyleTag();
   each(styles, (style) => {
-    updateStore(style.id, style.style, style.pseudoClass);
+    updateStore(style.id, style.style, style.pseudoClass, style.disabled);
   });
   updateStyling();
 }
@@ -64,21 +64,33 @@ function injectStyleTag() {
 /**
  * Injects the provided style into the styleStore.
  */
-function updateStore(styleId, style, pseudoClass) {
+function updateStore(styleId, style, pseudoClass, disabled) {
   styleStorage[styleId] = styleStorage[styleId] || {};
-  styleStorage[styleId][pseudoClass] = style;
+  if (disabled) {
+    styleStorage[styleId].disabledPseudoClasses = styleStorage[styleId].disabledPseudoClasses || {};
+    styleStorage[styleId].disabledPseudoClasses[pseudoClass] = style;
+  } else {
+    styleStorage[styleId].pseudoClasses = styleStorage[styleId].pseudoClasses || {};
+    styleStorage[styleId].pseudoClasses[pseudoClass] = style;
+  }
 }
 
 /**
  * Constructs all the stored styles & injects them to the DOM.
  */
 function updateStyling() {
-  const styles = map(styleStorage, (pseudoClasses, id) => {
-    return map(pseudoClasses, (style, pseudoClass) => {
+  const styles = map(styleStorage, (storageEntry, id) => {
+    const pseudoClassStyles = map(storageEntry.pseudoClasses, (style, pseudoClass) => {
       const styleString = CSSPropertyOperations.createMarkupForStyles(style);
       const styleWithImportant = styleString.replace(/;/g, ' !important;');
       return `.${id}:${pseudoClass} {${styleWithImportant}}`;
     });
+    const disabledPseudoClassStyles = map(storageEntry.disabledPseudoClasses, (style, pseudoClass) => {
+      const styleString = CSSPropertyOperations.createMarkupForStyles(style);
+      const styleWithImportant = styleString.replace(/;/g, ' !important;');
+      return `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}`;
+    });
+    return [pseudoClassStyles, disabledPseudoClassStyles];
   });
   styleElement.innerHTML = flatten(styles).join(' ');
 }

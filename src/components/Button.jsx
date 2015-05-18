@@ -91,7 +91,8 @@ Button.propTypes = {
   style: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
 Button.defaultProps = {
@@ -114,6 +115,7 @@ function sanitizeChildProperties(properties) {
     'focusStyle',
     'activeStyle',
     'disabledStyle',
+    'disabledHoverStyle',
     'primary'
   ]);
   return childProperties;
@@ -129,9 +131,11 @@ function updatePseudoClassStyle(styleId, properties) {
   const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.hoverStyle;
   const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
   const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.activeStyle;
+  const baseDisabledHoverStyle = properties.primary ? style.primaryDisabledHoverStyle : style.disabledHoverStyle;
   const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
   const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);
+  const disabledHoverStyle = extend({}, baseDisabledHoverStyle, properties.disabledHoverStyle);
   const styles = [
     {
       id: styleId,
@@ -147,6 +151,12 @@ function updatePseudoClassStyle(styleId, properties) {
       id: styleId,
       style: activeStyle,
       pseudoClass: 'active'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
     }
   ];
   injectStyles(styles);
