@@ -11,7 +11,7 @@ export default class ButtonDocumentation extends Component {
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
-      <Button primary={ true } style={ {marginRight: 10} }>Follow</Button>
+      <Button primary style={ {marginRight: 10} }>Follow</Button>
 
       <Button>Follow</Button>
 
@@ -55,6 +55,18 @@ export default class ButtonDocumentation extends Component {
               to the default behavior in HTML where a button would submit in case
               the 'type' attribute is not defined.
             </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabled
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              default: false</p>
+            <p>If true the Button will be disabled and can't be pressed by a user.</p>
           </td>
         </tr>
         <tr>
@@ -105,6 +117,38 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled and a user hovers over it.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <p>
@@ -113,6 +157,18 @@ export default class ButtonDocumentation extends Component {
       </p>
 
       <h3>More Examples</h3>
+
+      <p>Disabled buttons</p>
+
+      <Button primary style={ {marginRight: 10} }>Follow</Button>
+
+      <Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+
+      <Button style={ {marginRight: 10} }>Follow</Button>
+
+      <Button disabled>Follow</Button>
+
+      <Code value={ disabledButtonCodeExample } style={ {marginTop: 20} } />
 
       <p>Primary button with custom styles</p>
 
@@ -154,11 +210,11 @@ export default class ButtonDocumentation extends Component {
   }
 }
 
-const basicCodeExample = `<!-- default button -->
-<Button>Follow</Button>
+const basicCodeExample = `<!-- primary button -->
+<Button primary>Follow</Button>
 
-<!-- primary button -->
-<Button primary={ true }>Follow</Button>`;
+<!-- default button -->
+<Button>Follow</Button>`;
 
 const customStyleCodeExample = `<Button primary={ true }
         style={{
@@ -190,6 +246,15 @@ const customStyleCodeExample = `<Button primary={ true }
         }}>
   Follow
 </Button>`;
+
+const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>Follow</Button>
+
+<Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+
+<Button style={ {marginRight: 10} }>Follow</Button>
+
+<Button disabled>Follow</Button>
+`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
