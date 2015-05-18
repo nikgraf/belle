@@ -173,7 +173,9 @@ TextInput.propTypes = {
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   allowNewLine: React.PropTypes.bool,
-  disabled: React.PropTypes.bool
+  disabled: React.PropTypes.bool,
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
 TextInput.defaultProps = {
@@ -199,7 +201,9 @@ function sanitizeChildProperties(properties) {
     'className',
     'style',
     'hoverStyle',
-    'focusStyle'
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
   if (typeof properties.valueLink == 'object') {
     childProperties.value = properties.valueLink.value;
@@ -214,8 +218,10 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  const hoverStyle         = extend({}, style.hoverStyle, properties.hoverStyle);
+  const focusStyle         = extend({}, style.focusStyle, properties.focusStyle);
+  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+
   const styles = [
     {
       id: styleId,
@@ -226,6 +232,12 @@ function updatePseudoClassStyle(styleId, properties) {
       id: styleId,
       style: focusStyle,
       pseudoClass: 'focus'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
     }
   ];
   injectStyles(styles);

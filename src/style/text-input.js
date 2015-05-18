@@ -34,8 +34,12 @@ var textInputStyle = {
   },
 
   disabledStyle: {
-    borderBottom: '1px dotted #000',
-    color: '#505050'
+    borderBottom: '1px dotted rgb(159, 159, 159)',
+    color: 'rgb(159, 159, 159)'
+  },
+
+  disabledHoverStyle: {
+    borderBottom: '1px dotted rgb(159, 159, 159)'
   }
 
 };
