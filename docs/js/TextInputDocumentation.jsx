@@ -101,6 +101,20 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            disabled
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              optional
+            </p>
+            <p>If true the Textarea will be disabled and text can't be manipulated by a user.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             minHeight
           </td>
           <td style={ propertyDescriptionStyle }>
@@ -148,6 +162,40 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the textarea is disabled.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the textarea is disabled and a user hovers over it.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <p>
@@ -158,19 +206,19 @@ export default React.createClass({
       <h3>More Examples</h3>
 
       <TextInput minHeight={ 120 }
-             valueLink={ this.linkState('customTextInputValue') }
-             placeholder="Just fill in whatever you like :)"
-             style={{
+                 valueLink={ this.linkState('customTextInputValue') }
+                 placeholder="Just fill in whatever you like :)"
+                 style={{
                border: '1px solid #C8C8C8',
                padding: 10,
                width: 280,
                borderRadius: 3,
                boxShadow: 'inset 0 1px 2px #CCC'
              }}
-             hoverStyle={{
+                 hoverStyle={{
                border: '1px solid #6C6C6C'
              }}
-             focusStyle={{
+                 focusStyle={{
                borderColor: '#53C7F2',
                boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
              }}/>
@@ -178,6 +226,11 @@ export default React.createClass({
       <p>Two-way data binding: { this.state.customTextInputValue }</p>
 
       <Code value={ advancedExampleCode } style={ {marginTop: 40} } />
+
+      <h3>Disabled Text Input</h3>
+      <TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis."/>
+
+      <Code value={ disabledExampleCode } style={ {marginTop: 40} } />
 
     </div>;
   }
@@ -209,6 +262,8 @@ const advancedExampleCode = `<TextInput minHeight={ 120 }
        }}/>
 
 <p>Two-way data binding: { this.state.customTextInputValue }</p>`;
+
+const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
