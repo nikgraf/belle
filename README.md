@@ -142,7 +142,6 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 ## Future Plans
 
-- Add disabled style to TextInput & Button
 - Make sure components don't break when rendered by the backend
 - Make sure the components work great on Mobile
 - Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?
