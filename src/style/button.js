@@ -47,7 +47,8 @@ var buttonStyle = {
   disabledStyle: {
     background: '#000000',
     color: '#ffffff',
-    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD'
+    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD',
+    cursor: 'not-allowed'
   },
 
   primaryStyle: {
