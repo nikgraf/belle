@@ -144,7 +144,17 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let textareaStyle = extend({}, style.style, this.props.style);
+    const baseStyle = extend({}, style.style, this.props.style);
+
+    let textareaStyle;
+
+    if (this.props.disabled) {
+      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+      textareaStyle = extend({}, baseStyle, disabledStyle)
+    } else {
+      textareaStyle = baseStyle;
+    }
+
     textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
                      className={ unionClassNames(this.props.className, this._styleId) }
@@ -162,10 +172,14 @@ TextInput.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
-  allowNewLine: React.PropTypes.bool
+  allowNewLine: React.PropTypes.bool,
+  disabled: React.PropTypes.bool
 };
 
-TextInput.defaultProps = { allowNewLine: false };
+TextInput.defaultProps = {
+  allowNewLine: false,
+  disabled: false
+};
 
 const newLineRegex = /[\r\n]/g;
 

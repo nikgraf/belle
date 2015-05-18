@@ -17,8 +17,8 @@ var textInputStyle = {
     fontSize: 14,
     padding: '7px 0 5px 0',
     color: '#505050',
-    border: '0 #fff solid',
-    borderBottom: '1px #ccc solid',
+    border: '0 solid #fff',
+    borderBottom: '1px solid #ccc',
     background: 'none',
     display: 'block',
     boxSizing: 'border-box'
@@ -31,6 +31,11 @@ var textInputStyle = {
   focusStyle: {
     outline: 0, // to avoid default focus behaviour
     borderBottom: '1px #53C7F2 solid'
+  },
+
+  disabledStyle: {
+    borderBottom: '1px dotted #000',
+    color: '#505050'
   }
 
 };
