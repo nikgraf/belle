@@ -3,7 +3,7 @@
 var selectStyle = {
 
   style: {
-    borderBottom: '1px #ccc solid',
+    borderBottom: '1px solid #CCC',
     boxSizing: 'border-box',
     cursor: 'pointer',
     height: 34,
@@ -12,7 +12,7 @@ var selectStyle = {
   },
 
   focusStyle: {
-    borderBottom: '1px #53C7F2 solid',
+    borderBottom: '1px solid #6EB8D4',
     boxSizing: 'border-box',
     cursor: 'pointer',
     height: 34,
@@ -21,7 +21,7 @@ var selectStyle = {
   },
 
   hoverStyle: {
-    borderBottom: '1px #92D6EF solid',
+    borderBottom: '1px solid #92D6EF',
     boxSizing: 'border-box',
     cursor: 'pointer',
     padding: '7px 0 5px 0',
