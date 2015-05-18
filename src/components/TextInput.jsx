@@ -144,7 +144,17 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let textareaStyle = extend({}, style.style, this.props.style);
+    const baseStyle = extend({}, style.style, this.props.style);
+
+    let textareaStyle;
+
+    if (this.props.disabled) {
+      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+      textareaStyle = extend({}, baseStyle, disabledStyle)
+    } else {
+      textareaStyle = baseStyle;
+    }
+
     textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
                      className={ unionClassNames(this.props.className, this._styleId) }
@@ -162,10 +172,16 @@ TextInput.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
-  allowNewLine: React.PropTypes.bool
+  allowNewLine: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
-TextInput.defaultProps = { allowNewLine: false };
+TextInput.defaultProps = {
+  allowNewLine: false,
+  disabled: false
+};
 
 const newLineRegex = /[\r\n]/g;
 
@@ -185,7 +201,9 @@ function sanitizeChildProperties(properties) {
     'className',
     'style',
     'hoverStyle',
-    'focusStyle'
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
   if (typeof properties.valueLink == 'object') {
     childProperties.value = properties.valueLink.value;
@@ -200,8 +218,10 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  const hoverStyle         = extend({}, style.hoverStyle, properties.hoverStyle);
+  const focusStyle         = extend({}, style.focusStyle, properties.focusStyle);
+  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+
   const styles = [
     {
       id: styleId,
@@ -212,6 +232,12 @@ function updatePseudoClassStyle(styleId, properties) {
       id: styleId,
       style: focusStyle,
       pseudoClass: 'focus'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
     }
   ];
   injectStyles(styles);

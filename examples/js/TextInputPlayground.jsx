@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import {TextInput} from 'belle';
+import {TextInput, Card} from 'belle';
 
 function conditionalTextInput (showTextInput) {
   if (showTextInput) {
@@ -25,11 +25,15 @@ export default React.createClass({
 
   render () {
     return (
-      <div>
+      <Card>
         <h2>TextInput</h2>
 
         {/* Common use case */}
         <TextInput style={ {width: 250} } defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+        <br />
+
+        {/* Common use case disabled */}
+        <TextInput style={ {width: 250} } disabled defaultValue="Lorem ipsum disabled sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
         <br />
 
         {/* Remove TextInput behaviour */}
@@ -60,7 +64,7 @@ export default React.createClass({
                  hoverStyle={ { borderBottom: '1px red solid' } }
                  focusStyle={ { borderBottom: '1px brown solid' } } />
         </div>
-      </div>
+      </Card>
     );
   }
 });
