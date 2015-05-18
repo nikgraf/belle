@@ -92,7 +92,6 @@ function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
 
 function updateStyling() {
   const styles = map(styleStorage, (storageEntry, id) => {
-    console.log(storageEntry);
     let pseudoClassesArray = [];
 
     if(storageEntry.pseudoClasses) {
