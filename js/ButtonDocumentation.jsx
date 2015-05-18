@@ -117,6 +117,38 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled and a user hovers over it.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <p>
