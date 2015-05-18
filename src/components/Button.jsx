@@ -59,7 +59,15 @@ export default class Button extends Component {
 
   render() {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
-    const buttonStyle = extend({}, baseStyle, this.props.style);
+    const baseButtonStyle = extend({}, baseStyle, this.props.style);
+
+    let buttonStyle;
+    if (this.props.disabled) {
+      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+      buttonStyle = extend({}, baseButtonStyle, disabledStyle);
+    } else {
+      buttonStyle = baseButtonStyle;
+    }
 
     return <button style={ buttonStyle }
                    className={ unionClassNames(this.props.className, this.styleId) }
@@ -73,14 +81,17 @@ Button.displayName = 'Belle Button';
 
 Button.propTypes = {
   primary: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
   type: React.PropTypes.oneOf(buttonTypes),
   style: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object
+  hoverStyle: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object
 };
 
 Button.defaultProps = {
   primary: false,
+  disabled: false,
   type: 'button'
 };
 
@@ -96,7 +107,9 @@ function sanitizeChildProperties(properties) {
     'style',
     'hoverStyle',
     'focusStyle',
-    'activeStyle'
+    'activeStyle',
+    'disabledStyle',
+    'primary'
   ]);
   return childProperties;
 }

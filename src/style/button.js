@@ -44,6 +44,12 @@ var buttonStyle = {
     boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #E8E8E8'
   },
 
+  disabledStyle: {
+    background: '#000000',
+    color: '#ffffff',
+    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD'
+  },
+
   primaryStyle: {
     background: '#53C7F2',
     border: 0,
