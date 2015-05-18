@@ -25,21 +25,22 @@ var textInputStyle = {
   },
 
   hoverStyle: {
-    borderBottom: '1px #92D6EF solid'
+    borderBottom: '1px solid #92D6EF'
   },
 
   focusStyle: {
     outline: 0, // to avoid default focus behaviour
-    borderBottom: '1px #53C7F2 solid'
+    borderBottom: '1px solid #6EB8D4'
   },
 
   disabledStyle: {
-    borderBottom: '1px dotted rgb(159, 159, 159)',
-    color: 'rgb(159, 159, 159)'
+    borderBottom: '1px dotted #9F9F9F',
+    color: '#9F9F9F'
   },
 
   disabledHoverStyle: {
-    borderBottom: '1px dotted rgb(159, 159, 159)'
+    borderBottom: '1px dotted #92D6EF',
+    cursor: 'not-allowed'
   }
 
 };
