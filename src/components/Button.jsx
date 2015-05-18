@@ -63,8 +63,13 @@ export default class Button extends Component {
 
     let buttonStyle;
     if (this.props.disabled) {
-      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-      buttonStyle = extend({}, baseButtonStyle, disabledStyle);
+      if (this.props.primary) {
+        const primaryDisabledStyle = extend({}, style.primaryDisabledStyle, this.props.disabledStyle);
+        buttonStyle = extend({}, baseButtonStyle, primaryDisabledStyle);
+      } else {
+        const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+        buttonStyle = extend({}, baseButtonStyle, disabledStyle);
+      }
     } else {
       buttonStyle = baseButtonStyle;
     }

@@ -91,7 +91,14 @@ var buttonStyle = {
     background: '#4DBEE8',
     boxShadow: 'inset 0 1px 0px #3995B7, 0 1px 0px #4DBEE8',
     color: '#F5F5F5'
-  }
+  },
+
+  primaryDisabledStyle: {
+    background: '#ffffff',
+    color: '#ffffff',
+    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD',
+    cursor: 'not-allowed'
+  },
 };
 
 export default buttonStyle;
