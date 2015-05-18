@@ -3,12 +3,12 @@
 var buttonStyle = {
 
   style: {
-    background: '#EFEFEF',
+    background: '#EEEEEE',
     border: 0,
-    boxShadow: '0 1px 0px #D0D0D0',
+    boxShadow: '0 1px 0px #BDBDBD',
     borderRadius: 2,
     boxSizing: 'border-box',
-    color: '#555',
+    color: '#616161',
     cursor: 'pointer',
     display: 'inline-block',
     fontSize: 16,
@@ -27,34 +27,34 @@ var buttonStyle = {
 
   hoverStyle: {
     background: '#F5F5F5',
-    boxShadow: '0 1px 0px #D0D0D0',
-    color: '#666'
+    boxShadow: '0 1px 0px #BDBDBD',
+    color: '#757575'
   },
 
   focusStyle: {
     background: '#F5F5F5',
-    boxShadow: '0 1px 0px #D0D0D0',
-    color: '#666',
+    boxShadow: '0 1px 0px #E0E0E0',
+    color: '#757575',
     outline: 0 // avoid default focus behaviour
   },
 
   activeStyle: {
-    background: '#E8E8E8',
-    color: '#5C5C5C',
-    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #E8E8E8'
+    background: '#E0E0E0',
+    color: '#424242',
+    boxShadow: 'inset 0 1px 0px #BDBDBD, 0 2px 0px #E0E0E0'
   },
 
   disabledStyle: {
-    background: '#EFEFEF',
-    color: '#9A9A9A',
-    boxShadow: '0 1px 0px #D0D0D0',
+    background: '#EEEEEE',
+    color: '#FFFFFF',
+    boxShadow: '0 1px 0px #BDBDBD',
     cursor: 'not-allowed'
   },
 
   disabledHoverStyle: {
-    background: '#EFEFEF',
-    color: '#B5B5B5',
-    boxShadow: '0 1px 0px #D0D0D0',
+    background: 'rgba(108, 210, 247, 0.65)',
+    color: '#FFFFFF',
+    boxShadow: '0 1px 0px rgba(57, 149, 183, 0.65)',
     cursor: 'not-allowed'
   },
 
@@ -82,14 +82,14 @@ var buttonStyle = {
   },
 
   primaryHoverStyle: {
-    background: '#5FCDF5',
-    boxShadow: '0 1px 0px #4FB4DA',
+    background: '#82D9F9',
+    boxShadow: '0 1px 0px #3995B7',
     color: '#FFF'
   },
 
   primaryFocusStyle: {
-    background: '#5FCDF5',
-    boxShadow: '0 1px 0px #4FB4DA',
+    background: '#82D9F9',
+    boxShadow: '0 1px 0px #3995B7',
     color: '#FFF',
     outline: 0 // avoid default focus behaviour
   },
@@ -101,16 +101,16 @@ var buttonStyle = {
   },
 
   primaryDisabledStyle: {
-    background: '#ffffff',
-    color: '#ffffff',
-    boxShadow: 'inset 0 1px 0px #CFCFCF, 0 1px 0px #DDDDDD',
+    background: '#98DEF8',
+    color: '#FAFAFA',
+    boxShadow: '0 1px 0px #74B4CC',
     cursor: 'not-allowed'
   },
 
   primaryDisabledHoverStyle: {
-    background: '#EFEFEF',
-    color: '#B5B5B5',
-    boxShadow: '0 1px 0px #D0D0D0',
+    background: '#A7E4FB',
+    color: '#FFF',
+    boxShadow: '0 1px 0px #74B4CC',
     cursor: 'not-allowed'
   }
 };
