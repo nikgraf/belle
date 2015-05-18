@@ -103,10 +103,14 @@ const styleStructure = `style = {
     hoverStyle: { … },
     focusStyle: { … },
     activeStyle: { … },
+    disabledStyle: { … },
+    disabledHoveredStyle: { … },
     primaryStyle: { … },
     primaryHoverStyle: { … },
     primaryFocusStyle: { … },
-    primaryActiveStyle: { … }
+    primaryActiveStyle: { … },
+    pirmaryDisabledStyle: { … },
+    pirmaryDisabledHoveredStyle: { … }
   },
   card: {
     style: { … }
@@ -115,6 +119,8 @@ const styleStructure = `style = {
     style: { … },
     focusStyle: { … },
     hoverStyle: { … },
+    disabledStyle: { … }, (coming soon …)
+    disabledHoveredStyle: { … }, (coming soon …)
     wrapperStyle: { … },
     optionsAreaStyle: { … },
     nativeSelectStyle: { … },
@@ -135,7 +141,9 @@ const styleStructure = `style = {
   textInput: {
     style: { … },
     hoverStyle: { … },
-    focusStyle: { … }
+    focusStyle: { … },
+    disabledStyle: { … },
+    disabledHoveredStyle: { … }
   }
 }
 `;
