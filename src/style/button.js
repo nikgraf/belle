@@ -46,15 +46,15 @@ var buttonStyle = {
 
   disabledStyle: {
     background: '#EEEEEE',
-    color: '#FFFFFF',
+    color: '#C5C4C4',
     boxShadow: '0 1px 0px #BDBDBD',
     cursor: 'not-allowed'
   },
 
   disabledHoverStyle: {
-    background: 'rgba(108, 210, 247, 0.65)',
-    color: '#FFFFFF',
-    boxShadow: '0 1px 0px rgba(57, 149, 183, 0.65)',
+    background: '#F5F5F5',
+    color: '#D0D0D0',
+    boxShadow: '0 1px 0px #BDBDBD',
     cursor: 'not-allowed'
   },
 
