@@ -115,21 +115,6 @@ describe('Button', () => {
     expect(resetButtonNode.props.type).toBe('reset');
   });
 
-
-  it('should blur the button after clicking', () => {
-    const button = TestUtils.renderIntoDocument(
-      <Button>Follow</Button>
-    );
-
-    button._blur = jest.genMockFunction();
-
-    const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    TestUtils.Simulate.click(buttonNode);
-
-    expect(button._blur.mock.calls.length).toBe(1);
-  });
-
-
   it('should be able to adopt the pseudoClass styles of the button', function() {
     injectStyle.injectStyles = jest.genMockFunction();
 
