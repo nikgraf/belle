@@ -46,7 +46,7 @@ export function injectStyles(styles) {
  * Removes all pseudoClass styles based on the provided styleId.
  */
 export function removeStyle(styleId) {
-  styleStorage[styleId] = undefined;
+  delete styleStorage[styleId];
   updateStyling();
 }
 
@@ -78,19 +78,30 @@ function updateStore(styleId, style, pseudoClass, disabled) {
 /**
  * Constructs all the stored styles & injects them to the DOM.
  */
+
+function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
+  return map(pseudoClasses, (style, pseudoClass) => {
+    const styleString = CSSPropertyOperations.createMarkupForStyles(style);
+    const styleWithImportant = styleString.replace(/;/g, ' !important;');
+
+    return disabled ?
+        `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}`:
+        `.${id}:${pseudoClass} {${styleWithImportant}}`;
+  });
+}
+
 function updateStyling() {
   const styles = map(styleStorage, (storageEntry, id) => {
-    const pseudoClassStyles = map(storageEntry.pseudoClasses, (style, pseudoClass) => {
-      const styleString = CSSPropertyOperations.createMarkupForStyles(style);
-      const styleWithImportant = styleString.replace(/;/g, ' !important;');
-      return `.${id}:${pseudoClass} {${styleWithImportant}}`;
-    });
-    const disabledPseudoClassStyles = map(storageEntry.disabledPseudoClasses, (style, pseudoClass) => {
-      const styleString = CSSPropertyOperations.createMarkupForStyles(style);
-      const styleWithImportant = styleString.replace(/;/g, ' !important;');
-      return `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}`;
-    });
-    return [pseudoClassStyles, disabledPseudoClassStyles];
+    let pseudoClassesArray = [];
+
+    if(storageEntry.pseudoClasses) {
+      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.pseudoClasses, id, false));
+    }
+    if(storageEntry.disabledPseudoClasses) {
+      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.disabledPseudoClasses, id, true));
+    }
+
+    return pseudoClassesArray;
   });
   styleElement.innerHTML = flatten(styles).join(' ');
 }
