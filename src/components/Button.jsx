@@ -8,6 +8,9 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 
 const buttonTypes = ['button', 'submit', 'reset'];
 
+// Enable React Touch Events
+React.initializeTouchEvents(true);
+
 /**
  * Button component
  *
@@ -20,7 +23,10 @@ export default class Button extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties)
+      childProperties: sanitizeChildProperties(properties),
+      // used for touch devices like iOS Chrome/Safari where the active
+      // pseudoClass is not supported on touch
+      active: false
     };
   }
 
@@ -57,6 +63,39 @@ export default class Button extends Component {
     React.findDOMNode(this).blur();
   }
 
+  /**
+   * Updates the button to be pressed right now.
+   */
+  _onTouchStart(event) {
+    this.setState({ active: true });
+
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
+    }
+  }
+
+  /**
+   * Updates the button to be release.
+   */
+  _onTouchEnd(event) {
+    this.setState({ active: false });
+
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
+  }
+
+  /**
+   * Updates the button to be release.
+   */
+  _onTouchCancel(event) {
+    this.setState({ active: false });
+
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
+  }
+
   render() {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
     const baseButtonStyle = extend({}, baseStyle, this.props.style);
@@ -71,11 +110,20 @@ export default class Button extends Component {
         buttonStyle = extend({}, baseButtonStyle, disabledStyle);
       }
     } else {
-      buttonStyle = baseButtonStyle;
+      if (this.state.active) {
+        const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
+        const activeStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
+        buttonStyle = activeStyle;
+      } else {
+        buttonStyle = baseButtonStyle;
+      }
     }
 
     return <button style={ buttonStyle }
                    className={ unionClassNames(this.props.className, this.styleId) }
+                   onTouchStart={ this._onTouchStart.bind(this) }
+                   onTouchEnd={ this._onTouchEnd.bind(this) }
+                   onTouchCancel={ this._onTouchCancel.bind(this) }
                    {...this.state.childProperties}>
       { this.props.children }
     </button>;
@@ -92,7 +140,10 @@ Button.propTypes = {
   focusStyle: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object
+  disabledHoverStyle: React.PropTypes.object,
+  onTouchStart: React.PropTypes.func,
+  onTouchEnd: React.PropTypes.func,
+  onTouchCancel: React.PropTypes.func
 };
 
 Button.defaultProps = {
@@ -116,7 +167,10 @@ function sanitizeChildProperties(properties) {
     'activeStyle',
     'disabledStyle',
     'disabledHoverStyle',
-    'primary'
+    'primary',
+    'onTouchStart',
+    'onTouchEnd',
+    'onTouchCancel'
   ]);
   return childProperties;
 }
