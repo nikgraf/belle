@@ -6,6 +6,9 @@ import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 
+// Enable React Touch Events
+React.initializeTouchEvents(true);
+
 /**
  * Select component.
  *
@@ -153,11 +156,24 @@ export default class Select extends Component {
   }
 
   /**
-   * After the user clicks on an Option the state is changed & a change event is
-   * dispatched on this component.
-   *
-   * Belle's philosophy dicdates to fire a change event in order to be aligned
-   * with the behaviour of the native HTML select.
+   * Update the focusedOption based on Option the user is touching.
+   */
+  _onTouchStartAtOption (event) {
+    const entry = event.currentTarget.querySelector('[data-belle-value]');
+    this.setState({ focusedOptionValue: entry.getAttribute('data-belle-value') });
+  }
+
+  /**
+   * Triggers a change event after the user touched on an Option.
+   */
+  _onTouchFinishedAtOption (event) {
+    event.preventDefault();
+    const entry = event.currentTarget.querySelector('[data-belle-value]');
+    this._triggerChange(entry.getAttribute('data-belle-value'));
+  }
+
+  /**
+   * Triggers a change event after the user clicked on an Option.
    */
   _onClickAtOption (event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
@@ -309,9 +325,6 @@ export default class Select extends Component {
    * options area the focused option is selected.
    *
    * Same as _onClickAtOption this update the state & dispatches a change event.
-   *
-   * Belle's philosophy dicdates to fire a change event in order to be aligned
-   * with the behaviour of the native HTML select.
    */
   _onEnterOrSpaceKeyDown () {
     this._triggerChange(this.state.focusedOptionValue);
@@ -430,6 +443,9 @@ export default class Select extends Component {
 
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
+                      onTouchStart={ this._onTouchStartAtOption.bind(this) }
+                      onTouchEnd={ this._onTouchFinishedAtOption.bind(this) }
+                      onTouchCancel={ this._onTouchFinishedAtOption.bind(this) }
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                       role="option"
