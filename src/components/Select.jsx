@@ -157,19 +157,62 @@ export default class Select extends Component {
 
   /**
    * Update the focusedOption based on Option the user is touching.
+   *
+   * Unfortunately updating the focusedOption only works in case the optionsArea
+   * is not scrollable.
+   * If a setState would be triggered during a touch with the intention to
+   * scroll the setState would trigger a re-render & prevent the scrolling.
    */
   _onTouchStartAtOption (event) {
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
-    this.setState({ focusedOptionValue: entry.getAttribute('data-belle-value') });
+    if (event.touches.length === 1) {
+      const entry = event.currentTarget.querySelector('[data-belle-value]');
+      this._touchStartedAt = entry.getAttribute('data-belle-value');
+
+      // save the scroll position
+      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+      if (optionsAreaNode.scrollHeight > optionsAreaNode.offsetHeight) {
+        this._scrollTopPosition = optionsAreaNode.scrollTop;
+        // Note: don't use setState in here as it would prevent the scrolling
+      } else {
+        this._scrollTopPosition = 0;
+        this.setState({ focusedOptionValue: this._touchStartedAt });
+      }
+      // reset interaction
+      this._scrollActive = false;
+    }
+  }
+
+  /**
+   * Identifies if the optionsArea is scrollable.
+   */
+  _onTouchMoveAtOption (event) {
+    const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+    if (optionsAreaNode.scrollTop !== this._scrollTopPosition) {
+      this._scrollActive = true;
+    }
+  }
+
+
+  /**
+   * Triggers a change event after the user touched on an Option.
+   */
+  _onTouchEndAtOption (event) {
+    if (this._touchStartedAt && !this._scrollActive) {
+      const entry = event.currentTarget.querySelector('[data-belle-value]');
+      const value = entry.getAttribute('data-belle-value');
+      if (this._touchStartedAt === value) {
+        event.preventDefault();
+        this._triggerChange(value);
+      }
+    }
+    this._touchStartedAt = undefined;
   }
 
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchFinishedAtOption (event) {
-    event.preventDefault();
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
-    this._triggerChange(entry.getAttribute('data-belle-value'));
+  _onTouchCancelAtOption (event) {
+    this._touchStartedAt = undefined;
   }
 
   /**
@@ -444,8 +487,9 @@ export default class Select extends Component {
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
                       onTouchStart={ this._onTouchStartAtOption.bind(this) }
-                      onTouchEnd={ this._onTouchFinishedAtOption.bind(this) }
-                      onTouchCancel={ this._onTouchFinishedAtOption.bind(this) }
+                      onTouchMove={ this._onTouchMoveAtOption.bind(this) }
+                      onTouchEnd={ this._onTouchEndAtOption.bind(this) }
+                      onTouchCancel={ this._onTouchCancelAtOption.bind(this) }
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                       role="option"
