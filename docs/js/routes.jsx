@@ -14,6 +14,7 @@ import FuturePlans from './FuturePlans';
 import OptionDocumentation from './OptionDocumentation';
 import Philosophy from './Philosophy';
 import PlaceholderDocumentation from './PlaceholderDocumentation';
+import RatingDocumentation from './RatingDocumentation';
 import SelectDocumentation from './SelectDocumentation';
 import SeparatorDocumentation from './SeparatorDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
@@ -26,6 +27,7 @@ const routes = (
     <Route name="component/select" handler={SelectDocumentation}/>
     <Route name="component/option" handler={OptionDocumentation}/>
     <Route name="component/placeholder" handler={PlaceholderDocumentation}/>
+    <Route name="component/rating" handler={RatingDocumentation}/>
     <Route name="component/separator" handler={SeparatorDocumentation}/>
     <Route name="component/text-input" handler={TextInputDocumentation}/>
     <Route name="configuration" handler={Configuration}/>

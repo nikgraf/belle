@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, style} from 'belle';
+import {TextInput, Card, Button, style, Rating} from 'belle';
 import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
@@ -51,6 +51,15 @@ class App extends Component {
       <TextInputPlayground />
 
       <CardPlayground />
+
+      <br />
+
+      <h2>Rating</h2>
+
+      <Rating value={0}></Rating><br />
+      <Rating value={4} disabled></Rating><br />
+      <Rating value={1}></Rating><br />
+
     </div>;
   }
 }
