@@ -12,6 +12,7 @@ var style = {
   },
 
   ratingHolderStyle: {
+    fontSize: 32,
     color: '#e3e3e3',
     position: 'relative',
     overflow: 'hidden',
@@ -25,7 +26,6 @@ var style = {
   ratingHolderStyleBefore: {
     content: '"\\2605\\2605\\2605\\2605\\2605"'
   }
-
 };
 
 export default style;
