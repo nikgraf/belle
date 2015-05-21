@@ -25,7 +25,7 @@ export default class Rating extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingStyleId = `rating-style-id${id}`;
     this.ratingHolderStyleId = `rating-holder-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, this.ratingHolderStyleId);
+    updatePseudoClassStyle(this.ratingStyleId, this.ratingHolderStyleId, this.props.ratingCharacter);
   }
 
   /**
@@ -123,7 +123,8 @@ Rating.propTypes = {
   value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
   disabled: React.PropTypes.bool,
   onChange: React.PropTypes.func,
-  tabIndex: React.PropTypes.number
+  tabIndex: React.PropTypes.number,
+  ratingCharacter: React.PropTypes.string
 };
 
 /**
@@ -132,7 +133,8 @@ Rating.propTypes = {
 Rating.defaultProps = {
   value: 0,
   disabled: false,
-  tabIndex: 0
+  tabIndex: 0,
+  ratingCharacter: '\\2605'
 };
 
 Rating.displayName = 'Belle Rating';
@@ -140,16 +142,20 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(ratingStyleId, ratingHolderStyleId) {
+function updatePseudoClassStyle(ratingStyleId, ratingHolderStyleId, ratingCharacter) {
+  const ratingStyleBefore = {
+    content: "'" + ratingCharacter + ratingCharacter + ratingCharacter +
+              ratingCharacter + ratingCharacter + "'"
+  };
   const styles = [
     {
       id: ratingStyleId,
-      style: style.ratingStyleBefore,
+      style: ratingStyleBefore,
       pseudoClass: ':before'
     },
     {
       id: ratingHolderStyleId,
-      style: style.ratingHolderStyleBefore,
+      style: ratingStyleBefore,
       pseudoClass: ':before'
     }
   ];
