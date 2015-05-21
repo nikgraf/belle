@@ -19,6 +19,15 @@ var style = {
     display: 'inline-block'
   },
 
+  ratingStyleDisabled: {
+    cursor: 'not-allowed',
+    opacity: 0.6
+  },
+
+  ratingStyleEnabled: {
+    cursor: 'pointer'
+  },
+
   ratingStyleBefore: {
     content: '"\\2605\\2605\\2605\\2605\\2605"'
   },

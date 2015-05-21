@@ -100,9 +100,11 @@ export default class Rating extends Component {
   render () {
     const width = this._getWidth();
     const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.ratingStyleHover);
+    const ratingHolderStateStyle = this.props.disabled?style.ratingStyleDisabled:style.ratingStyleEnabled;
+    const ratingHolderCalculatedStyle = extend({}, style.ratingHolderStyle, ratingHolderStateStyle);
 
     return <div ref="holder"
-                style={style.ratingHolderStyle}
+                style={ratingHolderCalculatedStyle}
                 className={ this.ratingHolderStyleId }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
