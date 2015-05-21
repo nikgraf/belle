@@ -14,7 +14,7 @@ export default React.createClass({
 
           <Rating value={0}></Rating><br />
           <Rating value={4} disabled></Rating><br />
-          <Rating value={1}></Rating><br />
+          <Rating value={1} onChange={ (event) => console.log(event.target.value) }></Rating><br />
 
         </Card>
 

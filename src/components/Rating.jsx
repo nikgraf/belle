@@ -13,7 +13,7 @@ export default class Rating extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      rating: this.props.value,
+      rating: Math.ceil(this.props.value),
       hoverRating: undefined
     };
   }
@@ -42,7 +42,7 @@ export default class Rating extends Component {
    */
   _getWidth() {
     var value = this.state.hoverRating?this.state.hoverRating:this.state.rating;
-    return (Math.round(value) * 20) + '%';
+    return (value * 20) + '%';
   }
 
   /**
@@ -57,7 +57,7 @@ export default class Rating extends Component {
       const wrapperNode = React.findDOMNode(this.refs.holder);
       const holderWidth = wrapperNode.getBoundingClientRect().width;
       const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
-      const newRating = (mouseMoved * 5 / holderWidth) + 0.5;
+      const newRating = Math.ceil(mouseMoved * 5 / holderWidth);
       this.setState({
         hoverRating: newRating
       });
@@ -85,6 +85,11 @@ export default class Rating extends Component {
         rating: this.state.hoverRating,
         ratingStyleHover: undefined
       });
+      if (this.props.onChange) {
+        const wrapperNode = React.findDOMNode(this);
+        wrapperNode.value = this.state.hoverRating;
+        this.props.onChange({target: wrapperNode});
+      }
     }
   }
 
@@ -113,7 +118,8 @@ export default class Rating extends Component {
  */
 Rating.propTypes = {
   value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
-  disabled: React.PropTypes.bool
+  disabled: React.PropTypes.bool,
+  onChange: React.PropTypes.func
 };
 
 /**
