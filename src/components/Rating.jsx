@@ -106,7 +106,8 @@ export default class Rating extends Component {
                 className={ this.ratingHolderStyleId }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
-                onClick={ this._onClick.bind(this) }>
+                onClick={ this._onClick.bind(this) }
+                tabIndex={ this.props.tabIndex}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }></div>
               </div>;
@@ -119,7 +120,8 @@ export default class Rating extends Component {
 Rating.propTypes = {
   value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
   disabled: React.PropTypes.bool,
-  onChange: React.PropTypes.func
+  onChange: React.PropTypes.func,
+  tabIndex: React.PropTypes.number
 };
 
 /**
@@ -127,7 +129,8 @@ Rating.propTypes = {
  */
 Rating.defaultProps = {
   value: 0,
-  disabled: false
+  disabled: false,
+  tabIndex: 0
 };
 
 Rating.displayName = 'Belle Rating';
