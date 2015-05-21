@@ -26,7 +26,7 @@ export default class RatingDocumentation extends Component {
             <p style={ {marginTop: 0} }>
               <i>Integer(0-5)</i>
               <br />
-              required
+              optional
             </p>
             <p>
               The value specifies the initital rating.
@@ -60,6 +60,21 @@ export default class RatingDocumentation extends Component {
             </p>
             <p>
               This function will get executed when user changes the rating interactively.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            tabIndex
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Integer</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This tabIndex will get assigned to the Rating component on the page.
             </p>
           </td>
         </tr>
