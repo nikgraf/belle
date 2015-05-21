@@ -78,6 +78,21 @@ export default class RatingDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            ratingCharacter
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Character</i>
+              <br />
+              optional
+              </p>
+              <p>
+                This character will be used as the rating character in the component.
+              </p>
+          </td>
+        </tr>
       </table>
 
       <h3>More Examples</h3>
