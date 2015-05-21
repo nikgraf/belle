@@ -48,6 +48,21 @@ export default class RatingDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            onChange
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Function</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This function will get executed when user changes the rating interactively.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <h3>More Examples</h3>
