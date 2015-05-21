@@ -23,6 +23,10 @@ var style = {
     content: '"\\2605\\2605\\2605\\2605\\2605"'
   },
 
+  ratingStyleHover: {
+    textShadow: '1px 1px 1px black'
+  },
+
   ratingHolderStyleBefore: {
     content: '"\\2605\\2605\\2605\\2605\\2605"'
   }

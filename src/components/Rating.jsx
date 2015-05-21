@@ -25,8 +25,7 @@ export default class Rating extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingStyleId = `rating-style-id${id}`;
     this.ratingHolderStyleId = `rating-holder-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, style.ratingStyleBefore);
-    updatePseudoClassStyle(this.ratingHolderStyleId, style.ratingHolderStyleBefore);
+    updatePseudoClassStyle(this.ratingStyleId, this.ratingHolderStyleId);
   }
 
   /**
@@ -52,10 +51,13 @@ export default class Rating extends Component {
    */
   _onMouseMove(e) {
     if(!this.props.disabled) {
+      this.setState({
+        ratingStyleHover: style.ratingStyleHover
+      });
       const wrapperNode = React.findDOMNode(this.refs.holder);
       const holderWidth = wrapperNode.getBoundingClientRect().width;
       const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
-      const newRating = mouseMoved * 5 / holderWidth;
+      const newRating = (mouseMoved * 5 / holderWidth) + 0.5;
       this.setState({
         hoverRating: newRating
       });
@@ -68,7 +70,8 @@ export default class Rating extends Component {
   _onMouseLeave() {
     if(!this.props.disabled) {
       this.setState({
-        hoverRating: undefined
+        hoverRating: undefined,
+        ratingStyleHover: undefined
       });
     }
   }
@@ -79,7 +82,8 @@ export default class Rating extends Component {
   _onClick() {
     if(!this.props.disabled) {
       this.setState({
-        rating: this.state.hoverRating
+        rating: this.state.hoverRating,
+        ratingStyleHover: undefined
       });
     }
   }
@@ -90,7 +94,7 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width});
+    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.ratingStyleHover);
 
     return <div ref="holder"
                 style={style.ratingHolderStyle}
@@ -108,7 +112,7 @@ export default class Rating extends Component {
  * Props of Rating component
  */
 Rating.propTypes = {
-  value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]).isRequired,
+  value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
   disabled: React.PropTypes.bool
 };
 
@@ -116,6 +120,7 @@ Rating.propTypes = {
  * Setting default prop values.
  */
 Rating.defaultProps = {
+  value: 0,
   disabled: false
 };
 
@@ -124,11 +129,16 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(styleId, style) {
+function updatePseudoClassStyle(ratingStyleId, ratingHolderStyleId) {
   const styles = [
     {
-      id: styleId,
-      style: style,
+      id: ratingStyleId,
+      style: style.ratingStyleBefore,
+      pseudoClass: ':before'
+    },
+    {
+      id: ratingHolderStyleId,
+      style: style.ratingHolderStyleBefore,
       pseudoClass: ':before'
     }
   ];
