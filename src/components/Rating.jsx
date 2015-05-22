@@ -13,19 +13,20 @@ export default class Rating extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      rating: Math.ceil(this.props.value),
-      hoverRating: undefined
+      rating: Math.ceil(properties.value),
+      hoverRating: undefined,
+      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps)
     };
   }
 
   /**
-   * Function to apply pseudo classes to rating and rating holder divs.
+   * Function to apply pseudo classes to rating and rating wrapper divs.
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingStyleId = `rating-style-id${id}`;
-    this.ratingHolderStyleId = `rating-holder-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, this.ratingHolderStyleId, this.props.ratingCharacter);
+    this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
+    updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props.ratingCharacter);
   }
 
   /**
@@ -33,7 +34,7 @@ export default class Rating extends Component {
    */
   componentWillUnmount() {
     removeStyle(this.ratingStyleId);
-    removeStyle(this.ratingHolderStyleId);
+    removeStyle(this.ratingWrapperStyleId);
   }
 
   /**
@@ -54,10 +55,10 @@ export default class Rating extends Component {
       this.setState({
         ratingStyleHover: style.ratingStyleHover
       });
-      const wrapperNode = React.findDOMNode(this.refs.holder);
-      const holderWidth = wrapperNode.getBoundingClientRect().width;
+      const wrapperNode = React.findDOMNode(this.refs.wrapper);
+      const wrapperWidth = wrapperNode.getBoundingClientRect().width;
       const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
-      const newRating = Math.ceil(mouseMoved * 5 / holderWidth);
+      const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
       this.setState({
         hoverRating: newRating
       });
@@ -100,16 +101,18 @@ export default class Rating extends Component {
   render () {
     const width = this._getWidth();
     const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.ratingStyleHover);
-    const ratingHolderStateStyle = this.props.disabled?style.ratingStyleDisabled:style.ratingStyleEnabled;
-    const ratingHolderCalculatedStyle = extend({}, style.ratingHolderStyle, ratingHolderStateStyle);
+    const ratingWrapperStateStyle = this.props.disabled?style.ratingStyleDisabled:style.ratingStyleEnabled;
+    const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
+    const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
+    const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
-    return <div ref="holder"
-                style={ratingHolderCalculatedStyle}
-                className={ this.ratingHolderStyleId }
+    return <div ref="wrapper"
+                style={ratingWrapperCalculatedStyle}
+                className={ this.ratingWrapperStyleId }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
                 onClick={ this._onClick.bind(this) }
-                tabIndex={ this.props.tabIndex}>
+                tabIndex={ tabIndex }>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }></div>
               </div>;
@@ -124,7 +127,8 @@ Rating.propTypes = {
   disabled: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
-  ratingCharacter: React.PropTypes.string
+  ratingCharacter: React.PropTypes.string,
+  style: React.PropTypes.object
 };
 
 /**
@@ -142,7 +146,7 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(ratingStyleId, ratingHolderStyleId, ratingCharacter) {
+function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, ratingCharacter) {
   const ratingStyleBefore = {
     content: "'" + ratingCharacter + ratingCharacter + ratingCharacter +
               ratingCharacter + ratingCharacter + "'"
@@ -154,10 +158,19 @@ function updatePseudoClassStyle(ratingStyleId, ratingHolderStyleId, ratingCharac
       pseudoClass: ':before'
     },
     {
-      id: ratingHolderStyleId,
+      id: ratingWrapperStyleId,
       style: ratingStyleBefore,
       pseudoClass: ':before'
     }
   ];
   injectStyles(styles);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizePropertiesForWrapper(wrapperProperties) {
+  return omit(wrapperProperties, [
+    'tabIndex'
+  ]);
 }

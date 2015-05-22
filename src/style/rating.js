@@ -11,7 +11,7 @@ var style = {
     overflow: 'hidden'
   },
 
-  ratingHolderStyle: {
+  ratingWrapperStyle: {
     fontSize: 32,
     color: '#e3e3e3',
     position: 'relative',
