@@ -19,16 +19,16 @@ var style = {
     display: 'inline-block'
   },
 
-  ratingStyleDisabled: {
+  disabledStyle: {
     cursor: 'not-allowed',
     opacity: 0.6
   },
 
-  ratingStyleEnabled: {
+  enabledStyle: {
     cursor: 'pointer'
   },
 
-  ratingStyleHover: {
+  mouseMoveStyle: {
     textShadow: '1px 1px 1px black'
   }
 

@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
 import style from '../style/rating.js'
 import {injectStyles, removeStyle} from '../utils/inject-style';
+import unionClassNames from '../utils/union-class-names';
 
 /**
  * Rating component: shows 5 stars for rating. Allows to display, update, disable rating.
@@ -15,7 +16,7 @@ export default class Rating extends Component {
     this.state = {
       rating: Math.ceil(properties.value),
       hoverRating: undefined,
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps)
+      generalProperties: sanitizeProperties(properties)
     };
   }
 
@@ -26,7 +27,7 @@ export default class Rating extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props.ratingCharacter);
+    updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
   }
 
   /**
@@ -53,7 +54,7 @@ export default class Rating extends Component {
   _onMouseMove(e) {
     if(!this.props.disabled) {
       this.setState({
-        ratingStyleHover: style.ratingStyleHover
+        mouseMoveStyle: style.mouseMoveStyle
       });
       const wrapperNode = React.findDOMNode(this.refs.wrapper);
       const wrapperWidth = wrapperNode.getBoundingClientRect().width;
@@ -72,7 +73,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         hoverRating: undefined,
-        ratingStyleHover: undefined
+        mouseMoveStyle: undefined
       });
     }
   }
@@ -84,7 +85,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         rating: this.state.hoverRating,
-        ratingStyleHover: undefined
+        mouseMoveStyle: undefined
       });
       if (this.props.onChange) {
         const wrapperNode = React.findDOMNode(this);
@@ -94,27 +95,25 @@ export default class Rating extends Component {
     }
   }
 
-  //We may not allow custom styling to component since that can interfere with the rating calculations.
   /**
    * Function to render component.
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.ratingStyleHover);
-    const ratingWrapperStateStyle = this.props.disabled?style.ratingStyleDisabled:style.ratingStyleEnabled;
+    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.mouseMoveStyle);
+    const ratingWrapperStateStyle = this.props.disabled?extend({}, style.disabledStyle, this.props.disabledStyle):style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
-    const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
-    const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
     return <div ref="wrapper"
-                style={ratingWrapperCalculatedStyle}
-                className={ this.ratingWrapperStyleId }
+                style={ ratingWrapperCalculatedStyle }
+                className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
                 onClick={ this._onClick.bind(this) }
-                tabIndex={ tabIndex }>
+                {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
-                  className={ this.ratingStyleId }></div>
+                  className={ this.ratingStyleId }>
+                </div>
               </div>;
   }
 }
@@ -128,7 +127,13 @@ Rating.propTypes = {
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
   ratingCharacter: React.PropTypes.string,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  id: React.PropTypes.string,
+  className: React.PropTypes.string,
+  hoverStyle: React.PropTypes.object,
+  focusStyle: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
 /**
@@ -146,10 +151,10 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, ratingCharacter) {
+function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties) {
   const ratingStyleBefore = {
-    content: "'" + ratingCharacter + ratingCharacter + ratingCharacter +
-              ratingCharacter + ratingCharacter + "'"
+    content: "'" + properties.ratingCharacter + properties.ratingCharacter + properties.ratingCharacter +
+              properties.ratingCharacter + properties.ratingCharacter + "'"
   };
   const styles = [
     {
@@ -163,14 +168,55 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, ratingChara
       pseudoClass: ':before'
     }
   ];
+  if(properties.focusStyle) {
+    styles.push({
+        id: ratingWrapperStyleId,
+        style: properties.focusStyle,
+        pseudoClass: 'focus'
+      });
+  }
+  if(properties.focusStyle) {
+    styles.push({
+      id: ratingWrapperStyleId,
+      style: properties.focusStyle,
+      pseudoClass: 'focus'
+    });
+  }
+  if(properties.hoverStyle) {
+    styles.push({
+      id: ratingWrapperStyleId,
+      style: properties.hoverStyle,
+      pseudoClass: 'hover'
+    });
+  }
+  if(properties.disabledHoverStyle) {
+    styles.push({
+      id: ratingWrapperStyleId,
+      style: properties.disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
+    });
+  }
   injectStyles(styles);
 }
 
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
-function sanitizePropertiesForWrapper(wrapperProperties) {
-  return omit(wrapperProperties, [
-    'tabIndex'
+function sanitizeProperties(properties) {
+  return omit(properties, [
+    'value',
+    'disabled',
+    'onChange',
+    'ratingCharacter',
+    'style',
+    'className',
+    'hoverStyle',
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
+
+
+// Should we disable taxIndex and focus for disabled component ?
