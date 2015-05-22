@@ -20,21 +20,6 @@ export default class RatingDocumentation extends Component {
       <table>
         <tr>
           <td style={ propertyNameStyle }>
-            value
-          </td>
-          <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
-              <i>Integer(0-5)</i>
-              <br />
-              optional
-            </p>
-            <p>
-              The value specifies the initital rating.
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td style={ propertyNameStyle }>
             disabled
           </td>
           <td style={ propertyDescriptionStyle }>
@@ -65,6 +50,36 @@ export default class RatingDocumentation extends Component {
         </tr>
         <tr>
           <td style={ propertyNameStyle }>
+            ratingCharacter
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Character</i>
+              <br />
+              optional
+              </p>
+              <p>
+                This character will be used as the rating character in the component.
+              </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            style
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              These are general css styles that will get applied to the Rating component.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
             tabIndex
           </td>
           <td style={ propertyDescriptionStyle }>
@@ -80,17 +95,17 @@ export default class RatingDocumentation extends Component {
         </tr>
         <tr>
           <td style={ propertyNameStyle }>
-            ratingCharacter
+            value
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>Character</i>
+              <i>Integer(0-5)</i>
               <br />
               optional
-              </p>
-              <p>
-                This character will be used as the rating character in the component.
-              </p>
+            </p>
+            <p>
+              The value specifies the initial rating.
+            </p>
           </td>
         </tr>
       </table>
