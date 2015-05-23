@@ -397,7 +397,7 @@ export default class Select extends Component {
           return entry.type.name == 'Placeholder';
         });
 
-        // TODO push disabled styles to children
+        _placeholder.props.style = disabledStyle;
       }
       wrapperStyle = extend({}, style.wrapperStyle, disabledStyle);
     } else {
