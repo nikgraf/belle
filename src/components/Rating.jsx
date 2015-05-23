@@ -96,6 +96,37 @@ export default class Rating extends Component {
   }
 
   /**
+   * Manages the keyboard events.
+   *
+   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the rating and arrow down will result in decreasing the rating.
+   * Enter will result in updating the value of the component and calling onChange event.
+   *
+   * Pressing Escape will reset the rating to original value.
+   */
+  _onKeyDown (event) {
+  }
+
+  _onTouchStart (event) {
+    // similar to mouse move
+  }
+
+  _onTouchEnd (event) {
+    //similar to on click
+  }
+
+  _onTouchCancel (event) {
+    //similar to mouse leave
+  }
+
+  _onBlur (event) {
+    //similar to mouse leave
+  }
+
+  _onFocus (event) {
+    //similar to mouse mouse starting - apply styles
+  }
+
+  /**
    * Function to render component.
    */
   render () {
@@ -110,6 +141,12 @@ export default class Rating extends Component {
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
                 onClick={ this._onClick.bind(this) }
+                onKeyDown={ this._onKeyDown.bind(this) }
+                onTouchStart={ this._onTouchStart.bind(this) }
+                onTouchEnd={ this._onTouchEnd.bind(this) }
+                onTouchCancel={ this._onTouchCancel.bind(this) }
+                onBlur={ this._onBlur.bind( this) }
+                onFocus={ this._onFocus.bind( this) }
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
@@ -210,6 +247,3 @@ function sanitizeProperties(properties) {
     'disabledHoverStyle'
   ]);
 }
-
-
-// Should we disable taxIndex and focus for disabled component ?
