@@ -31,20 +31,11 @@ export default class Rating extends Component {
   }
 
   /**
-   * Funtion to remove pseudo classes from dom once component is removed.
+   * Function to remove pseudo classes from dom once component is removed.
    */
   componentWillUnmount() {
     removeStyle(this.ratingStyleId);
     removeStyle(this.ratingWrapperStyleId);
-  }
-
-  /**
-   * Calculate width of highlighted stars, the function uses this.state.hoverRating
-   * if it exists else it uses this.state.rating.
-   */
-  _getWidth() {
-    var value = this.state.hoverRating?this.state.hoverRating:this.state.rating;
-    return (value * 20) + '%';
   }
 
   /**
@@ -53,9 +44,7 @@ export default class Rating extends Component {
    */
   _onMouseMove(e) {
     if(!this.props.disabled) {
-      this.setState({
-        mouseMoveStyle: style.mouseMoveStyle
-      });
+      this._highlight();
       const wrapperNode = React.findDOMNode(this.refs.wrapper);
       const wrapperWidth = wrapperNode.getBoundingClientRect().width;
       const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
@@ -67,17 +56,13 @@ export default class Rating extends Component {
   }
 
   /**
-   * Function will reset hover rating as mouse leaves.
+   * Function that will be called as mouse leaves leaves.
    */
   _onMouseLeave() {
-    if(!this.props.disabled) {
-      this.setState({
-        hoverRating: undefined,
-        mouseMoveStyle: undefined
-      });
-    }
+    this._reset();
   }
 
+  //TODO: need to refactor many small things,  "this.props.disabled" should not be checked so often
   /**
    * The function will update rating when component is clicked.
    */
@@ -85,7 +70,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         rating: this.state.hoverRating,
-        mouseMoveStyle: undefined
+        highlightedStyle: undefined
       });
       if (this.props.onChange) {
         const wrapperNode = React.findDOMNode(this);
@@ -119,11 +104,43 @@ export default class Rating extends Component {
   }
 
   _onBlur (event) {
-    //similar to mouse leave
+    this._reset();
   }
 
   _onFocus (event) {
-    //similar to mouse mouse starting - apply styles
+    this._highlight();
+  }
+
+  /**
+   * Function will apply highlighting to rating component.
+   */
+  _highlight() {
+    if(!this.props.disabled) {
+      this.setState({
+        highlightedStyle: style.highlightedStyle
+      });
+    }
+  }
+
+  /**
+   * Calculate width of highlighted stars, the function uses this.state.hoverRating
+   * if it exists else it uses this.state.rating.
+   */
+  _getWidth() {
+    var value = this.state.hoverRating?this.state.hoverRating:this.state.rating;
+    return (value * 20) + '%';
+  }
+
+  /**
+   * Function will reset hover rating and style.
+   */
+  _reset() {
+    if(!this.props.disabled) {
+      this.setState({
+        hoverRating: undefined,
+        highlightedStyle: undefined
+      });
+    }
   }
 
   /**
@@ -131,7 +148,7 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.mouseMoveStyle);
+    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.highlightedStyle);
     const ratingWrapperStateStyle = this.props.disabled?extend({}, style.disabledStyle, this.props.disabledStyle):style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
 

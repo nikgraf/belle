@@ -28,7 +28,7 @@ var style = {
     cursor: 'pointer'
   },
 
-  mouseMoveStyle: {
+  highlightedStyle: {
     textShadow: '1px 1px 1px black'
   }
 
