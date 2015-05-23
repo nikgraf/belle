@@ -6,7 +6,6 @@ var selectStyle = {
     borderBottom: '1px solid #CCC',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    height: 34,
     padding: '7px 0 5px 0',
     position: 'relative',
 
@@ -34,7 +33,6 @@ var selectStyle = {
     borderBottom: '1px solid #6EB8D4',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    height: 34,
     padding: '7px 0 5px 0',
     position: 'relative',
 
@@ -104,7 +102,9 @@ var selectStyle = {
     borderRadius: 2,
     boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
     borderTop: '1px solid #f2f2f2',
-    top: 0
+    top: 0,
+    /* Improve scrolling for mobile Safari */
+    WebkitOverflowScrolling: 'touch'
   },
 
   caretToOpenStyle: {
