@@ -67,7 +67,8 @@ export default class Select extends Component {
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
       caretProperties: sanitizePropertiesForCaret(properties.caretProps),
-      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
+      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
+      isTouchedToToggle: false
     };
   }
 
@@ -299,9 +300,9 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the options area of the component.
+   * Toggle the options area after a user clicked on it.
    */
-  _toggleOptionsArea (event) {
+  _toggleOptionsAreaOnClick (event) {
     if (this.state.isOpen) {
       this.setState({ isOpen: false });
     } else {
@@ -310,6 +311,60 @@ export default class Select extends Component {
 
     if (this.props.onClick) {
       this.props.onClick(event);
+    }
+  }
+
+  /**
+   * Initiate the toggle for the optionsArea.
+   */
+  _initiateToggleOptionsAreaOnTouchStart (event) {
+    if (event.touches.length === 1) {
+      this.setState({ isTouchedToToggle: true });
+    } else {
+      this.setState({ isTouchedToToggle: false });
+    }
+
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
+    }
+  }
+
+  /**
+   * Toggle the options area after a user touched it & resets the pressed state
+   * for to toggle.
+   */
+  _toggleOptionsAreaOnTouchEnd (event) {
+    event.preventDefault();
+
+    if (this.state.isTouchedToToggle) {
+      if (this.state.isOpen) {
+        this.setState({
+          isOpen: false,
+          isTouchedToToggle: false
+        });
+      } else {
+        this.setState({
+          isOpen: true,
+          isTouchedToToggle: false
+        });
+      }
+    } else {
+      this.setState({ isTouchedToToggle: false });
+    }
+
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
+  }
+
+  /**
+   * Reset the precondition to initialize a toggle of the options area.
+   */
+  _cancelToggleOptionsAreaOnTouchCancel (event) {
+    this.setState({ isTouchedToToggle: false });
+
+    if (this.props.onTouchCancel) {
+      this.props.onTouchCancel(event);
     }
   }
 
@@ -422,6 +477,7 @@ export default class Select extends Component {
 
   render () {
     const defaultStyle = extend({}, style.style, this.props.style);
+    const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
@@ -447,6 +503,15 @@ export default class Select extends Component {
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
+    let selectedOptionWrapperStyle;
+    if (this.state.isFocused) {
+      selectedOptionWrapperStyle = focusStyle;
+    } else if (this.state.isTouchedToToggle) {
+      selectedOptionWrapperStyle = hoverStyle;
+    } else {
+      selectedOptionWrapperStyle = defaultStyle;
+    }
+
     return (
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
@@ -456,8 +521,11 @@ export default class Select extends Component {
            ref="wrapper"
            {...this.state.wrapperProperties} >
 
-        <div onClick={ this._toggleOptionsArea.bind(this) }
-             style={ this.state.isFocused ? focusStyle : defaultStyle }
+        <div onClick={ this._toggleOptionsAreaOnClick.bind(this) }
+             onTouchStart={ this._initiateToggleOptionsAreaOnTouchStart.bind(this) }
+             onTouchEnd={ this._toggleOptionsAreaOnTouchEnd.bind(this) }
+             onTouchCancel={ this._cancelToggleOptionsAreaOnTouchCancel.bind(this) }
+             style={ selectedOptionWrapperStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"
              role="button"
@@ -689,7 +757,10 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'valueLink',
     'role',
     'aria-expanded',
-    'id'
+    'id',
+    'onTouchStart',
+    'onTouchEnd',
+    'onTouchCancel'
   ]);
 }
 
