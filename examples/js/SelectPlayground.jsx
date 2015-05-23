@@ -179,9 +179,12 @@ export default React.createClass({
         <h3>Disabled Select</h3>
         <Select disabled>
           <Option value="tokyo">Tokyo</Option>
-          <Placeholder disabled>-- Select a City --</Placeholder>
+          <Placeholder>-- Select a City --</Placeholder>
           <Option value="vienna">Vienna</Option>
         </Select>
+
+        <br />
+        <br />
       </div>
     );
   }
