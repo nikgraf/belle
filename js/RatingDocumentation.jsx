@@ -20,16 +20,16 @@ export default class RatingDocumentation extends Component {
       <table>
         <tr>
           <td style={ propertyNameStyle }>
-            disabled
+            value
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>Boolean</i>
+              <i>Integer(0-5)</i>
               <br />
               optional
             </p>
             <p>
-              Property can be used to prevent any user input and changes to rating.
+              The value specifies the initial rating.
             </p>
           </td>
         </tr>
@@ -95,16 +95,16 @@ export default class RatingDocumentation extends Component {
         </tr>
         <tr>
           <td style={ propertyNameStyle }>
-            value
+            disabled
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>Integer(0-5)</i>
+              <i>Boolean</i>
               <br />
               optional
             </p>
             <p>
-              The value specifies the initial rating.
+              Property can be used to prevent any user input and changes to rating.
             </p>
           </td>
         </tr>
