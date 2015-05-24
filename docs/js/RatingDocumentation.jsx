@@ -26,10 +26,70 @@ export default class RatingDocumentation extends Component {
             <p style={ {marginTop: 0} }>
               <i>Integer(0-5)</i>
               <br />
-              required
+              optional
             </p>
             <p>
-              The value specifies the initital rating.
+              The value specifies the initial rating.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            onChange
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Function</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This function will get executed when user changes the rating interactively.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            ratingCharacter
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Character</i>
+              <br />
+              optional
+              </p>
+              <p>
+                This character will be used as the rating character in the component.
+              </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            style
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              These are general css styles that will get applied to the Rating component.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            tabIndex
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Integer</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This tabIndex will get assigned to the Rating component on the page.
             </p>
           </td>
         </tr>

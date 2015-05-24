@@ -262,7 +262,7 @@ export default class SelectDocumentation extends Component {
             </p>
             <p>
               This object allows to provide any kind of valid properties for a
-              div tag. I allows to extend the div wrapping the whole select
+              div tag. It allows to extend the div wrapping the whole select
               component.
             </p>
           </td>
@@ -280,7 +280,7 @@ export default class SelectDocumentation extends Component {
             </p>
             <p>
               This object allows to provide any kind of valid properties for a
-              ul tag. I allows to extend the ul wrapping the available options.
+              ul tag. It allows to extend the ul wrapping the available options.
             </p>
           </td>
         </tr>
