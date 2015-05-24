@@ -170,13 +170,6 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
   ];
   if(properties.focusStyle) {
     styles.push({
-        id: ratingWrapperStyleId,
-        style: properties.focusStyle,
-        pseudoClass: 'focus'
-      });
-  }
-  if(properties.focusStyle) {
-    styles.push({
       id: ratingWrapperStyleId,
       style: properties.focusStyle,
       pseudoClass: 'focus'
