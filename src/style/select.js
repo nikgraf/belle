@@ -129,6 +129,35 @@ var selectStyle = {
     borderBottom: '6px solid #666',
     borderLeft: '5px solid transparent',
     borderRight: '5px solid transparent'
+  },
+
+  disabledStyle:{
+    background: 'rgb(185,185,185)',
+    borderBottom: '1px solid rgb(235,235,235)',
+    cursor: 'not-allowed'
+  },
+  disabledHoverStyle:{
+    borderBottom: '1px solid rgb(185,185,185)',
+    cursor: 'not-allowed',
+    
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
   }
 
 };
