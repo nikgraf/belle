@@ -11,7 +11,7 @@ var style = {
     overflow: 'hidden'
   },
 
-  ratingHolderStyle: {
+  ratingWrapperStyle: {
     fontSize: 32,
     color: '#e3e3e3',
     position: 'relative',
@@ -19,13 +19,19 @@ var style = {
     display: 'inline-block'
   },
 
-  ratingStyleBefore: {
-    content: '"\\2605\\2605\\2605\\2605\\2605"'
+  disabledStyle: {
+    cursor: 'not-allowed',
+    opacity: 0.6
   },
 
-  ratingHolderStyleBefore: {
-    content: '"\\2605\\2605\\2605\\2605\\2605"'
+  enabledStyle: {
+    cursor: 'pointer'
+  },
+
+  mouseMoveStyle: {
+    textShadow: '1px 1px 1px black'
   }
+
 };
 
 export default style;
