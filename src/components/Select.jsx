@@ -259,7 +259,7 @@ export default class Select extends Component {
    * Toggle the options area of the component.
    */
   _toggleOptionsArea (event) {
-    if (this.state.isOpen) {
+    if (this.state.isOpen || this.props.disabled) {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true });
@@ -342,6 +342,10 @@ export default class Select extends Component {
    * Pressing Escape will close the options area.
    */
   _onKeyDown (event) {
+    if (this.props.disabled) {
+      event.preventDefault();
+      return;
+    }
 
     if(filter(this.props.children, isOption).length > 0) {
 
@@ -380,10 +384,25 @@ export default class Select extends Component {
   render () {
     const defaultStyle = extend({}, style.style, this.props.style);
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
-    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
+
+    let wrapperStyle;
+    if(this.props.disabled) {
+      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+
+      if(this.props.children) {
+        let _placeholder = find(this.props.children, (entry) => {
+          return entry.type.name == 'Placeholder';
+        });
+
+        _placeholder.props.style = disabledStyle;
+      }
+      wrapperStyle = extend({}, style.wrapperStyle, disabledStyle);
+    } else {
+      wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    }
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {
@@ -423,7 +442,7 @@ export default class Select extends Component {
              {...this.state.selectedOptionWrapperProperties} >
           { selectedOptionOrPlaceholder }
           <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }
-                {...this.state.caretProperties}>
+            {...this.state.caretProperties}>
           </span>
         </div>
 
@@ -502,11 +521,15 @@ Select.propTypes = {
   caretToCloseStyle: React.PropTypes.object,
   wrapperProps: React.PropTypes.object,
   optionsAreaProps: React.PropTypes.object,
-  caretProps: React.PropTypes.object
+  caretProps: React.PropTypes.object,
+  disabled: React.PropTypes.bool,
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
 Select.defaultProps = {
-  shouldPositionOptions: true
+  shouldPositionOptions: true,
+  disabled: false
 };
 
 /**
@@ -596,12 +619,19 @@ function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) 
  */
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
+  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
 
   const styles = [
     {
       id: styleId,
       style: hoverStyle,
       pseudoClass: 'hover'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
     }
   ];
   injectStyles(styles);
@@ -645,7 +675,9 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'valueLink',
     'role',
     'aria-expanded',
-    'id'
+    'id',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
 
@@ -684,7 +716,9 @@ function sanitizePropertiesForOptionsArea(optionsAreaProperties) {
 function sanitizePropertiesForCaret(caretProperties) {
   return omit(caretProperties, [
     'style',
-    'ref'
+    'ref',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
 
