@@ -342,37 +342,34 @@ export default class Select extends Component {
    * Pressing Escape will close the options area.
    */
   _onKeyDown (event) {
-    if (this.props.disabled) {
-      event.preventDefault();
-      return;
-    }
+    if (!this.props.disabled) {
+      if(filter(this.props.children, isOption).length > 0) {
 
-    if(filter(this.props.children, isOption).length > 0) {
-
-      if (!this.state.isOpen && event.key === 'ArrowDown' ||
-          !this.state.isOpen && event.key === 'ArrowUp' ||
-          !this.state.isOpen && event.key === ' ') {
-        event.preventDefault();
-        this.setState({ isOpen: true });
-      } else {
-        // Updates the state to set focus on the next option
-        // In case no option is active it should jump to the first.
-        // In case it is the last it should stop there.
-        if (event.key === 'ArrowDown') {
+        if (!this.state.isOpen && event.key === 'ArrowDown' ||
+            !this.state.isOpen && event.key === 'ArrowUp' ||
+            !this.state.isOpen && event.key === ' ') {
           event.preventDefault();
-          this._onArrowDownKeyDown();
-        } else if (event.key === 'ArrowUp') {
-          event.preventDefault();
-          this._onArrowUpKeyDown();
-        } else if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          this._onEnterOrSpaceKeyDown();
+          this.setState({ isOpen: true });
+        } else {
+          // Updates the state to set focus on the next option
+          // In case no option is active it should jump to the first.
+          // In case it is the last it should stop there.
+          if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            this._onArrowDownKeyDown();
+          } else if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            this._onArrowUpKeyDown();
+          } else if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this._onEnterOrSpaceKeyDown();
+          }
         }
-      }
 
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        this.setState({ isOpen: false });
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          this.setState({ isOpen: false });
+        }
       }
     }
 
@@ -384,27 +381,21 @@ export default class Select extends Component {
   render () {
     const defaultStyle = extend({}, style.style, this.props.style);
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
+    const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
 
     let wrapperStyle;
     if(this.props.disabled) {
-      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-
-      if(this.props.children) {
-        let _placeholder = find(this.props.children, (entry) => {
-          return entry.type.name == 'Placeholder';
-        });
-
-        _placeholder.props.style = disabledStyle;
-      }
       wrapperStyle = extend({}, style.wrapperStyle, disabledStyle);
     } else {
       wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     }
 
+
     let selectedOptionOrPlaceholder;
+
     if (this.state.selectedValue) {
       const selectedEntry = find(this.props.children, (entry) => {
         return entry.props.value == this.state.selectedValue;
@@ -419,6 +410,10 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
+    if(this.props.disabled) {
+      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, { style: disabledStyle });
+    }
+    
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
@@ -675,9 +670,7 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'valueLink',
     'role',
     'aria-expanded',
-    'id',
-    'disabledStyle',
-    'disabledHoverStyle'
+    'id'
   ]);
 }
 
@@ -692,7 +685,9 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
     'tabIndex',
     'onKeyDown',
     'onBlur',
-    'onFocus'
+    'onFocus',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
 
@@ -716,9 +711,7 @@ function sanitizePropertiesForOptionsArea(optionsAreaProperties) {
 function sanitizePropertiesForCaret(caretProperties) {
   return omit(caretProperties, [
     'style',
-    'ref',
-    'disabledStyle',
-    'disabledHoverStyle'
+    'ref'
   ]);
 }
 
