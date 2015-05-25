@@ -134,7 +134,7 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (this.props.shouldPositionOptions) {
+    if (this.props.shouldPositionOptions & !this.props.disabled) {
       const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
 
       // the optionsArea was just opened
