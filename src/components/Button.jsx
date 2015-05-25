@@ -42,7 +42,7 @@ export default class Button extends Component {
   }
 
   /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
     removeStyle(this.styleId);

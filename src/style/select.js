@@ -6,7 +6,6 @@ var selectStyle = {
     borderBottom: '1px solid #CCC',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    height: 34,
     padding: '7px 0 5px 0',
     position: 'relative',
 
@@ -34,7 +33,6 @@ var selectStyle = {
     borderBottom: '1px solid #6EB8D4',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    height: 34,
     padding: '7px 0 5px 0',
     position: 'relative',
 
@@ -104,7 +102,9 @@ var selectStyle = {
     borderRadius: 2,
     boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
     borderTop: '1px solid #f2f2f2',
-    top: 0
+    top: 0,
+    /* Improve scrolling for mobile Safari */
+    WebkitOverflowScrolling: 'touch'
   },
 
   caretToOpenStyle: {
@@ -131,15 +131,12 @@ var selectStyle = {
     borderRight: '5px solid transparent'
   },
 
-  disabledStyle:{
-    background: 'rgb(185,185,185)',
-    borderBottom: '1px solid rgb(235,235,235)',
-    cursor: 'not-allowed'
-  },
-  disabledHoverStyle:{
-    borderBottom: '1px solid rgb(185,185,185)',
-    cursor: 'not-allowed',
-    
+  disabledStyle: {
+    borderBottom: '1px dotted #9F9F9F',
+    boxSizing: 'border-box',
+    cursor: 'pointer',
+    padding: '7px 0 5px 0',
+    position: 'relative',
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the button text
@@ -148,16 +145,50 @@ var selectStyle = {
     MozUserSelect: 'none',
     MsUserSelect: 'none',
     userSelect: 'none',
-
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
-
     /*
     Prevent flickering while tapping on WebKit
     http://stackoverflow.com/a/3516243/837709
     */
     WebkitTapHighlightColor: 'transparent'
+  },
+
+  disabledHoverStyle: {
+    borderBottom: '1px dotted #92D6EF',
+    cursor: 'not-allowed',
+    boxSizing: 'border-box',
+    padding: '7px 0 5px 0',
+    position: 'relative',
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
+  },
+
+  disabledCaretToOpenStyle: {
+    height: 0,
+    width: 0,
+    content: ' ',
+    position: 'absolute',
+    top: 15,
+    right: 8,
+    borderTop: '6px solid #9F9F9F',
+    borderLeft: '5px solid transparent',
+    borderRight: '5px solid transparent'
   }
 
 };
