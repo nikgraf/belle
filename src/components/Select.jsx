@@ -481,20 +481,14 @@ export default class Select extends Component {
     const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+    const disabledHoverStyle = extend({}, style.disabledHoverStyle, this.props.disabledHoverStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
-
-    let wrapperStyle;
-    if(this.props.disabled) {
-      wrapperStyle = extend({}, style.wrapperStyle, disabledStyle);
-    } else {
-      wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    }
+    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
 
 
     let selectedOptionOrPlaceholder;
-
     if (this.state.selectedValue) {
       const selectedEntry = find(this.props.children, (entry) => {
         return entry.props.value == this.state.selectedValue;
@@ -509,21 +503,29 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
-    if(this.props.disabled) {
-      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, { style: disabledStyle });
-    }
-
     const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
     let selectedOptionWrapperStyle;
-    if (this.state.isFocused) {
-      selectedOptionWrapperStyle = focusStyle;
-    } else if (this.state.isTouchedToToggle) {
-      selectedOptionWrapperStyle = hoverStyle;
+
+    if(this.props.disabled) {
+      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, {
+        _isDisabled: true
+      });
+      if (this.state.isTouchedToToggle) {
+        selectedOptionWrapperStyle = disabledHoverStyle;
+      } else {
+        selectedOptionWrapperStyle = disabledStyle;
+      }
     } else {
-      selectedOptionWrapperStyle = defaultStyle;
+      if (this.state.isFocused) {
+        selectedOptionWrapperStyle = focusStyle;
+      } else if (this.state.isTouchedToToggle) {
+        selectedOptionWrapperStyle = hoverStyle;
+      } else {
+        selectedOptionWrapperStyle = defaultStyle;
+      }
     }
 
     return (
@@ -785,7 +787,9 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'id',
     'onTouchStart',
     'onTouchEnd',
-    'onTouchCancel'
+    'onTouchCancel',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
 
@@ -800,9 +804,7 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
     'tabIndex',
     'onKeyDown',
     'onBlur',
-    'onFocus',
-    'disabledStyle',
-    'disabledHoverStyle'
+    'onFocus'
   ]);
 }
 

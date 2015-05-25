@@ -27,7 +27,12 @@ export default class Placeholder extends Component {
   }
 
   render () {
-    const computedStyle = extend({}, style.style, this.props.style);
+    let computedStyle;
+    if (this.props._isDisabled) {
+      computedStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+    } else {
+      computedStyle = extend({}, style.style, this.props.style);
+    }
 
     return (
       <div style={ computedStyle } {...this.state.childProperties}>
@@ -38,14 +43,19 @@ export default class Placeholder extends Component {
 }
 
 Placeholder.propTypes = {
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  _isDisabled: React.PropTypes.bool
 };
 
 Placeholder.displayName = 'Belle Placeholder';
+
+Placeholder.defaultProps = {
+  _isDisabled: false
+};
 
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProperties(properties) {
-  return omit(properties, ['style']);
+  return omit(properties, ['style', '_isDisabled']);
 }

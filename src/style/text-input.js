@@ -40,6 +40,7 @@ var textInputStyle = {
 
   disabledHoverStyle: {
     borderBottom: '1px dotted #92D6EF',
+    color: '#9F9F9F',
     cursor: 'not-allowed'
   }
 

@@ -29,7 +29,7 @@ style.button.style = {
 };
 
 style.card.style = extend(style.card.style, {
-  background: '#ddd'
+  border: '1px solid black'
 });
 
 style.textInput.style = extend(style.textInput.style, {
