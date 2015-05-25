@@ -503,7 +503,7 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
-    const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
+    const computedOptionsAreaStyle = this.state.isOpen && !this.props.disabled ? optionsAreaStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
