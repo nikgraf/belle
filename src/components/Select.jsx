@@ -303,10 +303,12 @@ export default class Select extends Component {
    * Toggle the options area after a user clicked on it.
    */
   _toggleOptionsAreaOnClick (event) {
-    if (this.state.isOpen || this.props.disabled) {
-      this.setState({ isOpen: false });
-    } else {
-      this.setState({ isOpen: true });
+    if(!this.props.disabled) {
+      if (this.state.isOpen) {
+        this.setState({ isOpen: false });
+      } else {
+        this.setState({ isOpen: true });
+      }
     }
 
     if (this.props.onClick) {
@@ -334,23 +336,28 @@ export default class Select extends Component {
    * for to toggle.
    */
   _toggleOptionsAreaOnTouchEnd (event) {
+    // In case touch events are used preventDefault is applied to avoid
+    // triggering the click event which would cause trouble for toggling.
+    // In any case calling setState triggers a render. This leads to the fact
+    // that the click event won't be triggered anyways. Nik assumes it's due the
+    // element won't be in the DOM anymore.
+    // This also means the Select's onClick won't be triggered for touchDevices.
     event.preventDefault();
+
+    /* To avoid weird behaviour we check before focusing again - no specific use-case found */
+    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    if (document.activeElement != wrapperNode) {
+      wrapperNode.focus();
+    }
 
     if (this.state.isTouchedToToggle) {
       if (this.state.isOpen) {
-        this.setState({
-          isOpen: false,
-          isTouchedToToggle: false
-        });
+        this.setState({ isOpen: false });
       } else {
-        this.setState({
-          isOpen: true,
-          isTouchedToToggle: false
-        });
+        this.setState({ isOpen: true });
       }
-    } else {
-      this.setState({ isTouchedToToggle: false });
     }
+    this.setState({ isTouchedToToggle: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
