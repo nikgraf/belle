@@ -71,7 +71,7 @@ var optionStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  disabledSelectSyle: {
+  disabledSelectStyle: {
     boxSizing: 'border-box',
     color: '#9F9F9F',
     padding: 0,

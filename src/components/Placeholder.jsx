@@ -44,6 +44,7 @@ export default class Placeholder extends Component {
 
 Placeholder.propTypes = {
   style: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object,
   _isDisabled: React.PropTypes.bool
 };
 
@@ -57,5 +58,5 @@ Placeholder.defaultProps = {
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProperties(properties) {
-  return omit(properties, ['style', '_isDisabled']);
+  return omit(properties, ['style', 'disabledStyle', '_isDisabled']);
 }

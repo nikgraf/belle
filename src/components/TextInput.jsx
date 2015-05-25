@@ -53,7 +53,7 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
     removeStyle(this._styleId);

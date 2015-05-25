@@ -177,6 +177,18 @@ var selectStyle = {
     http://stackoverflow.com/a/3516243/837709
     */
     WebkitTapHighlightColor: 'transparent'
+  },
+
+  disabledCaretToOpenStyle: {
+    height: 0,
+    width: 0,
+    content: ' ',
+    position: 'absolute',
+    top: 15,
+    right: 8,
+    borderTop: '6px solid #9F9F9F',
+    borderLeft: '5px solid transparent',
+    borderRight: '5px solid transparent'
   }
 
 };

@@ -110,7 +110,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
     removeStyle(this._styleId);
@@ -485,8 +485,8 @@ export default class Select extends Component {
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
+    const disabledCaretToOpenStyle = extend({}, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {
@@ -528,6 +528,15 @@ export default class Select extends Component {
       }
     }
 
+    let caretStyle;
+    if (this.props.disabled) {
+      caretStyle = disabledCaretToOpenStyle;
+    } else if (this.state.isOpen) {
+      caretStyle = caretToOpenStyle;
+    } else {
+      caretStyle = caretToCloseStyle;
+    }
+
     return (
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
@@ -549,7 +558,7 @@ export default class Select extends Component {
              id={ this.state.selectedOptionWrapperId }
              {...this.state.selectedOptionWrapperProperties} >
           { selectedOptionOrPlaceholder }
-          <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }
+          <span style={ caretStyle }
             {...this.state.caretProperties}>
           </span>
         </div>
@@ -633,7 +642,8 @@ Select.propTypes = {
   caretProps: React.PropTypes.object,
   disabled: React.PropTypes.bool,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object
+  disabledHoverStyle: React.PropTypes.object,
+  disabledCaretToOpenStyle: React.PropTypes.object
 };
 
 Select.defaultProps = {
@@ -778,6 +788,7 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'optionsAreaStyle',
     'caretToOpenStyle',
     'caretToCloseStyle',
+    'disabledCaretToOpenStyle',
     'value',
     'defaultValue',
     'onChange',

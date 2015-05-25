@@ -30,12 +30,12 @@ export default class Option extends Component {
     const defaultStyle = extend({}, style.style, this.props.style);
     const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
     const selectStyle = extend({}, style.selectStyle, this.props.selectStyle);
-    const disabledSelectSyle = extend({}, style.disabledSelectSyle, this.props.disabledSelectSyle);
+    const disabledSelectStyle = extend({}, style.disabledSelectStyle, this.props.disabledSelectStyle);
 
     let styleToDisplay;
     if (this.props._isDisplayedAsSelected) {
       if (this.props._isDisabled) {
-        styleToDisplay = disabledSelectSyle;
+        styleToDisplay = disabledSelectStyle;
       } else {
         styleToDisplay = selectStyle;
       }
@@ -59,6 +59,7 @@ Option.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   selectStyle: React.PropTypes.object,
+  disabledSelectStyle: React.PropTypes.object,
   _isHovered: React.PropTypes.bool,
   _isDisplayedAsSelected: React.PropTypes.bool,
   value: React.PropTypes.oneOfType([
@@ -84,7 +85,7 @@ function sanitizeChildProperties(properties) {
     'style',
     'hoverStyle',
     'selectStyle',
-    'disabledSelectSyle',
+    'disabledSelectStyle',
     'value',
     '_isHovered',
     '_isDisplayedAsSelected',
