@@ -532,9 +532,9 @@ export default class Select extends Component {
     if (this.props.disabled) {
       caretStyle = disabledCaretToOpenStyle;
     } else if (this.state.isOpen) {
-      caretStyle = caretToOpenStyle;
-    } else {
       caretStyle = caretToCloseStyle;
+    } else {
+      caretStyle = caretToOpenStyle;
     }
 
     return (
