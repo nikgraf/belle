@@ -42,7 +42,7 @@ window.React = React;
 class App extends Component {
 
   render() {
-    return <div style={ {margin: '0 150px'} }>
+    return <div style={ {margin: '0 auto', width: 300} }>
       <h1>Belle Playground</h1>
 
       <SelectPlayground />
