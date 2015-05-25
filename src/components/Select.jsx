@@ -512,10 +512,9 @@ export default class Select extends Component {
 
     const computedOptionsAreaStyle = this.state.isOpen && !this.props.disabled ? optionsAreaStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
-    const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
+    let tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
     let selectedOptionWrapperStyle;
-
     if(this.props.disabled) {
       selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, {
         _isDisabled: true
@@ -525,6 +524,7 @@ export default class Select extends Component {
       } else {
         selectedOptionWrapperStyle = disabledStyle;
       }
+      tabIndex = -1;
     } else {
       if (this.state.isFocused) {
         selectedOptionWrapperStyle = focusStyle;
