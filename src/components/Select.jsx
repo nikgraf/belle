@@ -450,11 +450,13 @@ export default class Select extends Component {
     if (!this.props.disabled) {
       if(filter(this.props.children, isOption).length > 0) {
 
-        if (!this.state.isOpen && event.key === 'ArrowDown' ||
-            !this.state.isOpen && event.key === 'ArrowUp' ||
-            !this.state.isOpen && event.key === ' ') {
-          event.preventDefault();
-          this.setState({ isOpen: true });
+        if (!this.state.isOpen) {
+          if (event.key === 'ArrowDown' ||
+              event.key === 'ArrowUp' ||
+              event.key === ' ') {
+            event.preventDefault();
+            this.setState({ isOpen: true });
+          }
         } else {
           // Updates the state to set focus on the next option
           // In case no option is active it should jump to the first.
