@@ -7,7 +7,8 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 
 /**
- * Rating component: shows 5 stars for rating. Allows to display, update, disable rating.
+ * Rating component: shows 5 stars for rating.
+ * Allows to display, update, highlight, disable rating and do various other customizations.
  */
 export default class Rating extends Component {
 
@@ -15,7 +16,15 @@ export default class Rating extends Component {
     super(properties);
     this.state = {
       rating: Math.ceil(properties.value),
-      hoverRating: undefined,
+      tempRating: undefined,
+      generalProperties: sanitizeProperties(properties)
+    };
+  }
+
+  componentWillReceiveProps(properties) {
+    this.state = {
+      rating: Math.ceil(properties.value),
+      tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
   }
@@ -31,7 +40,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * Funtion to remove pseudo classes from dom once component is removed.
+   * Function to remove pseudo classes from dom once component is removed.
    */
   componentWillUnmount() {
     removeStyle(this.ratingStyleId);
@@ -39,60 +48,118 @@ export default class Rating extends Component {
   }
 
   /**
-   * Calculate width of highlighted stars, the function uses this.state.hoverRating
-   * if it exists else it uses this.state.rating.
-   */
-  _getWidth() {
-    var value = this.state.hoverRating?this.state.hoverRating:this.state.rating;
-    return (value * 20) + '%';
-  }
-
-  /**
-   * When mouse hover overs the component this function will set the hoverRating
+   * When user mouse hovers or touches the component this function will highlight the component and set the tempRating
    * in the component state depending on mouse position.
    */
-  _onMouseMove(e) {
+  _changeComponent(e) {
     if(!this.props.disabled) {
-      this.setState({
-        mouseMoveStyle: style.mouseMoveStyle
-      });
+      this._highlight();
       const wrapperNode = React.findDOMNode(this.refs.wrapper);
       const wrapperWidth = wrapperNode.getBoundingClientRect().width;
       const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
       const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
       this.setState({
-        hoverRating: newRating
+        tempRating: newRating
       });
     }
   }
 
   /**
-   * Function will reset hover rating as mouse leaves.
+   * Function that will be called to reset the component after mouse leave, touch cancel, blur or when escape key is pressed.
    */
-  _onMouseLeave() {
+  _resetComponent() {
     if(!this.props.disabled) {
       this.setState({
-        hoverRating: undefined,
-        mouseMoveStyle: undefined
+        tempRating: undefined,
+        highlightedStyle: undefined
       });
     }
   }
 
   /**
-   * The function will update rating when component is clicked.
+   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
    */
-  _onClick() {
+  _updateComponent() {
     if(!this.props.disabled) {
       this.setState({
-        rating: this.state.hoverRating,
-        mouseMoveStyle: undefined
+        rating: this.state.tempRating,
+        highlightedStyle: undefined
       });
       if (this.props.onChange) {
         const wrapperNode = React.findDOMNode(this);
-        wrapperNode.value = this.state.hoverRating;
+        wrapperNode.value = this.state.tempRating;
         this.props.onChange({target: wrapperNode});
       }
     }
+  }
+
+  /**
+   * Manages the keyboard events.
+   *
+   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the rating and arrow down will result in decreasing the rating.
+   * Enter/ space will result in updating the value of the component and calling onChange event.
+   *
+   * Pressing Escape will reset the rating to original value.
+   */
+  _onKeyDown(event) {
+    if(!this.props.disabled) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        this._onArrowDownKeyDown();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        this._onArrowUpKeyDown();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this._updateComponent();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        this._resetComponent();
+      }
+    }
+  }
+
+  /**
+   * Function will be called when ArrowUp key is hit on a focused component. I will decrease the rating by 1.
+   */
+  _onArrowDownKeyDown() {
+    this._highlight();
+    let newRating = this.state.tempRating?this.state.tempRating:this.state.rating;
+    newRating = newRating>0?(newRating-1):0;
+    this.setState({
+      tempRating: newRating
+    });
+  }
+
+  /**
+   * Function will be called when ArrowDown key is hit on a focused component. I will increase the rating by 1.
+   */
+  _onArrowUpKeyDown() {
+    this._highlight();
+    let newRating = this.state.tempRating?this.state.tempRating:this.state.rating;
+    newRating = newRating<5?(newRating+1):5;
+    this.setState({
+      tempRating: newRating
+    });
+  }
+
+  /**
+   * Function will apply highlighting to rating component.
+   */
+  _highlight() {
+    if(!this.state.highlightedStyle) {
+      this.setState({
+        highlightedStyle: style.highlightedStyle
+      });
+    }
+  }
+
+  /**
+   * Calculate width of highlighted stars, the function uses this.state.tempRating if it exists else it uses this.state.rating.
+   */
+  _getWidth() {
+    var value = (this.state.tempRating !== undefined)?this.state.tempRating:this.state.rating;
+    return (value * 20) + '%';
   }
 
   /**
@@ -100,16 +167,21 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.mouseMoveStyle);
+    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.highlightedStyle);
     const ratingWrapperStateStyle = this.props.disabled?extend({}, style.disabledStyle, this.props.disabledStyle):style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
 
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
                 className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-                onMouseMove={ this._onMouseMove.bind(this) }
-                onMouseLeave={ this._onMouseLeave.bind(this) }
-                onClick={ this._onClick.bind(this) }
+                onMouseMove={ this._changeComponent.bind(this) }
+                onMouseLeave={ this._resetComponent.bind(this) }
+                onClick={ this._updateComponent.bind(this) }
+                onKeyDown={ this._onKeyDown.bind(this) }
+                onTouchStart={ this._changeComponent.bind(this) }
+                onTouchEnd={ this._updateComponent.bind(this) }
+                onTouchCancel={ this._resetComponent.bind(this) }
+                onBlur={ this._resetComponent.bind( this) }
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
@@ -156,6 +228,7 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
     content: "'" + properties.ratingCharacter + properties.ratingCharacter + properties.ratingCharacter +
               properties.ratingCharacter + properties.ratingCharacter + "'"
   };
+  const ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
   const styles = [
     {
       id: ratingStyleId,
@@ -166,15 +239,13 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
       id: ratingWrapperStyleId,
       style: ratingStyleBefore,
       pseudoClass: ':before'
+    },
+    {
+      id: ratingWrapperStyleId,
+      style: ratingFocusStyle,
+      pseudoClass: 'focus'
     }
   ];
-  if(properties.focusStyle) {
-    styles.push({
-      id: ratingWrapperStyleId,
-      style: properties.focusStyle,
-      pseudoClass: 'focus'
-    });
-  }
   if(properties.hoverStyle) {
     styles.push({
       id: ratingWrapperStyleId,
@@ -210,6 +281,3 @@ function sanitizeProperties(properties) {
     'disabledHoverStyle'
   ]);
 }
-
-
-// Should we disable taxIndex and focus for disabled component ?

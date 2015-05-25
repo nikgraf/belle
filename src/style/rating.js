@@ -28,8 +28,15 @@ var style = {
     cursor: 'pointer'
   },
 
-  mouseMoveStyle: {
+  highlightedStyle: {
     textShadow: '1px 1px 1px black'
+  },
+
+  //TODO: should we have a focus style of our own and not using browser default.
+  focusStyle: {
+    //'textShadow': '1px 1px 1px #0099CC'
+    'textShadow': 'none'
+    //'outline': 0
   }
 
 };
