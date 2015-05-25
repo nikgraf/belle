@@ -30,10 +30,15 @@ export default class Option extends Component {
     const defaultStyle = extend({}, style.style, this.props.style);
     const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
     const selectStyle = extend({}, style.selectStyle, this.props.selectStyle);
+    const disabledSelectStyle = extend({}, style.disabledSelectStyle, this.props.disabledSelectStyle);
 
     let styleToDisplay;
     if (this.props._isDisplayedAsSelected) {
-      styleToDisplay = selectStyle;
+      if (this.props._isDisabled) {
+        styleToDisplay = disabledSelectStyle;
+      } else {
+        styleToDisplay = selectStyle;
+      }
     } else if (this.props._isHovered) {
       styleToDisplay = hoverStyle;
     } else {
@@ -54,6 +59,7 @@ Option.propTypes = {
   style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   selectStyle: React.PropTypes.object,
+  disabledSelectStyle: React.PropTypes.object,
   _isHovered: React.PropTypes.bool,
   _isDisplayedAsSelected: React.PropTypes.bool,
   value: React.PropTypes.oneOfType([
@@ -67,7 +73,8 @@ Option.displayName = 'Belle Option';
 
 Option.defaultProps = {
   _isHovered: false,
-  _isDisplayedAsSelected: false
+  _isDisplayedAsSelected: false,
+  _isDisabled: false
 };
 
 /**
@@ -77,8 +84,11 @@ function sanitizeChildProperties(properties) {
   return omit(properties, [
     'style',
     'hoverStyle',
+    'selectStyle',
+    'disabledSelectStyle',
     'value',
     '_isHovered',
-    '_isDisplayedAsSelected'
+    '_isDisplayedAsSelected',
+    '_isDisabled'
   ]);
 }

@@ -67,7 +67,8 @@ export default class Select extends Component {
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
       caretProperties: sanitizePropertiesForCaret(properties.caretProps),
-      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
+      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
+      isTouchedToToggle: false
     };
   }
 
@@ -109,7 +110,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
     removeStyle(this._styleId);
@@ -133,7 +134,7 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (this.props.shouldPositionOptions) {
+    if (this.props.shouldPositionOptions & !this.props.disabled) {
       const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
 
       // the optionsArea was just opened
@@ -157,19 +158,62 @@ export default class Select extends Component {
 
   /**
    * Update the focusedOption based on Option the user is touching.
+   *
+   * Unfortunately updating the focusedOption only works in case the optionsArea
+   * is not scrollable.
+   * If a setState would be triggered during a touch with the intention to
+   * scroll the setState would trigger a re-render & prevent the scrolling.
    */
   _onTouchStartAtOption (event) {
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
-    this.setState({ focusedOptionValue: entry.getAttribute('data-belle-value') });
+    if (event.touches.length === 1) {
+      const entry = event.currentTarget.querySelector('[data-belle-value]');
+      this._touchStartedAt = entry.getAttribute('data-belle-value');
+
+      // save the scroll position
+      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+      if (optionsAreaNode.scrollHeight > optionsAreaNode.offsetHeight) {
+        this._scrollTopPosition = optionsAreaNode.scrollTop;
+        // Note: don't use setState in here as it would prevent the scrolling
+      } else {
+        this._scrollTopPosition = 0;
+        this.setState({ focusedOptionValue: this._touchStartedAt });
+      }
+      // reset interaction
+      this._scrollActive = false;
+    }
+  }
+
+  /**
+   * Identifies if the optionsArea is scrollable.
+   */
+  _onTouchMoveAtOption (event) {
+    const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+    if (optionsAreaNode.scrollTop !== this._scrollTopPosition) {
+      this._scrollActive = true;
+    }
+  }
+
+
+  /**
+   * Triggers a change event after the user touched on an Option.
+   */
+  _onTouchEndAtOption (event) {
+    if (this._touchStartedAt && !this._scrollActive) {
+      const entry = event.currentTarget.querySelector('[data-belle-value]');
+      const value = entry.getAttribute('data-belle-value');
+      if (this._touchStartedAt === value) {
+        event.preventDefault();
+        this._triggerChange(value);
+      }
+    }
+    this._touchStartedAt = undefined;
   }
 
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchFinishedAtOption (event) {
-    event.preventDefault();
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
-    this._triggerChange(entry.getAttribute('data-belle-value'));
+  _onTouchCancelAtOption (event) {
+    this._touchStartedAt = undefined;
   }
 
   /**
@@ -256,17 +300,78 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the options area of the component.
+   * Toggle the options area after a user clicked on it.
    */
-  _toggleOptionsArea (event) {
-    if (this.state.isOpen || this.props.disabled) {
-      this.setState({ isOpen: false });
-    } else {
-      this.setState({ isOpen: true });
+  _toggleOptionsAreaOnClick (event) {
+    if(!this.props.disabled) {
+      if (this.state.isOpen) {
+        this.setState({ isOpen: false });
+      } else {
+        this.setState({ isOpen: true });
+      }
     }
 
     if (this.props.onClick) {
       this.props.onClick(event);
+    }
+  }
+
+  /**
+   * Initiate the toggle for the optionsArea.
+   */
+  _initiateToggleOptionsAreaOnTouchStart (event) {
+    if (event.touches.length === 1) {
+      this.setState({ isTouchedToToggle: true });
+    } else {
+      this.setState({ isTouchedToToggle: false });
+    }
+
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
+    }
+  }
+
+  /**
+   * Toggle the options area after a user touched it & resets the pressed state
+   * for to toggle.
+   */
+  _toggleOptionsAreaOnTouchEnd (event) {
+    // In case touch events are used preventDefault is applied to avoid
+    // triggering the click event which would cause trouble for toggling.
+    // In any case calling setState triggers a render. This leads to the fact
+    // that the click event won't be triggered anyways. Nik assumes it's due the
+    // element won't be in the DOM anymore.
+    // This also means the Select's onClick won't be triggered for touchDevices.
+    event.preventDefault();
+
+    /* To avoid weird behaviour we check before focusing again - no specific use-case found */
+    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    if (document.activeElement != wrapperNode) {
+      wrapperNode.focus();
+    }
+
+    if (this.state.isTouchedToToggle) {
+      if (this.state.isOpen) {
+        this.setState({ isOpen: false });
+      } else {
+        this.setState({ isOpen: true });
+      }
+    }
+    this.setState({ isTouchedToToggle: false });
+
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
+  }
+
+  /**
+   * Reset the precondition to initialize a toggle of the options area.
+   */
+  _cancelToggleOptionsAreaOnTouchCancel (event) {
+    this.setState({ isTouchedToToggle: false });
+
+    if (this.props.onTouchCancel) {
+      this.props.onTouchCancel(event);
     }
   }
 
@@ -380,22 +485,17 @@ export default class Select extends Component {
 
   render () {
     const defaultStyle = extend({}, style.style, this.props.style);
+    const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+    const disabledHoverStyle = extend({}, style.disabledHoverStyle, this.props.disabledHoverStyle);
     const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
-
-    let wrapperStyle;
-    if(this.props.disabled) {
-      wrapperStyle = extend({}, style.wrapperStyle, disabledStyle);
-    } else {
-      wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    }
-
+    const disabledCaretToOpenStyle = extend({}, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
+    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
 
     let selectedOptionOrPlaceholder;
-
     if (this.state.selectedValue) {
       const selectedEntry = find(this.props.children, (entry) => {
         return entry.props.value == this.state.selectedValue;
@@ -410,13 +510,39 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
-    if(this.props.disabled) {
-      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, { style: disabledStyle });
-    }
-    
-    const computedOptionsAreaStyle = this.state.isOpen ? optionsAreaStyle : { display: 'none' };
+    const computedOptionsAreaStyle = this.state.isOpen && !this.props.disabled ? optionsAreaStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     const tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
+
+    let selectedOptionWrapperStyle;
+
+    if(this.props.disabled) {
+      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, {
+        _isDisabled: true
+      });
+      if (this.state.isTouchedToToggle) {
+        selectedOptionWrapperStyle = disabledHoverStyle;
+      } else {
+        selectedOptionWrapperStyle = disabledStyle;
+      }
+    } else {
+      if (this.state.isFocused) {
+        selectedOptionWrapperStyle = focusStyle;
+      } else if (this.state.isTouchedToToggle) {
+        selectedOptionWrapperStyle = hoverStyle;
+      } else {
+        selectedOptionWrapperStyle = defaultStyle;
+      }
+    }
+
+    let caretStyle;
+    if (this.props.disabled) {
+      caretStyle = disabledCaretToOpenStyle;
+    } else if (this.state.isOpen) {
+      caretStyle = caretToCloseStyle;
+    } else {
+      caretStyle = caretToOpenStyle;
+    }
 
     return (
       <div style={ wrapperStyle }
@@ -427,8 +553,11 @@ export default class Select extends Component {
            ref="wrapper"
            {...this.state.wrapperProperties} >
 
-        <div onClick={ this._toggleOptionsArea.bind(this) }
-             style={ this.state.isFocused ? focusStyle : defaultStyle }
+        <div onClick={ this._toggleOptionsAreaOnClick.bind(this) }
+             onTouchStart={ this._initiateToggleOptionsAreaOnTouchStart.bind(this) }
+             onTouchEnd={ this._toggleOptionsAreaOnTouchEnd.bind(this) }
+             onTouchCancel={ this._cancelToggleOptionsAreaOnTouchCancel.bind(this) }
+             style={ selectedOptionWrapperStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"
              role="button"
@@ -436,7 +565,7 @@ export default class Select extends Component {
              id={ this.state.selectedOptionWrapperId }
              {...this.state.selectedOptionWrapperProperties} >
           { selectedOptionOrPlaceholder }
-          <span style={ this.state.isOpen ? caretToCloseStyle : caretToOpenStyle }
+          <span style={ caretStyle }
             {...this.state.caretProperties}>
           </span>
         </div>
@@ -458,8 +587,9 @@ export default class Select extends Component {
                 return (
                   <li onClick={ this._onClickAtOption.bind(this) }
                       onTouchStart={ this._onTouchStartAtOption.bind(this) }
-                      onTouchEnd={ this._onTouchFinishedAtOption.bind(this) }
-                      onTouchCancel={ this._onTouchFinishedAtOption.bind(this) }
+                      onTouchMove={ this._onTouchMoveAtOption.bind(this) }
+                      onTouchEnd={ this._onTouchEndAtOption.bind(this) }
+                      onTouchCancel={ this._onTouchCancelAtOption.bind(this) }
                       key={ index }
                       onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                       role="option"
@@ -519,7 +649,8 @@ Select.propTypes = {
   caretProps: React.PropTypes.object,
   disabled: React.PropTypes.bool,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object
+  disabledHoverStyle: React.PropTypes.object,
+  disabledCaretToOpenStyle: React.PropTypes.object
 };
 
 Select.defaultProps = {
@@ -664,13 +795,19 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'optionsAreaStyle',
     'caretToOpenStyle',
     'caretToCloseStyle',
+    'disabledCaretToOpenStyle',
     'value',
     'defaultValue',
     'onChange',
     'valueLink',
     'role',
     'aria-expanded',
-    'id'
+    'id',
+    'onTouchStart',
+    'onTouchEnd',
+    'onTouchCancel',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
 }
 
@@ -685,9 +822,7 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
     'tabIndex',
     'onKeyDown',
     'onBlur',
-    'onFocus',
-    'disabledStyle',
-    'disabledHoverStyle'
+    'onFocus'
   ]);
 }
 
