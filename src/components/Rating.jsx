@@ -71,7 +71,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         tempRating: undefined,
-        highlightedStyle: undefined
+        hoverStyle: undefined
       });
     }
   }
@@ -83,7 +83,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         rating: this.state.tempRating,
-        highlightedStyle: undefined
+        hoverStyle: undefined
       });
       if (this.props.onChange) {
         const wrapperNode = React.findDOMNode(this);
@@ -136,8 +136,8 @@ export default class Rating extends Component {
    */
   _onArrowUpKeyDown() {
     this._highlight();
-    let newRating = this.state.tempRating?this.state.tempRating:this.state.rating;
-    newRating = newRating<5?(newRating+1):5;
+    let newRating = this.state.tempRating ? this.state.tempRating : this.state.rating;
+    newRating = newRating < 5 ? (newRating+1) : 5;
     this.setState({
       tempRating: newRating
     });
@@ -147,9 +147,9 @@ export default class Rating extends Component {
    * Function will apply highlighting to rating component.
    */
   _highlight() {
-    if(!this.state.highlightedStyle) {
+    if(!this.state.hoverStyle) {
       this.setState({
-        highlightedStyle: style.highlightedStyle
+        hoverStyle: style.hoverStyle
       });
     }
   }
@@ -167,8 +167,8 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, {width: width}, this.state.highlightedStyle);
-    const ratingWrapperStateStyle = this.props.disabled?extend({}, style.disabledStyle, this.props.disabledStyle):style.enabledStyle;
+    const ratingCalculatedStyle = extend({}, style.ratingStyle, { width: width }, this.state.hoverStyle);
+    const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
 
     return <div ref="wrapper"
@@ -215,7 +215,7 @@ Rating.defaultProps = {
   value: 0,
   disabled: false,
   tabIndex: 0,
-  ratingCharacter: '\\2605'
+  ratingCharacter: '★'
 };
 
 Rating.displayName = 'Belle Rating';
