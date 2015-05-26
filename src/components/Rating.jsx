@@ -190,6 +190,7 @@ export default class Rating extends Component {
     const ratingCalculatedStyle = extend({}, style.ratingStyle, { width: width }, this.state.hoverStyle);
     const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
+    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled?-1:0);
 
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
@@ -202,6 +203,7 @@ export default class Rating extends Component {
                 onTouchEnd={ this._updateComponent.bind(this) }
                 onTouchCancel={ this._resetComponent.bind(this) }
                 onBlur={ this._resetComponent.bind( this) }
+                tabIndex={ tabIndex }
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
@@ -284,6 +286,7 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
   injectStyles(styles);
 }
 
+//Right now only one property is getting filtered out 'id' but leaving this method here as more properties may be added in future
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
@@ -298,6 +301,7 @@ function sanitizeProperties(properties) {
     'hoverStyle',
     'focusStyle',
     'disabledStyle',
-    'disabledHoverStyle'
+    'disabledHoverStyle',
+    'tabIndex'
   ]);
 }

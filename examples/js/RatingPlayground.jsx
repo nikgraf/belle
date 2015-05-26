@@ -12,9 +12,9 @@ export default React.createClass({
 
         <Card>
 
-          <Rating value={1} ratingCharacter={'\\2600'}></Rating><br />
-          <Rating value={4} disabled></Rating><br />
-          <Rating value={3} onChange={ (event) => console.log(event.target.value) } style={{color: 'gray'}}></Rating><br />
+          <Rating defaultValue={1} ratingCharacter={'\\2600'}></Rating><br />
+          <Rating defaultValue={4} disabled></Rating><br />
+          <Rating defaultValue={3} onChange={ (event) => console.log(event.target.value) } style={{color: 'gray'}}></Rating><br />
 
         </Card>
 
