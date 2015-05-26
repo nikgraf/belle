@@ -103,10 +103,10 @@ export default class Rating extends Component {
    */
   _onKeyDown(event) {
     if(!this.props.disabled) {
-      if (event.key === 'ArrowDown') {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
         event.preventDefault();
         this._onArrowDownKeyDown();
-      } else if (event.key === 'ArrowUp') {
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
         event.preventDefault();
         this._onArrowUpKeyDown();
       } else if (event.key === 'Enter' || event.key === ' ') {
