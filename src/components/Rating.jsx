@@ -26,7 +26,7 @@ export default class Rating extends Component {
 
   _initState(properties) {
     this.state = {
-      rating: Math.ceil(properties.value),
+      rating: Math.ceil(properties.defaultValue),
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
@@ -178,8 +178,8 @@ export default class Rating extends Component {
    * Calculate width of highlighted stars, the function uses this.state.tempRating if it exists else it uses this.state.rating.
    */
   _getWidth() {
-    var value = (this.state.tempRating !== undefined)?this.state.tempRating:this.state.rating;
-    return (value * 20) + '%';
+    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating:this.state.rating;
+    return (currentRating * 20) + '%';
   }
 
   /**
@@ -214,7 +214,7 @@ export default class Rating extends Component {
  * Props of Rating component
  */
 Rating.propTypes = {
-  value: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
+  defaultValue: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
   disabled: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
@@ -232,7 +232,7 @@ Rating.propTypes = {
  * Setting default prop values.
  */
 Rating.defaultProps = {
-  value: 0,
+  defaultValue: 0,
   disabled: false,
   tabIndex: 0,
   ratingCharacter: '★'
@@ -289,7 +289,7 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
  */
 function sanitizeProperties(properties) {
   return omit(properties, [
-    'value',
+    'defaultValue',
     'disabled',
     'onChange',
     'ratingCharacter',
