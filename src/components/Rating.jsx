@@ -6,6 +6,9 @@ import style from '../style/rating.js'
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 
+// Enable React Touch Events
+React.initializeTouchEvents(true);
+
 /**
  * Rating component: shows 5 stars for rating.
  * Allows to display, update, highlight, disable rating and do various other customizations.
@@ -14,14 +17,14 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
-    this.state = {
-      rating: Math.ceil(properties.value),
-      tempRating: undefined,
-      generalProperties: sanitizeProperties(properties)
-    };
+    this._initState(properties);
   }
 
   componentWillReceiveProps(properties) {
+    this._initState(properties);
+  }
+
+  _initState(properties) {
     this.state = {
       rating: Math.ceil(properties.value),
       tempRating: undefined,
@@ -48,20 +51,37 @@ export default class Rating extends Component {
   }
 
   /**
-   * When user mouse hovers or touches the component this function will highlight the component and set the tempRating
+   * When user mouse hovers the component this function will highlight the component and set the tempRating
    * in the component state depending on mouse position.
    */
-  _changeComponent(e) {
+  _mouseMove(e) {
     if(!this.props.disabled) {
-      this._highlight();
-      const wrapperNode = React.findDOMNode(this.refs.wrapper);
-      const wrapperWidth = wrapperNode.getBoundingClientRect().width;
-      const mouseMoved = e.pageX - wrapperNode.getBoundingClientRect().left;
-      const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
-      this.setState({
-        tempRating: newRating
-      });
+      this._changeComponent(e.pageX);
     }
+  }
+
+  /**
+   * On a touch device, when user touches the component this function will highlight the component and set the tempRating
+   * in the component state depending on touch position.
+   */
+  _touchMove(e) {
+    if(!this.props.disabled) {
+      if (e.targetTouches.length == 1) {
+        const touch = e.targetTouches[0];
+        this._changeComponent(touch.pageX);
+      }
+    }
+  }
+
+  _changeComponent(pageX) {
+    this._highlight();
+    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    const wrapperWidth = wrapperNode.getBoundingClientRect().width;
+    const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
+    const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
+    this.setState({
+      tempRating: newRating
+    });
   }
 
   /**
@@ -174,11 +194,11 @@ export default class Rating extends Component {
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
                 className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-                onMouseMove={ this._changeComponent.bind(this) }
+                onMouseMove={ this._mouseMove.bind(this) }
                 onMouseLeave={ this._resetComponent.bind(this) }
                 onClick={ this._updateComponent.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                onTouchStart={ this._changeComponent.bind(this) }
+                onTouchMove={ this._touchMove.bind(this) }
                 onTouchEnd={ this._updateComponent.bind(this) }
                 onTouchCancel={ this._resetComponent.bind(this) }
                 onBlur={ this._resetComponent.bind( this) }
