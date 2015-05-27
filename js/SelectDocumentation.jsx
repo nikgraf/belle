@@ -162,7 +162,7 @@ export default class SelectDocumentation extends Component {
 
         <tr>
           <td style={ propertyNameStyle }>
-            optionsAreaStyle
+            menuStyle
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
@@ -223,10 +223,10 @@ export default class SelectDocumentation extends Component {
               <br />
               optional</p>
             <p>
-              This one is by default true. If set to true the options area is
+              This one is by default true. If set to true the menu is
               repositioned after opening it to position the focused Option right
               on top of the already selected one. By default it also finds the
-              right entry in case the optionsArea has a maxHeight and scrolling
+              right entry in case the menu has a maxHeight and scrolling
               is active. If set to false it is not repositioned.
             </p>
           </td>
@@ -243,8 +243,8 @@ export default class SelectDocumentation extends Component {
               optional
             </p>
             <p>
-              A function called after the user opens the optionsArea.
-              The function's purpose is to reposition the options area to
+              A function called after the user opens the menu.
+              The function's purpose is to reposition the menu to
               improve the user experience.
             </p>
           </td>
@@ -270,7 +270,7 @@ export default class SelectDocumentation extends Component {
 
         <tr>
           <td style={ propertyNameStyle }>
-            optionsAreaProps
+            menuProps
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
@@ -405,7 +405,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ dataCodeExamplePartTwo } style={ {marginTop: 40} } />
 
-      <h3>Select as part of a form with a scrollable Options area</h3>
+      <h3>Select as part of a form with a scrollable menu</h3>
 
       <div style={ { display: 'table' } }>
         <TextInput style={ { width: 138,
@@ -415,7 +415,7 @@ export default class SelectDocumentation extends Component {
                                 float: 'left',
                                 marginLeft: 16 } }>
           <Select defaultValue="tokyo"
-                  optionsAreaStyle={ { height: 160,
+                  menuStyle={ { height: 160,
                                        overflow: 'scroll' } }>
             <Option value="berlin">Berlin</Option>
             <Option value="hong-kong">Hong Kong</Option>
@@ -445,7 +445,7 @@ export default class SelectDocumentation extends Component {
 
       <h3>Select with various Option styles</h3>
 
-      <Select optionsAreaStyle={{ padding: 6 }}>
+      <Select menuStyle={{ padding: 6 }}>
         <Placeholder>Choose your next Vacation</Placeholder>
         <Option value="santorini"
                 style={{
@@ -520,8 +520,8 @@ export default class SelectDocumentation extends Component {
 }
 
 function positionOptions (selectComponent) {
-  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
-  optionsAreaNode.style.top = '35px';
+  const menuNode = React.findDOMNode(selectComponent.refs.menu);
+  menuNode.style.top = '35px';
 }
 
 const basicCodeExample = `<!-- basic select example -->
@@ -565,7 +565,7 @@ const formCodeExample = `<!-- form consiting of an input & a select  -->
                           float: 'left',
                           marginLeft: 16 } }>
     <Select defaultValue="tokyo"
-            optionsAreaStyle={ { height: 160,
+            menuStyle={ { height: 160,
                                  overflow: 'scroll' } }>
       <Option value="berlin">Berlin</Option>
       <Option value="hong-kong">Hong Kong</Option>
@@ -589,7 +589,7 @@ const separatorCodeExample = `<!-- basic select example with separators -->
 </Select>`;
 
 const advancedStylingCodeExample = `<!-- select example with more advanced styling -->
-<Select optionsAreaStyle={{ padding: 6 }}>
+<Select menuStyle={{ padding: 6 }}>
   <Placeholder>Choose your next Vacation</Placeholder>
   <Option value="santorini"
           style={{
@@ -646,8 +646,8 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
 
 const positionOptionsCodeExample = `<!-- custom positionOptions function in your JS code -->
 function positionOptions (selectComponent) {
-  const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
-  optionsAreaNode.style.top = '35px';
+  const menuNode = React.findDOMNode(selectComponent.refs.menu);
+  menuNode.style.top = '35px';
 }`;
 
 const positionOptionsSelectCodeExample = `<!-- select with a custom positionOptions function -->
@@ -666,8 +666,8 @@ const htmlStructure = `<div ref="wrapper"
     <Option /> or <Placeholder />
     <span style={ caretToCloseStyle or caretToOpenStyle } />
   </div>
-  <ul ref="optionsArea"
-      style={ optionsAreaStyle }>
+  <ul ref="menu"
+      style={ menuStyle }>
     <li>
       <Option /> or <Separator />
     </li>
