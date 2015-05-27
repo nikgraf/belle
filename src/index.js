@@ -19,6 +19,8 @@ import selectStyle from './style/select';
 import separatorStyle from './style/separator';
 import textInputStyle from './style/text-input';
 
+import selectConfig from './config/select';
+
 module.exports = {
   Button: Button,
   Card: Card,
@@ -36,5 +38,8 @@ module.exports = {
     select: selectStyle,
     separator: separatorStyle,
     textInput: textInputStyle
+  },
+  config: {
+    select: selectConfig
   }
 };
