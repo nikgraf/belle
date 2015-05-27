@@ -224,7 +224,7 @@ export default class SelectDocumentation extends Component {
               optional</p>
             <p>
               This one is by default true. If set to true the options area is
-              repositioned after opening it to position the focusedOption right
+              repositioned after opening it to position the focused Option right
               on top of the already selected one. By default it also finds the
               right entry in case the optionsArea has a maxHeight and scrolling
               is active. If set to false it is not repositioned.
@@ -298,6 +298,70 @@ export default class SelectDocumentation extends Component {
             <p>
               This object allows to provide any kind of valid properties for a
               span tag.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabled
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              default: false</p>
+            <p>If true the Select will be disabled and can't be changed by the user.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the Select is disabled.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the Select is disabled and a user hovers over it.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledCaretToOpenStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Is applied to the Caret once the Select is disabled.
             </p>
           </td>
         </tr>
