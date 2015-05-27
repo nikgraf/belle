@@ -212,8 +212,8 @@ export default class Rating extends Component {
    */
   _onArrowDownKeyDown() {
     this._highlight();
-    let newRating = this.state.tempRating?this.state.tempRating:this.state.rating;
-    newRating = newRating>0?(newRating-1):0;
+    let newRating = this.state.tempRating ? this.state.tempRating:this.state.rating;
+    newRating = newRating > 0 ? (newRating-1) : 0;
     this.setState({
       tempRating: newRating
     });
@@ -246,7 +246,7 @@ export default class Rating extends Component {
    * Calculate width of highlighted stars, the function uses this.state.tempRating if it exists else it uses this.state.rating.
    */
   _getWidth() {
-    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating:this.state.rating;
+    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : this.state.rating;
     return (currentRating * 20) + '%';
   }
 
@@ -258,7 +258,7 @@ export default class Rating extends Component {
     const ratingCalculatedStyle = extend({}, style.ratingStyle, { width: width }, this.state.hoverStyle);
     const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
     const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
-    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled?-1:0);
+    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
