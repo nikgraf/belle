@@ -67,7 +67,7 @@ export default class Select extends Component {
       focusedOptionValue: focusedOptionValue,
       selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-      optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+      menuProperties: sanitizePropertiesForMenu(properties.menuProps),
       caretProperties: sanitizePropertiesForCaret(properties.caretProps),
       selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
       isTouchedToToggle: false
@@ -81,7 +81,7 @@ export default class Select extends Component {
         focusedOptionValue: properties.valueLink.value,
         selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
         wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-        optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+        menuProperties: sanitizePropertiesForMenu(properties.menuProps),
         caretProperties: sanitizePropertiesForCaret(properties.caretProps),
         selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
       });
@@ -91,7 +91,7 @@ export default class Select extends Component {
         focusedOptionValue: properties.value,
         selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
         wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-        optionsAreaProperties: sanitizePropertiesForOptionsArea(properties.optionsAreaProps),
+        menuProperties: sanitizePropertiesForMenu(properties.menuProps),
         caretProperties: sanitizePropertiesForCaret(properties.caretProps),
         selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
       });
@@ -120,36 +120,36 @@ export default class Select extends Component {
 
   /**
    * In case shouldPositionOptions is active the scrollTop position is stored
-   * to be applied later on. The optionsArea is hidden to make sure it is
+   * to be applied later on. The menu is hidden to make sure it is
    * not displayed beofre repositioned.
    */
   componentWillUpdate(nextProperties, nextState) {
     if (nextProperties.shouldPositionOptions) {
-      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
-      this.cachedOptionsAreaScrollTop = optionsAreaNode.scrollTop;
-      optionsAreaNode.style.display = 'none';
+      const menuNode = React.findDOMNode(this.refs.menu);
+      this.cachedMenuScrollTop = menuNode.scrollTop;
+      menuNode.style.display = 'none';
     }
   }
 
   /**
-   * In case shouldPositionOptions is active when opening the optionsArea it is
+   * In case shouldPositionOptions is active when opening the menu it is
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
     if (this.props.shouldPositionOptions & !this.props.disabled) {
-      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
+      const menuNode = React.findDOMNode(this.refs.menu);
 
-      // the optionsArea was just opened
+      // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen) {
         this.props.positionOptions(this);
       // restore the old scrollTop position
       } else {
-        optionsAreaNode.scrollTop = this.cachedOptionsAreaScrollTop;
+        menuNode.scrollTop = this.cachedMenuScrollTop;
       }
 
       if (this.state.isOpen) {
-        const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
-        optionsAreaNode.style.display = optionsAreaStyle.display;
+        const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+        menuNode.style.display = menuStyle.display;
       }
     }
   }
@@ -157,7 +157,7 @@ export default class Select extends Component {
   /**
    * Update the focusedOption based on Option the user is touching.
    *
-   * Unfortunately updating the focusedOption only works in case the optionsArea
+   * Unfortunately updating the focusedOption only works in case the menu
    * is not scrollable.
    * If a setState would be triggered during a touch with the intention to
    * scroll the setState would trigger a re-render & prevent the scrolling.
@@ -168,9 +168,9 @@ export default class Select extends Component {
       this._touchStartedAt = entry.getAttribute('data-belle-value');
 
       // save the scroll position
-      const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
-      if (optionsAreaNode.scrollHeight > optionsAreaNode.offsetHeight) {
-        this._scrollTopPosition = optionsAreaNode.scrollTop;
+      const menuNode = React.findDOMNode(this.refs.menu);
+      if (menuNode.scrollHeight > menuNode.offsetHeight) {
+        this._scrollTopPosition = menuNode.scrollTop;
         // Note: don't use setState in here as it would prevent the scrolling
       } else {
         this._scrollTopPosition = 0;
@@ -182,11 +182,11 @@ export default class Select extends Component {
   }
 
   /**
-   * Identifies if the optionsArea is scrollable.
+   * Identifies if the menu is scrollable.
    */
   _onTouchMoveAtOption (event) {
-    const optionsAreaNode = React.findDOMNode(this.refs.optionsArea);
-    if (optionsAreaNode.scrollTop !== this._scrollTopPosition) {
+    const menuNode = React.findDOMNode(this.refs.menu);
+    if (menuNode.scrollTop !== this._scrollTopPosition) {
       this._scrollActive = true;
     }
   }
@@ -223,7 +223,7 @@ export default class Select extends Component {
   }
 
   /**
-   * After an option has been selected the options area gets closed and the
+   * After an option has been selected the menu gets closed and the
    * selection processed.
    *
    * Depending on the component's properties the value gets updated and the
@@ -257,7 +257,7 @@ export default class Select extends Component {
   /**
    * In order to inform the user which element in the document is active the
    * component keeps track of when it's de-selected and depending on that
-   * close the optionsArea.
+   * close the menu.
    */
   _onBlur (event) {
     this.setState({
@@ -273,7 +273,7 @@ export default class Select extends Component {
   /**
    * In order to inform the user which element in the document is active the
    * component keeps track of when it's de-selected and depending on that
-   * close the optionsArea.
+   * close the menu.
    */
   _onFocus (event) {
     this.setState({
@@ -298,9 +298,9 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the options area after a user clicked on it.
+   * Toggle the menu after a user clicked on it.
    */
-  _toggleOptionsAreaOnClick (event) {
+  _toggleMenuOnClick (event) {
     if(!this.props.disabled) {
       if (this.state.isOpen) {
         this.setState({ isOpen: false });
@@ -315,9 +315,9 @@ export default class Select extends Component {
   }
 
   /**
-   * Initiate the toggle for the optionsArea.
+   * Initiate the toggle for the menu.
    */
-  _initiateToggleOptionsAreaOnTouchStart (event) {
+  _initiateToggleMenuOnTouchStart (event) {
     if (event.touches.length === 1) {
       this.setState({ isTouchedToToggle: true });
     } else {
@@ -330,10 +330,10 @@ export default class Select extends Component {
   }
 
   /**
-   * Toggle the options area after a user touched it & resets the pressed state
+   * Toggle the menu after a user touched it & resets the pressed state
    * for to toggle.
    */
-  _toggleOptionsAreaOnTouchEnd (event) {
+  _toggleMenuOnTouchEnd (event) {
     // In case touch events are used preventDefault is applied to avoid
     // triggering the click event which would cause trouble for toggling.
     // In any case calling setState triggers a render. This leads to the fact
@@ -363,9 +363,9 @@ export default class Select extends Component {
   }
 
   /**
-   * Reset the precondition to initialize a toggle of the options area.
+   * Reset the precondition to initialize a toggle of the menu.
    */
-  _cancelToggleOptionsAreaOnTouchCancel (event) {
+  _cancelToggleMenuOnTouchCancel (event) {
     this.setState({ isTouchedToToggle: false });
 
     if (this.props.onTouchCancel) {
@@ -374,7 +374,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Update focus for the options for an already open options area.
+   * Update focus for the options for an already open menu.
    *
    * The user experience of HTML's native select is good and the goal here is to
    * achieve the same behaviour.
@@ -399,7 +399,7 @@ export default class Select extends Component {
   }
 
   /**
-   * Update focus for the options for an already open options area.
+   * Update focus for the options for an already open menu.
    *
    * The user experience of HTML's native select is good and the goal here is to
    * achieve the same behaviour.
@@ -425,7 +425,7 @@ export default class Select extends Component {
 
   /**
    * After the user pressed the `Enter` or `Space` key for an already open
-   * options area the focused option is selected.
+   * menu the focused option is selected.
    *
    * Same as _onClickAtOption this update the state & dispatches a change event.
    */
@@ -437,12 +437,12 @@ export default class Select extends Component {
    * Manages the keyboard events.
    *
    * In case the Select is in focus, but closed ArrowDown, ArrowUp, Enter and
-   * Space will result in opening the options area.
+   * Space will result in opening the menu.
    *
-   * In case the options area is already open each key press will have
+   * In case the menu is already open each key press will have
    * different effects already documented in the related methods.
    *
-   * Pressing Escape will close the options area.
+   * Pressing Escape will close the menu.
    */
   _onKeyDown (event) {
     if (!this.props.disabled) {
@@ -489,7 +489,7 @@ export default class Select extends Component {
     const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
     const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
     const disabledHoverStyle = extend({}, style.disabledHoverStyle, this.props.disabledHoverStyle);
-    const optionsAreaStyle = extend({}, style.optionsAreaStyle, this.props.optionsAreaStyle);
+    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
     const disabledCaretToOpenStyle = extend({}, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
@@ -510,7 +510,7 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
-    const computedOptionsAreaStyle = this.state.isOpen && !this.props.disabled ? optionsAreaStyle : { display: 'none' };
+    const computedMenuStyle = this.state.isOpen && !this.props.disabled ? menuStyle : { display: 'none' };
     const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
 
@@ -553,10 +553,10 @@ export default class Select extends Component {
            ref="wrapper"
            {...this.state.wrapperProperties} >
 
-        <div onClick={ this._toggleOptionsAreaOnClick.bind(this) }
-             onTouchStart={ this._initiateToggleOptionsAreaOnTouchStart.bind(this) }
-             onTouchEnd={ this._toggleOptionsAreaOnTouchEnd.bind(this) }
-             onTouchCancel={ this._cancelToggleOptionsAreaOnTouchCancel.bind(this) }
+        <div onClick={ this._toggleMenuOnClick.bind(this) }
+             onTouchStart={ this._initiateToggleMenuOnTouchStart.bind(this) }
+             onTouchEnd={ this._toggleMenuOnTouchEnd.bind(this) }
+             onTouchCancel={ this._cancelToggleMenuOnTouchCancel.bind(this) }
              style={ selectedOptionWrapperStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"
@@ -570,11 +570,11 @@ export default class Select extends Component {
           </span>
         </div>
 
-        <ul style={ computedOptionsAreaStyle }
+        <ul style={ computedMenuStyle }
             role="listbox"
             aria-labelledby={ this.state.selectedOptionWrapperId }
-            ref="optionsArea"
-            {...this.state.optionsAreaProperties} >
+            ref="menu"
+            {...this.state.menuProperties} >
           {
             React.Children.map(this.props.children, (entry, index) => {
               // filter out all non-Option Components
@@ -641,11 +641,11 @@ Select.propTypes = {
   focusStyle: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   wrapperStyle: React.PropTypes.object,
-  optionsAreaStyle: React.PropTypes.object,
+  menuStyle: React.PropTypes.object,
   caretToOpenStyle: React.PropTypes.object,
   caretToCloseStyle: React.PropTypes.object,
   wrapperProps: React.PropTypes.object,
-  optionsAreaProps: React.PropTypes.object,
+  menuProps: React.PropTypes.object,
   caretProps: React.PropTypes.object,
   disabled: React.PropTypes.bool,
   disabledStyle: React.PropTypes.object,
@@ -655,7 +655,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   shouldPositionOptions: config.shouldPositionOptions,
-  positionOptions: config.repositionOptionsArea,
+  positionOptions: config.repositionMenu,
   disabled: false
 };
 
@@ -774,7 +774,7 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'focusStyle',
     'hoverStyle',
     'wrapperStyle',
-    'optionsAreaStyle',
+    'menuStyle',
     'caretToOpenStyle',
     'caretToCloseStyle',
     'disabledCaretToOpenStyle',
@@ -812,8 +812,8 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
  * Returns an object with properties that are relevant for the wrapping div of
  * the selected option.
  */
-function sanitizePropertiesForOptionsArea(optionsAreaProperties) {
-  return omit(optionsAreaProperties, [
+function sanitizePropertiesForMenu(menuProperties) {
+  return omit(menuProperties, [
     'style',
     'ref',
     'aria-labelledby',

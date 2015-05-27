@@ -202,28 +202,28 @@ describe('Select', () => {
 
   function testKeyEvents(container) {
 
-    it('should open the options area by pressing ArrowDown', () => {
+    it('should open the menu by pressing ArrowDown', () => {
       TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
-    it('should open the options area by pressing ArrowUp', () => {
+    it('should open the menu by pressing ArrowUp', () => {
       TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
-    it('should open the options area by pressing Space', () => {
+    it('should open the menu by pressing Space', () => {
       TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
-    describe('when the options area is open', () => {
+    describe('when the menu is open', () => {
 
       beforeEach(() => {
         container.select.setState({ isOpen: true });
       });
 
-      it('should close options area when pressing Escape', () => {
+      it('should close menu when pressing Escape', () => {
         TestUtils.Simulate.keyDown(container.selectNode, {key: 'Escape'});
         expect(container.select.state.isOpen).toBeFalsy();
       });

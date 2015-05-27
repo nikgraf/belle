@@ -66,7 +66,7 @@ export default class Configuration extends Component {
       <h4>Select</h4>
 
       <p>
-        By default the optionsArea of the Select component is positioned in a way
+        By default the menu of the Select component is positioned in a way
         that the focused Option is right above the previously selected one. In
         order to switch off this behaviour for all Select components in your
         application change the `shouldPositionOptions` option in config.
@@ -74,7 +74,7 @@ export default class Configuration extends Component {
       <p>
         In order you as developer want to implement your own functionality you
         you can provide your own positioning function for all Select components.
-        Keep in mind to set make the optionsArea visible e.g. `display: block`.
+        Keep in mind to set make the menu visible e.g. `display: block`.
       </p>
 
       <h4>Structure</h4>
@@ -146,7 +146,7 @@ const styleStructure = `style = {
     disabledStyle: { … },
     disabledHoveredStyle: { … },
     wrapperStyle: { … },
-    optionsAreaStyle: { … },
+    menuStyle: { … },
     nativeSelectStyle: { … },
     caretToOpenStyle: { … },
     caretToCloseStyle: { … }
@@ -175,7 +175,7 @@ const styleStructure = `style = {
 const configStructure = `config = {
   select: {
     shouldPositionOptions: true/false,
-    repositionOptionsArea: function () {}
+    repositionMenu: function () {}
   }
 }
 `;

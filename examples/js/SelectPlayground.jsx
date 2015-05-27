@@ -115,7 +115,7 @@ export default React.createClass({
         </Select>
 
         <h3>Select with scrollable options field</h3>
-        <Select optionsAreaStyle={ { height: 160, overflow: 'scroll' } } defaultValue="tokyo">
+        <Select menuStyle={ { height: 160, overflow: 'scroll' } } defaultValue="tokyo">
           <Option value="berlin">Berlin</Option>
           <Option value="hong-kong">Hong Kong</Option>
           <Option value="istanbul">Istanbul</Option>

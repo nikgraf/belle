@@ -11,15 +11,15 @@ var selectConfig = {
   shouldPositionOptions: true,
 
   /**
-   * Repositions to the optionsArea to position the focusedOption right on top
+   * Repositions to the menu to position the focusedOption right on top
    * of the selected one.
    *
    * @param selectComponent {object} - the Select component itself accessible with `this`
    */
-  repositionOptionsArea (selectComponent) {
-    const optionsAreaNode = React.findDOMNode(selectComponent.refs.optionsArea);
-    const optionsAreaStyle = window.getComputedStyle(optionsAreaNode, null);
-    const optionsAreaWidth = parseFloat(optionsAreaStyle.getPropertyValue('width'));
+  repositionMenu (selectComponent) {
+    const menuNode = React.findDOMNode(selectComponent.refs.menu);
+    const menuStyle = window.getComputedStyle(menuNode, null);
+    const menuWidth = parseFloat(menuStyle.getPropertyValue('width'));
 
     // In case of a placeholder no option is focused on initially
     let option, optionIndex;
@@ -29,10 +29,10 @@ var selectConfig = {
     } else {
       optionIndex = 0;
     }
-    option = optionsAreaNode.children[optionIndex];
+    option = menuNode.children[optionIndex];
 
-    const optionsAreaHeight = parseFloat(optionsAreaStyle.getPropertyValue('height'));
-    const optionsAreaTopBorderWidth = parseFloat(optionsAreaStyle.getPropertyValue('border-top-width'));
+    const menuHeight = parseFloat(menuStyle.getPropertyValue('height'));
+    const menuTopBorderWidth = parseFloat(menuStyle.getPropertyValue('border-top-width'));
 
     // In order to work with legacy browsers the second paramter for pseudoClass
     // has to be provided http://caniuse.com/#feat=getcomputedstyle
@@ -45,47 +45,47 @@ var selectConfig = {
     const selectedOptionWrapperPaddingTop = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
     const selectedOptionWrapperPaddingLeft = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
 
-    const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop + optionsAreaTopBorderWidth;
+    const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop + menuTopBorderWidth;
     const newLeft = option.offsetLeft + optionPaddingLeft;
 
     // Top positioning
-    if (optionsAreaHeight < optionsAreaNode.scrollHeight) {
-      if(newTop + optionsAreaHeight > optionsAreaNode.scrollHeight) {
+    if (menuHeight < menuNode.scrollHeight) {
+      if(newTop + menuHeight > menuNode.scrollHeight) {
         // In case scrolling is not enough the box needs to be moved more to
         // the top to match the same position.
-        const maxScrollTop = optionsAreaNode.scrollHeight - optionsAreaHeight;
-        optionsAreaNode.scrollTop = maxScrollTop;
-        optionsAreaNode.style.top = `-${newTop - maxScrollTop}px`;
+        const maxScrollTop = menuNode.scrollHeight - menuHeight;
+        menuNode.scrollTop = maxScrollTop;
+        menuNode.style.top = `-${newTop - maxScrollTop}px`;
       } else {
         // In case it's the first entry scrolling is not used to respect the
-        // optionsArea's paddingTop.
+        // menu's paddingTop.
         if (optionIndex === 0) {
-          optionsAreaNode.scrollTop = 0;
-          optionsAreaNode.style.top = `-${newTop}px`;
+          menuNode.scrollTop = 0;
+          menuNode.style.top = `-${newTop}px`;
         } else {
-          optionsAreaNode.scrollTop = newTop;
+          menuNode.scrollTop = newTop;
         }
       }
     } else {
-      optionsAreaNode.style.top = `-${newTop}px`;
+      menuNode.style.top = `-${newTop}px`;
     }
 
     // Left positioning
-    optionsAreaNode.style.left = `-${newLeft}px`;
+    menuNode.style.left = `-${newLeft}px`;
 
     // Increasing the width
     //
     // Pro:
-    // - It gives a option in the optionsArea the same width
+    // - It gives a option in the menu the same width
     // as in the selectedOptionWrapper.
     // - There is space to keep the text of the option on the exact same pixel
-    // when opening. The optionsArea is symetric in relation to the
+    // when opening. The menu is symetric in relation to the
     // selectedOptionWrapper.
     //
     // Con:
     // - Adding the padding could cause issue with design as it gets wider than
     // the original field.
-    optionsAreaNode.style.width = `${optionsAreaWidth + newLeft * 2}px`;
+    menuNode.style.width = `${menuWidth + newLeft * 2}px`;
   }
 };
 

@@ -94,7 +94,7 @@ var selectStyle = {
     position: 'relative'
   },
 
-  optionsAreaStyle: {
+  menuStyle: {
     display: 'block',
     listStyleType: 'none',
     background: '#FFF',
