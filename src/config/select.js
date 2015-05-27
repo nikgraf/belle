@@ -32,6 +32,7 @@ var selectConfig = {
     option = optionsAreaNode.children[optionIndex];
 
     const optionsAreaHeight = parseFloat(optionsAreaStyle.getPropertyValue('height'));
+    const optionsAreaTopBorderWidth = parseFloat(optionsAreaStyle.getPropertyValue('border-top-width'));
 
     // In order to work with legacy browsers the second paramter for pseudoClass
     // has to be provided http://caniuse.com/#feat=getcomputedstyle
@@ -44,7 +45,7 @@ var selectConfig = {
     const selectedOptionWrapperPaddingTop = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
     const selectedOptionWrapperPaddingLeft = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
 
-    const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop;
+    const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop + optionsAreaTopBorderWidth;
     const newLeft = option.offsetLeft + optionPaddingLeft;
 
     // Top positioning
@@ -56,10 +57,9 @@ var selectConfig = {
         optionsAreaNode.scrollTop = maxScrollTop;
         optionsAreaNode.style.top = `-${newTop - maxScrollTop}px`;
       } else {
-        // in case it's the first entry scrolling is not used to respect the
-        // optionsArea's paddingTop
+        // In case it's the first entry scrolling is not used to respect the
+        // optionsArea's paddingTop.
         if (optionIndex === 0) {
-          const optionsAreaPaddingTop = parseFloat(optionsAreaStyle.getPropertyValue('padding-top'));
           optionsAreaNode.scrollTop = 0;
           optionsAreaNode.style.top = `-${newTop}px`;
         } else {
