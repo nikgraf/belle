@@ -6,7 +6,12 @@ var selectStyle = {
     borderBottom: '1px solid #CCC',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    padding: '7px 0 5px 0',
+    /*
+    While the Select should have the same padding as TextInput 4px for
+    paddingBottom was chosen as in Chrome the Text is larger by 1px than in
+    the textarea.
+     */
+    padding: '7px 0 4px 0',
     position: 'relative',
 
     /*
@@ -33,7 +38,7 @@ var selectStyle = {
     borderBottom: '1px solid #6EB8D4',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    padding: '7px 0 5px 0',
+    padding: '7px 0 4px 0',
     position: 'relative',
 
     /*
@@ -60,7 +65,7 @@ var selectStyle = {
     borderBottom: '1px solid #92D6EF',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    padding: '7px 0 5px 0',
+    padding: '7px 0 4px 0',
     position: 'relative',
 
     /*
@@ -135,7 +140,7 @@ var selectStyle = {
     borderBottom: '1px dotted #9F9F9F',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    padding: '7px 0 5px 0',
+    padding: '7px 0 4px 0',
     position: 'relative',
     /*
     To avoid any kind of flickering the user won't get feedback
@@ -159,7 +164,7 @@ var selectStyle = {
     borderBottom: '1px dotted #92D6EF',
     cursor: 'not-allowed',
     boxSizing: 'border-box',
-    padding: '7px 0 5px 0',
+    padding: '7px 0 4px 0',
     position: 'relative',
     /*
     To avoid any kind of flickering the user won't get feedback
