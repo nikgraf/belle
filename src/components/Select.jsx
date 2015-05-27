@@ -6,6 +6,7 @@ import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 import config from '../config/select';
+import isComponentTypeOf from '../utils/is-component-of-type.js';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -674,27 +675,21 @@ const findIndexOfFocusedOption = (component) => {
  * Returns true if the provided property is a Placeholder component from Belle.
  */
 function isPlaceholder(reactElement) {
-  return reactElement._isReactElement &&
-    reactElement.type &&
-    reactElement.type.name === 'Placeholder';
+  return isComponentTypeOf('Placeholder', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Option component from Belle.
  */
 function isOption(reactElement) {
-  return reactElement._isReactElement &&
-    reactElement.type &&
-    reactElement.type.name === 'Option';
+  return isComponentTypeOf('Option', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Separator component from Belle.
  */
 function isSeparator(reactElement) {
-  return reactElement._isReactElement &&
-    reactElement.type &&
-    reactElement.type.name === 'Separator';
+  return isComponentTypeOf('Separator', reactElement);
 }
 
 /**
