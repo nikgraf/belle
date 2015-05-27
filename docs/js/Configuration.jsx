@@ -12,10 +12,10 @@ export default class Configuration extends Component {
 
       <p>
         Belle provides you with the ability to modify the default appearance of
-        it's components.
+        it's components and even some of the behaviour.
       </p>
 
-      <h3>How To</h3>
+      <h3>Styles</h3>
 
       <p>
         With this example you overwrite the hover style of default Belle button.
@@ -53,13 +53,37 @@ export default class Configuration extends Component {
         Follow
       </Button>
 
-      <h3>Structure</h3>
+      <h4>Structure</h4>
 
       <p>
         The following example shows the structure of belle.style.
       </p>
 
       <Code value={ styleStructure } style={ {marginTop: 40} } />
+
+      <h3>Behaviour</h3>
+
+      <h4>Select</h4>
+
+      <p>
+        By default the optionsArea of the Select component is positioned in a way
+        that the focused Option is right above the previously selected one. In
+        order to switch off this behaviour for all Select components in your
+        application change the `shouldPositionOptions` option in config.
+      </p>
+      <p>
+        In order you as developer want to implement your own functionality you
+        you can provide your own positioning function for all Select components.
+        Keep in mind to set make the optionsArea visible e.g. `display: block`.
+      </p>
+
+      <h4>Structure</h4>
+
+      <p>
+        The following example shows the structure of belle.config.
+      </p>
+
+      <Code value={ configStructure } style={ {marginTop: 40} } />
 
     </div>;
   }
@@ -119,8 +143,8 @@ const styleStructure = `style = {
     style: { … },
     focusStyle: { … },
     hoverStyle: { … },
-    disabledStyle: { … }, (coming soon …)
-    disabledHoveredStyle: { … }, (coming soon …)
+    disabledStyle: { … },
+    disabledHoveredStyle: { … },
     wrapperStyle: { … },
     optionsAreaStyle: { … },
     nativeSelectStyle: { … },
@@ -144,6 +168,14 @@ const styleStructure = `style = {
     focusStyle: { … },
     disabledStyle: { … },
     disabledHoveredStyle: { … }
+  }
+}
+`;
+
+const configStructure = `config = {
+  select: {
+    shouldPositionOptions: true/false,
+    repositionOptionsArea: function () {}
   }
 }
 `;
