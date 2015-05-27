@@ -22,7 +22,7 @@ export default function (styleId, style, pseudoClass, disabled) {
  *
  * By using this function someone can make sure the DOM is updated only once.
  *
- * Usage:
+ * @example
  * ```
  * const styles = [
  *   {
