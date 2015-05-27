@@ -43,7 +43,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * Function to remove pseudo classes from dom once component is removed.
+   * Function to remove pseudo classes from the DOM once component is removed.
    */
   componentWillUnmount() {
     removeStyle(this.ratingStyleId);
@@ -51,12 +51,27 @@ export default class Rating extends Component {
   }
 
   /**
-   * When user mouse hovers the component this function will highlight the component and set the tempRating
+   * When user mouse hovers the component this callback will highlight the component and set the tempRating
    * in the component state depending on mouse position.
    */
-  _mouseMove(e) {
+  _onMouseMove(e) {
     if(!this.props.disabled) {
       this._changeComponent(e.pageX);
+    }
+    if (this.props.onMouseMove) {
+      this.props.onMouseMove(event);
+    }
+  }
+
+  /**
+   * When mouse leaves the component this callback will reset the component to its previous state.
+   */
+  _onMouseLeave(e) {
+    if(!this.props.disabled) {
+      this._resetComponent();
+    }
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave(event);
     }
   }
 
@@ -64,52 +79,63 @@ export default class Rating extends Component {
    * On a touch device, when user touches the component this function will highlight the component and set the tempRating
    * in the component state depending on touch position.
    */
-  _touchMove(e) {
+  _onTouchMove(e) {
     if(!this.props.disabled) {
       if (e.targetTouches.length == 1) {
         const touch = e.targetTouches[0];
         this._changeComponent(touch.pageX);
       }
     }
-  }
-
-  _changeComponent(pageX) {
-    this._highlight();
-    const wrapperNode = React.findDOMNode(this.refs.wrapper);
-    const wrapperWidth = wrapperNode.getBoundingClientRect().width;
-    const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
-    this.setState({
-      tempRating: newRating
-    });
-  }
-
-  /**
-   * Function that will be called to reset the component after mouse leave, touch cancel, blur or when escape key is pressed.
-   */
-  _resetComponent() {
-    if(!this.props.disabled) {
-      this.setState({
-        tempRating: undefined,
-        hoverStyle: undefined
-      });
+    if (this.props.onTouchMove) {
+      this.props.onTouchMove(event);
     }
   }
 
   /**
-   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
+   * When touch ends this callback will update component value.
    */
-  _updateComponent() {
+  _onTouchEnd(e) {
     if(!this.props.disabled) {
-      this.setState({
-        rating: this.state.tempRating,
-        hoverStyle: undefined
-      });
-      if (this.props.onChange) {
-        const wrapperNode = React.findDOMNode(this);
-        wrapperNode.value = this.state.tempRating;
-        this.props.onChange({target: wrapperNode});
-      }
+      this._updateComponent();
+    }
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
+  }
+
+  /**
+   * When touch is cancelled this callback will reset the component tp previous value.
+   */
+  _onTouchCancel(e) {
+    if(!this.props.disabled) {
+      this._resetComponent();
+    }
+    if (this.props.onTouchCancel) {
+      this.props.onTouchCancel(event);
+    }
+  }
+
+  /**
+   * On blur callback will reset the component tp previous value.
+   */
+  _onBlur(e) {
+    if(!this.props.disabled) {
+      this._resetComponent();
+    }
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+  }
+
+  /**
+   * When user clicks the component this callback will update component value to that selected by user.
+   */
+  _onClick(e) {
+    if(!this.props.disabled) {
+      this._updateComponent();
+    }
+    if (this.props.onClick) {
+      this.props.onClick(event);
     }
   }
 
@@ -137,6 +163,48 @@ export default class Rating extends Component {
         this._resetComponent();
       }
     }
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+  }
+
+  /**
+   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
+   */
+  _changeComponent(pageX) {
+    this._highlight();
+    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    const wrapperWidth = wrapperNode.getBoundingClientRect().width;
+    const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
+    const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
+    this.setState({
+      tempRating: newRating
+    });
+  }
+
+  /**
+   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
+   */
+  _updateComponent() {
+    this.setState({
+      rating: this.state.tempRating,
+      highlightedStyle: undefined
+    });
+    if (this.props.onChange) {
+      const wrapperNode = React.findDOMNode(this);
+      wrapperNode.value = this.state.tempRating;
+      this.props.onChange({target: wrapperNode});
+    }
+  }
+
+  /**
+   * Function that will be called to reset the component rating.
+   */
+  _resetComponent() {
+    this.setState({
+      tempRating: undefined,
+      highlightedStyle: undefined
+    });
   }
 
   /**
@@ -195,14 +263,14 @@ export default class Rating extends Component {
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
                 className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-                onMouseMove={ this._mouseMove.bind(this) }
-                onMouseLeave={ this._resetComponent.bind(this) }
-                onClick={ this._updateComponent.bind(this) }
+                onMouseMove={ this._onMouseMove.bind(this) }
+                onMouseLeave={ this._onMouseLeave.bind(this) }
+                onClick={ this._onClick.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
-                onTouchMove={ this._touchMove.bind(this) }
-                onTouchEnd={ this._updateComponent.bind(this) }
-                onTouchCancel={ this._resetComponent.bind(this) }
-                onBlur={ this._resetComponent.bind( this) }
+                onTouchMove={ this._onTouchMove.bind(this) }
+                onTouchEnd={ this._onTouchEnd.bind(this) }
+                onTouchCancel={ this._onTouchCancel.bind(this) }
+                onBlur={ this._onBlur.bind( this) }
                 tabIndex={ tabIndex }
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
@@ -227,7 +295,18 @@ Rating.propTypes = {
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object
+  disabledHoverStyle: React.PropTypes.object,
+  onMouseEnter: React.PropTypes.func,
+  onMouseMove: React.PropTypes.func,
+  onMouseLeave: React.PropTypes.func,
+  onTouchStart: React.PropTypes.func,
+  onTouchMove: React.PropTypes.func,
+  onTouchEnd: React.PropTypes.func,
+  onTouchCancel: React.PropTypes.func,
+  onFocus: React.PropTypes.func,
+  onBlur: React.PropTypes.func,
+  onClick: React.PropTypes.func,
+  onKeyDown: React.PropTypes.func
 };
 
 /**
@@ -302,6 +381,14 @@ function sanitizeProperties(properties) {
     'focusStyle',
     'disabledStyle',
     'disabledHoverStyle',
-    'tabIndex'
+    'tabIndex',
+    'onMouseMove',
+    'onMouseLeave',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'onBlur',
+    'onClick',
+    'onKeyDown'
   ]);
 }
