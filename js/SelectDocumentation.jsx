@@ -344,9 +344,9 @@ export default class SelectDocumentation extends Component {
       <h3>Select as part of a form with a scrollable Options area</h3>
 
       <div style={ { display: 'table' } }>
-        <TextInput style={ { width: 178,
+        <TextInput style={ { width: 138,
                              float: 'left'} }
-                   placeholder="Please fill in your address …" />
+                   placeholder="Fill in your address …" />
                  <div style={ { width: 110,
                                 float: 'left',
                                 marginLeft: 16 } }>
@@ -493,15 +493,13 @@ const dataCodeExamplePartTwo = `<!-- filling a select with Option  -->
 </Select>`;
 
 const formCodeExample = `<!-- form consiting of an input & a select  -->
-<div style={ { content: '',
-               display: 'table',
-               clear: 'both' } }>
-  <TextInput style={ { width: 300,
-                       float: 'left' } }
-             placeholder="Please fill in your address …" />
-  <div style={ { width: 150,
-                 float: 'left',
-                 marginLeft: 16 } }>
+<div style={ { display: 'table' } }>
+  <TextInput style={ { width: 138,
+                       float: 'left'} }
+             placeholder="Fill in your address …" />
+           <div style={ { width: 110,
+                          float: 'left',
+                          marginLeft: 16 } }>
     <Select defaultValue="tokyo"
             optionsAreaStyle={ { height: 160,
                                  overflow: 'scroll' } }>
