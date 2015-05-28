@@ -26,7 +26,7 @@ export default class Rating extends Component {
 
   _initState(properties) {
     this.state = {
-      rating: Math.ceil(properties.defaultValue),
+      rating: Math.round(properties.defaultValue),
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
@@ -176,7 +176,7 @@ export default class Rating extends Component {
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
+    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + .4);
     this.setState({
       tempRating: newRating
     });
