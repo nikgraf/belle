@@ -11,7 +11,7 @@ export default class ButtonDocumentation extends Component {
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
-      <Button primary style={ {marginRight: 10} }>Follow</Button>
+      <Button primary style={ {marginRight: 15} }>Follow</Button>
 
       <Button>Follow</Button>
 
@@ -160,11 +160,11 @@ export default class ButtonDocumentation extends Component {
 
       <p>Disabled buttons</p>
 
-      <Button primary style={ {marginRight: 10} }>Follow</Button>
+      <Button primary style={ {marginRight: 15} }>Follow</Button>
 
-      <Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+      <Button primary disabled style={ {marginRight: 15} }>Follow</Button>
 
-      <Button style={ {marginRight: 10} }>Follow</Button>
+      <Button style={ {marginRight: 15} }>Follow</Button>
 
       <Button disabled>Follow</Button>
 
@@ -179,13 +179,15 @@ export default class ButtonDocumentation extends Component {
                 border: '1px solid #222',
                 borderBottom: '1px solid #222',
                 borderRadius: 2,
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}
               hoverStyle={{
                 border: '1px solid red',
                 borderBottom: '1px solid red',
                 color: 'red',
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}
               focusStyle={{
                 border: '1px solid red',
@@ -198,7 +200,8 @@ export default class ButtonDocumentation extends Component {
                 border: '1px solid red',
                 borderTop: '1px solid red',
                 color: 'red',
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}>
         Follow
       </Button>
