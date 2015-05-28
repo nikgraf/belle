@@ -188,7 +188,7 @@ export default class Rating extends Component {
   _updateComponent() {
     this.setState({
       rating: this.state.tempRating,
-      highlightedStyle: undefined
+      hoverStyle: undefined
     });
     if (this.props.onChange) {
       const wrapperNode = React.findDOMNode(this);
@@ -203,7 +203,7 @@ export default class Rating extends Component {
   _resetComponent() {
     this.setState({
       tempRating: undefined,
-      highlightedStyle: undefined
+      hoverStyle: undefined
     });
   }
 
@@ -365,7 +365,6 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
   injectStyles(styles);
 }
 
-//Right now only one property is getting filtered out 'id' but leaving this method here as more properties may be added in future
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */

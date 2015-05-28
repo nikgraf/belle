@@ -33,7 +33,8 @@ var style = {
   },
 
   focusStyle: {
-    outline: 0
+    outline: 0,
+    boxShadow: '0 1px 0 0 #ffb400'
   }
 
 };
