@@ -54,7 +54,7 @@ var buttonStyle = {
   activeStyle: {
     background: '#E0E0E0',
     color: '#424242',
-    boxShadow: 'inset 0 1px 0px #BDBDBD, 0 2px 0px #E0E0E0'
+    boxShadow: 'inset 0 1px 1px #BDBDBD, 0 2px 0px #E0E0E0'
   },
 
   disabledStyle: {
@@ -122,7 +122,7 @@ var buttonStyle = {
 
   primaryActiveStyle: {
     background: '#4DBEE8',
-    boxShadow: 'inset 0 1px 0px #3995B7, 0 1px 0px #4DBEE8',
+    boxShadow: 'inset 0 1px 1px #3995B7, 0 1px 0px #4DBEE8',
     color: '#F5F5F5'
   },
 
