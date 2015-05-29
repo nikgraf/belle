@@ -13,7 +13,7 @@ export default React.createClass({
         <Card>
 
           <Rating defaultValue={1} ratingCharacter={'\\2600'}></Rating><br />
-          <Rating defaultValue={4} disabled></Rating><br />
+          <Rating defaultValue={4} disabled aria-labelledby={'testing-only'}></Rating><br />
           <Rating defaultValue={3} onChange={ (event) => console.log(event.target.value) } style={{color: 'gray'}}></Rating><br />
 
         </Card>

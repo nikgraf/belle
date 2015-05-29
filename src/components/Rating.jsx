@@ -272,6 +272,10 @@ export default class Rating extends Component {
                 onTouchCancel={ this._onTouchCancel.bind(this) }
                 onBlur={ this._onBlur.bind( this) }
                 tabIndex={ tabIndex }
+                aria-valuemax = {5}
+                aria-valuemin = {0}
+                aria-valuenow = {this.state.rating}
+                aria-disabled = {this.props.disabled}
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
