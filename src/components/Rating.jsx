@@ -294,7 +294,6 @@ Rating.propTypes = {
   tabIndex: React.PropTypes.number,
   ratingCharacter: React.PropTypes.string,
   style: React.PropTypes.object,
-  id: React.PropTypes.string,
   className: React.PropTypes.string,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
