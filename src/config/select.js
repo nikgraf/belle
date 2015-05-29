@@ -2,7 +2,7 @@
 
 /* jslint browser: true */
 
-import React, {Component} from 'react';
+import React from 'react';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
 import {filter, findIndex} from 'underscore';
 
