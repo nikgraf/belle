@@ -4,6 +4,7 @@
 
 import {map, each, flatten} from 'underscore';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
+import animations from '../style/animations';
 
 let styleElement,
     styleStorage = {};
@@ -103,5 +104,5 @@ function updateStyling() {
 
     return pseudoClassesArray;
   });
-  styleElement.innerHTML = flatten(styles).join(' ');
+  styleElement.innerHTML = flatten([animations, styles]).join(' ');
 }
