@@ -5,7 +5,8 @@ var buttonStyle = {
   style: {
     background: '#EEEEEE',
     border: 0,
-    boxShadow: '0 1px 0px #BDBDBD',
+    borderTop: '1px solid #EEEEEE',
+    borderBottom: '1px solid #BDBDBD',
     borderRadius: 2,
     boxSizing: 'border-box',
     color: '#616161',
@@ -40,41 +41,46 @@ var buttonStyle = {
 
   hoverStyle: {
     background: '#F5F5F5',
-    boxShadow: '0 1px 0px #BDBDBD',
+    borderTop: '1px solid #F5F5F5',
+    borderBottom: '1px solid #BDBDBD',
     color: '#757575'
   },
 
   focusStyle: {
-    background: '#F5F5F5',
-    boxShadow: '0 1px 0px #E0E0E0',
-    color: '#757575',
+    WebkitAnimation: 'belle-button-focus 2s',
     outline: 0 // avoid default focus behaviour
   },
 
   activeStyle: {
     background: '#E0E0E0',
     color: '#424242',
-    boxShadow: 'inset 0 1px 1px #BDBDBD, 0 2px 0px #E0E0E0'
+    borderBottom: '1px solid #E0E0E0',
+    borderTop: '1px solid #BDBDBD'
   },
 
   disabledStyle: {
     background: '#EEEEEE',
     color: '#C5C4C4',
-    boxShadow: '0 1px 0px #BDBDBD',
+    borderBottom: '1px solid #BDBDBD',
+    borderTop: '1px solid #EEEEEE',
     cursor: 'not-allowed'
   },
 
   disabledHoverStyle: {
     background: '#F5F5F5',
     color: '#D0D0D0',
-    boxShadow: '0 1px 0px #BDBDBD',
+    borderBottom: '1px solid #BDBDBD',
+    borderTop: '1px solid #F5F5F5',
     cursor: 'not-allowed'
   },
 
   primaryStyle: {
     background: '#53C7F2',
     border: 0,
-    boxShadow: '0 1px 0px #3995B7',
+    // boxShadow: '0 1px 0px #3995B7',
+    borderTop: '1px solid #53C7F2',
+    borderBottom: '1px solid #3995B7',
+
     borderRadius: 2,
     boxSizing: 'border-box',
     color:'#FAFAFA',
@@ -109,34 +115,36 @@ var buttonStyle = {
 
   primaryHoverStyle: {
     background: '#82D9F9',
-    boxShadow: '0 1px 0px #3995B7',
+    borderTop: '1px solid #82D9F9',
+    borderBottom: '1px solid #3995B7',
     color: '#FFF'
   },
 
   primaryFocusStyle: {
-    background: '#82D9F9',
-    boxShadow: '0 1px 0px #3995B7',
-    color: '#FFF',
+    WebkitAnimation: 'belle-button-focus 2s',
     outline: 0 // avoid default focus behaviour
   },
 
   primaryActiveStyle: {
     background: '#4DBEE8',
-    boxShadow: 'inset 0 1px 1px #3995B7, 0 1px 0px #4DBEE8',
+    borderBottom: '1px solid #4DBEE8',
+    borderTop: '1px solid #3995B7',
     color: '#F5F5F5'
   },
 
   primaryDisabledStyle: {
     background: '#98DEF8',
     color: '#FAFAFA',
-    boxShadow: '0 1px 0px #74B4CC',
+    borderTop: '1px solid #98DEF8',
+    borderBottom: '1px solid #74B4CC',
     cursor: 'not-allowed'
   },
 
   primaryDisabledHoverStyle: {
     background: '#A7E4FB',
     color: '#FFF',
-    boxShadow: '0 1px 0px #74B4CC',
+    borderTop: '1px solid #A7E4FB',
+    borderBottom: '1px solid #74B4CC',
     cursor: 'not-allowed'
   }
 };
