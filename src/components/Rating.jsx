@@ -22,6 +22,7 @@ export default class Rating extends Component {
 
   componentWillReceiveProps(properties) {
     this._initState(properties);
+    this._updateComponentValue();
   }
 
   _initState(properties) {
@@ -30,6 +31,11 @@ export default class Rating extends Component {
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
+  }
+
+  _updateComponentValue() {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = this.state.rating;
   }
 
   /**
@@ -42,6 +48,9 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
   }
 
+  componentDidMount() {
+    this._updateComponentValue();
+  }
   /**
    * Function to remove pseudo classes from the DOM once component is removed.
    */
@@ -190,9 +199,9 @@ export default class Rating extends Component {
       rating: this.state.tempRating,
       hoverStyle: undefined
     });
+    this._updateComponentValue();
     if (this.props.onChange) {
       const wrapperNode = React.findDOMNode(this);
-      wrapperNode.value = this.state.tempRating;
       this.props.onChange({target: wrapperNode});
     }
   }
