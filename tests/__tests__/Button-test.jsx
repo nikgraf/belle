@@ -44,12 +44,13 @@ describe('Button', () => {
 
       const styles = injectStyle.injectStyles.mock.calls[0][0];
       expect(styles[0].pseudoClass).toBe('hover');
-      expect(styles[1].pseudoClass).toBe('focus');
-      expect(styles[2].pseudoClass).toBe('active');
+      expect(styles[1].pseudoClass).toBe('active');
+      expect(styles[2].pseudoClass).toBe('hover');
+      expect(styles[2].disabled).toBeTruthy();
+      expect(styles[3].pseudoClass).toBe('focus');
     });
 
   });
-
 
   it('should be able to bind onClick', () => {
     let wasClicked = false;
@@ -121,7 +122,8 @@ describe('Button', () => {
     const bodyWithButton = TestUtils.renderIntoDocument(
       <Button hoverStyle={{ color: 'red' }}
               focusStyle={{ color: 'brown' }}
-              activeStyle={{ color: 'green' }}>
+              activeStyle={{ color: 'green' }}
+              preventFocusStyleForTouchAndClick={ false }>
         Follow
       </Button>
     );
@@ -131,13 +133,13 @@ describe('Button', () => {
     expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
 
     const styles = injectStyle.injectStyles.mock.calls[0][0];
+
     expect(styles[0].pseudoClass).toBe('hover');
     expect(styles[0].style.color).toBe('red');
-    expect(styles[1].pseudoClass).toBe('focus');
-    expect(styles[1].style.color).toBe('brown');
-    expect(styles[2].pseudoClass).toBe('active');
-    expect(styles[2].style.color).toBe('green');
-
+    expect(styles[1].pseudoClass).toBe('active');
+    expect(styles[1].style.color).toBe('green');
+    expect(styles[3].pseudoClass).toBe('focus');
+    expect(styles[3].style.color).toBe('brown');
   });
 
   it('should remove the custom styles from the dom when the button unmounts', function() {
