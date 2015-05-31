@@ -63,6 +63,18 @@ export default class Configuration extends Component {
 
       <h3>Behaviour</h3>
 
+      <h4>Button</h4>
+
+      <p>
+        Focus styles are helpful to identify which element is currently
+        in focus when tabbing through the elements e.g. a user wants to
+        switch to the next input element. Yet it feels somewhat distracting
+        when clicking on the Button. That's why Belle by default prevents
+        the focus style being applied in case the Button is focused on
+        by a touch or click event. This default behaviour can be deactivated by
+        setting `preventFocusStyleForTouchAndClick` to false.
+      </p>
+
       <h4>Select</h4>
 
       <p>
@@ -173,6 +185,9 @@ const styleStructure = `style = {
 `;
 
 const configStructure = `config = {
+  button: {
+    preventFocusStyleForTouchAndClick: true/false
+  }
   select: {
     shouldPositionOptions: true/false,
     repositionMenu: function () {}
