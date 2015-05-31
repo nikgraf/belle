@@ -63,7 +63,7 @@ export default class Rating extends Component {
    * When user mouse hovers the component this callback will highlight the component and set the tempRating
    * in the component state depending on mouse position.
    */
-  _onMouseMove(e) {
+  _onMouseMove(event) {
     if(!this.props.disabled) {
       this._changeComponent(e.pageX);
     }
@@ -75,7 +75,7 @@ export default class Rating extends Component {
   /**
    * When mouse leaves the component this callback will reset the component to its previous state.
    */
-  _onMouseLeave(e) {
+  _onMouseLeave(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -88,7 +88,7 @@ export default class Rating extends Component {
    * On a touch device, when user touches the component this function will highlight the component and set the tempRating
    * in the component state depending on touch position.
    */
-  _onTouchMove(e) {
+  _onTouchMove(event) {
     if(!this.props.disabled) {
       if (e.targetTouches.length == 1) {
         const touch = e.targetTouches[0];
@@ -103,7 +103,7 @@ export default class Rating extends Component {
   /**
    * When touch ends this callback will update component value.
    */
-  _onTouchEnd(e) {
+  _onTouchEnd(event) {
     if(!this.props.disabled) {
       this._updateComponent();
     }
@@ -115,7 +115,7 @@ export default class Rating extends Component {
   /**
    * When touch is cancelled this callback will reset the component tp previous value.
    */
-  _onTouchCancel(e) {
+  _onTouchCancel(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -127,7 +127,7 @@ export default class Rating extends Component {
   /**
    * On blur callback will reset the component tp previous value.
    */
-  _onBlur(e) {
+  _onBlur(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -139,7 +139,7 @@ export default class Rating extends Component {
   /**
    * When user clicks the component this callback will update component value to that selected by user.
    */
-  _onClick(e) {
+  _onClick(event) {
     if(!this.props.disabled) {
       this._updateComponent();
     }
