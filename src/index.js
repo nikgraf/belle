@@ -18,6 +18,7 @@ import optionStyle from './style/option';
 import selectStyle from './style/select';
 import separatorStyle from './style/separator';
 import textInputStyle from './style/text-input';
+import ratingStyle from './style/rating';
 
 import selectConfig from './config/select';
 
@@ -37,7 +38,8 @@ module.exports = {
     option: optionStyle,
     select: selectStyle,
     separator: separatorStyle,
-    textInput: textInputStyle
+    textInput: textInputStyle,
+    ratingStyle: ratingStyle
   },
   config: {
     select: selectConfig

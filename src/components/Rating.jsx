@@ -264,9 +264,9 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, { width: width }, this.state.hoverStyle);
+    const ratingCalculatedStyle = extend({}, style.style, { width: width }, this.state.hoverStyle);
     const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
-    const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
+    const ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
     return <div ref="wrapper"

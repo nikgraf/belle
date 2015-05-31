@@ -1,8 +1,8 @@
 "use strict";
 
-var style = {
+var ratingStyle = {
 
-  ratingStyle: {
+  style: {
     color: '#ffb400',
     width: '40%',
     position: 'absolute',
@@ -11,7 +11,7 @@ var style = {
     overflow: 'hidden'
   },
 
-  ratingWrapperStyle: {
+  wrapperStyle: {
     fontSize: 32,
     color: '#e3e3e3',
     position: 'relative',
@@ -39,4 +39,4 @@ var style = {
 
 };
 
-export default style;
+export default ratingStyle;
