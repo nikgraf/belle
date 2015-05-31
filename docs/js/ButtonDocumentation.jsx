@@ -149,7 +149,33 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            preventFocusStyleForTouchAndClick
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              optional (default: true)
+            </p>
+            <p>
+              Prevents the focus style being applied in case the buttons becomes
+              focused by a click or touch.<br />
+              <b>Background:</b>
+              Focus styles are helpful to identify which element is currently
+              in focus when tabbing through the elements e.g. a user wants to
+              switch to the next input element. Yet it feels somewhat distracting
+              when clicking on the Button. That's why Belle by default prevents
+              the focus style being applied in case the Button is focused on
+              by a touch or click event.
+            </p>
+          </td>
+        </tr>
       </table>
+
+
+
 
       <p>
         Any other property valid for a HTML button like
