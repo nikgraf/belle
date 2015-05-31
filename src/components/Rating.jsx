@@ -17,19 +17,25 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
-    this._initState(properties);
-  }
-
-  componentWillReceiveProps(properties) {
-    this._initState(properties);
-  }
-
-  _initState(properties) {
     this.state = {
-      rating: Math.ceil(properties.defaultValue),
+      rating: Math.round(properties.defaultValue),
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
+  }
+
+  componentWillReceiveProps(properties) {
+    this.setState({
+      rating: Math.round(properties.defaultValue),
+      tempRating: undefined,
+      generalProperties: sanitizeProperties(properties)
+    });
+    this._updateComponentValue();
+  }
+
+  _updateComponentValue() {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = this.state.rating;
   }
 
   /**
@@ -42,6 +48,9 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
   }
 
+  componentDidMount() {
+    this._updateComponentValue();
+  }
   /**
    * Function to remove pseudo classes from the DOM once component is removed.
    */
@@ -54,7 +63,7 @@ export default class Rating extends Component {
    * When user mouse hovers the component this callback will highlight the component and set the tempRating
    * in the component state depending on mouse position.
    */
-  _onMouseMove(e) {
+  _onMouseMove(event) {
     if(!this.props.disabled) {
       this._changeComponent(e.pageX);
     }
@@ -66,7 +75,7 @@ export default class Rating extends Component {
   /**
    * When mouse leaves the component this callback will reset the component to its previous state.
    */
-  _onMouseLeave(e) {
+  _onMouseLeave(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -79,7 +88,7 @@ export default class Rating extends Component {
    * On a touch device, when user touches the component this function will highlight the component and set the tempRating
    * in the component state depending on touch position.
    */
-  _onTouchMove(e) {
+  _onTouchMove(event) {
     if(!this.props.disabled) {
       if (e.targetTouches.length == 1) {
         const touch = e.targetTouches[0];
@@ -94,7 +103,7 @@ export default class Rating extends Component {
   /**
    * When touch ends this callback will update component value.
    */
-  _onTouchEnd(e) {
+  _onTouchEnd(event) {
     if(!this.props.disabled) {
       this._updateComponent();
     }
@@ -106,7 +115,7 @@ export default class Rating extends Component {
   /**
    * When touch is cancelled this callback will reset the component tp previous value.
    */
-  _onTouchCancel(e) {
+  _onTouchCancel(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -118,7 +127,7 @@ export default class Rating extends Component {
   /**
    * On blur callback will reset the component tp previous value.
    */
-  _onBlur(e) {
+  _onBlur(event) {
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -130,7 +139,7 @@ export default class Rating extends Component {
   /**
    * When user clicks the component this callback will update component value to that selected by user.
    */
-  _onClick(e) {
+  _onClick(event) {
     if(!this.props.disabled) {
       this._updateComponent();
     }
@@ -176,7 +185,7 @@ export default class Rating extends Component {
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.ceil(mouseMoved * 5 / wrapperWidth);
+    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + .4);
     this.setState({
       tempRating: newRating
     });
@@ -188,11 +197,11 @@ export default class Rating extends Component {
   _updateComponent() {
     this.setState({
       rating: this.state.tempRating,
-      highlightedStyle: undefined
+      hoverStyle: undefined
     });
+    this._updateComponentValue();
     if (this.props.onChange) {
       const wrapperNode = React.findDOMNode(this);
-      wrapperNode.value = this.state.tempRating;
       this.props.onChange({target: wrapperNode});
     }
   }
@@ -203,7 +212,7 @@ export default class Rating extends Component {
   _resetComponent() {
     this.setState({
       tempRating: undefined,
-      highlightedStyle: undefined
+      hoverStyle: undefined
     });
   }
 
@@ -255,9 +264,9 @@ export default class Rating extends Component {
    */
   render () {
     const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.ratingStyle, { width: width }, this.state.hoverStyle);
+    const ratingCalculatedStyle = extend({}, style.style, { width: width }, this.state.hoverStyle);
     const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
-    const ratingWrapperCalculatedStyle = extend({}, style.ratingWrapperStyle, ratingWrapperStateStyle, this.props.style);
+    const ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
     return <div ref="wrapper"
@@ -272,6 +281,10 @@ export default class Rating extends Component {
                 onTouchCancel={ this._onTouchCancel.bind(this) }
                 onBlur={ this._onBlur.bind( this) }
                 tabIndex={ tabIndex }
+                aria-valuemax = {5}
+                aria-valuemin = {0}
+                aria-valuenow = {this.state.rating}
+                aria-disabled = {this.props.disabled}
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
@@ -290,7 +303,6 @@ Rating.propTypes = {
   tabIndex: React.PropTypes.number,
   ratingCharacter: React.PropTypes.string,
   style: React.PropTypes.object,
-  id: React.PropTypes.string,
   className: React.PropTypes.string,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
@@ -365,7 +377,6 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
   injectStyles(styles);
 }
 
-//Right now only one property is getting filtered out 'id' but leaving this method here as more properties may be added in future
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
