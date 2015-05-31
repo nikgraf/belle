@@ -17,20 +17,20 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
-    this._initState(properties);
-  }
-
-  componentWillReceiveProps(properties) {
-    this._initState(properties);
-    this._updateComponentValue();
-  }
-
-  _initState(properties) {
     this.state = {
       rating: Math.round(properties.defaultValue),
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     };
+  }
+
+  componentWillReceiveProps(properties) {
+    this.setState({
+      rating: Math.round(properties.defaultValue),
+      tempRating: undefined,
+      generalProperties: sanitizeProperties(properties)
+    });
+    this._updateComponentValue();
   }
 
   _updateComponentValue() {
