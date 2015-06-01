@@ -24,7 +24,6 @@ export default class Rating extends Component {
       rating: Math.round(properties.defaultValue),
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties),
-      active: false,
       focused: false
     };
   }
@@ -94,7 +93,7 @@ export default class Rating extends Component {
    * Sets active state to true.
    */
   _onMouseDown(event) {
-    this.setState({ active: true });
+    this.active = true;
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
@@ -103,8 +102,18 @@ export default class Rating extends Component {
   /**
    * Sets active state to true.
    */
+  _onMouseUp(event) {
+    this.active = false;
+    if (this.props.onMouseUp) {
+      this.props.onMouseUp(event);
+    }
+  }
+
+  /**
+   * Sets active state to true.
+   */
   _onTouchStart(event) {
-    this.setState({ active: true });
+    this.active = true;
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
@@ -130,6 +139,7 @@ export default class Rating extends Component {
    * When touch ends this callback will update component value.
    */
   _onTouchEnd(event) {
+    this.active = false;
     if(!this.props.disabled) {
       this._updateComponent();
     }
@@ -142,6 +152,7 @@ export default class Rating extends Component {
    * When touch is cancelled this callback will reset the component tp previous value.
    */
   _onTouchCancel(event) {
+    this.active = false;
     if(!this.props.disabled) {
       this._resetComponent();
     }
@@ -155,8 +166,7 @@ export default class Rating extends Component {
    */
   _onBlur(event) {
     this.setState({
-      focused: false,
-      active: false
+      focused: false
     });
     if(!this.props.disabled) {
       this._resetComponent();
@@ -170,7 +180,9 @@ export default class Rating extends Component {
    * On focus callback will enable focus styling on component when focused using tab.
    */
   _onFocus() {
-    this.setState({focused: true});
+    if(!this.active) {
+      this.setState({focused: true});
+    }
     this.forceUpdate();
     if (this.props.onFocus) {
       this.props.onFocus(event);
@@ -310,7 +322,7 @@ export default class Rating extends Component {
     let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
-    if (this.state.focused && !this.state.active && this.props.preventFocusStyleForTouchAndClick) {
+    if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
       ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
     }
 
@@ -319,6 +331,7 @@ export default class Rating extends Component {
                 className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
+                onMouseUp={ this._onMouseUp.bind(this) }
                 onMouseDown={ this._onMouseDown.bind(this) }
                 onClick={ this._onClick.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
@@ -449,6 +462,7 @@ function sanitizeProperties(properties) {
     'disabledStyle',
     'disabledHoverStyle',
     'tabIndex',
+    'onMouseUp',
     'onMouseDown',
     'onMouseMove',
     'onMouseLeave',
