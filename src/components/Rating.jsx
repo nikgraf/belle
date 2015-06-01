@@ -1,10 +1,13 @@
 "use strict";
 
+/* jslint browser: true */
+
 import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
 import style from '../style/rating.js'
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
+import config from '../config/rating';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -20,7 +23,9 @@ export default class Rating extends Component {
     this.state = {
       rating: Math.round(properties.defaultValue),
       tempRating: undefined,
-      generalProperties: sanitizeProperties(properties)
+      generalProperties: sanitizeProperties(properties),
+      active: false,
+      focused: false
     };
   }
 
@@ -65,7 +70,7 @@ export default class Rating extends Component {
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
-      this._changeComponent(e.pageX);
+      this._changeComponent(event.pageX);
     }
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
@@ -81,6 +86,27 @@ export default class Rating extends Component {
     }
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
+    }
+  }
+
+
+  /**
+   * Sets active state to true.
+   */
+  _onMouseDown(event) {
+    this.setState({ active: true });
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(event);
+    }
+  }
+
+  /**
+   * Sets active state to true.
+   */
+  _onTouchStart(event) {
+    this.setState({ active: true });
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
     }
   }
 
@@ -125,14 +151,29 @@ export default class Rating extends Component {
   }
 
   /**
-   * On blur callback will reset the component tp previous value.
+   * On blur callback will reset the component to previous value.
    */
   _onBlur(event) {
+    this.setState({
+      focused: false,
+      active: false
+    });
     if(!this.props.disabled) {
       this._resetComponent();
     }
     if (this.props.onBlur) {
       this.props.onBlur(event);
+    }
+  }
+
+  /**
+   * On focus callback will enable focus styling on component when focused using tab.
+   */
+  _onFocus() {
+    this.setState({focused: true});
+    this.forceUpdate();
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
     }
   }
 
@@ -266,20 +307,27 @@ export default class Rating extends Component {
     const width = this._getWidth();
     const ratingCalculatedStyle = extend({}, style.style, { width: width }, this.state.hoverStyle);
     const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
-    const ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
+    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+
+    if (this.state.focused && !this.state.active && this.props.preventFocusStyleForTouchAndClick) {
+      ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
+    }
 
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
                 className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
                 onMouseMove={ this._onMouseMove.bind(this) }
                 onMouseLeave={ this._onMouseLeave.bind(this) }
+                onMouseDown={ this._onMouseDown.bind(this) }
                 onClick={ this._onClick.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
+                onTouchStart={ this._onTouchStart.bind(this) }
                 onTouchMove={ this._onTouchMove.bind(this) }
                 onTouchEnd={ this._onTouchEnd.bind(this) }
                 onTouchCancel={ this._onTouchCancel.bind(this) }
                 onBlur={ this._onBlur.bind( this) }
+                onFocus={ this._onFocus.bind(this) }
                 tabIndex={ tabIndex }
                 aria-valuemax = {5}
                 aria-valuemin = {0}
@@ -308,6 +356,8 @@ Rating.propTypes = {
   focusStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
   disabledHoverStyle: React.PropTypes.object,
+  onMouseDown: React.PropTypes.func,
+  onMouseUp: React.PropTypes.func,
   onMouseEnter: React.PropTypes.func,
   onMouseMove: React.PropTypes.func,
   onMouseLeave: React.PropTypes.func,
@@ -328,7 +378,8 @@ Rating.defaultProps = {
   defaultValue: 0,
   disabled: false,
   tabIndex: 0,
-  ratingCharacter: '★'
+  ratingCharacter: '★',
+  preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
 
 Rating.displayName = 'Belle Rating';
@@ -341,7 +392,12 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
     content: "'" + properties.ratingCharacter + properties.ratingCharacter + properties.ratingCharacter +
               properties.ratingCharacter + properties.ratingCharacter + "'"
   };
-  const ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  let ratingFocusStyle;
+  if (properties.preventFocusStyleForTouchAndClick) {
+    ratingFocusStyle = { outline: 0 };
+  } else {
+    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  }
   const styles = [
     {
       id: ratingStyleId,
@@ -393,13 +449,16 @@ function sanitizeProperties(properties) {
     'disabledStyle',
     'disabledHoverStyle',
     'tabIndex',
+    'onMouseDown',
     'onMouseMove',
     'onMouseLeave',
+    'onTouchStart',
     'onTouchMove',
     'onTouchEnd',
     'onTouchCancel',
     'onBlur',
     'onClick',
-    'onKeyDown'
+    'onKeyDown',
+    'onFocus'
   ]);
 }

@@ -27,7 +27,7 @@ export default class Button extends Component {
       childProperties: sanitizeChildProperties(properties),
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false,
+      active: false
     };
     // The focused attribute is used to apply the one-time focus animation.
     // As it is reset after every render it can't be set inside state as this
