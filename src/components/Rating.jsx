@@ -94,6 +94,7 @@ export default class Rating extends Component {
    */
   _onMouseDown(event) {
     this.active = true;
+
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
@@ -104,6 +105,7 @@ export default class Rating extends Component {
    */
   _onMouseUp(event) {
     this.active = false;
+
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
@@ -143,9 +145,11 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this._updateComponent();
     }
+
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
+    React.findDOMNode(this.refs.wrapper).blur();
   }
 
   /**
@@ -196,9 +200,11 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this._updateComponent();
     }
+
     if (this.props.onClick) {
       this.props.onClick(event);
     }
+    React.findDOMNode(this.refs.wrapper).blur();
   }
 
   /**
