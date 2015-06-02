@@ -342,10 +342,11 @@ export default class Rating extends Component {
                 onBlur={ this._onBlur.bind( this) }
                 onFocus={ this._onFocus.bind(this) }
                 tabIndex={ tabIndex }
-                aria-valuemax = {5}
-                aria-valuemin = {0}
-                aria-valuenow = {this.state.rating}
-                aria-disabled = {this.props.disabled}
+                aria-label = { this.props['aria-label']}
+                aria-valuemax = { 5 }
+                aria-valuemin = { 0 }
+                aria-valuenow = { this.state.rating }
+                aria-disabled = { this.props.disabled }
                 {...this.state.generalProperties}>
                 <div style={ratingCalculatedStyle}
                   className={ this.ratingStyleId }>
@@ -363,6 +364,7 @@ Rating.propTypes = {
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
   ratingCharacter: React.PropTypes.string,
+  'aria-label': React.PropTypes.string,
   style: React.PropTypes.object,
   className: React.PropTypes.string,
   hoverStyle: React.PropTypes.object,
@@ -392,6 +394,7 @@ Rating.defaultProps = {
   disabled: false,
   tabIndex: 0,
   ratingCharacter: '★',
+  'aria-label': 'rating',
   preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
 
