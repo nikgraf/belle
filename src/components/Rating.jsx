@@ -255,7 +255,7 @@ export default class Rating extends Component {
    */
   _updateComponent() {
     this.setState({
-      rating: this.state.tempRating,
+      rating: this.state.tempRating > 0 ? this.state.tempRating : undefined,
       hoverStyle: undefined
     });
     this._updateComponentValue();
@@ -281,7 +281,7 @@ export default class Rating extends Component {
   _onArrowDownKeyDown() {
     this._highlight();
     let newRating = this.state.tempRating ? this.state.tempRating:this.state.rating;
-    newRating = newRating > 0 ? (newRating-1) : 0;
+    newRating = newRating > 2 ? (newRating-1) : undefined;
     this.setState({
       tempRating: newRating
     });
@@ -314,7 +314,7 @@ export default class Rating extends Component {
    * Calculate width of highlighted stars, the function uses this.state.tempRating if it exists else it uses this.state.rating.
    */
   _getWidth() {
-    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : this.state.rating;
+    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : (this.state.rating !== undefined)? this.state.rating: 0;
     return (currentRating * 20) + '%';
   }
 
@@ -350,7 +350,7 @@ export default class Rating extends Component {
                 tabIndex={ tabIndex }
                 aria-label = { this.props['aria-label']}
                 aria-valuemax = { 5 }
-                aria-valuemin = { 0 }
+                aria-valuemin = { 1 }
                 aria-valuenow = { this.state.rating }
                 aria-disabled = { this.props.disabled }
                 {...this.state.generalProperties}>
@@ -365,7 +365,7 @@ export default class Rating extends Component {
  * Props of Rating component
  */
 Rating.propTypes = {
-  defaultValue: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
+  defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
   disabled: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
@@ -396,7 +396,6 @@ Rating.propTypes = {
  * Setting default prop values.
  */
 Rating.defaultProps = {
-  defaultValue: 0,
   disabled: false,
   tabIndex: 0,
   ratingCharacter: '★',
