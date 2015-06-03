@@ -20,16 +20,50 @@ export default class RatingDocumentation extends Component {
       <table>
         <tr>
           <td style={ propertyNameStyle }>
+            valueLink
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Value Reference</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Behaves like the valueLink poperty of a native input-tag.
+              ValueLink allows to enable two-way data binding between a state property and the value in
+              the user interface.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
             defaultValue
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
-              <i>Integer(0-5)</i>
+              <i>Integer (1-5)</i>
               <br />
-              optional (default: 0)
+              optional
             </p>
             <p>
-              Initial value for rating component.
+              Behaves like the defaultValue poperty of a native input-tag.
+              The rating can be manipulated through the user interface.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            value
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Integer (1-5)</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Behaves like the value poperty of a native input-tag.
+              The rating can <b>not</b> be manipulated through the user interface.
             </p>
           </td>
         </tr>
