@@ -100,13 +100,31 @@ export default class RatingDocumentation extends Component {
       <span style={ {color: 'grey'} }> tabIndex, style, className, hoverStyle, focusStyle, disabledStyle, disabledHoverStyle, onMouseDown, onMouseUp, onMouseEnter, onMouseMove, onMouseLeave, onTouchStart, onTouchMove, onTouchEnd, onTouchCancel, onFocus, onBlur, onClick, onKeyDown, …</span>
       </p>
 
+      <h3>Methods</h3>
+
+      <table>
+        <tr>
+          <td style={ propertyNameStyle }>
+            resetRating
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              Method can be called to reset rating to undefined.
+            </p>
+          </td>
+        </tr>
+      </table>
+
       <h3>More Examples</h3>
 
       <Rating defaultValue={4} disabled></Rating>
       <Code value= { advanceCodeExample1 } style={ {marginTop: 40} } />
       <Rating defaultValue={4} ratingCharacter={'✪'}></Rating>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 40} } />
-
+      <Rating ref="rating" defaultValue={4}></Rating>
+      <a onClick={ function(){this.refs.rating.resetRating()}.bind(this) }
+         style={ {marginLeft: '20px', position: 'relative', top: '-20px', textDecoration: 'underline'} }>Reset</a>
+      <Code value= { advanceCodeExample3 } style={ {marginTop: 40} } />
 </Card>;
   }
 }
@@ -116,6 +134,8 @@ const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
 const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
 
 const advanceCodeExample2 = `<Rating defaultValue={4} ratingCharacter={'✪'}></Rating>`;
+
+const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>\n<a onClick={ function(){this.refs.rating.resetRating()}.bind(this) }>Reset</a>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
