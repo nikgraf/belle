@@ -37,9 +37,9 @@ export default class Rating extends Component {
     this._updateComponentValue();
   }
 
-  _updateComponentValue() {
+  _updateComponentValue(ratingValue) {
     const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = this.state.rating;
+    wrapperNode.value = ratingValue;
   }
 
   /**
@@ -50,6 +50,13 @@ export default class Rating extends Component {
     this.ratingStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
+  }
+
+  resetRating() {
+    this.setState({
+      rating: undefined,
+      tempRating: undefined
+    });
   }
 
   componentDidMount() {
@@ -254,11 +261,12 @@ export default class Rating extends Component {
    * The function will update rating when component is clicked, touch ends, enter or space key are hit.
    */
   _updateComponent() {
+    var ratingValue = this.state.tempRating > 0 ? this.state.tempRating : undefined;
     this.setState({
-      rating: this.state.tempRating > 0 ? this.state.tempRating : undefined,
+      rating: ratingValue,
       hoverStyle: undefined
     });
-    this._updateComponentValue();
+    this._updateComponentValue(ratingValue);
     if (this.props.onChange) {
       const wrapperNode = React.findDOMNode(this);
       this.props.onChange({target: wrapperNode});
