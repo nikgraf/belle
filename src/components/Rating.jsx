@@ -20,8 +20,9 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
+    const rating = this._getRatingFromProps(properties);
     this.state = {
-      rating: Math.round(properties.defaultValue),
+      rating: rating,
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties),
       focused: false
@@ -29,21 +30,46 @@ export default class Rating extends Component {
   }
 
   componentWillReceiveProps(properties) {
+    const rating = this._getRatingFromProps(properties);
     this.setState({
-      rating: Math.round(properties.defaultValue),
+      rating: rating,
       tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     });
-    this._updateComponentValue();
-  }
-
-  _updateComponentValue() {
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = this.state.rating;
+    this._updateComponentValue(rating);
   }
 
   /**
-   * Function to apply pseudo classes to rating and rating wrapper divs.
+   * get value of rating from props
+   */
+  _getRatingFromProps(properties) {
+    let rating;
+    if(properties.valueLink) {
+      rating = Math.round(properties.value);
+    }
+    else if(properties.value) {
+      rating = Math.round(properties.value);
+    }
+    else if(properties.defaultValue) {
+      rating = Math.round(properties.defaultValue);
+    }
+    return rating;
+  }
+
+  componentDidMount() {
+    this._updateComponentValue(this.state.rating);
+  }
+
+  /**
+   * Sets new value to component node
+   */
+  _updateComponentValue(ratingValue) {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = ratingValue;
+  }
+
+  /**
+   * apply pseudo classes to rating and rating wrapper divs
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
@@ -52,11 +78,18 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
   }
 
-  componentDidMount() {
-    this._updateComponentValue();
-  }
   /**
-   * Function to remove pseudo classes from the DOM once component is removed.
+   * api method for use to be able to reset rating to undefined
+   */
+  resetRating() {
+    this.setState({
+      rating: undefined,
+      tempRating: undefined
+    });
+  }
+
+  /**
+   * removes pseudo classes from the DOM once component is removed
    */
   componentWillUnmount() {
     removeStyle(this.ratingStyleId);
@@ -64,8 +97,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * When user mouse hovers the component this callback will highlight the component and set the tempRating
-   * in the component state depending on mouse position.
+   * in case of mouse hover highlights the component and set the tempRating depending on mouse position
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
@@ -77,7 +109,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * When mouse leaves the component this callback will reset the component to its previous state.
+   * reset component as mouse leaves
    */
   _onMouseLeave(event) {
     if(!this.props.disabled) {
@@ -94,16 +126,18 @@ export default class Rating extends Component {
    */
   _onMouseDown(event) {
     this.active = true;
+
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
   }
 
   /**
-   * Sets active state to true.
+   * Sets active state to false.
    */
   _onMouseUp(event) {
     this.active = false;
+
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
@@ -120,8 +154,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * On a touch device, when user touches the component this function will highlight the component and set the tempRating
-   * in the component state depending on touch position.
+   * On a touch device, in case of touch move highlights the component and set the tempRating depending on mouse position
    */
   _onTouchMove(event) {
     if(!this.props.disabled) {
@@ -136,20 +169,21 @@ export default class Rating extends Component {
   }
 
   /**
-   * When touch ends this callback will update component value.
+   * update the component when touch ends
    */
   _onTouchEnd(event) {
     this.active = false;
     if(!this.props.disabled) {
       this._updateComponent();
     }
+
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
   }
 
   /**
-   * When touch is cancelled this callback will reset the component tp previous value.
+   * reset the component in case of touch cancel
    */
   _onTouchCancel(event) {
     this.active = false;
@@ -162,14 +196,15 @@ export default class Rating extends Component {
   }
 
   /**
-   * On blur callback will reset the component to previous value.
+   * reset the component on blur
    */
   _onBlur(event) {
-    this.setState({
-      focused: false
-    });
     if(!this.props.disabled) {
-      this._resetComponent();
+      this.setState({
+        focused: false,
+        tempRating: undefined,
+        hoverStyle: undefined
+      });
     }
     if (this.props.onBlur) {
       this.props.onBlur(event);
@@ -177,25 +212,25 @@ export default class Rating extends Component {
   }
 
   /**
-   * On focus callback will enable focus styling on component when focused using tab.
+   * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
     if(!this.active) {
       this.setState({focused: true});
     }
-    this.forceUpdate();
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
   }
 
   /**
-   * When user clicks the component this callback will update component value to that selected by user.
+   * update component when clicked
    */
   _onClick(event) {
     if(!this.props.disabled) {
       this._updateComponent();
     }
+
     if (this.props.onClick) {
       this.props.onClick(event);
     }
@@ -207,7 +242,7 @@ export default class Rating extends Component {
    * In case the Rating Component is in focus Space, ArrowUp will result in increasing the rating and arrow down will result in decreasing the rating.
    * Enter/ space will result in updating the value of the component and calling onChange event.
    *
-   * Pressing Escape will reset the rating to original value.
+   * Pressing Escape will reset the rating to last value.
    */
   _onKeyDown(event) {
     if(!this.props.disabled) {
@@ -231,28 +266,33 @@ export default class Rating extends Component {
   }
 
   /**
-   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
+   * calculate tempRating and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
    */
   _changeComponent(pageX) {
-    this._highlight();
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
     const newRating = Math.round(mouseMoved * 5 / wrapperWidth + .4);
-    this.setState({
-      tempRating: newRating
-    });
+    this._showTempRating(newRating);
   }
 
   /**
-   * The function will update rating when component is clicked, touch ends, enter or space key are hit.
+   * update component component is clicked, touch ends, enter or space key are hit.
    */
   _updateComponent() {
+    var ratingValue = this.state.tempRating > 0 ? this.state.tempRating : undefined;
+    if(this.props.valueLink) {
+      this.props.valueLink.requestChange(ratingValue);
+    }
+    else if(!this.props.value && this.props.defaultValue) {
+      this.setState({
+        rating: ratingValue
+      });
+    }
     this.setState({
-      rating: this.state.tempRating,
       hoverStyle: undefined
     });
-    this._updateComponentValue();
+    this._updateComponentValue(ratingValue);
     if (this.props.onChange) {
       const wrapperNode = React.findDOMNode(this);
       this.props.onChange({target: wrapperNode});
@@ -261,6 +301,7 @@ export default class Rating extends Component {
 
   /**
    * Function that will be called to reset the component rating.
+   * This method looks like duplicate of resetRating above but that is an api method, this method is internal to the component
    */
   _resetComponent() {
     this.setState({
@@ -270,45 +311,39 @@ export default class Rating extends Component {
   }
 
   /**
-   * Function will be called when ArrowUp key is hit on a focused component. I will decrease the rating by 1.
+   * decrease rating by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
-    this._highlight();
     let newRating = this.state.tempRating ? this.state.tempRating:this.state.rating;
-    newRating = newRating > 0 ? (newRating-1) : 0;
-    this.setState({
-      tempRating: newRating
-    });
+    newRating = newRating > 2 ? (newRating-1) : undefined;
+    this._showTempRating(newRating);
   }
 
   /**
-   * Function will be called when ArrowDown key is hit on a focused component. I will increase the rating by 1.
+   * increase rating by 1 when arrow up key is pressed
    */
   _onArrowUpKeyDown() {
-    this._highlight();
     let newRating = this.state.tempRating ? this.state.tempRating : this.state.rating;
     newRating = newRating < 5 ? (newRating+1) : 5;
+    this._showTempRating(newRating);
+  }
+
+  /**
+   * apply highlighting to rating component
+   */
+  _showTempRating(tempRating) {
     this.setState({
-      tempRating: newRating
+      hoverStyle: style.hoverStyle,
+      tempRating: tempRating
     });
   }
 
   /**
-   * Function will apply highlighting to rating component.
-   */
-  _highlight() {
-    if(!this.state.hoverStyle) {
-      this.setState({
-        hoverStyle: style.hoverStyle
-      });
-    }
-  }
-
-  /**
-   * Calculate width of highlighted stars, the function uses this.state.tempRating if it exists else it uses this.state.rating.
+   * Calculate width of highlighted stars, the function uses
+   * this.state.tempRating if it exists else it uses this.state.rating.
    */
   _getWidth() {
-    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : this.state.rating;
+    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : (this.state.rating !== undefined)? this.state.rating: 0;
     return (currentRating * 20) + '%';
   }
 
@@ -342,12 +377,13 @@ export default class Rating extends Component {
                 onBlur={ this._onBlur.bind( this) }
                 onFocus={ this._onFocus.bind(this) }
                 tabIndex={ tabIndex }
-                aria-valuemax = {5}
-                aria-valuemin = {0}
-                aria-valuenow = {this.state.rating}
-                aria-disabled = {this.props.disabled}
+                aria-label = { this.props['aria-label'] }
+                aria-valuemax = { 5 }
+                aria-valuemin = { 1 }
+                aria-valuenow = { this.state.rating }
+                aria-disabled = { this.props.disabled }
                 {...this.state.generalProperties}>
-                <div style={ratingCalculatedStyle}
+                <div style={ ratingCalculatedStyle }
                   className={ this.ratingStyleId }>
                 </div>
               </div>;
@@ -358,11 +394,18 @@ export default class Rating extends Component {
  * Props of Rating component
  */
 Rating.propTypes = {
-  defaultValue: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
+  defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+  value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+    requestChange: React.PropTypes.func.isRequired
+  }),
   disabled: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
   ratingCharacter: React.PropTypes.string,
+  preventFocusStyleForTouchAndClick: React.PropTypes.bool,
+  'aria-label': React.PropTypes.string,
   style: React.PropTypes.object,
   className: React.PropTypes.string,
   hoverStyle: React.PropTypes.object,
@@ -388,10 +431,10 @@ Rating.propTypes = {
  * Setting default prop values.
  */
 Rating.defaultProps = {
-  defaultValue: 0,
   disabled: false,
   tabIndex: 0,
   ratingCharacter: '★',
+  'aria-label': 'rating',
   preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
 
@@ -452,6 +495,8 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
 function sanitizeProperties(properties) {
   return omit(properties, [
     'defaultValue',
+    'value',
+    'valueLink',
     'disabled',
     'onChange',
     'ratingCharacter',
@@ -473,6 +518,7 @@ function sanitizeProperties(properties) {
     'onBlur',
     'onClick',
     'onKeyDown',
-    'onFocus'
-  ]);
+    'onFocus',
+    'preventFocusStyleForTouchAndClick'
+]);
 }
