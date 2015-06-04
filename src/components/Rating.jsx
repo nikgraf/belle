@@ -180,7 +180,6 @@ export default class Rating extends Component {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
-    React.findDOMNode(this.refs.wrapper).blur();
   }
 
   /**
@@ -194,7 +193,6 @@ export default class Rating extends Component {
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
-    React.findDOMNode(this.refs.wrapper).blur();
   }
 
   /**
@@ -236,7 +234,6 @@ export default class Rating extends Component {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
-    React.findDOMNode(this.refs.wrapper).blur();
   }
 
   /**
