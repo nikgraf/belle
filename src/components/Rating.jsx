@@ -21,6 +21,8 @@ export default class Rating extends Component {
   constructor(properties) {
     super(properties);
 
+    this.active = false;
+
     let value;
 
     if (this.props.valueLink) {
@@ -113,7 +115,10 @@ export default class Rating extends Component {
    * Sets active state to true.
    */
   _onMouseDown(event) {
-    this.active = true;
+    if(!this.props.disabled) {
+      this.active = true;
+      this.forceUpdate();
+    }
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
@@ -135,7 +140,11 @@ export default class Rating extends Component {
    * Sets active state to true.
    */
   _onTouchStart(event) {
-    this.active = true;
+    if(!this.props.disabled) {
+      this.active = true;
+      this.forceUpdate();
+    }
+
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
@@ -203,9 +212,10 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.active) {
+    if(!this.active & !this.props.disabled) {
       this.setState({focused: true});
     }
+
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
@@ -342,42 +352,61 @@ export default class Rating extends Component {
    * Function to render component.
    */
   render () {
-    const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.style, { width: width }, this.state.hoverStyle);
-    const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
-    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
-    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+    let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
+    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
+
+    if (this.props.disabled) {
+      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
+    }
 
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
       ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
     }
 
-    return <div ref="wrapper"
-                style={ ratingWrapperCalculatedStyle }
-                className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-                onMouseMove={ this._onMouseMove.bind(this) }
-                onMouseLeave={ this._onMouseLeave.bind(this) }
-                onMouseUp={ this._onMouseUp.bind(this) }
-                onMouseDown={ this._onMouseDown.bind(this) }
-                onClick={ this._onClick.bind(this) }
-                onKeyDown={ this._onKeyDown.bind(this) }
-                onTouchStart={ this._onTouchStart.bind(this) }
-                onTouchMove={ this._onTouchMove.bind(this) }
-                onTouchEnd={ this._onTouchEnd.bind(this) }
-                onTouchCancel={ this._onTouchCancel.bind(this) }
-                onBlur={ this._onBlur.bind( this) }
-                onFocus={ this._onFocus.bind(this) }
-                tabIndex={ tabIndex }
-                aria-label = { this.props['aria-label'] }
-                aria-valuemax = { 5 }
-                aria-valuemin = { 1 }
-                aria-valuenow = { this.state.value }
-                aria-disabled = { this.props.disabled }
-                {...this.state.generalProperties}>
-                <div style={ ratingCalculatedStyle }
-                  className={ this.ratingStyleId }>
-                </div>
-              </div>;
+    if (this.active) {
+      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
+    }
+
+    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+
+    return (
+      <div ref="wrapper"
+           style={ ratingWrapperCalculatedStyle }
+           className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
+           onMouseMove={ this._onMouseMove.bind(this) }
+           onMouseLeave={ this._onMouseLeave.bind(this) }
+           onMouseUp={ this._onMouseUp.bind(this) }
+           onMouseDown={ this._onMouseDown.bind(this) }
+           onClick={ this._onClick.bind(this) }
+           onKeyDown={ this._onKeyDown.bind(this) }
+           onTouchStart={ this._onTouchStart.bind(this) }
+           onTouchMove={ this._onTouchMove.bind(this) }
+           onTouchEnd={ this._onTouchEnd.bind(this) }
+           onTouchCancel={ this._onTouchCancel.bind(this) }
+           onBlur={ this._onBlur.bind(this) }
+           onFocus={ this._onFocus.bind(this) }
+           tabIndex={ tabIndex }
+           aria-label = { this.props['aria-label'] }
+           aria-valuemax = { 5 }
+           aria-valuemin = { 1 }
+           aria-valuenow = { this.state.value }
+           aria-disabled = { this.props.disabled }
+           {...this.state.generalProperties}>
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      <div style={ ratingCalculatedStyle }
+        className={ this.ratingStyleId }>
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+      </div>
+    </div>
+    );
   }
 }
 
@@ -435,10 +464,6 @@ Rating.displayName = 'Belle Rating';
  * Function to create pseudo classes for styles.
  */
 function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties) {
-  const ratingStyleBefore = {
-    content: "'" + properties.ratingCharacter + properties.ratingCharacter + properties.ratingCharacter +
-              properties.ratingCharacter + properties.ratingCharacter + "'"
-  };
   let ratingFocusStyle;
   if (properties.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
@@ -446,16 +471,6 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
     ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
   }
   const styles = [
-    {
-      id: ratingStyleId,
-      style: ratingStyleBefore,
-      pseudoClass: ':before'
-    },
-    {
-      id: ratingWrapperStyleId,
-      style: ratingStyleBefore,
-      pseudoClass: ':before'
-    },
     {
       id: ratingWrapperStyleId,
       style: ratingFocusStyle,
