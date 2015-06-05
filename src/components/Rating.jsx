@@ -326,8 +326,14 @@ export default class Rating extends Component {
    * this.state.focusedValue if it exists else it uses this.state.value.
    */
   _getWidth() {
-    var currentRating = (this.state.focusedValue !== undefined)?this.state.focusedValue : (this.state.value !== undefined)? this.state.value: 0;
-    return (currentRating * 20) + '%';
+    let value;
+
+    if (this.state.focusedValue) {
+      value = this.state.focusedValue;
+    } else {
+      value = (this.state.value) ? this.state.value : 0;
+    }
+    return (value * 20) + '%';
   }
 
   /**
