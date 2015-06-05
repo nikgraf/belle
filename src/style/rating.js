@@ -9,12 +9,33 @@ var ratingStyle = {
     top: -1,
     left: 0,
     overflow: 'hidden',
-    textShadow: '0px 1px 0px #DCB000'
+    textShadow: '0px 1px 0px #DCB000',
+    cursor: 'pointer'
   },
 
   wrapperStyle: {
     position: 'relative',
-    display: 'inline-block'
+    display: 'inline-block',
+    cursor: 'pointer',
+
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
   },
 
   backgroundStyle: {
@@ -29,12 +50,12 @@ var ratingStyle = {
 
   disabledStyle: {
     cursor: 'not-allowed',
-    opacity: 0.6
+    color: '#FFE375',
+    textShadow: '0px 1px 0px #F3CE3C'
   },
 
   hoverStyle: {
-    color: '#FFDA46',
-    cursor: 'pointer'
+    color: '#FFDA46'
   },
 
   focusStyle: {

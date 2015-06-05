@@ -21,6 +21,8 @@ export default class Rating extends Component {
   constructor(properties) {
     super(properties);
 
+    this.active = false;
+
     let value;
 
     if (this.props.valueLink) {
@@ -113,8 +115,10 @@ export default class Rating extends Component {
    * Sets active state to true.
    */
   _onMouseDown(event) {
-    this.active = true;
-    this.forceUpdate();
+    if(!this.props.disabled) {
+      this.active = true;
+      this.forceUpdate();
+    }
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
@@ -136,8 +140,10 @@ export default class Rating extends Component {
    * Sets active state to true.
    */
   _onTouchStart(event) {
-    this.active = true;
-    this.forceUpdate();
+    if(!this.props.disabled) {
+      this.active = true;
+      this.forceUpdate();
+    }
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -206,9 +212,10 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.active) {
+    if(!this.active & !this.props.disabled) {
       this.setState({focused: true});
     }
+
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
@@ -348,8 +355,9 @@ export default class Rating extends Component {
     const backgroundStyle = extend({}, style.backgroundStyle, this.props.backgroundStyle);
     let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
     let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
+
     if (this.props.disabled) {
-      ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
+      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
     }
 
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
@@ -376,7 +384,7 @@ export default class Rating extends Component {
            onTouchMove={ this._onTouchMove.bind(this) }
            onTouchEnd={ this._onTouchEnd.bind(this) }
            onTouchCancel={ this._onTouchCancel.bind(this) }
-           onBlur={ this._onBlur.bind( this) }
+           onBlur={ this._onBlur.bind(this) }
            onFocus={ this._onFocus.bind(this) }
            tabIndex={ tabIndex }
            aria-label = { this.props['aria-label'] }
