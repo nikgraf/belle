@@ -52,11 +52,6 @@ export default class Rating extends Component {
       rating: rating,
       generalProperties: sanitizeProperties(properties)
     });
-    this._updateComponentValue(rating);
-  }
-
-  componentDidMount() {
-    this._updateComponentValue(this.state.rating);
   }
 
   /**
@@ -85,14 +80,6 @@ export default class Rating extends Component {
       rating: undefined,
       tempRating: undefined
     });
-  }
-
-  /**
-   * Sets new value to component node
-   */
-  _updateComponentValue(ratingValue) {
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = ratingValue;
   }
 
   /**
@@ -280,21 +267,18 @@ export default class Rating extends Component {
    */
   _updateComponent() {
     var ratingValue = this.state.tempRating > 0 ? this.state.tempRating : undefined;
-    if(this.props.valueLink) {
+
+    this.setState({
+      hoverStyle: undefined,
+      rating: ratingValue
+    });
+
+    if (this.props.valueLink) {
       this.props.valueLink.requestChange(ratingValue);
     }
-    else if(!this.props.value && this.props.defaultValue) {
-      this.setState({
-        rating: ratingValue
-      });
-    }
-    this.setState({
-      hoverStyle: undefined
-    });
-    this._updateComponentValue(ratingValue);
+
     if (this.props.onChange) {
-      const wrapperNode = React.findDOMNode(this);
-      this.props.onChange({target: wrapperNode});
+      this.props.onChange({target: { value: ratingValue }});
     }
   }
 
