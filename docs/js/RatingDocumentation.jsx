@@ -139,7 +139,7 @@ export default class RatingDocumentation extends Component {
       <table>
         <tr>
           <td style={ propertyNameStyle }>
-            resetRating
+            resetValue
           </td>
           <td style={ propertyDescriptionStyle }>
             <p style={ {marginTop: 0} }>
@@ -156,7 +156,7 @@ export default class RatingDocumentation extends Component {
       <Rating defaultValue={4} ratingCharacter={'✪'}></Rating>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 40} } />
       <Rating ref="rating" defaultValue={4}></Rating>
-      <a onClick={ function(){this.refs.rating.resetRating()}.bind(this) }
+      <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
          style={ {marginLeft: '20px', position: 'relative', top: '-20px', textDecoration: 'underline'} }>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 40} } />
 </Card>;
@@ -169,7 +169,7 @@ const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
 
 const advanceCodeExample2 = `<Rating defaultValue={4} ratingCharacter={'✪'}></Rating>`;
 
-const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>\n<a onClick={ function(){this.refs.rating.resetRating()}.bind(this) }>Reset</a>`;
+const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>\n<a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }>Reset</a>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',

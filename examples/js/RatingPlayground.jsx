@@ -19,8 +19,8 @@ export default React.createClass({
     this.setState({ ratingValue: 3 });
   },
 
-  _resetRating() {
-    this.refs.rating3.resetRating();
+  _resetValue() {
+    this.refs.rating3.resetValue();
   },
 
   render () {
@@ -58,7 +58,7 @@ export default React.createClass({
                   defaultValue={3}
                   onChange={ (event) => console.log(event.target.value) }
                   style={{color: 'gray'}} />
-          <Button onClick={ this._resetRating }>Reset Rating</Button>
+          <Button onClick={ this._resetValue }>Reset Rating</Button>
 
         </Card>
 
