@@ -46,6 +46,8 @@ export default class Rating extends Component {
       value = properties.valueLink.value;
     } else if (properties.value) {
       value = properties.value;
+    } else {
+      value = this.state.value;
     }
 
     this.setState({
