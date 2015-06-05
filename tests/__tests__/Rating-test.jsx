@@ -1,0 +1,76 @@
+"use strict";
+
+jest.dontMock('../lib/components/Rating');
+jest.dontMock('../lib/utils/inject-style');
+jest.dontMock('../lib/utils/union-class-names');
+
+import React from 'react/addons';
+const TestUtils = React.addons.TestUtils;
+
+const injectStyle = require('../lib/utils/inject-style');
+
+// Babel would move an import in front of the jest.dontMock. That's why require
+// is used instead of import.
+const Rating = require('../lib/components/Rating');
+
+describe('Rating', () => {
+
+  it('should be able to provide a valueLink', () => {
+    const valueLink = {
+      requestChange: () => {},
+      value: 1
+    };
+    const rating = TestUtils.renderIntoDocument(<Rating valueLink={ valueLink } />);
+
+    expect(rating.state.rating).toBe( 1 );
+  });
+
+  it('should be able to provide a value', () => {
+    const rating = TestUtils.renderIntoDocument(<Rating value={ 4 } />);
+    expect(rating.state.rating).toBe( 4 );
+
+  });
+
+  it('should be able to provide a defaultValue', () => {
+    const rating = TestUtils.renderIntoDocument(<Rating defaultValue={ 2 } />);
+    expect(rating.state.rating).toBe( 2 );
+  });
+
+  it('should to not provide any kind of value', () => {
+    const rating = TestUtils.renderIntoDocument(<Rating />);
+    expect(rating.state.rating).toBeUndefined();
+  });
+
+  describe('update the internal value', () => {
+
+    var rating;
+
+    beforeEach(() => {
+      rating = TestUtils.renderIntoDocument(
+        <Rating />
+      );
+    });
+
+    it('should be possible by updating the value property', () => {
+      rating.componentWillReceiveProps({ value: 2 });
+      expect(rating.state.rating).toBe( 2 );
+    });
+
+    it('should be possible by updating the valueLink property', () => {
+      const valueLink = {
+        requestChange: () => {},
+        value: 1
+      };
+
+      rating.componentWillReceiveProps({ valueLink: valueLink });
+      expect(rating.state.rating).toBe( 1 );
+    });
+
+    it('should not be possible by updating the defaultValue property', () => {
+      rating.componentWillReceiveProps({ defaultValue: 3 });
+      expect(rating.state.rating).toBeUndefined();
+    });
+
+  });
+
+});
