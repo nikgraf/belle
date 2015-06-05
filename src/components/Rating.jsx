@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
-import style from '../style/rating.js'
+import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
@@ -20,52 +20,40 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
-    const rating = this._getRatingFromProps(properties);
+
+    let value;
+
+    if (this.props.valueLink) {
+      value = this.props.valueLink.value;
+    } else if (this.props.value) {
+      value = this.props.value;
+    } else if (this.props.defaultValue) {
+      value = this.props.defaultValue;
+    }
+
     this.state = {
-      rating: rating,
-      tempRating: undefined,
+      value: value,
+      focusedValue: undefined,
       generalProperties: sanitizeProperties(properties),
       focused: false
     };
   }
 
   componentWillReceiveProps(properties) {
-    const rating = this._getRatingFromProps(properties);
+    let value;
+
+    if (properties.valueLink) {
+      value = properties.valueLink.value;
+    } else if (properties.value) {
+      value = properties.value;
+    } else {
+      value = this.state.value;
+    }
+
     this.setState({
-      rating: rating,
-      tempRating: undefined,
+      value: value,
       generalProperties: sanitizeProperties(properties)
     });
-    this._updateComponentValue(rating);
-  }
-
-  /**
-   * get value of rating from props
-   */
-  _getRatingFromProps(properties) {
-    let rating;
-    if(properties.valueLink) {
-      rating = Math.round(properties.value);
-    }
-    else if(properties.value) {
-      rating = Math.round(properties.value);
-    }
-    else if(properties.defaultValue) {
-      rating = Math.round(properties.defaultValue);
-    }
-    return rating;
-  }
-
-  componentDidMount() {
-    this._updateComponentValue(this.state.rating);
-  }
-
-  /**
-   * Sets new value to component node
-   */
-  _updateComponentValue(ratingValue) {
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = ratingValue;
   }
 
   /**
@@ -79,16 +67,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * api method for use to be able to reset rating to undefined
-   */
-  resetRating() {
-    this.setState({
-      rating: undefined,
-      tempRating: undefined
-    });
-  }
-
-  /**
    * removes pseudo classes from the DOM once component is removed
    */
   componentWillUnmount() {
@@ -97,7 +75,17 @@ export default class Rating extends Component {
   }
 
   /**
-   * in case of mouse hover highlights the component and set the tempRating depending on mouse position
+   * api method for use to be able to reset the value to undefined
+   */
+  resetValue() {
+    this.setState({
+      value: undefined,
+      focusedValue: undefined
+    });
+  }
+
+  /**
+   * in case of mouse hover highlights the component and set the focusedValue depending on mouse position
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
@@ -154,12 +142,12 @@ export default class Rating extends Component {
   }
 
   /**
-   * On a touch device, in case of touch move highlights the component and set the tempRating depending on mouse position
+   * On a touch device, in case of touch move highlights the component and set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
     if(!this.props.disabled) {
-      if (e.targetTouches.length == 1) {
-        const touch = e.targetTouches[0];
+      if (event.targetTouches.length === 1) {
+        const touch = event.targetTouches[0];
         this._changeComponent(touch.pageX);
       }
     }
@@ -202,7 +190,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         focused: false,
-        tempRating: undefined,
+        focusedValue: undefined,
         hoverStyle: undefined
       });
     }
@@ -239,10 +227,10 @@ export default class Rating extends Component {
   /**
    * Manages the keyboard events.
    *
-   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the rating and arrow down will result in decreasing the rating.
+   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the value and arrow down will result in decreasing the value.
    * Enter/ space will result in updating the value of the component and calling onChange event.
    *
-   * Pressing Escape will reset the rating to last value.
+   * Pressing Escape will reset the value to last value.
    */
   _onKeyDown(event) {
     if(!this.props.disabled) {
@@ -266,85 +254,88 @@ export default class Rating extends Component {
   }
 
   /**
-   * calculate tempRating and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
+   * calculate focusedValue and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
    */
   _changeComponent(pageX) {
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + .4);
-    this._showTempRating(newRating);
+    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + 0.4);
+    this._showFocusedValue(newRating);
   }
 
   /**
    * update component component is clicked, touch ends, enter or space key are hit.
    */
   _updateComponent() {
-    var ratingValue = this.state.tempRating > 0 ? this.state.tempRating : undefined;
-    if(this.props.valueLink) {
-      this.props.valueLink.requestChange(ratingValue);
-    }
-    else if(!this.props.value && this.props.defaultValue) {
-      this.setState({
-        rating: ratingValue
-      });
-    }
+    var value = this.state.focusedValue > 0 ? this.state.focusedValue : undefined;
+
     this.setState({
-      hoverStyle: undefined
+      hoverStyle: undefined,
+      value: value
     });
-    this._updateComponentValue(ratingValue);
+
+    if (this.props.valueLink) {
+      this.props.valueLink.requestChange(value);
+    }
+
     if (this.props.onChange) {
-      const wrapperNode = React.findDOMNode(this);
-      this.props.onChange({target: wrapperNode});
+      this.props.onChange({target: { value: value }});
     }
   }
 
   /**
-   * Function that will be called to reset the component rating.
-   * This method looks like duplicate of resetRating above but that is an api method, this method is internal to the component
+   * Function that will be called to reset the component value.
+   * This method looks like duplicate of resetValue above but that is an api method, this method is internal to the component
    */
   _resetComponent() {
     this.setState({
-      tempRating: undefined,
+      focusedValue: undefined,
       hoverStyle: undefined
     });
   }
 
   /**
-   * decrease rating by 1 when arrow down key is pressed
+   * decrease the value by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
-    let newRating = this.state.tempRating ? this.state.tempRating:this.state.rating;
-    newRating = newRating > 2 ? (newRating-1) : undefined;
-    this._showTempRating(newRating);
+    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
+    newValue = newValue > 2 ? (newValue - 1) : undefined;
+    this._showFocusedValue(newValue);
   }
 
   /**
-   * increase rating by 1 when arrow up key is pressed
+   * increase value by 1 when arrow up key is pressed
    */
   _onArrowUpKeyDown() {
-    let newRating = this.state.tempRating ? this.state.tempRating : this.state.rating;
-    newRating = newRating < 5 ? (newRating+1) : 5;
-    this._showTempRating(newRating);
+    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
+    newValue = newValue < 5 ? (newValue + 1) : 5;
+    this._showFocusedValue(newValue);
   }
 
   /**
-   * apply highlighting to rating component
+   * apply highlighting to value component
    */
-  _showTempRating(tempRating) {
+  _showFocusedValue(focusedValue) {
     this.setState({
       hoverStyle: style.hoverStyle,
-      tempRating: tempRating
+      focusedValue: focusedValue
     });
   }
 
   /**
    * Calculate width of highlighted stars, the function uses
-   * this.state.tempRating if it exists else it uses this.state.rating.
+   * this.state.focusedValue if it exists else it uses this.state.value.
    */
   _getWidth() {
-    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : (this.state.rating !== undefined)? this.state.rating: 0;
-    return (currentRating * 20) + '%';
+    let value;
+
+    if (this.state.focusedValue) {
+      value = this.state.focusedValue;
+    } else {
+      value = (this.state.value) ? this.state.value : 0;
+    }
+    return (value * 20) + '%';
   }
 
   /**
@@ -380,7 +371,7 @@ export default class Rating extends Component {
                 aria-label = { this.props['aria-label'] }
                 aria-valuemax = { 5 }
                 aria-valuemin = { 1 }
-                aria-valuenow = { this.state.rating }
+                aria-valuenow = { this.state.value }
                 aria-disabled = { this.props.disabled }
                 {...this.state.generalProperties}>
                 <div style={ ratingCalculatedStyle }
