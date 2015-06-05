@@ -60,14 +60,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * Sets new value to component node
-   */
-  _updateComponentValue(ratingValue) {
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = ratingValue;
-  }
-
-  /**
    * apply pseudo classes to rating and rating wrapper divs
    */
   componentWillMount() {
@@ -75,6 +67,14 @@ export default class Rating extends Component {
     this.ratingStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
+  }
+
+  /**
+   * removes pseudo classes from the DOM once component is removed
+   */
+  componentWillUnmount() {
+    removeStyle(this.ratingStyleId);
+    removeStyle(this.ratingWrapperStyleId);
   }
 
   /**
@@ -88,11 +88,11 @@ export default class Rating extends Component {
   }
 
   /**
-   * removes pseudo classes from the DOM once component is removed
+   * Sets new value to component node
    */
-  componentWillUnmount() {
-    removeStyle(this.ratingStyleId);
-    removeStyle(this.ratingWrapperStyleId);
+  _updateComponentValue(ratingValue) {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = ratingValue;
   }
 
   /**
@@ -271,7 +271,7 @@ export default class Rating extends Component {
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + .4);
+    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + 0.4);
     this._showTempRating(newRating);
   }
 
@@ -323,7 +323,7 @@ export default class Rating extends Component {
    */
   _onArrowUpKeyDown() {
     let newRating = this.state.tempRating ? this.state.tempRating : this.state.rating;
-    newRating = newRating < 5 ? (newRating+1) : 5;
+    newRating = newRating < 5 ? (newRating + 1) : 5;
     this._showTempRating(newRating);
   }
 
