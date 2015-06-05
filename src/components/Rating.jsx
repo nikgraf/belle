@@ -20,7 +20,17 @@ export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
-    const rating = this._getRatingFromProps(properties);
+
+    let rating;
+
+    if (this.props.valueLink) {
+      rating = this.props.valueLink.value;
+    } else if (this.props.value) {
+      rating = this.props.value;
+    } else if (this.props.defaultValue) {
+      rating = this.props.defaultValue;
+    }
+
     this.state = {
       rating: rating,
       tempRating: undefined,
@@ -30,30 +40,19 @@ export default class Rating extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    const rating = this._getRatingFromProps(properties);
+    let rating;
+
+    if (properties.valueLink) {
+      rating = properties.valueLink.value;
+    } else if (properties.value) {
+      rating = properties.value;
+    }
+
     this.setState({
       rating: rating,
-      tempRating: undefined,
       generalProperties: sanitizeProperties(properties)
     });
     this._updateComponentValue(rating);
-  }
-
-  /**
-   * get value of rating from props
-   */
-  _getRatingFromProps(properties) {
-    let rating;
-    if(properties.valueLink) {
-      rating = Math.round(properties.value);
-    }
-    else if(properties.value) {
-      rating = Math.round(properties.value);
-    }
-    else if(properties.defaultValue) {
-      rating = Math.round(properties.defaultValue);
-    }
-    return rating;
   }
 
   componentDidMount() {
