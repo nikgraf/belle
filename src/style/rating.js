@@ -4,6 +4,7 @@ var ratingStyle = {
 
   style: {
     fontSize: 32,
+    lineHeight: '32px',
     color: '#FFCC00',
     position: 'absolute',
     top: -1,
@@ -40,6 +41,7 @@ var ratingStyle = {
 
   backgroundStyle: {
     fontSize: 32,
+    lineHeight: '32px',
     color: '#e3e3e3',
     textShadow: '0px -1px 0px #D2D1D1'
   },
@@ -60,7 +62,8 @@ var ratingStyle = {
 
   focusStyle: {
     outline: 0,
-    boxShadow: '0 1px 0 0 #ffb400'
+    WebkitAnimation: 'belle-rating-focus 2s',
+    borderRadius: 2
   },
 
   activeStyle: {
