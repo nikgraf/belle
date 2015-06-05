@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
-import style from '../style/rating.js'
+import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
@@ -158,8 +158,8 @@ export default class Rating extends Component {
    */
   _onTouchMove(event) {
     if(!this.props.disabled) {
-      if (e.targetTouches.length == 1) {
-        const touch = e.targetTouches[0];
+      if (event.targetTouches.length === 1) {
+        const touch = event.targetTouches[0];
         this._changeComponent(touch.pageX);
       }
     }
