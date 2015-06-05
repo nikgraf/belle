@@ -7,12 +7,16 @@ export default React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
-  getInitialState: function() {
+  getInitialState() {
     return { ratingValue: 2 };
   },
 
-  _handleChange: function(newValue) {
+  _handleChange(newValue) {
     this.setState({ ratingValue: newValue });
+  },
+
+  _updateRatingToThree() {
+    this.setState({ ratingValue: 3 });
   },
 
   _resetRating() {
@@ -25,6 +29,8 @@ export default React.createClass({
         <h2>Rating</h2>
 
         <Card>
+
+          <Button onClick={ this._updateRatingToThree }>Update Rating to value 3</Button>
 
           <h3>ValueLink</h3>
           <Rating valueLink={ this.linkState('ratingValue') } />
