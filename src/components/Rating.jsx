@@ -114,6 +114,7 @@ export default class Rating extends Component {
    */
   _onMouseDown(event) {
     this.active = true;
+    this.forceUpdate();
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
@@ -136,6 +137,8 @@ export default class Rating extends Component {
    */
   _onTouchStart(event) {
     this.active = true;
+    this.forceUpdate();
+
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
@@ -342,17 +345,20 @@ export default class Rating extends Component {
    * Function to render component.
    */
   render () {
-    const ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
+    const backgroundStyle = extend({}, style.backgroundStyle, this.props.backgroundStyle);
+    let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
     let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
     if (this.props.disabled) {
-      ratingWrapperCalculatedStyle = extend(ratingWrapperCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
+      ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
     }
 
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
       ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
     }
 
-    const backgroundStyle = extend({}, style.backgroundStyle, this.props.backgroundStyle);
+    if (this.active) {
+      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
+    }
 
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
