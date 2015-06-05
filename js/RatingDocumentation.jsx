@@ -7,7 +7,7 @@ import Code from './Code';
 export default class RatingDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Rating</h2>
 
@@ -159,7 +159,7 @@ export default class RatingDocumentation extends Component {
       <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
          style={ {marginLeft: '20px', position: 'relative', top: '-20px', textDecoration: 'underline'} }>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 40} } />
-</Card>;
+    </div>;
   }
 }
 
