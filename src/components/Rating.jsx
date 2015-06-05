@@ -33,7 +33,7 @@ export default class Rating extends Component {
 
     this.state = {
       value: value,
-      tempRating: undefined,
+      focusedValue: undefined,
       generalProperties: sanitizeProperties(properties),
       focused: false
     };
@@ -78,12 +78,12 @@ export default class Rating extends Component {
   resetValue() {
     this.setState({
       value: undefined,
-      tempRating: undefined
+      focusedValue: undefined
     });
   }
 
   /**
-   * in case of mouse hover highlights the component and set the tempRating depending on mouse position
+   * in case of mouse hover highlights the component and set the focusedValue depending on mouse position
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
@@ -140,7 +140,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * On a touch device, in case of touch move highlights the component and set the tempRating depending on mouse position
+   * On a touch device, in case of touch move highlights the component and set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
     if(!this.props.disabled) {
@@ -188,7 +188,7 @@ export default class Rating extends Component {
     if(!this.props.disabled) {
       this.setState({
         focused: false,
-        tempRating: undefined,
+        focusedValue: undefined,
         hoverStyle: undefined
       });
     }
@@ -252,21 +252,21 @@ export default class Rating extends Component {
   }
 
   /**
-   * calculate tempRating and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
+   * calculate focusedValue and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
    */
   _changeComponent(pageX) {
     const wrapperNode = React.findDOMNode(this.refs.wrapper);
     const wrapperWidth = wrapperNode.getBoundingClientRect().width;
     const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
     const newRating = Math.round(mouseMoved * 5 / wrapperWidth + 0.4);
-    this._showTempRating(newRating);
+    this._showFocusedValue(newRating);
   }
 
   /**
    * update component component is clicked, touch ends, enter or space key are hit.
    */
   _updateComponent() {
-    var value = this.state.tempRating > 0 ? this.state.tempRating : undefined;
+    var value = this.state.focusedValue > 0 ? this.state.focusedValue : undefined;
 
     this.setState({
       hoverStyle: undefined,
@@ -288,7 +288,7 @@ export default class Rating extends Component {
    */
   _resetComponent() {
     this.setState({
-      tempRating: undefined,
+      focusedValue: undefined,
       hoverStyle: undefined
     });
   }
@@ -297,36 +297,36 @@ export default class Rating extends Component {
    * decrease the value by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
-    let newValue = this.state.tempRating ? this.state.tempRating : this.state.value;
+    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
     newValue = newValue > 2 ? (newValue - 1) : undefined;
-    this._showTempRating(newValue);
+    this._showFocusedValue(newValue);
   }
 
   /**
    * increase value by 1 when arrow up key is pressed
    */
   _onArrowUpKeyDown() {
-    let newValue = this.state.tempRating ? this.state.tempRating : this.state.value;
+    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
     newValue = newValue < 5 ? (newValue + 1) : 5;
-    this._showTempRating(newValue);
+    this._showFocusedValue(newValue);
   }
 
   /**
    * apply highlighting to value component
    */
-  _showTempRating(tempRating) {
+  _showFocusedValue(focusedValue) {
     this.setState({
       hoverStyle: style.hoverStyle,
-      tempRating: tempRating
+      focusedValue: focusedValue
     });
   }
 
   /**
    * Calculate width of highlighted stars, the function uses
-   * this.state.tempRating if it exists else it uses this.state.value.
+   * this.state.focusedValue if it exists else it uses this.state.value.
    */
   _getWidth() {
-    var currentRating = (this.state.tempRating !== undefined)?this.state.tempRating : (this.state.value !== undefined)? this.state.value: 0;
+    var currentRating = (this.state.focusedValue !== undefined)?this.state.focusedValue : (this.state.value !== undefined)? this.state.value: 0;
     return (currentRating * 20) + '%';
   }
 
