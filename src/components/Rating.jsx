@@ -352,7 +352,6 @@ export default class Rating extends Component {
    * Function to render component.
    */
   render () {
-    const backgroundStyle = extend({}, style.backgroundStyle, this.props.backgroundStyle);
     let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
     let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
 
@@ -393,13 +392,11 @@ export default class Rating extends Component {
            aria-valuenow = { this.state.value }
            aria-disabled = { this.props.disabled }
            {...this.state.generalProperties}>
-      <div style={ backgroundStyle }>
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-      </div>
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
+      { this.props.ratingCharacter }
       <div style={ ratingCalculatedStyle }
         className={ this.ratingStyleId }>
         { this.props.ratingCharacter }
@@ -515,7 +512,6 @@ function sanitizeProperties(properties) {
     'focusStyle',
     'disabledStyle',
     'disabledHoverStyle',
-    'backgroundStyle',
     'tabIndex',
     'onMouseUp',
     'onMouseDown',

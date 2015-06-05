@@ -18,6 +18,10 @@ var ratingStyle = {
     position: 'relative',
     display: 'inline-block',
     cursor: 'pointer',
+    fontSize: 32,
+    lineHeight: '32px',
+    color: '#e3e3e3',
+    textShadow: '0px -1px 0px #D2D1D1',
 
     /*
     To avoid any kind of flickering the user won't get feedback
@@ -39,23 +43,6 @@ var ratingStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  backgroundStyle: {
-    fontSize: 32,
-    lineHeight: '32px',
-    color: '#e3e3e3',
-    textShadow: '0px -1px 0px #D2D1D1'
-  },
-
-  activeBackgroundStyle: {
-    textShadow: 'none'
-  },
-
-  disabledStyle: {
-    cursor: 'not-allowed',
-    color: '#FFE375',
-    textShadow: '0px 1px 0px #F3CE3C'
-  },
-
   hoverStyle: {
     color: '#FFDA46'
   },
@@ -70,6 +57,18 @@ var ratingStyle = {
     textShadow: '0px -1px 0px #D6AB00',
     color: '#F3C200',
     top: 0
+  },
+
+  disabledStyle: {
+    cursor: 'not-allowed',
+    color: '#FFE375',
+    textShadow: '0px 1px 0px #F3CE3C'
+  },
+
+  disabledHoverStyle: {
+    cursor: 'not-allowed',
+    color: '#FFE375',
+    textShadow: '0px 1px 0px #F3CE3C'
   }
 
 };
