@@ -356,44 +356,46 @@ export default class Rating extends Component {
 
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
-    return <div ref="wrapper"
-                style={ ratingWrapperCalculatedStyle }
-                className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-                onMouseMove={ this._onMouseMove.bind(this) }
-                onMouseLeave={ this._onMouseLeave.bind(this) }
-                onMouseUp={ this._onMouseUp.bind(this) }
-                onMouseDown={ this._onMouseDown.bind(this) }
-                onClick={ this._onClick.bind(this) }
-                onKeyDown={ this._onKeyDown.bind(this) }
-                onTouchStart={ this._onTouchStart.bind(this) }
-                onTouchMove={ this._onTouchMove.bind(this) }
-                onTouchEnd={ this._onTouchEnd.bind(this) }
-                onTouchCancel={ this._onTouchCancel.bind(this) }
-                onBlur={ this._onBlur.bind( this) }
-                onFocus={ this._onFocus.bind(this) }
-                tabIndex={ tabIndex }
-                aria-label = { this.props['aria-label'] }
-                aria-valuemax = { 5 }
-                aria-valuemin = { 1 }
-                aria-valuenow = { this.state.value }
-                aria-disabled = { this.props.disabled }
-                {...this.state.generalProperties}>
-                <div style={ backgroundStyle }>
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                </div>
-                <div style={ ratingCalculatedStyle }
-                  className={ this.ratingStyleId }>
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                  { this.props.ratingCharacter }
-                </div>
-              </div>;
+    return (
+      <div ref="wrapper"
+           style={ ratingWrapperCalculatedStyle }
+           className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
+           onMouseMove={ this._onMouseMove.bind(this) }
+           onMouseLeave={ this._onMouseLeave.bind(this) }
+           onMouseUp={ this._onMouseUp.bind(this) }
+           onMouseDown={ this._onMouseDown.bind(this) }
+           onClick={ this._onClick.bind(this) }
+           onKeyDown={ this._onKeyDown.bind(this) }
+           onTouchStart={ this._onTouchStart.bind(this) }
+           onTouchMove={ this._onTouchMove.bind(this) }
+           onTouchEnd={ this._onTouchEnd.bind(this) }
+           onTouchCancel={ this._onTouchCancel.bind(this) }
+           onBlur={ this._onBlur.bind( this) }
+           onFocus={ this._onFocus.bind(this) }
+           tabIndex={ tabIndex }
+           aria-label = { this.props['aria-label'] }
+           aria-valuemax = { 5 }
+           aria-valuemin = { 1 }
+           aria-valuenow = { this.state.value }
+           aria-disabled = { this.props.disabled }
+           {...this.state.generalProperties}>
+      <div style={ backgroundStyle }>
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+      </div>
+      <div style={ ratingCalculatedStyle }
+        className={ this.ratingStyleId }>
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+        { this.props.ratingCharacter }
+      </div>
+    </div>
+    );
   }
 }
 
