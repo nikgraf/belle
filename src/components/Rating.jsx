@@ -342,15 +342,19 @@ export default class Rating extends Component {
    * Function to render component.
    */
   render () {
-    const width = this._getWidth();
-    const ratingCalculatedStyle = extend({}, style.style, { width: width }, this.state.hoverStyle);
-    const ratingWrapperStateStyle = this.props.disabled ? extend({}, style.disabledStyle, this.props.disabledStyle) : style.enabledStyle;
-    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, ratingWrapperStateStyle, this.props.style);
-    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+    const ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
+    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
+    if (this.props.disabled) {
+      ratingWrapperCalculatedStyle = extend(ratingWrapperCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
+    }
 
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
       ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
     }
+
+    const backgroundStyle = extend({}, style.backgroundStyle, this.props.backgroundStyle);
+
+    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
     return <div ref="wrapper"
                 style={ ratingWrapperCalculatedStyle }
@@ -374,8 +378,20 @@ export default class Rating extends Component {
                 aria-valuenow = { this.state.value }
                 aria-disabled = { this.props.disabled }
                 {...this.state.generalProperties}>
+                <div style={ backgroundStyle }>
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                </div>
                 <div style={ ratingCalculatedStyle }
                   className={ this.ratingStyleId }>
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
+                  { this.props.ratingCharacter }
                 </div>
               </div>;
   }
@@ -435,10 +451,6 @@ Rating.displayName = 'Belle Rating';
  * Function to create pseudo classes for styles.
  */
 function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties) {
-  const ratingStyleBefore = {
-    content: "'" + properties.ratingCharacter + properties.ratingCharacter + properties.ratingCharacter +
-              properties.ratingCharacter + properties.ratingCharacter + "'"
-  };
   let ratingFocusStyle;
   if (properties.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
@@ -446,16 +458,6 @@ function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties)
     ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
   }
   const styles = [
-    {
-      id: ratingStyleId,
-      style: ratingStyleBefore,
-      pseudoClass: ':before'
-    },
-    {
-      id: ratingWrapperStyleId,
-      style: ratingStyleBefore,
-      pseudoClass: ':before'
-    },
     {
       id: ratingWrapperStyleId,
       style: ratingFocusStyle,
@@ -497,6 +499,7 @@ function sanitizeProperties(properties) {
     'focusStyle',
     'disabledStyle',
     'disabledHoverStyle',
+    'backgroundStyle',
     'tabIndex',
     'onMouseUp',
     'onMouseDown',

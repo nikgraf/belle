@@ -3,8 +3,8 @@
 var ratingStyle = {
 
   style: {
+    fontSize: 32,
     color: '#ffb400',
-    width: '40%',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -12,11 +12,13 @@ var ratingStyle = {
   },
 
   wrapperStyle: {
-    fontSize: 32,
-    color: '#e3e3e3',
     position: 'relative',
-    overflow: 'hidden',
     display: 'inline-block'
+  },
+
+  backgroundStyle: {
+    fontSize: 32,
+    color: '#e3e3e3'
   },
 
   disabledStyle: {
@@ -24,12 +26,9 @@ var ratingStyle = {
     opacity: 0.4
   },
 
-  enabledStyle: {
-    cursor: 'pointer'
-  },
-
   hoverStyle: {
-    color: '#FFCD53'
+    color: '#FFCD53',
+    cursor: 'pointer'
   },
 
   focusStyle: {
