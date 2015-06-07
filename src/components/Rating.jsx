@@ -280,13 +280,20 @@ export default class Rating extends Component {
   _updateComponent() {
     var value = this.state.focusedValue > 0 ? this.state.focusedValue : undefined;
 
-    this.setState({
-      hoverStyle: undefined,
-      value: value
-    });
-
     if (this.props.valueLink) {
       this.props.valueLink.requestChange(value);
+      this.setState({
+        hoverStyle: undefined
+      });
+    } else if (this.props.value) {
+      this.setState({
+        hoverStyle: undefined
+      });
+    } else {
+      this.setState({
+        hoverStyle: undefined,
+        value: value
+      });
     }
 
     if (this.props.onChange) {

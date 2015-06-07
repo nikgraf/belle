@@ -28,7 +28,6 @@ describe('Rating', () => {
   it('should be able to provide a value', () => {
     const rating = TestUtils.renderIntoDocument(<Rating value={ 4 } />);
     expect(rating.state.value).toBe( 4 );
-
   });
 
   it('should be able to provide a defaultValue', () => {
@@ -39,6 +38,13 @@ describe('Rating', () => {
   it('should to not provide any kind of value', () => {
     const rating = TestUtils.renderIntoDocument(<Rating />);
     expect(rating.state.value).toBeUndefined();
+  });
+
+  it('should not be able to change value via the user interface if a value property is defined', () => {
+    const rating = TestUtils.renderIntoDocument(<Rating value={ 4 } />);
+    rating.setState({ focusedValue: 3 });
+    rating._updateComponent();
+    expect(rating.state.value).toBe( 4 );
   });
 
   describe('update the internal value', () => {
