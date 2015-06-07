@@ -35,11 +35,18 @@ export default React.createClass({
           <h3>ValueLink</h3>
           <Rating valueLink={ this.linkState('ratingValue') } />
 
-          <h3>Value</h3>
+          <h3>Value with update function onChange</h3>
           <Rating value={ this.state.ratingValue }
                   onChange={ (event) => {
                       console.log(event.target.value);
                       this._handleChange(event.target.value);
+                    }
+                  } />
+
+          <h3>Value</h3>
+          <Rating value={ this.state.ratingValue }
+                  onChange={ (event) => {
+                      console.log(event.target.value);
                     }
                   } />
 
