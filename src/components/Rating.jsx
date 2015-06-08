@@ -211,7 +211,7 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.active & !this.props.disabled) {
+    if(!this.active && !this.props.disabled) {
       this.setState({focused: true});
     }
 
@@ -252,7 +252,7 @@ export default class Rating extends Component {
         this._onArrowUpKeyDown();
       } else if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        this._updateComponent();
+        this._onEnterSpaceKeyDown();
       } else if (event.key === 'Escape') {
         event.preventDefault();
         this._resetComponent();
@@ -282,14 +282,17 @@ export default class Rating extends Component {
     if (this.props.valueLink) {
       this.props.valueLink.requestChange(value);
       this.setState({
+        focusedValue: undefined,
         hoverStyle: undefined
       });
     } else if (this.props.value) {
       this.setState({
+        focusedValue: undefined,
         hoverStyle: undefined
       });
     } else {
       this.setState({
+        focusedValue: undefined,
         hoverStyle: undefined,
         value: value
       });
@@ -315,8 +318,8 @@ export default class Rating extends Component {
    * decrease the value by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
-    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
-    newValue = newValue > 2 ? (newValue - 1) : undefined;
+    let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
+    newValue = newValue > 0 ? (newValue - 1) : 0;
     this._showFocusedValue(newValue);
   }
 
@@ -324,9 +327,24 @@ export default class Rating extends Component {
    * increase value by 1 when arrow up key is pressed
    */
   _onArrowUpKeyDown() {
-    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
-    newValue = newValue < 5 ? (newValue + 1) : 5;
+    let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
+    newValue = !newValue ? 1 : (newValue < 5) ? (newValue + 1) : 5;
     this._showFocusedValue(newValue);
+  }
+
+  _onEnterSpaceKeyDown() {
+    let newValue;
+    if(this.state.focusedValue !== undefined) {
+      if(this.state.focusedValue === 0) {
+        newValue = undefined;
+      }
+      else {
+        newValue = this.state.focusedValue;
+      }
+    }else {
+      newValue = this.state.value;
+    }
+    this._updateComponent(newValue);
   }
 
   /**
@@ -341,7 +359,7 @@ export default class Rating extends Component {
 
   _getCurrentValue() {
     let value;
-    if (this.state.focusedValue) {
+    if (this.state.focusedValue !== undefined) {
       value = this.state.focusedValue;
     } else {
       value = (this.state.value) ? this.state.value : 0;

@@ -10,14 +10,14 @@ var ratingStyle = {
 
   defaultStyle: {
     color: '#e3e3e3',
-    textShadow: '0px -1px 0px #D2D1D1'
+    textShadow: '0px 1px 0px #D2D1D1'
   },
 
   //TODO: we might prefer a different shade of gray for disabled default stars
   disabledDefaultStyle: {
     cursor: 'not-allowed',
     color: '#e3e3e3',
-    textShadow: '0px -1px 0px #D2D1D1'
+    textShadow: '0px 1px 0px #D2D1D1'
   },
 
   highlightedStyle: {
