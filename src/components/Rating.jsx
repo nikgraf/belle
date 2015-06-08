@@ -86,12 +86,10 @@ export default class Rating extends Component {
     });
   }
 
-  /**
-   * in case of mouse hover highlights the component and set the focusedValue depending on mouse position
-   */
-  _onMouseMove(event) {
+  _onMouseEnter(event) {
     if(!this.props.disabled) {
-      this._changeComponent(event.pageX);
+      const value = Number(event.target.getAttribute('value'));
+      this._showFocusedValue(value);
     }
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
@@ -226,7 +224,8 @@ export default class Rating extends Component {
    */
   _onClick(event) {
     if(!this.props.disabled) {
-      this._updateComponent();
+      const value = Number(event.target.getAttribute('value'));
+      this._updateComponent(value);
     }
 
     if (this.props.onClick) {
@@ -263,23 +262,22 @@ export default class Rating extends Component {
     }
   }
 
+  //todo: function to be removed ultimately
   /**
    * calculate focusedValue and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
    */
-  _changeComponent(pageX) {
-    const wrapperNode = React.findDOMNode(this.refs.wrapper);
-    const wrapperWidth = wrapperNode.getBoundingClientRect().width;
-    const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + 0.4);
+  _changeComponent(value) {
+  const wrapperNode = React.findDOMNode(this.refs.wrapper);
+  const wrapperWidth = wrapperNode.getBoundingClientRect().width;
+  const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
+    const newRating = value;
     this._showFocusedValue(newRating);
   }
 
   /**
-   * update component component is clicked, touch ends, enter or space key are hit.
+   * update component when component is clicked, touch ends, enter or space key are hit.
    */
-  _updateComponent() {
-    var value = this.state.focusedValue > 0 ? this.state.focusedValue : undefined;
-
+  _updateComponent(value) {
     if (this.props.valueLink) {
       this.props.valueLink.requestChange(value);
       this.setState({
@@ -370,7 +368,7 @@ export default class Rating extends Component {
 
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);//Todo: add new prop wrapperStyle
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
-      wrapperStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
+      wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
     }
 
     //todo: active style to be added
@@ -380,16 +378,15 @@ export default class Rating extends Component {
 
     //todo: add props wrapperClassName
     //todo: selectively move properties from wrapper to stars
+    //todo: might be mouse leave handling is needed for stars also
 
     return (
       <div ref="wrapper"
            style={ wrapperStyle }
            className={ unionClassNames(this.props.wrapperClassName, this.ratingWrapperStyleId) }
-           onMouseMove={ this._onMouseMove.bind(this) }
            onMouseLeave={ this._onMouseLeave.bind(this) }
            onMouseUp={ this._onMouseUp.bind(this) }
            onMouseDown={ this._onMouseDown.bind(this) }
-           onClick={ this._onClick.bind(this) }
            onKeyDown={ this._onKeyDown.bind(this) }
            onTouchStart={ this._onTouchStart.bind(this) }
            onTouchMove={ this._onTouchMove.bind(this) }
@@ -406,11 +403,14 @@ export default class Rating extends Component {
            {...this.state.generalProperties}>
 
            {
-             React.Children.map([5, 4, 3, 2, 1], (value) => {
-               const ratingStyle = (currentValue <= value) ? highlightedStyle : defaultStyle;
+             React.Children.map([1, 2, 3, 4, 5], (value) => {
+               const ratingStyle = (currentValue >= value) ? highlightedStyle : defaultStyle;
                return (
-                 <span style={ starStyle }
-                        className={ unionClassNames(this.props.className, this.ratingStyleId) }>
+                 <span value= { value }
+                        style={ ratingStyle }
+                        className = { unionClassNames(this.props.className, this.ratingStyleId) }
+                        onClick = { this._onClick.bind(this) }
+                        onMouseEnter={ this._onMouseEnter.bind(this) }>
                    { this.props.ratingCharacter }
                  </span>
                );
