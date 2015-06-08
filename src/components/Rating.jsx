@@ -59,20 +59,21 @@ export default class Rating extends Component {
   }
 
   /**
-   * apply pseudo classes to rating and rating wrapper divs
+   * apply pseudo classes to rating spans and rating wrapper div
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this.ratingStyleId = `rating-style-id${id}`;
+    this.ratingSpanStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
+    updatePseudoClassStyle(this.ratingSpanStyleId, this.ratingWrapperStyleId, this.props);
   }
+  //todo: we may later remove ratingSpanStyleId as updatePseudoClassStyle is not assigning any styles to it
 
   /**
    * removes pseudo classes from the DOM once component is removed
    */
   componentWillUnmount() {
-    removeStyle(this.ratingStyleId);
+    removeStyle(this.ratingSpanStyleId);
     removeStyle(this.ratingWrapperStyleId);
   }
 
@@ -86,6 +87,10 @@ export default class Rating extends Component {
     });
   }
 
+  //All 4 mouse events below onMouseEnter, onMouseLeave, onMouseDown, onMouseUp are handles at level of rating spans
+  /**
+   * As mouse enters a rating span the callback below will set focusValue to value of the span viz (1,2,3,4,5)
+   */
   _onMouseEnter(event) {
     if(!this.props.disabled) {
       const value = Number(event.target.getAttribute('value'));
@@ -234,35 +239,6 @@ export default class Rating extends Component {
     }
   }
 
-  /**
-   * Manages the keyboard events.
-   *
-   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the value and arrow down will result in decreasing the value.
-   * Enter/ space will result in updating the value of the component and calling onChange event.
-   *
-   * Pressing Escape will reset the value to last value.
-   */
-  _onKeyDown(event) {
-    if(!this.props.disabled) {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        this._onArrowDownKeyDown();
-      } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
-        event.preventDefault();
-        this._onArrowUpKeyDown();
-      } else if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        this._onEnterSpaceKeyDown();
-      } else if (event.key === 'Escape') {
-        event.preventDefault();
-        this._resetComponent();
-      }
-    }
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(event);
-    }
-  }
-
   //todo: function to be removed ultimately
   /**
    * calculate focusedValue and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
@@ -315,6 +291,37 @@ export default class Rating extends Component {
   }
 
   /**
+   * Manages the keyboard events.
+   *
+   * In case the Rating Component is in focus Space, ArrowUp will result in increasing the value and arrow down will result in decreasing the value.
+   * Enter/ space will result in updating the value of the component and calling onChange event.
+   *
+   * Pressing Escape will reset the value to last value.
+   *
+   * Kayboard events are handled on wrapper div
+   */
+  _onKeyDown(event) {
+    if(!this.props.disabled) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        this._onArrowDownKeyDown();
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        this._onArrowUpKeyDown();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this._onEnterSpaceKeyDown();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        this._resetComponent();
+      }
+    }
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+  }
+
+  /**
    * decrease the value by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
@@ -332,6 +339,9 @@ export default class Rating extends Component {
     this._showFocusedValue(newValue);
   }
 
+  /**
+   * set component value to current focus value
+   */
   _onEnterSpaceKeyDown() {
     let newValue;
     if(this.state.focusedValue !== undefined) {
@@ -367,6 +377,7 @@ export default class Rating extends Component {
     return value;
   }
 
+  //todo: add check to make sure that is value is updated to same as current value, setState is not called.
   /**
    * Function to render component.
    */
@@ -398,14 +409,12 @@ export default class Rating extends Component {
     //todo: selectively move properties from wrapper to stars
     //todo: might be mouse leave handling is needed for stars also
     //todo: add focus style handling
+    //todo: mouse touch events to rating spans
 
     return (
       <div ref="wrapper"
            style={ wrapperStyle }
            className={ unionClassNames(this.props.wrapperClassName, this.ratingWrapperStyleId) }
-           onMouseLeave={ this._onMouseLeave.bind(this) }
-           onMouseUp={ this._onMouseUp.bind(this) }
-           onMouseDown={ this._onMouseDown.bind(this) }
            onKeyDown={ this._onKeyDown.bind(this) }
            onTouchStart={ this._onTouchStart.bind(this) }
            onTouchMove={ this._onTouchMove.bind(this) }
@@ -427,9 +436,12 @@ export default class Rating extends Component {
                return (
                  <span value= { value }
                         style={ ratingStyle }
-                        className = { unionClassNames(this.props.className, this.ratingStyleId) }
+                        className = { unionClassNames(this.props.className, this.ratingSpanStyleId) }
                         onClick = { this._onClick.bind(this) }
-                        onMouseEnter={ this._onMouseEnter.bind(this) }>
+                        onMouseEnter={ this._onMouseEnter.bind(this) }
+                        onMouseLeave={ this._onMouseLeave.bind(this) }
+                        onMouseUp={ this._onMouseUp.bind(this) }
+                        onMouseDown={ this._onMouseDown.bind(this) }>
                    { this.props.ratingCharacter }
                  </span>
                );
@@ -494,7 +506,7 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties) {
+function updatePseudoClassStyle(ratingSpanStyleId, ratingWrapperStyleId, properties) {
   let ratingFocusStyle;
   if (properties.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
