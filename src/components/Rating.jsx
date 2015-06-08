@@ -340,46 +340,51 @@ export default class Rating extends Component {
     });
   }
 
-  /**
-   * Calculate width of highlighted stars, the function uses
-   * this.state.focusedValue if it exists else it uses this.state.value.
-   */
-  _getWidth() {
+  _getCurrentValue() {
     let value;
-
     if (this.state.focusedValue) {
       value = this.state.focusedValue;
     } else {
       value = (this.state.value) ? this.state.value : 0;
     }
-    return (value * 20) + '%';
+    return value;
   }
 
   /**
    * Function to render component.
    */
   render () {
-    let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
-    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
 
-    if (this.props.disabled) {
-      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
-    }
-
-    if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
-      ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
-    }
-
-    if (this.active) {
-      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
-    }
-
+    const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+
+    const baseStyle = extend({}, style.style, this.props.style);//Todo: change description of property style
+    let highlightedStyle, defaultStyle;
+    if (this.props.disabled) {
+      highlightedStyle = extend({}, baseStyle, style.disabledHighlightedStyle, this.props.disabledHighlightedStyle);
+      defaultStyle = extend({}, baseStyle, style.disabledDefaultStyle, this.props.disabledDefaultStyle);
+    } else {
+      highlightedStyle = extend({}, baseStyle, style.highlightedStyle, this.props.highlightedStyle);//Todo: add new prop highlightedStyle
+      defaultStyle = extend({}, baseStyle, style.defaultStyle, this.props.defaultStyle);//Todo: add new prop defaultStyle
+    }
+
+    let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);//Todo: add new prop wrapperStyle
+    if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
+      wrapperStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
+    }
+
+    //todo: active style to be added
+    //else if (this.active) {
+    //  ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
+    //}
+
+    //todo: add props wrapperClassName
+    //todo: selectively move properties from wrapper to stars
 
     return (
       <div ref="wrapper"
-           style={ ratingWrapperCalculatedStyle }
-           className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
+           style={ wrapperStyle }
+           className={ unionClassNames(this.props.wrapperClassName, this.ratingWrapperStyleId) }
            onMouseMove={ this._onMouseMove.bind(this) }
            onMouseLeave={ this._onMouseLeave.bind(this) }
            onMouseUp={ this._onMouseUp.bind(this) }
@@ -399,20 +404,20 @@ export default class Rating extends Component {
            aria-valuenow = { this.state.value }
            aria-disabled = { this.props.disabled }
            {...this.state.generalProperties}>
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      <div style={ ratingCalculatedStyle }
-        className={ this.ratingStyleId }>
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
+
+           {
+             React.Children.map([5, 4, 3, 2, 1], (value) => {
+               const ratingStyle = (currentValue <= value) ? highlightedStyle : defaultStyle;
+               return (
+                 <span style={ starStyle }
+                        className={ unionClassNames(this.props.className, this.ratingStyleId) }>
+                   { this.props.ratingCharacter }
+                 </span>
+               );
+             })
+           }
+
       </div>
-    </div>
     );
   }
 }
