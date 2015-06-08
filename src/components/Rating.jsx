@@ -21,8 +21,6 @@ export default class Rating extends Component {
   constructor(properties) {
     super(properties);
 
-    this.active = false;
-
     let value;
 
     if (this.props.valueLink) {
@@ -37,7 +35,9 @@ export default class Rating extends Component {
       value: value,
       focusedValue: undefined,
       generalProperties: sanitizeProperties(properties),
-      focused: false
+      characterProperties: sanitizeCharacterProperties(properties.characterProperties),
+      focused: false,
+      isActive: false
     };
   }
 
@@ -54,7 +54,8 @@ export default class Rating extends Component {
 
     this.setState({
       value: value,
-      generalProperties: sanitizeProperties(properties)
+      generalProperties: sanitizeProperties(properties),
+      characterProperties: sanitizeCharacterProperties(properties)
     });
   }
 
@@ -63,17 +64,14 @@ export default class Rating extends Component {
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this.ratingSpanStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingSpanStyleId, this.ratingWrapperStyleId, this.props);
+    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
   }
-  //todo: we may later remove ratingSpanStyleId as updatePseudoClassStyle is not assigning any styles to it
 
   /**
    * removes pseudo classes from the DOM once component is removed
    */
   componentWillUnmount() {
-    removeStyle(this.ratingSpanStyleId);
     removeStyle(this.ratingWrapperStyleId);
   }
 
@@ -93,8 +91,29 @@ export default class Rating extends Component {
    */
   _onMouseEnter(event) {
     if(!this.props.disabled) {
-      const value = Number(event.target.getAttribute('value'));
-      this._showFocusedValue(value);
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this.setState({
+        focusedValue: value,
+        isHover: true
+      });
+    } else {
+      this.setState({
+        isHover: true
+      });
+    }
+    if (this.props.onMouseMove) {
+      this.props.onMouseMove(event);
+    }
+  }
+
+  _onMouseMove(event) {
+    if(!this.props.disabled) {
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      if(this.state.focusedValue !== value) {
+        this.setState({
+          focusedValue: value
+        });
+      }
     }
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
@@ -107,8 +126,16 @@ export default class Rating extends Component {
    */
   _onMouseLeave(event) {
     if(!this.props.disabled) {
-      this._resetComponent();
+      this.setState({
+        focusedValue: undefined,
+        isHover: false
+      });
+    } else {
+      this.setState({
+        isHover: false
+      });
     }
+
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
@@ -116,12 +143,11 @@ export default class Rating extends Component {
 
 
   /**
-   * Sets active state to true.
+   * Sets isActive state to true.
    */
   _onMouseDown(event) {
     if(!this.props.disabled) {
-      this.active = true;
-      this.forceUpdate();
+      this.setState({isActive: true});
     }
 
     if (this.props.onMouseDown) {
@@ -130,10 +156,12 @@ export default class Rating extends Component {
   }
 
   /**
-   * Sets active state to false.
+   * Sets isActive state to false.
    */
   _onMouseUp(event) {
-    this.active = false;
+    if(!this.props.disabled) {
+      this.setState({isActive: false});
+    }
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
@@ -141,12 +169,11 @@ export default class Rating extends Component {
   }
 
   /**
-   * Sets active state to true.
+   * Sets isActive state to true.
    */
   _onTouchStart(event) {
     if(!this.props.disabled) {
-      this.active = true;
-      this.forceUpdate();
+      this.setState({isActive: true});
     }
 
     if (this.props.onTouchEnd) {
@@ -173,8 +200,9 @@ export default class Rating extends Component {
    * update the component when touch ends
    */
   _onTouchEnd(event) {
-    this.active = false;
+
     if(!this.props.disabled) {
+      this.setState({isActive: false});
       this._updateComponent();
     }
 
@@ -187,8 +215,8 @@ export default class Rating extends Component {
    * reset the component in case of touch cancel
    */
   _onTouchCancel(event) {
-    this.active = false;
     if(!this.props.disabled) {
+      this.setState({isActive: false});
       this._resetComponent();
     }
     if (this.props.onTouchCancel) {
@@ -204,7 +232,11 @@ export default class Rating extends Component {
       this.setState({
         focused: false,
         focusedValue: undefined,
-        hoverStyle: undefined
+        isHover: false
+      });
+    } else {
+      this.setState({
+        isHover: true
       });
     }
     if (this.props.onBlur) {
@@ -216,7 +248,7 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.active && !this.props.disabled) {
+    if(!this.state.isActive && !this.props.disabled) {
       this.setState({focused: true});
     }
 
@@ -230,7 +262,7 @@ export default class Rating extends Component {
    */
   _onClick(event) {
     if(!this.props.disabled) {
-      const value = Number(event.target.getAttribute('value'));
+      const value = Number(event.target.getAttribute('data-belle-value'));
       this._updateComponent(value);
     }
 
@@ -258,18 +290,15 @@ export default class Rating extends Component {
     if (this.props.valueLink) {
       this.props.valueLink.requestChange(value);
       this.setState({
-        focusedValue: undefined,
-        hoverStyle: undefined
+        focusedValue: undefined
       });
     } else if (this.props.value) {
       this.setState({
-        focusedValue: undefined,
-        hoverStyle: undefined
+        focusedValue: undefined
       });
     } else {
       this.setState({
         focusedValue: undefined,
-        hoverStyle: undefined,
         value: value
       });
     }
@@ -286,7 +315,7 @@ export default class Rating extends Component {
   _resetComponent() {
     this.setState({
       focusedValue: undefined,
-      hoverStyle: undefined
+      isHover: false
     });
   }
 
@@ -362,7 +391,6 @@ export default class Rating extends Component {
    */
   _showFocusedValue(focusedValue) {
     this.setState({
-      hoverStyle: style.hoverStyle,
       focusedValue: focusedValue
     });
   }
@@ -386,36 +414,39 @@ export default class Rating extends Component {
     const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
-    const baseStyle = extend({}, style.style, this.props.style);//Todo: change description of property style
-    let highlightedStyle, defaultStyle;
+    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);//Todo: change description of property style
     if (this.props.disabled) {
-      highlightedStyle = extend({}, baseStyle, style.disabledHighlightedStyle, this.props.disabledHighlightedStyle);
-      defaultStyle = extend({}, baseStyle, style.disabledDefaultStyle, this.props.disabledDefaultStyle);
+      characterStyle = extend({}, characterStyle, style.disabledCharacterStyle, this.props.disabledCharacterStyle);
+      if (this.state.isHover) {
+        characterStyle = extend({}, characterStyle, style.disabledHoverCharacterStyle, this.props.disabledHoverCharacterStyle);
+      }
     } else {
-      highlightedStyle = extend({}, baseStyle, style.highlightedStyle, this.props.highlightedStyle);//Todo: add new prop highlightedStyle
-      defaultStyle = extend({}, baseStyle, style.defaultStyle, this.props.defaultStyle);//Todo: add new prop defaultStyle
-      if (this.active) {
-        highlightedStyle = extend({}, highlightedStyle, style.activeStyle, this.props.activeStyle);
-        //todo: is default active style also needed ?
+      if (this.state.isActive) {
+        characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+      } else if (this.state.isHover) {
+        characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
       }
     }
 
-    let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);//Todo: add new prop wrapperStyle
+    let wrapperStyle = extend({}, style.style, this.props.style);//Todo: add new prop wrapperStyle
     if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
       wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
     }
 
     //todo: add props wrapperClassName
-    //todo: selectively move properties from wrapper to stars
-    //todo: might be mouse leave handling is needed for stars also
-    //todo: add focus style handling
-    //todo: mouse touch events to rating spans
+
 
     return (
       <div ref="wrapper"
            style={ wrapperStyle }
-           className={ unionClassNames(this.props.wrapperClassName, this.ratingWrapperStyleId) }
+           className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
            onKeyDown={ this._onKeyDown.bind(this) }
+           onClick = { this._onClick.bind(this) }
+           onMouseEnter={ this._onMouseEnter.bind(this) }
+           onMouseMove={ this._onMouseMove.bind(this) }
+           onMouseLeave={ this._onMouseLeave.bind(this) }
+           onMouseUp={ this._onMouseUp.bind(this) }
+           onMouseDown={ this._onMouseDown.bind(this) }
            onTouchStart={ this._onTouchStart.bind(this) }
            onTouchMove={ this._onTouchMove.bind(this) }
            onTouchEnd={ this._onTouchEnd.bind(this) }
@@ -432,16 +463,11 @@ export default class Rating extends Component {
 
            {
              React.Children.map([1, 2, 3, 4, 5], (value) => {
-               const ratingStyle = (currentValue >= value) ? highlightedStyle : defaultStyle;
+               const ratingStyle = (currentValue >= value) ? characterStyle : {};
                return (
-                 <span value= { value }
+                 <span data-belle-value= { value }
                         style={ ratingStyle }
-                        className = { unionClassNames(this.props.className, this.ratingSpanStyleId) }
-                        onClick = { this._onClick.bind(this) }
-                        onMouseEnter={ this._onMouseEnter.bind(this) }
-                        onMouseLeave={ this._onMouseLeave.bind(this) }
-                        onMouseUp={ this._onMouseUp.bind(this) }
-                        onMouseDown={ this._onMouseDown.bind(this) }>
+                        {...this.state.characterProperties}>
                    { this.props.ratingCharacter }
                  </span>
                );
@@ -506,7 +532,7 @@ Rating.displayName = 'Belle Rating';
 /**
  * Function to create pseudo classes for styles.
  */
-function updatePseudoClassStyle(ratingSpanStyleId, ratingWrapperStyleId, properties) {
+function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
   let ratingFocusStyle;
   if (properties.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
@@ -520,21 +546,6 @@ function updatePseudoClassStyle(ratingSpanStyleId, ratingWrapperStyleId, propert
       pseudoClass: 'focus'
     }
   ];
-  if(properties.hoverStyle) {
-    styles.push({
-      id: ratingWrapperStyleId,
-      style: properties.hoverStyle,
-      pseudoClass: 'hover'
-    });
-  }
-  if(properties.disabledHoverStyle) {
-    styles.push({
-      id: ratingWrapperStyleId,
-      style: properties.disabledHoverStyle,
-      pseudoClass: 'hover',
-      disabled: true
-    });
-  }
   injectStyles(styles);
 }
 
@@ -570,4 +581,35 @@ function sanitizeProperties(properties) {
     'onFocus',
     'preventFocusStyleForTouchAndClick'
 ]);
+}
+
+function sanitizeCharacterProperties(properties) {
+  return omit(properties, [
+    'data-belle-value',
+    'style',
+    'valueLink',
+    'disabled',
+    'onChange',
+    'ratingCharacter',
+    'style',
+    'className',
+    'hoverStyle',
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle',
+    'tabIndex',
+    'onMouseUp',
+    'onMouseDown',
+    'onMouseMove',
+    'onMouseLeave',
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'onBlur',
+    'onClick',
+    'onKeyDown',
+    'onFocus',
+    'preventFocusStyleForTouchAndClick'
+  ]);
 }
