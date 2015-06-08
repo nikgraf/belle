@@ -97,7 +97,8 @@ export default class Rating extends Component {
   }
 
   /**
-   * reset component as mouse leaves
+   * reset component as mouse leaves from rating span
+   * this function can rather be used as mouseLeave handler for wrapperDiv also, but it might break the component if user uses padding on wrapper div
    */
   _onMouseLeave(event) {
     if(!this.props.disabled) {
@@ -364,6 +365,10 @@ export default class Rating extends Component {
     } else {
       highlightedStyle = extend({}, baseStyle, style.highlightedStyle, this.props.highlightedStyle);//Todo: add new prop highlightedStyle
       defaultStyle = extend({}, baseStyle, style.defaultStyle, this.props.defaultStyle);//Todo: add new prop defaultStyle
+      if (this.active) {
+        highlightedStyle = extend({}, highlightedStyle, style.activeStyle, this.props.activeStyle);
+        //todo: is default active style also needed ?
+      }
     }
 
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);//Todo: add new prop wrapperStyle
@@ -371,14 +376,10 @@ export default class Rating extends Component {
       wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
     }
 
-    //todo: active style to be added
-    //else if (this.active) {
-    //  ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
-    //}
-
     //todo: add props wrapperClassName
     //todo: selectively move properties from wrapper to stars
     //todo: might be mouse leave handling is needed for stars also
+    //todo: add focus style handling
 
     return (
       <div ref="wrapper"
