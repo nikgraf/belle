@@ -3,13 +3,14 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {TextInput, Card, Button, style, Rating} from 'belle';
+import {TextInput, Card, Button, Rating, style} from 'belle';
 import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
 import SelectPlayground from './SelectPlayground';
 import RatingPlayground from './RatingPlayground';
 import TextInputPlayground from './TextInputPlayground';
+import TogglePlayground from './TogglePlayground';
 
 style.button.style = {
   boxSizing: 'border-box',
@@ -45,7 +46,7 @@ class App extends Component {
     return <div style={ {margin: '0 auto', width: 300} }>
       <h1>Belle Playground</h1>
 
-      <SelectPlayground />
+      <TogglePlayground />
 
       <ButtonPlayground />
 
