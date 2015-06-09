@@ -84,21 +84,6 @@ export default class RatingDocumentation extends Component {
         </tr>
         <tr>
           <td style={ propertyNameStyle }>
-            ratingCharacter
-          </td>
-          <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
-              <i>Character</i>
-              <br />
-              optional (default: '★')
-              </p>
-              <p>
-                Rating character used in the component.
-              </p>
-          </td>
-        </tr>
-        <tr>
-          <td style={ propertyNameStyle }>
             disabled
           </td>
           <td style={ propertyDescriptionStyle }>
@@ -127,11 +112,48 @@ export default class RatingDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            character
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Character</i>
+              <br />
+              optional (default: '★')
+            </p>
+            <p>
+              Rating character used in the component.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            characterProperties
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property can be used to specify styling and other properties specific to rating character used.
+            </p>
+          </td>
+        </tr>
       </table>
 
       <p>
       Other supported properties include:
-      <span style={ {color: 'grey'} }> tabIndex, style, className, hoverStyle, focusStyle, disabledStyle, disabledHoverStyle, onMouseDown, onMouseUp, onMouseEnter, onMouseMove, onMouseLeave, onTouchStart, onTouchMove, onTouchEnd, onTouchCancel, onFocus, onBlur, onClick, onKeyDown, …</span>
+      <span style={ {color: 'grey'} }> tabIndex, style, className, focusStyle, onMouseDown,
+        onMouseUp, onMouseEnter, onMouseMove, onMouseLeave, onTouchStart, onTouchMove, onTouchEnd, onTouchCancel, onFocus, onBlur, onClick,
+        onKeyDown</span>
+      </p>
+      <p>
+        In addition for the rating character following properties can be used (inside characterProperties object):
+        <span style={ {color: 'grey'} }> characterStyle, disabledCharacterStyle, disabledHoverCharacterStyle, activeCharacterStyle,
+        hoverCharacterStyle</span>
       </p>
 
       <h3>Methods</h3>
@@ -153,7 +175,7 @@ export default class RatingDocumentation extends Component {
 
       <Rating defaultValue={4} disabled></Rating>
       <Code value= { advanceCodeExample1 } style={ {marginTop: 40} } />
-      <Rating defaultValue={4} ratingCharacter={'✪'}></Rating>
+      <Rating defaultValue={4} character={'✪'}></Rating>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 40} } />
       <Rating ref="rating" defaultValue={4}></Rating>
       <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
@@ -167,7 +189,7 @@ const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
 
 const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
 
-const advanceCodeExample2 = `<Rating defaultValue={4} ratingCharacter={'✪'}></Rating>`;
+const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
 
 const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>\n<a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }>Reset</a>`;
 
