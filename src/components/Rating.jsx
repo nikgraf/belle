@@ -34,7 +34,7 @@ export default class Rating extends Component {
     this.state = {
       value: value,
       focusedValue: undefined,
-      generalProperties: sanitizeProperties(properties),
+      generalProperties: sanitizeWrapperProperties(properties),
       characterProperties: sanitizeCharacterProperties(properties.characterProperties),
       isFocus: false,
       isActive: false
