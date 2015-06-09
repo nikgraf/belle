@@ -562,7 +562,8 @@ function sanitizeWrapperProperties(properties) {
     'aria-valuemax',
     'aria-valuemin',
     'aria-valuenow',
-    'aria-disabled'
+    'aria-disabled',
+    'characterProperties'
   ]);
 }
 
