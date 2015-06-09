@@ -55,7 +55,7 @@ export default class Rating extends Component {
     this.setState({
       value: value,
       wrapperProperties: sanitizeWrapperProperties(properties),
-      characterProperties: sanitizeCharacterProperties(properties)
+      characterProperties: sanitizeCharacterProperties(properties.characterProperties)
     });
   }
 
@@ -377,6 +377,9 @@ export default class Rating extends Component {
     });
   }
 
+  /**
+   * Returns current value of rating to be displayed on the component
+   */
   _getCurrentValue() {
     let value;
     if (this.state.focusedValue !== undefined) {
@@ -388,6 +391,15 @@ export default class Rating extends Component {
   }
 
   /**
+   * if this.props.characterProperties exists this function will returns specified property
+   */
+  _getCharacterProperty(propertyName) {
+    if(this.props.characterProperties) {
+      return this.props.characterProperties[propertyName];
+    }
+  }
+
+  /**
    * Function to render component.
    */
   render () {
@@ -395,18 +407,17 @@ export default class Rating extends Component {
     const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
-    //todo: move this character related stylong to characetrProperties
-    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
+    let characterStyle = extend({}, style.characterStyle, this._getCharacterProperty('characterStyle'));
     if (this.props.disabled) {
-      characterStyle = extend({}, characterStyle, style.disabledCharacterStyle, this.props.disabledCharacterStyle);
+      characterStyle = extend({}, characterStyle, style.disabledCharacterStyle, this._getCharacterProperty('disabledCharacterStyle'));
       if (this.state.isHover) {
-        characterStyle = extend({}, characterStyle, style.disabledHoverCharacterStyle, this.props.disabledHoverCharacterStyle);
+        characterStyle = extend({}, characterStyle, style.disabledHoverCharacterStyle, this._getCharacterProperty('disabledHoverCharacterStyle'));
       }
     } else {
       if (this.state.isActive) {
-        characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+        characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this._getCharacterProperty('activeCharacterStyle'));
       } else if (this.state.isHover) {
-        characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
+        characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this._getCharacterProperty('hoverCharacterStyle'));
       }
     }
 
