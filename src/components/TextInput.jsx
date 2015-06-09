@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
+import unionClassNames from '../utils/union-class-names';
 import {omit, extend} from 'underscore';
 import style from '../style/text-input';
 
@@ -52,7 +53,7 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Remove a component's associated syles whenever it gets removed from the DOM.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
     removeStyle(this._styleId);
@@ -64,7 +65,7 @@ export default class TextInput extends Component {
    */
   componentWillReceiveProps(properties) {
     this.setState({ textareaProperties: sanitizeChildProperties(properties) });
-    updatePseudoClassStyle(this._styleId, this.props);
+    updatePseudoClassStyle(this._styleId, properties);
     this._resize();
   }
 
@@ -103,7 +104,7 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Update the height and provide the changeCallback for valueLink.
+   * Update the height and calls the provided change callback for onChange or valueLink.
    *
    * In addition newline characters are replaced by spaces in the textarea value
    * in case allowNewLine is set to false and newLine characters could be found.
@@ -143,10 +144,20 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let textareaStyle = extend({}, style.defaultStyle, this.props.style);
+    const baseStyle = extend({}, style.style, this.props.style);
+
+    let textareaStyle;
+
+    if (this.props.disabled) {
+      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
+      textareaStyle = extend({}, baseStyle, disabledStyle)
+    } else {
+      textareaStyle = baseStyle;
+    }
+
     textareaStyle.height = this.state.height;
     return <textarea style={ textareaStyle }
-                     className={ `${this.props.className} ${this._styleId}` }
+                     className={ unionClassNames(this.props.className, this._styleId) }
                      onChange={ this._onChange.bind(this) }
                      onKeyDown={ this._onKeyDown.bind(this) }
                      { ...this.state.textareaProperties }/>;
@@ -158,12 +169,19 @@ TextInput.displayName = 'Belle TextInput';
 TextInput.propTypes = {
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
+  style: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
-  allowNewLine: React.PropTypes.bool
+  allowNewLine: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
+  disabledStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object
 };
 
-TextInput.defaultProps = { allowNewLine: false };
+TextInput.defaultProps = {
+  allowNewLine: false,
+  disabled: false
+};
 
 const newLineRegex = /[\r\n]/g;
 
@@ -183,7 +201,9 @@ function sanitizeChildProperties(properties) {
     'className',
     'style',
     'hoverStyle',
-    'focusStyle'
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle'
   ]);
   if (typeof properties.valueLink == 'object') {
     childProperties.value = properties.valueLink.value;
@@ -198,8 +218,10 @@ function sanitizeChildProperties(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.defaultHoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.defaultFocusStyle, properties.focusStyle);
+  const hoverStyle         = extend({}, style.hoverStyle, properties.hoverStyle);
+  const focusStyle         = extend({}, style.focusStyle, properties.focusStyle);
+  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+
   const styles = [
     {
       id: styleId,
@@ -210,6 +232,12 @@ function updatePseudoClassStyle(styleId, properties) {
       id: styleId,
       style: focusStyle,
       pseudoClass: 'focus'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
     }
   ];
   injectStyles(styles);

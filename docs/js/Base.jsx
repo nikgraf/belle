@@ -3,125 +3,168 @@
 import React, {Component} from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
+import Column from './Column';
+import ViewportMixin from './mixin/viewport';
 
-const belleLogoStyle = {
-  height: 54,
-  width: 54,
-  background: '#53C7F2',
-  display: 'inline-block',
-  fontSize: 14,
-  borderRadius: '100%',
-  position: 'relative',
-  top: 1
-};
+export default React.createClass({
 
-export default class Base extends Component {
+  mixins: [ViewportMixin],
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   render() {
+    const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
+
     let header;
     if (this.context.router.getCurrentPath() === '/') {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 800, paddingLeft: 160 } }>
+      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+                mediumScreenStyle={{margin: '0 auto', width: 820, paddingLeft: 160 }}>
+
+          <Link style={{ display: 'inline' }} to="app">
+            <h1 style={{ fontSize: 52, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              <svg version="1.1"
+                   viewBox="0 0 80 80"
+                   style={{ width: 50,
+                            height: 50,
+                            position: 'relative',
+                            top: 3,
+                            marginRight: 12 }}>
+                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
+                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
+              </svg>
+              Belle
+            </h1>
+          </Link>
+
+          <p style={{ fontSize: 22, marginTop: 0, paddingBottom: 26, color: '#FEFEFE'}}>
+            Configurable React Components with great UX
+          </p>
+
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
             frameBorder="0"
             scrolling="0"
-            width="111px"
+            width="120px"
             height="30px"
-            style={ { float: 'right', marginTop: 207 } }>
+            style={ { marginBottom: 20 } }>
           </iframe>
-
-          <Link style={{ display: 'inline' }} to="app">
-            <h1 style={{ fontSize: 72, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
-              <i style={ belleLogoStyle }></i> Belle
-            </h1>
-          </Link>
-
-          <p style={{ fontSize: 18, marginTop: -10, paddingBottom: 60, color: '#B8B8B8'}}>
-            React Components with great User Experience
-          </p>
-        </div>
+        </Column>
       </header>;
     } else {
-      header = <header style={ {background: 'rgb(44, 44, 44)', width: '100%'} }>
-        <div style={ {margin: '0 auto', width: 800} }>
+      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+                mediumScreenStyle={{margin: '0 auto', width: 820}}>
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
             scrolling="0"
-            width="73px"
+            width="78px"
             height="30px"
             style={ { float: 'right', marginTop: 20 } }>
           </iframe>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+              <svg version="1.1"
+                   viewBox="0 0 80 80"
+                   style={{ width: 22,
+                            height: 22,
+                            position: 'relative',
+                            top: 2,
+                            marginRight: 6 }}>
+                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
+                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
+              </svg>
               Belle
             </h1>
           </Link>
-        </div>
+        </Column>
       </header>;
     }
 
-    return <div>
+    return <div style={{ background: '#F7F7F7' }}>
 
       { header }
 
-      <div style={ {margin: '0 auto', width: 800, marginTop: 40 } }>
-        <div style={ {float: 'left', width: 160 } }>
+      <Column smallScreenStyle={{ width: '100%' }}
+              mediumScreenStyle={{margin: '0 auto', width: 820 }}>
+
+        <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
+                mediumScreenStyle={{ float: 'left', width: 160 }}
+                className="navigation">
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
-              <Link style={{ display: 'block' }} to="getting-started">Getting Started</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="getting-started">Getting Started</Link>
             </li>
           </ul>
-          <span style={ { color: '#888', fontWeight: 'bold' } } >Components</span>
+          <span style={ { color: '#738088' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
-            <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/button">Button</Link>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/button">Button</Link>
+            </li>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/card">Card</Link>
+            </li>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="component/select">Select</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/text-input">TextInput</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/option">Option</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block' }} to="component/card">Card</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/placeholder">Placeholder</Link>
             </li>
-
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="philosophy">Philosophy</Link>
+            <li style={{ paddingLeft: 10 }}>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="component/separator">Separator</Link>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="configuration">Configuration</Link>
+            <li>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="component/rating">Rating</Link>
             </li>
-            <li style={{ marginTop: 12 }}>
-              <Link style={{ display: 'block' }} to="future-work">Future Plans</Link>
-            </li>
-            <li style={{ marginTop: 12 }}>
-              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
-            </li>
-            <li style={{ marginTop: 12 }}>
-              <a style={{ display: 'block' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
+            <li>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="component/text-input">TextInput</Link>
             </li>
           </ul>
-        </div>
+          <span style={ { color: '#738088' } } >General</span>
+          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="philosophy">Philosophy</Link>
+            </li>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="configuration">Configuration</Link>
+            </li>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="future-work">Future Plans</Link>
+            </li>
+            <li>
+              <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
+            </li>
+            <li>
+              <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle/issues" target="_blank">Report an Issue</a>
+            </li>
+          </ul>
+        </Column>
 
-        <div style={ {float: 'left', width: 640 } }>
-          <RouteHandler/>
-        </div>
+        <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
+                mediumScreenStyle={{ float: 'left', width: 660 }}>
+          <Card style={ cardContentStyle }>
+            <RouteHandler/>
+          </Card>
+        </Column>
         <div style={{ clear: 'left' }}></div>
-      </div>
-      <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, marginBottom: 60 }}>
-        <span style={{ paddingLeft: 160 }}>
+      </Column>
+      <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, paddingBottom: 60 }}>
+        <Column smallScreenStyle={{}}
+                mediumScreenStyle={{ paddingLeft: 160 }}>
           Built with
           <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
             &nbsp;&#x2764;&nbsp;
           </span>
           on Planet Earth :)
-        </span>
+        </Column>
       </footer>
     </div>;
   }
-}
-
-Base.contextTypes = {
-  router: React.PropTypes.func
-};
+});

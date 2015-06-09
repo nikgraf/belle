@@ -1,29 +1,28 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Button} from 'belle';
+import {Button} from 'belle';
 import Code from './Code';
 
 export default class ButtonDocumentation extends Component {
 
   render() {
-    return <Card>
+    return <div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
-      <Button primary={ true } style={ {marginRight: 10} }>Follow</Button>
+      <Button primary style={ {marginRight: 15} }>Follow</Button>
 
       <Button>Follow</Button>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
       <p style={{ marginTop: 40 }}>
-        <i>Note:</i> Belle's Button is rendered as normal HTML button and behaves exactly like it except for these two behaviours:
+        <i>Note:</i> Belle's Button is rendered as normal HTML button and behaves exactly like it except for these behaviours:
       </p>
 
       <ul>
         <li>By default the button is of type="button" instead of "submit".</li>
-        <li>Once a user clicked on the button it will loose focus.</li>
       </ul>
 
       <h3>Properties</h3>
@@ -56,6 +55,18 @@ export default class ButtonDocumentation extends Component {
               to the default behavior in HTML where a button would submit in case
               the 'type' attribute is not defined.
             </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabled
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              default: false</p>
+            <p>If true the Button will be disabled and can't be pressed by a user.</p>
           </td>
         </tr>
         <tr>
@@ -106,7 +117,65 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Becomes active once the button is disabled and a user hovers over it.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyNameStyle }>
+            preventFocusStyleForTouchAndClick
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Boolean</i>
+              <br />
+              optional (default: true)
+            </p>
+            <p>
+              Prevents the focus style being applied in case the buttons becomes
+              focused by a click or touch.<br />
+              <b>Background:</b>
+              Focus styles are helpful to identify which element is currently
+              in focus when tabbing through the elements e.g. a user wants to
+              switch to the next input element. Yet it feels somewhat distracting
+              when clicking on the Button. That's why Belle by default prevents
+              the focus style being applied in case the Button is focused on
+              by a touch or click event.
+            </p>
+          </td>
+        </tr>
       </table>
+
+
+
 
       <p>
         Any other property valid for a HTML button like
@@ -114,6 +183,18 @@ export default class ButtonDocumentation extends Component {
       </p>
 
       <h3>More Examples</h3>
+
+      <p>Disabled buttons</p>
+
+      <Button primary style={ {marginRight: 15} }>Follow</Button>
+
+      <Button primary disabled style={ {marginRight: 15} }>Follow</Button>
+
+      <Button style={ {marginRight: 15} }>Follow</Button>
+
+      <Button disabled>Follow</Button>
+
+      <Code value={ disabledButtonCodeExample } style={ {marginTop: 20} } />
 
       <p>Primary button with custom styles</p>
 
@@ -124,13 +205,15 @@ export default class ButtonDocumentation extends Component {
                 border: '1px solid #222',
                 borderBottom: '1px solid #222',
                 borderRadius: 2,
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}
               hoverStyle={{
                 border: '1px solid red',
                 borderBottom: '1px solid red',
                 color: 'red',
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}
               focusStyle={{
                 border: '1px solid red',
@@ -143,7 +226,8 @@ export default class ButtonDocumentation extends Component {
                 border: '1px solid red',
                 borderTop: '1px solid red',
                 color: 'red',
-                background: '#fff'
+                background: '#fff',
+                boxShadow: 'none'
               }}>
         Follow
       </Button>
@@ -151,15 +235,15 @@ export default class ButtonDocumentation extends Component {
       <Code value={ customStyleCodeExample } style={ {marginTop: 20} } />
 
 
-    </Card>;
+    </div>;
   }
 }
 
-const basicCodeExample = `<!-- default button -->
-<Button>Follow</Button>
+const basicCodeExample = `<!-- primary button -->
+<Button primary>Follow</Button>
 
-<!-- primary button -->
-<Button primary={ true }>Follow</Button>`;
+<!-- default button -->
+<Button>Follow</Button>`;
 
 const customStyleCodeExample = `<Button primary={ true }
         style={{
@@ -191,6 +275,15 @@ const customStyleCodeExample = `<Button primary={ true }
         }}>
   Follow
 </Button>`;
+
+const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>Follow</Button>
+
+<Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+
+<Button style={ {marginRight: 10} }>Follow</Button>
+
+<Button disabled>Follow</Button>
+`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',

@@ -2,6 +2,7 @@
 
 jest.dontMock('../lib/components/Button');
 jest.dontMock('../lib/utils/inject-style');
+jest.dontMock('../lib/utils/union-class-names');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
@@ -10,7 +11,7 @@ const injectStyle = require('../lib/utils/inject-style');
 
 
 // Babel would move an import in front of the jest.dontMock. That's why require
-// is used here.
+// is used instead of import.
 const Button = require('../lib/components/Button');
 
 describe('Button', () => {
@@ -34,7 +35,7 @@ describe('Button', () => {
 
 
     it('should set the type to button by default', () => {
-      expect(buttonNode.props.type).toEqual('button');
+      expect(buttonNode.props.type).toBe('button');
     });
 
 
@@ -43,12 +44,13 @@ describe('Button', () => {
 
       const styles = injectStyle.injectStyles.mock.calls[0][0];
       expect(styles[0].pseudoClass).toBe('hover');
-      expect(styles[1].pseudoClass).toBe('focus');
-      expect(styles[2].pseudoClass).toBe('active');
+      expect(styles[1].pseudoClass).toBe('active');
+      expect(styles[2].pseudoClass).toBe('hover');
+      expect(styles[2].disabled).toBeTruthy();
+      expect(styles[3].pseudoClass).toBe('focus');
     });
 
   });
-
 
   it('should be able to bind onClick', () => {
     let wasClicked = false;
@@ -61,7 +63,7 @@ describe('Button', () => {
     // Simulate a click
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(button, 'button'));
 
-    expect(wasClicked).toEqual(true);
+    expect(wasClicked).toBeTruthy();
   });
 
 
@@ -71,7 +73,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.className).toEqual('test-me');
+    expect(buttonNode.props.className).toContain('test-me');
   });
 
 
@@ -81,7 +83,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.style.color).toEqual('#F00');
+    expect(buttonNode.props.style.color).toBe('#F00');
   });
 
 
@@ -105,29 +107,14 @@ describe('Button', () => {
       <Button type="submit">Submit</Button>
     );
     const submitButtonNode = TestUtils.findRenderedDOMComponentWithTag(submitButton, 'button');
-    expect(submitButtonNode.props.type).toEqual('submit');
+    expect(submitButtonNode.props.type).toBe('submit');
 
     const resetButton = TestUtils.renderIntoDocument(
       <Button type="reset">Submit</Button>
     );
     const resetButtonNode = TestUtils.findRenderedDOMComponentWithTag(resetButton, 'button');
-    expect(resetButtonNode.props.type).toEqual('reset');
+    expect(resetButtonNode.props.type).toBe('reset');
   });
-
-
-  it('should blur the button after clicking', () => {
-    const button = TestUtils.renderIntoDocument(
-      <Button>Follow</Button>
-    );
-
-    button._blur = jest.genMockFunction();
-
-    const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    TestUtils.Simulate.click(buttonNode);
-
-    expect(button._blur.mock.calls.length).toBe(1);
-  });
-
 
   it('should be able to adopt the pseudoClass styles of the button', function() {
     injectStyle.injectStyles = jest.genMockFunction();
@@ -135,7 +122,8 @@ describe('Button', () => {
     const bodyWithButton = TestUtils.renderIntoDocument(
       <Button hoverStyle={{ color: 'red' }}
               focusStyle={{ color: 'brown' }}
-              activeStyle={{ color: 'green' }}>
+              activeStyle={{ color: 'green' }}
+              preventFocusStyleForTouchAndClick={ false }>
         Follow
       </Button>
     );
@@ -145,13 +133,13 @@ describe('Button', () => {
     expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
 
     const styles = injectStyle.injectStyles.mock.calls[0][0];
+
     expect(styles[0].pseudoClass).toBe('hover');
     expect(styles[0].style.color).toBe('red');
-    expect(styles[1].pseudoClass).toBe('focus');
-    expect(styles[1].style.color).toBe('brown');
-    expect(styles[2].pseudoClass).toBe('active');
-    expect(styles[2].style.color).toBe('green');
-
+    expect(styles[1].pseudoClass).toBe('active');
+    expect(styles[1].style.color).toBe('green');
+    expect(styles[3].pseudoClass).toBe('focus');
+    expect(styles[3].style.color).toBe('brown');
   });
 
   it('should remove the custom styles from the dom when the button unmounts', function() {

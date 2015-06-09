@@ -1,6 +1,6 @@
 # Belle
 
-React Components with great User Experience.
+Configurable React Components with great UX.
 
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
 
@@ -124,7 +124,9 @@ npm start
 
 ### Tests
 
-Build Status: [ ![Codeship Status for nikgraf/belle](https://codeship.com/projects/7650fa30-c483-0132-3f11-46867e328226/status?branch=master)](https://codeship.com/projects/74133)
+Build Status:
+
+[ ![Codeship Status for nikgraf/belle](https://codeship.com/projects/7650fa30-c483-0132-3f11-46867e328226/status?branch=master)](https://codeship.com/projects/74133)
 
 In order to run the tests use
 
@@ -140,7 +142,6 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 ## Future Plans
 
-- Add disabled style to TextInput & Button
 - Make sure components don't break when rendered by the backend
 - Make sure the components work great on Mobile
 - Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?

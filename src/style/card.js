@@ -2,7 +2,7 @@
 
 var cardStyle = {
 
-  defaultStyle: {
+  style: {
     marginBottom: 20,
     padding: 40,
     borderRadius: 2,

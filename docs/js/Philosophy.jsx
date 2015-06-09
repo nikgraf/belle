@@ -1,12 +1,11 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card} from 'belle';
 
 export default class Philosophy extends Component {
 
   render() {
-    return <Card>
+    return <div>
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Philosophy</h2>
 
       <p><i>“Great UX starts with a good UI”</i></p>
@@ -76,6 +75,6 @@ export default class Philosophy extends Component {
         provide an experience close to instant.
       </p>
 
-    </Card>;
+    </div>;
   }
 }

@@ -12,10 +12,10 @@ import style from '../style/card';
  */
 export default class Card extends Component {
 
-  constructor(properties) {
+  constructor (properties) {
     super(properties);
     this.state = {
-      childProperties: omit(properties, 'style')
+      childProperties: sanitizeChildProperties(properties)
     };
   }
 
@@ -23,12 +23,12 @@ export default class Card extends Component {
    * Update the _childProperties based on the updated properties passed to the
    * card.
    */
-  componentWillReceiveProps(properties) {
-    this.setState({ childProperties: omit(properties, 'style') });
+  componentWillReceiveProps (properties) {
+    this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
-  render() {
-    let divStyle = extend({}, style.defaultStyle, this.props.style);
+  render () {
+    let divStyle = extend({}, style.style, this.props.style);
 
     return <div {...this.state.childProperties} style={ divStyle }>
       { this.props.children }
@@ -37,3 +37,10 @@ export default class Card extends Component {
 }
 
 Card.displayName = 'Belle Card';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style']);
+}

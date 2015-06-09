@@ -1,21 +1,21 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {Card, Button} from 'belle';
+import {Button, Card} from 'belle';
 import Code from './Code';
 
 export default class Configuration extends Component {
 
   render() {
-    return <Card>
+    return <div>
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Configuration</h2>
 
       <p>
         Belle provides you with the ability to modify the default appearance of
-        it's components.
+        it's components and even some of the behaviour.
       </p>
 
-      <h3>How To</h3>
+      <h3>Styles</h3>
 
       <p>
         With this example you overwrite the hover style of default Belle button.
@@ -53,7 +53,7 @@ export default class Configuration extends Component {
         Follow
       </Button>
 
-      <h3>Structure</h3>
+      <h4>Structure</h4>
 
       <p>
         The following example shows the structure of belle.style.
@@ -61,13 +61,49 @@ export default class Configuration extends Component {
 
       <Code value={ styleStructure } style={ {marginTop: 40} } />
 
-    </Card>;
+      <h3>Behaviour</h3>
+
+      <h4>Button</h4>
+
+      <p>
+        Focus styles are helpful to identify which element is currently
+        in focus when tabbing through the elements e.g. a user wants to
+        switch to the next input element. Yet it feels somewhat distracting
+        when clicking on the Button. That's why Belle by default prevents
+        the focus style being applied in case the Button is focused on
+        by a touch or click event. This default behaviour can be deactivated by
+        setting `preventFocusStyleForTouchAndClick` to false.
+      </p>
+
+      <h4>Select</h4>
+
+      <p>
+        By default the menu of the Select component is positioned in a way
+        that the focused Option is right above the previously selected one. In
+        order to switch off this behaviour for all Select components in your
+        application change the `shouldPositionOptions` option in config.
+      </p>
+      <p>
+        In order you as developer want to implement your own functionality you
+        you can provide your own positioning function for all Select components.
+        Keep in mind to set make the menu visible e.g. `display: block`.
+      </p>
+
+      <h4>Structure</h4>
+
+      <p>
+        The following example shows the structure of belle.config.
+      </p>
+
+      <Code value={ configStructure } style={ {marginTop: 40} } />
+
+    </div>;
   }
 }
 
 const overwriteCardStyleExample = `var belle = require('belle');
 
-belle.style.card.defaultStyle = {
+belle.style.card.style = {
   marginBottom: 20,
   padding: 20,
   borderRadius: 2,
@@ -81,7 +117,7 @@ belle.style.card.defaultStyle = {
 const extendButtonStyleExample = `var _ = require('underscore');
 var belle = require('belle');
 
-belle.style.button.defaultStyle = _.extend(belle.style.button.defaultStyle, {
+belle.style.button.style = _.extend(belle.style.button.style, {
   color: '#FFF',
   background: '#444',
   border: '1px solid #444',
@@ -89,7 +125,7 @@ belle.style.button.defaultStyle = _.extend(belle.style.button.defaultStyle, {
 });
 
 // extending hoverStyle works as well
-belle.style.button.defaultHoverStyle = _.extend(belle.style.button.defaultHoverStyle, {
+belle.style.button.hoverStyle = _.extend(belle.style.button.hoverStyle, {
   color: '#FFF',
   background: '#666',
   border: '1px solid #666',
@@ -99,22 +135,62 @@ belle.style.button.defaultHoverStyle = _.extend(belle.style.button.defaultHoverS
 
 const styleStructure = `style = {
   button: {
-    defaultStyle: { … },
-    defaultHoverStyle: { … },
-    defaultFocusStyle: { … },
-    defaultActiveStyle: { … },
+    style: { … },
+    hoverStyle: { … },
+    focusStyle: { … },
+    activeStyle: { … },
+    disabledStyle: { … },
+    disabledHoveredStyle: { … },
     primaryStyle: { … },
     primaryHoverStyle: { … },
     primaryFocusStyle: { … },
-    primaryActiveStyle: { … }
+    primaryActiveStyle: { … },
+    pirmaryDisabledStyle: { … },
+    pirmaryDisabledHoveredStyle: { … }
   },
   card: {
-    defaultStyle: { … }
+    style: { … }
+  },
+  select: {
+    style: { … },
+    focusStyle: { … },
+    hoverStyle: { … },
+    disabledStyle: { … },
+    disabledHoveredStyle: { … },
+    wrapperStyle: { … },
+    menuStyle: { … },
+    nativeSelectStyle: { … },
+    caretToOpenStyle: { … },
+    caretToCloseStyle: { … }
+  },
+  option: {
+    style: { … },
+    hoverStyle: { … },
+    selectStyle: { … }
+  },
+  placeholder: {
+    style: { … }
+  },
+  separator: {
+    style: { … }
   },
   textInput: {
-    defaultStyle: { … },
-    defaultHoverStyle: { … },
-    defaultFocusStyle: { … }
+    style: { … },
+    hoverStyle: { … },
+    focusStyle: { … },
+    disabledStyle: { … },
+    disabledHoveredStyle: { … }
+  }
+}
+`;
+
+const configStructure = `config = {
+  button: {
+    preventFocusStyleForTouchAndClick: true/false
+  }
+  select: {
+    shouldPositionOptions: true/false,
+    repositionMenu: function () {}
   }
 }
 `;
