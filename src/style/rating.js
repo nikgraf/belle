@@ -48,20 +48,21 @@ var ratingStyle = {
     textShadow: '0px 1px 0px #F3CE3C'
   },
 
+  disabledDefaultCharacterStyle: {
+    cursor: 'not-allowed'
+  },
+
   hoverCharacterStyle: {
     color: '#FFDA46'
   },
 
   activeCharacterStyle: {
     textShadow: '0px -1px 0px #D6AB00',
-    color: '#F3C200',
-    top: 0
+    color: '#F3C200'
   },
 
+  //todo: we might show some different styling here or else we can get rid or this and refactor line #414 in Rating.jsx
   disabledHoverCharacterStyle: {
-    cursor: 'not-allowed',
-    color: '#FFE375',
-    textShadow: '0px 1px 0px #F3CE3C'
   }
 
 };

@@ -408,8 +408,10 @@ export default class Rating extends Component {
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
     let characterStyle = extend({}, style.characterStyle, this._getCharacterProperty('characterStyle'));
+    let defaultCharacterStyle = {};
     if (this.props.disabled) {
       characterStyle = extend({}, characterStyle, style.disabledCharacterStyle, this._getCharacterProperty('disabledCharacterStyle'));
+      defaultCharacterStyle = extend({}, style.disabledDefaultCharacterStyle);
       if (this.state.isHover) {
         characterStyle = extend({}, characterStyle, style.disabledHoverCharacterStyle, this._getCharacterProperty('disabledHoverCharacterStyle'));
       }
@@ -453,7 +455,7 @@ export default class Rating extends Component {
 
            {
              React.Children.map([1, 2, 3, 4, 5], (value) => {
-               const ratingStyle = (currentValue >= value) ? characterStyle : {};
+               const ratingStyle = (currentValue >= value) ? characterStyle : defaultCharacterStyle;
                return (
                  <span data-belle-value= { value }
                        style={ ratingStyle }
