@@ -58,7 +58,9 @@ var ratingStyle = {
 
   activeCharacterStyle: {
     textShadow: '0px -1px 0px #D6AB00',
-    color: '#F3C200'
+    color: '#F3C200',
+    position: 'relative',
+    top: 1
   },
 
   //todo: we might show some different styling here or else we can get rid or this and refactor line #414 in Rating.jsx
