@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {extend, omit} from 'underscore';
+import {extend, omit, has} from 'underscore';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
@@ -23,11 +23,11 @@ export default class Rating extends Component {
 
     let value;
 
-    if (this.props.valueLink) {
+    if (has(this.props, 'valueLink')) {
       value = this.props.valueLink.value;
-    } else if (this.props.value) {
+    } else if (has(this.props, 'value')) {
       value = this.props.value;
-    } else if (this.props.defaultValue) {
+    } else if (has(this.props, 'defaultValue')) {
       value = this.props.defaultValue;
     }
 
@@ -278,12 +278,12 @@ export default class Rating extends Component {
    * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
    */
   _updateComponent(value) {
-    if (this.props.valueLink) {
+    if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         focusedValue: undefined
       });
-    } else if (this.props.value) {
+    } else if (has(this.props, 'value')) {
       this.setState({
         focusedValue: undefined
       });
