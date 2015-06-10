@@ -369,11 +369,11 @@ export default class Rating extends Component {
 
   /**
    * reset component when escape key is pressed
+   * esc key should just reset the component displayed rating without removing hover or focus styles
    */
   _onEscapeKeyDown() {
     this.setState({
-      focusedValue: undefined,
-      isFocus: true
+      focusedValue: undefined
     });
   }
 
