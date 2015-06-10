@@ -173,14 +173,20 @@ export default class RatingDocumentation extends Component {
 
       <h3>More Examples</h3>
 
-      <Rating defaultValue={4} disabled></Rating>
-      <Code value= { advanceCodeExample1 } style={ {marginTop: 40} } />
-      <Rating defaultValue={4} character={'✪'}></Rating>
-      <Code value= { advanceCodeExample2 } style={ {marginTop: 40} } />
-      <Rating ref="rating" defaultValue={4}></Rating>
-      <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
-         style={ {marginLeft: '20px', position: 'relative', top: '-20px', textDecoration: 'underline'} }>Reset</a>
-      <Code value= { advanceCodeExample3 } style={ {marginTop: 40} } />
+      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
+        <Rating defaultValue={4} disabled></Rating>
+        <Code value= { advanceCodeExample1 } style={ {marginTop: 15} } />
+      </Card>
+      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
+        <Rating defaultValue={4} character={'✪'}></Rating>
+        <Code value= { advanceCodeExample2 } style={ {marginTop: 15} } />
+      </Card>
+      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
+        <Rating ref="rating" defaultValue={4}></Rating>
+        <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
+           style={ {marginLeft: '20px', position: 'relative', top: '-5px', textDecoration: 'underline', 'cursor': 'pointer'} }>Reset</a>
+        <Code value= { advanceCodeExample3 } style={ {marginTop: 15} } />
+      </Card>
     </div>;
   }
 }
