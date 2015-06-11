@@ -13,8 +13,8 @@ export default React.createClass({
     mediumScreenStyle: React.PropTypes.object.isRequired
   },
 
-  getInitialState(properties) {
-    this.childProperties = omit(properties, [
+  getInitialState() {
+    this.childProperties = omit(this.props, [
       'style',
       'smallScreenStyle',
       'mediumScreenStyle'
