@@ -193,7 +193,7 @@ export default class Rating extends Component {
    * Change focusValue and sets isActive state to true.
    */
   _onTouchStart(event) {
-    if(!this.props.disabled) {
+    if(!this.props.disabled && event.touches.length === 1) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value,
@@ -209,8 +209,10 @@ export default class Rating extends Component {
    * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
-    if(!this.props.disabled) {
-      const value = Number(event.target.getAttribute('data-belle-value'));
+    if(!this.props.disabled && event.touches.length === 1) {
+
+      const touchedElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
+      const value = Number(touchedElement.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value
       });
