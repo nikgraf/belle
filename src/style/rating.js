@@ -6,8 +6,8 @@ var ratingStyle = {
     position: 'relative',
     display: 'inline-block',
     cursor: 'pointer',
-    fontSize: 32,
-    lineHeight: '32px',
+    fontSize: 36,
+    lineHeight: '36px',
     color: '#e3e3e3',
     textShadow: '0px 1px 0px #D2D1D1',
 
@@ -31,6 +31,11 @@ var ratingStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
+  disabledStyle: {
+    opacity: 0.6,
+    cursor: 'not-allowed'
+  },
+
   focusStyle: {
     outline: 0,
     WebkitAnimation: 'belle-rating-focus 2s',
@@ -42,16 +47,6 @@ var ratingStyle = {
     textShadow: '0px 1px 0px #DCB000'
   },
 
-  disabledCharacterStyle: {
-    cursor: 'not-allowed',
-    color: '#FFE375',
-    textShadow: '0px 1px 0px #F3CE3C'
-  },
-
-  disabledDefaultCharacterStyle: {
-    cursor: 'not-allowed'
-  },
-
   hoverCharacterStyle: {
     color: '#FFDA46'
   },
@@ -61,10 +56,6 @@ var ratingStyle = {
     color: '#F3C200',
     position: 'relative',
     top: 1
-  },
-
-  //todo: we might show some different styling here or else we can get rid or this and refactor line #414 in Rating.jsx
-  disabledHoverCharacterStyle: {
   }
 
 };

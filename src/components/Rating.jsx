@@ -13,8 +13,10 @@ import config from '../config/rating';
 React.initializeTouchEvents(true);
 
 /**
- * Rating component: shows 5 stars for rating.
- * Allows to display, update, highlight, disable rating and do various other customizations.
+ * Rating component
+ *
+ * The component leverages 5 characters (by default stars) to allow the user to
+ * to rate.
  */
 export default class Rating extends Component {
 
@@ -60,7 +62,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * apply pseudo classes and styling to rating wrapper div
+   * Apply pseudo class styling to the wrapper div.
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
@@ -69,14 +71,16 @@ export default class Rating extends Component {
   }
 
   /**
-   * removes pseudo classes from the DOM once component is removed
+   * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
     removeStyle(this.ratingWrapperStyleId);
   }
 
   /**
-   * api method for use to be able to reset the value to undefined
+   * Reset the value to undefined.
+   *
+   * This can be used in case you as developer want to reset the rating manually.
    */
   resetValue() {
     this.setState({
@@ -86,7 +90,8 @@ export default class Rating extends Component {
   }
 
   /**
-   * as mouse enters the component the callback will update rating to value of target span
+   * As soon as the mouse enters the component the focusedValue is updated based
+   * on the value of the targeted span.
    */
   _onMouseEnter(event) {
     if(!this.props.disabled) {
@@ -106,7 +111,8 @@ export default class Rating extends Component {
   }
 
   /**
-   * as mouse over the component and enters a new star the callback will update rating to value of target span
+   * As the mouse moved over the component and enters a new star the focusedValue
+   * is updated based on the value of the targeted span.
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
@@ -123,7 +129,7 @@ export default class Rating extends Component {
   }
 
   /**
-   * reset component as mouse leaves
+   * Resets the component as the mouse leaves the hover area.
    */
   _onMouseLeave(event) {
     if(!this.props.disabled) {
@@ -391,39 +397,26 @@ export default class Rating extends Component {
   }
 
   /**
-   * if this.props.characterProperties exists this function will returns specified property
-   */
-  _getCharacterProperty(propertyName) {
-    if(this.props.characterProperties) {
-      return this.props.characterProperties[propertyName];
-    }
-  }
-
-  /**
-   * Function to render component.
+   * Returns the HTML function to be rendered by this component.
    */
   render () {
 
     const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
-    let characterStyle = extend({}, style.characterStyle, this._getCharacterProperty('characterStyle'));
-    let defaultCharacterStyle = {};
-    if (this.props.disabled) {
-      characterStyle = extend({}, characterStyle, style.disabledCharacterStyle, this._getCharacterProperty('disabledCharacterStyle'));
-      defaultCharacterStyle = extend({}, style.disabledDefaultCharacterStyle);
-      if (this.state.isHover) {
-        characterStyle = extend({}, characterStyle, style.disabledHoverCharacterStyle, this._getCharacterProperty('disabledHoverCharacterStyle'));
-      }
-    } else {
-      if (this.state.isActive) {
-        characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this._getCharacterProperty('activeCharacterStyle'));
-      } else if (this.state.isHover) {
-        characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this._getCharacterProperty('hoverCharacterStyle'));
-      }
+    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
+
+    if (this.state.isActive) {
+      characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+    } else if (this.state.isHover) {
+      characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
     }
 
     let wrapperStyle = extend({}, style.style, this.props.style);
+    if (this.props.disabled) {
+      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
+    }
+
     if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
       wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
     }
@@ -455,7 +448,7 @@ export default class Rating extends Component {
 
            {
              React.Children.map([1, 2, 3, 4, 5], (value) => {
-               const ratingStyle = (currentValue >= value) ? characterStyle : defaultCharacterStyle;
+               const ratingStyle = (currentValue >= value) ? characterStyle : {};
                return (
                  <span data-belle-value= { value }
                        style={ ratingStyle }
@@ -474,7 +467,7 @@ export default class Rating extends Component {
 Rating.displayName = 'Belle Rating';
 
 /**
- * Function to create pseudo classes for styles.
+ * Injects pseudo classes for styles into the DOM.
  */
 function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
   let ratingFocusStyle;
@@ -493,9 +486,6 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
   injectStyles(styles);
 }
 
-/**
- * Props of Rating component
- */
 Rating.propTypes = {
   defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
   value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
@@ -512,6 +502,10 @@ Rating.propTypes = {
   style: React.PropTypes.object,
   className: React.PropTypes.string,
   focusStyle: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object,
+  characterStyle: React.PropTypes.object,
+  activeCharacterStyle: React.PropTypes.object,
+  hoverCharacterStyle: React.PropTypes.object,
   onChange: React.PropTypes.func,
   onMouseDown: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
@@ -544,7 +538,6 @@ Rating.defaultProps = {
  */
 function sanitizeWrapperProperties(properties) {
   return omit(properties, [
-    'style',
     'className',
     'onKeyDown',
     'onClick',
@@ -565,6 +558,12 @@ function sanitizeWrapperProperties(properties) {
     'aria-valuemin',
     'aria-valuenow',
     'aria-disabled',
+    'style',
+    'focusStyle',
+    'disabledStyle',
+    'characterStyle',
+    'activeCharacterStyle',
+    'hoverCharacterStyle',
     'characterProperties'
   ]);
 }
