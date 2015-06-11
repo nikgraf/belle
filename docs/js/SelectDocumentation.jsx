@@ -38,18 +38,16 @@ export default class SelectDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <p>
-        Documentation coming soon …
-      </p>
-
       <table>
 
         <tr>
           <td style={ propertyNameStyle }>
             valueLink
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Value Reference</i>
               <br />
               optional</p>
@@ -65,8 +63,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             defaultValue
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String, Boolean, Number</i>
               <br />
               optional</p>
@@ -81,8 +81,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             value
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String, Boolean, Number, Date</i>
               <br />
               optional</p>
@@ -97,8 +99,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             onChange
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Function</i>
               <br />
               optional</p>
@@ -115,8 +119,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             hoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -127,12 +133,15 @@ export default class SelectDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             focusStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -148,8 +157,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             wrapperStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -165,8 +176,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             menuStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -182,8 +195,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             caretToOpenStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -200,8 +215,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             caretToCloseStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -218,8 +235,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             shouldPositionOptions
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               optional</p>
@@ -237,8 +256,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             positionOptions
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>function(this)</i>
               <br />
               optional
@@ -255,8 +276,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             wrapperProps
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -273,8 +296,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             menuProps
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -290,8 +315,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             caretProps
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -307,8 +334,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             disabled
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               default: false</p>
@@ -320,8 +349,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             disabledStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -337,8 +368,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             disabledHoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -354,8 +387,10 @@ export default class SelectDocumentation extends Component {
           <td style={ propertyNameStyle }>
             disabledCaretToOpenStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
