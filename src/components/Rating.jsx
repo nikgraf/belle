@@ -226,6 +226,7 @@ export default class Rating extends Component {
   _onTouchEnd(event) {
 
     if(!this.props.disabled) {
+      event.preventDefault();
       this.setState({isActive: false});
       const value = this.state.focusedValue;
       this._updateComponent(value);

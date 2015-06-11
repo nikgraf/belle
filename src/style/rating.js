@@ -44,7 +44,16 @@ var ratingStyle = {
 
   characterStyle: {
     color: '#FFCC00',
-    textShadow: '0px 1px 0px #DCB000'
+    textShadow: '0px 1px 0px #DCB000',
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
   },
 
   hoverCharacterStyle: {
@@ -55,7 +64,16 @@ var ratingStyle = {
     textShadow: '0px -1px 0px #D6AB00',
     color: '#F3C200',
     position: 'relative',
-    top: 1
+    top: 1,
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
   }
 
 };
