@@ -6,8 +6,8 @@ var ratingStyle = {
     position: 'relative',
     display: 'inline-block',
     cursor: 'pointer',
-    fontSize: 36,
-    lineHeight: '36px',
+    fontSize: 40,
+    lineHeight: '40px',
     color: '#e3e3e3',
     textShadow: '0px 1px 0px #D2D1D1',
 
