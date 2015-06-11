@@ -7,20 +7,6 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
 import style from '../style/toggle';
 
-function sanitizeChildProperties(properties) {
-  let childProperties = omit(properties, [
-    'type',
-    'style',
-    'onChange',
-    'onFocus',
-    'onBlur',
-    'checked',
-    'defaultChecked'
-  ]);
-
-  return childProperties;
-}
-
 /**
  * Toggle component
  */
@@ -92,10 +78,10 @@ export default class Toggle extends Component {
     const computedTrueChoice      = first(this.props.children) ? first(this.props.children) : "✔";
     const computedFalseChoice     = last(this.props.children) ? last(this.props.children) : "✘";
 
-    const computedToggleStyle     = extend( {}, style.toggle, (this.state.value ? style.toggleActive : {}) );
+    const computedToggleStyle     = extend( {}, style.toggle, this.props.style, (this.state.value ? style.toggleActive : {}) );
     const computedSliderStyle     = extend( {}, style.slider, { transform: this.state.value ? 'translateX(0)' : 'translateX(' + style.sliderOffset + 'px)' } );
     const computedBackgroundStyle = extend( {}, style.background, (this.state.value ? style.backgroundActive : {}) );
-    
+
     return (
       <div style={ computedToggleStyle }>
         <div style={ computedBackgroundStyle }/>
@@ -121,3 +107,17 @@ export default class Toggle extends Component {
 }
 
 Toggle.displayName = 'Belle Toggle';
+
+function sanitizeChildProperties(properties) {
+  let childProperties = omit(properties, [
+    'type',
+    'style',
+    'onChange',
+    'onFocus',
+    'onBlur',
+    'checked',
+    'defaultChecked'
+  ]);
+
+  return childProperties;
+}

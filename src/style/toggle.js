@@ -14,13 +14,14 @@ const optionWidth = toggleWidth - handleWidth / 2;
 
 const sliderWidth = 2 * optionWidth;
 
-const sliderAnimationSpeed = '0.35s'
+const sliderAnimationSpeed = '0.35s';
 
 var toggleStyle = {
 
   sliderOffset: -(optionWidth - handleWidth / 2),
 
   toggle: {
+    display: 'inline-block',
     position: 'relative',
     boxSizing: 'border-box',
     borderRadius: toggleHeight,
@@ -32,9 +33,9 @@ var toggleStyle = {
     cursor: 'pointer',
     boxShadow:  '0 0 0 1px #E6E6E6, inset 0 0 0 1px #E6E6E6',
     transition: 'all ' + sliderAnimationSpeed + ' ease-in-out'
-    
+
   },
-  
+
   toggleActive: {
     background: '#38D774',
     boxShadow:  '0 0 0 1px #38D774, inset 0 0 0 1px #38D774',
@@ -95,7 +96,7 @@ var toggleStyle = {
   toggleFocus: {
     boxShadow: '0 0 5px 0 rgba(140, 175, 80, .4)'
   },
-  
+
   background: {
     background: 'white',
     position: 'absolute',
@@ -109,7 +110,7 @@ var toggleStyle = {
     transform: 'translate3d(-50%, -50%, 0)',
     transition: 'all ' + sliderAnimationSpeed + ' ease-in-out'
   },
-  
+
   backgroundActive: {
     width: '0%',
     height: '0%',
