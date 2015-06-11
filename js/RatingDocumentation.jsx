@@ -1,10 +1,10 @@
 "use strict";
 
-import React, {Component} from 'react';
+import React from 'react';
 import {Card, Rating} from 'belle';
 import Code from './Code';
 
-export default class RatingDocumentation extends Component {
+export default React.createClass({
 
   render() {
     return <div>
@@ -127,6 +127,97 @@ export default class RatingDocumentation extends Component {
             </p>
           </td>
         </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            characterStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property can be used to specify styling of set rating values
+              and will be applied to the spans wrapping the characters. Behaves
+              like React's built-in style property.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            hoverCharacterStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property can be used to specify styling of set rating values
+              when a user hover them. These styles will be applied to the spans
+              wrapping the characters. Behaves like React's built-in style property.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            activeCharacterStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property can be used to specify styling of set rating values
+              when a user touches or presses the rating. These styles will be
+              applied to the spans wrapping the characters. Behaves like React's
+              built-in style property.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            focusStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property is used to apply a focus style directly to the wrapper.
+              Behaves like React's built-in style property.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledStyle
+          </td>
+          <td style={ propertyDescriptionStyle }>
+            <p style={ {marginTop: 0} }>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property is used to apply a style directly to the wrapper
+              applied when the component is disabled. It behaves like React's
+              built-in style property.
+            </p>
+          </td>
+        </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             characterProperties
@@ -138,7 +229,7 @@ export default class RatingDocumentation extends Component {
               optional
             </p>
             <p>
-              The property can be used to specify styling and other properties specific to rating character used.
+              The property can be used to specify any other properties specific to rating character apart from styling. They will be applied to the span wrapping the character.
             </p>
           </td>
         </tr>
@@ -149,11 +240,6 @@ export default class RatingDocumentation extends Component {
       <span style={ {color: 'grey'} }> tabIndex, style, className, focusStyle, onMouseDown,
         onMouseUp, onMouseEnter, onMouseMove, onMouseLeave, onTouchStart, onTouchMove, onTouchEnd, onTouchCancel, onFocus, onBlur, onClick,
         onKeyDown</span>
-      </p>
-      <p>
-        In addition for the rating character following properties can be used (inside characterProperties object):
-        <span style={ {color: 'grey'} }> characterStyle, disabledCharacterStyle, disabledHoverCharacterStyle, activeCharacterStyle,
-        hoverCharacterStyle</span>
       </p>
 
       <h3>Methods</h3>
@@ -173,23 +259,23 @@ export default class RatingDocumentation extends Component {
 
       <h3>More Examples</h3>
 
-      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
-        <Rating defaultValue={4} disabled></Rating>
-        <Code value= { advanceCodeExample1 } style={ {marginTop: 15} } />
-      </Card>
-      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
-        <Rating defaultValue={4} character={'✪'}></Rating>
-        <Code value= { advanceCodeExample2 } style={ {marginTop: 15} } />
-      </Card>
-      <Card style={{ borderTop: '1px solid #f2f2f2', 'padding': '15px' }}>
-        <Rating ref="rating" defaultValue={4}></Rating>
-        <a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }
-           style={ {marginLeft: '20px', position: 'relative', top: '-5px', textDecoration: 'underline', 'cursor': 'pointer'} }>Reset</a>
-        <Code value= { advanceCodeExample3 } style={ {marginTop: 15} } />
-      </Card>
+      <Rating defaultValue={4} disabled></Rating>
+      <Code value= { advanceCodeExample1 } style={ {marginTop: 20, marginBottom: 40} } />
+      <Rating defaultValue={4} character={'✪'}></Rating>
+      <Code value= { advanceCodeExample2 } style={ {marginTop: 20, marginBottom: 40} } />
+      <Rating ref="rating" defaultValue={4}></Rating>
+      <a onClick={ function() { this.refs.rating.resetValue(); }.bind(this) }
+         style={ {
+           marginLeft: 20,
+           position: 'relative',
+           top: -5,
+           textDecoration: 'underline',
+           cursor: 'pointer'
+          } }>Reset</a>
+      <Code value= { advanceCodeExample3 } style={ {marginTop: 20} } />
     </div>;
   }
-}
+});
 
 const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
 
@@ -197,7 +283,15 @@ const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
 
 const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
 
-const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>\n<a onClick={ function(){this.refs.rating.resetValue()}.bind(this) }>Reset</a>`;
+const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>
+<a onClick={ function() { this.refs.rating.resetValue(); }.bind(this); }
+   style={ {
+     marginLeft: 20,
+     position: 'relative',
+     top: -5,
+     textDecoration: 'underline',
+     cursor: 'pointer'
+    } }>Reset</a>`;
 
 const propertyNameStyle = {
   padding: '0 20px 0 0',
