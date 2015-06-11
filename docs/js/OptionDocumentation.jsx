@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {Option, Select} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default class OptionDocumentation extends Component {
 
@@ -76,16 +77,3 @@ const basicCodeExample = `<!-- basic select example with multiple options -->
   <Option value="tokyo">Tokyo</Option>
   <Option value="vienna">Vienna</Option>
 </Select>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};
