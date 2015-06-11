@@ -21,12 +21,15 @@ export default class ToggleDocumentation extends Component {
         <h3>Properties</h3>
 
         <table>
+
           <tr>
             <td style={ propertyNameStyle }>
               defaultChecked
             </td>
+          </tr>
+          <tr>
             <td style={ propertyDescriptionStyle }>
-              <p style={ {marginTop: 0} }>
+              <p>
                 <i>Boolean</i>
                 <br />
                 optional</p>
@@ -40,8 +43,10 @@ export default class ToggleDocumentation extends Component {
             <td style={ propertyNameStyle }>
               value
             </td>
+          </tr>
+          <tr>
             <td style={ propertyDescriptionStyle }>
-              <p style={ {marginTop: 0} }>
+              <p>
                 <i>String</i>
                 <br />
                 optional</p>
