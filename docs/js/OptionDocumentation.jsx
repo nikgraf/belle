@@ -29,8 +29,10 @@ export default class OptionDocumentation extends Component {
           <td style={ propertyNameStyle }>
             value
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String, Boolean, Number</i>
               <br />
               required</p>
@@ -46,8 +48,10 @@ export default class OptionDocumentation extends Component {
           <td style={ propertyNameStyle }>
             hoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
