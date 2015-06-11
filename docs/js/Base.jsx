@@ -126,6 +126,9 @@ export default React.createClass({
             <li>
               <Link style={{ display: 'block', padding: '4px 0' }} to="component/text-input">TextInput</Link>
             </li>
+            <li>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="component/toggle">Toggle</Link>
+            </li>
           </ul>
           <span style={ { color: '#738088' } } >General</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
