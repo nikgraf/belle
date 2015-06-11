@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {Choice, Toggle} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default class ToggleDocumentation extends Component {
 
@@ -85,16 +86,3 @@ const choiceCodeExample = `<!-- toggle with custom choices -->
   <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

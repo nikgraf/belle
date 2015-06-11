@@ -3,6 +3,7 @@
 import React, {Component} from 'react/addons';
 import {TextInput} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default React.createClass({
 
@@ -264,16 +265,3 @@ const advancedExampleCode = `<TextInput minHeight={ 120 }
 <p>Two-way data binding: { this.state.customTextInputValue }</p>`;
 
 const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

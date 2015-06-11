@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 const fruits = [
   { value: "pineapple", content: (<span>🍍 Pineapple</span>) },
@@ -677,16 +678,3 @@ const htmlStructure = `<div ref="wrapper"
     … more entries …
   </ul>
 </div>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};
