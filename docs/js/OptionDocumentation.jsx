@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {Option, Select} from 'belle';
 import {map} from 'underscore';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default class OptionDocumentation extends Component {
 
@@ -28,8 +29,10 @@ export default class OptionDocumentation extends Component {
           <td style={ propertyNameStyle }>
             value
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String, Boolean, Number</i>
               <br />
               required</p>
@@ -45,8 +48,10 @@ export default class OptionDocumentation extends Component {
           <td style={ propertyNameStyle }>
             hoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -76,16 +81,3 @@ const basicCodeExample = `<!-- basic select example with multiple options -->
   <Option value="tokyo">Tokyo</Option>
   <Option value="vienna">Vienna</Option>
 </Select>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

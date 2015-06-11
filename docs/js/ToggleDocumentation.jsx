@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {Choice, Toggle} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default class ToggleDocumentation extends Component {
 
@@ -20,12 +21,15 @@ export default class ToggleDocumentation extends Component {
         <h3>Properties</h3>
 
         <table>
+
           <tr>
             <td style={ propertyNameStyle }>
               defaultChecked
             </td>
+          </tr>
+          <tr>
             <td style={ propertyDescriptionStyle }>
-              <p style={ {marginTop: 0} }>
+              <p>
                 <i>Boolean</i>
                 <br />
                 optional</p>
@@ -39,8 +43,10 @@ export default class ToggleDocumentation extends Component {
             <td style={ propertyNameStyle }>
               value
             </td>
+          </tr>
+          <tr>
             <td style={ propertyDescriptionStyle }>
-              <p style={ {marginTop: 0} }>
+              <p>
                 <i>String</i>
                 <br />
                 optional</p>
@@ -85,16 +91,3 @@ const choiceCodeExample = `<!-- toggle with custom choices -->
   <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

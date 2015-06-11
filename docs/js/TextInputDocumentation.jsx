@@ -3,6 +3,7 @@
 import React, {Component} from 'react/addons';
 import {TextInput} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default React.createClass({
 
@@ -33,12 +34,15 @@ export default React.createClass({
       <h3>Properties</h3>
 
       <table>
+
         <tr>
           <td style={ propertyNameStyle }>
             valueLink
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Value Reference</i>
               <br />
               optional</p>
@@ -54,8 +58,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             defaultValue
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String</i>
               <br />
               optional</p>
@@ -70,8 +76,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             value
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String</i>
               <br />
               optional</p>
@@ -86,8 +94,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             onChange
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Function</i>
               <br />
               optional</p>
@@ -103,8 +113,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             disabled
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               optional
@@ -117,8 +129,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             minHeight
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Integer</i>
               <br />
               optional</p>
@@ -133,8 +147,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             hoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -150,8 +166,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             focusStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -167,8 +185,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             disabledStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -184,8 +204,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             disabledHoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -264,16 +286,3 @@ const advancedExampleCode = `<TextInput minHeight={ 120 }
 <p>Two-way data binding: { this.state.customTextInputValue }</p>`;
 
 const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

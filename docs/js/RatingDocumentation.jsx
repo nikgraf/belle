@@ -3,6 +3,7 @@
 import React from 'react';
 import {Card, Rating} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default React.createClass({
 
@@ -22,8 +23,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             valueLink
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Value Reference</i>
               <br />
               optional
@@ -35,12 +38,15 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             defaultValue
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Integer (1-5)</i>
               <br />
               optional
@@ -51,12 +57,15 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             value
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Integer (1-5)</i>
               <br />
               optional
@@ -67,12 +76,15 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             onChange
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Function</i>
               <br />
               optional
@@ -82,12 +94,15 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             disabled
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               optional (default: false)
@@ -97,27 +112,33 @@ export default React.createClass({
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             preventFocusStyleForTouchAndClick
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               optional (default: true)
             </p>
             <p>
-              Prevents the focus style being applied in case the buttons becomes focused by a click or touch..
+              Prevents the focus style being applied in case the buttons becomes focused by a click or touch.
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             character
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Character</i>
               <br />
               optional (default: '★')
@@ -132,8 +153,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             characterStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -150,8 +173,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             hoverCharacterStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -168,8 +193,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             activeCharacterStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -187,8 +214,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             focusStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -204,8 +233,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             disabledStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -222,8 +253,10 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             characterProperties
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -249,9 +282,11 @@ export default React.createClass({
           <td style={ propertyNameStyle }>
             resetValue
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
-              Method can be called to reset rating to undefined.
+            <p>
+              This method can be called to reset the Rating's value to undefined.
             </p>
           </td>
         </tr>
@@ -292,16 +327,3 @@ const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>
      textDecoration: 'underline',
      cursor: 'pointer'
     } }>Reset</a>`;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};

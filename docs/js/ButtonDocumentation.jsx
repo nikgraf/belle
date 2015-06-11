@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {Button} from 'belle';
 import Code from './Code';
+import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 export default class ButtonDocumentation extends Component {
 
@@ -32,20 +33,25 @@ export default class ButtonDocumentation extends Component {
           <td style={ propertyNameStyle }>
             primary
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p >
               <i>Boolean</i>
               <br />
               default: false</p>
             <p>If true the Button will be appear with the primary button styles</p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             type
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>String</i> of 'button', 'submit', 'reset'
               <br />
               default: 'buttom'
@@ -57,24 +63,30 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             disabled
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               default: false</p>
             <p>If true the Button will be disabled and can't be pressed by a user.</p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             hoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -85,12 +97,15 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             focusStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -101,12 +116,15 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             activeStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -117,12 +135,15 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             disabledStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -133,12 +154,15 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             disabledHoverStyle
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Object</i>
               <br />
               optional
@@ -149,12 +173,15 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
+
         <tr>
           <td style={ propertyNameStyle }>
             preventFocusStyleForTouchAndClick
           </td>
+        </tr>
+        <tr>
           <td style={ propertyDescriptionStyle }>
-            <p style={ {marginTop: 0} }>
+            <p>
               <i>Boolean</i>
               <br />
               optional (default: true)
@@ -284,16 +311,3 @@ const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>F
 
 <Button disabled>Follow</Button>
 `;
-
-const propertyNameStyle = {
-  padding: '0 20px 0 0',
-  textAlign: 'left',
-  verticalAlign: 'top',
-  color: 'grey'
-};
-
-const propertyDescriptionStyle = {
-  padding: 0,
-  textAlign: 'left',
-  verticalAlign: 'top'
-};
