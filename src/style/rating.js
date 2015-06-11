@@ -3,30 +3,18 @@
 var ratingStyle = {
 
   style: {
-    fontSize: 32,
-    lineHeight: '32px',
-    color: '#FFCC00',
-    position: 'absolute',
-    top: -1,
-    left: 0,
-    overflow: 'hidden',
-    textShadow: '0px 1px 0px #DCB000',
-    cursor: 'pointer'
-  },
-
-  wrapperStyle: {
     position: 'relative',
     display: 'inline-block',
     cursor: 'pointer',
-    fontSize: 32,
-    lineHeight: '32px',
+    fontSize: 36,
+    lineHeight: '36px',
     color: '#e3e3e3',
-    textShadow: '0px -1px 0px #D2D1D1',
+    textShadow: '0px 1px 0px #D2D1D1',
 
     /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
     MsUserSelect: 'none',
@@ -37,14 +25,15 @@ var ratingStyle = {
     touchAction: 'manipulation',
 
     /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
     WebkitTapHighlightColor: 'transparent'
   },
 
-  hoverStyle: {
-    color: '#FFDA46'
+  disabledStyle: {
+    opacity: 0.6,
+    cursor: 'not-allowed'
   },
 
   focusStyle: {
@@ -53,22 +42,20 @@ var ratingStyle = {
     borderRadius: 2
   },
 
-  activeStyle: {
+  characterStyle: {
+    color: '#FFCC00',
+    textShadow: '0px 1px 0px #DCB000'
+  },
+
+  hoverCharacterStyle: {
+    color: '#FFDA46'
+  },
+
+  activeCharacterStyle: {
     textShadow: '0px -1px 0px #D6AB00',
     color: '#F3C200',
-    top: 0
-  },
-
-  disabledStyle: {
-    cursor: 'not-allowed',
-    color: '#FFE375',
-    textShadow: '0px 1px 0px #F3CE3C'
-  },
-
-  disabledHoverStyle: {
-    cursor: 'not-allowed',
-    color: '#FFE375',
-    textShadow: '0px 1px 0px #F3CE3C'
+    position: 'relative',
+    top: 1
   }
 
 };

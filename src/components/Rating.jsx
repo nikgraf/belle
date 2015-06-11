@@ -3,7 +3,7 @@
 /* jslint browser: true */
 
 import React, {Component} from 'react';
-import {extend, omit} from 'underscore';
+import {extend, omit, has} from 'underscore';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
@@ -13,31 +13,33 @@ import config from '../config/rating';
 React.initializeTouchEvents(true);
 
 /**
- * Rating component: shows 5 stars for rating.
- * Allows to display, update, highlight, disable rating and do various other customizations.
+ * Rating component
+ *
+ * The component leverages 5 characters (by default stars) to allow the user to
+ * to rate.
  */
 export default class Rating extends Component {
 
   constructor(properties) {
     super(properties);
 
-    this.active = false;
-
     let value;
 
-    if (this.props.valueLink) {
+    if (has(this.props, 'valueLink')) {
       value = this.props.valueLink.value;
-    } else if (this.props.value) {
+    } else if (has(this.props, 'value')) {
       value = this.props.value;
-    } else if (this.props.defaultValue) {
+    } else if (has(this.props, 'defaultValue')) {
       value = this.props.defaultValue;
     }
 
     this.state = {
       value: value,
       focusedValue: undefined,
-      generalProperties: sanitizeProperties(properties),
-      focused: false
+      generalProperties: sanitizeWrapperProperties(properties),
+      characterProperties: sanitizeCharacterProperties(properties.characterProperties),
+      isFocus: false,
+      isActive: false
     };
   }
 
@@ -54,30 +56,31 @@ export default class Rating extends Component {
 
     this.setState({
       value: value,
-      generalProperties: sanitizeProperties(properties)
+      wrapperProperties: sanitizeWrapperProperties(properties),
+      characterProperties: sanitizeCharacterProperties(properties.characterProperties)
     });
   }
 
   /**
-   * apply pseudo classes to rating and rating wrapper divs
+   * Apply pseudo class styling to the wrapper div.
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this.ratingStyleId = `rating-style-id${id}`;
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingStyleId, this.ratingWrapperStyleId, this.props);
+    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
   }
 
   /**
-   * removes pseudo classes from the DOM once component is removed
+   * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
-    removeStyle(this.ratingStyleId);
     removeStyle(this.ratingWrapperStyleId);
   }
 
   /**
-   * api method for use to be able to reset the value to undefined
+   * Reset the value to undefined.
+   *
+   * This can be used in case you as developer want to reset the rating manually.
    */
   resetValue() {
     this.setState({
@@ -87,11 +90,38 @@ export default class Rating extends Component {
   }
 
   /**
-   * in case of mouse hover highlights the component and set the focusedValue depending on mouse position
+   * As soon as the mouse enters the component the focusedValue is updated based
+   * on the value of the targeted span.
+   */
+  _onMouseEnter(event) {
+    if(!this.props.disabled) {
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this.setState({
+        focusedValue: value,
+        isHover: true
+      });
+    } else {
+      this.setState({
+        isHover: true
+      });
+    }
+    if (this.props.onMouseEnter) {
+      this.props.onMouseEnter(event);
+    }
+  }
+
+  /**
+   * As the mouse moved over the component and enters a new star the focusedValue
+   * is updated based on the value of the targeted span.
    */
   _onMouseMove(event) {
     if(!this.props.disabled) {
-      this._changeComponent(event.pageX);
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      if(this.state.focusedValue !== value) {
+        this.setState({
+          focusedValue: value
+        });
+      }
     }
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
@@ -99,12 +129,20 @@ export default class Rating extends Component {
   }
 
   /**
-   * reset component as mouse leaves
+   * Resets the component as the mouse leaves the hover area.
    */
   _onMouseLeave(event) {
     if(!this.props.disabled) {
-      this._resetComponent();
+      this.setState({
+        focusedValue: undefined,
+        isHover: false
+      });
+    } else {
+      this.setState({
+        isHover: false
+      });
     }
+
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
@@ -112,12 +150,11 @@ export default class Rating extends Component {
 
 
   /**
-   * Sets active state to true.
+   * Sets isActive state to true.
    */
   _onMouseDown(event) {
     if(!this.props.disabled) {
-      this.active = true;
-      this.forceUpdate();
+      this.setState({isActive: true});
     }
 
     if (this.props.onMouseDown) {
@@ -126,10 +163,12 @@ export default class Rating extends Component {
   }
 
   /**
-   * Sets active state to false.
+   * Sets isActive state to false.
    */
   _onMouseUp(event) {
-    this.active = false;
+    if(!this.props.disabled) {
+      this.setState({isActive: false});
+    }
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
@@ -137,28 +176,44 @@ export default class Rating extends Component {
   }
 
   /**
-   * Sets active state to true.
+   * update component when clicked
    */
-  _onTouchStart(event) {
+  _onClick(event) {
     if(!this.props.disabled) {
-      this.active = true;
-      this.forceUpdate();
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this._updateComponent(value);
     }
 
-    if (this.props.onTouchEnd) {
-      this.props.onTouchEnd(event);
+    if (this.props.onClick) {
+      this.props.onClick(event);
     }
   }
 
   /**
-   * On a touch device, in case of touch move highlights the component and set the focusedValue depending on mouse position
+   * Change focusValue and sets isActive state to true.
+   */
+  _onTouchStart(event) {
+    if(!this.props.disabled) {
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this.setState({
+        focusedValue: value,
+        isActive: true
+      });
+    }
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
+    }
+  }
+
+  /**
+   * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
     if(!this.props.disabled) {
-      if (event.targetTouches.length === 1) {
-        const touch = event.targetTouches[0];
-        this._changeComponent(touch.pageX);
-      }
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this.setState({
+        focusedValue: value
+      });
     }
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
@@ -169,9 +224,11 @@ export default class Rating extends Component {
    * update the component when touch ends
    */
   _onTouchEnd(event) {
-    this.active = false;
+
     if(!this.props.disabled) {
-      this._updateComponent();
+      this.setState({isActive: false});
+      const value = this.state.focusedValue;
+      this._updateComponent(value);
     }
 
     if (this.props.onTouchEnd) {
@@ -183,9 +240,11 @@ export default class Rating extends Component {
    * reset the component in case of touch cancel
    */
   _onTouchCancel(event) {
-    this.active = false;
     if(!this.props.disabled) {
-      this._resetComponent();
+      this.setState({
+        isActive: false,
+        focusedValue: undefined
+      });
     }
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
@@ -198,9 +257,8 @@ export default class Rating extends Component {
   _onBlur(event) {
     if(!this.props.disabled) {
       this.setState({
-        focused: false,
         focusedValue: undefined,
-        hoverStyle: undefined
+        isFocus: false
       });
     }
     if (this.props.onBlur) {
@@ -212,8 +270,8 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.active & !this.props.disabled) {
-      this.setState({focused: true});
+    if(!this.state.isActive && !this.props.disabled) {
+      this.setState({isFocus: true});
     }
 
     if (this.props.onFocus) {
@@ -222,15 +280,28 @@ export default class Rating extends Component {
   }
 
   /**
-   * update component when clicked
+   * update component when component is clicked, touch ends, enter or space key are hit
+   * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
    */
-  _onClick(event) {
-    if(!this.props.disabled) {
-      this._updateComponent();
+  _updateComponent(value) {
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
+      this.setState({
+        focusedValue: undefined
+      });
+    } else if (has(this.props, 'value')) {
+      this.setState({
+        focusedValue: undefined
+      });
+    } else {
+      this.setState({
+        focusedValue: undefined,
+        value: value
+      });
     }
 
-    if (this.props.onClick) {
-      this.props.onClick(event);
+    if (this.props.onChange) {
+      this.props.onChange({target: { value: value }});
     }
   }
 
@@ -238,9 +309,10 @@ export default class Rating extends Component {
    * Manages the keyboard events.
    *
    * In case the Rating Component is in focus Space, ArrowUp will result in increasing the value and arrow down will result in decreasing the value.
-   * Enter/ space will result in updating the value of the component and calling onChange event.
+   * Enter/ space will result in updating the value of the component.
    *
    * Pressing Escape will reset the value to last value.
+   *
    */
   _onKeyDown(event) {
     if(!this.props.disabled) {
@@ -252,10 +324,10 @@ export default class Rating extends Component {
         this._onArrowUpKeyDown();
       } else if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        this._updateComponent();
+        this._onEnterSpaceKeyDown();
       } else if (event.key === 'Escape') {
         event.preventDefault();
-        this._resetComponent();
+        this._onEscapeKeyDown();
       }
     }
     if (this.props.onKeyDown) {
@@ -264,128 +336,102 @@ export default class Rating extends Component {
   }
 
   /**
-   * calculate focusedValue and apply highlighting to the component when it is clicked, touch ends, enter or space key are hit
-   */
-  _changeComponent(pageX) {
-    const wrapperNode = React.findDOMNode(this.refs.wrapper);
-    const wrapperWidth = wrapperNode.getBoundingClientRect().width;
-    const mouseMoved = pageX - wrapperNode.getBoundingClientRect().left;
-    const newRating = Math.round(mouseMoved * 5 / wrapperWidth + 0.4);
-    this._showFocusedValue(newRating);
-  }
-
-  /**
-   * update component component is clicked, touch ends, enter or space key are hit.
-   */
-  _updateComponent() {
-    var value = this.state.focusedValue > 0 ? this.state.focusedValue : undefined;
-
-    if (this.props.valueLink) {
-      this.props.valueLink.requestChange(value);
-      this.setState({
-        hoverStyle: undefined
-      });
-    } else if (this.props.value) {
-      this.setState({
-        hoverStyle: undefined
-      });
-    } else {
-      this.setState({
-        hoverStyle: undefined,
-        value: value
-      });
-    }
-
-    if (this.props.onChange) {
-      this.props.onChange({target: { value: value }});
-    }
-  }
-
-  /**
-   * Function that will be called to reset the component value.
-   * This method looks like duplicate of resetValue above but that is an api method, this method is internal to the component
-   */
-  _resetComponent() {
-    this.setState({
-      focusedValue: undefined,
-      hoverStyle: undefined
-    });
-  }
-
-  /**
    * decrease the value by 1 when arrow down key is pressed
    */
   _onArrowDownKeyDown() {
-    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
-    newValue = newValue > 2 ? (newValue - 1) : undefined;
-    this._showFocusedValue(newValue);
+    let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
+    newValue = newValue > 0 ? (newValue - 1) : 0;
+    this.setState({
+      focusedValue: newValue
+    });
   }
 
   /**
    * increase value by 1 when arrow up key is pressed
    */
   _onArrowUpKeyDown() {
-    let newValue = this.state.focusedValue ? this.state.focusedValue : this.state.value;
-    newValue = newValue < 5 ? (newValue + 1) : 5;
-    this._showFocusedValue(newValue);
-  }
-
-  /**
-   * apply highlighting to value component
-   */
-  _showFocusedValue(focusedValue) {
+    let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
+    newValue = !newValue ? 1 : (newValue < 5) ? (newValue + 1) : 5;
     this.setState({
-      hoverStyle: style.hoverStyle,
-      focusedValue: focusedValue
+      focusedValue: newValue
     });
   }
 
   /**
-   * Calculate width of highlighted stars, the function uses
-   * this.state.focusedValue if it exists else it uses this.state.value.
+   * set component value to current focus value
    */
-  _getWidth() {
-    let value;
+  _onEnterSpaceKeyDown() {
+    let newValue;
+    if(this.state.focusedValue !== undefined) {
+      if(this.state.focusedValue === 0) {
+        newValue = undefined;
+      }
+      else {
+        newValue = this.state.focusedValue;
+      }
+      this._updateComponent(newValue);
+    }
+  }
 
-    if (this.state.focusedValue) {
+  /**
+   * reset component when escape key is pressed
+   * esc key should just reset the component displayed rating without removing hover or focus styles
+   */
+  _onEscapeKeyDown() {
+    this.setState({
+      focusedValue: undefined
+    });
+  }
+
+  /**
+   * Returns current value of rating to be displayed on the component
+   */
+  _getCurrentValue() {
+    let value;
+    if (this.state.focusedValue !== undefined) {
       value = this.state.focusedValue;
     } else {
       value = (this.state.value) ? this.state.value : 0;
     }
-    return (value * 20) + '%';
+    return value;
   }
 
   /**
-   * Function to render component.
+   * Returns the HTML function to be rendered by this component.
    */
   render () {
-    let ratingCalculatedStyle = extend({}, style.style, this.state.hoverStyle, { width: this._getWidth() });
-    let ratingWrapperCalculatedStyle = extend({}, style.wrapperStyle, this.props.style);
 
-    if (this.props.disabled) {
-      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.disabledStyle, this.props.disabledStyle);
-    }
-
-    if (this.state.focused && this.props.preventFocusStyleForTouchAndClick) {
-      ratingWrapperCalculatedStyle = extend({}, ratingWrapperCalculatedStyle, style.focusStyle, this.props.focusStyle);
-    }
-
-    if (this.active) {
-      ratingCalculatedStyle = extend({}, ratingCalculatedStyle, style.activeStyle, this.props.activeStyle);
-    }
-
+    const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+
+    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
+
+    if (this.state.isActive) {
+      characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+    } else if (this.state.isHover) {
+      characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
+    }
+
+    let wrapperStyle = extend({}, style.style, this.props.style);
+    if (this.props.disabled) {
+      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
+    }
+
+    if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
+      wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+    }
 
     return (
       <div ref="wrapper"
-           style={ ratingWrapperCalculatedStyle }
+           style={ wrapperStyle }
            className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
+           onKeyDown={ this._onKeyDown.bind(this) }
+           onClick = { this._onClick.bind(this) }
+           onMouseEnter={ this._onMouseEnter.bind(this) }
            onMouseMove={ this._onMouseMove.bind(this) }
            onMouseLeave={ this._onMouseLeave.bind(this) }
            onMouseUp={ this._onMouseUp.bind(this) }
            onMouseDown={ this._onMouseDown.bind(this) }
-           onClick={ this._onClick.bind(this) }
-           onKeyDown={ this._onKeyDown.bind(this) }
            onTouchStart={ this._onTouchStart.bind(this) }
            onTouchMove={ this._onTouchMove.bind(this) }
            onTouchEnd={ this._onTouchEnd.bind(this) }
@@ -398,28 +444,48 @@ export default class Rating extends Component {
            aria-valuemin = { 1 }
            aria-valuenow = { this.state.value }
            aria-disabled = { this.props.disabled }
-           {...this.state.generalProperties}>
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      { this.props.ratingCharacter }
-      <div style={ ratingCalculatedStyle }
-        className={ this.ratingStyleId }>
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
-        { this.props.ratingCharacter }
+           {...this.state.wrapperProperties}>
+
+           {
+             React.Children.map([1, 2, 3, 4, 5], (value) => {
+               const ratingStyle = (currentValue >= value) ? characterStyle : {};
+               return (
+                 <span data-belle-value= { value }
+                       style={ ratingStyle }
+                       {...this.state.characterProperties}>
+                   { this.props.character }
+                 </span>
+               );
+             })
+           }
+
       </div>
-    </div>
     );
   }
 }
 
+Rating.displayName = 'Belle Rating';
+
 /**
- * Props of Rating component
+ * Injects pseudo classes for styles into the DOM.
  */
+function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
+  let ratingFocusStyle;
+  if (properties.preventFocusStyleForTouchAndClick) {
+    ratingFocusStyle = { outline: 0 };
+  } else {
+    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  }
+  const styles = [
+    {
+      id: ratingWrapperStyleId,
+      style: ratingFocusStyle,
+      pseudoClass: 'focus'
+    }
+  ];
+  injectStyles(styles);
+}
+
 Rating.propTypes = {
   defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
   value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
@@ -428,17 +494,19 @@ Rating.propTypes = {
     requestChange: React.PropTypes.func.isRequired
   }),
   disabled: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
-  ratingCharacter: React.PropTypes.string,
+  character: React.PropTypes.string,
+  characterProperties: React.PropTypes.object,
   preventFocusStyleForTouchAndClick: React.PropTypes.bool,
   'aria-label': React.PropTypes.string,
   style: React.PropTypes.object,
   className: React.PropTypes.string,
-  hoverStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
+  characterStyle: React.PropTypes.object,
+  activeCharacterStyle: React.PropTypes.object,
+  hoverCharacterStyle: React.PropTypes.object,
+  onChange: React.PropTypes.func,
   onMouseDown: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
   onMouseEnter: React.PropTypes.func,
@@ -460,78 +528,52 @@ Rating.propTypes = {
 Rating.defaultProps = {
   disabled: false,
   tabIndex: 0,
-  ratingCharacter: '★',
+  character: '★',
   'aria-label': 'rating',
   preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
 
-Rating.displayName = 'Belle Rating';
-
 /**
- * Function to create pseudo classes for styles.
+ * sanitize properties for the wrapping div.
  */
-function updatePseudoClassStyle(ratingStyleId, ratingWrapperStyleId, properties) {
-  let ratingFocusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
-    ratingFocusStyle = { outline: 0 };
-  } else {
-    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
-  }
-  const styles = [
-    {
-      id: ratingWrapperStyleId,
-      style: ratingFocusStyle,
-      pseudoClass: 'focus'
-    }
-  ];
-  if(properties.hoverStyle) {
-    styles.push({
-      id: ratingWrapperStyleId,
-      style: properties.hoverStyle,
-      pseudoClass: 'hover'
-    });
-  }
-  if(properties.disabledHoverStyle) {
-    styles.push({
-      id: ratingWrapperStyleId,
-      style: properties.disabledHoverStyle,
-      pseudoClass: 'hover',
-      disabled: true
-    });
-  }
-  injectStyles(styles);
-}
-
-/**
- * Returns an object with properties that are relevant for the wrapping div.
- */
-function sanitizeProperties(properties) {
+function sanitizeWrapperProperties(properties) {
   return omit(properties, [
-    'defaultValue',
-    'value',
-    'valueLink',
-    'disabled',
-    'onChange',
-    'ratingCharacter',
-    'style',
     'className',
-    'hoverStyle',
-    'focusStyle',
-    'disabledStyle',
-    'disabledHoverStyle',
-    'tabIndex',
-    'onMouseUp',
-    'onMouseDown',
+    'onKeyDown',
+    'onClick',
+    'onMouseEnter',
     'onMouseMove',
     'onMouseLeave',
+    'onMouseUp',
+    'onMouseDown',
     'onTouchStart',
     'onTouchMove',
     'onTouchEnd',
     'onTouchCancel',
     'onBlur',
-    'onClick',
-    'onKeyDown',
     'onFocus',
-    'preventFocusStyleForTouchAndClick'
-]);
+    'tabIndex',
+    'aria-label',
+    'aria-valuemax',
+    'aria-valuemin',
+    'aria-valuenow',
+    'aria-disabled',
+    'style',
+    'focusStyle',
+    'disabledStyle',
+    'characterStyle',
+    'activeCharacterStyle',
+    'hoverCharacterStyle',
+    'characterProperties'
+  ]);
+}
+
+/**
+ * sanitize properties for the character span.
+ */
+function sanitizeCharacterProperties(properties) {
+  return omit(properties, [
+    'data-belle-value',
+    'style'
+  ]);
 }

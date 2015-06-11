@@ -55,7 +55,7 @@ export default React.createClass({
                   onChange={ (event) => console.log(event.target.value) } />
 
           <h3>Disabled</h3>
-          <Rating defaultValue={ 4 } disabled aria-labelledby={'testing-only'} />
+          <Rating defaultValue={ 2 } disabled aria-labelledby={'testing-only'} />
 
           <h3>RatingCharacter</h3>
           <Rating defaultValue={ 1 } ratingCharacter={'✪'} id={'my_rating'} aria-label={ 'user_provided' } />
