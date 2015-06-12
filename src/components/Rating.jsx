@@ -206,20 +206,29 @@ export default class Rating extends Component {
   }
 
   /**
+   * The function will be passed to requestAnimationFrame for touchMove
+   */
+  _updateComponentOnTouchMove(touches) {
+    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
+    const value = Number(touchedElement.getAttribute('data-belle-value'));
+    if(value && this.state.focusedValue !== value) {
+      this.setState({
+        focusedValue: value
+      });
+    }
+  }
+
+  /**
    * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
     if(!this.props.disabled && event.touches.length === 1) {
-
-      const touchedElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
-      const value = Number(touchedElement.getAttribute('data-belle-value'));
-      if(value && this.state.focusedValue !== value) {
-        window.requestAnimationFrame((function(){
-          this.setState({
-            focusedValue: value
-          });
-        }).bind(this));
+      var touches = event.touches[0];
+      var animationFrame = window.requestAnimationFrame(this._updateComponentOnTouchMove.bind(this, touches));
+      if(this.previousMouseMoveFrame) {
+        window.cancelAnimationFrame(this.previousMouseMoveFrame);
       }
+      this.previousMouseMoveFrame = animationFrame;
     }
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
