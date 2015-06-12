@@ -6,8 +6,8 @@ var ratingStyle = {
     position: 'relative',
     display: 'inline-block',
     cursor: 'pointer',
-    fontSize: 40,
-    lineHeight: '40px',
+    fontSize: '2rem',
+    lineHeight: '2rem',
     color: '#e3e3e3',
     textShadow: '0px 1px 0px #D2D1D1',
 
@@ -53,7 +53,7 @@ var ratingStyle = {
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
     MsUserSelect: 'none',
-    userSelect: 'none',
+    userSelect: 'none'
   },
 
   hoverCharacterStyle: {
@@ -73,7 +73,7 @@ var ratingStyle = {
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
     MsUserSelect: 'none',
-    userSelect: 'none',
+    userSelect: 'none'
   }
 
 };
