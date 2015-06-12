@@ -213,9 +213,11 @@ export default class Rating extends Component {
 
       const touchedElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
       const value = Number(touchedElement.getAttribute('data-belle-value'));
-      this.setState({
-        focusedValue: value
-      });
+      if(value && this.state.focusedValue !== value) {
+        this.setState({
+          focusedValue: value
+        });
+      }
     }
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
