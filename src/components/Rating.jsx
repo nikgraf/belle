@@ -8,6 +8,7 @@ import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
+import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animationframe-polyfill';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -224,9 +225,9 @@ export default class Rating extends Component {
   _onTouchMove(event) {
     if(!this.props.disabled && event.touches.length === 1) {
       var touches = event.touches[0];
-      var animationFrame = window.requestAnimationFrame(this._updateComponentOnTouchMove.bind(this, touches));
+      var animationFrame = requestAnimationFrame(this._updateComponentOnTouchMove.bind(this, touches));
       if(this.previousMouseMoveFrame) {
-        window.cancelAnimationFrame(this.previousMouseMoveFrame);
+        cancelAnimationFrame(this.previousMouseMoveFrame);
       }
       this.previousMouseMoveFrame = animationFrame;
     }
