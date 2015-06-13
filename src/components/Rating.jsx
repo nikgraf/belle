@@ -224,13 +224,23 @@ export default class Rating extends Component {
    */
   _onTouchMove(event) {
     if(!this.props.disabled && event.touches.length === 1) {
-      var touches = event.touches[0];
-      var animationFrame = requestAnimationFrame(this._updateComponentOnTouchMove.bind(this, touches));
+      const touches = event.touches[0];
+
+      // the requestAnimationFrame function must be executed in the context of window
+      // see http://stackoverflow.com/a/9678166/837709
+      const animationFrame = requestAnimationFrame.call(
+        window,
+        this._updateComponentOnTouchMove.bind(this, touches)
+      );
+
       if(this.previousMouseMoveFrame) {
-        cancelAnimationFrame(this.previousMouseMoveFrame);
+        // the cancelAnimationFrame function must be executed in the context of window
+        // see http://stackoverflow.com/a/9678166/837709
+        cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
       }
       this.previousMouseMoveFrame = animationFrame;
     }
+
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
     }
