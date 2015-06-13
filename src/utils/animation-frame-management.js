@@ -2,6 +2,8 @@
 
 /* jslint browser: true */
 
+// Inspired by https://gist.github.com/paulirish/1579671
+
 export var requestAnimationFrame;
 export var cancelAnimationFrame;
 

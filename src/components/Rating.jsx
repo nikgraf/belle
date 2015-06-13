@@ -8,7 +8,7 @@ import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
-import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animationframe-polyfill';
+import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
