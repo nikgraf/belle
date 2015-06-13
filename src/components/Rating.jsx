@@ -8,6 +8,7 @@ import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
+import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -206,17 +207,40 @@ export default class Rating extends Component {
   }
 
   /**
-   * set the focusedValue depending on mouse position
+   * The function will be passed to requestAnimationFrame for touchMove
    */
-  _onTouchMove(event) {
-    if(!this.props.disabled && event.touches.length === 1) {
-
-      const touchedElement = document.elementFromPoint(event.touches[0].clientX, event.touches[0].clientY);
-      const value = Number(touchedElement.getAttribute('data-belle-value'));
+  _updateComponentOnTouchMove(touches) {
+    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
+    const value = Number(touchedElement.getAttribute('data-belle-value'));
+    if(value && this.state.focusedValue !== value) {
       this.setState({
         focusedValue: value
       });
     }
+  }
+
+  /**
+   * set the focusedValue depending on mouse position
+   */
+  _onTouchMove(event) {
+    if(!this.props.disabled && event.touches.length === 1) {
+      const touches = event.touches[0];
+
+      // the requestAnimationFrame function must be executed in the context of window
+      // see http://stackoverflow.com/a/9678166/837709
+      const animationFrame = requestAnimationFrame.call(
+        window,
+        this._updateComponentOnTouchMove.bind(this, touches)
+      );
+
+      if(this.previousMouseMoveFrame) {
+        // the cancelAnimationFrame function must be executed in the context of window
+        // see http://stackoverflow.com/a/9678166/837709
+        cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
+      }
+      this.previousMouseMoveFrame = animationFrame;
+    }
+
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
     }
