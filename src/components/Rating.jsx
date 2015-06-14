@@ -72,6 +72,13 @@ export default class Rating extends Component {
   }
 
   /**
+   * Update value of component dom node.
+   */
+  componentDidMount() {
+    React.findDOMNode(this).value = this.state.value;
+  }
+
+  /**
    * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
@@ -327,8 +334,11 @@ export default class Rating extends Component {
       });
     }
 
+    const domNode = React.findDOMNode(this);
+    domNode.value = value;
+
     if (this.props.onChange) {
-      this.props.onChange({target: { value: value }});
+      this.props.onChange({target: domNode});
     }
   }
 
