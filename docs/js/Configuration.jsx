@@ -89,6 +89,15 @@ export default class Configuration extends Component {
         Keep in mind to set make the menu visible e.g. `display: block`.
       </p>
 
+      <h4>Rating</h4>
+
+      <p>
+        Similar as in the case of Button in Rating also by default
+        the focus style is not applied in case the component is focused on
+        by a touch or click event. This default behaviour can be deactivated by
+        setting `preventFocusStyleForTouchAndClick` to false.
+      </p>
+
       <h4>Structure</h4>
 
       <p>
@@ -174,6 +183,14 @@ const styleStructure = `style = {
   separator: {
     style: { … }
   },
+  rating: {
+    style: { … },
+    disabledStyle: { … },
+    focusStyle: { … },
+    characterStyle: { … },
+    hoverCharacterStyle: { … },
+    activeCharacterStyle: { … }
+  },
   textInput: {
     style: { … },
     hoverStyle: { … },
@@ -187,10 +204,13 @@ const styleStructure = `style = {
 const configStructure = `config = {
   button: {
     preventFocusStyleForTouchAndClick: true/false
-  }
+  },
   select: {
     shouldPositionOptions: true/false,
     repositionMenu: function () {}
+  },
+  rating: {
+    preventFocusStyleForTouchAndClick: true/false
   }
 }
 `;

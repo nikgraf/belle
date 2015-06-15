@@ -58,7 +58,7 @@ export default React.createClass({
           <Rating defaultValue={ 2 } disabled aria-labelledby={'testing-only'} />
 
           <h3>RatingCharacter</h3>
-          <Rating defaultValue={ 1 } ratingCharacter={'✪'} id={'my_rating'} aria-label={ 'user_provided' } />
+          <Rating defaultValue={ 1 } character={'✪'} id={'my_rating'} aria-label={ 'user_provided' } />
 
           <h3>ResetValue</h3>
           <Rating ref="rating3"
