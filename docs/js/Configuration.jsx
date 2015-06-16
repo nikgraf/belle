@@ -92,10 +92,10 @@ export default class Configuration extends Component {
       <h4>Rating</h4>
 
       <p>
-        Similar as in the case of Button in Rating also by default
-        the focus style is not applied in case the component is focused on
-        by a touch or click event. This default behaviour can be deactivated by
-        setting `preventFocusStyleForTouchAndClick` to false.
+        Similar to the Button for the Rating component the focus style is not
+        applied in case the component is focused on by a touch or click event.
+        This default behaviour can be deactivated by setting
+        `preventFocusStyleForTouchAndClick` to false.
       </p>
 
       <h4>Structure</h4>
