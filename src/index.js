@@ -23,6 +23,8 @@ import separatorStyle from './style/separator';
 import textInputStyle from './style/text-input';
 
 import selectConfig from './config/select';
+import buttonConfig from './config/button';
+import ratingConfig from './config/rating';
 
 module.exports = {
   Button: Button,
@@ -40,12 +42,14 @@ module.exports = {
     card: cardStyle,
     option: optionStyle,
     placeholder: placeholderStyle,
-    ratingStyle: ratingStyle,
+    rating: ratingStyle,
     select: selectStyle,
     separator: separatorStyle,
     textInput: textInputStyle
   },
   config: {
-    select: selectConfig
+    select: selectConfig,
+    button: buttonConfig,
+    rating: ratingConfig
   }
 };
