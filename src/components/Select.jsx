@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some, uniqueId} from 'underscore';
+import {omit, extend, filter, find, first, isEmpty, isUndefined, findIndex, last, size, some, uniqueId, has} from 'underscore';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -44,13 +44,13 @@ export default class Select extends Component {
 
     let selectedValue, focusedOptionValue;
 
-    if (this.props.valueLink) {
+    if (has(this.props, 'valueLink')) {
       selectedValue = this.props.valueLink.value;
       focusedOptionValue = selectedValue;
-    } else if (this.props.value) {
+    } else if (has(this.props, 'value')) {
       selectedValue = this.props.value;
       focusedOptionValue = selectedValue;
-    } else if (this.props.defaultValue) {
+    } else if (has(this.props, 'defaultValue')) {
       selectedValue = this.props.defaultValue;
       focusedOptionValue = selectedValue;
     } else if (!isEmpty(this.props.children) && !some(this.props.children, isPlaceholder)) {
@@ -109,6 +109,13 @@ export default class Select extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
+  }
+
+  /**
+   * Update value of component dom node.
+   */
+  componentDidMount() {
+    React.findDOMNode(this).value = this.state.selectedValue;
   }
 
   /**
@@ -230,26 +237,32 @@ export default class Select extends Component {
    * provided change callback for onChange or valueLink is called.
    */
   _triggerChange (value) {
-    if(isUndefined(this.props.value)) {
+    if(has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
+      this.setState({
+        isOpen: false
+      });
+    }
+    else if(has(this.props, 'value')) {
+      this.setState({
+        isOpen: false
+      });
+    }
+    else {
       this.setState({
         focusedOptionValue: value,
         selectedValue: value,
         isOpen: false
       });
-    } else {
-      this.setState({
-        isOpen: false
-      });
     }
 
-    if (this.props.valueLink) {
-      this.props.valueLink.requestChange(value);
-    } else if (this.props.onChange) {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = value;
+
+    if (this.props.onChange) {
       // TODO investigate how to properly simulate a change event that includes
       // all the usual properties documented here:
       // https://facebook.github.io/react/docs/events.html
-      const wrapperNode = React.findDOMNode(this);
-      wrapperNode.value = value;
       this.props.onChange({target: wrapperNode});
     }
   }
