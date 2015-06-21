@@ -40,10 +40,11 @@ var toggleStyle = {
     transform: 'translateX(-50%)',
     boxSizing: 'border-box',
     borderRadius: handleHeight,
-    backgroundColor: '#eee',
+    backgroundColor: 'rgb(238, 238, 238)',
     height: handleHeight - 6,
     width: handleWidth - 6,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    borderBottom: '1px solid rgb(189, 189, 189)'
   },
 
   option: {
@@ -68,11 +69,7 @@ var toggleStyle = {
     padding: 0,
     position: 'absolute',
     width: 1
-  },
-
-  toggleFocus: {
-    boxShadow: '0 0 5px 0 rgba(140, 175, 80, .4)'
-  },
+  }
 };
 
 toggleStyle['check'] = extend( {}, toggleStyle.option, {

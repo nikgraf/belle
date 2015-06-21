@@ -139,7 +139,7 @@ export default class Toggle extends Component {
 
   render() {
 
-    const computedToggleStyle = extend( {}, style.toggle, (this.state.hasFocus ? style.toggleFocus : {}) );
+    const computedToggleStyle = extend( {}, style.toggle );
     var computedSliderStyle;
 
     if(this.state.isDragging){
