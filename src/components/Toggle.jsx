@@ -51,45 +51,37 @@ export default class Toggle extends Component {
     }
   }
 
-  _onClick(event){
+  _onClick(event) {
+    console.log('on click');
     this._triggerChange(!this.state.value);
   }
 
-  _triggerChange(value){
+  _triggerChange(value) {
     this.setState( { value: value } );
 
     if (this.props.onChange) {
       this.props.onChange({ target: { value: value }});
     }
   }
-  // Just in case the mouse moves outside the Toggle component bind events to document instead of the Toggle itself
-  _bindDocumentMouseEvents () {
-    document.addEventListener('mousemove', this._mouseMoveEvent);
-    document.addEventListener('mouseup', this._mouseUpEvent);
-  }
 
-  _unbindDocumentMouseEvents () {
-    document.removeEventListener('mousemove', this._mouseMoveEvent);
-    document.removeEventListener('mouseup', this._mouseUpEvent);
-  }
+  _onMouseDown(event) {
+    // check for left mouse button pressed
+    if (event.button !== 0) return;
 
-  _onMouseDown(e){
-    if (e.button !== 0) return;
-
-    this._bindDocumentMouseEvents();
-    this._dragStart = e.pageX - (this.state.value ? 0 : style.sliderOffset);
+    this._dragStart = event.pageX - (this.state.value ? -style.sliderOffset : 0);
 
     this.setState({
       isDragging: true,
-      hasFocus: true,
-      sliderOffset: (this.state.value ? 0 : style.sliderOffset)
+      sliderOffset: (this.state.value ? -style.sliderOffset : 0)
     });
   }
 
-  _onMouseMove(e){
+  _onMouseMove(event) {
     if (!this.state.isDragging) return;
 
-    let difference = e.pageX - this._dragStart;
+    console.log('on mouse move');
+
+    let difference = event.pageX - this._dragStart;
     if (difference < -style.handle.width || difference > 0) return;
 
     this._dragEnd = difference;
@@ -98,10 +90,8 @@ export default class Toggle extends Component {
     });
   }
 
-  _onMouseUp(e){
-    this._unbindDocumentMouseEvents();
-
-    if(this._dragEnd){
+  _onMouseUp(event) {
+    if (this._dragEnd) {
       let state = this._dragEnd > -(style.handle.width / 2);
 
       this.setState({
@@ -117,8 +107,8 @@ export default class Toggle extends Component {
     this._dragStart = false;
   }
 
-  _onMouseLeave(e){
-    this._onMouseUp(e);
+  _onMouseLeave(event) {
+    // this._onMouseUp(event);
   }
 
   render() {
@@ -129,7 +119,7 @@ export default class Toggle extends Component {
 
     if(this.state.isDragging){
       computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset, transition: "none" } );
-      handleStyle = extend( {}, style.handle, { left: -this.state.sliderOffset, transition: "none" } );
+      handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
     }else{
       computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : style.sliderOffset } );
       handleStyle = extend( {}, style.handle, { left: this.state.value ? -style.sliderOffset + 1 : -1 } );
@@ -163,7 +153,11 @@ export default class Toggle extends Component {
         <div className="react-toggle-handle"
              ref="belleToggleHandle"
              style={ handleStyle }
-             onMouseDown={ this._onClick.bind(this)} />
+             onClick={ this._onClick.bind(this)}
+             onMouseDown={ this._onMouseDown.bind(this) }
+             onMouseMove={ this._onMouseMove.bind(this) }
+             onMouseUp={ this._onMouseUp.bind(this) }
+             onMouseLeave={ this._onMouseLeave.bind(this) } />
       </div>
     );
   }
