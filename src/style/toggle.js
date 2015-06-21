@@ -3,19 +3,16 @@
 import {extend} from "underscore";
 
 const toggleWidth = 60;
-const toggleHeight = 30;
-
-const handleHeight = toggleHeight;
-const handleWidth = toggleHeight;
+const toggleHeight = 28;
 
 const optionHeight = toggleHeight;
-const optionWidth = toggleWidth - handleWidth / 2;
+const optionWidth = toggleWidth - toggleHeight / 2;
 
 const sliderWidth = 2 * optionWidth;
 
 var toggleStyle = {
 
-  sliderOffset: -(optionWidth - handleWidth / 2),
+  sliderOffset: -(optionWidth - toggleHeight / 2),
 
   toggle: {
     boxSizing: 'border-box',
@@ -23,41 +20,28 @@ var toggleStyle = {
     overflow: 'hidden',
     height: toggleHeight,
     width: toggleWidth,
-    WebkitUserSelect: 'none'
+    WebkitUserSelect: 'none',
+    position: 'relative'
   },
 
   slider: {
     position: 'relative',
     width: sliderWidth,
-    transition: 'left .25s ease-in-out'
+    transition: 'left 0.25s ease-in-out'
   },
 
   handle: {
     position: 'absolute',
-    top: 3,
-    left: '50%',
-    zIndex: 5,
-    transform: 'translateX(-50%)',
+    top: 0,
+    left: 0,
     boxSizing: 'border-box',
-    borderRadius: handleHeight,
+    borderRadius: 28,
     backgroundColor: 'rgb(238, 238, 238)',
-    height: handleHeight - 6,
-    width: handleWidth - 6,
+    height: 28,
+    width: 28,
     cursor: 'pointer',
-    borderBottom: '1px solid rgb(189, 189, 189)'
-  },
-
-  option: {
-    display: 'inline-block',
-    boxSizing: 'border-box',
-    height: optionHeight,
-    width: optionWidth,
-    lineHeight: optionHeight + 'px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    color: '#FFF',
-    boxShadow: 'inset 0 0 2px rgba(0,0,0, 0.05)',
-    transition: 'opacity .25s ease-in-out'
+    borderBottom: '1px solid rgb(189, 189, 189)',
+    transition: 'left 0.25s ease-in-out'
   },
 
   checkbox: {
@@ -69,19 +53,33 @@ var toggleStyle = {
     padding: 0,
     position: 'absolute',
     width: 1
+  },
+
+  check: {
+    display: 'inline-block',
+    boxSizing: 'border-box',
+    height: optionHeight,
+    width: optionWidth,
+    lineHeight: optionHeight + 'px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    color: '#FFF',
+    backgroundColor: '#AED75F',
+    textIndent: -10
+  },
+
+  cross: {
+    display: 'inline-block',
+    boxSizing: 'border-box',
+    height: optionHeight,
+    width: optionWidth,
+    lineHeight: optionHeight + 'px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    color: '#FFF',
+    backgroundColor: '#C9D1D4',
+    textIndent: 10
   }
 };
-
-toggleStyle['check'] = extend( {}, toggleStyle.option, {
-  backgroundColor: '#AED75F',
-  borderRadius: '20px 0 0 20px',
-  textIndent: -10
-});
-
-toggleStyle['cross'] = extend( {}, toggleStyle.option, {
-  borderRadius: '0 20px 20px 0',
-  backgroundColor: '#C9D1D4',
-  textIndent: 10
-});
 
 export default toggleStyle;

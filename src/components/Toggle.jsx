@@ -140,19 +140,22 @@ export default class Toggle extends Component {
   render() {
 
     const computedToggleStyle = extend( {}, style.toggle );
-    var computedSliderStyle;
+    let computedSliderStyle;
+    let handleStyle;
 
     if(this.state.isDragging){
       computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset, transition: "none" } );
+      handleStyle = extend( {}, style.handle, { left: -this.state.sliderOffset, transition: "none" } );
     }else{
       computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : style.sliderOffset } );
+      handleStyle = extend( {}, style.handle, { left: this.state.value ? -style.sliderOffset + 1 : -1 } );
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
-    const computedTrueChoiceStyle = extend( {}, style.check, (this.state.value ? {} : { opacity : 0 }) );
-    const computedFalseChoiceStyle = extend( {}, style.cross, (this.state.value ? { opacity : 0 } : {}) );
+    const computedTrueChoiceStyle = extend( {}, style.check );
+    const computedFalseChoiceStyle = extend( {}, style.cross );
 
     return (
       <div style={ computedToggleStyle }
@@ -165,16 +168,16 @@ export default class Toggle extends Component {
                onClick={ this._onClick.bind(this) }>
             { computedTrueChoice }
           </div>
-          <div className="react-toggle-handle"
-               ref="belleToggleHandle"
-               style={ style.handle }
-               onMouseDown={ this._onMouseDown.bind(this)} />
           <div className="react-toggle-track-cross"
                style={ computedFalseChoiceStyle }
                onClick={ this._onClick.bind(this) }>
             { computedFalseChoice }
           </div>
         </div>
+        <div className="react-toggle-handle"
+             ref="belleToggleHandle"
+             style={ handleStyle }
+             onMouseDown={ this._onMouseDown.bind(this)} />
         <input
           ref="belleToggle"
           name={this.props.name}
