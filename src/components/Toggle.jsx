@@ -52,31 +52,15 @@ export default class Toggle extends Component {
   }
 
   _onClick(event){
-    const input = React.findDOMNode(this.refs.belleToggle);
-
-    const clickEvent = new MouseEvent('click', event.nativeEvent);
-    input.dispatchEvent(clickEvent);
-
-    input.focus();
+    this._triggerChange(!this.state.value);
   }
 
-  onFocus(){
-    this.setState( { hasFocus : true } );
-  }
-
-  onBlur(){
-    this.setState( { hasFocus : false } );
-  }
-
-  _onChange(event){
-    if(isUndefined(this.props.checked)){
-      this.setState( { value: event.target.checked } );
-    }
+  _triggerChange(value){
+    this.setState( { value: value } );
 
     if (this.props.onChange) {
-      this.props.onChange(event);
+      this.props.onChange({ target: { value: value }});
     }
-
   }
   // Just in case the mouse moves outside the Toggle component bind events to document instead of the Toggle itself
   _bindDocumentMouseEvents () {
@@ -179,18 +163,7 @@ export default class Toggle extends Component {
         <div className="react-toggle-handle"
              ref="belleToggleHandle"
              style={ handleStyle }
-             onMouseDown={ this._onMouseDown.bind(this)} />
-        <input
-          ref="belleToggle"
-          name={this.props.name}
-          value={this.props.value}
-          onFocus={this.onFocus.bind(this)}
-          onBlur={this.onBlur.bind(this)}
-          onChange={this._onChange.bind(this)}
-          checked={this.state.value}
-          style={ style.checkbox}
-          type="checkbox"
-          {...this.childProperties} />
+             onMouseDown={ this._onClick.bind(this)} />
       </div>
     );
   }
