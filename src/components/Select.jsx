@@ -134,7 +134,10 @@ export default class Select extends Component {
     if (nextProperties.shouldPositionOptions) {
       const menuNode = React.findDOMNode(this.refs.menu);
       this.cachedMenuScrollTop = menuNode.scrollTop;
-      menuNode.style.display = 'none';
+
+      if (!this.state.isOpen && nextState.isOpen) {
+        menuNode.style.display = 'none';
+      }
     }
   }
 
@@ -154,7 +157,7 @@ export default class Select extends Component {
         menuNode.scrollTop = this.cachedMenuScrollTop;
       }
 
-      if (this.state.isOpen) {
+      if (!previousState.isOpen && this.state.isOpen) {
         const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
         menuNode.style.display = menuStyle.display;
       }

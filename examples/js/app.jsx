@@ -48,6 +48,8 @@ class App extends Component {
 
       <TogglePlayground />
 
+      <SelectPlayground />
+
       <ButtonPlayground />
 
       <TextInputPlayground />
