@@ -17,7 +17,6 @@ var toggleStyle = {
   toggle: {
     boxSizing: 'border-box',
     borderRadius: toggleHeight,
-    overflow: 'hidden',
     height: toggleHeight,
     width: toggleWidth,
     WebkitUserSelect: 'none',
@@ -28,6 +27,11 @@ var toggleStyle = {
     position: 'relative',
     width: sliderWidth,
     transition: 'left 0.25s ease-in-out'
+  },
+
+  sliderWrapper: {
+    overflow: 'hidden',
+    borderRadius: toggleHeight,
   },
 
   handle: {

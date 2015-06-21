@@ -160,18 +160,20 @@ export default class Toggle extends Component {
     return (
       <div style={ computedToggleStyle }
            onMouseLeave={ this.state.isDragging ? this._onMouseLeave.bind(this) : null }>
-        <div className="react-toggle-slider"
-             ref="belleToggleSlider"
-             style={ computedSliderStyle }>
-          <div className="react-toggle-track-check"
-               style={ computedTrueChoiceStyle }
-               onClick={ this._onClick.bind(this) }>
-            { computedTrueChoice }
-          </div>
-          <div className="react-toggle-track-cross"
-               style={ computedFalseChoiceStyle }
-               onClick={ this._onClick.bind(this) }>
-            { computedFalseChoice }
+        <div style={ style.sliderWrapper}>
+          <div className="react-toggle-slider"
+               ref="belleToggleSlider"
+               style={ computedSliderStyle }>
+            <div className="react-toggle-track-check"
+                 style={ computedTrueChoiceStyle }
+                 onClick={ this._onClick.bind(this) }>
+              { computedTrueChoice }
+            </div>
+            <div className="react-toggle-track-cross"
+                 style={ computedFalseChoiceStyle }
+                 onClick={ this._onClick.bind(this) }>
+              { computedFalseChoice }
+            </div>
           </div>
         </div>
         <div className="react-toggle-handle"
