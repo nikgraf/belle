@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
 import style from '../style/toggle';
+import isComponentTypeOf from '../utils/is-component-of-type.js';
 
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
@@ -34,15 +35,6 @@ export default class Toggle extends Component {
     this.state = {
       value : checked
     };
-
-    if(!isUndefined(this.props.children)){
-      if(this.props.children.length !== 2){
-        console.warn("You must have 2 choices for each toggle.");
-      }
-      if(first(this.props.children).props.value == last(this.props.children).props.value){
-        console.warn("Your Choices must not have the same value.");
-      }
-    }
   }
 
   _onClick(event) {
@@ -180,3 +172,44 @@ export default class Toggle extends Component {
 }
 
 Toggle.displayName = 'Belle Toggle';
+
+Toggle.propTypes = {
+  children: validateChoices,
+  value: React.PropTypes.bool,
+  defaultValue: React.PropTypes.bool,
+  onChange: React.PropTypes.func,
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.string.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  })
+};
+
+Toggle.defaultProps = {
+  disabled: false
+};
+
+/**
+ * Verifies that the children is an array containing only two choices with a
+ * different value.
+ */
+function validateChoices (props, propName, componentName) {
+  const error = React.PropTypes.arrayOf(choicePropType)(props, propName, componentName);
+  if (error) return error;
+
+  if (props.children && props.children.length !== 2) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected exactly two Choice components.`);
+  }
+  if (props.children &&
+      first(props.children).props.value === last(props.children).props.value) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
+  }
+}
+
+/**
+ * Verifies that the provided property is a Choice from Belle.
+ */
+function choicePropType(props, propName, componentName) {
+  if (!(props[propName] && isComponentTypeOf('Choice', props[propName]))) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
+  }
+}
