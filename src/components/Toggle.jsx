@@ -41,7 +41,6 @@ export default class Toggle extends Component {
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
 
-    this._touchStartedAtHandle = false;
     this._preventTouchSwitch = false;
 
     this._mouseDragStart = undefined;
@@ -177,7 +176,6 @@ export default class Toggle extends Component {
     // check for one touch as multiple could be browser gestures and only one
     // is relevant for us
     if (event.touches.length === 1) {
-      this._touchStartedAtHandle = true;
       this._preventTouchSwitch = false;
 
       this.setState({
@@ -194,7 +192,7 @@ export default class Toggle extends Component {
     console.log('_onTouchMoveHandle');
 
     // TODO move to requestAnimationFrame
-    if (event.touches.length === 1 && this._touchStartedAtHandle) {
+    if (event.touches.length === 1 && this.state.isDraggingWithTouch) {
       const touch = event.touches[0];
       const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
       const handleNode = React.findDOMNode(this.refs.handle);
@@ -209,7 +207,6 @@ export default class Toggle extends Component {
         } else {
           this._triggerChange(!this.state.value);
         }
-        this._touchStartedAtHandle = false;
       // is still dragging
       } else if (this.state.isDraggingWithTouch) {
 
@@ -239,9 +236,7 @@ export default class Toggle extends Component {
     // prevent the onClick to happen
     event.preventDefault();
 
-    console.log(this._touchStartedAtHandle);
-
-    if (this._touchStartedAtHandle) {
+    if (this.state.isDraggingWithTouch) {
       // no click & move was involved
       if (this._touchDragEnd) {
         if (this._preventTouchSwitch) {
@@ -262,17 +257,18 @@ export default class Toggle extends Component {
     this._touchDragStart = undefined;
     this._touchDragEnd = undefined;
     this._preventTouchSwitch = false;
-    this._touchStartedAtHandle = false;
 
     console.log('_onTouchEndHandle');
-    // TODO remove - we used it for testing
-    event.preventDefault();
   }
 
   _onTouchCancelHandle (event) {
-    this._touchStartedAtHandle = false;
-
     console.log('_onTouchCancelHandle');
+    this.setState({
+      isDraggingWithTouch: false
+    });
+    this._touchDragStart = undefined;
+    this._touchDragEnd = undefined;
+    this._preventTouchSwitch = false;
   }
 
   render () {
