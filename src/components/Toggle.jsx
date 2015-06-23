@@ -33,19 +33,20 @@ export default class Toggle extends Component {
     this.childProperties = sanitizeChildProperties(properties);
 
     this.state = {
-      value : checked
+      value : checked,
+      isDraggingWithMouse: false,
+      isDraggingWithTouch: false
     };
 
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
 
     this._touchStartedAtHandle = false;
-    this._touchEndedNotInHandle = false;
+    this._preventTouchSwitch = false;
 
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
-    this._mouseDragMoved = undefined;
-    this._preventSwitch = false;
+    this._preventMouseSwitch = false;
   }
 
   _onClick (event) {
@@ -56,7 +57,8 @@ export default class Toggle extends Component {
   _triggerChange (value) {
     this.setState({
       value: value,
-      isDraggingWithMouse: false
+      isDraggingWithMouse: false,
+      isDraggingWithTouch: false
     });
 
     if (this.props.onChange) {
@@ -69,7 +71,7 @@ export default class Toggle extends Component {
     if (event.button !== 0) return;
 
     this._mouseDragStart = event.pageX - (this.state.value ? style.sliderOffset : 0);
-    this._preventSwitch = false;
+    this._preventMouseSwitch = false;
 
     this.setState({
       isDraggingWithMouse: true,
@@ -82,18 +84,21 @@ export default class Toggle extends Component {
 
     let difference = event.pageX - this._mouseDragStart;
 
-    if (this.state.value && difference > this._mouseDragMoved) {
-      this._preventSwitch = true;
-    } else if (!this.state.value && difference < this._mouseDragMoved) {
-      this._preventSwitch = true;
+    if (this.state.value &&
+        this._mouseDragEnd &&
+        difference > this._mouseDragEnd) {
+      this._preventMouseSwitch = true;
+    } else if (!this.state.value &&
+               this._mouseDragEnd &&
+               difference < this._mouseDragEnd) {
+      this._preventMouseSwitch = true;
     }
 
-    this._mouseDragMoved = difference;
     // TODO calculate the limits from real elements
+    this._mouseDragEnd = difference;
 
     if (difference < 0 || difference > 60 - 28) return;
 
-    this._mouseDragEnd = difference;
     this.setState({
       sliderOffset: difference
     });
@@ -105,9 +110,9 @@ export default class Toggle extends Component {
     // TODO calculate the limits from real elements
 
     if (this._mouseDragEnd) {
-      if (!this._preventSwitch) {
+      if (!this._preventMouseSwitch) {
         this._triggerChange(!this.state.value);
-      } else if (this._preventSwitch) {
+      } else if (this._preventMouseSwitch) {
         const value = this._mouseDragEnd > (style.handle.width / 2);
         this._triggerChange(value);
       }
@@ -116,25 +121,23 @@ export default class Toggle extends Component {
     }
 
     this._mouseDragStart = undefined;
-    this._mouseDragMoved = undefined;
     this._mouseDragEnd = undefined;
-    this._preventSwitch = false;
+    this._preventMouseSwitch = false;
   }
 
   _onMouseLeave (event) {
     console.log('_onMouseLeave');
 
-    if (this._mouseDragStart && !this._preventSwitch) {
+    if (this._mouseDragStart && !this._preventMouseSwitch) {
       this._triggerChange(!this.state.value);
-    } else if (this._mouseDragStart && this._preventSwitch) {
+    } else if (this._mouseDragStart && this._preventMouseSwitch) {
       const value = this._mouseDragEnd > (style.handle.width / 2);
       this._triggerChange(value);
     }
 
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
-    this._mouseDragMoved = undefined;
-    this._preventSwitch = false;
+    this._preventMouseSwitch = false;
   }
 
   _onTouchStartAtSlider (event) {
@@ -175,32 +178,91 @@ export default class Toggle extends Component {
     // is relevant for us
     if (event.touches.length === 1) {
       this._touchStartedAtHandle = true;
+      this._preventTouchSwitch = false;
+
+      this.setState({
+        isDraggingWithTouch: true,
+        sliderOffset: (this.state.value ? style.sliderOffset : 0)
+      });
+
+      this._touchDragStart = event.touches[0].pageX - (this.state.value ? style.sliderOffset : 0);
     }
     console.log('_onTouchStartHandle');
   }
 
   _onTouchMoveHandle (event) {
+    console.log('_onTouchMoveHandle');
+
     // TODO move to requestAnimationFrame
     if (event.touches.length === 1 && this._touchStartedAtHandle) {
       const touch = event.touches[0];
       const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
       const handleNode = React.findDOMNode(this.refs.handle);
 
-      this._touchEndedNotInHandle = touchedElement !== handleNode;
-    }
+      let difference = event.touches[0].pageX - this._touchDragStart;
 
-    console.log('_onTouchMoveHandle');
+      // touch left the handle
+      if (touchedElement !== handleNode) {
+        if (this._preventTouchSwitch) {
+          const value = difference > (style.handle.width / 2);
+          this._triggerChange(value);
+        } else {
+          this._triggerChange(!this.state.value);
+        }
+        this._touchStartedAtHandle = false;
+      // is still dragging
+      } else if (this.state.isDraggingWithTouch) {
+
+        if (this.state.value &&
+            this._touchDragEnd &&
+            difference > this._touchDragEnd) {
+          this._preventTouchSwitch = true;
+        } else if (!this.state.value &&
+                   this._touchDragEnd &&
+                   difference < this._touchDragEnd) {
+          this._preventTouchSwitch = true;
+        }
+
+        // TODO calculate the limits from real elements
+        if (difference < 0 || difference > 60 - 28) return;
+
+        this._touchDragEnd = difference;
+        this.setState({
+          sliderOffset: difference
+        });
+      }
+
+    }
   }
 
   _onTouchEndHandle (event) {
-    if (this._touchStartedAtHandle && !this._touchEndedNotInHandle) {
-      // prevent the onClick to happen
-      event.preventDefault();
-      this._triggerChange(!this.state.value);
+    // prevent the onClick to happen
+    event.preventDefault();
+
+    console.log(this._touchStartedAtHandle);
+
+    if (this._touchStartedAtHandle) {
+      // no click & move was involved
+      if (this._touchDragEnd) {
+        if (this._preventTouchSwitch) {
+          console.log('_preventTouchSwitch');
+          const value = this._touchDragEnd > (style.handle.width / 2);
+          this._triggerChange(value);
+        } else {
+          console.log('!_preventTouchSwitch');
+          this._triggerChange(!this.state.value);
+        }
+      // click like
+      } else {
+        console.log('click like');
+        this._triggerChange(!this.state.value);
+      }
     }
 
+    this._touchDragStart = undefined;
+    this._touchDragEnd = undefined;
+    this._preventTouchSwitch = false;
     this._touchStartedAtHandle = false;
-    this._touchEndedNotInHandle = false;
 
     console.log('_onTouchEndHandle');
     // TODO remove - we used it for testing
@@ -209,7 +271,6 @@ export default class Toggle extends Component {
 
   _onTouchCancelHandle (event) {
     this._touchStartedAtHandle = false;
-    this._touchEndedNotInHandle = false;
 
     console.log('_onTouchCancelHandle');
   }
@@ -219,7 +280,7 @@ export default class Toggle extends Component {
     let computedSliderStyle;
     let handleStyle;
 
-    if(this.state.isDraggingWithMouse){
+    if(this.state.isDraggingWithMouse || this.state.isDraggingWithTouch){
       computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset - 32, transition: "none" } );
       handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
     }else{
