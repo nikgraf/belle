@@ -52,7 +52,6 @@ export default class Toggle extends Component {
   }
 
   _onClick(event) {
-    console.log('on click');
     this._triggerChange(!this.state.value);
   }
 
@@ -68,21 +67,30 @@ export default class Toggle extends Component {
     // check for left mouse button pressed
     if (event.button !== 0) return;
 
-    this._dragStart = event.pageX - (this.state.value ? -style.sliderOffset : 0);
+    this._dragStart = event.pageX - (this.state.value ? style.sliderOffset : 0);
+    this._preventSwitch = false;
 
     this.setState({
       isDragging: true,
-      sliderOffset: (this.state.value ? -style.sliderOffset : 0)
+      sliderOffset: (this.state.value ? style.sliderOffset : 0)
     });
   }
 
   _onMouseMove(event) {
     if (!this.state.isDragging) return;
 
-    console.log('on mouse move');
-
     let difference = event.pageX - this._dragStart;
-    if (difference < -style.handle.width || difference > 0) return;
+
+    if (this.state.value && difference > this._dragMoved) {
+      this._preventSwitch = true;
+    } else if (!this.state.value && difference < this._dragMoved) {
+      this._preventSwitch = true;
+    }
+
+    this._dragMoved = difference;
+    // TODO calculate the limits from real elements
+
+    if (difference < 0 || difference > 60 - 28) return;
 
     this._dragEnd = difference;
     this.setState({
@@ -91,24 +99,53 @@ export default class Toggle extends Component {
   }
 
   _onMouseUp(event) {
-    if (this._dragEnd) {
-      let state = this._dragEnd > -(style.handle.width / 2);
+    // TODO calculate the limits from real elements
 
+    if (this._dragEnd) {
+      if (!this._preventSwitch) {
+        this.setState({
+          isDragging: false,
+          value: !this.state.value
+        });
+      } else if (this._preventSwitch) {
+        let state = this._dragEnd > (style.handle.width / 2);
+        this.setState({
+          isDragging: false,
+          value: state
+        });
+      }
+
+    } else {
+      this.setState({
+        isDragging: false,
+        value: !this.state.value
+      });
+    }
+
+    this._dragStart = undefined;
+    this._dragMoved = undefined;
+    this._dragEnd = undefined;
+    this._preventSwitch = false;
+  }
+
+  _onMouseLeave(event) {
+    if (this._dragStart && !this._preventSwitch) {
+      this.setState({
+        isDragging: false,
+        value: !this.state.value
+      });
+    } else if (this._dragStart && this._preventSwitch) {
+      let state = this._dragEnd > (style.handle.width / 2);
       this.setState({
         isDragging: false,
         value: state
       });
-
-      this._dragEnd = false;
-    } else {
-      this.setState( { isDragging: false } );
     }
 
-    this._dragStart = false;
-  }
-
-  _onMouseLeave(event) {
-    // this._onMouseUp(event);
+    this._dragStart = undefined;
+    this._dragEnd = undefined;
+    this._dragMoved = undefined;
+    this._preventSwitch = false;
   }
 
   render() {
@@ -118,11 +155,11 @@ export default class Toggle extends Component {
     let handleStyle;
 
     if(this.state.isDragging){
-      computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset, transition: "none" } );
+      computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset - 32, transition: "none" } );
       handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
     }else{
-      computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : style.sliderOffset } );
-      handleStyle = extend( {}, style.handle, { left: this.state.value ? -style.sliderOffset + 1 : -1 } );
+      computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : -style.sliderOffset } );
+      handleStyle = extend( {}, style.handle, { left: this.state.value ? style.sliderOffset + 1 : -1 } );
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✔";
@@ -132,9 +169,9 @@ export default class Toggle extends Component {
     const computedFalseChoiceStyle = extend( {}, style.cross );
 
     return (
-      <div style={ computedToggleStyle }
-           onMouseLeave={ this.state.isDragging ? this._onMouseLeave.bind(this) : null }>
-        <div style={ style.sliderWrapper}>
+      <div style={ computedToggleStyle }>
+        <div style={ style.sliderWrapper}
+             ref="sliderWrapper">
           <div className="react-toggle-slider"
                ref="belleToggleSlider"
                style={ computedSliderStyle }>
@@ -153,7 +190,6 @@ export default class Toggle extends Component {
         <div className="react-toggle-handle"
              ref="belleToggleHandle"
              style={ handleStyle }
-             onClick={ this._onClick.bind(this)}
              onMouseDown={ this._onMouseDown.bind(this) }
              onMouseMove={ this._onMouseMove.bind(this) }
              onMouseUp={ this._onMouseUp.bind(this) }

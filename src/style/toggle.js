@@ -12,7 +12,7 @@ const sliderWidth = 2 * optionWidth;
 
 var toggleStyle = {
 
-  sliderOffset: -(optionWidth - toggleHeight / 2),
+  sliderOffset: (optionWidth - toggleHeight / 2),
 
   toggle: {
     boxSizing: 'border-box',
@@ -26,7 +26,7 @@ var toggleStyle = {
   slider: {
     position: 'relative',
     width: sliderWidth,
-    transition: 'left 0.25s ease-in-out'
+    transition: 'left 0.15s ease-in-out'
   },
 
   sliderWrapper: {
@@ -45,7 +45,7 @@ var toggleStyle = {
     width: 28,
     cursor: 'pointer',
     borderBottom: '1px solid rgb(189, 189, 189)',
-    transition: 'left 0.25s ease-in-out'
+    transition: 'left 0.15s ease-in-out'
   },
 
   checkbox: {
