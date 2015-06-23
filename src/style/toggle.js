@@ -48,17 +48,6 @@ var toggleStyle = {
     transition: 'left 0.15s ease-in-out'
   },
 
-  checkbox: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    width: 1
-  },
-
   check: {
     display: 'inline-block',
     boxSizing: 'border-box',
