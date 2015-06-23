@@ -35,9 +35,18 @@ export default class Toggle extends Component {
     this.state = {
       value : checked
     };
+
+    this._touchStartedAtSlider = false;
+    this._touchEndedNotInSlider = false;
+
+    this._mouseDragStart = undefined;
+    this._mouseDragEnd = undefined;
+    this._mouseDragMoved = undefined;
+    this._preventSwitch = false;
   }
 
   _onClick(event) {
+    console.log('on click');
     this._triggerChange(!this.state.value);
   }
 
@@ -121,6 +130,55 @@ export default class Toggle extends Component {
     this._preventSwitch = false;
   }
 
+  _onTouchStartAtSlider (event) {
+    if (event.touches.length === 1) {
+      this._touchStartedAtSlider = true;
+    }
+  }
+
+  _onTouchMoveAtSlider (event) {
+    // TODO move to requestAnimationFrame
+    if (event.touches.length === 1 && this._touchStartedAtSlider) {
+      const touch = event.touches[0];
+      const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
+      const toggleTrackCheck = React.findDOMNode(this.refs.toggleTrackCheck);
+      const trackCrossNode = React.findDOMNode(this.refs.toggleTrackCross);
+
+      this._touchEndedNotInSlider = !(touchedElement === toggleTrackCheck || touchedElement === trackCrossNode);
+    }
+  }
+
+  _onTouchEndAtSlider (event) {
+    if (this._touchStartedAtSlider && !this._touchEndedNotInSlider) {
+      // prevent the onClick to happen
+      event.preventDefault();
+      this._triggerChange(!this.state.value);
+    }
+    this._touchStartedAtSlider = false;
+    this._touchEndedNotInSlider = false;
+  }
+
+  _onTouchCancelAtSlider (event) {
+    this._touchStartedAtSlider = false;
+    this._touchEndedNotInSlider = false;
+  }
+
+  _onTouchStartHandle(event) {
+    debugger
+  }
+
+  _onTouchMoveHandle(event) {
+
+  }
+
+  _onTouchEndHandle(event) {
+
+  }
+
+  _onTouchCancelHandle(event) {
+
+  }
+
   render() {
     const computedToggleStyle = extend( {}, style.toggle );
     let computedSliderStyle;
@@ -147,14 +205,22 @@ export default class Toggle extends Component {
           <div className="react-toggle-slider"
                ref="belleToggleSlider"
                style={ computedSliderStyle }>
-            <div className="react-toggle-track-check"
+            <div ref="toggleTrackCheck"
                  style={ computedTrueChoiceStyle }
-                 onClick={ this._onClick.bind(this) }>
+                 onClick={ this._onClick.bind(this) }
+                 onTouchStart={ this._onTouchStartAtSlider.bind(this) }
+                 onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
+                 onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
+                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }>
               { computedTrueChoice }
             </div>
-            <div className="react-toggle-track-cross"
+            <div ref="toggleTrackCross"
                  style={ computedFalseChoiceStyle }
-                 onClick={ this._onClick.bind(this) }>
+                 onClick={ this._onClick.bind(this) }
+                 onTouchStart={ this._onTouchStartAtSlider.bind(this) }
+                 onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
+                 onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
+                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }>
               { computedFalseChoice }
             </div>
           </div>
@@ -165,7 +231,11 @@ export default class Toggle extends Component {
              onMouseDown={ this._onMouseDown.bind(this) }
              onMouseMove={ this._onMouseMove.bind(this) }
              onMouseUp={ this._onMouseUp.bind(this) }
-             onMouseLeave={ this._onMouseLeave.bind(this) } />
+             onMouseLeave={ this._onMouseLeave.bind(this) }
+             onTouchStart={ this._onTouchStartHandle.bind(this) }
+             onTouchMove={ this._onTouchMoveHandle.bind(this) }
+             onTouchEnd={ this._onTouchEndHandle.bind(this) }
+             onTouchCancel={ this._onTouchCancelHandle.bind(this) } />
       </div>
     );
   }
