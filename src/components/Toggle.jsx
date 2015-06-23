@@ -9,11 +9,8 @@ import style from '../style/toggle';
 
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
-    'type',
     'style',
     'onChange',
-    'onFocus',
-    'onBlur',
     'checked',
     'defaultChecked'
   ]);
@@ -33,9 +30,6 @@ export default class Toggle extends Component {
     checked = properties.checked ? properties.checked : checked;
 
     this.childProperties = sanitizeChildProperties(properties);
-
-    this._mouseMoveEvent  = this._onMouseMove.bind(this);
-    this._mouseUpEvent    = this._onMouseUp.bind(this);
 
     this.state = {
       value : checked
