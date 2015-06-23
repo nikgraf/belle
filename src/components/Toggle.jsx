@@ -61,32 +61,32 @@ export default class Toggle extends Component {
     // check for left mouse button pressed
     if (event.button !== 0) return;
 
-    this._dragStart = event.pageX - (this.state.value ? style.sliderOffset : 0);
+    this._mouseDragStart = event.pageX - (this.state.value ? style.sliderOffset : 0);
     this._preventSwitch = false;
 
     this.setState({
-      isDragging: true,
+      isDraggingWithMouse: true,
       sliderOffset: (this.state.value ? style.sliderOffset : 0)
     });
   }
 
   _onMouseMove(event) {
-    if (!this.state.isDragging) return;
+    if (!this.state.isDraggingWithMouse) return;
 
-    let difference = event.pageX - this._dragStart;
+    let difference = event.pageX - this._mouseDragStart;
 
-    if (this.state.value && difference > this._dragMoved) {
+    if (this.state.value && difference > this._mouseDragMoved) {
       this._preventSwitch = true;
-    } else if (!this.state.value && difference < this._dragMoved) {
+    } else if (!this.state.value && difference < this._mouseDragMoved) {
       this._preventSwitch = true;
     }
 
-    this._dragMoved = difference;
+    this._mouseDragMoved = difference;
     // TODO calculate the limits from real elements
 
     if (difference < 0 || difference > 60 - 28) return;
 
-    this._dragEnd = difference;
+    this._mouseDragEnd = difference;
     this.setState({
       sliderOffset: difference
     });
@@ -95,60 +95,59 @@ export default class Toggle extends Component {
   _onMouseUp(event) {
     // TODO calculate the limits from real elements
 
-    if (this._dragEnd) {
+    if (this._mouseDragEnd) {
       if (!this._preventSwitch) {
         this.setState({
-          isDragging: false,
+          isDraggingWithMouse: false,
           value: !this.state.value
         });
       } else if (this._preventSwitch) {
-        let state = this._dragEnd > (style.handle.width / 2);
+        let state = this._mouseDragEnd > (style.handle.width / 2);
         this.setState({
-          isDragging: false,
+          isDraggingWithMouse: false,
           value: state
         });
       }
 
     } else {
       this.setState({
-        isDragging: false,
+        isDraggingWithMouse: false,
         value: !this.state.value
       });
     }
 
-    this._dragStart = undefined;
-    this._dragMoved = undefined;
-    this._dragEnd = undefined;
+    this._mouseDragStart = undefined;
+    this._mouseDragMoved = undefined;
+    this._mouseDragEnd = undefined;
     this._preventSwitch = false;
   }
 
   _onMouseLeave(event) {
-    if (this._dragStart && !this._preventSwitch) {
+    if (this._mouseDragStart && !this._preventSwitch) {
       this.setState({
-        isDragging: false,
+        isDraggingWithMouse: false,
         value: !this.state.value
       });
-    } else if (this._dragStart && this._preventSwitch) {
-      let state = this._dragEnd > (style.handle.width / 2);
+    } else if (this._mouseDragStart && this._preventSwitch) {
+      let state = this._mouseDragEnd > (style.handle.width / 2);
       this.setState({
-        isDragging: false,
+        isDraggingWithMouse: false,
         value: state
       });
     }
 
-    this._dragStart = undefined;
-    this._dragEnd = undefined;
-    this._dragMoved = undefined;
+    this._mouseDragStart = undefined;
+    this._mouseDragEnd = undefined;
+    this._mouseDragMoved = undefined;
     this._preventSwitch = false;
   }
 
   render() {
-
     const computedToggleStyle = extend( {}, style.toggle );
     let computedSliderStyle;
     let handleStyle;
 
-    if(this.state.isDragging){
+    if(this.state.isDraggingWithMouse){
       computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset - 32, transition: "none" } );
       handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
     }else{
