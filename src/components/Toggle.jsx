@@ -50,7 +50,10 @@ export default class Toggle extends Component {
   }
 
   _triggerChange(value) {
-    this.setState( { value: value } );
+    this.setState({
+      value: value,
+      isDraggingWithMouse: false
+    });
 
     if (this.props.onChange) {
       this.props.onChange({ target: { value: value }});
@@ -97,23 +100,13 @@ export default class Toggle extends Component {
 
     if (this._mouseDragEnd) {
       if (!this._preventSwitch) {
-        this.setState({
-          isDraggingWithMouse: false,
-          value: !this.state.value
-        });
+        this._triggerChange(!this.state.value);
       } else if (this._preventSwitch) {
-        let state = this._mouseDragEnd > (style.handle.width / 2);
-        this.setState({
-          isDraggingWithMouse: false,
-          value: state
-        });
+        const value = this._mouseDragEnd > (style.handle.width / 2);
+        this._triggerChange(value);
       }
-
     } else {
-      this.setState({
-        isDraggingWithMouse: false,
-        value: !this.state.value
-      });
+      this._triggerChange(!this.state.value);
     }
 
     this._mouseDragStart = undefined;
@@ -124,16 +117,10 @@ export default class Toggle extends Component {
 
   _onMouseLeave(event) {
     if (this._mouseDragStart && !this._preventSwitch) {
-      this.setState({
-        isDraggingWithMouse: false,
-        value: !this.state.value
-      });
+      this._triggerChange(!this.state.value);
     } else if (this._mouseDragStart && this._preventSwitch) {
-      let state = this._mouseDragEnd > (style.handle.width / 2);
-      this.setState({
-        isDraggingWithMouse: false,
-        value: state
-      });
+      const value = this._mouseDragEnd > (style.handle.width / 2);
+      this._triggerChange(value);
     }
 
     this._mouseDragStart = undefined;
