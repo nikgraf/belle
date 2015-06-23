@@ -8,7 +8,7 @@ import {extend, omit, isUndefined, first, last} from "underscore";
 import style from '../style/toggle';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
 
-function sanitizeChildProperties(properties) {
+function sanitizeChildProperties (properties) {
   let childProperties = omit(properties, [
     'style',
     'onChange',
@@ -25,7 +25,7 @@ function sanitizeChildProperties(properties) {
  */
 export default class Toggle extends Component {
 
-  constructor(properties) {
+  constructor (properties) {
     super(properties);
     let checked = properties.defaultChecked ? properties.defaultChecked : false;
     checked = properties.checked ? properties.checked : checked;
@@ -39,18 +39,21 @@ export default class Toggle extends Component {
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
 
+    this._touchStartedAtHandle = false;
+    this._touchEndedNotInHandle = false;
+
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
     this._mouseDragMoved = undefined;
     this._preventSwitch = false;
   }
 
-  _onClick(event) {
+  _onClick (event) {
     console.log('on click');
     this._triggerChange(!this.state.value);
   }
 
-  _triggerChange(value) {
+  _triggerChange (value) {
     this.setState({
       value: value,
       isDraggingWithMouse: false
@@ -61,7 +64,7 @@ export default class Toggle extends Component {
     }
   }
 
-  _onMouseDown(event) {
+  _onMouseDown (event) {
     // check for left mouse button pressed
     if (event.button !== 0) return;
 
@@ -74,7 +77,7 @@ export default class Toggle extends Component {
     });
   }
 
-  _onMouseMove(event) {
+  _onMouseMove (event) {
     if (!this.state.isDraggingWithMouse) return;
 
     let difference = event.pageX - this._mouseDragStart;
@@ -96,7 +99,9 @@ export default class Toggle extends Component {
     });
   }
 
-  _onMouseUp(event) {
+  _onMouseUp (event) {
+    console.log('_onMouseUp');
+
     // TODO calculate the limits from real elements
 
     if (this._mouseDragEnd) {
@@ -116,7 +121,9 @@ export default class Toggle extends Component {
     this._preventSwitch = false;
   }
 
-  _onMouseLeave(event) {
+  _onMouseLeave (event) {
+    console.log('_onMouseLeave');
+
     if (this._mouseDragStart && !this._preventSwitch) {
       this._triggerChange(!this.state.value);
     } else if (this._mouseDragStart && this._preventSwitch) {
@@ -163,23 +170,51 @@ export default class Toggle extends Component {
     this._touchEndedNotInSlider = false;
   }
 
-  _onTouchStartHandle(event) {
-    debugger
+  _onTouchStartHandle (event) {
+    // check for one touch as multiple could be browser gestures and only one
+    // is relevant for us
+    if (event.touches.length === 1) {
+      this._touchStartedAtHandle = true;
+    }
+    console.log('_onTouchStartHandle');
   }
 
-  _onTouchMoveHandle(event) {
+  _onTouchMoveHandle (event) {
+    // TODO move to requestAnimationFrame
+    if (event.touches.length === 1 && this._touchStartedAtHandle) {
+      const touch = event.touches[0];
+      const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
+      const handleNode = React.findDOMNode(this.refs.handle);
 
+      this._touchEndedNotInHandle = touchedElement !== handleNode;
+    }
+
+    console.log('_onTouchMoveHandle');
   }
 
-  _onTouchEndHandle(event) {
+  _onTouchEndHandle (event) {
+    if (this._touchStartedAtHandle && !this._touchEndedNotInHandle) {
+      // prevent the onClick to happen
+      event.preventDefault();
+      this._triggerChange(!this.state.value);
+    }
 
+    this._touchStartedAtHandle = false;
+    this._touchEndedNotInHandle = false;
+
+    console.log('_onTouchEndHandle');
+    // TODO remove - we used it for testing
+    event.preventDefault();
   }
 
-  _onTouchCancelHandle(event) {
+  _onTouchCancelHandle (event) {
+    this._touchStartedAtHandle = false;
+    this._touchEndedNotInHandle = false;
 
+    console.log('_onTouchCancelHandle');
   }
 
-  render() {
+  render () {
     const computedToggleStyle = extend( {}, style.toggle );
     let computedSliderStyle;
     let handleStyle;
@@ -226,7 +261,7 @@ export default class Toggle extends Component {
           </div>
         </div>
         <div className="react-toggle-handle"
-             ref="belleToggleHandle"
+             ref="handle"
              style={ handleStyle }
              onMouseDown={ this._onMouseDown.bind(this) }
              onMouseMove={ this._onMouseMove.bind(this) }
