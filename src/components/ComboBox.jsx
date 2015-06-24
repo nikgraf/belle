@@ -290,18 +290,21 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false,
+        tempValue: undefined,
         focusedOptionIndex: undefined
       });
     }
     else if(has(this.props, 'value')) {
       this.setState({
         isOpen: false,
+        tempValue: undefined,
         focusedOptionIndex: undefined
       });
     }
     else {
       this.setState({
         inputValue: value,
+        tempValue: undefined,
         isOpen: false,
         focusedOptionIndex: undefined,
         filteredOptions: this.filterOptions(value)
