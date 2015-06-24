@@ -304,7 +304,7 @@ export default class Toggle extends Component {
       handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
     }else{
       computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : -style.sliderOffset } );
-      handleStyle = extend( {}, style.handle, { left: this.state.value ? style.sliderOffset + 1 : -1 } );
+      handleStyle = extend( {}, style.handle, { left: this.state.value ? style.sliderOffset : 0 } );
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✓";
