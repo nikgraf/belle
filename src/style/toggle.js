@@ -2,9 +2,6 @@
 
 var toggleStyle = {
 
-  // width of check/cross area - half of the width of the handle
-  sliderOffset: 32,
-
   toggle: {
     boxSizing: 'border-box',
     borderRadius: 28,

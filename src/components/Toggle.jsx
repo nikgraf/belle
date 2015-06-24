@@ -60,12 +60,14 @@ export default class Toggle extends Component {
     // check for left mouse button pressed
     if (event.button !== 0) return;
 
-    this._mouseDragStart = event.pageX - (this.state.value ? style.sliderOffset : 0);
+    const defaultSliderOffset = style.check.width - style.handle.width / 2;
+
+    this._mouseDragStart = event.pageX - (this.state.value ? defaultSliderOffset : 0);
     this._preventMouseSwitch = false;
 
     this.setState({
       isDraggingWithMouse: true,
-      sliderOffset: (this.state.value ? style.sliderOffset : 0)
+      sliderOffset: (this.state.value ? defaultSliderOffset : 0)
     });
   }
 
@@ -197,12 +199,14 @@ export default class Toggle extends Component {
     if (event.touches.length === 1) {
       this._preventTouchSwitch = false;
 
+      const defaultSliderOffset = style.check.width - style.handle.width / 2;
+
       this.setState({
         isDraggingWithTouch: true,
-        sliderOffset: (this.state.value ? style.sliderOffset : 0)
+        sliderOffset: (this.state.value ? defaultSliderOffset : 0)
       });
 
-      this._touchDragStart = event.touches[0].pageX - (this.state.value ? style.sliderOffset : 0);
+      this._touchDragStart = event.touches[0].pageX - (this.state.value ? defaultSliderOffset : 0);
     }
   }
 
@@ -295,23 +299,37 @@ export default class Toggle extends Component {
   }
 
   render () {
+
+
     const computedToggleStyle = extend( {}, style.toggle );
     let computedSliderStyle;
     let handleStyle;
 
-    if(this.state.isDraggingWithMouse || this.state.isDraggingWithTouch){
-      computedSliderStyle = extend( {}, style.slider, { left: this.state.sliderOffset - 32, transition: "none" } );
-      handleStyle = extend( {}, style.handle, { left: this.state.sliderOffset, transition: "none" } );
-    }else{
-      computedSliderStyle = extend( {}, style.slider, { left: this.state.value ? 0 : -style.sliderOffset } );
-      handleStyle = extend( {}, style.handle, { left: this.state.value ? style.sliderOffset : 0 } );
+    const defaultSliderOffset = style.check.width - style.handle.width / 2;
+
+    if (this.state.isDraggingWithMouse || this.state.isDraggingWithTouch) {
+      computedSliderStyle = extend({}, style.slider, {
+        left: this.state.sliderOffset - defaultSliderOffset,
+        transition: "none"
+      });
+      handleStyle = extend({}, style.handle, {
+        left: this.state.sliderOffset,
+        transition: "none"
+      });
+    } else {
+      computedSliderStyle = extend({}, style.slider, {
+        left: this.state.value ? 0 : -defaultSliderOffset
+      });
+      handleStyle = extend({}, style.handle, {
+        left: this.state.value ? defaultSliderOffset : 0
+      });
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✓";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
-    const computedTrueChoiceStyle = extend( {}, style.check );
-    const computedFalseChoiceStyle = extend( {}, style.cross );
+    const computedTrueChoiceStyle = extend({}, style.check);
+    const computedFalseChoiceStyle = extend({}, style.cross);
 
     return (
       <div style={ computedToggleStyle }>
