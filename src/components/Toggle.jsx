@@ -177,7 +177,8 @@ export default class Toggle extends Component {
     const toggleTrackCheck = React.findDOMNode(this.refs.toggleTrackCheck);
     const trackCrossNode = React.findDOMNode(this.refs.toggleTrackCross);
 
-    this._touchEndedNotInSlider = !(touchedElement === toggleTrackCheck || touchedElement === trackCrossNode);
+    this._touchEndedNotInSlider = touchedElement !== toggleTrackCheck &&
+                                  touchedElement !== trackCrossNode;
   }
 
   _onTouchEndAtSlider (event) {
