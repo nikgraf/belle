@@ -27,7 +27,8 @@ export default class Toggle extends Component {
     this.state = {
       value : checked,
       isDraggingWithMouse: false,
-      isDraggingWithTouch: false
+      isDraggingWithTouch: false,
+      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
     };
 
     this._touchStartedAtSlider = false;
@@ -38,6 +39,12 @@ export default class Toggle extends Component {
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
     this._preventMouseSwitch = false;
+  }
+
+  componentWillReceiveProps (properties) {
+    this.setState({
+      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps)
+    });
   }
 
   _onClick (event) {
@@ -331,8 +338,16 @@ export default class Toggle extends Component {
     const computedTrueChoiceStyle = extend({}, style.check);
     const computedFalseChoiceStyle = extend({}, style.cross);
 
+    const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
+    let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
+    if(this.props.disabled) {
+      tabIndex = -1;
+    }
+
     return (
-      <div style={ computedToggleStyle }>
+      <div style={ computedToggleStyle }
+           tabIndex={ tabIndex }
+           {...this.state.wrapperProperties} >
         <div style={ style.sliderWrapper}
              ref="sliderWrapper">
           <div ref="belleToggleSlider"
@@ -388,6 +403,17 @@ Toggle.propTypes = {
 Toggle.defaultProps = {
   disabled: false
 };
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the Toggle.
+ */
+function sanitizePropertiesForWrapper(wrapperProperties) {
+  return omit(wrapperProperties, [
+    'style',
+    'tabIndex'
+  ]);
+}
 
 function sanitizeChildProperties (properties) {
   let childProperties = omit(properties, [
