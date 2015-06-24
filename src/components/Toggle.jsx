@@ -214,44 +214,57 @@ export default class Toggle extends Component {
   _onTouchMoveHandle (event) {
     console.log('_onTouchMoveHandle');
 
-    // TODO move to requestAnimationFrame
     if (event.touches.length === 1 && this.state.isDraggingWithTouch) {
-      const touch = event.touches[0];
-      const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-      const handleNode = React.findDOMNode(this.refs.handle);
+      // the requestAnimationFrame function must be executed in the context of window
+      // see http://stackoverflow.com/a/9678166/837709
+      const animationFrame = requestAnimationFrame.call(
+        window,
+        this._updateComponentOnTouchMoveAtHandle.bind(this, event.touches[0])
+      );
 
-      let difference = event.touches[0].pageX - this._touchDragStart;
+      if(this.previousTouchMoveAtHandleFrame) {
+        // the cancelAnimationFrame function must be executed in the context of window
+        // see http://stackoverflow.com/a/9678166/837709
+        cancelAnimationFrame.call(window, this.previousTouchMoveAtHandleFrame);
+      }
+      this.previousTouchMoveAtHandleFrame = animationFrame;
+    }
+  }
 
-      // touch left the handle
-      if (touchedElement !== handleNode) {
-        if (this._preventTouchSwitch) {
-          const value = difference > (style.handle.width / 2);
-          this._triggerChange(value);
-        } else {
-          this._triggerChange(!this.state.value);
-        }
-      // is still dragging
-      } else if (this.state.isDraggingWithTouch) {
+  _updateComponentOnTouchMoveAtHandle (touch) {
+    const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
+    const handleNode = React.findDOMNode(this.refs.handle);
 
-        if (this.state.value &&
-            this._touchDragEnd &&
-            difference > this._touchDragEnd) {
-          this._preventTouchSwitch = true;
-        } else if (!this.state.value &&
-                   this._touchDragEnd &&
-                   difference < this._touchDragEnd) {
-          this._preventTouchSwitch = true;
-        }
+    let difference = touch.pageX - this._touchDragStart;
 
-        // TODO calculate the limits from real elements
-        if (difference < 0 || difference > 60 - 28) return;
+    // touch left the handle
+    if (touchedElement !== handleNode) {
+      if (this._preventTouchSwitch) {
+        const value = difference > (style.handle.width / 2);
+        this._triggerChange(value);
+      } else {
+        this._triggerChange(!this.state.value);
+      }
+    // is still dragging
+    } else if (this.state.isDraggingWithTouch) {
 
-        this._touchDragEnd = difference;
-        this.setState({
-          sliderOffset: difference
-        });
+      if (this.state.value &&
+          this._touchDragEnd &&
+          difference > this._touchDragEnd) {
+        this._preventTouchSwitch = true;
+      } else if (!this.state.value &&
+                 this._touchDragEnd &&
+                 difference < this._touchDragEnd) {
+        this._preventTouchSwitch = true;
       }
 
+      // TODO calculate the limits from real elements
+      if (difference < 0 || difference > 60 - 28) return;
+
+      this._touchDragEnd = difference;
+      this.setState({
+        sliderOffset: difference
+      });
     }
   }
 
