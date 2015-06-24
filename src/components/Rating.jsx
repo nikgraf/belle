@@ -240,12 +240,12 @@ export default class Rating extends Component {
         this._updateComponentOnTouchMove.bind(this, touches)
       );
 
-      if(this.previousMouseMoveFrame) {
+      if(this.previousTouchMoveFrame) {
         // the cancelAnimationFrame function must be executed in the context of window
         // see http://stackoverflow.com/a/9678166/837709
-        cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
+        cancelAnimationFrame.call(window, this.previousTouchMoveFrame);
       }
-      this.previousMouseMoveFrame = animationFrame;
+      this.previousTouchMoveFrame = animationFrame;
     }
 
     if (this.props.onTouchMove) {
