@@ -41,7 +41,6 @@ export default class Toggle extends Component {
   }
 
   _onClick (event) {
-    console.log('on click');
     this._triggerChange(!this.state.value);
   }
 
@@ -112,8 +111,6 @@ export default class Toggle extends Component {
   }
 
   _onMouseUp (event) {
-    console.log('_onMouseUp');
-
     // TODO calculate the limits from real elements
 
     if (this._mouseDragEnd) {
@@ -133,8 +130,6 @@ export default class Toggle extends Component {
   }
 
   _onMouseLeave (event) {
-    console.log('_onMouseLeave');
-
     if (this._mouseDragStart && !this._preventMouseSwitch) {
       this._triggerChange(!this.state.value);
     } else if (this._mouseDragStart && this._preventMouseSwitch) {
@@ -209,12 +204,9 @@ export default class Toggle extends Component {
 
       this._touchDragStart = event.touches[0].pageX - (this.state.value ? style.sliderOffset : 0);
     }
-    console.log('_onTouchStartHandle');
   }
 
   _onTouchMoveHandle (event) {
-    console.log('_onTouchMoveHandle');
-
     if (event.touches.length === 1 && this.state.isDraggingWithTouch) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
@@ -277,16 +269,13 @@ export default class Toggle extends Component {
       // no click & move was involved
       if (this._touchDragEnd) {
         if (this._preventTouchSwitch) {
-          console.log('_preventTouchSwitch');
           const value = this._touchDragEnd > (style.handle.width / 2);
           this._triggerChange(value);
         } else {
-          console.log('!_preventTouchSwitch');
           this._triggerChange(!this.state.value);
         }
       // click like
       } else {
-        console.log('click like');
         this._triggerChange(!this.state.value);
       }
     }
@@ -294,12 +283,9 @@ export default class Toggle extends Component {
     this._touchDragStart = undefined;
     this._touchDragEnd = undefined;
     this._preventTouchSwitch = false;
-
-    console.log('_onTouchEndHandle');
   }
 
   _onTouchCancelHandle (event) {
-    console.log('_onTouchCancelHandle');
     this.setState({
       isDraggingWithTouch: false
     });
