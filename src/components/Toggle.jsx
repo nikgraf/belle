@@ -317,8 +317,7 @@ export default class Toggle extends Component {
       <div style={ computedToggleStyle }>
         <div style={ style.sliderWrapper}
              ref="sliderWrapper">
-          <div className="react-toggle-slider"
-               ref="belleToggleSlider"
+          <div ref="belleToggleSlider"
                style={ computedSliderStyle }>
             <div ref="toggleTrackCheck"
                  style={ computedTrueChoiceStyle }
@@ -340,8 +339,7 @@ export default class Toggle extends Component {
             </div>
           </div>
         </div>
-        <div className="react-toggle-handle"
-             ref="handle"
+        <div ref="handle"
              style={ handleStyle }
              onMouseDown={ this._onMouseDown.bind(this) }
              onMouseMove={ this._onMouseMove.bind(this) }
