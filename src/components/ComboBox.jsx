@@ -42,12 +42,12 @@ export default class ComboBox extends Component {
 
   componentWillReceiveProps(properties) {
     let inputValue;
-    if (has(this.props, 'valueLink')) {
-      inputValue = this.props.valueLink.value;
-    } else if (has(this.props, 'value')) {
-      inputValue = this.props.value;
-    } else if (has(this.props, 'defaultValue')) {
-      inputValue = this.props.defaultValue;
+    if (has(properties, 'valueLink')) {
+      inputValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      inputValue = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      inputValue = properties.defaultValue;
     }
 
     this.setState({
