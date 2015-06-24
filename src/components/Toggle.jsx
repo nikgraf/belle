@@ -154,15 +154,30 @@ export default class Toggle extends Component {
   }
 
   _onTouchMoveAtSlider (event) {
-    // TODO move to requestAnimationFrame
     if (event.touches.length === 1 && this._touchStartedAtSlider) {
-      const touch = event.touches[0];
-      const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-      const toggleTrackCheck = React.findDOMNode(this.refs.toggleTrackCheck);
-      const trackCrossNode = React.findDOMNode(this.refs.toggleTrackCross);
 
-      this._touchEndedNotInSlider = !(touchedElement === toggleTrackCheck || touchedElement === trackCrossNode);
+      // the requestAnimationFrame function must be executed in the context of window
+      // see http://stackoverflow.com/a/9678166/837709
+      const animationFrame = requestAnimationFrame.call(
+        window,
+        this._updateComponentOnTouchMoveAtSlider.bind(this, event.touches[0])
+      );
+
+      if(this.previousTouchMoveAtSliderFrame) {
+        // the cancelAnimationFrame function must be executed in the context of window
+        // see http://stackoverflow.com/a/9678166/837709
+        cancelAnimationFrame.call(window, this.previousTouchMoveAtSliderFrame);
+      }
+      this.previousTouchMoveAtSliderFrame = animationFrame;
     }
+  }
+
+  _updateComponentOnTouchMoveAtSlider (touch) {
+    const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
+    const toggleTrackCheck = React.findDOMNode(this.refs.toggleTrackCheck);
+    const trackCrossNode = React.findDOMNode(this.refs.toggleTrackCross);
+
+    this._touchEndedNotInSlider = !(touchedElement === toggleTrackCheck || touchedElement === trackCrossNode);
   }
 
   _onTouchEndAtSlider (event) {
