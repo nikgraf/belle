@@ -1,37 +1,29 @@
 'use strict';
 
-import {extend} from "underscore";
-
-const toggleWidth = 60;
-const toggleHeight = 28;
-
-const optionHeight = toggleHeight;
-const optionWidth = toggleWidth - toggleHeight / 2;
-
-const sliderWidth = 2 * optionWidth;
-
 var toggleStyle = {
 
-  sliderOffset: (optionWidth - toggleHeight / 2),
+  // width of check/cross area - half of the width of the handle
+  sliderOffset: 32,
 
   toggle: {
     boxSizing: 'border-box',
-    borderRadius: toggleHeight,
-    height: toggleHeight,
-    width: toggleWidth,
+    borderRadius: 28,
+    height: 28,
+    width: 60,
     WebkitUserSelect: 'none',
     position: 'relative'
   },
 
   slider: {
     position: 'relative',
-    width: sliderWidth,
+    // Calculated with 2 * the width of check/cross area
+    width: 92,
     transition: 'left 0.15s ease-in-out'
   },
 
   sliderWrapper: {
     overflow: 'hidden',
-    borderRadius: toggleHeight,
+    borderRadius: 28,
   },
 
   handle: {
@@ -51,9 +43,13 @@ var toggleStyle = {
   check: {
     display: 'inline-block',
     boxSizing: 'border-box',
-    height: optionHeight,
-    width: optionWidth,
-    lineHeight: optionHeight + 'px',
+    height: 28,
+    // Calculated with the width of the whole toggle - half of the width from the handle
+    //
+    // This allows to have a round handle that is position exactly in on top of the
+    // border between the check and cross areas.
+    width: 46,
+    lineHeight: 28 + 'px',
     textAlign: 'center',
     cursor: 'pointer',
     color: '#FFF',
@@ -64,9 +60,13 @@ var toggleStyle = {
   cross: {
     display: 'inline-block',
     boxSizing: 'border-box',
-    height: optionHeight,
-    width: optionWidth,
-    lineHeight: optionHeight + 'px',
+    height: 28,
+    // Calculated with the width of the whole toggle - half of the width from the handle
+    //
+    // This allows to have a round handle that is position exactly in on top of the
+    // border between the check and cross areas.
+    width: 46,
+    lineHeight: 28 + 'px',
     textAlign: 'center',
     cursor: 'pointer',
     color: '#FFF',
