@@ -55,7 +55,7 @@ export default class Button extends Component {
 
   /**
    * Deactivate the focused attribute in order to make sure the focus animation
-   * only runs once when the component is focused on & not after rerendering
+   * only runs once when the component is focused on & not after re-rendering
    * e.g when the user clicks the button.
    */
   componentDidUpdate() {
