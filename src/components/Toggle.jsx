@@ -7,18 +7,10 @@ import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
 import style from '../style/toggle';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
+import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
-function sanitizeChildProperties (properties) {
-  let childProperties = omit(properties, [
-    'style',
-    'onChange',
-    'checked',
-    'defaultChecked'
-  ]);
-
-  return childProperties;
-}
-
+// Enable React Touch Events
+React.initializeTouchEvents(true);
 
 /**
  * Toggle component
@@ -81,7 +73,23 @@ export default class Toggle extends Component {
   _onMouseMove (event) {
     if (!this.state.isDraggingWithMouse) return;
 
-    let difference = event.pageX - this._mouseDragStart;
+    // the requestAnimationFrame function must be executed in the context of window
+    // see http://stackoverflow.com/a/9678166/837709
+    const animationFrame = requestAnimationFrame.call(
+      window,
+      this._updateComponentOnMouseMove.bind(this, event.pageX)
+    );
+
+    if(this.previousMouseMoveFrame) {
+      // the cancelAnimationFrame function must be executed in the context of window
+      // see http://stackoverflow.com/a/9678166/837709
+      cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
+    }
+    this.previousMouseMoveFrame = animationFrame;
+  }
+
+  _updateComponentOnMouseMove (pageX) {
+    let difference = pageX - this._mouseDragStart;
 
     if (this.state.value &&
         this._mouseDragEnd &&
@@ -349,6 +357,17 @@ Toggle.propTypes = {
 Toggle.defaultProps = {
   disabled: false
 };
+
+function sanitizeChildProperties (properties) {
+  let childProperties = omit(properties, [
+    'style',
+    'onChange',
+    'checked',
+    'defaultChecked'
+  ]);
+
+  return childProperties;
+}
 
 /**
  * Verifies that the children is an array containing only two choices with a
