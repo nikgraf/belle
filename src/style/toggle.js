@@ -2,13 +2,18 @@
 
 var toggleStyle = {
 
-  toggle: {
+  style: {
     boxSizing: 'border-box',
     borderRadius: 28,
     height: 28,
     width: 60,
     WebkitUserSelect: 'none',
     position: 'relative'
+  },
+
+  focusStyle: {
+    WebkitAnimation: 'belle-toggle-focus 2s',
+    outline: 0 // avoid default focus behaviour
   },
 
   slider: {

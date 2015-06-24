@@ -6,8 +6,10 @@ import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, isUndefined, first, last} from "underscore";
 import style from '../style/toggle';
+import config from '../config/toggle';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
+import unionClassNames from '../utils/union-class-names';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -22,13 +24,11 @@ export default class Toggle extends Component {
     let checked = properties.defaultChecked ? properties.defaultChecked : false;
     checked = properties.checked ? properties.checked : checked;
 
-    this.childProperties = sanitizeChildProperties(properties);
-
     this.state = {
       value : checked,
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
+      childProperties: sanitizeChildProperties(properties),
     };
 
     this._touchStartedAtSlider = false;
@@ -39,12 +39,71 @@ export default class Toggle extends Component {
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
     this._preventMouseSwitch = false;
+
+    // The focused attribute is used to apply the one-time focus animation.
+    // As it is reset after every render it can't be set inside state as this
+    // would trigger an endless loop.
+    this.focused = false;
   }
 
   componentWillReceiveProps (properties) {
     this.setState({
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps)
+      childProperties: sanitizeChildProperties(properties)
     });
+    updatePseudoClassStyle(this.styleId, properties);
+  }
+
+  /**
+   * Generates the style-id & inject the focus style.
+   *
+   * The style-id is based on React's unique DOM node id.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this.styleId = `style-id${id}`;
+    updatePseudoClassStyle(this.styleId, this.props);
+  }
+
+  /**
+   * Remove a component's associated styles whenever it gets removed from the DOM.
+   */
+  componentWillUnmount() {
+    removeStyle(this.styleId);
+  }
+
+  /**
+   * Deactivate the focused attribute in order to make sure the focus animation
+   * only runs once when the component is focused on & not after re-rendering
+   * e.g when the user clicks on the toggle.
+   */
+  componentDidUpdate() {
+    this.focused = false;
+  }
+
+  /**
+   * Activate the focused attribute used to determine when to show the
+   * one-time focus animation and trigger a render.
+   */
+  _onFocus(event) {
+    this.focused = true;
+    this.forceUpdate();
+
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  }
+
+  /**
+   * Deactivate the focused attribute used to determine when to show the
+   * one-time focus animation and trigger a render.
+   */
+  _onBlur(event) {
+    this.focused = false;
+    this.forceUpdate();
+
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
   }
 
   _onClick (event) {
@@ -308,7 +367,7 @@ export default class Toggle extends Component {
   render () {
 
 
-    const computedToggleStyle = extend( {}, style.toggle );
+    const computedToggleStyle = extend( {}, style.style );
     let computedSliderStyle;
     let handleStyle;
 
@@ -347,7 +406,8 @@ export default class Toggle extends Component {
     return (
       <div style={ computedToggleStyle }
            tabIndex={ tabIndex }
-           {...this.state.wrapperProperties} >
+           className={ unionClassNames(this.props.className, this.styleId) }
+           {...this.state.childProperties} >
         <div style={ style.sliderWrapper}
              ref="sliderWrapper">
           <div ref="belleToggleSlider"
@@ -391,9 +451,14 @@ Toggle.displayName = 'Belle Toggle';
 
 Toggle.propTypes = {
   children: validateChoices,
-  value: React.PropTypes.bool,
+  className: React.PropTypes.string,
   defaultValue: React.PropTypes.bool,
+  focusStyle: React.PropTypes.object,
+  onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
+  onFocus: React.PropTypes.func,
+  style: React.PropTypes.object,
+  value: React.PropTypes.bool,
   valueLink: React.PropTypes.shape({
     value: React.PropTypes.string.isRequired,
     requestChange: React.PropTypes.func.isRequired
@@ -401,29 +466,22 @@ Toggle.propTypes = {
 };
 
 Toggle.defaultProps = {
-  disabled: false
+  disabled: false,
+  preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
 
-/**
- * Returns an object with properties that are relevant for the wrapping div of
- * the Toggle.
- */
-function sanitizePropertiesForWrapper(wrapperProperties) {
-  return omit(wrapperProperties, [
-    'style',
-    'tabIndex'
-  ]);
-}
-
 function sanitizeChildProperties (properties) {
-  let childProperties = omit(properties, [
-    'style',
-    'onChange',
+  return omit(properties, [
     'checked',
-    'defaultChecked'
+    'className',
+    'defaultChecked',
+    'focusStyle',
+    'style',
+    'tabIndex',
+    'onFocus',
+    'onBlur',
+    'onChange',
   ]);
-
-  return childProperties;
 }
 
 /**
@@ -450,4 +508,30 @@ function choicePropType(props, propName, componentName) {
   if (!(props[propName] && isComponentTypeOf('Choice', props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
+}
+
+
+/**
+ * Update focus style for the speficied styleId.
+ *
+ * @param styleId {string} - a unique id that exists as class attribute in the DOM
+ * @param properties {object} - the components properties optionally containing custom styles
+ */
+function updatePseudoClassStyle(styleId, properties) {
+  let focusStyle;
+  if (properties.preventFocusStyleForTouchAndClick) {
+    focusStyle = { outline: 0 };
+  } else {
+    focusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  }
+
+  const styles = [
+    {
+      id: styleId,
+      style: focusStyle,
+      pseudoClass: 'focus'
+    }
+  ];
+
+  injectStyles(styles);
 }
