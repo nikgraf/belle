@@ -6,6 +6,7 @@ import React from 'react';
 import {Route, DefaultRoute} from 'react-router';
 
 import Base from './Base';
+import ComboBoxDocumentation from './ComboBoxDocumentation';
 import ButtonDocumentation from './ButtonDocumentation';
 import CardDocumentation from './CardDocumentation';
 import Configuration from './Configuration';
@@ -25,6 +26,7 @@ const routes = (
     <Route name="getting-started" handler={GettingStarted}/>
     <Route name="component/button" handler={ButtonDocumentation}/>
     <Route name="component/card" handler={CardDocumentation}/>
+    <Route name="component/combo-box" handler={ComboBoxDocumentation}/>
     <Route name="component/select" handler={SelectDocumentation}/>
     <Route name="component/option" handler={OptionDocumentation}/>
     <Route name="component/placeholder" handler={PlaceholderDocumentation}/>

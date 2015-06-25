@@ -52,7 +52,7 @@ export default class SelectDocumentation extends Component {
               <br />
               optional</p>
             <p>
-              Behaves like the valueLink poperty of a native select-tag.
+              Behaves like the valueLink property of a native select-tag.
               ValueLink allows to enable two-way data binding between a state property and the value in
               the user interface.
             </p>
@@ -71,7 +71,7 @@ export default class SelectDocumentation extends Component {
               <br />
               optional</p>
             <p>
-              Behaves like the defaultValue poperty of a native select-tag.
+              Behaves like the defaultValue property of a native select-tag.
               The Option with the same value is initially used as selected and can be manipulated through the user interface.
             </p>
           </td>
@@ -85,11 +85,11 @@ export default class SelectDocumentation extends Component {
         <tr>
           <td style={ propertyDescriptionStyle }>
             <p>
-              <i>String, Boolean, Number, Date</i>
+              <i>String, Boolean, Number</i>
               <br />
               optional</p>
             <p>
-              Behaves like the value poperty of a native select-tag.
+              Behaves like the value property of a native select-tag.
               The Option with the same value is initially used as selected and can <b>not</b> be manipulated through the user interface.
             </p>
           </td>
@@ -107,10 +107,10 @@ export default class SelectDocumentation extends Component {
               <br />
               optional</p>
             <p>
-              Behaves like the onChange poperty of a native select-tag.
-              Behaves like the onChange property of any React rendered input of type="text" or textarea.
+              Behaves like the onChange property of a native select-tag.
+              Behaves like the onChange property of any React rendered input of type="text" or "textarea".
               Any time an Option is selected onChange is trigger passing on the change event.
-              This change event contains a property 'value'.
+              This target of change event (event.target) contains a property 'value'.
             </p>
           </td>
         </tr>
@@ -694,16 +694,13 @@ const positionOptionsSelectCodeExample = `<!-- select with a custom positionOpti
   <Option value="vienna">Vienna</Option>
 </Select>`;
 
-const htmlStructure = `<div ref="wrapper"
-     tabIndex="0"
+const htmlStructure = `<div tabIndex="0"
      style={ wrapperStyle }>
-  <div ref="selectedOptionWrapper"
-       style={ style }>
+  <div style={ style }>
     <Option /> or <Placeholder />
     <span style={ caretToCloseStyle or caretToOpenStyle } />
   </div>
-  <ul ref="menu"
-      style={ menuStyle }>
+  <ul style={ menuStyle }>
     <li>
       <Option /> or <Separator />
     </li>

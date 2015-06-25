@@ -527,8 +527,8 @@ export default class Select extends Component {
     }
 
     const computedMenuStyle = this.state.isOpen && !this.props.disabled ? menuStyle : { display: 'none' };
-    const hasCustomTabIndex = this.props.wrapperProperties && this.props.wrapperProperties.tabIndex;
-    let tabIndex = hasCustomTabIndex ? this.props.wrapperProperties.tabIndex : '0';
+    const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
+    let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
 
     let selectedOptionWrapperStyle;
     if(this.props.disabled) {
