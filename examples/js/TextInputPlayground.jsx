@@ -13,8 +13,13 @@ export default React.createClass({
 
   getInitialState () {
     return {
-      showTextInput: true
+      showTextInput: true,
+      inputValue: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     };
+  },
+
+  _handleChange(newValue) {
+    this.setState({ inputValue: newValue });
   },
 
   _removeTextInput() {
@@ -24,12 +29,18 @@ export default React.createClass({
   },
 
   render () {
+    var valueLink = {
+      value: this.state.inputValue,
+      requestChange: this._handleChange
+    };
+
     return (
       <Card>
         <h2>TextInput</h2>
 
         {/* Common use case */}
-        <TextInput style={ {width: 250} } defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+        <TextInput allowNewLine={true} style={ {width: 250} } valueLink= { valueLink }
+          onChange={ (event) => {console.log(event.target.value)} }/>
         <br />
 
         {/* Common use case disabled */}
@@ -39,7 +50,7 @@ export default React.createClass({
         {/* Remove TextInput behaviour */}
         {conditionalTextInput(this.state.showTextInput)}
         <br />
-        <button type="button" onClick={this._removeTextInput.bind(this)}>Remove TextInput</button>
+        <button type="button" onClick={this._removeTextInput}>Remove TextInput</button>
 
         {/* Empty TextInput */}
         <TextInput style={ {width: 250} }/>
@@ -47,7 +58,8 @@ export default React.createClass({
 
         {/* Not editable value */}
         <div style={ {width: 250} }>
-          <TextInput value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+          <TextInput allowNewLine={false} value={ this.state.inputValue }
+                     onChange={ (event) => {console.log(event.target.value); this._handleChange(event.target.value)} }/>
         </div>
         <br />
 

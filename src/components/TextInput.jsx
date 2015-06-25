@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend} from 'underscore';
+import {omit, extend, has} from 'underscore';
 import style from '../style/text-input';
 
 /**
@@ -114,32 +114,21 @@ export default class TextInput extends Component {
 
     if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
       value = event.target.value.replace(newLineRegex, ' ');
-
-      // controlled textarea must have value
-      if (this.state.textareaProperties.value) {
-        this.setState({ textareaProperties: { value: value } });
-        this.forceUpdate(this._resize);
-      // uncontrolled textarea must be updated with value, but then released again
-      } else {
-        this.setState({ textareaProperties: { value: value } });
-        this.forceUpdate(() => {
-          this._resize();
-          this.setState({ textareaProperties: { value: undefined } });
-        });
-      }
-    } else {
-      this._resize();
+      //If user enters new line text in the <textarea> and allowNewLine is false, we remove new lines from domElement's value
+      //"domNode.value = value" seems to be updating the dafaultValue by itself
+      //still might be it will be a good idea to update 'this.state.textareaProperties.defaultValue'
     }
+    const domNode = React.findDOMNode(this);
+    domNode.value = value;
 
-    let changeCallback = this.props.onChange;
+    this._resize();
+
     const valueLink = this.props.valueLink;
-
     if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
-      changeCallback = event => valueLink.requestChange(value);
+      valueLink.requestChange(value);
     }
-
-    if (changeCallback) {
-      changeCallback(event);
+    else if (this.props.onChange) {
+      this.props.onChange({target: domNode});
     }
   }
 
