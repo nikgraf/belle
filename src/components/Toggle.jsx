@@ -377,6 +377,51 @@ export default class Toggle extends Component {
     this._preventTouchSwitch = false;
   }
 
+  _onKeyDown(event) {
+    if (!this.props.disabled) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        this._onArrowLeftKeyDown();
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        this._onArrowRightKeyDown();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this._onEnterOrSpaceKeyDown();
+      }
+    }
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+  }
+
+  /**
+   * Flip value in case it is false.
+   */
+  _onArrowLeftKeyDown() {
+    if (!this.props.disabled && this.state.value === true) {
+      this._triggerChange(false);
+    }
+  }
+
+  /**
+   * Flip value in case it is true.
+   */
+  _onArrowRightKeyDown() {
+    if (!this.props.disabled && this.state.value === false) {
+      this._triggerChange(true);
+    }
+  }
+
+   /**
+    * Flip value and trigger change.
+    */
+   _onEnterOrSpaceKeyDown() {
+    if (!this.props.disabled) {
+      this._triggerChange(!this.state.value);
+    }
+  }
+
   render () {
     let wrapperStyle = extend({}, style.style, this.props.style);
 
@@ -423,6 +468,7 @@ export default class Toggle extends Component {
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
            className={ unionClassNames(this.props.className, this.styleId) }
+           onKeyDown={ this._onKeyDown.bind(this) }
            onMouseDown={ this._onMouseDownOnWrapper.bind(this) }
            onTouchStart={ this._onTouchStartOnWrapper.bind(this) }
            onFocus={ this._onFocus.bind(this) }
