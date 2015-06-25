@@ -8,8 +8,9 @@ import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
 import SelectPlayground from './SelectPlayground';
-import RatingPlayground from './RatingPlayground';
 import TextInputPlayground from './TextInputPlayground';
+import RatingPlayground from './RatingPlayground';
+import ComboBoxPlayground from './ComboBoxPlayground';
 import TogglePlayground from './TogglePlayground';
 
 style.button.style = {
@@ -57,6 +58,8 @@ class App extends Component {
       <CardPlayground />
 
       <RatingPlayground />
+
+      <ComboBoxPlayground />
 
     </div>;
   }
