@@ -29,7 +29,8 @@ export default class Toggle extends Component {
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
       childProperties: sanitizeChildProperties(properties),
-      wasFocusedWithClickOrTouch: false
+      wasFocusedWithClickOrTouch: false,
+      isActive: false
     };
 
     this._touchStartedAtSlider = false;
@@ -133,7 +134,8 @@ export default class Toggle extends Component {
     this.setState({
       value: value,
       isDraggingWithMouse: false,
-      isDraggingWithTouch: false
+      isDraggingWithTouch: false,
+      isActive: false
     });
 
     if (this.props.onChange) {
@@ -222,6 +224,8 @@ export default class Toggle extends Component {
     } else if (this._mouseDragStart && this._preventMouseSwitch) {
       const value = this._mouseDragEnd > (style.handle.width / 2);
       this._triggerChange(value);
+    } else {
+      this.setState({ isActive: false });
     }
 
     this._mouseDragStart = undefined;
@@ -264,6 +268,11 @@ export default class Toggle extends Component {
 
     this._touchEndedNotInSlider = touchedElement !== toggleTrackCheck &&
                                   touchedElement !== trackCrossNode;
+    if (this.state.isActive && this._touchEndedNotInSlider) {
+      this.setState({ isActive: false });
+    } else if (!this.state.isActive && !this._touchEndedNotInSlider) {
+      this.setState({ isActive: true });
+    }
   }
 
   _onTouchEndAtSlider (event) {
@@ -440,13 +449,14 @@ export default class Toggle extends Component {
   _onMouseEnterAtSliderWrapper() {
     this.setState({
       isHovered: true
-    })
+    });
   }
 
   _onMouseLeaveAtSliderWrapper() {
     this.setState({
-      isHovered: false
-    })
+      isHovered: false,
+      isActive: false
+    });
   }
 
   render () {
