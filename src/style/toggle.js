@@ -17,6 +17,7 @@ var toggleStyle = {
   },
 
   slider: {
+    boxSizing: 'border-box',
     position: 'relative',
     // Calculated with 2 * the width of check/cross area
     width: 92,
@@ -24,8 +25,10 @@ var toggleStyle = {
   },
 
   sliderWrapper: {
+    boxSizing: 'border-box',
     overflow: 'hidden',
-    borderRadius: 28
+    borderRadius: 28,
+    boxShadow: 'inset 0 1px 0px 0px rgba(0,0,0,0.6)'
   },
 
   handle: {
@@ -55,7 +58,7 @@ var toggleStyle = {
     textAlign: 'center',
     cursor: 'pointer',
     color: '#FFF',
-    backgroundColor: '#AED75F',
+    backgroundColor: 'rgba(43, 206, 56, 0.8)',
     textIndent: -10
   },
 
@@ -72,31 +75,20 @@ var toggleStyle = {
     textAlign: 'center',
     cursor: 'pointer',
     color: '#FFF',
-    backgroundColor: '#C9D1D4',
+    backgroundColor: 'rgba(205, 205, 205, 0.8)',
     textIndent: 10
   },
 
   hoverHandleStyle: {
-    boxShadow: 'rgba(0,0,0,0.6) 0 0 1.5px',
-    backgroundImage: '-webkit-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 14px)'
-    /*
-    backgroundImage: '-moz-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)',
-    backgroundImage: '-o-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)',
-    backgroundImage: 'radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)'
-    */
+    backgroundColor: '#F5F5F5'
   },
 
   activeHandleStyle: {
-    boxShadow: 'rgba(0,0,0,0.6) 0 0 1.5px inset',
-    //browser specific property, need to do something about it
-    backgroundImage: '-webkit-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 14px)'
+    backgroundColor: 'rgb(238, 238, 238)'
   },
 
   grabbedHandleStyle: {
-    //this cursor property is browser specific, needs to be fixed
-    //also browsers that do not yet support this cursor style may show ugly default cursor style
-    //a customized cursor style can also be made using image
-    cursor: '-webkit-grabbing'
+    cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
   }
 
 };
