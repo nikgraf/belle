@@ -84,7 +84,13 @@ var toggleStyle = {
     backgroundImage: '-o-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)',
     backgroundImage: 'radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)'
     */
+  },
+
+  activeStyle: {
+    boxShadow: 'rgba(0,0,0,0.6) 0 0 1.5px inset',
+    backgroundImage: '-webkit-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 14px)'
   }
+
 };
 
 export default toggleStyle;

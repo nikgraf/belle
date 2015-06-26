@@ -109,7 +109,13 @@ export default class Toggle extends Component {
 
   _onMouseDownOnWrapper (event) {
     if(!this.props.disabled) {
-      this.setState({ wasFocusedWithClickOrTouch: true });
+      this.setState({ wasFocusedWithClickOrTouch: true, isActive: true });
+    }
+  }
+
+  _onMouseUpOnWrapper (event) {
+    if(!this.props.disabled) {
+      this.setState({ isActive: false });
     }
   }
 
@@ -226,6 +232,9 @@ export default class Toggle extends Component {
   _onTouchStartAtSlider (event) {
     if (event.touches.length === 1) {
       this._touchStartedAtSlider = true;
+      this.setState({
+        isActive: true
+      });
     }
   }
 
@@ -259,6 +268,9 @@ export default class Toggle extends Component {
 
   _onTouchEndAtSlider (event) {
     if (this._touchStartedAtSlider && !this._touchEndedNotInSlider) {
+      this.setState({
+        isActive: false
+      });
       // prevent the onClick to happen
       event.preventDefault();
       this._triggerChange(!this.state.value);
@@ -268,6 +280,9 @@ export default class Toggle extends Component {
   }
 
   _onTouchCancelAtSlider (event) {
+    this.setState({
+      isActive: false
+    });
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
   }
@@ -446,12 +461,13 @@ export default class Toggle extends Component {
 
     const defaultSliderOffset = style.check.width - style.handle.width / 2;
 
+
     if (this.state.isDraggingWithMouse || this.state.isDraggingWithTouch) {
       computedSliderStyle = extend({}, style.slider, {
         left: this.state.sliderOffset - defaultSliderOffset,
         transition: "none"
       });
-      handleStyle = extend({}, style.handle, {
+      handleStyle = extend({}, style.handle, style.activeStyle, {
         left: this.state.sliderOffset,
         transition: "none"
       });
@@ -459,7 +475,12 @@ export default class Toggle extends Component {
       computedSliderStyle = extend({}, style.slider, {
         left: this.state.value ? 0 : -defaultSliderOffset
       });
-      if(this.state.isHovered) {
+      if(this.state.isActive) {
+        handleStyle = extend({}, style.handle, style.activeStyle , {
+          left: this.state.value ? defaultSliderOffset : 0
+        });
+      }
+      else if(this.state.isHovered) {
         handleStyle = extend({}, style.handle, style.hoverStyle , {
           left: this.state.value ? defaultSliderOffset : 0
         });
@@ -488,6 +509,7 @@ export default class Toggle extends Component {
            className={ unionClassNames(this.props.className, this.styleId) }
            onKeyDown={ this._onKeyDown.bind(this) }
            onMouseDown={ this._onMouseDownOnWrapper.bind(this) }
+           onMouseUp={ this._onMouseUpOnWrapper.bind(this) }
            onTouchStart={ this._onTouchStartOnWrapper.bind(this) }
            onFocus={ this._onFocus.bind(this) }
            onBlur={ this._onBlur.bind(this) }
