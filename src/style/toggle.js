@@ -25,7 +25,7 @@ var toggleStyle = {
 
   sliderWrapper: {
     overflow: 'hidden',
-    borderRadius: 28,
+    borderRadius: 28
   },
 
   handle: {
@@ -74,6 +74,16 @@ var toggleStyle = {
     color: '#FFF',
     backgroundColor: '#C9D1D4',
     textIndent: 10
+  },
+
+  hoverStyle: {
+    boxShadow: 'rgba(0,0,0,0.6) 0 0 1.5px',
+    backgroundImage: '-webkit-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 14px)'
+    /*
+    backgroundImage: '-moz-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)',
+    backgroundImage: '-o-radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)',
+    backgroundImage: 'radial-gradient(top center, circle, rgba(255,255,255,0.9),rgba(255,255,255,0.2) 28px)'
+    */
   }
 };
 

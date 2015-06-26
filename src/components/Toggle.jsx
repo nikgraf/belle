@@ -422,6 +422,18 @@ export default class Toggle extends Component {
     }
   }
 
+  _onMouseEnterAtSliderWrapper() {
+    this.setState({
+      isHovered: true
+    })
+  }
+
+  _onMouseLeaveAtSliderWrapper() {
+    this.setState({
+      isHovered: false
+    })
+  }
+
   render () {
     let wrapperStyle = extend({}, style.style, this.props.style);
 
@@ -447,9 +459,15 @@ export default class Toggle extends Component {
       computedSliderStyle = extend({}, style.slider, {
         left: this.state.value ? 0 : -defaultSliderOffset
       });
-      handleStyle = extend({}, style.handle, {
-        left: this.state.value ? defaultSliderOffset : 0
-      });
+      if(this.state.isHovered) {
+        handleStyle = extend({}, style.handle, style.hoverStyle , {
+          left: this.state.value ? defaultSliderOffset : 0
+        });
+      } else {
+        handleStyle = extend({}, style.handle, {
+          left: this.state.value ? defaultSliderOffset : 0
+        });
+      }
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✓";
@@ -473,6 +491,8 @@ export default class Toggle extends Component {
            onTouchStart={ this._onTouchStartOnWrapper.bind(this) }
            onFocus={ this._onFocus.bind(this) }
            onBlur={ this._onBlur.bind(this) }
+           onMouseEnter = { this._onMouseEnterAtSliderWrapper.bind(this) }
+           onMouseLeave = { this._onMouseLeaveAtSliderWrapper.bind(this) }
            {...this.state.childProperties} >
         <div style={ style.sliderWrapper}
              ref="sliderWrapper">
