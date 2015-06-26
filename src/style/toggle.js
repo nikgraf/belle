@@ -137,11 +137,11 @@ var toggleStyle = {
   },
 
   hoverHandleStyle: {
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F8F8F8'
   },
 
   activeHandleStyle: {
-    backgroundColor: 'rgb(238, 238, 238)'
+    backgroundColor: '#F8F8F8'
   },
 
   grabbedHandleStyle: {
