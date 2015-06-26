@@ -467,7 +467,9 @@ export default class Toggle extends Component {
         left: this.state.sliderOffset - defaultSliderOffset,
         transition: "none"
       });
-      handleStyle = extend({}, style.handle, style.activeStyle, {
+      //right now even when handle is clicked, it momentarily shows this grabbing styles
+      //may be this.state.isDraggingWithMouse should be set to true only after mouse movement starts
+      handleStyle = extend({}, style.handle, style.activeHandleStyle, style.grabbedHandleStyle, {
         left: this.state.sliderOffset,
         transition: "none"
       });
@@ -476,12 +478,12 @@ export default class Toggle extends Component {
         left: this.state.value ? 0 : -defaultSliderOffset
       });
       if(this.state.isActive) {
-        handleStyle = extend({}, style.handle, style.activeStyle , {
+        handleStyle = extend({}, style.handle, style.activeHandleStyle , {
           left: this.state.value ? defaultSliderOffset : 0
         });
       }
       else if(this.state.isHovered) {
-        handleStyle = extend({}, style.handle, style.hoverStyle , {
+        handleStyle = extend({}, style.handle, style.hoverHandleStyle , {
           left: this.state.value ? defaultSliderOffset : 0
         });
       } else {
