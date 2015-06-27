@@ -29,6 +29,7 @@ export default class Toggle extends Component {
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
       childProperties: sanitizeChildProperties(properties),
+      sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps),
       wasFocusedWithClickOrTouch: false,
       isActive: false
@@ -52,6 +53,7 @@ export default class Toggle extends Component {
   componentWillReceiveProps (properties) {
     this.setState({
       childProperties: sanitizeChildProperties(properties),
+      sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
     });
     updatePseudoClassStyle(this.styleId, properties);
@@ -546,10 +548,9 @@ export default class Toggle extends Component {
            onMouseLeave = { this._onMouseLeaveAtSliderWrapper.bind(this) }
            {...this.state.childProperties} >
         <div style={ style.sliderWrapper}
-             ref="sliderWrapper"
              {...this.state.sliderWrapperProperties}>
-          <div ref="belleToggleSlider"
-               style={ computedSliderStyle }>
+          <div style={ computedSliderStyle }
+               {...this.state.sliderProperties}>
             <div ref="toggleTrackCheck"
                  style={ computedTrueChoiceStyle }
                  onClick={ this._onClick.bind(this) }
@@ -600,7 +601,8 @@ Toggle.propTypes = {
   onMouseLeave: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
   onTouchStart: React.PropTypes.func,
-  sliderWrapperProperties: React.PropTypes.object,
+  sliderProps: React.PropTypes.object,
+  sliderWrapperProps: React.PropTypes.object,
   style: React.PropTypes.object,
   value: React.PropTypes.bool,
   valueLink: React.PropTypes.shape({
@@ -627,16 +629,22 @@ function sanitizeChildProperties (properties) {
     'onMouseLeave',
     'onMouseUp',
     'onTouchStart',
-    'sliderWrapperProperties',
+    'sliderProps',
+    'sliderWrapperProps',
     'style',
     'tabIndex'
   ]);
 }
 
+function sanitizeSliderProperties (properties) {
+  return omit(properties, [
+    'style'
+  ]);
+}
+
 function sanitizeSliderWrapperProperties (properties) {
   return omit(properties, [
-    'style',
-    'ref'
+    'style'
   ]);
 }
 
