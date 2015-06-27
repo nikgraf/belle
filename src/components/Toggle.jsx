@@ -28,6 +28,7 @@ export default class Toggle extends Component {
       checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
       childProperties: sanitizeChildProperties(properties),
       crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
+      handleProperties: sanitizeHandleProperties(properties.handleProps),
       isActive: false,
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
@@ -57,6 +58,7 @@ export default class Toggle extends Component {
       checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
       childProperties: sanitizeChildProperties(properties),
       crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
+      handleProperties: sanitizeHandleProperties(properties.handleProps),
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
     });
@@ -586,7 +588,8 @@ export default class Toggle extends Component {
              onTouchStart={ this._onTouchStartHandle.bind(this) }
              onTouchMove={ this._onTouchMoveHandle.bind(this) }
              onTouchEnd={ this._onTouchEndHandle.bind(this) }
-             onTouchCancel={ this._onTouchCancelHandle.bind(this) } />
+             onTouchCancel={ this._onTouchCancelHandle.bind(this) }
+             {...this.state.handleProperties} />
       </div>
     );
   }
@@ -601,6 +604,7 @@ Toggle.propTypes = {
   crossAreaProps: React.PropTypes.object,
   defaultValue: React.PropTypes.bool,
   focusStyle: React.PropTypes.object,
+  handleProps: React.PropTypes.object,
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onFocus: React.PropTypes.func,
@@ -632,6 +636,7 @@ function sanitizeChildProperties (properties) {
     'crossAreaProps',
     'defaultChecked',
     'focusStyle',
+    'handleProps',
     'onFocus',
     'onBlur',
     'onChange',
@@ -661,6 +666,21 @@ function sanitizeSliderWrapperProperties (properties) {
 function sanitizeCheckAndCrossAreaProperties (properties) {
   return omit(properties, [
     'onClick',
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'ref',
+    'style'
+  ]);
+}
+
+function sanitizeHandleProperties (properties) {
+  return omit(properties, [
+    'onMouseDown',
+    'onMouseMove',
+    'onMouseUp',
+    'onMouseLeave',
     'onTouchStart',
     'onTouchMove',
     'onTouchEnd',
