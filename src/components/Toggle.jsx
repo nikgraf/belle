@@ -175,6 +175,10 @@ export default class Toggle extends Component {
       isDraggingWithMouse: true,
       sliderOffset: (this.state.value ? defaultSliderOffset : 0)
     });
+
+    if (this.props.handleProps && this.props.handleProps.onMouseDown) {
+      this.props.handleProps.onMouseDown(event);
+    }
   }
 
   _onMouseMoveOnHandle (event) {
@@ -193,6 +197,10 @@ export default class Toggle extends Component {
       cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
     }
     this.previousMouseMoveFrame = animationFrame;
+
+    if (this.props.handleProps && this.props.handleProps.onMouseMove) {
+      this.props.handleProps.onMouseMove(event);
+    }
   }
 
   _updateComponentOnMouseMove (pageX) {
@@ -235,6 +243,10 @@ export default class Toggle extends Component {
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
     this._preventMouseSwitch = false;
+
+    if (this.props.handleProps && this.props.handleProps.onMouseUp) {
+      this.props.handleProps.onMouseUp(event);
+    }
   }
 
   _onMouseLeaveOnHandle (event) {
@@ -250,6 +262,10 @@ export default class Toggle extends Component {
     this._mouseDragStart = undefined;
     this._mouseDragEnd = undefined;
     this._preventMouseSwitch = false;
+
+    if (this.props.handleProps && this.props.handleProps.onMouseLeave) {
+      this.props.handleProps.onMouseLeave(event);
+    }
   }
 
   _onTouchStartAtSlider (event) {
@@ -330,6 +346,10 @@ export default class Toggle extends Component {
 
       this._touchDragStart = event.touches[0].pageX - (this.state.value ? defaultSliderOffset : 0);
     }
+
+    if (this.props.handleProps && this.props.handleProps.onTouchStart) {
+      this.props.handleProps.onTouchStart(event);
+    }
   }
 
   _onTouchMoveHandle (event) {
@@ -347,6 +367,10 @@ export default class Toggle extends Component {
         cancelAnimationFrame.call(window, this.previousTouchMoveAtHandleFrame);
       }
       this.previousTouchMoveAtHandleFrame = animationFrame;
+    }
+
+    if (this.props.handleProps && this.props.handleProps.onTouchMove) {
+      this.props.handleProps.onTouchMove(event);
     }
   }
 
@@ -409,6 +433,10 @@ export default class Toggle extends Component {
     this._touchDragStart = undefined;
     this._touchDragEnd = undefined;
     this._preventTouchSwitch = false;
+
+    if (this.props.handleProps && this.props.handleProps.onTouchEnd) {
+      this.props.handleProps.onTouchEnd(event);
+    }
   }
 
   _onTouchCancelHandle (event) {
@@ -418,6 +446,10 @@ export default class Toggle extends Component {
     this._touchDragStart = undefined;
     this._touchDragEnd = undefined;
     this._preventTouchSwitch = false;
+
+    if (this.props.handleProps && this.props.handleProps.onTouchCancel) {
+      this.props.handleProps.onTouchCancel(event);
+    }
   }
 
   _onKeyDown(event) {
