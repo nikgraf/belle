@@ -25,14 +25,16 @@ export default class Toggle extends Component {
     checked = properties.checked ? properties.checked : checked;
 
     this.state = {
-      value : checked,
+      checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
+      childProperties: sanitizeChildProperties(properties),
+      crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
+      isActive: false,
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
-      childProperties: sanitizeChildProperties(properties),
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps),
-      wasFocusedWithClickOrTouch: false,
-      isActive: false
+      value : checked,
+      wasFocusedWithClickOrTouch: false
     };
 
     this._touchStartedAtSlider = false;
@@ -52,7 +54,9 @@ export default class Toggle extends Component {
 
   componentWillReceiveProps (properties) {
     this.setState({
+      checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
       childProperties: sanitizeChildProperties(properties),
+      crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
     });
@@ -557,7 +561,8 @@ export default class Toggle extends Component {
                  onTouchStart={ this._onTouchStartAtSlider.bind(this) }
                  onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
                  onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
-                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }>
+                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
+                 {...this.state.checkAreaProperties}>
               { computedTrueChoice }
             </div>
             <div ref="crossArea"
@@ -566,7 +571,8 @@ export default class Toggle extends Component {
                  onTouchStart={ this._onTouchStartAtSlider.bind(this) }
                  onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
                  onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
-                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }>
+                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
+                 {...this.state.crossAreaProperties}>
               { computedFalseChoice }
             </div>
           </div>
@@ -591,6 +597,8 @@ Toggle.displayName = 'Belle Toggle';
 Toggle.propTypes = {
   children: validateChoices,
   className: React.PropTypes.string,
+  checkAreaProps: React.PropTypes.object,
+  crossAreaProps: React.PropTypes.object,
   defaultValue: React.PropTypes.bool,
   focusStyle: React.PropTypes.object,
   onBlur: React.PropTypes.func,
@@ -620,6 +628,8 @@ function sanitizeChildProperties (properties) {
   return omit(properties, [
     'checked',
     'className',
+    'checkAreaProps',
+    'crossAreaProps',
     'defaultChecked',
     'focusStyle',
     'onFocus',
@@ -644,6 +654,18 @@ function sanitizeSliderProperties (properties) {
 
 function sanitizeSliderWrapperProperties (properties) {
   return omit(properties, [
+    'style'
+  ]);
+}
+
+function sanitizeCheckAndCrossAreaProperties (properties) {
+  return omit(properties, [
+    'onClick',
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'ref',
     'style'
   ]);
 }
