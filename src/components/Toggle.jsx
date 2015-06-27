@@ -112,17 +112,26 @@ export default class Toggle extends Component {
     if(!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true, isActive: true });
     }
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(event);
+    }
   }
 
   _onMouseUpOnWrapper (event) {
     if(!this.props.disabled) {
       this.setState({ isActive: false });
     }
+    if (this.props.onMouseUp) {
+      this.props.onMouseUp(event);
+    }
   }
 
   _onTouchStartOnWrapper (event) {
     if(!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true });
+    }
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
     }
   }
 
@@ -450,6 +459,9 @@ export default class Toggle extends Component {
     this.setState({
       isHovered: true
     });
+    if (this.props.onMouseEnter) {
+      this.props.onMouseEnter(event);
+    }
   }
 
   _onMouseLeaveAtSliderWrapper() {
@@ -457,6 +469,9 @@ export default class Toggle extends Component {
       isHovered: false,
       isActive: false
     });
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave(event);
+    }
   }
 
   render () {
@@ -577,6 +592,11 @@ Toggle.propTypes = {
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onFocus: React.PropTypes.func,
+  onMouseDown: React.PropTypes.func,
+  onMouseEnter: React.PropTypes.func,
+  onMouseLeave: React.PropTypes.func,
+  onMouseUp: React.PropTypes.func,
+  onTouchStart: React.PropTypes.func,
   style: React.PropTypes.object,
   value: React.PropTypes.bool,
   valueLink: React.PropTypes.shape({
@@ -596,11 +616,15 @@ function sanitizeChildProperties (properties) {
     'className',
     'defaultChecked',
     'focusStyle',
-    'style',
-    'tabIndex',
     'onFocus',
     'onBlur',
     'onChange',
+    'onMouseDown',
+    'onMouseLeave',
+    'onMouseUp',
+    'onTouchStart',
+    'style',
+    'tabIndex'
   ]);
 }
 
