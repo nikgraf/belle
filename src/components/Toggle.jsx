@@ -276,11 +276,11 @@ export default class Toggle extends Component {
 
   _updateComponentOnTouchMoveAtSlider (touch) {
     const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const toggleTrackCheck = React.findDOMNode(this.refs.toggleTrackCheck);
-    const trackCrossNode = React.findDOMNode(this.refs.toggleTrackCross);
+    const checkAreaNode = React.findDOMNode(this.refs.checkArea);
+    const crossAreaNode = React.findDOMNode(this.refs.crossArea);
 
-    this._touchEndedNotInSlider = touchedElement !== toggleTrackCheck &&
-                                  touchedElement !== trackCrossNode;
+    this._touchEndedNotInSlider = touchedElement !== checkAreaNode &&
+                                  touchedElement !== crossAreaNode;
     if (this.state.isActive && this._touchEndedNotInSlider) {
       this.setState({ isActive: false });
     } else if (!this.state.isActive && !this._touchEndedNotInSlider) {
@@ -551,7 +551,7 @@ export default class Toggle extends Component {
              {...this.state.sliderWrapperProperties}>
           <div style={ computedSliderStyle }
                {...this.state.sliderProperties}>
-            <div ref="toggleTrackCheck"
+            <div ref="checkArea"
                  style={ computedTrueChoiceStyle }
                  onClick={ this._onClick.bind(this) }
                  onTouchStart={ this._onTouchStartAtSlider.bind(this) }
@@ -560,7 +560,7 @@ export default class Toggle extends Component {
                  onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }>
               { computedTrueChoice }
             </div>
-            <div ref="toggleTrackCross"
+            <div ref="crossArea"
                  style={ computedFalseChoiceStyle }
                  onClick={ this._onClick.bind(this) }
                  onTouchStart={ this._onTouchStartAtSlider.bind(this) }
