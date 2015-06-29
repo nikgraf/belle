@@ -114,8 +114,10 @@ export default class Toggle extends Component {
    * one-time focus animation and trigger a render.
    */
   _onFocus(event) {
-    this.isFocused = true;
-    this.forceUpdate();
+    if (!this.props.disabled) {
+      this.isFocused = true;
+      this.forceUpdate();
+    }
 
     if (this.props.onFocus) {
       this.props.onFocus(event);
