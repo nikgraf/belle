@@ -699,7 +699,7 @@ Toggle.propTypes = {
     onTouchStart: React.PropTypes.func,
     onTouchMove: React.PropTypes.func,
     onTouchEnd: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func,
+    onTouchCancel: React.PropTypes.func
   }),
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
@@ -709,7 +709,13 @@ Toggle.propTypes = {
   onMouseLeave: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
   onTouchStart: React.PropTypes.func,
-  sliderProps: React.PropTypes.object,
+  sliderProps: React.PropTypes.shape({
+    onClick: React.PropTypes.func,
+    onTouchStart: React.PropTypes.func,
+    onTouchMove: React.PropTypes.func,
+    onTouchEnd: React.PropTypes.func,
+    onTouchCancel: React.PropTypes.func
+  }),
   sliderWrapperProps: React.PropTypes.object,
   style: React.PropTypes.object,
   value: React.PropTypes.bool,
