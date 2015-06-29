@@ -145,8 +145,12 @@ export default class Toggle extends Component {
     }
   }
 
-  _onClick (event) {
+  _onClickAtSlider (event) {
     this._triggerChange(!this.state.value);
+
+    if (this.props.sliderProps && this.props.sliderProps.onClick) {
+      this.props.sliderProps.onClick(event);
+    }
   }
 
   _triggerChange (value) {
@@ -275,6 +279,10 @@ export default class Toggle extends Component {
         isActive: true
       });
     }
+
+    if (this.props.sliderProps && this.props.sliderProps.onTouchStart) {
+      this.props.sliderProps.onTouchStart(event);
+    }
   }
 
   _onTouchMoveAtSlider (event) {
@@ -293,6 +301,10 @@ export default class Toggle extends Component {
         cancelAnimationFrame.call(window, this.previousTouchMoveAtSliderFrame);
       }
       this.previousTouchMoveAtSliderFrame = animationFrame;
+    }
+
+    if (this.props.sliderProps && this.props.sliderProps.onTouchMove) {
+      this.props.sliderProps.onTouchMove(event);
     }
   }
 
@@ -321,6 +333,10 @@ export default class Toggle extends Component {
     }
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
+
+    if (this.props.sliderProps && this.props.sliderProps.onTouchEnd) {
+      this.props.sliderProps.onTouchEnd(event);
+    }
   }
 
   _onTouchCancelAtSlider (event) {
@@ -329,6 +345,10 @@ export default class Toggle extends Component {
     });
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
+
+    if (this.props.sliderProps && this.props.sliderProps.onTouchCancel) {
+      this.props.sliderProps.onTouchCancel(event);
+    }
   }
 
   _onTouchStartHandle (event) {
@@ -588,24 +608,19 @@ export default class Toggle extends Component {
         <div style={ style.sliderWrapper}
              {...this.state.sliderWrapperProperties}>
           <div style={ computedSliderStyle }
+               onClick={ this._onClickAtSlider.bind(this) }
+               onTouchStart={ this._onTouchStartAtSlider.bind(this) }
+               onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
+               onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
+               onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
                {...this.state.sliderProperties}>
             <div ref="checkArea"
                  style={ computedTrueChoiceStyle }
-                 onClick={ this._onClick.bind(this) }
-                 onTouchStart={ this._onTouchStartAtSlider.bind(this) }
-                 onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
-                 onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
-                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
                  {...this.state.checkAreaProperties}>
               { computedTrueChoice }
             </div>
             <div ref="crossArea"
                  style={ computedFalseChoiceStyle }
-                 onClick={ this._onClick.bind(this) }
-                 onTouchStart={ this._onTouchStartAtSlider.bind(this) }
-                 onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
-                 onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
-                 onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
                  {...this.state.crossAreaProperties}>
               { computedFalseChoice }
             </div>
@@ -694,7 +709,12 @@ function sanitizeChildProperties (properties) {
 
 function sanitizeSliderProperties (properties) {
   return omit(properties, [
-    'style'
+    'style',
+    'onClick',
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel'
   ]);
 }
 
@@ -706,11 +726,6 @@ function sanitizeSliderWrapperProperties (properties) {
 
 function sanitizeCheckAndCrossAreaProperties (properties) {
   return omit(properties, [
-    'onClick',
-    'onTouchStart',
-    'onTouchMove',
-    'onTouchEnd',
-    'onTouchCancel',
     'ref',
     'style'
   ]);
