@@ -27,7 +27,7 @@ var toggleStyle = {
     position: 'relative',
     // Calculated with 2 * the width of check/cross area
     width: 92,
-    transition: 'left 0.15s ease-in-out'
+    transition: 'left 0.1s ease-in-out'
   },
 
   sliderWrapperStyle: {
@@ -48,7 +48,7 @@ var toggleStyle = {
     width: 28,
     cursor: 'pointer',
     borderBottom: '1px solid rgb(189, 189, 189)',
-    transition: 'left 0.15s ease-in-out',
+    transition: 'left 0.1s ease-in-out',
 
     /*
     To avoid any kind of flickering the user won't get feedback
