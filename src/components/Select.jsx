@@ -44,20 +44,20 @@ export default class Select extends Component {
 
     let selectedValue, focusedOptionValue;
 
-    if (has(this.props, 'valueLink')) {
-      selectedValue = this.props.valueLink.value;
+    if (has(properties, 'valueLink')) {
+      selectedValue = properties.valueLink.value;
       focusedOptionValue = selectedValue;
-    } else if (has(this.props, 'value')) {
-      selectedValue = this.props.value;
+    } else if (has(properties, 'value')) {
+      selectedValue = properties.value;
       focusedOptionValue = selectedValue;
-    } else if (has(this.props, 'defaultValue')) {
-      selectedValue = this.props.defaultValue;
+    } else if (has(properties, 'defaultValue')) {
+      selectedValue = properties.defaultValue;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(this.props.children) && !some(this.props.children, isPlaceholder)) {
-      selectedValue = first(filter(this.props.children, isOption)).props.value;
+    } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
+      selectedValue = first(filter(properties.children, isOption)).props.value;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(this.props.children)) {
-      focusedOptionValue = first(filter(this.props.children, isOption)).props.value;
+    } else if (!isEmpty(properties.children)) {
+      focusedOptionValue = first(filter(properties.children, isOption)).props.value;
     }
 
     this.state = {
@@ -75,28 +75,24 @@ export default class Select extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    if (properties.valueLink) {
-      this.setState({
-        selectedValue: properties.valueLink.value,
-        focusedOptionValue: properties.valueLink.value,
-        selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
-        wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-        menuProperties: sanitizePropertiesForMenu(properties.menuProps),
-        caretProperties: sanitizePropertiesForCaret(properties.caretProps),
-        selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
-      });
-    } else if (properties.value) {
-      this.setState({
-        selectedValue: properties.value,
-        focusedOptionValue: properties.value,
-        selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
-        wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-        menuProperties: sanitizePropertiesForMenu(properties.menuProps),
-        caretProperties: sanitizePropertiesForCaret(properties.caretProps),
-        selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
-      });
+    let newState = {
+      selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
+      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
+      menuProperties: sanitizePropertiesForMenu(properties.menuProps),
+      caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
+    };
+
+    let value;
+    if (has(properties, 'valueLink')) {
+      newState.selectedValue = properties.valueLink.value;
+      newState.focusedOptionValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      newState.selectedValue = properties.value;
+      newState.focusedOptionValue = properties.value;
     }
 
+    this.setState(newState);
     updatePseudoClassStyle(this._styleId, properties);
   }
 
