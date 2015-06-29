@@ -43,6 +43,10 @@ export default React.createClass({
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
+        <h3>Disabled Toggle</h3>
+        <Toggle disabled />
+        <Toggle disabled defaultChecked />
+
       </Card>
     );
   }

@@ -163,8 +163,9 @@ export default class Toggle extends Component {
   }
 
   _onClickAtSlider (event) {
-    this._triggerChange(!this.state.value);
-
+    if(!this.props.disabled) {
+      this._triggerChange(!this.state.value);
+    }
     if (this.props.sliderProps && this.props.sliderProps.onClick) {
       this.props.sliderProps.onClick(event);
     }
@@ -208,17 +209,17 @@ export default class Toggle extends Component {
 
   _onMouseDownOnHandle (event) {
     // check for left mouse button pressed
-    if (event.button !== 0) return;
+    if(event.button !== 0 && !this.props.disabled) {
+      const defaultSliderOffset = style.check.width - style.handle.width / 2;
 
-    const defaultSliderOffset = style.check.width - style.handle.width / 2;
+      this._mouseDragStart = event.pageX - (this.state.value ? defaultSliderOffset : 0);
+      this._preventMouseSwitch = false;
 
-    this._mouseDragStart = event.pageX - (this.state.value ? defaultSliderOffset : 0);
-    this._preventMouseSwitch = false;
-
-    this.setState({
-      isDraggingWithMouse: true,
-      sliderOffset: (this.state.value ? defaultSliderOffset : 0)
-    });
+      this.setState({
+        isDraggingWithMouse: true,
+        sliderOffset: (this.state.value ? defaultSliderOffset : 0)
+      });
+    }
 
     if (this.props.handleProps && this.props.handleProps.onMouseDown) {
       this.props.handleProps.onMouseDown(event);
@@ -226,21 +227,21 @@ export default class Toggle extends Component {
   }
 
   _onMouseMoveOnHandle (event) {
-    if (!this.state.isDraggingWithMouse) return;
-
-    // the requestAnimationFrame function must be executed in the context of window
-    // see http://stackoverflow.com/a/9678166/837709
-    const animationFrame = requestAnimationFrame.call(
-      window,
-      this._updateComponentOnMouseMove.bind(this, event.pageX)
-    );
-
-    if(this.previousMouseMoveFrame) {
-      // the cancelAnimationFrame function must be executed in the context of window
+    if(!this.state.isDraggingWithMouse && !this.props.disabled) {
+      // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
-      cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
+      const animationFrame = requestAnimationFrame.call(
+        window,
+        this._updateComponentOnMouseMove.bind(this, event.pageX)
+      );
+
+      if(this.previousMouseMoveFrame) {
+        // the cancelAnimationFrame function must be executed in the context of window
+        // see http://stackoverflow.com/a/9678166/837709
+        cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
+      }
+      this.previousMouseMoveFrame = animationFrame;
     }
-    this.previousMouseMoveFrame = animationFrame;
 
     if (this.props.handleProps && this.props.handleProps.onMouseMove) {
       this.props.handleProps.onMouseMove(event);
@@ -271,17 +272,19 @@ export default class Toggle extends Component {
   }
 
   _onMouseUpOnHandle (event) {
-    // TODO calculate the limits from real elements
+    if (!this.props.disabled) {
+      // TODO calculate the limits from real elements
 
-    if (this._mouseDragEnd) {
-      if (!this._preventMouseSwitch) {
+      if (this._mouseDragEnd) {
+        if (!this._preventMouseSwitch) {
+          this._triggerChange(!this.state.value);
+        } else if (this._preventMouseSwitch) {
+          const value = this._mouseDragEnd > (style.handle.width / 2);
+          this._triggerChange(value);
+        }
+      } else {
         this._triggerChange(!this.state.value);
-      } else if (this._preventMouseSwitch) {
-        const value = this._mouseDragEnd > (style.handle.width / 2);
-        this._triggerChange(value);
       }
-    } else {
-      this._triggerChange(!this.state.value);
     }
 
     this._mouseDragStart = undefined;
@@ -294,13 +297,15 @@ export default class Toggle extends Component {
   }
 
   _onMouseLeaveOnHandle (event) {
-    if (this._mouseDragStart && !this._preventMouseSwitch) {
-      this._triggerChange(!this.state.value);
-    } else if (this._mouseDragStart && this._preventMouseSwitch) {
-      const value = this._mouseDragEnd > (style.handle.width / 2);
-      this._triggerChange(value);
-    } else {
-      this.setState({ isActive: false });
+    if (!this.props.disabled) {
+      if (this._mouseDragStart && !this._preventMouseSwitch) {
+        this._triggerChange(!this.state.value);
+      } else if (this._mouseDragStart && this._preventMouseSwitch) {
+        const value = this._mouseDragEnd > (style.handle.width / 2);
+        this._triggerChange(value);
+      } else {
+        this.setState({ isActive: false });
+      }
     }
 
     this._mouseDragStart = undefined;
@@ -313,7 +318,7 @@ export default class Toggle extends Component {
   }
 
   _onTouchStartAtSlider (event) {
-    if (event.touches.length === 1) {
+    if (event.touches.length === 1 && !this.props.disabled) {
       this._touchStartedAtSlider = true;
       this.setState({
         isActive: true
@@ -326,7 +331,7 @@ export default class Toggle extends Component {
   }
 
   _onTouchMoveAtSlider (event) {
-    if (event.touches.length === 1 && this._touchStartedAtSlider) {
+    if (event.touches.length === 1 && this._touchStartedAtSlider && !this.props.disabled) {
 
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
@@ -363,13 +368,16 @@ export default class Toggle extends Component {
   }
 
   _onTouchEndAtSlider (event) {
-    if (this._touchStartedAtSlider && !this._touchEndedNotInSlider) {
+    // prevent the onClick to happen
+    event.preventDefault();
+
+    if (this._touchStartedAtSlider && !this._touchEndedNotInSlider && !this.props.disabled) {
       this.setState({
         isActive: false
       });
-      // prevent the onClick to happen
-      event.preventDefault();
       this._triggerChange(!this.state.value);
+    } else {
+      this.setState({ isActive: false });
     }
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
@@ -380,9 +388,7 @@ export default class Toggle extends Component {
   }
 
   _onTouchCancelAtSlider (event) {
-    this.setState({
-      isActive: false
-    });
+    this.setState({ isActive: false });
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
 
@@ -394,7 +400,7 @@ export default class Toggle extends Component {
   _onTouchStartHandle (event) {
     // check for one touch as multiple could be browser gestures and only one
     // is relevant for us
-    if (event.touches.length === 1) {
+    if (event.touches.length === 1 && !this.props.disabled) {
       this._preventTouchSwitch = false;
 
       const defaultSliderOffset = style.check.width - style.handle.width / 2;
@@ -413,7 +419,7 @@ export default class Toggle extends Component {
   }
 
   _onTouchMoveHandle (event) {
-    if (event.touches.length === 1 && this.state.isDraggingWithTouch) {
+    if (event.touches.length === 1 && this.state.isDraggingWithTouch && !this.props.disabled) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
       const animationFrame = requestAnimationFrame.call(
@@ -475,7 +481,7 @@ export default class Toggle extends Component {
     // prevent the onClick to happen
     event.preventDefault();
 
-    if (this.state.isDraggingWithTouch) {
+    if (this.state.isDraggingWithTouch && !this.props.disabled) {
       // no click & move was involved
       if (this._touchDragEnd) {
         if (this._preventTouchSwitch) {
@@ -488,6 +494,11 @@ export default class Toggle extends Component {
       } else {
         this._triggerChange(!this.state.value);
       }
+    } else {
+      this.setState({
+        isActive: false,
+        isDraggingWithTouch: false
+      });
     }
 
     this._touchDragStart = undefined;
@@ -534,7 +545,7 @@ export default class Toggle extends Component {
    * Flip value in case it is false.
    */
   _onArrowLeftKeyDown() {
-    if (!this.props.disabled && this.state.value === true) {
+    if (this.state.value === true) {
       this._triggerChange(false);
     }
   }
@@ -543,7 +554,7 @@ export default class Toggle extends Component {
    * Flip value in case it is true.
    */
   _onArrowRightKeyDown() {
-    if (!this.props.disabled && this.state.value === false) {
+    if (this.state.value === false) {
       this._triggerChange(true);
     }
   }
@@ -551,10 +562,8 @@ export default class Toggle extends Component {
    /**
     * Flip value and trigger change.
     */
-   _onEnterOrSpaceKeyDown() {
-    if (!this.props.disabled) {
-      this._triggerChange(!this.state.value);
-    }
+  _onEnterOrSpaceKeyDown() {
+    this._triggerChange(!this.state.value);
   }
 
   _onMouseEnterAtSliderWrapper() {
