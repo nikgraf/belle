@@ -9,7 +9,8 @@ var toggleStyle = {
     width: 60,
     WebkitUserSelect: 'none',
     position: 'relative',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    display: 'inline-block'
   },
 
   focusStyle: {
