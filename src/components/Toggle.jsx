@@ -715,7 +715,12 @@ Toggle.propTypes = {
   checkAreaStyle: React.PropTypes.object,
   crossAreaProps: React.PropTypes.object,
   crossAreaStyle: React.PropTypes.object,
-  defaultValue: React.PropTypes.bool,
+  checked: React.PropTypes.bool,
+  checkedLink: React.PropTypes.shape({
+    value: React.PropTypes.bool.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  }),
+  defaultChecked: React.PropTypes.bool,
   disabled: React.PropTypes.bool,
   disabledHandleStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
@@ -749,12 +754,7 @@ Toggle.propTypes = {
   }),
   sliderStyle: React.PropTypes.object,
   sliderWrapperProps: React.PropTypes.object,
-  style: React.PropTypes.object,
-  value: React.PropTypes.bool,
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.string.isRequired,
-    requestChange: React.PropTypes.func.isRequired
-  })
+  style: React.PropTypes.object
 };
 
 Toggle.defaultProps = {
