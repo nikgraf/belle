@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend, omit, isUndefined, first, last} from "underscore";
+import {extend, first, has, isUndefined, omit, last} from "underscore";
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
@@ -21,8 +21,17 @@ export default class Toggle extends Component {
 
   constructor (properties) {
     super(properties);
-    let checked = properties.defaultChecked ? properties.defaultChecked : false;
-    checked = properties.checked ? properties.checked : checked;
+
+    let checked;
+    if (has(properties, 'checkedLink')) {
+      checked = properties.checkedLink.value;
+    } else if (has(properties, 'checked')) {
+      checked = properties.checked;
+    } else if (has(properties, 'defaultChecked')) {
+      checked = properties.defaultChecked;
+    } else {
+      checked = false;
+    }
 
     this.state = {
       checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
@@ -54,14 +63,22 @@ export default class Toggle extends Component {
   }
 
   componentWillReceiveProps (properties) {
-    this.setState({
+    let newState = {
       checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
       childProperties: sanitizeChildProperties(properties),
       crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
       handleProperties: sanitizeHandleProperties(properties.handleProps),
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
-    });
+    };
+
+    if (has(properties, 'checkedLink')) {
+      newState.value = properties.checkedLink.value;
+    } else if (has(properties, 'checked')) {
+      newState.value = properties.checked;
+    }
+
+    this.setState(newState);
     updatePseudoClassStyle(this.styleId, properties);
   }
 
@@ -154,15 +171,38 @@ export default class Toggle extends Component {
   }
 
   _triggerChange (value) {
-    this.setState({
-      value: value,
-      isDraggingWithMouse: false,
-      isDraggingWithTouch: false,
-      isActive: false
-    });
+    if(has(this.props, 'checkedLink')) {
+      this.props.checkedLink.requestChange(value);
+      this.setState({
+        isDraggingWithMouse: false,
+        isDraggingWithTouch: false,
+        isActive: false
+      });
+    }
+    else if(has(this.props, 'checked')) {
+      this.setState({
+        isDraggingWithMouse: false,
+        isDraggingWithTouch: false,
+        isActive: false
+      });
+    }
+    else {
+      this.setState({
+        value: value,
+        isDraggingWithMouse: false,
+        isDraggingWithTouch: false,
+        isActive: false
+      });
+    }
+
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = value;
 
     if (this.props.onChange) {
-      this.props.onChange({ target: { value: value }});
+      // TODO investigate how to properly simulate a change event that includes
+      // all the usual properties documented here:
+      // https://facebook.github.io/react/docs/events.html
+      this.props.onChange({target: wrapperNode});
     }
   }
 
