@@ -209,7 +209,7 @@ export default class Toggle extends Component {
 
   _onMouseDownOnHandle (event) {
     // check for left mouse button pressed
-    if(event.button !== 0 && !this.props.disabled) {
+    if(event.button === 0 && !this.props.disabled) {
       const defaultSliderOffset = style.check.width - style.handle.width / 2;
 
       this._mouseDragStart = event.pageX - (this.state.value ? defaultSliderOffset : 0);
@@ -227,7 +227,7 @@ export default class Toggle extends Component {
   }
 
   _onMouseMoveOnHandle (event) {
-    if(!this.state.isDraggingWithMouse && !this.props.disabled) {
+    if(this.state.isDraggingWithMouse && !this.props.disabled) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
       const animationFrame = requestAnimationFrame.call(
