@@ -621,21 +621,21 @@ export default class Toggle extends Component {
         transition: "none"
       });
     } else {
-      handleStyle = extend(handleStyle, style.handleStyle, this.props.handleStyle);
+      handleStyle = extend({}, style.handleStyle, this.props.handleStyle);
       computedSliderStyle = extend({}, style.sliderStyle, {
         left: this.state.value ? 0 : -defaultSliderOffset
       });
 
       if(this.state.isActive) {
-        handleStyle = extend(handleStyle, style.activeHandleStyle, this.props.activeHandleStyle, {
+        handleStyle = extend({}, handleStyle, style.activeHandleStyle, this.props.activeHandleStyle, {
           left: this.state.value ? defaultSliderOffset : 0
         });
       } else if(this.state.isHovered) {
-        handleStyle = extend(handleStyle, style.hoverHandleStyle, this.props.hoverHandleStyle, {
+        handleStyle = extend({}, handleStyle, style.hoverHandleStyle, this.props.hoverHandleStyle, {
           left: this.state.value ? defaultSliderOffset : 0
         });
       } else {
-        handleStyle = extend(handleStyle, {
+        handleStyle = extend({}, handleStyle, {
           left: this.state.value ? defaultSliderOffset : 0
         });
       }
