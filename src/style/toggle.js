@@ -22,7 +22,7 @@ var toggleStyle = {
     cursor: 'not-allowed'
   },
 
-  slider: {
+  sliderStyle: {
     boxSizing: 'border-box',
     position: 'relative',
     // Calculated with 2 * the width of check/cross area
@@ -30,14 +30,14 @@ var toggleStyle = {
     transition: 'left 0.15s ease-in-out'
   },
 
-  sliderWrapper: {
+  sliderWrapperStyle: {
     boxSizing: 'border-box',
     overflow: 'hidden',
     borderRadius: 28,
     boxShadow: 'inset 0 1px 0px 0px rgba(0,0,0,0.6)'
   },
 
-  handle: {
+  handleStyle: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -70,7 +70,7 @@ var toggleStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  check: {
+  checkAreaStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
     height: 28,
@@ -105,7 +105,7 @@ var toggleStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  cross: {
+  crossAreaStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
     height: 28,
@@ -145,10 +145,7 @@ var toggleStyle = {
   },
 
   activeHandleStyle: {
-    backgroundColor: '#F8F8F8'
-  },
-
-  grabbedHandleStyle: {
+    backgroundColor: '#F8F8F8',
     cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
   },
 
