@@ -708,11 +708,17 @@ export default class Toggle extends Component {
 Toggle.displayName = 'Belle Toggle';
 
 Toggle.propTypes = {
+  activeHandleStyle: React.PropTypes.object,
   children: validateChoices,
   className: React.PropTypes.string,
   checkAreaProps: React.PropTypes.object,
+  checkAreaStyle: React.PropTypes.object,
   crossAreaProps: React.PropTypes.object,
+  crossAreaStyle: React.PropTypes.object,
   defaultValue: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
+  disabledHandleStyle: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   handleProps: React.PropTypes.shape({
     onMouseDown: React.PropTypes.func,
@@ -724,6 +730,8 @@ Toggle.propTypes = {
     onTouchEnd: React.PropTypes.func,
     onTouchCancel: React.PropTypes.func
   }),
+  handleStyle: React.PropTypes.object,
+  hoverHandleStyle: React.PropTypes.object,
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onFocus: React.PropTypes.func,
@@ -739,6 +747,7 @@ Toggle.propTypes = {
     onTouchEnd: React.PropTypes.func,
     onTouchCancel: React.PropTypes.func
   }),
+  sliderStyle: React.PropTypes.object,
   sliderWrapperProps: React.PropTypes.object,
   style: React.PropTypes.object,
   value: React.PropTypes.bool,
