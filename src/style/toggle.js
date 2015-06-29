@@ -8,12 +8,18 @@ var toggleStyle = {
     height: 28,
     width: 60,
     WebkitUserSelect: 'none',
-    position: 'relative'
+    position: 'relative',
+    cursor: 'pointer'
   },
 
   focusStyle: {
     WebkitAnimation: 'belle-toggle-focus 2s',
     outline: 0 // avoid default focus behaviour
+  },
+
+  disabledStyle: {
+    opacity: 0.6,
+    cursor: 'not-allowed'
   },
 
   slider: {
@@ -75,7 +81,6 @@ var toggleStyle = {
     width: 46,
     lineHeight: 28 + 'px',
     textAlign: 'center',
-    cursor: 'pointer',
     color: '#FFF',
     backgroundColor: 'rgba(43, 206, 56, 0.8)',
     textIndent: -10,
@@ -111,7 +116,6 @@ var toggleStyle = {
     width: 46,
     lineHeight: 28 + 'px',
     textAlign: 'center',
-    cursor: 'pointer',
     color: '#FFF',
     backgroundColor: 'rgba(205, 205, 205, 0.8)',
     textIndent: 10,
@@ -146,6 +150,10 @@ var toggleStyle = {
 
   grabbedHandleStyle: {
     cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
+  },
+
+  disabledHandleStyle: {
+    cursor: 'not-allowed'
   }
 
 };

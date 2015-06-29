@@ -639,6 +639,8 @@ export default class Toggle extends Component {
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
     if(this.props.disabled) {
       tabIndex = -1;
+      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
+      handleStyle = extend({}, handleStyle, style.disabledHandleStyle, this.props.disabledHandleStyle);
     }
 
     return (
