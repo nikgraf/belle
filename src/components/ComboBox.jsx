@@ -41,23 +41,21 @@ export default class ComboBox extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    let inputValue;
-    if (has(properties, 'valueLink')) {
-      inputValue = properties.valueLink.value;
-    } else if (has(properties, 'value')) {
-      inputValue = properties.value;
-    } else if (has(properties, 'defaultValue')) {
-      inputValue = properties.defaultValue;
-    }
-
-    this.setState({
-      inputValue: inputValue,
-      filteredOption: this.filterOptions(inputValue),
+    let newState = {
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       inputProperties: sanitizePropertiesForInput(properties),
       menuProperties: sanitizePropertiesForMenu(properties.menuProps)
-    });
+    };
 
+    if (has(properties, 'valueLink')) {
+      newState.inputValue = properties.valueLink.value;
+      newState.filteredOption = this.filterOptions(properties.valueLink.value);
+    } else if (has(properties, 'value')) {
+      newState.inputValue = properties.value;
+      newState.filteredOption = this.filterOptions(properties.value);
+    }
+
+    this.setState(newState);
     updatePseudoClassStyle(this._styleId, properties);
   }
 
