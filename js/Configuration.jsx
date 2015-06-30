@@ -160,6 +160,18 @@ const styleStructure = `style = {
   card: {
     style: { … }
   },
+  comboBox: {
+    style: { … },
+    focusStyle: { … },
+    hoverStyle: { … },
+    wrapperStyle: { … },
+    menuStyle: { … },
+    disabledStyle: { … },
+    disabledHoverStyle: { … },
+    disabledCaretToOpenStyle: { … },
+    caretToCloseStyle: { … },
+    caretToOpenStyle: { … }
+  }
   select: {
     style: { … },
     focusStyle: { … },
@@ -197,6 +209,19 @@ const styleStructure = `style = {
     focusStyle: { … },
     disabledStyle: { … },
     disabledHoveredStyle: { … }
+  },
+  toggle: {
+    style: { … },
+    focusStyle: { … },
+    disabledStyle: { … },
+    sliderStyle: { … },
+    sliderWrapperStyle: { … },
+    handleStyle: { … },
+    firstChoiceStyle: { … },
+    secondChoiceStyle: { … },
+    hoverHandleStyle: { … },
+    activeHandleStyle: { … },
+    disabledHandleStyle: { … }
   }
 }
 `;
@@ -205,11 +230,14 @@ const configStructure = `config = {
   button: {
     preventFocusStyleForTouchAndClick: true/false
   },
+  rating: {
+    preventFocusStyleForTouchAndClick: true/false
+  },
   select: {
     shouldPositionOptions: true/false,
     repositionMenu: function () {}
   },
-  rating: {
+  toggle: {
     preventFocusStyleForTouchAndClick: true/false
   }
 }
