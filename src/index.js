@@ -49,7 +49,6 @@ module.exports = {
     select: selectStyle,
     separator: separatorStyle,
     textInput: textInputStyle,
-    ratingStyle: ratingStyle,
     comboBox: comboBoxStyle
   },
   config: {
