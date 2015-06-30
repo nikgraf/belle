@@ -358,13 +358,22 @@ export default class ToggleDocumentation extends Component {
           <span style={ {color: 'grey'} }> style, id, className, onMouseDown, onTouchStart …</span>
         </p>
 
+        <h3>Internal HTML Structure</h3>
+
+        <p>
+          This should help developer to understand how the Select is structured
+          in order to use the API
+        </p>
+
+        <Code value={ htmlStructure } style={ {marginTop: 40} } />
+
         <h3>More Examples</h3>
 
         <p>Toggle with custom choices</p>
 
-        <Toggle defaultChecked={ true }>
-          <Choice value={ true }
-                  style={ { background: 'rgba(43, 176, 206, 0.8)' } }>On</Choice>
+        <Toggle defaultChecked={ true }
+                checkAreaStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
+          <Choice value={ true }>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
@@ -380,8 +389,26 @@ const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle defaultChecked={ true } style={ { marginLeft: 20 } }/>`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultChecked={ true }>
-  <Choice value={ true }
-          style={ { background: 'rgba(43, 176, 206, 0.8)' } }>On</Choice>
+<Toggle defaultChecked={ true }
+        checkAreaStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
+  <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
+
+const htmlStructure = `<div style={ wrapperStyle }
+     tabIndex={ tabIndex } >
+  <div style={ sliderWrapperStyle }>
+    <div style={ sliderStyle }>
+      <div ref="firstChoice"
+           style={ firstChoiceStyle }>
+        <Choice />
+      </div>
+      <div ref="secondChoice"
+           style={ secondChoiceStyle }>
+        <Choice />
+      </div>
+    </div>
+  </div>
+  <div ref="handle"
+       style={ handleStyle } />
+</div>`;
