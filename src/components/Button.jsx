@@ -89,7 +89,7 @@ export default class Button extends Component {
    */
   _onBlur(event) {
     this.focused = false;
-    this.forceUpdate();
+    this.setState({ active: false });
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
@@ -100,7 +100,9 @@ export default class Button extends Component {
    * Updates the button to be pressed.
    */
   _onMouseDown(event) {
-    this.setState({ active: true });
+    if(event.button === 0 && !this.props.disabled) {
+      this.setState({ active: true });
+    }
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
@@ -122,7 +124,9 @@ export default class Button extends Component {
    * Updates the button to be pressed.
    */
   _onTouchStart(event) {
-    this.setState({ active: true });
+    if(!this.props.disabled && event.touches.length === 1) {
+      this.setState({ active: true });
+    }
 
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
