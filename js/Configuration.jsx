@@ -36,7 +36,7 @@ export default class Configuration extends Component {
       <p style={ {marginTop: 40} }>
         In case you only want to change a couple parameters you easily can do it
         by leveraging ES6 Object.assign() or Underscores' extend for example.
-        This is possible due all styles are simply plain JavaScript objects.
+        This is possible because all styles are simply plain JavaScript objects.
         Of course you also can overwrite the hoverStyle as well.
       </p>
 
