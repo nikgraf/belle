@@ -1,9 +1,17 @@
 "use strict";
 
-import React from 'react';
+import React from 'react/addons';
 import {Toggle, Choice, Card} from 'belle';
 
 export default React.createClass({
+
+  mixins: [React.addons.LinkedStateMixin],
+
+  getInitialState () {
+    return {
+      active: true
+    };
+  },
 
   render () {
     return (
@@ -25,11 +33,19 @@ export default React.createClass({
         <h3>Default Unchecked Toggle (defaultChecked)</h3>
         <Toggle defaultChecked={false} />
 
+        <h3>Default Toggle (checkedLink)</h3>
+        <Toggle checkedLink={this.linkState('active')} />
+        <div>{ `active: ${this.state.active}` }</div>
+
         <h3>Custom Toggle</h3>
         <Toggle defaultChecked={ true }>
           <Choice value={ true }>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
+
+        <h3>Disabled Toggle</h3>
+        <Toggle disabled />
+        <Toggle disabled defaultChecked />
 
       </Card>
     );
