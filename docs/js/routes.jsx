@@ -9,6 +9,7 @@ import Base from './Base';
 import ComboBoxDocumentation from './ComboBoxDocumentation';
 import ButtonDocumentation from './ButtonDocumentation';
 import CardDocumentation from './CardDocumentation';
+import ChoiceDocumentation from './ChoiceDocumentation';
 import Configuration from './Configuration';
 import GettingStarted from './GettingStarted';
 import FuturePlans from './FuturePlans';
@@ -26,6 +27,7 @@ const routes = (
     <Route name="getting-started" handler={GettingStarted}/>
     <Route name="component/button" handler={ButtonDocumentation}/>
     <Route name="component/card" handler={CardDocumentation}/>
+    <Route name="component/choice" handler={ChoiceDocumentation}/>
     <Route name="component/combo-box" handler={ComboBoxDocumentation}/>
     <Route name="component/select" handler={SelectDocumentation}/>
     <Route name="component/option" handler={OptionDocumentation}/>
