@@ -45,21 +45,19 @@ export default class Rating extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    let value;
-
-    if (properties.valueLink) {
-      value = properties.valueLink.value;
-    } else if (properties.value) {
-      value = properties.value;
-    } else {
-      value = this.state.value;
-    }
-
-    this.setState({
-      value: value,
+    let newState = {
       wrapperProperties: sanitizeWrapperProperties(properties),
       characterProperties: sanitizeCharacterProperties(properties.characterProperties)
-    });
+    };
+
+    if (properties.valueLink) {
+      newState.value = properties.valueLink.value;
+    } else if (properties.value) {
+      newState.value = properties.value;
+    }
+
+    this.setState(newState);
+    updatePseudoClassStyle(this._styleId, properties);
   }
 
   /**

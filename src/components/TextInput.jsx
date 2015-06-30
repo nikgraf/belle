@@ -150,7 +150,7 @@ export default class TextInput extends Component {
 
     if (this.props.disabled) {
       const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-      textareaStyle = extend({}, baseStyle, disabledStyle)
+      textareaStyle = extend({}, baseStyle, disabledStyle);
     } else {
       textareaStyle = baseStyle;
     }
