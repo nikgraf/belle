@@ -43,7 +43,7 @@ export default class Toggle extends Component {
       isDraggingWithTouch: false,
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps),
-      value : checked,
+      value: checked,
       wasFocusedWithClickOrTouch: false
     };
 
@@ -655,6 +655,8 @@ export default class Toggle extends Component {
       handleStyle = extend({}, handleStyle, style.disabledHandleStyle, this.props.disabledHandleStyle);
     }
 
+    const role = has(this.state.childProperties, 'role') ? this.state.childProperties.role : 'checkbox';
+
     return (
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
@@ -667,6 +669,8 @@ export default class Toggle extends Component {
            onBlur={ this._onBlur.bind(this) }
            onMouseEnter = { this._onMouseEnterAtSliderWrapper.bind(this) }
            onMouseLeave = { this._onMouseLeaveAtSliderWrapper.bind(this) }
+           role={ role }
+           aria-checked={ this.state.value }
            {...this.state.childProperties} >
         <div style={ sliderWrapperStyle }
              {...this.state.sliderWrapperProperties}>
