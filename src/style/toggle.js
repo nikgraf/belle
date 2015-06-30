@@ -1,134 +1,159 @@
 'use strict';
 
-import {extend} from "underscore";
-
-const toggleWidth = 60;
-const toggleHeight = 30;
-
-const handleHeight = toggleHeight;
-const handleWidth = toggleHeight;
-const handleMargin = 2;
-
-const optionHeight = toggleHeight;
-const optionWidth = toggleWidth - handleWidth / 2;
-
-const sliderWidth = 2 * optionWidth;
-
-const sliderAnimationSpeed = '0.35s';
-
 var toggleStyle = {
 
-  sliderOffset: -(optionWidth - handleWidth / 2),
-
-  toggle: {
-    display: 'inline-block',
-    position: 'relative',
+  style: {
     boxSizing: 'border-box',
-    borderRadius: toggleHeight,
-    overflow: 'hidden',
-    height: toggleHeight,
-    width: toggleWidth,
+    borderRadius: 28,
+    height: 28,
+    width: 60,
     WebkitUserSelect: 'none',
-    backgroundColor: '#E6E6E6',
+    position: 'relative',
     cursor: 'pointer',
-    boxShadow:  '0 0 0 1px #E6E6E6, inset 0 0 0 1px #E6E6E6',
-    transition: 'all ' + sliderAnimationSpeed + ' ease-in-out'
-
+    display: 'inline-block'
   },
 
-  toggleActive: {
-    background: '#38D774',
-    boxShadow:  '0 0 0 1px #38D774, inset 0 0 0 1px #38D774',
-    transition: 'all ' + sliderAnimationSpeed + ' ease-in-out'
+  focusStyle: {
+    WebkitAnimation: 'belle-toggle-focus 2s',
+    outline: 0 // avoid default focus behaviour
   },
 
-  slider: {
-    position: 'relative',
-    zIndex: 3,
-    width: sliderWidth,
-    transition: 'transform ' + sliderAnimationSpeed + ' cubic-bezier(0.35, 0.84, 0.51, 1.19)'
+  disabledStyle: {
+    opacity: 0.6,
+    cursor: 'not-allowed'
   },
 
-  handle: {
-    position: 'absolute',
-    top: handleMargin,
-    left: '50%',
-    zIndex: 5,
-    transform: 'translateX(-50%)',
+  sliderStyle: {
     boxSizing: 'border-box',
-    borderRadius: '100%',
-    backgroundColor: 'white',
-    height: handleHeight - handleMargin * 2,
-    width: handleWidth - handleMargin * 2,
-    border: '1px solid #E6E6E6',
-    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.1)'
+    position: 'relative',
+    // Calculated with 2 * the width of choice area
+    width: 92,
+    transition: 'left 0.1s ease-in-out'
   },
 
-  option: {
-    position: 'relative',
-    zIndex: 2,
+  sliderWrapperStyle: {
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    borderRadius: 28,
+    boxShadow: 'inset 0 1px 0px 0px rgba(0,0,0,0.6)'
+  },
+
+  handleStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    boxSizing: 'border-box',
+    borderRadius: 28,
+    backgroundColor: 'rgb(238, 238, 238)',
+    height: 28,
+    width: 28,
+    cursor: 'pointer',
+    borderBottom: '1px solid rgb(189, 189, 189)',
+    transition: 'left 0.1s ease-in-out',
+
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
+  },
+
+  firstChoiceStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
-    height: optionHeight,
-    width: optionWidth,
-    fontSize: 11,
-    letterSpacing: '0.05em',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    lineHeight: optionHeight + 'px',
+    height: 28,
+    // Calculated with the width of the whole toggle - half of the width from the handle
+    //
+    // This allows to have a round handle that is position exactly in on top of the
+    // border between the two choice areas.
+    width: 46,
+    lineHeight: 28 + 'px',
     textAlign: 'center',
     color: '#FFF',
-    boxShadow: 'inset 0 0 2px rgba(0,0,0, 0.05)',
-    transition: 'opacity ' + sliderAnimationSpeed + ' ease-in-out'
+    backgroundColor: 'rgba(43, 206, 56, 0.8)',
+    textIndent: -10,
+
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
   },
 
-  checkbox: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    width: 1
+  secondChoiceStyle: {
+    display: 'inline-block',
+    boxSizing: 'border-box',
+    height: 28,
+    // Calculated with the width of the whole toggle - half of the width from the handle
+    //
+    // This allows to have a round handle that is position exactly in on top of the
+    // border between the two choice areas.
+    width: 46,
+    lineHeight: 28 + 'px',
+    textAlign: 'center',
+    color: '#FFF',
+    backgroundColor: 'rgba(205, 205, 205, 0.8)',
+    textIndent: 10,
+
+    /*
+    To avoid any kind of flickering the user won't get feedback
+    for selecting the button text
+    */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent'
   },
 
-  toggleFocus: {
-    boxShadow: '0 0 5px 0 rgba(140, 175, 80, .4)'
+  hoverHandleStyle: {
+    backgroundColor: '#F8F8F8'
   },
 
-  background: {
-    background: 'white',
-    position: 'absolute',
-    borderRadius: 20,
-    width: '100%',
-    height: '100%',
-    zIndex: 1,
-    top: '50%',
-    left: '50%',
-    boxShadow: 'inset 0 0 0 1px #E6E6E6',
-    transform: 'translate3d(-50%, -50%, 0)',
-    transition: 'all ' + sliderAnimationSpeed + ' ease-in-out'
+  activeHandleStyle: {
+    backgroundColor: '#F8F8F8',
+    cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
   },
 
-  backgroundActive: {
-    width: '0%',
-    height: '0%',
-    transition: 'all 0.2s'
+  disabledHandleStyle: {
+    cursor: 'not-allowed'
   }
+
 };
-
-toggleStyle['check'] = extend( {}, toggleStyle.option, {
-  // backgroundColor: '#AED75F',
-  borderRadius: '20px 0 0 20px',
-  textIndent: -10
-});
-
-toggleStyle['cross'] = extend( {}, toggleStyle.option, {
-  // backgroundColor: '#C9D1D4',
-  borderRadius: '0 20px 20px 0',
-  textIndent: 10,
-  color: '#e6e6e6'
-});
 
 export default toggleStyle;
