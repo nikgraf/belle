@@ -34,9 +34,9 @@ export default class Toggle extends Component {
     }
 
     this.state = {
-      checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
+      firstChoiceProperties: sanitizeChoiceProperties(properties.firstChoiceProps),
       childProperties: sanitizeChildProperties(properties),
-      crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
+      secondChoiceProperties: sanitizeChoiceProperties(properties.secondChoiceProps),
       handleProperties: sanitizeHandleProperties(properties.handleProps),
       isActive: false,
       isDraggingWithMouse: false,
@@ -64,9 +64,9 @@ export default class Toggle extends Component {
 
   componentWillReceiveProps (properties) {
     let newState = {
-      checkAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.checkAreaProps),
+      firstChoiceProperties: sanitizeChoiceProperties(properties.firstChoiceProps),
       childProperties: sanitizeChildProperties(properties),
-      crossAreaProperties: sanitizeCheckAndCrossAreaProperties(properties.crossAreaProps),
+      secondChoiceProperties: sanitizeChoiceProperties(properties.secondChoiceProps),
       handleProperties: sanitizeHandleProperties(properties.handleProps),
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
@@ -354,11 +354,11 @@ export default class Toggle extends Component {
 
   _updateComponentOnTouchMoveAtSlider (touch) {
     const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const checkAreaNode = React.findDOMNode(this.refs.checkArea);
-    const crossAreaNode = React.findDOMNode(this.refs.crossArea);
+    const firstChoiceNode = React.findDOMNode(this.refs.firstChoice);
+    const secondChoiceNode = React.findDOMNode(this.refs.secondChoice);
 
-    this._touchEndedNotInSlider = touchedElement !== checkAreaNode &&
-                                  touchedElement !== crossAreaNode;
+    this._touchEndedNotInSlider = touchedElement !== firstChoiceNode &&
+                                  touchedElement !== secondChoiceNode;
     if (this.state.isActive && this._touchEndedNotInSlider) {
       this.setState({ isActive: false });
     } else if (!this.state.isActive && !this._touchEndedNotInSlider) {
@@ -591,9 +591,9 @@ export default class Toggle extends Component {
   }
 
   _sliderOffset() {
-    const checkAreaWidth = has(this.props.checkAreaStyle, 'width') ? this.props.checkAreaStyle.width : style.checkAreaStyle.width;
+    const firstChoiceWidth = has(this.props.firstChoiceStyle, 'width') ? this.props.firstChoiceStyle.width : style.firstChoiceStyle.width;
 
-    return checkAreaWidth - this._handleWidth() / 2;
+    return firstChoiceWidth - this._handleWidth() / 2;
   }
 
   render () {
@@ -644,8 +644,8 @@ export default class Toggle extends Component {
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : "✓";
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : "✘";
 
-    const computedTrueChoiceStyle = extend({}, style.checkAreaStyle, this.props.checkAreaStyle);
-    const computedFalseChoiceStyle = extend({}, style.crossAreaStyle, this.props.crossAreaStyle);
+    const computedTrueChoiceStyle = extend({}, style.firstChoiceStyle, this.props.firstChoiceStyle);
+    const computedFalseChoiceStyle = extend({}, style.secondChoiceStyle, this.props.secondChoiceStyle);
 
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
@@ -677,14 +677,14 @@ export default class Toggle extends Component {
                onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
                onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
                {...this.state.sliderProperties}>
-            <div ref="checkArea"
+            <div ref="firstChoice"
                  style={ computedTrueChoiceStyle }
-                 {...this.state.checkAreaProperties}>
+                 {...this.state.firstChoiceProperties}>
               { computedTrueChoice }
             </div>
-            <div ref="crossArea"
+            <div ref="secondChoice"
                  style={ computedFalseChoiceStyle }
-                 {...this.state.crossAreaProperties}>
+                 {...this.state.secondChoiceProperties}>
               { computedFalseChoice }
             </div>
           </div>
@@ -711,10 +711,10 @@ Toggle.propTypes = {
   activeHandleStyle: React.PropTypes.object,
   children: validateChoices,
   className: React.PropTypes.string,
-  checkAreaProps: React.PropTypes.object,
-  checkAreaStyle: React.PropTypes.object,
-  crossAreaProps: React.PropTypes.object,
-  crossAreaStyle: React.PropTypes.object,
+  firstChoiceProps: React.PropTypes.object,
+  firstChoiceStyle: React.PropTypes.object,
+  secondChoiceProps: React.PropTypes.object,
+  secondChoiceStyle: React.PropTypes.object,
   checked: React.PropTypes.bool,
   checkedLink: React.PropTypes.shape({
     value: React.PropTypes.bool.isRequired,
@@ -766,8 +766,8 @@ function sanitizeChildProperties (properties) {
   return omit(properties, [
     'checked',
     'className',
-    'checkAreaProps',
-    'crossAreaProps',
+    'firstChoiceProps',
+    'secondChoiceProps',
     'defaultChecked',
     'focusStyle',
     'handleProps',
@@ -802,7 +802,7 @@ function sanitizeSliderWrapperProperties (properties) {
   ]);
 }
 
-function sanitizeCheckAndCrossAreaProperties (properties) {
+function sanitizeChoiceProperties (properties) {
   return omit(properties, [
     'ref',
     'style'

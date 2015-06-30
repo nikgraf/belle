@@ -26,7 +26,7 @@ var toggleStyle = {
   sliderStyle: {
     boxSizing: 'border-box',
     position: 'relative',
-    // Calculated with 2 * the width of check/cross area
+    // Calculated with 2 * the width of choice area
     width: 92,
     transition: 'left 0.1s ease-in-out'
   },
@@ -71,14 +71,14 @@ var toggleStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  checkAreaStyle: {
+  firstChoiceStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
     height: 28,
     // Calculated with the width of the whole toggle - half of the width from the handle
     //
     // This allows to have a round handle that is position exactly in on top of the
-    // border between the check and cross areas.
+    // border between the two choice areas.
     width: 46,
     lineHeight: 28 + 'px',
     textAlign: 'center',
@@ -106,14 +106,14 @@ var toggleStyle = {
     WebkitTapHighlightColor: 'transparent'
   },
 
-  crossAreaStyle: {
+  secondChoiceStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
     height: 28,
     // Calculated with the width of the whole toggle - half of the width from the handle
     //
     // This allows to have a round handle that is position exactly in on top of the
-    // border between the check and cross areas.
+    // border between the two choice areas.
     width: 46,
     lineHeight: 28 + 'px',
     textAlign: 'center',
