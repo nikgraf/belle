@@ -89,14 +89,14 @@ export default class ToggleDocumentation extends Component {
               </p>
               <p>
                 Works like React's built-in style property.
-                Becomes active once the user clicks or touches the toggle (including the check & cross areas).
+                Becomes active once the user clicks or touches the toggle (including the first & second choice area).
               </p>
             </td>
           </tr>
 
           <tr>
             <td style={ propertyNameStyle }>
-              checkAreaStyle
+              firstChoiceStyle
             </td>
           </tr>
           <tr>
@@ -114,7 +114,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              crossAreaStyle
+              secondChoiceStyle
             </td>
           </tr>
           <tr>
@@ -258,7 +258,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              checkAreaProps
+              firstChoiceProps
             </td>
           </tr>
           <tr>
@@ -277,7 +277,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              crossAreaProps
+              secondChoiceProps
             </td>
           </tr>
           <tr>
@@ -372,7 +372,7 @@ export default class ToggleDocumentation extends Component {
         <p>Toggle with custom choices</p>
 
         <Toggle defaultChecked={ true }
-                checkAreaStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
+                firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
           <Choice value={ true }>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
@@ -390,7 +390,7 @@ const basicCodeExample = `<!-- basic toggle examples -->
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
 <Toggle defaultChecked={ true }
-        checkAreaStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
+        firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
   <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
