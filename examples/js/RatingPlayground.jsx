@@ -33,7 +33,12 @@ export default React.createClass({
           <Button onClick={ this._updateRatingToThree }>Update Rating to value 3</Button>
 
           <h3>ValueLink</h3>
-          <Rating valueLink={ this.linkState('ratingValue') } />
+          <Rating valueLink={ this.linkState('ratingValue') }
+                  onChange={ (event) => {
+                      //onChange should not be called for valueLink
+                      console.log(event.target.value);
+                    }
+                  } />
 
           <h3>Value with update function onChange</h3>
           <Rating value={ this.state.ratingValue }

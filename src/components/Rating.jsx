@@ -316,27 +316,29 @@ export default class Rating extends Component {
    * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
    */
   _updateComponent(value) {
+    const domNode = React.findDOMNode(this);
+    domNode.value = value;
+
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         focusedValue: undefined
       });
-    } else if (has(this.props, 'value')) {
-      this.setState({
-        focusedValue: undefined
-      });
     } else {
-      this.setState({
-        focusedValue: undefined,
-        value: value
-      });
-    }
+      if (has(this.props, 'value')) {
+        this.setState({
+          focusedValue: undefined
+        });
+      } else {
+        this.setState({
+          focusedValue: undefined,
+          value: value
+        });
+      }
 
-    const domNode = React.findDOMNode(this);
-    domNode.value = value;
-
-    if (this.props.onChange) {
-      this.props.onChange({target: domNode});
+      if (this.props.onChange) {
+        this.props.onChange({target: domNode});
+      }
     }
   }
 
