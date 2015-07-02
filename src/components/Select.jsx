@@ -236,33 +236,33 @@ export default class Select extends Component {
    * provided change callback for onChange or valueLink is called.
    */
   _triggerChange (value) {
+    const wrapperNode = React.findDOMNode(this);
+    wrapperNode.value = value;
+
     if(has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false
       });
-    }
-    else if(has(this.props, 'value')) {
-      this.setState({
-        isOpen: false
-      });
-    }
-    else {
-      this.setState({
-        focusedOptionValue: value,
-        selectedValue: value,
-        isOpen: false
-      });
-    }
-
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = value;
-
-    if (this.props.onChange) {
-      // TODO investigate how to properly simulate a change event that includes
-      // all the usual properties documented here:
-      // https://facebook.github.io/react/docs/events.html
-      this.props.onChange({target: wrapperNode});
+    } else {
+      if(has(this.props, 'value')) {
+        this.setState({
+          isOpen: false
+        });
+      }
+      else {
+        this.setState({
+          focusedOptionValue: value,
+          selectedValue: value,
+          isOpen: false
+        });
+      }
+      if (this.props.onChange) {
+        // TODO investigate how to properly simulate a change event that includes
+        // all the usual properties documented here:
+        // https://facebook.github.io/react/docs/events.html
+        this.props.onChange({target: wrapperNode});
+      }
     }
   }
 

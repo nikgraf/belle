@@ -48,20 +48,20 @@ export default React.createClass({
         </select>
 
         <h3>Native Select with onChange</h3>
-        <select onChange={ (event) => console.log(event) }>
+        <select onChange={ (event) => console.log(event.target.value) }>
           <option value="A">Apple</option>
           <option value="B">Banana</option>
           <option value="C">Cranberry</option>
         </select>
 
         <h3>Select with onChange</h3>
-        <Select onChange={ (event) => console.log(event) }>
+        <Select onChange={ (event) => console.log(event.target.value) }>
           <Option value={ "vienna" }>Vienna</Option>
           <Option value={ "rome" }>Rome</Option>
         </Select>
 
         <h3>Select with value & onChange</h3>
-        <Select value="rome" onChange={ (event) => console.log(event) }>
+        <Select value="rome" onChange={ (event) => console.log(event.target.value) }>
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
@@ -88,7 +88,7 @@ export default React.createClass({
         </Select>
 
         <h3>Select with valueLink: { this.state.valueA }</h3>
-        <Select valueLink={ this.linkState('valueA') } >
+        <Select valueLink={ this.linkState('valueA') } onChange={ (event) => console.log(event.target.value) }>
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
