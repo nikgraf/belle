@@ -325,33 +325,33 @@ export default class ComboBox extends Component {
    */
   _onChange(event) {
     const value = event.target.value;
+    const domNode = React.findDOMNode(this);
+    domNode.value = value;
+
     if(has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: true,
         focusedOptionIndex: 0
       });
-    }
-    else if(has(this.props, 'value')) {
-      this.setState({
-        isOpen: true,
-        focusedOptionIndex: 0
-      });
-    }
-    else {
-      this.setState({
-        inputValue: value,
-        isOpen: true,
-        focusedOptionIndex: 0,
-        filteredOptions: this.filterOptions(value)
-      });
-    }
-
-    const domNode = React.findDOMNode(this);
-    domNode.value = value;
-
-    if (this.props.onChange) {
-      this.props.onChange({target: domNode});
+    } else {
+      if(has(this.props, 'value')) {
+        this.setState({
+          isOpen: true,
+          focusedOptionIndex: 0
+        });
+      }
+      else {
+        this.setState({
+          inputValue: value,
+          isOpen: true,
+          focusedOptionIndex: 0,
+          filteredOptions: this.filterOptions(value)
+        });
+      }
+      if (this.props.onChange) {
+        this.props.onChange({target: domNode});
+      }
     }
   }
 

@@ -5,16 +5,64 @@ import {Card, ComboBox, Option} from 'belle';
 
 export default React.createClass({
 
+  getInitialState() {
+    return { comboValue: 'te' };
+  },
+
+  _handleChange(newValue) {
+    this.setState({ comboValue: newValue });
+  },
+
   render () {
+
+    var valueLink = {
+      value: this.state.comboValue,
+      requestChange: this._handleChange
+    };
+
     return (
       <div>
 
         <h2>ComboBox</h2>
 
         <Card>
-
+          <h3>Default Value Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <ComboBox defaultValue={ 'test' }>
+              <Option value="te">Te</Option>
+              <Option value="tes">Tes</Option>
+              <Option value="test">Test</Option>
+              <Option value="test1">Test1</Option>
+              <Option value="test123">Test123</Option>
+              <Option value="orange">Orange</Option>
+            </ComboBox>
+          </div>
+
+          <h3>Value Example</h3>
+          <div style={ { 'marginBottom': '20px' } }>
+            <ComboBox value={ this.state.comboValue }
+                      onChange={ (event) => {
+                          console.log(event.target.value);
+                          //this._handleChange(event.target.value);
+                        }
+                      }>
+              <Option value="te">Te</Option>
+              <Option value="tes">Tes</Option>
+              <Option value="test">Test</Option>
+              <Option value="test1">Test1</Option>
+              <Option value="test123">Test123</Option>
+              <Option value="orange">Orange</Option>
+            </ComboBox>
+          </div>
+
+          <h3>Value Link Example</h3>
+          <div style={ { 'marginBottom': '20px' } }>
+            <ComboBox valueLink={ valueLink }
+                      onChange={ (event) => {
+                          console.log(event.target.value);
+                          //this._handleChange(event.target.value);
+                        }
+                      }>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
               <Option value="test">Test</Option>
