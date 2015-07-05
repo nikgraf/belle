@@ -64,6 +64,12 @@ export default React.createClass({
                  hoverStyle={ { borderBottom: '1px red solid' } }
                  focusStyle={ { borderBottom: '1px brown solid' } } />
         </div>
+
+        {/* Value test */}
+        <div style={ {width: 250} }>
+          <textarea value="abc" onChange={ (event) => console.log(event.target.value) }/>
+        </div>
+        <br />
       </Card>
     );
   }
