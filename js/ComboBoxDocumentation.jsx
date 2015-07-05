@@ -27,9 +27,11 @@ const currencies = [
   {code: 'USD', name: 'United States Dollar'}
 ];
 
-const currencyFilterFunc = function(inputValue, optionValue) {
+const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];
+
+const customFilterFunc = function(inputValue, optionValue) {
   if(inputValue && optionValue) {
-    return optionValue.indexOf(inputValue) === 0;
+    return optionValue.toLowerCase().indexOf(inputValue.toLowerCase()) === 0;
   }
   return false;
 };
@@ -154,10 +156,28 @@ export default React.createClass({
             <p>
               <i>Object</i>
               <br />
-              default: true
+              default: false
             </p>
             <p>
               Can be used to show/hide the caret that appears inside combo-box.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            enableHint
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              default: false
+            </p>
+            <p>
+              Can be used to enable/disable showing hints to users in combo-box.
             </p>
           </td>
         </tr>
@@ -369,10 +389,11 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <h3>ComboBox with each option having an image and description</h3>
+      <h3>ComboBox with each option having an image, description and caret</h3>
 
       <ComboBox placeholder = { 'Choose an Animal' }
-                    defaultValue = "Ant">
+                    defaultValue = "Ant"
+                    displayCaret = { true }>
         {
           animals.map(function(animal, index) {
             return (
@@ -416,7 +437,7 @@ export default React.createClass({
       <ComboBox placeholder = { 'Choose a Currency' }
                     onUpdate={ function(event) { console.log(event.value); } }
                     maxOptions = { 5 }
-                    filterFunc = { currencyFilterFunc }>
+                    filterFunc = { customFilterFunc }>
         {
           currencies.map(function(currency, index) {
             return (
@@ -440,6 +461,27 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleTwoPartThree } style={ {marginTop: 40} } />
 
+      <h3>ComboBox with custom filtering, and hints enabled</h3>
+
+      <ComboBox enableHint = { true }
+                filterFunc = { customFilterFunc }
+                placeholder = { 'Select Baby Name' }>
+        {
+          babyNames.map(function(name, index) {
+            return (
+              <Option value={ name }
+                      key={ index }>
+                { name }
+              </Option>
+            );
+          })
+        }
+      </ComboBox>
+
+      <Code value={ dataCodeExampleThreePartOne } style={ {marginTop: 40} } />
+
+      <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
+
     </div>;
   }
 });
@@ -461,7 +503,9 @@ const animals = [
   {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'}
 ]`;
 
-const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' }>
+const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' }
+              defaultValue = "Ant"
+              displayCaret = { true }>
   {
     animals.map(function(animal, index) {
       return (
@@ -514,7 +558,7 @@ const dataCodeExampleTwoPartOne = `const currencies = [
 const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
               onUpdate={ function(event) { console.log(event.value); } }
               maxOptions = { 5 }
-              filterFunc = { currencyFilterFunc }>
+              filterFunc = { customFilterFunc }>
   {
     currencies.map(function(currency, index) {
       return (
@@ -532,14 +576,32 @@ const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency'
   }
 </ComboBox>`;
 
-const dataCodeExampleTwoPartThree = `const currencyFilterFunc = function(inputValue, optionValue) {
+const dataCodeExampleTwoPartThree = `const customFilterFunc = function(inputValue, optionValue) {
   if(inputValue && optionValue) {
     return optionValue.indexOf(inputValue) === 0;
   }
   return false;
 };`;
 
+const dataCodeExampleThreePartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
+
+const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
+          filterFunc = { customFilterFunc }
+          placeholder = { 'Select Baby Name' }>
+  {
+    babyNames.map(function(name, index) {
+      return (
+        <Option value={ name }
+                key={ index }>
+          { name }
+        </Option>
+      );
+    })
+  }
+</ComboBox>`;
+
 const htmlStructure = `<div style={ wrapperStyle }>
+  <input></input>
   <input style={ style }>
   </input>
   <ul style={ menuStyle }>
