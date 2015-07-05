@@ -38,11 +38,11 @@ describe('ComboBox', () => {
     expect(combobox.state.filteredOptions.length).toBe(2);
   });
 
-  it('should be able to provide a onChange callback', () => {
+  it('should be able to provide a onUpdate callback', () => {
     let wasCalled = false;
 
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox onChange={ () => { wasCalled = true; } }>
+      <ComboBox onUpdate={ () => { wasCalled = true; } }>
         <Option value='rome'>Rome</Option>
         <Option value='vienna' className="vienna-option">Vienna</Option>
       </ComboBox>

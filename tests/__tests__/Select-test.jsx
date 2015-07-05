@@ -102,11 +102,11 @@ describe('Select', () => {
     expect(wasCalled).toBeTruthy();
   });
 
-  it('should be able to provide a onChange callback', () => {
+  it('should be able to provide a onUpdate callback', () => {
     let wasCalled = false;
 
     const select = TestUtils.renderIntoDocument(
-      <Select onChange={ () => { wasCalled = true; } } >
+      <Select onUpdate={ () => { wasCalled = true; } } >
         <Option value='rome'>Rome</Option>
         <Option value='vienna' className="vienna-option">Vienna</Option>
       </Select>

@@ -12,7 +12,7 @@ export default class ChoiceDocumentation extends Component {
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Choice</h2>
 
-      <Toggle defaultChecked={ true }>
+      <Toggle defaultValue={ true }>
         <Choice value={ true }>On</Choice>
         <Choice value={ false }>Off</Choice>
       </Toggle>
@@ -52,7 +52,7 @@ export default class ChoiceDocumentation extends Component {
 }
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultChecked={ true }>
+<Toggle defaultValue={ true }>
   <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;

@@ -33,13 +33,13 @@
     "test": "cd tests && npm install && ln -snf ../lib lib && cd .. && jest tests/"
   },
   "devDependencies": {
-    "babel": "^5.2.6",
-    "babel-jest": "^5.0.1",
-    "jest-cli": "^0.4.0",
-    "react": ">=0.13.2",
+    "babel": "^5.6.14",
+    "babel-jest": "^5.3.0",
+    "babel-eslint": "^3.1.20",
     "eslint": "^0.24.0",
-    "babel-eslint": "^3.1.20",    
-    "eslint-plugin-react": "^2.2.0"
+    "eslint-plugin-react": "^2.6.4",
+    "jest-cli": "^0.4.15",
+    "react": ">=0.13.3"
   },
   "jest": {
     "unmockedModulePathPatterns": [

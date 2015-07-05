@@ -79,7 +79,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onChange
+            onUpdate
           </td>
         </tr>
         <tr>
@@ -90,7 +90,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Callback executed as user changes rating interactively.
+              Callback executed when a user changes the rating via the user interface. onUpdate has one argument which is an object containing the value e.g. {'{'} value: 3 {'}'}.
             </p>
           </td>
         </tr>

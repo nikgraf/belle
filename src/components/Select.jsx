@@ -108,13 +108,6 @@ export default class Select extends Component {
   }
 
   /**
-   * Update value of component dom node.
-   */
-  componentDidMount() {
-    React.findDOMNode(this).value = this.state.selectedValue;
-  }
-
-  /**
    * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
@@ -233,7 +226,7 @@ export default class Select extends Component {
    * selection processed.
    *
    * Depending on the component's properties the value gets updated and the
-   * provided change callback for onChange or valueLink is called.
+   * provided change callback for onUpdate or valueLink is called.
    */
   _triggerChange (value) {
     if(has(this.props, 'valueLink')) {
@@ -241,28 +234,19 @@ export default class Select extends Component {
       this.setState({
         isOpen: false
       });
-    }
-    else if(has(this.props, 'value')) {
+    } else if(has(this.props, 'value')) {
       this.setState({
         isOpen: false
       });
-    }
-    else {
+    } else {
       this.setState({
         focusedOptionValue: value,
         selectedValue: value,
         isOpen: false
       });
     }
-
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = value;
-
-    if (this.props.onChange) {
-      // TODO investigate how to properly simulate a change event that includes
-      // all the usual properties documented here:
-      // https://facebook.github.io/react/docs/events.html
-      this.props.onChange({target: wrapperNode});
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 
@@ -641,7 +625,7 @@ Select.propTypes = {
     React.PropTypes.string,
     React.PropTypes.number
   ]),
-  onChange: React.PropTypes.func,
+  onUpdate: React.PropTypes.func,
   valueLink: React.PropTypes.shape({
     value: React.PropTypes.string.isRequired,
     requestChange: React.PropTypes.func.isRequired
@@ -792,7 +776,7 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
     'disabledCaretToOpenStyle',
     'value',
     'defaultValue',
-    'onChange',
+    'onUpdate',
     'valueLink',
     'role',
     'aria-expanded',
