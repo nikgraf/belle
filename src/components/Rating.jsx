@@ -199,6 +199,8 @@ export default class Rating extends Component {
    * Change focusValue and sets isActive state to true.
    */
   _onTouchStart(event) {
+    event.preventDefault();
+
     if(!this.props.disabled && event.touches.length === 1) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
