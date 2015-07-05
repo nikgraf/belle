@@ -119,6 +119,7 @@ export default class TextInput extends Component {
       //still might be it will be a good idea to update 'this.state.textareaProperties.defaultValue'
     }
     const domNode = React.findDOMNode(this);
+    const storedValue = domNode.value;
     domNode.value = value;
 
     this._resize();
@@ -129,6 +130,10 @@ export default class TextInput extends Component {
     }
     else if (this.props.onChange) {
       this.props.onChange({target: domNode});
+    }
+
+    if (has(this.props.value)) {
+      domNode.value = storedValue;
     }
   }
 
