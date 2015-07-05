@@ -14,7 +14,7 @@ export default class ToggleDocumentation extends Component {
 
       <Toggle />
 
-      <Toggle defaultChecked={ true } style={ { marginLeft: 20 } }/>
+      <Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
@@ -24,7 +24,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              defaultChecked
+              defaultValue
             </td>
           </tr>
           <tr>
@@ -41,7 +41,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              checked
+              value
             </td>
           </tr>
           <tr>
@@ -58,7 +58,7 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
-              checkedLink
+              valueLink
             </td>
           </tr>
           <tr>
@@ -68,8 +68,8 @@ export default class ToggleDocumentation extends Component {
                 <br />
                 optional</p>
               <p>
-                Behaves like the checkedLink poperty of a React rendered checkbox.
-                CheckedLink allows to enable two-way data binding between a state property and the value in
+                Behaves like the valueLink poperty of a React rendered checkbox.
+                vlaueLink allows to enable two-way data binding between a state property and the value in
                 the user interface.
               </p>
             </td>
@@ -388,7 +388,7 @@ export default class ToggleDocumentation extends Component {
 
         <p>Toggle with custom choices</p>
 
-        <Toggle defaultChecked={ true }
+        <Toggle defaultValue={ true }
                 firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
           <Choice value={ true }>On</Choice>
           <Choice value={ false }>Off</Choice>
@@ -403,10 +403,10 @@ export default class ToggleDocumentation extends Component {
 const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle />
 
-<Toggle defaultChecked={ true } style={ { marginLeft: 20 } }/>`;
+<Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultChecked={ true }
+<Toggle defaultValue={ true }
         firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
   <Choice value={ true }>On</Choice>
   <Choice value={ false }>Off</Choice>

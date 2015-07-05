@@ -22,15 +22,15 @@ export default class Toggle extends Component {
   constructor (properties) {
     super(properties);
 
-    let checked;
-    if (has(properties, 'checkedLink')) {
-      checked = properties.checkedLink.value;
-    } else if (has(properties, 'checked')) {
-      checked = properties.checked;
-    } else if (has(properties, 'defaultChecked')) {
-      checked = properties.defaultChecked;
+    let value;
+    if (has(properties, 'valueLink')) {
+      value = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      value = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      value = properties.defaultValue;
     } else {
-      checked = false;
+      value = false;
     }
 
     this.state = {
@@ -43,7 +43,7 @@ export default class Toggle extends Component {
       isDraggingWithTouch: false,
       sliderProperties: sanitizeSliderProperties(properties.sliderProps),
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps),
-      value: checked,
+      value: value,
       wasFocusedWithClickOrTouch: false
     };
 
@@ -72,10 +72,10 @@ export default class Toggle extends Component {
       sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
     };
 
-    if (has(properties, 'checkedLink')) {
-      newState.value = properties.checkedLink.value;
-    } else if (has(properties, 'checked')) {
-      newState.value = properties.checked;
+    if (has(properties, 'valueLink')) {
+      newState.value = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      newState.value = properties.value;
     }
 
     this.setState(newState);
@@ -174,15 +174,15 @@ export default class Toggle extends Component {
   }
 
   _triggerChange (value) {
-    if(has(this.props, 'checkedLink')) {
-      this.props.checkedLink.requestChange(value);
+    if(has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
       this.setState({
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
         isActive: false
       });
     }
-    else if(has(this.props, 'checked')) {
+    else if(has(this.props, 'value')) {
       this.setState({
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
@@ -713,19 +713,12 @@ Toggle.propTypes = {
   activeHandleStyle: React.PropTypes.object,
   children: validateChoices,
   className: React.PropTypes.string,
-  firstChoiceProps: React.PropTypes.object,
-  firstChoiceStyle: React.PropTypes.object,
-  secondChoiceProps: React.PropTypes.object,
-  secondChoiceStyle: React.PropTypes.object,
-  checked: React.PropTypes.bool,
-  checkedLink: React.PropTypes.shape({
-    value: React.PropTypes.bool.isRequired,
-    requestChange: React.PropTypes.func.isRequired
-  }),
-  defaultChecked: React.PropTypes.bool,
+  defaultValue: React.PropTypes.bool,
   disabled: React.PropTypes.bool,
   disabledHandleStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
+  firstChoiceProps: React.PropTypes.object,
+  firstChoiceStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   handleProps: React.PropTypes.shape({
     onMouseDown: React.PropTypes.func,
@@ -747,6 +740,8 @@ Toggle.propTypes = {
   onMouseLeave: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
   onTouchStart: React.PropTypes.func,
+  secondChoiceProps: React.PropTypes.object,
+  secondChoiceStyle: React.PropTypes.object,
   sliderProps: React.PropTypes.shape({
     onClick: React.PropTypes.func,
     onTouchStart: React.PropTypes.func,
@@ -756,7 +751,12 @@ Toggle.propTypes = {
   }),
   sliderStyle: React.PropTypes.object,
   sliderWrapperProps: React.PropTypes.object,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  value: React.PropTypes.bool,
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.bool.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  })
 };
 
 Toggle.defaultProps = {
@@ -766,11 +766,9 @@ Toggle.defaultProps = {
 
 function sanitizeChildProperties (properties) {
   return omit(properties, [
-    'checked',
     'className',
+    'defaultValue',
     'firstChoiceProps',
-    'secondChoiceProps',
-    'defaultChecked',
     'focusStyle',
     'handleProps',
     'onFocus',
@@ -780,10 +778,12 @@ function sanitizeChildProperties (properties) {
     'onMouseLeave',
     'onMouseUp',
     'onTouchStart',
+    'secondChoiceProps',
     'sliderProps',
     'sliderWrapperProps',
     'style',
-    'tabIndex'
+    'tabIndex',
+    'value'
   ]);
 }
 

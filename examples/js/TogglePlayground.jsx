@@ -21,31 +21,31 @@ export default React.createClass({
         <h3>Default Toggle</h3>
         <Toggle />
 
-        <h3>Default Checked Toggle</h3>
-        <Toggle checked={true} />
+        <h3>Default value=true Toggle</h3>
+        <Toggle value={true} />
 
-        <h3>Default Unchecked Toggle</h3>
-        <Toggle checked={false} />
+        <h3>Default value=false Toggle</h3>
+        <Toggle value={false} />
 
-        <h3>Default Checked Toggle (defaultChecked)</h3>
-        <Toggle defaultChecked={true} />
+        <h3>defaultValue=true Toggle (defaultValue)</h3>
+        <Toggle defaultValue={true} />
 
-        <h3>Default Unchecked Toggle (defaultChecked)</h3>
-        <Toggle defaultChecked={false} />
+        <h3>DefaultValue=false Toggle (defaultValue)</h3>
+        <Toggle defaultValue={false} />
 
-        <h3>Default Toggle (checkedLink)</h3>
-        <Toggle checkedLink={this.linkState('active')} />
+        <h3>Default Toggle (valueLink)</h3>
+        <Toggle valueLink={this.linkState('active')} />
         <div>{ `active: ${this.state.active}` }</div>
 
         <h3>Custom Toggle</h3>
-        <Toggle defaultChecked={ true }>
+        <Toggle defaultValue={ true }>
           <Choice value={ true }>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
         <h3>Disabled Toggle</h3>
         <Toggle disabled />
-        <Toggle disabled defaultChecked />
+        <Toggle disabled defaultValue />
 
       </Card>
     );
