@@ -234,22 +234,19 @@ export default class Select extends Component {
       this.setState({
         isOpen: false
       });
+    } else if(has(this.props, 'value')) {
+      this.setState({
+        isOpen: false
+      });
     } else {
-      if(has(this.props, 'value')) {
-        this.setState({
-          isOpen: false
-        });
-      }
-      else {
-        this.setState({
-          focusedOptionValue: value,
-          selectedValue: value,
-          isOpen: false
-        });
-      }
-      if (this.props.onUpdate) {
-        this.props.onUpdate({ value: value });
-      }
+      this.setState({
+        focusedOptionValue: value,
+        selectedValue: value,
+        isOpen: false
+      });
+    }
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 

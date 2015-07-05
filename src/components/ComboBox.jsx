@@ -322,24 +322,22 @@ export default class ComboBox extends Component {
         isOpen: true,
         focusedOptionIndex: 0
       });
+    } else if(has(this.props, 'value')) {
+      this.setState({
+        isOpen: true,
+        focusedOptionIndex: 0
+      });
     } else {
-      if(has(this.props, 'value')) {
-        this.setState({
-          isOpen: true,
-          focusedOptionIndex: 0
-        });
-      }
-      else {
-        this.setState({
-          inputValue: value,
-          isOpen: true,
-          focusedOptionIndex: 0,
-          filteredOptions: this.filterOptions(value)
-        });
-      }
-      if (this.props.onUpdate) {
-        this.props.onUpdate({ value: value });
-      }
+      this.setState({
+        inputValue: value,
+        isOpen: true,
+        focusedOptionIndex: 0,
+        filteredOptions: this.filterOptions(value)
+      });
+    }
+
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 

@@ -314,21 +314,19 @@ export default class Rating extends Component {
       this.setState({
         focusedValue: undefined
       });
+    } else if (has(this.props, 'value')) {
+      this.setState({
+        focusedValue: undefined
+      });
     } else {
-      if (has(this.props, 'value')) {
-        this.setState({
-          focusedValue: undefined
-        });
-      } else {
-        this.setState({
-          focusedValue: undefined,
-          value: value
-        });
-      }
+      this.setState({
+        focusedValue: undefined,
+        value: value
+      });
+    }
 
-      if (this.props.onUpdate) {
-        this.props.onUpdate({ value: value });
-      }
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 

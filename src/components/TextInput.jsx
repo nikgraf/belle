@@ -136,7 +136,8 @@ export default class TextInput extends Component {
     if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
       valueLink.requestChange(value);
     }
-    else if (this.props.onUpdate) {
+
+    if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
   }
