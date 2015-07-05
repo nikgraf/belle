@@ -1,7 +1,3 @@
-"use strict";
-
-/* jslint browser: true */
-
 import React, {Component} from 'react';
 import {extend, omit, has} from 'underscore';
 import style from '../style/rating.js';
@@ -12,6 +8,72 @@ import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-fr
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
+
+
+/**
+ * sanitize properties for the wrapping div.
+ */
+function sanitizeWrapperProperties(properties) {
+  return omit(properties, [
+    'className',
+    'onKeyDown',
+    'onClick',
+    'onMouseEnter',
+    'onMouseMove',
+    'onMouseLeave',
+    'onMouseUp',
+    'onMouseDown',
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'onBlur',
+    'onFocus',
+    'tabIndex',
+    'aria-label',
+    'aria-valuemax',
+    'aria-valuemin',
+    'aria-valuenow',
+    'aria-disabled',
+    'style',
+    'focusStyle',
+    'disabledStyle',
+    'characterStyle',
+    'activeCharacterStyle',
+    'hoverCharacterStyle',
+    'characterProperties'
+  ]);
+}
+
+/**
+ * sanitize properties for the character span.
+ */
+function sanitizeCharacterProperties(properties) {
+  return omit(properties, [
+    'data-belle-value',
+    'style'
+  ]);
+}
+
+/**
+ * Injects pseudo classes for styles into the DOM.
+ */
+function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
+  let ratingFocusStyle;
+  if (properties.preventFocusStyleForTouchAndClick) {
+    ratingFocusStyle = { outline: 0 };
+  } else {
+    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  }
+  const styles = [
+    {
+      id: ratingWrapperStyleId,
+      style: ratingFocusStyle,
+      pseudoClass: 'focus'
+    }
+  ];
+  injectStyles(styles);
+}
 
 /**
  * Rating component
@@ -44,8 +106,17 @@ export default class Rating extends Component {
     };
   }
 
+  /**
+   * Apply pseudo class styling to the wrapper div.
+   */
+  componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
+    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
+  }
+
   componentWillReceiveProps(properties) {
-    let newState = {
+    const newState = {
       wrapperProperties: sanitizeWrapperProperties(properties),
       characterProperties: sanitizeCharacterProperties(properties.characterProperties)
     };
@@ -61,15 +132,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * Apply pseudo class styling to the wrapper div.
-   */
-  componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
-    this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
-  }
-
-  /**
    * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
@@ -77,23 +139,11 @@ export default class Rating extends Component {
   }
 
   /**
-   * Reset the value to undefined.
-   *
-   * This can be used in case you as developer want to reset the rating manually.
-   */
-  resetValue() {
-    this.setState({
-      value: undefined,
-      focusedValue: undefined
-    });
-  }
-
-  /**
    * As soon as the mouse enters the component the focusedValue is updated based
    * on the value of the targeted span.
    */
   _onMouseEnter(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value,
@@ -114,9 +164,9 @@ export default class Rating extends Component {
    * is updated based on the value of the targeted span.
    */
   _onMouseMove(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       const value = Number(event.target.getAttribute('data-belle-value'));
-      if(this.state.focusedValue !== value) {
+      if (this.state.focusedValue !== value) {
         this.setState({
           focusedValue: value
         });
@@ -131,7 +181,7 @@ export default class Rating extends Component {
    * Resets the component as the mouse leaves the hover area.
    */
   _onMouseLeave(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
         isHover: false
@@ -152,7 +202,7 @@ export default class Rating extends Component {
    * Sets isActive state to true.
    */
   _onMouseDown(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       this.setState({isActive: true});
     }
 
@@ -165,7 +215,7 @@ export default class Rating extends Component {
    * Sets isActive state to false.
    */
   _onMouseUp(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       this.setState({isActive: false});
     }
 
@@ -178,7 +228,7 @@ export default class Rating extends Component {
    * update component when clicked
    */
   _onClick(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this._updateComponent(value);
     }
@@ -194,7 +244,7 @@ export default class Rating extends Component {
   _onTouchStart(event) {
     event.preventDefault();
 
-    if(!this.props.disabled && event.touches.length === 1) {
+    if (!this.props.disabled && event.touches.length === 1) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value,
@@ -212,7 +262,7 @@ export default class Rating extends Component {
   _updateComponentOnTouchMove(touches) {
     const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
     const value = Number(touchedElement.getAttribute('data-belle-value'));
-    if(value && this.state.focusedValue !== value) {
+    if (value && this.state.focusedValue !== value) {
       this.setState({
         focusedValue: value
       });
@@ -223,7 +273,7 @@ export default class Rating extends Component {
    * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
-    if(!this.props.disabled && event.touches.length === 1) {
+    if (!this.props.disabled && event.touches.length === 1) {
       const touches = event.touches[0];
 
       // the requestAnimationFrame function must be executed in the context of window
@@ -233,7 +283,7 @@ export default class Rating extends Component {
         this._updateComponentOnTouchMove.bind(this, touches)
       );
 
-      if(this.previousTouchMoveFrame) {
+      if (this.previousTouchMoveFrame) {
         // the cancelAnimationFrame function must be executed in the context of window
         // see http://stackoverflow.com/a/9678166/837709
         cancelAnimationFrame.call(window, this.previousTouchMoveFrame);
@@ -250,8 +300,7 @@ export default class Rating extends Component {
    * update the component when touch ends
    */
   _onTouchEnd(event) {
-
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       event.preventDefault();
       this.setState({isActive: false});
       const value = this.state.focusedValue;
@@ -267,7 +316,7 @@ export default class Rating extends Component {
    * reset the component in case of touch cancel
    */
   _onTouchCancel(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       this.setState({
         isActive: false,
         focusedValue: undefined
@@ -282,7 +331,7 @@ export default class Rating extends Component {
    * reset the component on blur
    */
   _onBlur(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
         isFocus: false
@@ -297,7 +346,7 @@ export default class Rating extends Component {
    * enable focus styling of component when tab is used to focus component
    */
   _onFocus() {
-    if(!this.state.isActive && !this.props.disabled) {
+    if (!this.state.isActive && !this.props.disabled) {
       this.setState({isFocus: true});
     }
 
@@ -342,7 +391,7 @@ export default class Rating extends Component {
    *
    */
   _onKeyDown(event) {
-    if(!this.props.disabled) {
+    if (!this.props.disabled) {
       if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
         event.preventDefault();
         this._onArrowDownKeyDown();
@@ -389,11 +438,10 @@ export default class Rating extends Component {
    */
   _onEnterSpaceKeyDown() {
     let newValue;
-    if(this.state.focusedValue !== undefined) {
-      if(this.state.focusedValue === 0) {
+    if (this.state.focusedValue !== undefined) {
+      if (this.state.focusedValue === 0) {
         newValue = undefined;
-      }
-      else {
+      } else {
         newValue = this.state.focusedValue;
       }
       this._updateComponent(newValue);
@@ -424,10 +472,21 @@ export default class Rating extends Component {
   }
 
   /**
+   * Reset the value to undefined.
+   *
+   * This can be used in case you as developer want to reset the rating manually.
+   */
+  resetValue() { /*eslint react/sort-comp:0*/
+    this.setState({
+      value: undefined,
+      focusedValue: undefined
+    });
+  }
+
+  /**
    * Returns the HTML function to be rendered by this component.
    */
-  render () {
-
+  render() {
     const currentValue = this._getCurrentValue();
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
 
@@ -493,26 +552,6 @@ export default class Rating extends Component {
 
 Rating.displayName = 'Belle Rating';
 
-/**
- * Injects pseudo classes for styles into the DOM.
- */
-function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
-  let ratingFocusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
-    ratingFocusStyle = { outline: 0 };
-  } else {
-    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
-  }
-  const styles = [
-    {
-      id: ratingWrapperStyleId,
-      style: ratingFocusStyle,
-      pseudoClass: 'focus'
-    }
-  ];
-  injectStyles(styles);
-}
-
 Rating.propTypes = {
   defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
   value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
@@ -559,48 +598,3 @@ Rating.defaultProps = {
   'aria-label': 'rating',
   preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
 };
-
-/**
- * sanitize properties for the wrapping div.
- */
-function sanitizeWrapperProperties(properties) {
-  return omit(properties, [
-    'className',
-    'onKeyDown',
-    'onClick',
-    'onMouseEnter',
-    'onMouseMove',
-    'onMouseLeave',
-    'onMouseUp',
-    'onMouseDown',
-    'onTouchStart',
-    'onTouchMove',
-    'onTouchEnd',
-    'onTouchCancel',
-    'onBlur',
-    'onFocus',
-    'tabIndex',
-    'aria-label',
-    'aria-valuemax',
-    'aria-valuemin',
-    'aria-valuenow',
-    'aria-disabled',
-    'style',
-    'focusStyle',
-    'disabledStyle',
-    'characterStyle',
-    'activeCharacterStyle',
-    'hoverCharacterStyle',
-    'characterProperties'
-  ]);
-}
-
-/**
- * sanitize properties for the character span.
- */
-function sanitizeCharacterProperties(properties) {
-  return omit(properties, [
-    'data-belle-value',
-    'style'
-  ]);
-}

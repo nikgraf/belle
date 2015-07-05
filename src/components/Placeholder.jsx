@@ -1,8 +1,13 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
 import style from '../style/placeholder';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style', 'disabledStyle', '_isDisabled']);
+}
 
 /**
  * Placeholder component.
@@ -11,7 +16,7 @@ import style from '../style/placeholder';
  */
 export default class Placeholder extends Component {
 
-  constructor (properties) {
+  constructor(properties) {
     super(properties);
     this.state = {
       childProperties: sanitizeChildProperties(properties)
@@ -22,11 +27,11 @@ export default class Placeholder extends Component {
    * Update the childProperties based on the updated properties passed to the
    * Placeholder.
    */
-  componentWillReceiveProps (properties) {
+  componentWillReceiveProps(properties) {
     this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
-  render () {
+  render() {
     let computedStyle;
     if (this.props._isDisabled) {
       computedStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
@@ -43,6 +48,10 @@ export default class Placeholder extends Component {
 }
 
 Placeholder.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
   style: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
   _isDisabled: React.PropTypes.bool
@@ -53,10 +62,3 @@ Placeholder.displayName = 'Belle Placeholder';
 Placeholder.defaultProps = {
   _isDisabled: false
 };
-
-/**
- * Returns an object with properties that are relevant for the wrapping div.
- */
-function sanitizeChildProperties(properties) {
-  return omit(properties, ['style', 'disabledStyle', '_isDisabled']);
-}

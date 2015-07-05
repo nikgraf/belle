@@ -1,8 +1,13 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {omit, extend} from 'underscore';
 import style from '../style/card';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style']);
+}
 
 /**
  * Card component with a light shadow.
@@ -12,7 +17,7 @@ import style from '../style/card';
  */
 export default class Card extends Component {
 
-  constructor (properties) {
+  constructor(properties) {
     super(properties);
     this.state = {
       childProperties: sanitizeChildProperties(properties)
@@ -23,24 +28,27 @@ export default class Card extends Component {
    * Update the _childProperties based on the updated properties passed to the
    * card.
    */
-  componentWillReceiveProps (properties) {
+  componentWillReceiveProps(properties) {
     this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
-  render () {
-    let divStyle = extend({}, style.style, this.props.style);
+  render() {
+    const divStyle = extend({}, style.style, this.props.style);
 
-    return <div {...this.state.childProperties} style={ divStyle }>
-      { this.props.children }
-    </div>;
+    return (
+      <div {...this.state.childProperties} style={ divStyle }>
+        { this.props.children }
+      </div>
+    );
   }
 }
 
 Card.displayName = 'Belle Card';
 
-/**
- * Returns an object with properties that are relevant for the wrapping div.
- */
-function sanitizeChildProperties(properties) {
-  return omit(properties, ['style']);
-}
+Card.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
+  style: React.PropTypes.object
+};

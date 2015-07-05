@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {Component} from 'react';
 
 /**
@@ -17,4 +15,10 @@ export default class Choice extends Component {
 }
 
 Choice.displayName = 'Belle Choice';
-Choice.propTypes = { value: React.PropTypes.bool.isRequired };
+Choice.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
+  value: React.PropTypes.bool.isRequired
+};
