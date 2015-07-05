@@ -70,13 +70,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * Update value of component dom node.
-   */
-  componentDidMount() {
-    React.findDOMNode(this).value = this.state.value;
-  }
-
-  /**
    * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
@@ -316,9 +309,6 @@ export default class Rating extends Component {
    * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
    */
   _updateComponent(value) {
-    const domNode = React.findDOMNode(this);
-    domNode.value = value;
-
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
@@ -336,8 +326,8 @@ export default class Rating extends Component {
         });
       }
 
-      if (this.props.onChange) {
-        this.props.onChange({target: domNode});
+      if (this.props.onUpdate) {
+        this.props.onUpdate({ value: value });
       }
     }
   }
@@ -543,7 +533,7 @@ Rating.propTypes = {
   characterStyle: React.PropTypes.object,
   activeCharacterStyle: React.PropTypes.object,
   hoverCharacterStyle: React.PropTypes.object,
-  onChange: React.PropTypes.func,
+  onUpdate: React.PropTypes.func,
   onMouseDown: React.PropTypes.func,
   onMouseUp: React.PropTypes.func,
   onMouseEnter: React.PropTypes.func,

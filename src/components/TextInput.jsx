@@ -91,7 +91,7 @@ export default class TextInput extends Component {
    * the onKeyDown property.
    *
    * This is an optimization to avoid adding a newline char & removing it right
-   * away in the onChange callback.
+   * away in the onUpdate callback.
    */
   _onKeyDown(event) {
     if (!this.props.allowNewLine && event.key == 'Enter') {
@@ -104,7 +104,8 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Update the height and calls the provided change callback for onChange or valueLink.
+   * Update the height and calls the provided change callback for onUpdate
+   * or valueLink.
    *
    * In addition newline characters are replaced by spaces in the textarea value
    * in case allowNewLine is set to false and newLine characters could be found.
@@ -113,27 +114,30 @@ export default class TextInput extends Component {
     let value = event.target.value;
 
     if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
-      value = event.target.value.replace(newLineRegex, ' ');
-      //If user enters new line text in the <textarea> and allowNewLine is false, we remove new lines from domElement's value
-      //"domNode.value = value" seems to be updating the dafaultValue by itself
-      //still might be it will be a good idea to update 'this.state.textareaProperties.defaultValue'
-    }
-    const domNode = React.findDOMNode(this);
-    const storedValue = domNode.value;
-    domNode.value = value;
+      value = value.replace(newLineRegex, ' ');
 
-    this._resize();
+      // controlled textarea must have value
+      if (this.state.textareaProperties.value) {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(this._resize);
+      // uncontrolled textarea must be updated with value, but then released again
+      } else {
+        this.setState({ textareaProperties: { value: value } });
+        this.forceUpdate(() => {
+          this._resize();
+          this.setState({ textareaProperties: { value: undefined } });
+        });
+      }
+    } else {
+      this._resize();
+    }
 
     const valueLink = this.props.valueLink;
     if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
       valueLink.requestChange(value);
     }
-    else if (this.props.onChange) {
-      this.props.onChange({target: domNode});
-    }
-
-    if (has(this.props.value)) {
-      domNode.value = storedValue;
+    else if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 
@@ -169,7 +173,12 @@ TextInput.propTypes = {
   allowNewLine: React.PropTypes.bool,
   disabled: React.PropTypes.bool,
   disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object
+  disabledHoverStyle: React.PropTypes.object,
+  onUpdate: React.PropTypes.func,
+  valueLink: React.PropTypes.shape({
+    value: React.PropTypes.string.isRequired,
+    requestChange: React.PropTypes.func.isRequired
+  })
 };
 
 TextInput.defaultProps = {
@@ -182,13 +191,13 @@ const newLineRegex = /[\r\n]/g;
 /**
  * Returns an object with properties that are relevant for the TextInput's textarea.
  *
- * As the height of the textarea needs to be calculated valueLink & onChange can
- * not be passed down to the textarea, but made available through this component.
+ * As the height of the textarea needs to be calculated valueLink can not be
+ * passed down to the textarea, but made available through this component.
  */
 function sanitizeChildProperties(properties) {
   let childProperties = omit(properties, [
     'valueLink',
-    'onChange',
+    'onUpdate',
     'onKeyDown',
     'minHeight',
     'maxHeight',

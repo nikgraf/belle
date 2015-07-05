@@ -54,14 +54,14 @@ export default React.createClass({
           <option value="C">Cranberry</option>
         </select>
 
-        <h3>Select with onChange</h3>
-        <Select onChange={ (event) => console.log(event.target.value) }>
+        <h3>Select with onUpdate</h3>
+        <Select onUpdate={ (event) => console.log(event.value) }>
           <Option value={ "vienna" }>Vienna</Option>
           <Option value={ "rome" }>Rome</Option>
         </Select>
 
-        <h3>Select with value & onChange</h3>
-        <Select value="rome" onChange={ (event) => console.log(event.target.value) }>
+        <h3>Select with value & onUpdate</h3>
+        <Select value="rome" onUpdate={ (event) => console.log(event.value) }>
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
@@ -88,7 +88,7 @@ export default React.createClass({
         </Select>
 
         <h3>Select with valueLink: { this.state.valueA }</h3>
-        <Select valueLink={ this.linkState('valueA') } onChange={ (event) => console.log(event.target.value) }>
+        <Select valueLink={ this.linkState('valueA') } onUpdate={ (event) => console.log(event.value) }>
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
@@ -161,9 +161,9 @@ export default React.createClass({
           }
         </Select>
 
-        <h3>Select from Data with defaultValue & onChange</h3>
+        <h3>Select from Data with defaultValue & onUpdate</h3>
         <Select defaultValue={ fruits[2].value }
-                onChange={ (event) => console.log(event) }>
+                onUpdate={ (event) => console.log(event) }>
           {
             map(fruits, (fruit, index) => {
               return (

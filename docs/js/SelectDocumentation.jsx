@@ -97,7 +97,7 @@ export default class SelectDocumentation extends Component {
 
         <tr>
           <td style={ propertyNameStyle }>
-            onChange
+            onUpdate
           </td>
         </tr>
         <tr>
@@ -107,10 +107,7 @@ export default class SelectDocumentation extends Component {
               <br />
               optional</p>
             <p>
-              Behaves like the onChange property of a native select-tag.
-              Behaves like the onChange property of any React rendered input of type="text" or "textarea".
-              Any time an Option is selected onChange is trigger passing on the change event.
-              This target of change event (event.target) contains a property 'value'.
+              Callback executed every time an Option is selected. onUpdate has one argument which is an object containing the value e.g. {'{'} value: 'Rome' {'}'}.
             </p>
           </td>
         </tr>
@@ -421,10 +418,10 @@ export default class SelectDocumentation extends Component {
 
       <h3>More Examples</h3>
 
-      <p>Select from a dynamic data set including a defaultValue & onChange callback</p>
+      <p>Select from a dynamic data set including a defaultValue & onUpdate callback</p>
 
       <Select defaultValue={ fruits[3].value }
-              onChange={ function(event) { console.log(event); } }>
+              onUpdate={ function(event) { console.log(event.value); } }>
         {
           fruits.map(function(fruit, index) {
             return (
@@ -579,7 +576,7 @@ var fruits = [
 
 const dataCodeExamplePartTwo = `<!-- filling a select with Option  -->
 <Select defaultValue={ fruits[3].value }
-        onChange={ function(event) { console.log(event); } }>
+        onUpdate={ function(event) { console.log(event.value); } }>
   {
     fruits.map(function(fruit, index) {
       return (

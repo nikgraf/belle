@@ -41,9 +41,9 @@ export default React.createClass({
           <h3>Value Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <ComboBox value={ this.state.comboValue }
-                      onChange={ (event) => {
-                          console.log(event.target.value);
-                          //this._handleChange(event.target.value);
+                      onUpdate={ (event) => {
+                          console.log(event.value);
+                          //this._handleChange(event.value);
                         }
                       }>
               <Option value="te">Te</Option>
@@ -58,9 +58,9 @@ export default React.createClass({
           <h3>Value Link Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <ComboBox valueLink={ valueLink }
-                      onChange={ (event) => {
-                          console.log(event.target.value);
-                          //this._handleChange(event.target.value);
+                      onUpdate={ (event) => {
+                          console.log(event.value);
+                          //this._handleChange(event.value);
                         }
                       }>
               <Option value="te">Te</Option>

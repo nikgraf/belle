@@ -113,7 +113,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onChange
+            onUpdate
           </td>
         </tr>
         <tr>
@@ -123,9 +123,7 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              Behaves like the onChange property of any React rendered input of type="text" or "textarea".
-              Any time an Option is selected or a user input some value, onChange is trigger passing on the change event.
-              This target of change event (event.target) contains a property 'value'.
+              Callback executed every time an Option is selected or a user inputs some value. onUpdate has one argument which is an object containing the value e.g. {'{'} value: 'Rome' {'}'}.
             </p>
           </td>
         </tr>
@@ -415,10 +413,10 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleOnePartTwo } style={ {marginTop: 40} } />
 
-      <h3>ComboBox with custom filtering, onChange callback & maxOptions set to 5</h3>
+      <h3>ComboBox with custom filtering, onUpdate callback & maxOptions set to 5</h3>
 
       <ComboBox placeholder = { 'Choose a Currency' }
-                    onChange={ function(event) { console.log(event.target.value); } }
+                    onUpdate={ function(event) { console.log(event.value); } }
                     maxOptions = { 5 }
                     filterFunc = { currencyFilterFunc }>
         {
@@ -516,7 +514,7 @@ const dataCodeExampleTwoPartOne = `const currencies = [
 ];`;
 
 const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
-              onChange={ function(event) { console.log(event.target.value); } }
+              onUpdate={ function(event) { console.log(event.value); } }
               maxOptions = { 5 }
               filterFunc = { currencyFilterFunc }>
   {

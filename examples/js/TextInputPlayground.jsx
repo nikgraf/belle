@@ -40,7 +40,7 @@ export default React.createClass({
 
         {/* Common use case */}
         <TextInput allowNewLine={true} style={ {width: 250} } valueLink= { valueLink }
-          onChange={ (event) => {console.log(event.target.value)} }/>
+          onUpdate={ (event) => {console.log(event.value)} }/>
         <br />
 
         {/* Common use case disabled */}
@@ -56,10 +56,11 @@ export default React.createClass({
         <TextInput style={ {width: 250} }/>
         <br />
 
-        {/* Not editable value */}
+        <h3>Not editable value</h3>
         <div style={ {width: 250} }>
-          <TextInput allowNewLine={false} value={ this.state.inputValue }
-                     onChange={ (event) => {console.log(event.target.value); this._handleChange(event.target.value)} }/>
+          <TextInput allowNewLine={false}
+                     value={ this.state.inputValue }
+                     onUpdate={ (event) => {console.log(event.value); this._handleChange(event.value); } }/>
         </div>
         <br />
 
