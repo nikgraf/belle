@@ -70,13 +70,6 @@ export default class ComboBox extends Component {
   }
 
   /**
-   * Update value of component dom node.
-   */
-  componentDidMount() {
-    React.findDOMNode(this).value = this.state.inputValue;
-  }
-
-  /**
    * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
@@ -281,7 +274,7 @@ export default class ComboBox extends Component {
    * The function is called when user selects an option. Function will do following:
    * 1. Close the options
    * 2. Change value of input depending on whether its has value, defaultValue or valueLink property
-   * 3. Call onChange props function
+   * 3. Call onUpdate props function
    */
   _triggerChange (value) {
     if(has(this.props, 'valueLink')) {
@@ -309,11 +302,8 @@ export default class ComboBox extends Component {
       });
     }
 
-    const domNode = React.findDOMNode(this);
-    domNode.value = value;
-
-    if (this.props.onChange) {
-      this.props.onChange({target: domNode});
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 
@@ -321,24 +311,23 @@ export default class ComboBox extends Component {
    * The function is called when user inputs a value in the input box. Function will do following:
    * 1. Open the options
    * 2. Change value of input depending on whether its has value, defaultValue or valueLink property
-   * 3. Call onChange props function
+   * 3. Call onUpdate props function
    */
   _onChange(event) {
     const value = event.target.value;
+
     if(has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: true,
         focusedOptionIndex: 0
       });
-    }
-    else if(has(this.props, 'value')) {
+    } else if(has(this.props, 'value')) {
       this.setState({
         isOpen: true,
         focusedOptionIndex: 0
       });
-    }
-    else {
+    } else {
       this.setState({
         inputValue: value,
         isOpen: true,
@@ -347,11 +336,8 @@ export default class ComboBox extends Component {
       });
     }
 
-    const domNode = React.findDOMNode(this);
-    domNode.value = value;
-
-    if (this.props.onChange) {
-      this.props.onChange({target: domNode});
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 
@@ -468,7 +454,7 @@ ComboBox.propTypes = {
   disabled: React.PropTypes.bool,
   wrapperProps: React.PropTypes.object,
   menuProps: React.PropTypes.object,
-  onChange: React.PropTypes.func,
+  onUpdate: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
   onKeyDown: React.PropTypes.func,
   onFocus: React.PropTypes.func,
@@ -549,7 +535,7 @@ function sanitizePropertiesForInput(properties) {
     'disabled',
     'className',
     'style',
-    'onChange',
+    'onUpdate',
     'tabIndex',
     'onBlur',
     'onFocus',

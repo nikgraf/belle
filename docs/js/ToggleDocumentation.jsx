@@ -77,6 +77,23 @@ export default class ToggleDocumentation extends Component {
 
           <tr>
             <td style={ propertyNameStyle }>
+              onUpdate
+            </td>
+          </tr>
+          <tr>
+            <td style={ propertyDescriptionStyle }>
+              <p>
+                <i>Function</i>
+                <br />
+                optional</p>
+              <p>
+                Callback executed every the toggle switches from true to false or the other way around via user input. onUpdate has one argument which is an object containing the value e.g. {'{'} value: true {'}'}.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style={ propertyNameStyle }>
               activeHandleStyle
             </td>
           </tr>

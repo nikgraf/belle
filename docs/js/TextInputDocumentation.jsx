@@ -92,7 +92,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onChange
+            onUpdate
           </td>
         </tr>
         <tr>
@@ -102,9 +102,7 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              Behaves like the onChange property of any React rendered input of type="text" or textarea.
-              Any time the value in the TextInput changes onChange is trigger passing on a change event.
-              This change event contains a property 'value'.
+              Callback executed every time a user updates the text in the textarea. onUpdate has one argument which is an object containing the value e.g. {'{'} value: 'What a beautiful da' {'}'}.
             </p>
           </td>
         </tr>

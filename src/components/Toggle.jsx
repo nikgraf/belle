@@ -198,14 +198,8 @@ export default class Toggle extends Component {
       });
     }
 
-    const wrapperNode = React.findDOMNode(this);
-    wrapperNode.value = value;
-
-    if (this.props.onChange) {
-      // TODO investigate how to properly simulate a change event that includes
-      // all the usual properties documented here:
-      // https://facebook.github.io/react/docs/events.html
-      this.props.onChange({target: wrapperNode});
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
     }
   }
 
@@ -746,7 +740,7 @@ Toggle.propTypes = {
   handleStyle: React.PropTypes.object,
   hoverHandleStyle: React.PropTypes.object,
   onBlur: React.PropTypes.func,
-  onChange: React.PropTypes.func,
+  onUpdate: React.PropTypes.func,
   onFocus: React.PropTypes.func,
   onMouseDown: React.PropTypes.func,
   onMouseEnter: React.PropTypes.func,
@@ -781,7 +775,7 @@ function sanitizeChildProperties (properties) {
     'handleProps',
     'onFocus',
     'onBlur',
-    'onChange',
+    'onUpdate',
     'onMouseDown',
     'onMouseLeave',
     'onMouseUp',

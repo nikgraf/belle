@@ -106,11 +106,11 @@ describe('TextInput', () => {
   });
 
 
-  it('should be able to bind onChange', () => {
+  it('should be able to bind onUpdate', () => {
     let wasChanged = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onChange={ (event) => wasChanged = true }/>
+      <TextInput onUpdate={ (event) => wasChanged = true }/>
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
