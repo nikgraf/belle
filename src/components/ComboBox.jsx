@@ -116,12 +116,72 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      tempValue: undefined,
+      hint: undefined,
       filteredOptions: this.filterOptions(inputValue),
       wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
       inputProperties: sanitizePropertiesForInput(properties),
       menuProperties: sanitizePropertiesForMenu(properties.menuProps)
     };
+  }
+
+  static _getHint(filteredOptions, index, inputValue, isOptionSelected = false) {
+    let hint = '';
+    if(filteredOptions && filteredOptions.length > 0 &&
+      !((inputValue === undefined || inputValue === null || inputValue.length === 0) && !isOptionSelected)) {
+      const optionValue = filteredOptions[index].props.value;
+      if(inputValue) {
+        const position = optionValue.toLowerCase().indexOf(inputValue.toLowerCase());
+        if(position == -1) {
+          hint = optionValue;
+        } else if(position == 0) {
+          hint = inputValue + optionValue.substr(inputValue.length, (optionValue.length - inputValue.length));
+        }
+      }
+      else {
+        hint = optionValue;
+      }
+    }
+    return hint;
+  }
+
+  /**
+   * This method will calculate the hint that should be present in comboBox at some point in time. Rules:
+   * 1. If menu is not open hint is undefined
+   * 2. If menu is open but there are no filteredOptions hint is undefined
+   * 3. If if some option is highlighted hint is equal to its value
+   * 4. If no option is highlighted but some value is present in input box hint is equal to value of first filteredOptions
+   * If user has typed some text in input box and there is a hint(according to above calculations), the starting of hint
+   * is replaced by the text input by user ( this is to make sure that case of letters in hint is same as that in input box
+   * value and overlap is perfect.
+   * todo: simplify logic in method below
+   */
+  _getHint() {
+    if(this.state.isOpen) {
+      const filteredOptions = this.state.filteredOptions;
+      if (filteredOptions && filteredOptions.length > 0) {
+        let hint;
+        const focusedOptionIndex = this.state.focusedOptionIndex;
+        const inputValue = this.state.inputValue;
+        if (focusedOptionIndex >= 0) {
+          hint = filteredOptions[focusedOptionIndex].props.value;
+        } else if (inputValue && inputValue.length > 0) {
+          hint = filteredOptions[0].props.value;
+        }
+        if (hint) {
+          if (inputValue && inputValue.length > 0) {
+            const position = hint.toLowerCase().indexOf(inputValue.toLowerCase());
+            if (position === 0) {
+              return inputValue + hint.substr(inputValue.length, (hint.length - inputValue.length));
+            }
+            else if (position === -1) {
+              return hint;
+            }
+          } else {
+            return hint;
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -204,7 +264,7 @@ export default class ComboBox extends Component {
       this.setState({
         isOpen: false,
         focusedOptionIndex: undefined,
-        tempValue: undefined
+        hint: undefined
       });
     }
 
@@ -219,8 +279,7 @@ export default class ComboBox extends Component {
   _onFocus(event) {
     if (!this.props.disabled) {
       this.setState({
-        isOpen: true,
-        focusedOptionIndex: 0
+        isOpen: true
       });
     }
 
@@ -236,7 +295,8 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       this.setState({
-        focusedOptionIndex: index
+        focusedOptionIndex: index,
+        hint: ComboBox._getHint(this.state.filteredOptions, index, this.state.inputValue, true)
       });
     }
   }
@@ -247,7 +307,8 @@ export default class ComboBox extends Component {
   _onMouseLeaveAtOption() {
     if (!this.props.disabled) {
       this.setState({
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
+        hint: undefined
       });
     }
   }
@@ -264,13 +325,12 @@ export default class ComboBox extends Component {
 
   /**
    * Handle keyDown in input (when input is focused):
-   * 1. ComboBox is closed and ArrowDown/ ArrowUp/ SpaceKey is pressed -> open the ComboBox
+   * 1. ComboBox is closed and ArrowDown/ ArrowUp is pressed -> open the ComboBox
    * 2. ComboBox is opened and ArrowDown is pressed -> highlight next option
    * 3. ComboBox is opened and ArrowUp is pressed -> highlight previous option
-   * 4. ComboBox is opened and Enter/ Tab is pressed -> update input value to value of option
-   * 5. ComboBox is opened and Esc is pressed -> close ComboBox
-   * 6. ComboBox is opened and any key is pressed immediately after pressing ArrowUp or DownKey
-   *    -> content of highlighted option will be copied over to combo-box
+   * 4. ComboBox is opened and ArrowRight is pressed -> value of hint is copied over to inputBox
+   * 5. ComboBox is opened and Enter/ Tab is pressed -> update input value to value of option
+   * 6. ComboBox is opened and Esc is pressed -> close ComboBox
    */
   _onKeyDown(event) {
     if (!this.props.disabled) {
@@ -278,7 +338,9 @@ export default class ComboBox extends Component {
         if (event.key === 'ArrowDown' ||
           event.key === 'ArrowUp') {
           event.preventDefault();
-          this.setState({ isOpen: true, focusedOptionIndex: 0 });
+          this.setState({
+            isOpen: true
+          });
         }
       } else {
         if (event.key === 'ArrowDown') {
@@ -287,6 +349,12 @@ export default class ComboBox extends Component {
         } else if (event.key === 'ArrowUp') {
           event.preventDefault();
           this._onArrowUpKeyDown();
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          const hint = this._getHint();
+          if(hint) {
+            this._userUpdateValue(hint);
+          }
         } else if (event.key === 'Enter') {
           event.preventDefault();
           this._onEnterOrTabKeyDown();
@@ -296,16 +364,11 @@ export default class ComboBox extends Component {
           this._onEnterOrTabKeyDown();
         } else if (event.key === 'Escape') {
           event.preventDefault();
-          this.setState({ isOpen: false, focusedOptionIndex: undefined, tempValue: undefined });
-        } else {
-          const tempValue = this.state.tempValue;
-          if (this.state.tempValue) {
-            this.setState({
-              tempValue: undefined,
-              inputValue: tempValue,
-              filteredOptions: this.filterOptions(tempValue)
-            });
-          }
+          this.setState({
+            isOpen: false,
+            focusedOptionIndex: undefined,
+            hint: undefined
+          });
         }
       }
     }
@@ -325,8 +388,7 @@ export default class ComboBox extends Component {
       index = this.state.focusedOptionIndex + 1;
     }
     this.setState({
-      focusedOptionIndex: index,
-      tempValue: this.state.filteredOptions[index].props.value
+      focusedOptionIndex: index
     });
   }
 
@@ -341,8 +403,7 @@ export default class ComboBox extends Component {
         index = this.state.focusedOptionIndex - 1;
       }
       this.setState({
-        focusedOptionIndex: index,
-        tempValue: this.state.filteredOptions[index].props.value
+        focusedOptionIndex: index
       });
     }
   }
@@ -351,7 +412,9 @@ export default class ComboBox extends Component {
    * Update value of Input box to the value of highlighted option.
    */
   _onEnterOrTabKeyDown() {
-    this._triggerChange(this.state.filteredOptions[this.state.focusedOptionIndex].props.value);
+    if(this.state.focusedOptionIndex >= 0) {
+      this._triggerChange(this.state.filteredOptions[this.state.focusedOptionIndex].props.value);
+    }
   }
 
   /**
@@ -365,19 +428,19 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false,
-        tempValue: undefined,
+        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: false,
-        tempValue: undefined,
+        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else {
       this.setState({
         inputValue: value,
-        tempValue: undefined,
+        hint: undefined,
         isOpen: false,
         focusedOptionIndex: undefined,
         filteredOptions: this.filterOptions(value)
@@ -390,31 +453,42 @@ export default class ComboBox extends Component {
   }
 
   /**
-   * The function is called when user inputs a value in the input box. Function will do following:
+   * The function is called when user type/ paste value in the input box.
+   */
+  _onChange(event) {
+    const value = event.target.value;
+    this._userUpdateValue(value);
+  }
+
+  /**
+   * The function is called when user inputs a value in the input box. This can be done by:
+   * 1. typing/ pasting value into input box
+   * 2. pressing arrowRight key when there is some hint in the input box
+   *
+   * Function will do following:
    * 1. Open the options
    * 2. Change value of input depending on whether its has value, defaultValue or valueLink property
    * 3. Call onUpdate props function
    */
-  _onChange(event) {
-    const value = event.target.value;
-
+  _userUpdateValue(value) {
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: true,
-        focusedOptionIndex: 0
+        focusedOptionIndex: undefined
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: true,
-        focusedOptionIndex: 0
+        focusedOptionIndex: undefined
       });
     } else {
+      const filteredOptions =  this.filterOptions(value);
       this.setState({
         inputValue: value,
         isOpen: true,
-        focusedOptionIndex: 0,
-        filteredOptions: this.filterOptions(value)
+        filteredOptions: filteredOptions,
+        focusedOptionIndex: undefined
       });
     }
 
@@ -444,8 +518,11 @@ export default class ComboBox extends Component {
   }
 
   render() {
+    const hint = this.props.enableHint ? this._getHint() : undefined;
+    const placeHolder = !hint ? this.props.placeholder : undefined;
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    let inputStyle = extend({}, style.style, this.props.style);
+    const inputStyle = extend({}, style.style, this.props.style);
+    let hintInputStyle = extend({}, style.hintInputStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
 
     const inputClassName = unionClassNames(this.props.className, this._styleId);
@@ -455,11 +532,11 @@ export default class ComboBox extends Component {
     // Currently there are no different hover styles for caret, like select they are probably not really needed.
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        inputStyle = extend({}, inputStyle, style.disabledCaretToOpenStyle);
+        hintInputStyle = extend({}, hintInputStyle, style.disabledCaretToOpenStyle);
       } else if (this.state.isOpen) {
-        inputStyle = extend({}, inputStyle, style.caretToCloseStyle);
+        hintInputStyle = extend({}, hintInputStyle, style.caretToCloseStyle);
       } else {
-        inputStyle = extend({}, inputStyle, style.caretToOpenStyle);
+        hintInputStyle = extend({}, hintInputStyle, style.caretToOpenStyle);
       }
     }
 
@@ -473,10 +550,15 @@ export default class ComboBox extends Component {
            aria-disabled = { this.props.disabled }
            {...this.state.wrapperProperties}>
 
+        <input style={ hintInputStyle }
+               value={ hint }
+               tabIndex = { -1 }
+               readOnly></input>
+
         <input disabled = { this.props.disabled }
                aria-disabled = { this.props.disabled }
-               value={ this.state.tempValue || this.state.inputValue }
-               placeholder={ this.props.placeholder }
+               value={ this.state.inputValue }
+               placeholder={ placeHolder }
                style={ inputStyle }
                className={ inputClassName }
                onChange={ this._onChange.bind(this) }
@@ -553,13 +635,15 @@ ComboBox.propTypes = {
   hoverStyle: React.PropTypes.object,
   maxOptions: React.PropTypes.number,
   displayCaret: React.PropTypes.bool,
+  enableHint: React.PropTypes.bool,
   filterFunc: React.PropTypes.func,
   'aria-label': React.PropTypes.string
 };
 
 ComboBox.defaultProps = {
   disabled: false,
-  displayCaret: true,
+  displayCaret: false,
+  enableHint: false,
   'aria-label': 'ComboBox',
   filterFunc: filterFunc
 };
