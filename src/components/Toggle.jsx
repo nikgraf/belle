@@ -317,6 +317,8 @@ export default class Toggle extends Component {
   }
 
   _onTouchStartAtSlider (event) {
+    event.preventDefault();
+
     if (event.touches.length === 1 && !this.props.disabled) {
       this._touchStartedAtSlider = true;
       this.setState({
@@ -397,6 +399,8 @@ export default class Toggle extends Component {
   }
 
   _onTouchStartHandle (event) {
+    event.preventDefault();
+
     // check for one touch as multiple could be browser gestures and only one
     // is relevant for us
     if (event.touches.length === 1 && !this.props.disabled) {
