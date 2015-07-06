@@ -1,6 +1,4 @@
-"use strict";
-
-import React, {Component} from 'react/addons';
+import React from 'react/addons';
 import {TextInput} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';

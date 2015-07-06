@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
 import {map} from 'underscore';

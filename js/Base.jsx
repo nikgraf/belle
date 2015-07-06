@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';

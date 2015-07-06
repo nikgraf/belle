@@ -1,5 +1,3 @@
-"use strict";
-
 var style = {
 
   propertyNameStyle: {
