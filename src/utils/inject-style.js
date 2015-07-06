@@ -2,16 +2,62 @@ import {map, each, flatten} from 'underscore';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
 import animations from '../style/animations';
 
-let styleElement,
-    styleStorage = {};
+let styleElement;
+const styleStorage = {};
 
 /**
- * Injects a style tag and adds the passed style for the provided pseudoClass.
+ * Injects the provided style into the styleStore.
  */
-export default function (styleId, style, pseudoClass, disabled) {
-  injectStyleTag();
-  updateStore(styleId, style, pseudoClass, disabled);
-  updateStyling();
+function injectStyleTag() {
+  if (!styleElement) {
+    styleElement = document.createElement('style');
+    document.body.appendChild(styleElement);
+    styleElement.setAttribute('class', 'belle-style');
+  }
+}
+
+/**
+ * Injects the provided style into the styleStore.
+ */
+function updateStore(styleId, style, pseudoClass, disabled) {
+  styleStorage[styleId] = styleStorage[styleId] || {};
+  if (disabled) {
+    styleStorage[styleId].disabledPseudoClasses = styleStorage[styleId].disabledPseudoClasses || {};
+    styleStorage[styleId].disabledPseudoClasses[pseudoClass] = style;
+  } else {
+    styleStorage[styleId].pseudoClasses = styleStorage[styleId].pseudoClasses || {};
+    styleStorage[styleId].pseudoClasses[pseudoClass] = style;
+  }
+}
+
+/**
+ * Constructs all the stored styles & injects them to the DOM.
+ */
+function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
+  return map(pseudoClasses, (style, pseudoClass) => {
+    const styleString = CSSPropertyOperations.createMarkupForStyles(style);
+    const styleWithImportant = styleString.replace(/;/g, ' !important;');
+
+    return disabled ?
+        `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}` :
+        `.${id}:${pseudoClass} {${styleWithImportant}}`;
+  });
+}
+
+function updateStyling() {
+  const styles = map(styleStorage, (storageEntry, id) => {
+    const pseudoClassesArray = [];
+
+    if (storageEntry.pseudoClasses) {
+      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.pseudoClasses, id, false));
+    }
+    if (storageEntry.disabledPseudoClasses) {
+      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.disabledPseudoClasses, id, true));
+    }
+
+    return pseudoClassesArray;
+  });
+  styleElement.innerHTML = flatten([animations, styles]).join(' ');
 }
 
 /**
@@ -48,57 +94,10 @@ export function removeStyle(styleId) {
 }
 
 /**
- * Injects the provided style into the styleStore.
+ * Injects a style tag and adds the passed style for the provided pseudoClass.
  */
-function injectStyleTag() {
-  if (!styleElement) {
-    styleElement = document.createElement('style');
-    document.body.appendChild(styleElement);
-    styleElement.setAttribute('class', 'belle-style');
-  }
-}
-
-/**
- * Injects the provided style into the styleStore.
- */
-function updateStore(styleId, style, pseudoClass, disabled) {
-  styleStorage[styleId] = styleStorage[styleId] || {};
-  if (disabled) {
-    styleStorage[styleId].disabledPseudoClasses = styleStorage[styleId].disabledPseudoClasses || {};
-    styleStorage[styleId].disabledPseudoClasses[pseudoClass] = style;
-  } else {
-    styleStorage[styleId].pseudoClasses = styleStorage[styleId].pseudoClasses || {};
-    styleStorage[styleId].pseudoClasses[pseudoClass] = style;
-  }
-}
-
-/**
- * Constructs all the stored styles & injects them to the DOM.
- */
-
-function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
-  return map(pseudoClasses, (style, pseudoClass) => {
-    const styleString = CSSPropertyOperations.createMarkupForStyles(style);
-    const styleWithImportant = styleString.replace(/;/g, ' !important;');
-
-    return disabled ?
-        `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}`:
-        `.${id}:${pseudoClass} {${styleWithImportant}}`;
-  });
-}
-
-function updateStyling() {
-  const styles = map(styleStorage, (storageEntry, id) => {
-    let pseudoClassesArray = [];
-
-    if(storageEntry.pseudoClasses) {
-      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.pseudoClasses, id, false));
-    }
-    if(storageEntry.disabledPseudoClasses) {
-      pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.disabledPseudoClasses, id, true));
-    }
-
-    return pseudoClassesArray;
-  });
-  styleElement.innerHTML = flatten([animations, styles]).join(' ');
+export default function(styleId, style, pseudoClass, disabled) {
+  injectStyleTag();
+  updateStore(styleId, style, pseudoClass, disabled);
+  updateStyling();
 }

@@ -1,34 +1,33 @@
 // Inspired by https://gist.github.com/paulirish/1579671
 
-export var requestAnimationFrame;
-export var cancelAnimationFrame;
+export let requestAnimationFrame;
+export let cancelAnimationFrame;
 
 requestAnimationFrame = window.requestAnimationFrame;
 cancelAnimationFrame = window.cancelAnimationFrame;
 
-var lastTime = 0;
-var vendors = ['ms', 'moz', 'webkit', 'o'];
-for (var x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
+const lastTime = 0;
+const vendors = ['ms', 'moz', 'webkit', 'o'];
+for (let x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
   requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
   cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
                          window[vendors[x] + 'CancelRequestAnimationFrame'];
 }
 
 if (!requestAnimationFrame) {
-  requestAnimationFrame = function (callback, element) {
-    var currTime = new Date().getTime();
-    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-    var id = window.setTimeout(function () {
-        callback(currTime + timeToCall);
-      },
-      timeToCall);
+  requestAnimationFrame = (callback) => {
+    const currTime = new Date().getTime();
+    const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+    const id = window.setTimeout(() => {
+      callback(currTime + timeToCall);
+    }, timeToCall);
     lastTime = currTime + timeToCall;
     return id;
   };
 }
 
 if (!cancelAnimationFrame) {
-  cancelAnimationFrame = function (id) {
+  cancelAnimationFrame = (id) => {
     clearTimeout(id);
   };
 }
