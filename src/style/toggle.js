@@ -147,7 +147,6 @@ const toggleStyle = {
   activeHandleStyle: {
     height: 28,
     backgroundColor: 'rgb(246, 246, 246)',
-    border: '1px solid rgb(220, 220, 220)',
     boxShadow: '0 0 0 0 rgb(189, 189, 189)',
     cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
   },
