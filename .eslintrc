@@ -210,8 +210,8 @@
         "componentWillUnmount",
         "/^_on.+$/",
         "/^_get.+$/",
-        "/^_render.+$/",
         "/^_trigger.+$/",
+        "/^_render.+$/",
         "render"
       ]
     }]
