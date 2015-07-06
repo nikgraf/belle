@@ -1,4 +1,4 @@
-"use strict";
+/*global jest, describe, it, expect*/
 
 jest.dontMock('../lib/components/TextInput');
 jest.dontMock('../lib/utils/inject-style');
@@ -12,7 +12,6 @@ const injectStyle = require('../lib/utils/inject-style');
 const TextInput = require('../lib/components/TextInput');
 
 describe('TextInput', () => {
-
   it('should come with default styles', () => {
     const textInput = TestUtils.renderIntoDocument(
       <TextInput />
@@ -39,10 +38,10 @@ describe('TextInput', () => {
       <TextInput />
     );
 
-    textInput._resize = jest.genMockFunction();
+    textInput._triggerResize = jest.genMockFunction();
     textInput.componentDidMount();
 
-    expect(textInput._resize.mock.calls.length).toBe(1);
+    expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
 
@@ -51,13 +50,13 @@ describe('TextInput', () => {
       <TextInput />
     );
 
-    textInput._resize = jest.genMockFunction();
+    textInput._triggerResize = jest.genMockFunction();
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
     TestUtils.Simulate.change(textareaNode, 'some input text');
 
-    expect(textInput._resize.mock.calls.length).toBe(1);
+    expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
 
@@ -66,13 +65,13 @@ describe('TextInput', () => {
       <TextInput value="some text"/>
     );
 
-    textInput._resize = jest.genMockFunction();
+    textInput._triggerResize = jest.genMockFunction();
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
     TestUtils.Simulate.change(textareaNode, 'some other text');
 
-    expect(textInput._resize.mock.calls.length).toBe(1);
+    expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
 
@@ -81,13 +80,13 @@ describe('TextInput', () => {
       <TextInput value="some text" allowNewLine={ true }/>
     );
 
-    textInput._resize = jest.genMockFunction();
+    textInput._triggerResize = jest.genMockFunction();
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
     TestUtils.Simulate.change(textareaNode, 'some other text');
 
-    expect(textInput._resize.mock.calls.length).toBe(1);
+    expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
 
@@ -95,12 +94,12 @@ describe('TextInput', () => {
     let wasPressed = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onKeyDown={ (event) => wasPressed = true }/>
+      <TextInput onKeyDown={ () => wasPressed = true }/>
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    TestUtils.Simulate.keyDown(textareaNode, {key: "1"});
+    TestUtils.Simulate.keyDown(textareaNode, {key: '1'});
 
     expect(wasPressed).toEqual(true);
   });
@@ -110,7 +109,7 @@ describe('TextInput', () => {
     let wasChanged = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onUpdate={ (event) => wasChanged = true }/>
+      <TextInput onUpdate={ () => wasChanged = true }/>
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
@@ -151,7 +150,7 @@ describe('TextInput', () => {
   });
 
 
-  it('should remove the custom styles from the dom when the textInput unmounts', function() {
+  it('should remove the custom styles from the dom when the textInput unmounts', () => {
     injectStyle.removeStyle = jest.genMockFunction();
 
     const textInput = TestUtils.renderIntoDocument(
@@ -162,5 +161,4 @@ describe('TextInput', () => {
 
     expect(injectStyle.removeStyle.mock.calls.length).toBe(1);
   });
-
 });

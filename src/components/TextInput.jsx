@@ -105,7 +105,7 @@ export default class TextInput extends Component {
    * Right after the component go injected into the DOM it should be resized.
    */
   componentDidMount() {
-    this._resize();
+    this._triggerResize();
   }
 
   /**
@@ -115,7 +115,7 @@ export default class TextInput extends Component {
   componentWillReceiveProps(properties) {
     this.setState({ textareaProperties: sanitizeChildProperties(properties) });
     updatePseudoClassStyle(this._styleId, properties);
-    this._resize();
+    this._triggerResize();
   }
 
   /**
@@ -158,17 +158,17 @@ export default class TextInput extends Component {
       // controlled textarea must have value
       if (this.state.textareaProperties.value) {
         this.setState({ textareaProperties: { value: value } });
-        this.forceUpdate(this._resize);
+        this.forceUpdate(this._triggerResize);
       // uncontrolled textarea must be updated with value, but then released again
       } else {
         this.setState({ textareaProperties: { value: value } });
         this.forceUpdate(() => {
-          this._resize();
+          this._triggerResize();
           this.setState({ textareaProperties: { value: undefined } });
         });
       }
     } else {
-      this._resize();
+      this._triggerResize();
     }
 
     const valueLink = this.props.valueLink;
