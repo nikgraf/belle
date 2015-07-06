@@ -23,6 +23,7 @@ import comboBoxStyle from './style/combo-box';
 import selectConfig from './config/select';
 import buttonConfig from './config/button';
 import ratingConfig from './config/rating';
+import toggleConfig from './config/toggle';
 
 module.exports = {
   Button: Button,
@@ -50,6 +51,7 @@ module.exports = {
   config: {
     select: selectConfig,
     button: buttonConfig,
-    rating: ratingConfig
+    rating: ratingConfig,
+    toggle: toggleConfig
   }
 };

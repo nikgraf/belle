@@ -1,9 +1,5 @@
-"use strict";
-
-/* jslint browser: true */
-
 import React, {Component} from 'react';
-import {TextInput, Card, Button, Rating, style} from 'belle';
+import {style} from 'belle';
 import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
