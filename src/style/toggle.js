@@ -42,11 +42,12 @@ const toggleStyle = {
     left: 0,
     boxSizing: 'border-box',
     borderRadius: 28,
-    backgroundColor: 'rgb(238, 238, 238)',
-    height: 28,
+    backgroundColor: 'rgb(243, 243, 243)',
+    height: 27,
     width: 28,
     cursor: 'pointer',
-    borderBottom: '1px solid rgb(189, 189, 189)',
+    border: '1px solid rgb(220, 220, 220)',
+    boxShadow: '0 1px 0px 0px rgb(185, 185, 185)',
     transition: 'left 0.1s ease-in-out',
 
     /*
@@ -140,11 +141,13 @@ const toggleStyle = {
   },
 
   hoverHandleStyle: {
-    backgroundColor: '#F8F8F8'
+    backgroundColor: 'rgb(250, 250, 250)'
   },
 
   activeHandleStyle: {
-    backgroundColor: '#F8F8F8',
+    height: 28,
+    backgroundColor: 'rgb(246, 246, 246)',
+    boxShadow: '0 0 0 0 rgb(189, 189, 189)',
     cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
   },
 
