@@ -47,7 +47,7 @@ const toggleStyle = {
     width: 28,
     cursor: 'pointer',
     border: '1px solid rgb(220, 220, 220)',
-    boxShadow: '0 1px 0px 0px rgb(189, 189, 189)',
+    boxShadow: '0 1px 0px 0px rgb(185, 185, 185)',
     transition: 'left 0.1s ease-in-out',
 
     /*
