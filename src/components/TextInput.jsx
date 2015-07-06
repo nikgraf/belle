@@ -1,13 +1,69 @@
-"use strict";
-
-/* jslint browser: true */
-
 import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, has} from 'underscore';
+import {omit, extend} from 'underscore';
 import style from '../style/text-input';
+
+const newLineRegex = /[\r\n]/g;
+
+/**
+ * Returns an object with properties that are relevant for the TextInput's textarea.
+ *
+ * As the height of the textarea needs to be calculated valueLink can not be
+ * passed down to the textarea, but made available through this component.
+ */
+function sanitizeChildProperties(properties) {
+  const childProperties = omit(properties, [
+    'valueLink',
+    'onUpdate',
+    'onKeyDown',
+    'minHeight',
+    'maxHeight',
+    'className',
+    'style',
+    'hoverStyle',
+    'focusStyle',
+    'disabledStyle',
+    'disabledHoverStyle'
+  ]);
+  if (typeof properties.valueLink === 'object') {
+    childProperties.value = properties.valueLink.value;
+  }
+  return childProperties;
+}
+
+/**
+ * Update hover & focus style for the speficied styleId.
+ *
+ * @param styleId {string} - a unique id that exists as class attribute in the DOM
+ * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
+ */
+function updatePseudoClassStyle(styleId, properties) {
+  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
+  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
+  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+
+  const styles = [
+    {
+      id: styleId,
+      style: hoverStyle,
+      pseudoClass: 'hover'
+    },
+    {
+      id: styleId,
+      style: focusStyle,
+      pseudoClass: 'focus'
+    },
+    {
+      id: styleId,
+      style: disabledHoverStyle,
+      pseudoClass: 'hover',
+      disabled: true
+    }
+  ];
+  injectStyles(styles);
+}
 
 /**
  * TextInput component with great UX like autogrowing & handling states
@@ -53,13 +109,6 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Remove a component's associated styles whenever it gets removed from the DOM.
-   */
-  componentWillUnmount() {
-    removeStyle(this._styleId);
-  }
-
-  /**
    * Update the properties passed to the textarea and resize as with the new
    * properties the height might have changed.
    */
@@ -70,20 +119,10 @@ export default class TextInput extends Component {
   }
 
   /**
-   * Calculate the height and store the new height in the state to trigger a render.
+   * Remove a component's associated styles whenever it gets removed from the DOM.
    */
-  _resize() {
-    let height = calculateTextareaHeight(React.findDOMNode(this));
-
-    if (this.props.minHeight && this.props.minHeight > height) {
-      height = this.props.minHeight;
-    }
-
-    if (this.props.maxHeight && this.props.maxHeight < height) {
-      height = this.props.maxHeight;
-    }
-
-    this.setState({ height: height});
+  componentWillUnmount() {
+    removeStyle(this._styleId);
   }
 
   /**
@@ -94,7 +133,7 @@ export default class TextInput extends Component {
    * away in the onUpdate callback.
    */
   _onKeyDown(event) {
-    if (!this.props.allowNewLine && event.key == 'Enter') {
+    if (!this.props.allowNewLine && event.key === 'Enter') {
       event.preventDefault();
     }
 
@@ -133,13 +172,30 @@ export default class TextInput extends Component {
     }
 
     const valueLink = this.props.valueLink;
-    if (typeof valueLink == 'object' && typeof valueLink.requestChange == 'function') {
+    if (typeof valueLink === 'object' && typeof valueLink.requestChange === 'function') {
       valueLink.requestChange(value);
     }
 
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
+  }
+
+  /**
+   * Calculate the height and store the new height in the state to trigger a render.
+   */
+  _triggerResize() {
+    let height = calculateTextareaHeight(React.findDOMNode(this));
+
+    if (this.props.minHeight && this.props.minHeight > height) {
+      height = this.props.minHeight;
+    }
+
+    if (this.props.maxHeight && this.props.maxHeight < height) {
+      height = this.props.maxHeight;
+    }
+
+    this.setState({ height: height});
   }
 
   render() {
@@ -155,17 +211,20 @@ export default class TextInput extends Component {
     }
 
     textareaStyle.height = this.state.height;
-    return <textarea style={ textareaStyle }
-                     className={ unionClassNames(this.props.className, this._styleId) }
-                     onChange={ this._onChange.bind(this) }
-                     onKeyDown={ this._onKeyDown.bind(this) }
-                     { ...this.state.textareaProperties }/>;
+    return (
+      <textarea style={ textareaStyle }
+                className={ unionClassNames(this.props.className, this._styleId) }
+                onChange={ this._onChange.bind(this) }
+                onKeyDown={ this._onKeyDown.bind(this) }
+                { ...this.state.textareaProperties } />
+    );
   }
 }
 
 TextInput.displayName = 'Belle TextInput';
 
 TextInput.propTypes = {
+  className: React.PropTypes.string,
   minHeight: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
   style: React.PropTypes.object,
@@ -176,6 +235,7 @@ TextInput.propTypes = {
   disabledStyle: React.PropTypes.object,
   disabledHoverStyle: React.PropTypes.object,
   onUpdate: React.PropTypes.func,
+  onKeyDown: React.PropTypes.func,
   valueLink: React.PropTypes.shape({
     value: React.PropTypes.string.isRequired,
     requestChange: React.PropTypes.func.isRequired
@@ -186,63 +246,3 @@ TextInput.defaultProps = {
   allowNewLine: false,
   disabled: false
 };
-
-const newLineRegex = /[\r\n]/g;
-
-/**
- * Returns an object with properties that are relevant for the TextInput's textarea.
- *
- * As the height of the textarea needs to be calculated valueLink can not be
- * passed down to the textarea, but made available through this component.
- */
-function sanitizeChildProperties(properties) {
-  let childProperties = omit(properties, [
-    'valueLink',
-    'onUpdate',
-    'onKeyDown',
-    'minHeight',
-    'maxHeight',
-    'className',
-    'style',
-    'hoverStyle',
-    'focusStyle',
-    'disabledStyle',
-    'disabledHoverStyle'
-  ]);
-  if (typeof properties.valueLink == 'object') {
-    childProperties.value = properties.valueLink.value;
-  }
-  return childProperties;
-}
-
-/**
- * Update hover & focus style for the speficied styleId.
- *
- * @param styleId {string} - a unique id that exists as class attribute in the DOM
- * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
- */
-function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle         = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle         = extend({}, style.focusStyle, properties.focusStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
-
-  const styles = [
-    {
-      id: styleId,
-      style: hoverStyle,
-      pseudoClass: 'hover'
-    },
-    {
-      id: styleId,
-      style: focusStyle,
-      pseudoClass: 'focus'
-    },
-    {
-      id: styleId,
-      style: disabledHoverStyle,
-      pseudoClass: 'hover',
-      disabled: true
-    }
-  ];
-  injectStyles(styles);
-}
