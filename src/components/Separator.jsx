@@ -1,8 +1,13 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {extend, omit} from 'underscore';
 import style from '../style/separator';
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div.
+ */
+function sanitizeChildProperties(properties) {
+  return omit(properties, ['style']);
+}
 
 /**
  * Separator component.
@@ -11,7 +16,7 @@ import style from '../style/separator';
  */
 export default class Separator extends Component {
 
-  constructor (properties) {
+  constructor(properties) {
     super(properties);
     this.state = {
       childProperties: sanitizeChildProperties(properties)
@@ -22,11 +27,11 @@ export default class Separator extends Component {
    * Update the childProperties based on the updated properties passed to the
    * Separator.
    */
-  componentWillReceiveProps (properties) {
+  componentWillReceiveProps(properties) {
     this.setState({ childProperties: sanitizeChildProperties(properties) });
   }
 
-  render () {
+  render() {
     const computedStyle = extend({}, style.style, this.props.style);
 
     return (
@@ -38,14 +43,11 @@ export default class Separator extends Component {
 }
 
 Separator.propTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
   style: React.PropTypes.object
 };
 
 Separator.displayName = 'Belle Separator';
-
-/**
- * Returns an object with properties that are relevant for the wrapping div.
- */
-function sanitizeChildProperties(properties) {
-  return omit(properties, ['style']);
-}
