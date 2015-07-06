@@ -1,6 +1,4 @@
-"use strict";
-
-var placeholderStyle = {
+const placeholderStyle = {
 
   style: {
     boxSizing: 'border-box',

@@ -1,7 +1,3 @@
-"use strict";
-
-/* jslint browser: true */
-
 import {map, each, flatten} from 'underscore';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
 import animations from '../style/animations';

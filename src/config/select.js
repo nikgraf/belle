@@ -1,12 +1,21 @@
-"use strict";
-
-/* jslint browser: true */
-
 import React from 'react';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
 import {filter, findIndex} from 'underscore';
 
-var selectConfig = {
+/**
+ * Returns the index of the entry with a certain value from the component's
+ * children.
+ *
+ * The index search includes separator & option components.
+ */
+const findIndexOfSelectedOption = (component) => {
+  const filterFunction = (child) => (isComponentTypeOf('Option', child) || isComponentTypeOf('Separator', child));
+  return findIndex(filter(component.props.children, filterFunction), (element) => {
+    return element.props.value === component.state.selectedValue;
+  });
+};
+
+const selectConfig = {
 
   shouldPositionOptions: true,
 
@@ -16,13 +25,14 @@ var selectConfig = {
    *
    * @param selectComponent {object} - the Select component itself accessible with `this`
    */
-  repositionMenu (selectComponent) {
+  repositionMenu(selectComponent) {
     const menuNode = React.findDOMNode(selectComponent.refs.menu);
     const menuStyle = window.getComputedStyle(menuNode, null);
     const menuWidth = parseFloat(menuStyle.getPropertyValue('width'));
 
     // In case of a placeholder no option is focused on initially
-    let option, optionIndex;
+    let option;
+    let optionIndex;
 
     if (selectComponent.state.selectedValue) {
       optionIndex = findIndexOfSelectedOption(selectComponent);
@@ -43,14 +53,13 @@ var selectConfig = {
     const selectedOptionWrapperNode = React.findDOMNode(selectComponent.refs.selectedOptionWrapper);
     const selectedOptionWrapperStyle = window.getComputedStyle(selectedOptionWrapperNode, null);
     const selectedOptionWrapperPaddingTop = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
-    const selectedOptionWrapperPaddingLeft = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
 
     const newTop = option.offsetTop + optionPaddingTop - selectedOptionWrapperPaddingTop + menuTopBorderWidth;
     const newLeft = option.offsetLeft + optionPaddingLeft;
 
     // Top positioning
     if (menuHeight < menuNode.scrollHeight) {
-      if(newTop + menuHeight > menuNode.scrollHeight) {
+      if (newTop + menuHeight > menuNode.scrollHeight) {
         // In case scrolling is not enough the box needs to be moved more to
         // the top to match the same position.
         const maxScrollTop = menuNode.scrollHeight - menuHeight;
@@ -87,19 +96,6 @@ var selectConfig = {
     // the original field.
     menuNode.style.width = `${menuWidth + newLeft * 2}px`;
   }
-};
-
-/**
- * Returns the index of the entry with a certain value from the component's
- * children.
- *
- * The index search includes separator & option components.
- */
-const findIndexOfSelectedOption = (component) => {
-  const filterFunction = (child) => (isComponentTypeOf('Option', child) || isComponentTypeOf('Separator', child));
-  return findIndex(filter(component.props.children, filterFunction), (element) => {
-    return element.props.value === component.state.selectedValue;
-  });
 };
 
 export default selectConfig;

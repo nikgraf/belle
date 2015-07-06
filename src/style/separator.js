@@ -1,6 +1,4 @@
-"use strict";
-
-var separatorStyle = {
+const separatorStyle = {
 
   style: {
     boxSizing: 'border-box',

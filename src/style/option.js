@@ -1,6 +1,4 @@
-"use strict";
-
-var optionStyle = {
+const optionStyle = {
 
   style: {
     boxSizing: 'border-box',

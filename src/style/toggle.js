@@ -1,6 +1,4 @@
-'use strict';
-
-var toggleStyle = {
+const toggleStyle = {
 
   style: {
     boxSizing: 'border-box',

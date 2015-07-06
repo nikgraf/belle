@@ -1,6 +1,4 @@
-"use strict";
-
-var textInputStyle = {
+const textInputStyle = {
 
   style: {
     /* normalize.css v3.0.1 */

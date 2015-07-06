@@ -1,6 +1,4 @@
-"use strict";
-
-var buttonConfig = {
+const buttonConfig = {
 
   preventFocusStyleForTouchAndClick: true
 

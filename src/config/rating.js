@@ -1,6 +1,4 @@
-"use strict";
-
-var ratingConfig = {
+const ratingConfig = {
 
   preventFocusStyleForTouchAndClick: true
 

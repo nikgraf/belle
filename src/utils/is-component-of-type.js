@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Returns true if the provided property is a component of the provided name.
  *

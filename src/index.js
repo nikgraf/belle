@@ -1,7 +1,3 @@
-"use strict";
-
-/* jslint node: true */
-
 import Button from './components/Button';
 import Card from './components/Card';
 import Choice from './components/Choice';

@@ -1,6 +1,4 @@
-"use strict";
-
-var buttonStyle = {
+const buttonStyle = {
 
   style: {
     background: '#EEEEEE',
@@ -83,7 +81,7 @@ var buttonStyle = {
 
     borderRadius: 2,
     boxSizing: 'border-box',
-    color:'#FAFAFA',
+    color: '#FAFAFA',
     cursor: 'pointer',
     display: 'inline-block',
     fontSize: 16,

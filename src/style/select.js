@@ -1,6 +1,4 @@
-"use strict";
-
-var selectStyle = {
+const selectStyle = {
 
   style: {
     borderBottom: '1px solid #CCC',

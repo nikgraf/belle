@@ -1,6 +1,4 @@
-"use strict";
-
-var cardStyle = {
+const cardStyle = {
 
   style: {
     marginBottom: 20,

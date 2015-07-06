@@ -1,6 +1,4 @@
-"use strict";
-
-var ratingStyle = {
+const ratingStyle = {
 
   style: {
     position: 'relative',

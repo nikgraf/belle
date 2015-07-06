@@ -189,7 +189,7 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex to undefined on touch cancel.
    */
-  _onTouchCancelAtOption(event) {
+  _onTouchCancelAtOption() {
     if (!this.props.disabled) {
       this._touchStartedAt = undefined;
       this.setState({focusedOptionIndex: undefined});
@@ -244,7 +244,7 @@ export default class ComboBox extends Component {
   /**
    * Set focusedOptionIndex to undefined.
    */
-  _onMouseLeaveAtOption(event) {
+  _onMouseLeaveAtOption() {
     if (!this.props.disabled) {
       this.setState({
         focusedOptionIndex: undefined

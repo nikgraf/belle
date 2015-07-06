@@ -1,5 +1,3 @@
-"use strict";
-
 import {union} from 'underscore';
 
 /**

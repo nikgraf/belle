@@ -1,6 +1,4 @@
-"use strict";
-
-var toggleConfig = {
+const toggleConfig = {
 
   preventFocusStyleForTouchAndClick: true
 
