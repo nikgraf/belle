@@ -1,8 +1,5 @@
-"use strict";
-
 import React, {Component} from 'react';
 import {Option, Select, Separator} from 'belle';
-import {map} from 'underscore';
 import Code from './Code';
 
 export default class SeparatorDocumentation extends Component {

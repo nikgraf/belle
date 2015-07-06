@@ -1,5 +1,3 @@
-"use strict";
-
 import React from 'react';
 import {Card, Rating} from 'belle';
 import Code from './Code';

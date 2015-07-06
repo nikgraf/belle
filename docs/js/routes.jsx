@@ -1,7 +1,3 @@
-"use strict";
-
-/* jslint node: true */
-
 import React from 'react';
 import {Route, DefaultRoute} from 'react-router';
 

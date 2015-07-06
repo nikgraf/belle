@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {Component} from 'react';
 import highlightJs from 'highlight.js';
 import {omit, extend} from 'underscore';

@@ -1,5 +1,3 @@
-"use strict";
-
 import React from 'react';
 import {omit} from 'underscore';
 import ViewportMixin from './mixin/viewport';
