@@ -727,18 +727,15 @@ export default class Toggle extends Component {
       });
 
       if (this.state.isActive) {
-        handleStyle = extend({}, handleStyle, style.activeHandleStyle, this.props.activeHandleStyle, {
-          left: this.state.value ? defaultSliderOffset : 0
-        });
+        handleStyle = extend({}, handleStyle, style.activeHandleStyle, this.props.activeHandleStyle);
       } else if (this.state.isHovered) {
-        handleStyle = extend({}, handleStyle, style.hoverHandleStyle, this.props.hoverHandleStyle, {
-          left: this.state.value ? defaultSliderOffset : 0
-        });
-      } else {
-        handleStyle = extend({}, handleStyle, {
-          left: this.state.value ? defaultSliderOffset : 0
-        });
+        handleStyle = extend({}, handleStyle, style.hoverHandleStyle, this.props.hoverHandleStyle);
       }
+
+      const position = {
+        left: this.state.value ? defaultSliderOffset : 0
+      };
+      handleStyle = extend({}, handleStyle, position);
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : '✓';
