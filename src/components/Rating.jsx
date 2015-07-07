@@ -13,8 +13,8 @@ React.initializeTouchEvents(true);
 /**
  * sanitize properties for the wrapping div.
  */
-function sanitizeWrapperProperties(properties) {
-  return omit(properties, [
+function sanitizeWrapperProps(props) {
+  return omit(props, [
     'className',
     'onKeyDown',
     'onClick',
@@ -41,15 +41,15 @@ function sanitizeWrapperProperties(properties) {
     'characterStyle',
     'activeCharacterStyle',
     'hoverCharacterStyle',
-    'characterProperties'
+    'characterProps'
   ]);
 }
 
 /**
  * sanitize properties for the character span.
  */
-function sanitizeCharacterProperties(properties) {
-  return omit(properties, [
+function sanitizeCharacterProps(props) {
+  return omit(props, [
     'data-belle-value',
     'style'
   ]);
@@ -58,12 +58,12 @@ function sanitizeCharacterProperties(properties) {
 /**
  * Injects pseudo classes for styles into the DOM.
  */
-function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
+function updatePseudoClassStyle(ratingWrapperStyleId, props) {
   let ratingFocusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
+  if (props.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
-    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+    ratingFocusStyle = extend({}, style.focusStyle, props.focusStyle);
   }
   const styles = [
     {
@@ -83,8 +83,8 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
  */
 export default class Rating extends Component {
 
-  constructor(properties) {
-    super(properties);
+  constructor(props) {
+    super(props);
 
     let value;
 
@@ -99,8 +99,8 @@ export default class Rating extends Component {
     this.state = {
       value: value,
       focusedValue: undefined,
-      generalProperties: sanitizeWrapperProperties(properties),
-      characterProperties: sanitizeCharacterProperties(properties.characterProperties),
+      generalProps: sanitizeWrapperProps(props),
+      characterProps: sanitizeCharacterProps(props.characterProps),
       isFocus: false,
       isActive: false
     };
@@ -115,20 +115,20 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
   }
 
-  componentWillReceiveProps(properties) {
+  componentWillReceiveProps(props) {
     const newState = {
-      wrapperProperties: sanitizeWrapperProperties(properties),
-      characterProperties: sanitizeCharacterProperties(properties.characterProperties)
+      wrapperProps: sanitizeWrapperProps(props),
+      characterProps: sanitizeCharacterProps(props.characterProps)
     };
 
-    if (properties.valueLink) {
-      newState.value = properties.valueLink.value;
-    } else if (properties.value) {
-      newState.value = properties.value;
+    if (props.valueLink) {
+      newState.value = props.valueLink.value;
+    } else if (props.value) {
+      newState.value = props.value;
     }
 
     this.setState(newState);
-    updatePseudoClassStyle(this._styleId, properties);
+    updatePseudoClassStyle(this._styleId, props);
   }
 
   /**
