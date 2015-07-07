@@ -367,8 +367,6 @@ export default class Toggle extends Component {
   }
 
   _onTouchStartAtSlider(event) {
-    event.preventDefault();
-
     if (event.touches.length === 1 && !this.props.disabled) {
       this._touchStartedAtSlider = true;
       this.setState({
