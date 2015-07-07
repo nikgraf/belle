@@ -5,7 +5,7 @@ import style from '../style/separator';
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
-function sanitizeChildProperties(properties) {
+function sanitizeChildProps(properties) {
   return omit(properties, ['style']);
 }
 
@@ -19,7 +19,7 @@ export default class Separator extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties)
+      childProps: sanitizeChildProps(properties)
     };
   }
 
@@ -28,14 +28,14 @@ export default class Separator extends Component {
    * Separator.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProperties: sanitizeChildProperties(properties) });
+    this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
     const computedStyle = extend({}, style.style, this.props.style);
 
     return (
-      <div style={ computedStyle } {...this.state.childProperties}>
+      <div style={ computedStyle } {...this.state.childProps}>
         { this.props.children }
       </div>
     );

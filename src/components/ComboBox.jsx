@@ -42,8 +42,8 @@ function updatePseudoClassStyle(styleId, properties) {
 /**
  * Returns an object with properties that are relevant for the wrapper div.
  */
-function sanitizePropertiesForWrapper(wrapperProperties) {
-  return omit(wrapperProperties, [
+function sanitizeWrapperProps(properties) {
+  return omit(properties, [
     'style',
     'aria-label',
     'aria-disabled'
@@ -53,7 +53,7 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
 /**
  * Returns an object with properties that are relevant for the input box.
  */
-function sanitizePropertiesForInput(properties) {
+function sanitizeInputProps(properties) {
   return omit(properties, [
     'ref',
     'value',
@@ -78,8 +78,8 @@ function sanitizePropertiesForInput(properties) {
 /**
  * Returns an object with properties that are relevant for the combo-box menu.
  */
-function sanitizePropertiesForMenu(menuProperties) {
-  return omit(menuProperties, [
+function sanitizeMenuProps(properties) {
+  return omit(properties, [
     'style',
     'ref',
     'role'
@@ -105,43 +105,23 @@ export default class ComboBox extends Component {
     super(properties);
     let inputValue;
 
-    if (has(this.props, 'valueLink')) {
-      inputValue = this.props.valueLink.value;
-    } else if (has(this.props, 'value')) {
-      inputValue = this.props.value;
-    } else if (has(this.props, 'defaultValue')) {
-      inputValue = this.props.defaultValue;
+    if (has(properties, 'valueLink')) {
+      inputValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      inputValue = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      inputValue = properties.defaultValue;
     }
 
     this.state = {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      hint: undefined,
       filteredOptions: this.filterOptions(inputValue),
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-      inputProperties: sanitizePropertiesForInput(properties),
-      menuProperties: sanitizePropertiesForMenu(properties.menuProps)
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      inputProps: sanitizeInputProps(properties),
+      menuProps: sanitizeMenuProps(properties.menuProps)
     };
-  }
-
-  static _getHint(filteredOptions, index, inputValue, isOptionSelected = false) {
-    let hint = '';
-    if (filteredOptions && filteredOptions.length > 0 &&
-      !((inputValue === undefined || inputValue === null || inputValue.length === 0) && !isOptionSelected)) {
-      const optionValue = filteredOptions[index].props.value;
-      if (inputValue) {
-        const position = optionValue.toLowerCase().indexOf(inputValue.toLowerCase());
-        if (position === -1) {
-          hint = optionValue;
-        } else if (position === 0) {
-          hint = inputValue + optionValue.substr(inputValue.length, (optionValue.length - inputValue.length));
-        }
-      } else {
-        hint = optionValue;
-      }
-    }
-    return hint;
   }
 
   /**
@@ -152,7 +132,7 @@ export default class ComboBox extends Component {
    * 4. If no option is highlighted but some value is present in input box hint is equal to value of first filteredOptions
    * If user has typed some text in input box and there is a hint(according to above calculations), the starting of hint
    * is replaced by the text input by user ( this is to make sure that case of letters in hint is same as that in input box
-   * value and overlap is perfect.
+   * value and overlap is perfect.)
    * todo: simplify logic in method below
    */
   _getHint() {
@@ -195,9 +175,9 @@ export default class ComboBox extends Component {
 
   componentWillReceiveProps(properties) {
     const newState = {
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-      inputProperties: sanitizePropertiesForInput(properties),
-      menuProperties: sanitizePropertiesForMenu(properties.menuProps)
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      inputProps: sanitizeInputProps(properties),
+      menuProps: sanitizeMenuProps(properties.menuProps)
     };
 
     if (has(properties, 'valueLink')) {
@@ -262,8 +242,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined,
-        hint: undefined
+        focusedOptionIndex: undefined
       });
     }
 
@@ -294,8 +273,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       this.setState({
-        focusedOptionIndex: index,
-        hint: ComboBox._getHint(this.state.filteredOptions, index, this.state.inputValue, true)
+        focusedOptionIndex: index
       });
     }
   }
@@ -306,8 +284,7 @@ export default class ComboBox extends Component {
   _onMouseLeaveAtOption() {
     if (!this.props.disabled) {
       this.setState({
-        focusedOptionIndex: undefined,
-        hint: undefined
+        focusedOptionIndex: undefined
       });
     }
   }
@@ -365,8 +342,7 @@ export default class ComboBox extends Component {
           event.preventDefault();
           this.setState({
             isOpen: false,
-            focusedOptionIndex: undefined,
-            hint: undefined
+            focusedOptionIndex: undefined
           });
         }
       }
@@ -427,19 +403,16 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false,
-        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: false,
-        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else {
       this.setState({
         inputValue: value,
-        hint: undefined,
         isOpen: false,
         focusedOptionIndex: undefined,
         filteredOptions: this.filterOptions(value)
@@ -547,7 +520,7 @@ export default class ComboBox extends Component {
       <div style={ wrapperStyle }
            aria-label = { this.props['aria-label'] }
            aria-disabled = { this.props.disabled }
-           {...this.state.wrapperProperties}>
+           {...this.state.wrapperProps}>
 
         <input style={ hintStyle }
                value={ hint }
@@ -566,12 +539,12 @@ export default class ComboBox extends Component {
                onFocus={ this._onFocus.bind(this) }
                onKeyDown={ this._onKeyDown.bind(this) }
                aria-autocomplete="list"
-              {...this.state.inputProperties}></input>
+              {...this.state.inputProps}></input>
 
         <ul style={ computedMenuStyle }
             role="listbox"
             aria-expanded={ this.state.isOpen }
-            {...this.state.menuProperties} >
+            {...this.state.menuProps} >
           {
             React.Children.map(this.state.filteredOptions, (entry, index) => {
               const isHovered = this.state.focusedOptionIndex === index;

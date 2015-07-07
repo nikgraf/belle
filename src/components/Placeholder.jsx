@@ -5,7 +5,7 @@ import style from '../style/placeholder';
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
-function sanitizeChildProperties(properties) {
+function sanitizeChildProps(properties) {
   return omit(properties, ['style', 'disabledStyle', '_isDisabled']);
 }
 
@@ -19,16 +19,16 @@ export default class Placeholder extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties)
+      childProps: sanitizeChildProps(properties)
     };
   }
 
   /**
-   * Update the childProperties based on the updated properties passed to the
+   * Update the childProps based on the updated properties passed to the
    * Placeholder.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProperties: sanitizeChildProperties(properties) });
+    this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
@@ -40,7 +40,7 @@ export default class Placeholder extends Component {
     }
 
     return (
-      <div style={ computedStyle } {...this.state.childProperties}>
+      <div style={ computedStyle } {...this.state.childProps}>
         { this.props.children }
       </div>
     );

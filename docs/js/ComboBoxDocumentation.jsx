@@ -347,7 +347,7 @@ export default React.createClass({
             <p>
               Works like React's built-in style property.
               Manipulates the styling for underlying input which is suggesting
-              the first option. This input is only visible of the property `enableHint`
+              the first option. This input is only visible if the property `enableHint`
               is enabled.
             </p>
           </td>
@@ -622,7 +622,7 @@ const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
 </ComboBox>`;
 
 const htmlStructure = `<div style={ wrapperStyle }>
-  <input style={ hint } />
+  <input style={ hintStyle } />
   <input style={ style } />
   <ul style={ menuStyle }>
     <li>
