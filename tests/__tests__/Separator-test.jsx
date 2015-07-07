@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Separator');
 
@@ -10,7 +10,6 @@ const TestUtils = React.addons.TestUtils;
 const Separator = require('../lib/components/Separator');
 
 describe('Separator', () => {
-
   it('should come with a set of default styles', () => {
     const separator = TestUtils.renderIntoDocument(
       <Separator>Europe</Separator>
@@ -37,5 +36,4 @@ describe('Separator', () => {
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
     expect(div.props['data-custom']).toBe('example');
   });
-
 });

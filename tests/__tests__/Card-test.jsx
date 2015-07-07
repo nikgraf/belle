@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Card');
 jest.dontMock('../lib/utils/inject-style');
@@ -6,18 +6,14 @@ jest.dontMock('../lib/utils/inject-style');
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
-const injectStyle = require('../lib/utils/inject-style');
-
-
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const Card = require('../lib/components/Card');
 
 describe('Card', () => {
-
   it('should come with default styles', () => {
     const card = TestUtils.renderIntoDocument(
-      <Card></Card>
+      <Card/>
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
 
@@ -27,7 +23,7 @@ describe('Card', () => {
 
   it('should be able to adopt the style of the card', () => {
     const card = TestUtils.renderIntoDocument(
-      <Card style={{ background: '#F00' }}></Card>
+      <Card style={{ background: '#F00' }}/>
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
 
@@ -44,5 +40,4 @@ describe('Card', () => {
     expect(divNode.props.children.type).toEqual('span');
     expect(spanNode.props.children).toEqual('Hello there');
   });
-
 });

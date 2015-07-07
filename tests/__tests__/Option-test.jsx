@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Option');
 
@@ -10,10 +10,9 @@ const TestUtils = React.addons.TestUtils;
 const Option = require('../lib/components/Option');
 
 describe('Option', () => {
-
   it('should initialise _isHovered & _isDisplayedAsSelected during construction', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value='rome'>Rome</Option>
+      <Option value="rome">Rome</Option>
     );
 
     expect(option.props._isHovered).toBeFalsy();
@@ -22,7 +21,7 @@ describe('Option', () => {
 
   it('should show the select style in case _isDisplayedAsSelected is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value='rome' _isDisplayedAsSelected={ true }>Rome</Option>
+      <Option value="rome" _isDisplayedAsSelected={ true }>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
@@ -31,7 +30,7 @@ describe('Option', () => {
 
   it('should show the hover style in case _isHovered is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value='rome' _isHovered={ true }>Rome</Option>
+      <Option value="rome" _isHovered={ true }>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
@@ -40,11 +39,10 @@ describe('Option', () => {
 
   it('should be able to provide custom properties', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value='rome' data-custom="example">Rome</Option>
+      <Option value="rome" data-custom="example">Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
     expect(div.props['data-custom']).toBe('example');
   });
-
 });
