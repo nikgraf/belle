@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Placeholder');
 
@@ -10,7 +10,6 @@ const TestUtils = React.addons.TestUtils;
 const Placeholder = require('../lib/components/Placeholder');
 
 describe('Placeholder', () => {
-
   it('should come with a set of default styles', () => {
     const placeholder = TestUtils.renderIntoDocument(
       <Placeholder>Please select a city</Placeholder>
@@ -37,5 +36,4 @@ describe('Placeholder', () => {
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
     expect(div.props['data-custom']).toBe('example');
   });
-
 });

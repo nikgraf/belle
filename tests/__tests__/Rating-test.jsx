@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Rating');
 jest.dontMock('../lib/utils/inject-style');
@@ -7,14 +7,11 @@ jest.dontMock('../lib/utils/union-class-names');
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
-const injectStyle = require('../lib/utils/inject-style');
-
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const Rating = require('../lib/components/Rating');
 
 describe('Rating', () => {
-
   it('should be able to provide a valueLink', () => {
     const valueLink = {
       requestChange: () => {},
@@ -48,8 +45,7 @@ describe('Rating', () => {
   });
 
   describe('update the internal value', () => {
-
-    var rating;
+    let rating;
 
     beforeEach(() => {
       rating = TestUtils.renderIntoDocument(
@@ -76,7 +72,5 @@ describe('Rating', () => {
       rating.componentWillReceiveProps({ defaultValue: 3 });
       expect(rating.state.value).toBeUndefined();
     });
-
   });
-
 });

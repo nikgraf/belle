@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Select');
 jest.dontMock('../lib/components/Option');
@@ -17,12 +17,11 @@ const Placeholder = require('../lib/components/Placeholder');
 const Separator = require('../lib/components/Separator');
 
 describe('Select', () => {
-
   it('should initialise selectedValue & focusedOptionValue during construction', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select value='vienna' >
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+      <Select value="vienna" >
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -33,8 +32,8 @@ describe('Select', () => {
   it('should take the first option in case no value, defaultValue or valueLink is defined', () => {
     const select = TestUtils.renderIntoDocument(
       <Select>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -46,8 +45,8 @@ describe('Select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select>
         <Placeholder>Select a City</Placeholder>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -57,9 +56,9 @@ describe('Select', () => {
 
   it('should render the content of selected option', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select value='vienna'>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+      <Select value="vienna">
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -71,8 +70,8 @@ describe('Select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select>
         <Placeholder>Select a City</Placeholder>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -91,8 +90,8 @@ describe('Select', () => {
 
     const select = TestUtils.renderIntoDocument(
       <Select valueLink={ valueLink } >
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </Select>
     );
 
@@ -107,8 +106,8 @@ describe('Select', () => {
 
     const select = TestUtils.renderIntoDocument(
       <Select onUpdate={ () => { wasCalled = true; } } >
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </Select>
     );
 
@@ -120,9 +119,9 @@ describe('Select', () => {
 
   it('should change the selectedValue & focusedOptionValue on selection', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select defaultValue='rome'>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+      <Select defaultValue="rome">
+        <Option value="rome">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </Select>
     );
 
@@ -135,9 +134,9 @@ describe('Select', () => {
 
   it('should not change the selectedValue & focusedOptionValue on selection in case props.value is provided', () => {
     const select = TestUtils.renderIntoDocument(
-      <Select value='rome' >
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+      <Select value="rome" >
+        <Option value="rome">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </Select>
     );
 
@@ -151,8 +150,8 @@ describe('Select', () => {
   it('should be able to adopt the styles of a select', () => {
     const select = TestUtils.renderIntoDocument(
       <Select style={ { cursor: 'cross' } }>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </Select>
     );
 
@@ -161,14 +160,13 @@ describe('Select', () => {
   });
 
   describe('updating props', () => {
-
-    let select, nativeSelect;
+    let select;
 
     beforeEach(() => {
       select = TestUtils.renderIntoDocument(
         <Select>
-          <Option value='rome'>Rome</Option>
-          <Option value='vienna'>Vienna</Option>
+          <Option value="rome">Rome</Option>
+          <Option value="vienna">Vienna</Option>
         </Select>
       );
     });
@@ -201,7 +199,6 @@ describe('Select', () => {
   });
 
   function testKeyEvents(container) {
-
     it('should open the menu by pressing ArrowDown', () => {
       TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
       expect(container.select.state.isOpen).toBeTruthy();
@@ -218,7 +215,6 @@ describe('Select', () => {
     });
 
     describe('when the menu is open', () => {
-
       beforeEach(() => {
         container.select.setState({ isOpen: true });
       });
@@ -264,53 +260,46 @@ describe('Select', () => {
         TestUtils.Simulate.keyDown(container.selectNode, {key: ' '});
         expect(container.select.state.selectedValue).toBe('berlin');
       });
-
     });
-
   }
 
 
   describe('manage key events for simple list', () => {
-
     // in order to ensure no references are lost a container object is used
-    var container = {};
+    const container = {};
 
     beforeEach(() => {
       container.select = TestUtils.renderIntoDocument(
         <Select>
-          <Option value='rome'>Rome</Option>
-          <Option value='vienna'>Vienna</Option>
-          <Option value='berlin'>Berlin</Option>
+          <Option value="rome">Rome</Option>
+          <Option value="vienna">Vienna</Option>
+          <Option value="berlin">Berlin</Option>
         </Select>
       );
       container.selectNode = React.findDOMNode(container.select);
     });
 
     testKeyEvents(container);
-
   });
 
   describe('manage key events when separators are present', () => {
-
     // in order to ensure no references are lost a container object is used
-    var container = {};
+    const container = {};
 
     beforeEach(() => {
       container.select = TestUtils.renderIntoDocument(
         <Select>
           <Separator>Italy</Separator>
-          <Option value='rome'>Rome</Option>
+          <Option value="rome">Rome</Option>
           <Separator>Austria</Separator>
-          <Option value='vienna'>Vienna</Option>
+          <Option value="vienna">Vienna</Option>
           <Separator>Germany</Separator>
-          <Option value='berlin'>Berlin</Option>
+          <Option value="berlin">Berlin</Option>
         </Select>
       );
       container.selectNode = React.findDOMNode(container.select);
     });
 
     testKeyEvents(container);
-
   });
-
 });
