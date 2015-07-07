@@ -1,11 +1,10 @@
-"use strict";
+/*global jest, describe, it, expect*/
 
 jest.dontMock('../lib/utils/union-class-names');
 
 const unionClassNames = require('../lib/utils/union-class-names');
 
 describe('unionClassNames', () => {
-
   it('should add a class to existing ones', () => {
     expect(unionClassNames('first button', 'last')).toBe('first button last');
   });

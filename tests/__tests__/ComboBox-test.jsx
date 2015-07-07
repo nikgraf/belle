@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/ComboBox');
 jest.dontMock('../lib/components/Option');
@@ -13,12 +13,11 @@ const ComboBox = require('../lib/components/ComboBox');
 const Option = require('../lib/components/Option');
 
 describe('ComboBox', () => {
-
   it('should initialise inputValue & filteredOptions during construction', () => {
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox value='vie'>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+      <ComboBox value="vie">
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </ComboBox>
     );
 
@@ -29,8 +28,8 @@ describe('ComboBox', () => {
   it('should filter all values case no value, defaultValue or valueLink is defined', () => {
     const combobox = TestUtils.renderIntoDocument(
       <ComboBox>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </ComboBox>
     );
 
@@ -43,8 +42,8 @@ describe('ComboBox', () => {
 
     const combobox = TestUtils.renderIntoDocument(
       <ComboBox onUpdate={ () => { wasCalled = true; } }>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </ComboBox>
     );
 
@@ -56,19 +55,19 @@ describe('ComboBox', () => {
 
 
   it('should be able to provide a valueLink', () => {
-    let wasCalled = false;
+    // let wasCalled = false;
 
     const valueLink = {
       requestChange: () => {
-        wasCalled = true;
+        // wasCalled = true;
       },
       value: 'vie'
     };
 
     const combobox = TestUtils.renderIntoDocument(
       <ComboBox valueLink={ valueLink }>
-        <Option value='vienna'>Rome</Option>
-        <Option value='vienna123' className="vienna-option">Vienna</Option>
+        <Option value="vienna">Rome</Option>
+        <Option value="vienna123" className="vienna-option">Vienna</Option>
       </ComboBox>
     );
 
@@ -77,16 +76,16 @@ describe('ComboBox', () => {
     const viennaOptionNode = TestUtils.scryRenderedDOMComponentsWithClass(combobox, 'vienna-option');
     TestUtils.Simulate.click(viennaOptionNode);
 
-    //strangely line below is failing
-    //expect(wasCalled).toBeTruthy();
+    // strangely line below is failing
+    // expect(wasCalled).toBeTruthy();
   });
 
 
   it('should change the inputValue on selection', () => {
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox defaultValue='vie'>
-        <Option value='vienna123'>Rome</Option>
-        <Option value='vienna' className="vienna-option">Vienna</Option>
+      <ComboBox defaultValue="vie">
+        <Option value="vienna123">Rome</Option>
+        <Option value="vienna" className="vienna-option">Vienna</Option>
       </ComboBox>
     );
 
@@ -99,8 +98,8 @@ describe('ComboBox', () => {
   it('should be able to adopt the styles of a combobox', () => {
     const combobox = TestUtils.renderIntoDocument(
       <ComboBox style={ { cursor: 'cross' } }>
-        <Option value='rome'>Rome</Option>
-        <Option value='vienna'>Vienna</Option>
+        <Option value="rome">Rome</Option>
+        <Option value="vienna">Vienna</Option>
       </ComboBox>
     );
 
@@ -109,14 +108,13 @@ describe('ComboBox', () => {
   });
 
   describe('updating props', () => {
-
     let combobox;
 
     beforeEach(() => {
       combobox = TestUtils.renderIntoDocument(
         <ComboBox>
-          <Option value='rome'>Rome</Option>
-          <Option value='vienna'>Vienna</Option>
+          <Option value="rome">Rome</Option>
+          <Option value="vienna">Vienna</Option>
         </ComboBox>
       );
     });
@@ -141,20 +139,18 @@ describe('ComboBox', () => {
       expect(combobox.state.inputValue).toBe('vienna');
     });
 
-    //I do not understand this test case... it works for select...might be should work for combo box also
     /*
      it('should not update it\'s state in case defaultValue is updated', () => {
-     const properties = extend({}, combobox.props, { defaultValue: 'vienna' });
+     const properties = extend({}, combobox.props, { defaultValue: "vienna" });
      combobox.componentWillReceiveProps(properties);
 
-     expect(combobox.state.inputValue).toBe('rome');
+     expect(combobox.state.inputValue).toBe("rome");
      });
      */
   });
 
 
   function testKeyEvents(container) {
-
     it('should open the menu by pressing ArrowDown', () => {
       TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowDown'});
       expect(container.combobox.state.isOpen).toBeTruthy();
@@ -171,7 +167,6 @@ describe('ComboBox', () => {
     });
 
     describe('when the menu is open', () => {
-
       beforeEach(() => {
         container.combobox.setState({isOpen: true});
       });
@@ -218,30 +213,25 @@ describe('ComboBox', () => {
         TestUtils.Simulate.keyDown(container.comboNode, {key: 'Tab'});
         expect(container.combobox.state.inputValue).toBe('berlin');
       });
-
     });
-
   }
 
 
   describe('manage key events for simple list', () => {
-
     // in order to ensure no references are lost a container object is used
-    var container = {};
+    const container = {};
 
     beforeEach(() => {
       container.combobox = TestUtils.renderIntoDocument(
         <ComboBox>
-          <Option value='rome'>Rome</Option>
-          <Option value='vienna'>Vienna</Option>
-          <Option value='berlin'>Berlin</Option>
+          <Option value="rome">Rome</Option>
+          <Option value="vienna">Vienna</Option>
+          <Option value="berlin">Berlin</Option>
         </ComboBox>
       );
       container.comboNode = TestUtils.scryRenderedDOMComponentsWithTag(container.combobox, 'input')[1];
     });
 
     testKeyEvents(container);
-
   });
-
 });

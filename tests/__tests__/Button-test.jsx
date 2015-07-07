@@ -1,4 +1,4 @@
-"use strict";
+/*global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/Button');
 jest.dontMock('../lib/utils/inject-style');
@@ -15,10 +15,9 @@ const injectStyle = require('../lib/utils/inject-style');
 const Button = require('../lib/components/Button');
 
 describe('Button', () => {
-
   describe('without any properties', () => {
-
-    var button, buttonNode;
+    let button;
+    let buttonNode;
 
     beforeEach(() => {
       injectStyle.injectStyles = jest.genMockFunction();
@@ -49,7 +48,6 @@ describe('Button', () => {
       expect(styles[2].disabled).toBeTruthy();
       expect(styles[3].pseudoClass).toBe('focus');
     });
-
   });
 
   it('should be able to bind onClick', () => {
@@ -57,7 +55,7 @@ describe('Button', () => {
 
     // Render a button with an onClick handler
     const button = TestUtils.renderIntoDocument(
-      <Button onClick={ function() { wasClicked = true; } }>Follow</Button>
+      <Button onClick={ () => { wasClicked = true; } }>Follow</Button>
     );
 
     // Simulate a click
@@ -99,7 +97,7 @@ describe('Button', () => {
     const defaultButtonNode = TestUtils.findRenderedDOMComponentWithTag(defaultButton, 'button');
     const prmaryButtonNode = TestUtils.findRenderedDOMComponentWithTag(primaryButton, 'button');
 
-    expect(prmaryButtonNode.props.style.background).toNotEqual(defaultButtonNode.props.style.background);
+    expect(prmaryButtonNode.props.style.background).not.toEqual(defaultButtonNode.props.style.background);
   });
 
   it('should be able to change the type to submit or reset', () => {
@@ -116,7 +114,7 @@ describe('Button', () => {
     expect(resetButtonNode.props.type).toBe('reset');
   });
 
-  it('should be able to adopt the pseudoClass styles of the button', function() {
+  it('should be able to adopt the pseudoClass styles of the button', () => {
     injectStyle.injectStyles = jest.genMockFunction();
 
     const bodyWithButton = TestUtils.renderIntoDocument(
@@ -128,7 +126,7 @@ describe('Button', () => {
       </Button>
     );
 
-    const buttonNode = TestUtils.findRenderedDOMComponentWithTag(bodyWithButton, 'button');
+    TestUtils.findRenderedDOMComponentWithTag(bodyWithButton, 'button');
 
     expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
 
@@ -142,7 +140,7 @@ describe('Button', () => {
     expect(styles[3].style.color).toBe('brown');
   });
 
-  it('should remove the custom styles from the dom when the button unmounts', function() {
+  it('should remove the custom styles from the dom when the button unmounts', () => {
     injectStyle.removeStyle = jest.genMockFunction();
     expect(injectStyle.removeStyle.mock.calls.length).toBe(0);
 
@@ -154,5 +152,4 @@ describe('Button', () => {
 
     expect(injectStyle.removeStyle.mock.calls.length).toBe(1);
   });
-
 });
