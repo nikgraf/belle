@@ -622,9 +622,8 @@ const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
 </ComboBox>`;
 
 const htmlStructure = `<div style={ wrapperStyle }>
-  <input></input>
-  <input style={ style }>
-  </input>
+  <input style={ hint } />
+  <input style={ style } />
   <ul style={ menuStyle }>
     <li>
       <Option />
