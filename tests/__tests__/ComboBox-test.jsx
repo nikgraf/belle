@@ -16,13 +16,13 @@ describe('ComboBox', () => {
 
   it('should initialise inputValue & filteredOptions during construction', () => {
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox value='vienna'>
+      <ComboBox value='vie'>
         <Option value='rome'>Rome</Option>
         <Option value='vienna'>Vienna</Option>
       </ComboBox>
     );
 
-    expect(combobox.state.inputValue).toBe('vienna');
+    expect(combobox.state.inputValue).toBe('vie');
     expect(combobox.state.filteredOptions.length).toBe(1);
   });
 
@@ -62,7 +62,7 @@ describe('ComboBox', () => {
       requestChange: () => {
         wasCalled = true;
       },
-      value: 'vienna'
+      value: 'vie'
     };
 
     const combobox = TestUtils.renderIntoDocument(
@@ -84,7 +84,7 @@ describe('ComboBox', () => {
 
   it('should change the inputValue on selection', () => {
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox defaultValue='vienna'>
+      <ComboBox defaultValue='vie'>
         <Option value='vienna123'>Rome</Option>
         <Option value='vienna' className="vienna-option">Vienna</Option>
       </ComboBox>
@@ -104,7 +104,7 @@ describe('ComboBox', () => {
       </ComboBox>
     );
 
-    const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(combobox, 'input')[0];
+    const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(combobox, 'input')[1];
     expect(selectedAreaNode.props.style.cursor).toBe('cross');
   });
 
@@ -237,7 +237,7 @@ describe('ComboBox', () => {
           <Option value='berlin'>Berlin</Option>
         </ComboBox>
       );
-      container.comboNode = TestUtils.scryRenderedDOMComponentsWithTag(container.combobox, 'input')[0];
+      container.comboNode = TestUtils.scryRenderedDOMComponentsWithTag(container.combobox, 'input')[1];
     });
 
     testKeyEvents(container);

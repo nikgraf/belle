@@ -530,7 +530,7 @@ export default class Rating extends Component {
            aria-valuemin = { 1 }
            aria-valuenow = { this.state.value }
            aria-disabled = { this.props.disabled }
-           {...this.state.wrapperProperties}>
+           {...this.state.wrapperProps}>
 
            {
              React.Children.map([1, 2, 3, 4, 5], (value) => {
@@ -538,7 +538,7 @@ export default class Rating extends Component {
                return (
                  <span data-belle-value= { value }
                        style={ ratingStyle }
-                       {...this.state.characterProperties}>
+                       {...this.state.characterProps}>
                    { this.props.character }
                  </span>
                );
@@ -562,7 +562,7 @@ Rating.propTypes = {
   disabled: React.PropTypes.bool,
   tabIndex: React.PropTypes.number,
   character: React.PropTypes.string,
-  characterProperties: React.PropTypes.object,
+  characterProps: React.PropTypes.object,
   preventFocusStyleForTouchAndClick: React.PropTypes.bool,
   'aria-label': React.PropTypes.string,
   style: React.PropTypes.object,

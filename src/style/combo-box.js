@@ -1,6 +1,9 @@
 const comboBoxStyle = {
 
   style: {
+
+    background: 'transparent',
+
     /* normalize.css v3.0.1 */
     font: 'inherit',
     margin: 0,
@@ -187,6 +190,53 @@ const comboBoxStyle = {
     backgroundSize: '10px 6px',
     backgroundPosition: 'right 10px bottom 10px',
     backgroundRepeat: 'no-repeat'
+  },
+
+  hintStyle: {
+
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    outline: 'none',
+    color: '#ccc',
+
+    /* normalize.css v3.0.1 */
+    font: 'inherit',
+    margin: 0,
+
+    /* Reset the default borderRadius for Mobile Safari */
+    borderRadius: 0,
+
+    /* Belle TextInput style */
+    overflow: 'hidden',
+    resize: 'none',
+    width: '100%',
+    fontSize: 14,
+    paddingTop: '7px',
+    paddingBottom: '5px',
+    border: '0 solid #fff',
+    borderBottom: '1px solid #ccc',
+    display: 'block',
+    boxSizing: 'border-box',
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent'
   }
 };
 

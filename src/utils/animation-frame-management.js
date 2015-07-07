@@ -6,7 +6,7 @@ export let cancelAnimationFrame;
 requestAnimationFrame = window.requestAnimationFrame;
 cancelAnimationFrame = window.cancelAnimationFrame;
 
-const lastTime = 0;
+let lastTime = 0;
 const vendors = ['ms', 'moz', 'webkit', 'o'];
 for (let x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
   requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];

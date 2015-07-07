@@ -249,7 +249,27 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            characterProperties
+            wrapperProps
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This object allows to provide any kind of valid properties for a
+              div tag. It allows to extend the div wrapping the whole rating
+              component.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            characterProps
           </td>
         </tr>
         <tr>
