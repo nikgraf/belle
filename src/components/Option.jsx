@@ -5,7 +5,7 @@ import style from '../style/option';
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
-function sanitizeChildProperties(properties) {
+function sanitizeChildProps(properties) {
   return omit(properties, [
     'style',
     'hoverStyle',
@@ -28,16 +28,16 @@ export default class Option extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties)
+      childProps: sanitizeChildProps(properties)
     };
   }
 
   /**
-   * Update the childProperties based on the updated properties passed to the
+   * Update the childProps based on the updated properties passed to the
    * Option.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProperties: sanitizeChildProperties(properties) });
+    this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class Option extends Component {
     return (
       <div data-belle-value={ this.props.value }
            style={ styleToDisplay }
-           {...this.state.childProperties}>
+           {...this.state.childProps}>
         { this.props.children }
       </div>
     );

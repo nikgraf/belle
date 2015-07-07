@@ -113,7 +113,7 @@ const hasPrevious = (list, currentIndex) => {
  * Returns an object with properties that are relevant for the wrapping div of
  * the selected option.
  */
-function sanitizePropertiesForSelectedOptionWrapper(properties) {
+function sanitizeSelectedOptionWrapperProps(properties) {
   return omit(properties, [
     'onClick',
     'style',
@@ -147,8 +147,8 @@ function sanitizePropertiesForSelectedOptionWrapper(properties) {
  * Returns an object with properties that are relevant for the wrapping div of
  * the selected option.
  */
-function sanitizePropertiesForWrapper(wrapperProperties) {
-  return omit(wrapperProperties, [
+function sanitizeWrapperProps(properties) {
+  return omit(properties, [
     'style',
     'ref',
     'tabIndex',
@@ -162,8 +162,8 @@ function sanitizePropertiesForWrapper(wrapperProperties) {
  * Returns an object with properties that are relevant for the wrapping div of
  * the selected option.
  */
-function sanitizePropertiesForMenu(menuProperties) {
-  return omit(menuProperties, [
+function sanitizeMenuProps(properties) {
+  return omit(properties, [
     'style',
     'ref',
     'aria-labelledby',
@@ -175,8 +175,8 @@ function sanitizePropertiesForMenu(menuProperties) {
  * Returns an object with properties that are relevant for the wrapping div of
  * the selected option.
  */
-function sanitizePropertiesForCaret(caretProperties) {
-  return omit(caretProperties, [
+function sanitizeCaretProps(properties) {
+  return omit(properties, [
     'style',
     'ref'
   ]);
@@ -237,10 +237,10 @@ export default class Select extends Component {
       isFocused: false,
       selectedValue: selectedValue,
       focusedOptionValue: focusedOptionValue,
-      selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-      menuProperties: sanitizePropertiesForMenu(properties.menuProps),
-      caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+      selectedOptionWrapperProps: sanitizeSelectedOptionWrapperProps(properties),
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      menuProps: sanitizeMenuProps(properties.menuProps),
+      caretProps: sanitizeCaretProps(properties.caretProps),
       selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
       isTouchedToToggle: false
     };
@@ -259,10 +259,10 @@ export default class Select extends Component {
 
   componentWillReceiveProps(properties) {
     const newState = {
-      selectedOptionWrapperProperties: sanitizePropertiesForSelectedOptionWrapper(properties),
-      wrapperProperties: sanitizePropertiesForWrapper(properties.wrapperProps),
-      menuProperties: sanitizePropertiesForMenu(properties.menuProps),
-      caretProperties: sanitizePropertiesForCaret(properties.caretProps),
+      selectedOptionWrapperProps: sanitizeSelectedOptionWrapperProps(properties),
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      menuProps: sanitizeMenuProps(properties.menuProps),
+      caretProps: sanitizeCaretProps(properties.caretProps),
       selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
     };
 
@@ -299,7 +299,7 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (this.props.shouldPositionOptions & !this.props.disabled) {
+    if (this.props.shouldPositionOptions && !this.props.disabled) {
       const menuNode = React.findDOMNode(this.refs.menu);
 
       // the menu was just opened
@@ -717,7 +717,7 @@ export default class Select extends Component {
            onBlur={ this._onBlur.bind( this) }
            onFocus={ this._onFocus.bind( this) }
            ref="wrapper"
-           {...this.state.wrapperProperties} >
+           {...this.state.wrapperProps} >
 
         <div onClick={ this._onClickToggleMenu.bind(this) }
              onTouchStart={ this._onTouchStartToggleMenu.bind(this) }
@@ -729,10 +729,10 @@ export default class Select extends Component {
              role="button"
              aria-expanded={ this.state.isOpen }
              id={ this.state.selectedOptionWrapperId }
-             {...this.state.selectedOptionWrapperProperties} >
+             {...this.state.selectedOptionWrapperProps} >
           { selectedOptionOrPlaceholder }
           <span style={ caretStyle }
-            {...this.state.caretProperties}>
+            {...this.state.caretProps}>
           </span>
         </div>
 
@@ -740,7 +740,7 @@ export default class Select extends Component {
             role="listbox"
             aria-labelledby={ this.state.selectedOptionWrapperId }
             ref="menu"
-            {...this.state.menuProperties} >
+            {...this.state.menuProps} >
           {
             React.Children.map(this.props.children, (entry, index) => {
               if (isOption(entry)) { // filter out all non-Option Components

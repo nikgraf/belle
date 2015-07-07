@@ -17,8 +17,8 @@ React.initializeTouchEvents(true);
  * In case a wrong or no type is defined the type of the child button will be
  * set to `button`.
  */
-function sanitizeChildProperties(properties) {
-  const childProperties = omit(properties, [
+function sanitizeChildProps(properties) {
+  return omit(properties, [
     'className',
     'style',
     'hoverStyle',
@@ -35,7 +35,6 @@ function sanitizeChildProperties(properties) {
     'onFocus',
     'onBlur'
   ]);
-  return childProperties;
 }
 
 /**
@@ -99,7 +98,7 @@ export default class Button extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties),
+      childProps: sanitizeChildProps(properties),
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
       active: false
@@ -122,10 +121,10 @@ export default class Button extends Component {
   }
 
   /**
-   * Update the childProperties based on the updated properties of the button.
+   * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProperties: sanitizeChildProperties(properties) });
+    this.setState({ childProps: sanitizeChildProps(properties) });
     updatePseudoClassStyle(this.styleId, properties);
   }
 
@@ -248,8 +247,7 @@ export default class Button extends Component {
     } else {
       if (this.state.active) {
         const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
-        const activeStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
-        buttonStyle = activeStyle;
+        buttonStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
       } else if (this.focused && !this.state.active && this.props.preventFocusStyleForTouchAndClick) {
         buttonStyle = extend({}, baseButtonStyle, focusStyle);
       } else {
@@ -267,7 +265,7 @@ export default class Button extends Component {
               onBlur={ this._onBlur.bind(this) }
               onMouseDown={ this._onMouseDown.bind(this) }
               onMouseUp={ this._onMouseUp.bind(this) }
-              {...this.state.childProperties}>
+              {...this.state.childProps}>
         { this.props.children }
       </button>
     );

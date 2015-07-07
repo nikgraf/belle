@@ -5,7 +5,7 @@ import style from '../style/card';
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
-function sanitizeChildProperties(properties) {
+function sanitizeChildProps(properties) {
   return omit(properties, ['style']);
 }
 
@@ -20,7 +20,7 @@ export default class Card extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProperties: sanitizeChildProperties(properties)
+      childProps: sanitizeChildProps(properties)
     };
   }
 
@@ -29,14 +29,14 @@ export default class Card extends Component {
    * card.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProperties: sanitizeChildProperties(properties) });
+    this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
     const divStyle = extend({}, style.style, this.props.style);
 
     return (
-      <div {...this.state.childProperties} style={ divStyle }>
+      <div {...this.state.childProps} style={ divStyle }>
         { this.props.children }
       </div>
     );
