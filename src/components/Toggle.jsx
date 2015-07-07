@@ -10,7 +10,7 @@ import unionClassNames from '../utils/union-class-names';
 // Enable React Touch Events
 React.initializeTouchEvents(true);
 
-function sanitizeChildProperties(properties) {
+function sanitizeChildProps(properties) {
   return omit(properties, [
     'className',
     'defaultValue',
@@ -33,7 +33,7 @@ function sanitizeChildProperties(properties) {
   ]);
 }
 
-function sanitizeSliderProperties(properties) {
+function sanitizeSliderProps(properties) {
   return omit(properties, [
     'style',
     'onClick',
@@ -44,20 +44,20 @@ function sanitizeSliderProperties(properties) {
   ]);
 }
 
-function sanitizeSliderWrapperProperties(properties) {
+function sanitizeSliderWrapperProps(properties) {
   return omit(properties, [
     'style'
   ]);
 }
 
-function sanitizeChoiceProperties(properties) {
+function sanitizeChoiceProps(properties) {
   return omit(properties, [
     'ref',
     'style'
   ]);
 }
 
-function sanitizeHandleProperties(properties) {
+function sanitizeHandleProps(properties) {
   return omit(properties, [
     'onMouseDown',
     'onMouseMove',
@@ -143,15 +143,15 @@ export default class Toggle extends Component {
     }
 
     this.state = {
-      firstChoiceProperties: sanitizeChoiceProperties(properties.firstChoiceProps),
-      childProperties: sanitizeChildProperties(properties),
-      secondChoiceProperties: sanitizeChoiceProperties(properties.secondChoiceProps),
-      handleProperties: sanitizeHandleProperties(properties.handleProps),
+      firstChoiceProps: sanitizeChoiceProps(properties.firstChoiceProps),
+      childProps: sanitizeChildProps(properties),
+      secondChoiceProps: sanitizeChoiceProps(properties.secondChoiceProps),
+      handleProps: sanitizeHandleProps(properties.handleProps),
       isActive: false,
       isDraggingWithMouse: false,
       isDraggingWithTouch: false,
-      sliderProperties: sanitizeSliderProperties(properties.sliderProps),
-      sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps),
+      sliderProps: sanitizeSliderProps(properties.sliderProps),
+      sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps),
       value: value,
       wasFocusedWithClickOrTouch: false
     };
@@ -184,12 +184,12 @@ export default class Toggle extends Component {
 
   componentWillReceiveProps(properties) {
     const newState = {
-      firstChoiceProperties: sanitizeChoiceProperties(properties.firstChoiceProps),
-      childProperties: sanitizeChildProperties(properties),
-      secondChoiceProperties: sanitizeChoiceProperties(properties.secondChoiceProps),
-      handleProperties: sanitizeHandleProperties(properties.handleProps),
-      sliderProperties: sanitizeSliderProperties(properties.sliderProps),
-      sliderWrapperProperties: sanitizeSliderWrapperProperties(properties.sliderWrapperProps)
+      firstChoiceProps: sanitizeChoiceProps(properties.firstChoiceProps),
+      childProps: sanitizeChildProps(properties),
+      secondChoiceProps: sanitizeChoiceProps(properties.secondChoiceProps),
+      handleProps: sanitizeHandleProps(properties.handleProps),
+      sliderProps: sanitizeSliderProps(properties.sliderProps),
+      sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps)
     };
 
     if (has(properties, 'valueLink')) {
@@ -750,7 +750,7 @@ export default class Toggle extends Component {
       handleStyle = extend({}, handleStyle, style.disabledHandleStyle, this.props.disabledHandleStyle);
     }
 
-    const role = has(this.state.childProperties, 'role') ? this.state.childProperties.role : 'checkbox';
+    const role = has(this.state.childProps, 'role') ? this.state.childProps.role : 'checkbox';
 
     return (
       <div style={ wrapperStyle }
@@ -766,24 +766,24 @@ export default class Toggle extends Component {
            onMouseLeave = { this._onMouseLeaveAtSliderWrapper.bind(this) }
            role={ role }
            aria-checked={ this.state.value }
-           {...this.state.childProperties} >
+           {...this.state.childProps} >
         <div style={ sliderWrapperStyle }
-             {...this.state.sliderWrapperProperties}>
+             {...this.state.sliderWrapperProps}>
           <div style={ computedSliderStyle }
                onClick={ this._onClickAtSlider.bind(this) }
                onTouchStart={ this._onTouchStartAtSlider.bind(this) }
                onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
                onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
                onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
-               {...this.state.sliderProperties}>
+               {...this.state.sliderProps}>
             <div ref="firstChoice"
                  style={ computedTrueChoiceStyle }
-                 {...this.state.firstChoiceProperties}>
+                 {...this.state.firstChoiceProps}>
               { computedTrueChoice }
             </div>
             <div ref="secondChoice"
                  style={ computedFalseChoiceStyle }
-                 {...this.state.secondChoiceProperties}>
+                 {...this.state.secondChoiceProps}>
               { computedFalseChoice }
             </div>
           </div>
@@ -798,7 +798,7 @@ export default class Toggle extends Component {
              onTouchMove={ this._onTouchMoveHandle.bind(this) }
              onTouchEnd={ this._onTouchEndHandle.bind(this) }
              onTouchCancel={ this._onTouchCancelHandle.bind(this) }
-             {...this.state.handleProperties} />
+             {...this.state.handleProps} />
       </div>
     );
   }
