@@ -117,7 +117,6 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      hint: undefined,
       filteredOptions: this.filterOptions(inputValue),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
@@ -243,8 +242,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined,
-        hint: undefined
+        focusedOptionIndex: undefined
       });
     }
 
@@ -275,8 +273,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       this.setState({
-        focusedOptionIndex: index,
-        hint: ComboBox._getHint(this.state.filteredOptions, index, this.state.inputValue, true)
+        focusedOptionIndex: index
       });
     }
   }
@@ -287,8 +284,7 @@ export default class ComboBox extends Component {
   _onMouseLeaveAtOption() {
     if (!this.props.disabled) {
       this.setState({
-        focusedOptionIndex: undefined,
-        hint: undefined
+        focusedOptionIndex: undefined
       });
     }
   }
@@ -346,8 +342,7 @@ export default class ComboBox extends Component {
           event.preventDefault();
           this.setState({
             isOpen: false,
-            focusedOptionIndex: undefined,
-            hint: undefined
+            focusedOptionIndex: undefined
           });
         }
       }
@@ -408,19 +403,16 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false,
-        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: false,
-        hint: undefined,
         focusedOptionIndex: undefined
       });
     } else {
       this.setState({
         inputValue: value,
-        hint: undefined,
         isOpen: false,
         focusedOptionIndex: undefined,
         filteredOptions: this.filterOptions(value)
