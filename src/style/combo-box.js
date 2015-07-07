@@ -187,9 +187,9 @@ const comboBoxStyle = {
   caretToOpenStyle: {
     paddingRight: '26px',
     backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,0 20,0 10,12\" style=\"fill:grey\" /></svg>')",
-    backgroundSize: "10px 6px",
-    backgroundPosition: "right 10px bottom 10px",
-    backgroundRepeat: "no-repeat"
+    backgroundSize: '10px 6px',
+    backgroundPosition: 'right 10px bottom 10px',
+    backgroundRepeat: 'no-repeat'
   },
 
   hintStyle: {
