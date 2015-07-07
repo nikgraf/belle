@@ -126,18 +126,17 @@ export default class ComboBox extends Component {
 
   static _getHint(filteredOptions, index, inputValue, isOptionSelected = false) {
     let hint = '';
-    if(filteredOptions && filteredOptions.length > 0 &&
+    if (filteredOptions && filteredOptions.length > 0 &&
       !((inputValue === undefined || inputValue === null || inputValue.length === 0) && !isOptionSelected)) {
       const optionValue = filteredOptions[index].props.value;
-      if(inputValue) {
+      if (inputValue) {
         const position = optionValue.toLowerCase().indexOf(inputValue.toLowerCase());
-        if(position == -1) {
+        if (position === -1) {
           hint = optionValue;
-        } else if(position == 0) {
+        } else if (position === 0) {
           hint = inputValue + optionValue.substr(inputValue.length, (optionValue.length - inputValue.length));
         }
-      }
-      else {
+      } else {
         hint = optionValue;
       }
     }
@@ -156,7 +155,7 @@ export default class ComboBox extends Component {
    * todo: simplify logic in method below
    */
   _getHint() {
-    if(this.state.isOpen) {
+    if (this.state.isOpen) {
       const filteredOptions = this.state.filteredOptions;
       if (filteredOptions && filteredOptions.length > 0) {
         let hint;
@@ -172,8 +171,7 @@ export default class ComboBox extends Component {
             const position = hint.toLowerCase().indexOf(inputValue.toLowerCase());
             if (position === 0) {
               return inputValue + hint.substr(inputValue.length, (hint.length - inputValue.length));
-            }
-            else if (position === -1) {
+            } else if (position === -1) {
               return hint;
             }
           } else {
@@ -352,7 +350,7 @@ export default class ComboBox extends Component {
         } else if (event.key === 'ArrowRight') {
           event.preventDefault();
           const hint = this._getHint();
-          if(hint) {
+          if (hint) {
             this._userUpdateValue(hint);
           }
         } else if (event.key === 'Enter') {
@@ -412,7 +410,7 @@ export default class ComboBox extends Component {
    * Update value of Input box to the value of highlighted option.
    */
   _onEnterOrTabKeyDown() {
-    if(this.state.focusedOptionIndex >= 0) {
+    if (this.state.focusedOptionIndex >= 0) {
       this._triggerChange(this.state.filteredOptions[this.state.focusedOptionIndex].props.value);
     }
   }
@@ -483,7 +481,7 @@ export default class ComboBox extends Component {
         focusedOptionIndex: undefined
       });
     } else {
-      const filteredOptions =  this.filterOptions(value);
+      const filteredOptions = this.filterOptions(value);
       this.setState({
         inputValue: value,
         isOpen: true,
