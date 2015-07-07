@@ -13,7 +13,7 @@ React.initializeTouchEvents(true);
 /**
  * sanitize properties for the wrapping div.
  */
-function sanitizeWrapperProperties(properties) {
+function sanitizeWrapperProps(properties) {
   return omit(properties, [
     'className',
     'onKeyDown',
@@ -48,7 +48,7 @@ function sanitizeWrapperProperties(properties) {
 /**
  * sanitize properties for the character span.
  */
-function sanitizeCharacterProperties(properties) {
+function sanitizeCharacterProps(properties) {
   return omit(properties, [
     'data-belle-value',
     'style'
