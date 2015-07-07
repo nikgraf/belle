@@ -192,7 +192,7 @@ const comboBoxStyle = {
     backgroundRepeat: "no-repeat"
   },
 
-  hintInputStyle: {
+  hintStyle: {
 
     position: 'absolute',
     top: 0,

@@ -61,6 +61,7 @@ function sanitizePropertiesForInput(properties) {
     'defaultValue',
     'placeholder',
     'disabled',
+    'hintStyle',
     'className',
     'style',
     'onUpdate',
@@ -520,7 +521,7 @@ export default class ComboBox extends Component {
     const placeHolder = !hint ? this.props.placeholder : undefined;
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const inputStyle = extend({}, style.style, this.props.style);
-    let hintInputStyle = extend({}, style.hintInputStyle);
+    let hintStyle = extend({}, style.hintStyle, this.props.hintStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
 
     const inputClassName = unionClassNames(this.props.className, this._styleId);
@@ -530,11 +531,11 @@ export default class ComboBox extends Component {
     // Currently there are no different hover styles for caret, like select they are probably not really needed.
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        hintInputStyle = extend({}, hintInputStyle, style.disabledCaretToOpenStyle);
+        hintStyle = extend({}, hintStyle, style.disabledCaretToOpenStyle);
       } else if (this.state.isOpen) {
-        hintInputStyle = extend({}, hintInputStyle, style.caretToCloseStyle);
+        hintStyle = extend({}, hintStyle, style.caretToCloseStyle);
       } else {
-        hintInputStyle = extend({}, hintInputStyle, style.caretToOpenStyle);
+        hintStyle = extend({}, hintStyle, style.caretToOpenStyle);
       }
     }
 
@@ -548,7 +549,7 @@ export default class ComboBox extends Component {
            aria-disabled = { this.props.disabled }
            {...this.state.wrapperProperties}>
 
-        <input style={ hintInputStyle }
+        <input style={ hintStyle }
                value={ hint }
                tabIndex = { -1 }
                readOnly></input>
@@ -627,6 +628,7 @@ ComboBox.propTypes = {
   className: React.PropTypes.string,
   style: React.PropTypes.object,
   wrapperStyle: React.PropTypes.object,
+  hintStyle: React.PropTypes.object,
   menuStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
   disabledHoverStyle: React.PropTypes.object,
