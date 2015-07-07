@@ -13,8 +13,8 @@ React.initializeTouchEvents(true);
 /**
  * sanitize properties for the wrapping div.
  */
-function sanitizeWrapperProps(props) {
-  return omit(props, [
+function sanitizeWrapperProperties(properties) {
+  return omit(properties, [
     'className',
     'onKeyDown',
     'onClick',
@@ -48,8 +48,8 @@ function sanitizeWrapperProps(props) {
 /**
  * sanitize properties for the character span.
  */
-function sanitizeCharacterProps(props) {
-  return omit(props, [
+function sanitizeCharacterProperties(properties) {
+  return omit(properties, [
     'data-belle-value',
     'style'
   ]);
@@ -58,12 +58,12 @@ function sanitizeCharacterProps(props) {
 /**
  * Injects pseudo classes for styles into the DOM.
  */
-function updatePseudoClassStyle(ratingWrapperStyleId, props) {
+function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
   let ratingFocusStyle;
-  if (props.preventFocusStyleForTouchAndClick) {
+  if (properties.preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
-    ratingFocusStyle = extend({}, style.focusStyle, props.focusStyle);
+    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
   }
   const styles = [
     {
@@ -83,24 +83,24 @@ function updatePseudoClassStyle(ratingWrapperStyleId, props) {
  */
 export default class Rating extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(properties) {
+    super(properties);
 
     let value;
 
-    if (has(this.props, 'valueLink')) {
-      value = this.props.valueLink.value;
-    } else if (has(this.props, 'value')) {
-      value = this.props.value;
-    } else if (has(this.props, 'defaultValue')) {
-      value = this.props.defaultValue;
+    if (has(properties, 'valueLink')) {
+      value = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      value = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      value = properties.defaultValue;
     }
 
     this.state = {
       value: value,
       focusedValue: undefined,
-      generalProps: sanitizeWrapperProps(props),
-      characterProps: sanitizeCharacterProps(props.characterProps),
+      generalProps: sanitizeWrapperProps(properties),
+      characterProps: sanitizeCharacterProps(properties.characterProps),
       isFocus: false,
       isActive: false
     };
@@ -115,20 +115,20 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(properties) {
     const newState = {
-      wrapperProps: sanitizeWrapperProps(props),
-      characterProps: sanitizeCharacterProps(props.characterProps)
+      wrapperProps: sanitizeWrapperProps(properties),
+      characterProps: sanitizeCharacterProps(properties.characterProps)
     };
 
-    if (props.valueLink) {
-      newState.value = props.valueLink.value;
-    } else if (props.value) {
-      newState.value = props.value;
+    if (properties.valueLink) {
+      newState.value = properties.valueLink.value;
+    } else if (properties.value) {
+      newState.value = properties.value;
     }
 
     this.setState(newState);
-    updatePseudoClassStyle(this._styleId, props);
+    updatePseudoClassStyle(this._styleId, properties);
   }
 
   /**
