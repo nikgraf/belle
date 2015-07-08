@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
@@ -6,18 +6,18 @@ import ViewportMixin from './mixin/viewport';
 
 export default React.createClass({
 
-  mixins: [ViewportMixin],
-
   contextTypes: {
     router: React.PropTypes.func
   },
+
+  mixins: [ViewportMixin],
 
   render() {
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     let header;
     if (this.context.router.getCurrentPath() === '/') {
-      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+      header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 820, paddingLeft: 160 }}>
 
@@ -50,9 +50,9 @@ export default React.createClass({
             style={ { marginBottom: 20 } }>
           </iframe>
         </Column>
-      </header>;
+      </header>);
     } else {
-      header = <header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+      header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 820}}>
           <iframe
@@ -61,7 +61,7 @@ export default React.createClass({
             scrolling="0"
             width="78px"
             height="30px"
-            style={ { float: 'right', marginTop: 20 } }>
+            style={ { 'float': 'right', marginTop: 20 } }>
           </iframe>
 
           <Link style={{ display: 'inline' }} to="app">
@@ -80,10 +80,10 @@ export default React.createClass({
             </h1>
           </Link>
         </Column>
-      </header>;
+      </header>);
     }
 
-    return <div style={{ background: '#F7F7F7' }}>
+    return (<div style={{ background: '#F7F7F7' }}>
 
       { header }
 
@@ -91,7 +91,7 @@ export default React.createClass({
               mediumScreenStyle={{margin: '0 auto', width: 820 }}>
 
         <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
-                mediumScreenStyle={{ float: 'left', width: 160 }}
+                mediumScreenStyle={{ 'float': 'left', width: 160 }}
                 className="navigation">
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
@@ -155,7 +155,7 @@ export default React.createClass({
         </Column>
 
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
-                mediumScreenStyle={{ float: 'left', width: 660 }}>
+                mediumScreenStyle={{ 'float': 'left', width: 660 }}>
           <Card style={ cardContentStyle }>
             <RouteHandler/>
           </Card>
@@ -172,6 +172,6 @@ export default React.createClass({
           on Planet Earth :)
         </Column>
       </footer>
-    </div>;
+    </div>);
   }
 });

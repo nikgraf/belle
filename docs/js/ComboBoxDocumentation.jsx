@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, ComboBox, Option, Rating} from 'belle';
+import {ComboBox, Option} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
@@ -29,17 +29,145 @@ const currencies = [
 
 const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];
 
-const customFilterFunc = function(inputValue, optionValue) {
-  if(inputValue && optionValue) {
+function customFilterFunc(inputValue, optionValue) {
+  if (inputValue && optionValue) {
     return optionValue.toLowerCase().indexOf(inputValue.toLowerCase()) === 0;
   }
   return false;
-};
+}
+
+const basicCodeExample = `<ComboBox placeholder="Choose a State">
+  <Option value="Alabama">Alabama</Option>
+  <Option value="Alaska">Alaska</Option>
+  <Option value="Arizona">Arizona</Option>
+  <Option value="Arkansas">Arkansas</Option>
+</ComboBox>`;
+
+const dataCodeExampleOnePartOne = `<!-- defining the data -->
+const animals = [
+  {name: 'Abyssinian', description: 'The oldest breed of cat in the world!', image: 'images/abyssinian.jpg'},
+  {name: 'Albatross', description: 'The largest wingspan of any bird!', image: 'images/albatross.jpg'},
+  {name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg'},
+  {name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg'},
+  {name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg'},
+  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'}
+]`;
+
+const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' }
+              defaultValue = "Ant"
+              displayCaret = { true }>
+  {
+    animals.map(function(animal, index) {
+      return (
+        <Option value={ animal.name }
+                style={{
+                  padding: '5px 0 5px 60px',
+                  marginBottom: '5px',
+                  height: 50,
+                  background:  'url(' + animal.image + ') no-repeat',
+                  backgroundSize: '50px 50px'
+                }}
+                hoverStyle={{
+                  padding: '5px 0 5px 60px',
+                  marginBottom: '5px',
+                  height: 50,
+                  background:  'url(' + animal.image + ') no-repeat',
+                  backgroundSize: '50px 50px',
+                  backgroundColor: '#FFE95D'
+                }}
+                key={ index }>
+          <span>
+            <div style={ {fontWeight: 'bold', fontSize: '14px'} }>
+              { animal.name }
+            </div>
+            <div style={ {fontSize: '12px'} }>
+              { animal.description }
+            </div>
+          </span>
+        </Option>
+      );
+    })
+  }
+</ComboBox>`;
+
+const dataCodeExampleTwoPartOne = `const currencies = [
+  {code: 'AUD', name: 'Australia Dollar'},
+  {code: 'BRL', name: 'Brazil Real'},
+  {code: 'CAD', name: 'Canada Dollar'},
+  {code: 'CNY', name: 'China Yuan Renminbi'},
+  {code: 'CRC', name: 'Costa Rica Colon'},
+  {code: 'CUP', name: 'Cuba Peso'},
+  {code: 'EGP', name: 'Egypt Pound'},
+  {code: 'HKD', name: 'Hong Kong Dollar'},
+  {code: 'NZD', name: 'New Zealand Dollar'},
+  {code: 'SEK', name: 'Sweden Krona'},
+  {code: 'GBP', name: 'United Kingdom Pound'},
+  {code: 'USD', name: 'United States Dollar'}
+];`;
+
+const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
+              onUpdate={ function(event) { console.log(event.value); } }
+              maxOptions = { 5 }
+              filterFunc = { customFilterFunc }>
+  {
+    currencies.map(function(currency, index) {
+      return (
+        <Option value={ currency.code }
+                key={ index }>
+          <span style={ {fontWeight: 'bold', fontSize: '14px', marginRight: '10px'} }>
+            { currency.code }
+          </span>
+          <span style={ {fontSize: '12px'} }>
+            { currency.name }
+          </span>
+        </Option>
+      );
+    })
+  }
+</ComboBox>`;
+
+const dataCodeExampleTwoPartThree = `const customFilterFunc = function(inputValue, optionValue) {
+  if(inputValue && optionValue) {
+    return optionValue.indexOf(inputValue) === 0;
+  }
+  return false;
+};`;
+
+const dataCodeExampleThreePartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
+
+const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
+          filterFunc = { customFilterFunc }
+          placeholder = { 'Select Baby Name' }>
+  {
+    babyNames.map(function(name, index) {
+      return (
+        <Option value={ name }
+                key={ index }>
+          { name }
+        </Option>
+      );
+    })
+  }
+</ComboBox>`;
+
+const htmlStructure = `<div style={ wrapperStyle }>
+  <input style={ hintStyle } />
+  <input style={ style } />
+  <ul style={ menuStyle }>
+    <li>
+      <Option />
+    </li>
+    <li>
+      <Option />
+    </li>
+    … more entries …
+  </ul>
+</div>`;
 
 export default React.createClass({
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>ComboBox</h2>
 
@@ -423,14 +551,14 @@ export default React.createClass({
                         padding: '5px 0 5px 60px',
                         marginBottom: '5px',
                         height: 50,
-                        background:  'url(' + animal.image + ') no-repeat',
+                        background: 'url(' + animal.image + ') no-repeat',
                         backgroundSize: '50px 50px'
                       }}
                       hoverStyle={{
                         padding: '5px 0 5px 60px',
                         marginBottom: '5px',
                         height: 50,
-                        background:  'url(' + animal.image + ') no-repeat',
+                        background: 'url(' + animal.image + ') no-repeat',
                         backgroundSize: '50px 50px',
                         backgroundColor: '#FFE95D'
                       }}
@@ -456,7 +584,7 @@ export default React.createClass({
       <h3>ComboBox with custom filtering, onUpdate callback & maxOptions set to 5</h3>
 
       <ComboBox placeholder = { 'Choose a Currency' }
-                    onUpdate={ function(event) { console.log(event.value); } }
+                    onUpdate={ (event) => { console.log(event.value); } }
                     maxOptions = { 5 }
                     filterFunc = { customFilterFunc }>
         {
@@ -503,134 +631,6 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
 
-    </div>;
+    </div>);
   }
 });
-
-const basicCodeExample = `<ComboBox placeholder="Choose a State">
-  <Option value="Alabama">Alabama</Option>
-  <Option value="Alaska">Alaska</Option>
-  <Option value="Arizona">Arizona</Option>
-  <Option value="Arkansas">Arkansas</Option>
-</ComboBox>`;
-
-const dataCodeExampleOnePartOne = `<!-- defining the data -->
-const animals = [
-  {name: 'Abyssinian', description: 'The oldest breed of cat in the world!', image: 'images/abyssinian.jpg'},
-  {name: 'Albatross', description: 'The largest wingspan of any bird!', image: 'images/albatross.jpg'},
-  {name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg'},
-  {name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg'},
-  {name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg'},
-  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'}
-]`;
-
-const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' }
-              defaultValue = "Ant"
-              displayCaret = { true }>
-  {
-    animals.map(function(animal, index) {
-      return (
-        <Option value={ animal.name }
-                style={{
-                  padding: '5px 0 5px 60px',
-                  marginBottom: '5px',
-                  height: 50,
-                  background:  'url(' + animal.image + ') no-repeat',
-                  backgroundSize: '50px 50px'
-                }}
-                hoverStyle={{
-                  padding: '5px 0 5px 60px',
-                  marginBottom: '5px',
-                  height: 50,
-                  background:  'url(' + animal.image + ') no-repeat',
-                  backgroundSize: '50px 50px',
-                  backgroundColor: '#FFE95D'
-                }}
-                key={ index }>
-          <span>
-            <div style={ {fontWeight: 'bold', fontSize: '14px'} }>
-              { animal.name }
-            </div>
-            <div style={ {fontSize: '12px'} }>
-              { animal.description }
-            </div>
-          </span>
-        </Option>
-      );
-    })
-  }
-</ComboBox>`;
-
-const dataCodeExampleTwoPartOne = `const currencies = [
-  {code: 'AUD', name: 'Australia Dollar'},
-  {code: 'BRL', name: 'Brazil Real'},
-  {code: 'CAD', name: 'Canada Dollar'},
-  {code: 'CNY', name: 'China Yuan Renminbi'},
-  {code: 'CRC', name: 'Costa Rica Colon'},
-  {code: 'CUP', name: 'Cuba Peso'},
-  {code: 'EGP', name: 'Egypt Pound'},
-  {code: 'HKD', name: 'Hong Kong Dollar'},
-  {code: 'NZD', name: 'New Zealand Dollar'},
-  {code: 'SEK', name: 'Sweden Krona'},
-  {code: 'GBP', name: 'United Kingdom Pound'},
-  {code: 'USD', name: 'United States Dollar'}
-];`;
-
-const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
-              onUpdate={ function(event) { console.log(event.value); } }
-              maxOptions = { 5 }
-              filterFunc = { customFilterFunc }>
-  {
-    currencies.map(function(currency, index) {
-      return (
-        <Option value={ currency.code }
-                key={ index }>
-          <span style={ {fontWeight: 'bold', fontSize: '14px', marginRight: '10px'} }>
-            { currency.code }
-          </span>
-          <span style={ {fontSize: '12px'} }>
-            { currency.name }
-          </span>
-        </Option>
-      );
-    })
-  }
-</ComboBox>`;
-
-const dataCodeExampleTwoPartThree = `const customFilterFunc = function(inputValue, optionValue) {
-  if(inputValue && optionValue) {
-    return optionValue.indexOf(inputValue) === 0;
-  }
-  return false;
-};`;
-
-const dataCodeExampleThreePartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
-
-const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
-          filterFunc = { customFilterFunc }
-          placeholder = { 'Select Baby Name' }>
-  {
-    babyNames.map(function(name, index) {
-      return (
-        <Option value={ name }
-                key={ index }>
-          { name }
-        </Option>
-      );
-    })
-  }
-</ComboBox>`;
-
-const htmlStructure = `<div style={ wrapperStyle }>
-  <input style={ hintStyle } />
-  <input style={ style } />
-  <ul style={ menuStyle }>
-    <li>
-      <Option />
-    </li>
-    <li>
-      <Option />
-    </li>
-    … more entries …
-  </ul>
-</div>`;

@@ -1,4 +1,4 @@
-var style = {
+const style = {
 
   propertyNameStyle: {
     padding: '0 20px 0 0',

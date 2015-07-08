@@ -1,16 +1,32 @@
 import React from 'react';
-import {Card, Rating} from 'belle';
+import {Rating} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
+
+const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
+
+const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
+
+const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
+
+const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>
+<a onClick={ function() { this.refs.rating.resetValue(); }.bind(this); }
+   style={ {
+     marginLeft: 20,
+     position: 'relative',
+     top: -5,
+     textDecoration: 'underline',
+     cursor: 'pointer'
+    } }>Reset</a>`;
 
 export default React.createClass({
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Rating</h2>
 
-      <Rating defaultValue={3}></Rating>
+      <Rating defaultValue={3}/>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
@@ -312,12 +328,12 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <Rating defaultValue={4} disabled></Rating>
+      <Rating defaultValue={4} disabled/>
       <Code value= { advanceCodeExample1 } style={ {marginTop: 20, marginBottom: 40} } />
-      <Rating defaultValue={4} character={'✪'}></Rating>
+      <Rating defaultValue={4} character={'✪'}/>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 20, marginBottom: 40} } />
-      <Rating ref="rating" defaultValue={4}></Rating>
-      <a onClick={ function() { this.refs.rating.resetValue(); }.bind(this) }
+      <Rating ref="rating" defaultValue={4}/>
+      <a onClick={ (() => { this.refs.rating.resetValue(); }).bind(this) }
          style={ {
            marginLeft: 20,
            position: 'relative',
@@ -326,22 +342,6 @@ export default React.createClass({
            cursor: 'pointer'
           } }>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 20} } />
-    </div>;
+    </div>);
   }
 });
-
-const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
-
-const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
-
-const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
-
-const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>
-<a onClick={ function() { this.refs.rating.resetValue(); }.bind(this); }
-   style={ {
-     marginLeft: 20,
-     position: 'relative',
-     top: -5,
-     textDecoration: 'underline',
-     cursor: 'pointer'
-    } }>Reset</a>`;
