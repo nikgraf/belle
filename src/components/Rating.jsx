@@ -427,7 +427,13 @@ export default class Rating extends Component {
    */
   _onArrowUpKeyDown() {
     let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
-    newValue = !newValue ? 1 : (newValue < 5) ? (newValue + 1) : 5;
+    if (!newValue) {
+      newValue = 1;
+    } else if (newValue < 5) {
+      newValue = newValue + 1;
+    } else {
+      newValue = 5;
+    }
     this.setState({
       focusedValue: newValue
     });
@@ -488,7 +494,7 @@ export default class Rating extends Component {
    */
   render() {
     const currentValue = this._getCurrentValue();
-    const tabIndex = this.props.tabIndex ? this.props.tabIndex : (this.props.disabled ? -1 : 0);
+    const tabIndex = !this.props.disabled ? this.props.tabIndex : -1;
 
     let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
 
