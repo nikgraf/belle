@@ -25,15 +25,6 @@ const comboBoxStyle = {
     boxSizing: 'border-box',
     position: 'relative',
 
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
@@ -52,15 +43,6 @@ const comboBoxStyle = {
     paddingBottom: '5px',
     outline: 'none',
 
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
@@ -77,15 +59,6 @@ const comboBoxStyle = {
     boxSizing: 'border-box',
     paddingTop: '7px',
     paddingBottom: '5px',
-
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
 
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
@@ -126,14 +99,7 @@ const comboBoxStyle = {
     boxSizing: 'border-box',
     paddingTop: '7px',
     paddingBottom: '5px',
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
+
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
@@ -150,14 +116,7 @@ const comboBoxStyle = {
     boxSizing: 'border-box',
     paddingTop: '7px',
     paddingBottom: '5px',
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
+
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
@@ -218,15 +177,6 @@ const comboBoxStyle = {
     borderBottom: '1px solid #ccc',
     display: 'block',
     boxSizing: 'border-box',
-
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
 
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
