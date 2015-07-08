@@ -4,12 +4,13 @@ import ViewportMixin from './mixin/viewport';
 
 export default React.createClass({
 
-  mixins: [ViewportMixin],
-
   propTypes: {
     smallScreenStyle: React.PropTypes.object.isRequired,
-    mediumScreenStyle: React.PropTypes.object.isRequired
+    mediumScreenStyle: React.PropTypes.object.isRequired,
+    children: React.PropTypes.any
   },
+
+  mixins: [ViewportMixin],
 
   getInitialState() {
     this.childProperties = omit(this.props, [

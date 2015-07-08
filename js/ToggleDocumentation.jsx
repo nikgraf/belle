@@ -3,10 +3,40 @@ import {Choice, Toggle} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
+const basicCodeExample = `<!-- basic toggle examples -->
+<Toggle />
+
+<Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>`;
+
+const choiceCodeExample = `<!-- toggle with custom choices -->
+<Toggle defaultValue={ true }
+        firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
+  <Choice value={ true }>On</Choice>
+  <Choice value={ false }>Off</Choice>
+</Toggle>`;
+
+const htmlStructure = `<div style={ wrapperStyle }
+     tabIndex={ tabIndex } >
+  <div style={ sliderWrapperStyle }>
+    <div style={ sliderStyle }>
+      <div ref="firstChoice"
+           style={ firstChoiceStyle }>
+        <Choice />
+      </div>
+      <div ref="secondChoice"
+           style={ secondChoiceStyle }>
+        <Choice />
+      </div>
+    </div>
+  </div>
+  <div ref="handle"
+       style={ handleStyle } />
+</div>`;
+
 export default class ToggleDocumentation extends Component {
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Toggle</h2>
 
@@ -394,36 +424,6 @@ export default class ToggleDocumentation extends Component {
 
         <Code value={ choiceCodeExample } style={ {marginTop: 40} } />
 
-    </div>;
+    </div>);
   }
 }
-
-const basicCodeExample = `<!-- basic toggle examples -->
-<Toggle />
-
-<Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>`;
-
-const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultValue={ true }
-        firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
-  <Choice value={ true }>On</Choice>
-  <Choice value={ false }>Off</Choice>
-</Toggle>`;
-
-const htmlStructure = `<div style={ wrapperStyle }
-     tabIndex={ tabIndex } >
-  <div style={ sliderWrapperStyle }>
-    <div style={ sliderStyle }>
-      <div ref="firstChoice"
-           style={ firstChoiceStyle }>
-        <Choice />
-      </div>
-      <div ref="secondChoice"
-           style={ secondChoiceStyle }>
-        <Choice />
-      </div>
-    </div>
-  </div>
-  <div ref="handle"
-       style={ handleStyle } />
-</div>`;

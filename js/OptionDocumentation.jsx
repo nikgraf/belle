@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import {Option, Select} from 'belle';
-import {map} from 'underscore';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
+
+const basicCodeExample = `<!-- basic select example with multiple options -->
+<Select>
+  <Option value="berlin">Berlin</Option>
+  <Option value="tokyo">Tokyo</Option>
+  <Option value="vienna">Vienna</Option>
+</Select>`;
 
 export default class OptionDocumentation extends Component {
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Option</h2>
 
@@ -69,13 +75,6 @@ export default class OptionDocumentation extends Component {
         <span style={ {color: 'grey'} }> style, id, className, …</span>
       </p>
 
-    </div>;
+    </div>);
   }
 }
-
-const basicCodeExample = `<!-- basic select example with multiple options -->
-<Select>
-  <Option value="berlin">Berlin</Option>
-  <Option value="tokyo">Tokyo</Option>
-  <Option value="vienna">Vienna</Option>
-</Select>`;

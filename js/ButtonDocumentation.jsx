@@ -3,10 +3,56 @@ import {Button} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
+const basicCodeExample = `<!-- primary button -->
+<Button primary>Follow</Button>
+
+<!-- default button -->
+<Button>Follow</Button>`;
+
+const customStyleCodeExample = `<Button primary={ true }
+        style={{
+          marginRight: 10,
+          color: '#222',
+          border: '1px solid #222',
+          borderBottom: '1px solid #222',
+          borderRadius: 2,
+          background: '#fff'
+        }}
+        hoverStyle={{
+          border: '1px solid red',
+          borderBottom: '1px solid red',
+          color: '#red',
+          background: '#fff'
+        }}
+        focusStyle={{
+          border: '1px solid red',
+          borderBottom: '1px solid red',
+          color: '#red',
+          background: '#fff',
+          boxShadow: 'red 0px 0px 5px'
+        }}
+        activeStyle={{
+          border: '1px solid red',
+          borderTop: '1px solid red',
+          color: '#000',
+          background: '#fff'
+        }}>
+  Follow
+</Button>`;
+
+const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>Follow</Button>
+
+<Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+
+<Button style={ {marginRight: 10} }>Follow</Button>
+
+<Button disabled>Follow</Button>
+`;
+
 export default class ButtonDocumentation extends Component {
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Button</h2>
 
@@ -199,9 +245,6 @@ export default class ButtonDocumentation extends Component {
         </tr>
       </table>
 
-
-
-
       <p>
         Any other property valid for a HTML button like
         <span style={ {color: 'grey'} }> style, onClick, …</span>
@@ -260,52 +303,6 @@ export default class ButtonDocumentation extends Component {
       <Code value={ customStyleCodeExample } style={ {marginTop: 20} } />
 
 
-    </div>;
+    </div>);
   }
 }
-
-const basicCodeExample = `<!-- primary button -->
-<Button primary>Follow</Button>
-
-<!-- default button -->
-<Button>Follow</Button>`;
-
-const customStyleCodeExample = `<Button primary={ true }
-        style={{
-          marginRight: 10,
-          color: '#222',
-          border: '1px solid #222',
-          borderBottom: '1px solid #222',
-          borderRadius: 2,
-          background: '#fff'
-        }}
-        hoverStyle={{
-          border: '1px solid red',
-          borderBottom: '1px solid red',
-          color: '#red',
-          background: '#fff'
-        }}
-        focusStyle={{
-          border: '1px solid red',
-          borderBottom: '1px solid red',
-          color: '#red',
-          background: '#fff',
-          boxShadow: 'red 0px 0px 5px'
-        }}
-        activeStyle={{
-          border: '1px solid red',
-          borderTop: '1px solid red',
-          color: '#000',
-          background: '#fff'
-        }}>
-  Follow
-</Button>`;
-
-const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>Follow</Button>
-
-<Button primary disabled style={ {marginRight: 10} }>Follow</Button>
-
-<Button style={ {marginRight: 10} }>Follow</Button>
-
-<Button disabled>Follow</Button>
-`;

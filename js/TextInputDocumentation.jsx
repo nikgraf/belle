@@ -3,6 +3,35 @@ import {TextInput} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
+const exampleCode = `<!-- TextInput with a defaultValue -->
+<TextInput defaultValue="Jane Doe" placeholder="Name"/>
+
+<!-- TextInput with allowNewLine set to true -->
+<TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
+           allowNewLine={ true } />`;
+
+const advancedExampleCode = `<TextInput minHeight={ 120 }
+       valueLink={ this.linkState('customTextInputValue') }
+       placeholder="Just fill in whatever you like :)"
+       style={{
+         border: '1px solid #C8C8C8',
+         padding: 10,
+         width: 280,
+         borderRadius: 3,
+         boxShadow: 'inset 0 1px 2px #CCC'
+       }}
+       hoverStyle={{
+         border: '1px solid #6C6C6C'
+       }}
+       focusStyle={{
+         borderColor: '#53C7F2',
+         boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
+       }}/>
+
+<p>Two-way data binding: { this.state.customTextInputValue }</p>`;
+
+const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
+
 export default React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
@@ -14,7 +43,7 @@ export default React.createClass({
   },
 
   render() {
-    return <div>
+    return (<div>
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
 
@@ -250,35 +279,6 @@ export default React.createClass({
 
       <Code value={ disabledExampleCode } style={ {marginTop: 40} } />
 
-    </div>;
+    </div>);
   }
 });
-
-const exampleCode = `<!-- TextInput with a defaultValue -->
-<TextInput defaultValue="Jane Doe" placeholder="Name"/>
-
-<!-- TextInput with allowNewLine set to true -->
-<TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } />`;
-
-const advancedExampleCode = `<TextInput minHeight={ 120 }
-       valueLink={ this.linkState('customTextInputValue') }
-       placeholder="Just fill in whatever you like :)"
-       style={{
-         border: '1px solid #C8C8C8',
-         padding: 10,
-         width: 280,
-         borderRadius: 3,
-         boxShadow: 'inset 0 1px 2px #CCC'
-       }}
-       hoverStyle={{
-         border: '1px solid #6C6C6C'
-       }}
-       focusStyle={{
-         borderColor: '#53C7F2',
-         boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
-       }}/>
-
-<p>Two-way data binding: { this.state.customTextInputValue }</p>`;
-
-const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
