@@ -618,5 +618,6 @@ ComboBox.defaultProps = {
   displayCaret: false,
   enableHint: false,
   'aria-label': 'ComboBox',
-  filterFunc: filterFunc
+  filterFunc: filterFunc,
+  tabIndex: 0
 };
