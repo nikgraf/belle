@@ -7,13 +7,8 @@ export default React.createClass({
     return { comboValue: 'te' };
   },
 
-  _handleChange(newValue) {
-    this.setState({ comboValue: newValue });
-  },
-
-  render () {
-
-    var valueLink = {
+  render() {
+    const valueLink = {
       value: this.state.comboValue,
       requestChange: this._handleChange
     };
@@ -39,11 +34,7 @@ export default React.createClass({
           <h3>Value Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <ComboBox value={ this.state.comboValue }
-                      onUpdate={ (event) => {
-                          console.log(event.value);
-                          //this._handleChange(event.value);
-                        }
-                      }>
+                      onUpdate={ (event) => {console.log(event.value); } }>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
               <Option value="test">Test</Option>
@@ -55,12 +46,7 @@ export default React.createClass({
 
           <h3>Value Link Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <ComboBox valueLink={ valueLink }
-                      onUpdate={ (event) => {
-                          console.log(event.value);
-                          //this._handleChange(event.value);
-                        }
-                      }>
+            <ComboBox valueLink={ valueLink } onUpdate={ (event) => { console.log(event.value); } }>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
               <Option value="test">Test</Option>
@@ -91,5 +77,9 @@ export default React.createClass({
 
       </div>
     );
+  },
+
+  _handleChange(newValue) {
+    this.setState({ comboValue: newValue });
   }
 });

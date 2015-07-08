@@ -9,19 +9,7 @@ export default React.createClass({
     return { ratingValue: 2 };
   },
 
-  _handleChange(newValue) {
-    this.setState({ ratingValue: newValue });
-  },
-
-  _updateRatingToThree() {
-    this.setState({ ratingValue: 3 });
-  },
-
-  _resetValue() {
-    this.refs.rating3.resetValue();
-  },
-
-  render () {
+  render() {
     return (
       <div>
         <h2>Rating</h2>
@@ -30,28 +18,18 @@ export default React.createClass({
 
           <Button onClick={ this._updateRatingToThree }>Update Rating to value 3</Button>
 
+          //onUpdate should not be called for valueLink
           <h3>ValueLink</h3>
           <Rating valueLink={ this.linkState('ratingValue') }
-                  onUpdate={ (event) => {
-                      //onUpdate should not be called for valueLink
-                      console.log(event.value);
-                    }
-                  } />
+                  onUpdate={ (event) => { console.log(event.value); } } />
 
           <h3>Value with update function onUpdate</h3>
           <Rating value={ this.state.ratingValue }
-                  onUpdate={ (event) => {
-                      console.log(event.value);
-                      this._handleChange(event.value);
-                    }
-                  } />
+                  onUpdate={ (event) => { console.log(event.value); this._handleChange(event.value); } } />
 
           <h3>Value</h3>
           <Rating value={ this.state.ratingValue }
-                  onUpdate={ (event) => {
-                      console.log(event.value);
-                    }
-                  } />
+                  onUpdate={ (event) => { console.log(event.value); } } />
 
           <h3>DefaultValue</h3>
           <Rating defaultValue={ this.state.ratingValue }
@@ -74,5 +52,17 @@ export default React.createClass({
 
       </div>
     );
+  },
+
+  _handleChange(newValue) {
+    this.setState({ ratingValue: newValue });
+  },
+
+  _updateRatingToThree() {
+    this.setState({ ratingValue: 3 });
+  },
+
+  _resetValue() {
+    this.refs.rating3.resetValue();
   }
 });

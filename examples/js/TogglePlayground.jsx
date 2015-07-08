@@ -5,13 +5,13 @@ export default React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
-  getInitialState () {
+  getInitialState() {
     return {
       active: true
     };
   },
 
-  render () {
+  render() {
     return (
       <Card>
         <h2>Toggle</h2>

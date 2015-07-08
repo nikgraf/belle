@@ -3,24 +3,24 @@ import {Button, TextInput, Select, Separator, Option, Placeholder} from 'belle';
 import {map} from 'underscore';
 
 const fruits = [
-  { value: "pineapple", content: (<span>🍍</span>) },
-  { value: "banana", content: (<span>🍌</span>) },
-  { value: "peach", content: (<span>🍑</span>) },
-  { value: "pear", content: (<span>🍐</span>) },
-  { value: "cherries", content: (<span>🍒</span>) }
+  { value: 'pineapple', content: (<span>🍍</span>) },
+  { value: 'banana', content: (<span>🍌</span>) },
+  { value: 'peach', content: (<span>🍑</span>) },
+  { value: 'pear', content: (<span>🍐</span>) },
+  { value: 'cherries', content: (<span>🍒</span>) }
 ];
 
 export default React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
-  getInitialState () {
+  getInitialState() {
     return {
       valueA: 'rome'
     };
   },
 
-  render () {
+  render() {
     return (
       <div>
         <h2>Select</h2>
@@ -95,8 +95,8 @@ export default React.createClass({
           Select after TextInput
         </h3>
         <div style={ { content: '', display: 'table', clear: 'both' } }>
-          <TextInput style={ {width: 150, float: 'left' } } defaultValue="Lorem ipsum …" />
-          <div style={ { width: 150, float: 'left', marginLeft: 16 } }>
+          <TextInput style={ {width: 150, 'float': 'left' } } defaultValue="Lorem ipsum …" />
+          <div style={ { width: 150, 'float': 'left', marginLeft: 16 } }>
             <Select>
               <Option value="vienna">Vienna</Option>
               <Option value="rome">Rome</Option>

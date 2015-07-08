@@ -40,24 +40,24 @@ window.React = React;
 class App extends Component {
 
   render() {
-    return <div style={ {margin: '0 auto', width: 300} }>
-      <h1>Belle Playground</h1>
+    return (<div style={ {margin: '0 auto', width: 300} }>
+        <h1>Belle Playground</h1>
 
-      <TogglePlayground />
+        <TogglePlayground />
 
-      <SelectPlayground />
+        <SelectPlayground />
 
-      <ButtonPlayground />
+        <ButtonPlayground />
 
-      <TextInputPlayground />
+        <TextInputPlayground />
 
-      <CardPlayground />
+        <CardPlayground />
 
-      <RatingPlayground />
+        <RatingPlayground />
 
-      <ComboBoxPlayground />
+        <ComboBoxPlayground />
 
-    </div>;
+      </div>);
   }
 }
 

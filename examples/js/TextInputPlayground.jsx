@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, Card} from 'belle';
 
-function conditionalTextInput (showTextInput) {
+function conditionalTextInput(showTextInput) {
   if (showTextInput) {
     return <TextInput style={ {width: 250} } defaultValue="This TextInput can be removed." />;
   }
@@ -9,25 +9,15 @@ function conditionalTextInput (showTextInput) {
 
 export default React.createClass({
 
-  getInitialState () {
+  getInitialState() {
     return {
       showTextInput: true,
-      inputValue: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      inputValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     };
   },
 
-  _handleChange(newValue) {
-    this.setState({ inputValue: newValue });
-  },
-
-  _removeTextInput() {
-    this.setState({
-      showTextInput: false
-    });
-  },
-
-  render () {
-    var valueLink = {
+  render() {
+    const valueLink = {
       value: this.state.inputValue,
       requestChange: this._handleChange
     };
@@ -38,7 +28,7 @@ export default React.createClass({
 
         {/* Common use case */}
         <TextInput allowNewLine={true} style={ {width: 250} } valueLink= { valueLink }
-          onUpdate={ (event) => {console.log(event.value)} }/>
+          onUpdate={ (event) => { console.log(event.value); } }/>
         <br />
 
         {/* Common use case disabled */}
@@ -83,5 +73,16 @@ export default React.createClass({
         <br />
       </Card>
     );
+  },
+
+  _handleChange(newValue) {
+    this.setState({ inputValue: newValue });
+  },
+
+  _removeTextInput() {
+    this.setState({
+      showTextInput: false
+    });
   }
+
 });

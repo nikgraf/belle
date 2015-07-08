@@ -3,7 +3,7 @@ import {Button, Card} from 'belle';
 
 export default React.createClass({
 
-  render () {
+  render() {
     return (
       <Card>
         <h2>Button</h2>

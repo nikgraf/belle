@@ -3,7 +3,7 @@ import {Card} from 'belle';
 
 export default React.createClass({
 
-  render () {
+  render() {
     return (
       <div>
         <h2>Card</h2>
