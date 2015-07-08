@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {omit, extend} from 'underscore';
+import {has, omit, extend} from 'underscore';
 import style from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -43,7 +43,7 @@ function sanitizeChildProps(properties) {
  * @param styleId {string} - a unique id that exists as class attribute in the DOM
  * @param properties {object} - the components properties optionally containing custom styles
  */
-function updatePseudoClassStyle(styleId, properties) {
+function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAndClick) {
   const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.hoverStyle;
   const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.activeStyle;
   const baseDisabledHoverStyle = properties.primary ? style.primaryDisabledHoverStyle : style.disabledHoverStyle;
@@ -52,7 +52,7 @@ function updatePseudoClassStyle(styleId, properties) {
   const disabledHoverStyle = extend({}, baseDisabledHoverStyle, properties.disabledHoverStyle);
 
   let focusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
+  if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
     const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
@@ -97,11 +97,15 @@ export default class Button extends Component {
 
   constructor(properties) {
     super(properties);
+
+    const preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+
     this.state = {
       childProps: sanitizeChildProps(properties),
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false
+      active: false,
+      preventFocusStyleForTouchAndClick: preventFocusStyleForTouchAndClick
     };
     // The focused attribute is used to apply the one-time focus animation.
     // As it is reset after every render it can't be set inside state as this
@@ -117,15 +121,20 @@ export default class Button extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.styleId = `style-id${id}`;
-    updatePseudoClassStyle(this.styleId, this.props);
+    updatePseudoClassStyle(this.styleId, this.props, this.state.preventFocusStyleForTouchAndClick);
   }
 
   /**
    * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProps: sanitizeChildProps(properties) });
-    updatePseudoClassStyle(this.styleId, properties);
+    const preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+
+    this.setState({
+      childProps: sanitizeChildProps(properties),
+      preventFocusStyleForTouchAndClick: preventFocusStyleForTouchAndClick
+    });
+    updatePseudoClassStyle(this.styleId, properties, preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -302,6 +311,5 @@ Button.propTypes = {
 Button.defaultProps = {
   primary: false,
   disabled: false,
-  type: 'button',
-  preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
+  type: 'button'
 };

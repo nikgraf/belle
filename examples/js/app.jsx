@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {style} from 'belle';
+import {config} from 'belle';
 import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
@@ -9,30 +10,43 @@ import RatingPlayground from './RatingPlayground';
 import ComboBoxPlayground from './ComboBoxPlayground';
 import TogglePlayground from './TogglePlayground';
 
-style.button.style = {
-  boxSizing: 'border-box',
-  borderRadius: 2,
-  cursor: 'pointer',
-  padding: '8px 12px 6px 12px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  background: 'red',
-  border: '1px solid #EFEFEF',
-  borderBottomColor: '#D0D0D0',
-  color: 'brown',
-  verticalAlign: 'bottom',
-  fontSize: 16,
-  lineHeight: '26px'
-};
+// TODO create a button to switch between those stylings for testing purposes
+if (true) {
+  config.button.preventFocusStyleForTouchAndClick = false;
+  style.button.focusStyle = {
+    boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
+    outline: 0
+  };
+  style.button.primaryFocusStyle = {
+    boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
+    outline: 0
+  };
+} else {
+  style.button.style = {
+    boxSizing: 'border-box',
+    borderRadius: 2,
+    cursor: 'pointer',
+    padding: '8px 12px 6px 12px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    background: 'red',
+    border: '1px solid #EFEFEF',
+    borderBottomColor: '#D0D0D0',
+    color: 'brown',
+    verticalAlign: 'bottom',
+    fontSize: 16,
+    lineHeight: '26px'
+  };
 
-style.card.style = extend(style.card.style, {
-  border: '1px solid black'
-});
+  style.card.style = extend(style.card.style, {
+    border: '1px solid black'
+  });
 
-style.textInput.style = extend(style.textInput.style, {
-  color: 'blue'
-});
+  style.textInput.style = extend(style.textInput.style, {
+    color: 'blue'
+  });
+}
 
 // export for http://fb.me/react-devtools
 window.React = React;
