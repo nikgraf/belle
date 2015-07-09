@@ -278,7 +278,8 @@ export default class SelectDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the user hovers over the select with the cursor.
             </p>
           </td>
@@ -297,7 +298,8 @@ export default class SelectDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the select is the element focused in the DOM.
             </p>
           </td>
@@ -527,7 +529,8 @@ export default class SelectDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base disabledStyle.
               Becomes active once the Select is disabled and a user hovers over it.
             </p>
           </td>
@@ -546,7 +549,8 @@ export default class SelectDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base disabledCaretToOpenStyle.
               Is applied to the Caret once the Select is disabled.
             </p>
           </td>

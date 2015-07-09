@@ -504,7 +504,7 @@ export default class ComboBox extends Component {
     // Currently there are no different hover styles for caret, like select they are probably not really needed.
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        hintStyle = extend({}, hintStyle, style.disabledCaretToOpenStyle);
+        hintStyle = extend({}, hintStyle, style.caretToOpenStyle, style.disabledCaretToOpenStyle);
       } else if (this.state.isOpen) {
         hintStyle = extend({}, hintStyle, style.caretToCloseStyle);
       } else {

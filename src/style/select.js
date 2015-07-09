@@ -34,56 +34,12 @@ const selectStyle = {
 
   focusStyle: {
     borderBottom: '1px solid #6EB8D4',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-    padding: '7px 0 4px 0',
-    position: 'relative',
-
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    cursor: 'pointer'
   },
 
   hoverStyle: {
     borderBottom: '1px solid #92D6EF',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-    padding: '7px 0 4px 0',
-    position: 'relative',
-
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    cursor: 'pointer'
   },
 
   wrapperStyle: {
@@ -135,63 +91,16 @@ const selectStyle = {
   },
 
   disabledStyle: {
-    borderBottom: '1px dotted #9F9F9F',
-    boxSizing: 'border-box',
-    cursor: 'pointer',
-    padding: '7px 0 4px 0',
-    position: 'relative',
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    borderBottom: '1px dotted #9F9F9F'
   },
 
   disabledHoverStyle: {
     borderBottom: '1px dotted #92D6EF',
-    cursor: 'not-allowed',
-    boxSizing: 'border-box',
-    padding: '7px 0 4px 0',
-    position: 'relative',
-    /*
-    To avoid any kind of flickering the user won't get feedback
-    for selecting the button text
-    */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    cursor: 'not-allowed'
   },
 
   disabledCaretToOpenStyle: {
-    height: 0,
-    width: 0,
-    content: ' ',
-    position: 'absolute',
-    top: 15,
-    right: 8,
-    borderTop: '6px solid #9F9F9F',
-    borderLeft: '5px solid transparent',
-    borderRight: '5px solid transparent'
+    borderTop: '6px solid #9F9F9F'
   }
 
 };

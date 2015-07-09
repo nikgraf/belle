@@ -651,14 +651,14 @@ export default class Select extends Component {
 
   render() {
     const defaultStyle = extend({}, style.style, this.props.style);
-    const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
-    const focusStyle = extend({}, style.focusStyle, this.props.focusStyle);
-    const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-    const disabledHoverStyle = extend({}, style.disabledHoverStyle, this.props.disabledHoverStyle);
+    const hoverStyle = extend({}, defaultStyle, style.hoverStyle, this.props.hoverStyle);
+    const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
+    const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
+    const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
-    const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
-    const disabledCaretToOpenStyle = extend({}, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
+    const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
+    const disabledCaretToOpenStyle = extend({}, caretToOpenStyle, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
 
     let selectedOptionOrPlaceholder;
