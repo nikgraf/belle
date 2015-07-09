@@ -270,6 +270,48 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            hoverStyle
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property is used to apply a style directly to the wrapper
+              applied when the component is hovered.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            disabledHoverStyle
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              The property is used to apply a style directly to the wrapper
+              applied when the component is disabled and is hovered.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             wrapperProps
           </td>
         </tr>

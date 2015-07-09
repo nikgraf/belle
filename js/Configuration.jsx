@@ -91,6 +91,8 @@ const styleStructure = `style = {
     style: { … },
     disabledStyle: { … },
     focusStyle: { … },
+    hoverStyle: { … },
+    disabledHoverStyle: { … },
     characterStyle: { … },
     hoverCharacterStyle: { … },
     activeCharacterStyle: { … }
