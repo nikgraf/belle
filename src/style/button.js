@@ -40,7 +40,6 @@ const buttonStyle = {
   hoverStyle: {
     background: '#F5F5F5',
     borderTop: '1px solid #F5F5F5',
-    borderBottom: '1px solid #BDBDBD',
     color: '#757575'
   },
 
@@ -57,19 +56,12 @@ const buttonStyle = {
   },
 
   disabledStyle: {
-    background: '#EEEEEE',
     color: '#C5C4C4',
-    borderBottom: '1px solid #BDBDBD',
-    borderTop: '1px solid #EEEEEE',
     cursor: 'not-allowed'
   },
 
   disabledHoverStyle: {
-    background: '#F5F5F5',
-    color: '#D0D0D0',
-    borderBottom: '1px solid #BDBDBD',
-    borderTop: '1px solid #F5F5F5',
-    cursor: 'not-allowed'
+    color: '#D0D0D0'
   },
 
   primaryStyle: {
@@ -114,7 +106,6 @@ const buttonStyle = {
   primaryHoverStyle: {
     background: '#82D9F9',
     borderTop: '1px solid #82D9F9',
-    borderBottom: '1px solid #3995B7',
     color: '#FFF'
   },
 
@@ -141,9 +132,7 @@ const buttonStyle = {
   primaryDisabledHoverStyle: {
     background: '#A7E4FB',
     color: '#FFF',
-    borderTop: '1px solid #A7E4FB',
-    borderBottom: '1px solid #74B4CC',
-    cursor: 'not-allowed'
+    borderTop: '1px solid #A7E4FB'
   }
 };
 

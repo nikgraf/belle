@@ -11,7 +11,7 @@ const ratingStyle = {
 
     /*
      To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
+     for selecting the rating stars
      */
     WebkitUserSelect: 'none',
     MozUserSelect: 'none',
@@ -19,8 +19,8 @@ const ratingStyle = {
     userSelect: 'none',
 
     /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
+    MsTouchAction: 'none',
+    touchAction: 'none',
 
     /*
      Prevent flickering while tapping on WebKit
@@ -40,18 +40,17 @@ const ratingStyle = {
     borderRadius: 2
   },
 
+  hoverStyle: {
+    color: '#FFDA46'
+  },
+
+  disabledHoverStyle: {
+    opacity: 0.6
+  },
+
   characterStyle: {
     color: '#FFCC00',
-    textShadow: '0px 1px 0px #DCB000',
-
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none'
+    textShadow: '0px 1px 0px #DCB000'
   },
 
   hoverCharacterStyle: {
@@ -62,16 +61,7 @@ const ratingStyle = {
     textShadow: '0px -1px 0px #D6AB00',
     color: '#F3C200',
     position: 'relative',
-    top: 1,
-
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none'
+    top: 1
   }
 
 };

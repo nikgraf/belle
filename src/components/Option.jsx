@@ -41,27 +41,23 @@ export default class Option extends Component {
   }
 
   render() {
-    const defaultStyle = extend({}, style.style, this.props.style);
-    const hoverStyle = extend({}, style.hoverStyle, this.props.hoverStyle);
-    const selectStyle = extend({}, style.selectStyle, this.props.selectStyle);
-    const disabledSelectStyle = extend({}, style.disabledSelectStyle, this.props.disabledSelectStyle);
+    let optionStyle;
 
-    let styleToDisplay;
     if (this.props._isDisplayedAsSelected) {
+      optionStyle = extend({}, style.selectStyle, this.props.selectStyle);
       if (this.props._isDisabled) {
-        styleToDisplay = disabledSelectStyle;
-      } else {
-        styleToDisplay = selectStyle;
+        optionStyle = extend(optionStyle, style.disabledSelectStyle, this.props.disabledSelectStyle);
       }
-    } else if (this.props._isHovered) {
-      styleToDisplay = hoverStyle;
     } else {
-      styleToDisplay = defaultStyle;
+      optionStyle = extend({}, style.style, this.props.style);
+      if (this.props._isHovered) {
+        optionStyle = extend(optionStyle, style.hoverStyle, this.props.hoverStyle);
+      }
     }
 
     return (
       <div data-belle-value={ this.props.value }
-           style={ styleToDisplay }
+           style={ optionStyle }
            {...this.state.childProps}>
         { this.props.children }
       </div>

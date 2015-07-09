@@ -511,10 +511,16 @@ export default class Rating extends Component {
     let wrapperStyle = extend({}, style.style, this.props.style);
     if (this.props.disabled) {
       wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
-    }
-
-    if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
-      wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+      if (this.state.isHover) {
+        wrapperStyle = extend(wrapperStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
+      }
+    } else {
+      if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
+        wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+      }
+      if (this.state.isHover) {
+        wrapperStyle = extend(wrapperStyle, style.hoverStyle, this.props.hoverStyle);
+      }
     }
 
     return (
@@ -579,6 +585,8 @@ Rating.propTypes = {
   className: React.PropTypes.string,
   focusStyle: React.PropTypes.object,
   disabledStyle: React.PropTypes.object,
+  hoverStyle: React.PropTypes.object,
+  disabledHoverStyle: React.PropTypes.object,
   characterStyle: React.PropTypes.object,
   activeCharacterStyle: React.PropTypes.object,
   hoverCharacterStyle: React.PropTypes.object,
