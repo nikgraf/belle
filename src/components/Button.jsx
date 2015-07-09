@@ -98,14 +98,13 @@ export default class Button extends Component {
   constructor(properties) {
     super(properties);
 
-    const preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     this.state = {
       childProps: sanitizeChildProps(properties),
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false,
-      preventFocusStyleForTouchAndClick: preventFocusStyleForTouchAndClick
+      active: false
     };
     // The focused attribute is used to apply the one-time focus animation.
     // As it is reset after every render it can't be set inside state as this
@@ -121,20 +120,19 @@ export default class Button extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.styleId = `style-id${id}`;
-    updatePseudoClassStyle(this.styleId, this.props, this.state.preventFocusStyleForTouchAndClick);
+    updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
    * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    const preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     this.setState({
-      childProps: sanitizeChildProps(properties),
-      preventFocusStyleForTouchAndClick: preventFocusStyleForTouchAndClick
+      childProps: sanitizeChildProps(properties)
     });
-    updatePseudoClassStyle(this.styleId, properties, preventFocusStyleForTouchAndClick);
+    updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
