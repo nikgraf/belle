@@ -239,24 +239,21 @@ export default class Button extends Component {
   render() {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
     const baseButtonStyle = extend({}, baseStyle, this.props.style);
-    const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
-    const focusStyle = extend({}, baseFocusStyle, this.props.focusStyle);
 
     let buttonStyle;
     if (this.props.disabled) {
       if (this.props.primary) {
-        const primaryDisabledStyle = extend({}, style.primaryDisabledStyle, this.props.disabledStyle);
-        buttonStyle = extend({}, baseButtonStyle, primaryDisabledStyle);
+        buttonStyle = extend({}, baseButtonStyle, style.primaryDisabledStyle, this.props.disabledStyle);
       } else {
-        const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-        buttonStyle = extend({}, baseButtonStyle, disabledStyle);
+        buttonStyle = extend({}, baseButtonStyle, style.disabledStyle, this.props.disabledStyle);
       }
     } else {
       if (this.state.active) {
         const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
         buttonStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
       } else if (this.focused && !this.state.active && this.props.preventFocusStyleForTouchAndClick) {
-        buttonStyle = extend({}, baseButtonStyle, focusStyle);
+        const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
+        buttonStyle = extend({}, baseButtonStyle, baseFocusStyle, this.props.focusStyle);
       } else {
         buttonStyle = baseButtonStyle;
       }

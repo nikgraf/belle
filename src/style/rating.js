@@ -42,7 +42,7 @@ const ratingStyle = {
 
   characterStyle: {
     color: '#FFCC00',
-    textShadow: '0px 1px 0px #DCB000',
+    textShadow: '0px 1px 0px #DCB000'
   },
 
   hoverCharacterStyle: {
