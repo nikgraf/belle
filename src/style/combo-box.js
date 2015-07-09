@@ -104,6 +104,7 @@ const comboBoxStyle = {
     left: 0,
     outline: 'none',
     color: '#ccc',
+    border: 'none',
 
     /* normalize.css v3.0.1 */
     font: 'inherit',
