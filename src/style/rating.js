@@ -40,6 +40,14 @@ const ratingStyle = {
     borderRadius: 2
   },
 
+  hoverStyle: {
+    color: '#FFDA46'
+  },
+
+  disabledHoverStyle: {
+    opacity: 0.6
+  },
+
   characterStyle: {
     color: '#FFCC00',
     textShadow: '0px 1px 0px #DCB000'
