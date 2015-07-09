@@ -98,7 +98,7 @@ export default class Button extends Component {
   constructor(properties) {
     super(properties);
 
-    this.preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     this.state = {
       childProps: sanitizeChildProps(properties),
@@ -127,7 +127,7 @@ export default class Button extends Component {
    * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.preventFocusStyleForTouchAndClick = has('preventFocusStyleForTouchAndClick', properties) ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     this.setState({
       childProps: sanitizeChildProps(properties)
