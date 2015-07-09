@@ -38,37 +38,11 @@ const comboBoxStyle = {
 
   focusStyle: {
     borderBottom: '1px solid #6EB8D4',
-    boxSizing: 'border-box',
-    paddingTop: '7px',
-    paddingBottom: '5px',
-    outline: 'none',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    outline: 'none'
   },
 
   hoverStyle: {
-    borderBottom: '1px solid #92D6EF',
-    boxSizing: 'border-box',
-    paddingTop: '7px',
-    paddingBottom: '5px',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    borderBottom: '1px solid #92D6EF'
   },
 
   wrapperStyle: {
@@ -95,44 +69,16 @@ const comboBoxStyle = {
   },
 
   disabledStyle: {
-    borderBottom: '1px dotted #9F9F9F',
-    boxSizing: 'border-box',
-    paddingTop: '7px',
-    paddingBottom: '5px',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    borderBottom: '1px dotted #9F9F9F'
   },
 
   disabledHoverStyle: {
     borderBottom: '1px dotted #92D6EF',
-    cursor: 'not-allowed',
-    boxSizing: 'border-box',
-    paddingTop: '7px',
-    paddingBottom: '5px',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-    /*
-    Prevent flickering while tapping on WebKit
-    http://stackoverflow.com/a/3516243/837709
-    */
-    WebkitTapHighlightColor: 'transparent'
+    cursor: 'not-allowed'
   },
 
   disabledCaretToOpenStyle: {
-    paddingRight: '26px',
-    backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,0 20,0 10,12\" style=\"fill:#ccc\"></polygon></svg>')",
-    backgroundSize: '10px 6px',
-    backgroundPosition: 'right 10px bottom 10px',
-    backgroundRepeat: 'no-repeat'
+    backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,0 20,0 10,12\" style=\"fill:#ccc\"></polygon></svg>')"
   },
 
   caretToCloseStyle: {
