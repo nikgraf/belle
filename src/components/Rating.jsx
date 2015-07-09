@@ -511,9 +511,7 @@ export default class Rating extends Component {
     let wrapperStyle = extend({}, style.style, this.props.style);
     if (this.props.disabled) {
       wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
-    }
-
-    if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
+    } else if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
       wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
     }
 
