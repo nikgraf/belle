@@ -29,7 +29,8 @@ const optionStyle = {
   },
 
   selectStyle: {
-    color: '#666'
+    color: '#666',
+    padding: 0
   },
 
   disabledSelectStyle: {

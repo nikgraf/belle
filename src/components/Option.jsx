@@ -55,7 +55,7 @@ export default class Option extends Component {
 
     return (
       <div data-belle-value={ this.props.value }
-           style={ styleToDisplay }
+           style={ optionStyle }
            {...this.state.childProps}>
         { this.props.children }
       </div>
