@@ -41,16 +41,18 @@ export default class Option extends Component {
   }
 
   render() {
-    let optionStyle = extend({}, style.style, this.props.style);
+    let optionStyle;
 
     if (this.props._isDisplayedAsSelected) {
+      optionStyle = extend({}, style.selectStyle, this.props.selectStyle);
       if (this.props._isDisabled) {
         optionStyle = extend(optionStyle, style.disabledSelectStyle, this.props.disabledSelectStyle);
-      } else {
-        optionStyle = extend(optionStyle, style.selectStyle, this.props.selectStyle);
       }
-    } else if (this.props._isHovered) {
-      optionStyle = extend(optionStyle, style.hoverStyle, this.props.hoverStyle);
+    } else {
+      optionStyle = extend({}, style.style, this.props.style);
+      if (this.props._isHovered) {
+        optionStyle = extend(optionStyle, style.hoverStyle, this.props.hoverStyle);
+      }
     }
 
     return (
