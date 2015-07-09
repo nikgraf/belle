@@ -155,7 +155,8 @@ export default class ButtonDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the button is the element focused in the DOM.
             </p>
           </td>
@@ -174,7 +175,8 @@ export default class ButtonDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the button is pressed by a user, but yet not release.
             </p>
           </td>
@@ -193,7 +195,8 @@ export default class ButtonDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the button is disabled.
             </p>
           </td>
@@ -212,7 +215,8 @@ export default class ButtonDocumentation extends Component {
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base disabledStyle.
               Becomes active once the button is disabled and a user hovers over it.
             </p>
           </td>

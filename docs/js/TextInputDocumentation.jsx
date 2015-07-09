@@ -181,7 +181,8 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the user hovers over the input with the cursor.
             </p>
           </td>
@@ -200,7 +201,8 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the input is the element focused in the DOM.
             </p>
           </td>
@@ -219,7 +221,8 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
               Becomes active once the textarea is disabled.
             </p>
           </td>
@@ -238,7 +241,8 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Works like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base disabledStyle.
               Becomes active once the textarea is disabled and a user hovers over it.
             </p>
           </td>

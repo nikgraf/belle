@@ -198,7 +198,9 @@ export default React.createClass({
             <p>
               The property can be used to specify styling of set rating values
               when a user hover them. These styles will be applied to the spans
-              wrapping the characters. Behaves like React's built-in style property.
+              wrapping the characters.
+              Works like React's built-in style property except that it extends
+              the properties from the base characterStyle.
             </p>
           </td>
         </tr>
@@ -218,8 +220,9 @@ export default React.createClass({
             <p>
               The property can be used to specify styling of set rating values
               when a user touches or presses the rating. These styles will be
-              applied to the spans wrapping the characters. Behaves like React's
-              built-in style property.
+              applied to the spans wrapping the characters.
+              Works like React's built-in style property except that it extends
+              the properties from the base characterStyle.
             </p>
           </td>
         </tr>
@@ -238,7 +241,8 @@ export default React.createClass({
             </p>
             <p>
               The property is used to apply a focus style directly to the wrapper.
-              Behaves like React's built-in style property.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
             </p>
           </td>
         </tr>
@@ -257,8 +261,9 @@ export default React.createClass({
             </p>
             <p>
               The property is used to apply a style directly to the wrapper
-              applied when the component is disabled. It behaves like React's
-              built-in style property.
+              applied when the component is disabled.
+              Works like React's built-in style property except that it extends
+              the properties from the base style.
             </p>
           </td>
         </tr>
