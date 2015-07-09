@@ -45,6 +45,15 @@ const comboBoxStyle = {
     borderBottom: '1px solid #92D6EF'
   },
 
+  disabledStyle: {
+    borderBottom: '1px dotted #9F9F9F'
+  },
+
+  disabledHoverStyle: {
+    borderBottom: '1px dotted #92D6EF',
+    cursor: 'not-allowed'
+  },
+
   wrapperStyle: {
     outline: 0, // to avoid default focus behaviour
     boxSizing: 'border-box',
@@ -66,15 +75,6 @@ const comboBoxStyle = {
     borderTop: '1px solid #f2f2f2',
     /* Improve scrolling for mobile Safari */
     WebkitOverflowScrolling: 'touch'
-  },
-
-  disabledStyle: {
-    borderBottom: '1px dotted #9F9F9F'
-  },
-
-  disabledHoverStyle: {
-    borderBottom: '1px dotted #92D6EF',
-    cursor: 'not-allowed'
   },
 
   disabledCaretToOpenStyle: {
@@ -119,8 +119,6 @@ const comboBoxStyle = {
     fontSize: 14,
     paddingTop: '7px',
     paddingBottom: '5px',
-    border: '0 solid #fff',
-    borderBottom: '1px solid #ccc',
     display: 'block',
     boxSizing: 'border-box',
 

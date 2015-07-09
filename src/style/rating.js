@@ -19,8 +19,8 @@ const ratingStyle = {
     userSelect: 'none',
 
     /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
+    MsTouchAction: 'none',
+    touchAction: 'none',
 
     /*
      Prevent flickering while tapping on WebKit

@@ -490,25 +490,28 @@ export default class ComboBox extends Component {
   }
 
   render() {
-    const hint = this.props.enableHint ? this._getHint() : undefined;
-    const placeHolder = !hint ? this.props.placeholder : undefined;
-    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    const inputStyle = extend({}, style.style, this.props.style);
+    let inputStyle = extend({}, style.style, this.props.style);
     let hintStyle = extend({}, style.hintStyle, this.props.hintStyle);
+    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
 
+    const hint = this.props.enableHint ? this._getHint() : undefined;
+    const placeHolder = !hint ? this.props.placeholder : undefined;
     const inputClassName = unionClassNames(this.props.className, this._styleId);
-
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
+
+    if (this.props.disabled) {
+      inputStyle = extend(inputStyle, style.disabledStyle, this.props.disabledStyle);
+    }
 
     // Currently there are no different hover styles for caret, like select they are probably not really needed.
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        hintStyle = extend({}, hintStyle, style.caretToOpenStyle, style.disabledCaretToOpenStyle);
+        hintStyle = extend(hintStyle, style.disabledCaretToOpenStyle);
       } else if (this.state.isOpen) {
-        hintStyle = extend({}, hintStyle, style.caretToCloseStyle);
+        hintStyle = extend(hintStyle, style.caretToCloseStyle);
       } else {
-        hintStyle = extend({}, hintStyle, style.caretToOpenStyle);
+        hintStyle = extend(hintStyle, style.caretToOpenStyle);
       }
     }
 
@@ -604,6 +607,7 @@ ComboBox.propTypes = {
   hintStyle: React.PropTypes.object,
   menuStyle: React.PropTypes.object,
   focusStyle: React.PropTypes.object,
+  disabledStyle: React.PropTypes.object,
   disabledHoverStyle: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
   maxOptions: React.PropTypes.number,
