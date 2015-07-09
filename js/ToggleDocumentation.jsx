@@ -133,7 +133,8 @@ export default class ToggleDocumentation extends Component {
                 optional
               </p>
               <p>
-                Works like React's built-in style property.
+                Works like React's built-in style property except that it extends
+                the properties from the base handleStyle.
                 Becomes active once the user clicks or touches the toggle (including the first & second choice area).
               </p>
             </td>
@@ -188,7 +189,9 @@ export default class ToggleDocumentation extends Component {
                 optional
               </p>
               <p>
-                Works like React's built-in style property. Becomes active once the Toggle
+                Works like React's built-in style property except that it extends
+                the properties from the base style.
+                Becomes active once the Toggle
                 is disabled via the disabled property.
               </p>
             </td>
@@ -207,7 +210,9 @@ export default class ToggleDocumentation extends Component {
                 optional
               </p>
               <p>
-                Works like React's built-in style property. Becomes active once the Toggle
+                Works like React's built-in style property except that it extends
+                the properties from the base handleStyle.
+                Becomes active once the Toggle
                 is disabled via the disabled property.
               </p>
             </td>
@@ -226,7 +231,9 @@ export default class ToggleDocumentation extends Component {
                 optional
               </p>
               <p>
-                Works like React's built-in style property. Becomes active once the Toggle
+                Works like React's built-in style property except that it extends
+                the properties from the base style.
+                Becomes active once the Toggle
                 is focused on. Only applies to the handle node.
               </p>
             </td>
@@ -263,7 +270,9 @@ export default class ToggleDocumentation extends Component {
                 optional
               </p>
               <p>
-                Works like React's built-in style property. Becomes active once a user moves the mouse above the Toggle component. Only applies to the handle node.
+                Works like React's built-in style property except that it extends
+                the properties from the base handleStyle.
+                Becomes active once a user moves the mouse above the Toggle component. Only applies to the handle node.
               </p>
             </td>
           </tr>
