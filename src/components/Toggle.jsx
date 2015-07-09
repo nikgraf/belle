@@ -104,9 +104,9 @@ function validateChoices(props, propName, componentName) {
  * @param styleId {string} - a unique id that exists as class attribute in the DOM
  * @param properties {object} - the components properties optionally containing custom styles
  */
-function updatePseudoClassStyle(styleId, properties) {
+function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAndClick) {
   let focusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
+  if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
     focusStyle = extend({}, style.focusStyle, properties.focusStyle);
@@ -169,6 +169,8 @@ export default class Toggle extends Component {
     // As it is reset after every render it can't be set inside state as this
     // would trigger an endless loop.
     this.isFocused = false;
+
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
   /**
@@ -179,7 +181,7 @@ export default class Toggle extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.styleId = `style-id${id}`;
-    updatePseudoClassStyle(this.styleId, this.props);
+    updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
   componentWillReceiveProps(properties) {
@@ -197,9 +199,11 @@ export default class Toggle extends Component {
     } else if (has(properties, 'value')) {
       newState.value = properties.value;
     }
-
     this.setState(newState);
-    updatePseudoClassStyle(this.styleId, properties);
+
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+
+    updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -860,6 +864,5 @@ Toggle.propTypes = {
 };
 
 Toggle.defaultProps = {
-  disabled: false,
-  preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
+  disabled: false
 };

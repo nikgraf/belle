@@ -58,9 +58,9 @@ function sanitizeCharacterProps(properties) {
 /**
  * Injects pseudo classes for styles into the DOM.
  */
-function updatePseudoClassStyle(ratingWrapperStyleId, properties) {
+function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusStyleForTouchAndClick) {
   let ratingFocusStyle;
-  if (properties.preventFocusStyleForTouchAndClick) {
+  if (preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
     ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
@@ -104,6 +104,8 @@ export default class Rating extends Component {
       isFocus: false,
       isActive: false
     };
+
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
   /**
@@ -112,7 +114,7 @@ export default class Rating extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
-    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props);
+    updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
   componentWillReceiveProps(properties) {
@@ -126,9 +128,11 @@ export default class Rating extends Component {
     } else if (properties.value) {
       newState.value = properties.value;
     }
-
     this.setState(newState);
-    updatePseudoClassStyle(this._styleId, properties);
+
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+
+    updatePseudoClassStyle(this._styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -601,6 +605,5 @@ Rating.defaultProps = {
   disabled: false,
   tabIndex: 0,
   character: '★',
-  'aria-label': 'rating',
-  preventFocusStyleForTouchAndClick: config.preventFocusStyleForTouchAndClick
+  'aria-label': 'rating'
 };
