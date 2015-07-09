@@ -199,15 +199,10 @@ export default class TextInput extends Component {
   }
 
   render() {
-    const baseStyle = extend({}, style.style, this.props.style);
-
-    let textareaStyle;
+    let textareaStyle = extend({}, style.style, this.props.style);
 
     if (this.props.disabled) {
-      const disabledStyle = extend({}, style.disabledStyle, this.props.disabledStyle);
-      textareaStyle = extend({}, baseStyle, disabledStyle);
-    } else {
-      textareaStyle = baseStyle;
+      textareaStyle = extend(textareaStyle, style.disabledStyle, this.props.disabledStyle);
     }
 
     textareaStyle.height = this.state.height;

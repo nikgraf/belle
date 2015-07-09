@@ -33,19 +33,26 @@ const selectStyle = {
   },
 
   focusStyle: {
-    borderBottom: '1px solid #6EB8D4',
-    cursor: 'pointer'
+    borderBottom: '1px solid #6EB8D4'
   },
 
   hoverStyle: {
-    borderBottom: '1px solid #92D6EF',
-    cursor: 'pointer'
+    borderBottom: '1px solid #92D6EF'
   },
 
   wrapperStyle: {
     outline: 0, // to avoid default focus behaviour
     boxSizing: 'border-box',
     position: 'relative'
+  },
+
+  disabledStyle: {
+    borderBottom: '1px dotted #9F9F9F'
+  },
+
+  disabledHoverStyle: {
+    borderBottom: '1px dotted #92D6EF',
+    cursor: 'not-allowed'
   },
 
   menuStyle: {
@@ -88,15 +95,6 @@ const selectStyle = {
     borderBottom: '6px solid #666',
     borderLeft: '5px solid transparent',
     borderRight: '5px solid transparent'
-  },
-
-  disabledStyle: {
-    borderBottom: '1px dotted #9F9F9F'
-  },
-
-  disabledHoverStyle: {
-    borderBottom: '1px dotted #92D6EF',
-    cursor: 'not-allowed'
   },
 
   disabledCaretToOpenStyle: {
