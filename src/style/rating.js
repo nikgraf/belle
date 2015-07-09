@@ -41,7 +41,7 @@ const ratingStyle = {
   },
 
   hoverStyle: {
-    color: '#FFDA46'
+    opacity: 1
   },
 
   disabledHoverStyle: {
