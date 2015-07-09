@@ -17,6 +17,7 @@ import optionStyle from './style/option';
 import selectStyle from './style/select';
 import separatorStyle from './style/separator';
 import textInputStyle from './style/text-input';
+import toggleStyle from './style/toggle';
 import ratingStyle from './style/rating';
 import comboBoxStyle from './style/combo-box';
 
@@ -46,6 +47,7 @@ module.exports = {
     select: selectStyle,
     separator: separatorStyle,
     textInput: textInputStyle,
+    toggle: toggleStyle,
     comboBox: comboBoxStyle
   },
   config: {

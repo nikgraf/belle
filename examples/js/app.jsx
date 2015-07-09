@@ -29,6 +29,11 @@ if (true) {
     borderRadius: 3
   };
 
+  config.toggle.preventFocusStyleForTouchAndClick = false;
+  style.toggle.focusStyle = {
+    boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
+    outline: 0
+  };
 } else {
   style.button.style = {
     boxSizing: 'border-box',
