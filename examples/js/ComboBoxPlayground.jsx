@@ -73,6 +73,17 @@ export default React.createClass({
             </ComboBox>
           </div>
 
+          <div>
+            <ComboBox displayCaret disabled>
+              <Option value="te">Te</Option>
+              <Option value="tes">Tes</Option>
+              <Option value="test">Test</Option>
+              <Option value="test1">Test1</Option>
+              <Option value="test123">Test123</Option>
+              <Option value="orange">Orange</Option>
+            </ComboBox>
+          </div>
+
         </Card>
 
       </div>
