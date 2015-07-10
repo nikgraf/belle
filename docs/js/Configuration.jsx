@@ -129,7 +129,7 @@ const configStructure = `config = {
   },
   select: {
     shouldPositionOptions: true/false,
-    repositionMenu: function () {}
+    positionOptions: function () {}
   },
   toggle: {
     preventFocusStyleForTouchAndClick: true/false
