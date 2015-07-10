@@ -25,7 +25,7 @@ const selectConfig = {
    *
    * @param selectComponent {object} - the Select component itself accessible with `this`
    */
-  repositionMenu(selectComponent) {
+  positionOptions(selectComponent) {
     const menuNode = React.findDOMNode(selectComponent.refs.menu);
     const menuStyle = window.getComputedStyle(menuNode, null);
     const menuWidth = parseFloat(menuStyle.getPropertyValue('width'));

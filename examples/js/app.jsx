@@ -34,6 +34,8 @@ if (true) {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
     outline: 0
   };
+
+  config.select.shouldPositionOptions = false;
 } else {
   style.button.style = {
     boxSizing: 'border-box',
