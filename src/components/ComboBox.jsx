@@ -298,10 +298,6 @@ export default class ComboBox extends Component {
         isOpen: isOpen
       });
     }
-
-    if (this.props.onCaretClick) {
-      this.props.onCaretClick(event);
-    }
   }
 
   /**
@@ -647,7 +643,6 @@ ComboBox.propTypes = {
   tabIndex: React.PropTypes.number,
   onKeyDown: React.PropTypes.func,
   onFocus: React.PropTypes.func,
-  onCaretClick: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   className: React.PropTypes.string,
   caretClassName: React.PropTypes.string,
