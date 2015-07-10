@@ -153,7 +153,9 @@ const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
 const htmlStructure = `<div style={ wrapperStyle }>
   <input style={ hintStyle } />
   <input style={ style } />
-  <ul style={ menuStyle }>
+  <span style={ caretToCloseStyle or caretToOpenStyle } />
+  </span>
+    <ul style={ menuStyle }>
     <li>
       <Option />
     </li>
@@ -368,6 +370,26 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            disabledCaretToOpenStyle
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property except that it extends
+              the properties from the base disabledCaretToOpenStyle.
+              Is applied to the Caret once the combo-box is disabled.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             hoverStyle
           </td>
         </tr>
@@ -487,6 +509,46 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            caretToOpenStyle
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the caret when the options to combo-box
+              are not visible.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            caretToCloseStyle
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Works like React's built-in style property.
+              Manipulates the styling for the caret when the options to combo-box
+              are visible.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             wrapperProps
           </td>
         </tr>
@@ -524,11 +586,30 @@ export default React.createClass({
           </td>
         </tr>
 
+        <tr>
+          <td style={ propertyNameStyle }>
+            caretProps
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Object</i>
+              <br />
+              optional
+            </p>
+            <p>
+              This object allows to provide any kind of valid properties for a
+              span tag.
+            </p>
+          </td>
+        </tr>
+
       </table>
 
       <p>
         Any other property valid for an input element like
-        <span style={ {color: 'grey'} }> placeholder, onFocus, onBlur, onClick…</span><br />
+        <span style={ {color: 'grey'} }> placeholder, onFocus, onBlur…</span><br />
       </p>
 
       <h3>Internal HTML Structure</h3>

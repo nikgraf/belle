@@ -77,24 +77,38 @@ const comboBoxStyle = {
     WebkitOverflowScrolling: 'touch'
   },
 
-  disabledCaretToOpenStyle: {
-    backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,0 20,0 10,12\" style=\"fill:#ccc\"></polygon></svg>')"
+  caretToOpenStyle: {
+    height: 0,
+    width: 0,
+    content: ' ',
+    position: 'absolute',
+    top: 15,
+    right: 8,
+    cursor: 'pointer',
+    borderTop: '6px solid #666',
+    borderLeft: '5px solid transparent',
+    borderRight: '5px solid transparent'
   },
 
   caretToCloseStyle: {
-    paddingRight: '26px',
-    backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,12 20,12 10,0\" style=\"fill:grey\"></polygon></svg>')",
-    backgroundSize: '10px 6px',
-    backgroundPosition: 'right 10px bottom 10px',
-    backgroundRepeat: 'no-repeat'
+    height: 0,
+    width: 0,
+    content: ' ',
+    position: 'absolute',
+    top: 15,
+    right: 8,
+    cursor: 'pointer',
+    borderBottom: '6px solid #666',
+    borderLeft: '5px solid transparent',
+    borderRight: '5px solid transparent'
   },
 
-  caretToOpenStyle: {
-    paddingRight: '26px',
-    backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"12\"><polygon points=\"0,0 20,0 10,12\" style=\"fill:grey\"></polygon></svg>')",
-    backgroundSize: '10px 6px',
-    backgroundPosition: 'right 10px bottom 10px',
-    backgroundRepeat: 'no-repeat'
+  caretFocusStyle: {
+    outline: 0
+  },
+
+  disabledCaretToOpenStyle: {
+    borderTop: '6px solid #9F9F9F'
   },
 
   hintStyle: {
