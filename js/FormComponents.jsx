@@ -1,76 +1,108 @@
 import React, {Component} from 'react';
+import Code from './Code';
+
+const controlledComponentCodeOne = `
+  render: function() {
+    return <TextInput value="Hello!" />;
+  }`;
+
+const controlledComponentCodeTwo = `
+  getInitialState: function() {
+    return {value: 'Hello!'};
+  },
+  handleChange: function(obj) {
+    this.setState({value: obj.value});
+  },
+  render: function() {
+    var value = this.state.value;
+    return <TextInput type="text" value={value} onUpdate={this.handleChange} />;
+  }`;
+
+const uncontrolledComponentCode = `
+  render: function() {
+    return <input type="text" />;
+  }`;
+
+const reactLinkCode = `var WithLink = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
+  getInitialState: function() {
+    return {message: 'Hello!'};
+  },
+  render: function() {
+    return <input type="text" valueLink={this.linkState('message')} />;
+  }
+});`;
 
 export default class FormComponents extends Component {
 
   render() {
     return (<div>
-      <h2 style={ {marginTop: 0, marginBottom: 40} }>Philosophy</h2>
-
-      <p><i>“Great UX starts with a good UI”</i></p>
+      <h2 style={ {marginTop: 0, marginBottom: 40} }>Form Components</h2>
 
       <p>
-        With Belle I'm aiming to provide a library that follows a couple well established
-        principles. While some of them might not be consider best practice today
-        We believe they will become some day in the near future.
+        Belle has many Form Components: ComboBox, Select, Rating, TextInput and Toggle.
+        They differ from other components because they can be mutated via user interactions.
       </p>
 
-      <p>This is an early draft &amp; any improvement you can think of is very welcome.</p>
-
-      <h3>Principles</h3>
-
-      <h4>Easy to use</h4>
+      <h4>onUpdate Prop</h4>
 
       <p>
-        The most important attribute of any great experience is that there was no hassle to achieve
-        the initial goals.
+        Form components allow listening for changes by setting a callback to the onUpdate prop.
+        The callback receives as parameter an object containing a field 'value' which is the value entered by the user.
       </p>
 
-      <h4>Consistent Behavior</h4>
+      <h4>Controlled Components</h4>
 
       <p>
-        Every object someone interacts with has it's own little language. This language
-        must be learned by everyone getting in touch with a new set of object. In order
-        to provide a great experience the amount to learn should be reduced to a minimum.
+        An Form Component with value set is a controlled component. In a controlled component,
+        the value of the rendered element will always reflect the value prop. For example:
       </p>
 
+      <Code value={ controlledComponentCodeOne } style={ {marginTop: 20} } />
+
       <p>
-        There are two major personalities to target with Belle. One is the developer.
-        For him/her APIs should be provided in a consistent way through all components.
-        The other and more important is the users of the components. Every color,
-        animation or behavior should be aligned with the other components to provide
-        a great experience.
+        This will render a TextInput that always has a value of Hello!. Any user input will have no effect on the rendered element
+        because React has declared the value to be Hello!. If you wanted to update the value in response to user input, you
+        could use the onUpdate event:
       </p>
 
-      <h4>Encapsulate Styles</h4>
+      <Code value={ controlledComponentCodeTwo } style={ {marginTop: 20} } />
 
-      <p>
-        There is no reason while a style designed one specific element should affect
-        others. In CSS styles are often defined by overwriting previous ones and introducing
-        deeper and deeper nesting. Once nesting is introduced resolution of styles for one
-        specific element is not a trivial task anymore. Due this managing CSS dependencies
-        is hard. It is hard to predict how an application looks like after updating or
-        removing dependency.
+      <p>This pattern makes it easy to implement interfaces that respond to or validate user interactions.</p>
+
+      <h4>Uncontrolled Components</h4>
+
+      <p>A component that does not supply a value is an uncontrolled component.
+        In an uncontrolled component, the value of the rendered element will reflect the user's input. For example:
       </p>
 
+      <Code value={ uncontrolledComponentCode } style={ {marginTop: 20} } />
+
       <p>
-        That's why with Belle styles should apply to the components themselves in the DOM.
-        By doing so the visual appearance and business logic are combined in location.
+        This will render an input that starts off with an empty value. Any user input will be immediately reflected by the rendered element.
+        If you wanted to listen to updates to the value, you could use the onUpdate event just like you can with controlled components.
+        If you want to initialize the component with a non-empty value, you can supply a defaultValue prop.
       </p>
 
-      <h4>Every Interaction is followed up with Feedback</h4>
+      <h4>Two-Way Binding Helpers</h4>
 
-      <p>
-        Let people know how their behavior affects the system. It assures them that
-        their input was acknowledged which provides them with a feeling of control over
-        the system.
+      <p>Two-way binding is implicitly enforcing that some value in the DOM is always consistent with some React state.
+        Like React form components Belle form components also provide ReactLink: its syntactic sugar for setting up the common
+        data flow loop pattern, or "linking" some data source to React state.
       </p>
 
-      <h4>High Performance</h4>
+      <Code value={ reactLinkCode } style={ {marginTop: 20} } />
 
+      <p>Note:<br/>
+        ReactLink is just a thin wrapper and convention around the onUpdate/setState() pattern. It doesn't fundamentally change how data
+        flows in your React application.</p>
+
+      <h4>References</h4>
       <p>
-        The user should see affects of his actions instantly. Any delay can cause confusion
-        and frustration. While instant certainly is not always possible Belle strives to
-        provide an experience close to instant.
+        <a href="https://facebook.github.io/react/docs/forms.html">React Forms</a>
+      </p>
+      <p>
+        <a href="https://facebook.github.io/react/docs/two-way-binding-helpers.html">Two-Way Binding Helpers</a>
       </p>
 
     </div>);
