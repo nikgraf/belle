@@ -284,7 +284,9 @@ export default class Select extends Component {
    * not displayed beofre repositioned.
    */
   componentWillUpdate(nextProperties, nextState) {
-    if (nextProperties.shouldPositionOptions) {
+    const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : config.shouldPositionOptions;
+
+    if (shouldPositionOptions) {
       const menuNode = React.findDOMNode(this.refs.menu);
       this.cachedMenuScrollTop = menuNode.scrollTop;
 
@@ -299,12 +301,15 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    if (this.props.shouldPositionOptions && !this.props.disabled) {
+    const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : config.shouldPositionOptions;
+
+    if (shouldPositionOptions && !this.props.disabled) {
       const menuNode = React.findDOMNode(this.refs.menu);
 
       // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen) {
-        this.props.positionOptions(this);
+        const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
+        positionOptions(this);
       // restore the old scrollTop position
       } else {
         menuNode.scrollTop = this.cachedMenuScrollTop;
@@ -823,7 +828,5 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
-  shouldPositionOptions: config.shouldPositionOptions,
-  positionOptions: config.repositionMenu,
   disabled: false
 };
