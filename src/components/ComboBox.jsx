@@ -13,10 +13,11 @@ React.initializeTouchEvents(true);
  * @param styleId {string} - a unique id that exists as class attribute in the DOM
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
-function updatePseudoClassStyle(styleId, properties) {
+function updatePseudoClassStyle(styleId, caretStyleId, properties) {
   const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
   const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
   const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+  const caretFocusStyle = extend({}, style.caretFocusStyle);
 
   const styles = [
     {
@@ -33,6 +34,11 @@ function updatePseudoClassStyle(styleId, properties) {
     {
       id: styleId,
       style: focusStyle,
+      pseudoClass: 'focus'
+    },
+    {
+      id: caretStyleId,
+      style: caretFocusStyle,
       pseudoClass: 'focus'
     }
   ];
@@ -72,6 +78,19 @@ function sanitizeInputProps(properties) {
     'aria-disabled',
     'aria-autocomplete',
     'children'
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizeCaretProps(properties) {
+  return omit(properties, [
+    'style',
+    'className',
+    'onClick',
+    'tabIndex'
   ]);
 }
 
@@ -120,6 +139,7 @@ export default class ComboBox extends Component {
       filteredOptions: this.filterOptions(inputValue),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
+      caretProps: sanitizeCaretProps(properties.caretProps),
       menuProps: sanitizeMenuProps(properties.menuProps)
     };
   }
@@ -170,13 +190,15 @@ export default class ComboBox extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this._styleId = `style-id${id}`;
-    updatePseudoClassStyle(this._styleId, this.props);
+    this._caretStyleId = `caretStyle-id${id}`;
+    updatePseudoClassStyle(this._styleId, this._caretStyleId, this.props);
   }
 
   componentWillReceiveProps(properties) {
     const newState = {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
+      caretProps: sanitizeCaretProps(properties.caretProps),
       menuProps: sanitizeMenuProps(properties.menuProps)
     };
 
@@ -189,7 +211,7 @@ export default class ComboBox extends Component {
     }
 
     this.setState(newState);
-    updatePseudoClassStyle(this._styleId, properties);
+    updatePseudoClassStyle(this._styleId, this._caretStyleId, properties);
   }
 
   /**
@@ -263,6 +285,22 @@ export default class ComboBox extends Component {
 
     if (this.props.onFocus) {
       this.props.onFocus(event);
+    }
+  }
+
+  /**
+   * Open/ Close menu when create is clicked.
+   */
+  _onCaretClick() {
+    if (!this.props.disabled) {
+      const isOpen = !this.state.isOpen;
+      this.setState({
+        isOpen: isOpen
+      });
+    }
+
+    if (this.props.onCaretClick) {
+      this.props.onCaretClick(event);
     }
   }
 
@@ -491,7 +529,7 @@ export default class ComboBox extends Component {
 
   render() {
     let inputStyle = extend({}, style.style, this.props.style);
-    let hintStyle = extend({}, style.hintStyle, this.props.hintStyle);
+    const hintStyle = extend({}, style.hintStyle, this.props.hintStyle);
     const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
 
@@ -504,14 +542,16 @@ export default class ComboBox extends Component {
       inputStyle = extend(inputStyle, style.disabledStyle, this.props.disabledStyle);
     }
 
-    // Currently there are no different hover styles for caret, like select they are probably not really needed.
+    // todo: Currently there are no different hover styles for caret, like select they are probably not really needed.
+    let caretStyle;
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        hintStyle = extend(hintStyle, style.caretToOpenStyle, style.disabledCaretToOpenStyle);
+        caretStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle,
+          style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
       } else if (this.state.isOpen) {
-        hintStyle = extend(hintStyle, style.caretToCloseStyle);
+        caretStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
       } else {
-        hintStyle = extend(hintStyle, style.caretToOpenStyle);
+        caretStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
       }
     }
 
@@ -542,7 +582,13 @@ export default class ComboBox extends Component {
                onFocus={ this._onFocus.bind(this) }
                onKeyDown={ this._onKeyDown.bind(this) }
                aria-autocomplete="list"
-              {...this.state.inputProps}></input>
+          {...this.state.inputProps}></input>
+          <span style={ caretStyle }
+                className = { this._caretStyleId }
+                onClick = { this._onCaretClick.bind(this) }
+                tabIndex = { -1 }
+            {...this.state.caretProps}>
+          </span>
 
         <ul style={ computedMenuStyle }
             role="listbox"
@@ -596,12 +642,15 @@ ComboBox.propTypes = {
   disabled: React.PropTypes.bool,
   wrapperProps: React.PropTypes.object,
   menuProps: React.PropTypes.object,
+  caretProps: React.PropTypes.object,
   onUpdate: React.PropTypes.func,
   tabIndex: React.PropTypes.number,
   onKeyDown: React.PropTypes.func,
   onFocus: React.PropTypes.func,
+  onCaretClick: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   className: React.PropTypes.string,
+  caretClassName: React.PropTypes.string,
   style: React.PropTypes.object,
   wrapperStyle: React.PropTypes.object,
   hintStyle: React.PropTypes.object,
@@ -610,6 +659,9 @@ ComboBox.propTypes = {
   disabledStyle: React.PropTypes.object,
   disabledHoverStyle: React.PropTypes.object,
   hoverStyle: React.PropTypes.object,
+  caretToOpenStyle: React.PropTypes.object,
+  caretToCloseStyle: React.PropTypes.object,
+  disabledCaretToOpenStyle: React.PropTypes.object,
   maxOptions: React.PropTypes.number,
   displayCaret: React.PropTypes.bool,
   enableHint: React.PropTypes.bool,
