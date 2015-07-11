@@ -4,7 +4,7 @@ import Code from './Code';
 
 const basicCodeExample = `<!-- basic select example with separators -->
 <Select>
-  <Separator>Amerika</Separator>
+  <Separator>America</Separator>
   <Option value="san-francisco">San Francisco</Option>
   <Option value="vancouver">Vancouver</Option>
   <Separator>Asia</Separator>
@@ -25,7 +25,7 @@ export default class SeparatorDocumentation extends Component {
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Separator</h2>
 
       <Select>
-        <Separator>Amerika</Separator>
+        <Separator>America</Separator>
         <Option value="san-francisco">San Francisco</Option>
         <Option value="vancouver">Vancouver</Option>
         <Separator>Asia</Separator>
