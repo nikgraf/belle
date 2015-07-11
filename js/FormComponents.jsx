@@ -47,8 +47,8 @@ export default class FormComponents extends Component {
       <h4>onUpdate Prop</h4>
 
       <p>
-        Form components allow listening for changes by setting a callback to the onUpdate prop.
-        The callback receives as parameter an object containing a field 'value' which is the value entered by the user.
+        Form components allow listening for changes by setting a callback to the onUpdate property.
+        The callback receives an object as parameter containing a field 'value' which is the value entered by the user.
       </p>
 
       <h4>Controlled Components</h4>
