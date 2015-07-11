@@ -173,6 +173,65 @@ export default class Toggle extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
+  static displayName = 'Belle Toggle';
+
+  static propTypes = {
+    activeHandleStyle: React.PropTypes.object,
+    children: validateChoices,
+    className: React.PropTypes.string,
+    defaultValue: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    disabledHandleStyle: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    firstChoiceProps: React.PropTypes.object,
+    firstChoiceStyle: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    handleProps: React.PropTypes.shape({
+      onMouseDown: React.PropTypes.func,
+      onMouseMove: React.PropTypes.func,
+      onMouseUp: React.PropTypes.func,
+      onMouseLeave: React.PropTypes.func,
+      onTouchStart: React.PropTypes.func,
+      onTouchMove: React.PropTypes.func,
+      onTouchEnd: React.PropTypes.func,
+      onTouchCancel: React.PropTypes.func
+    }),
+    handleStyle: React.PropTypes.object,
+    hoverHandleStyle: React.PropTypes.object,
+    onBlur: React.PropTypes.func,
+    onUpdate: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onKeyDown: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
+    onTouchStart: React.PropTypes.func,
+    secondChoiceProps: React.PropTypes.object,
+    secondChoiceStyle: React.PropTypes.object,
+    sliderProps: React.PropTypes.shape({
+      onClick: React.PropTypes.func,
+      onTouchStart: React.PropTypes.func,
+      onTouchMove: React.PropTypes.func,
+      onTouchEnd: React.PropTypes.func,
+      onTouchCancel: React.PropTypes.func
+    }),
+    sliderStyle: React.PropTypes.object,
+    sliderWrapperProps: React.PropTypes.object,
+    sliderWrapperStyle: React.PropTypes.object,
+    style: React.PropTypes.object,
+    value: React.PropTypes.bool,
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.bool.isRequired,
+      requestChange: React.PropTypes.func.isRequired
+    }),
+    wrapperProps: React.PropTypes.object
+  };
+
+  static defaultProps = {
+    disabled: false
+  };
+
   /**
    * Generates the style-id & inject the focus style.
    *
@@ -807,62 +866,3 @@ export default class Toggle extends Component {
     );
   }
 }
-
-Toggle.displayName = 'Belle Toggle';
-
-Toggle.propTypes = {
-  activeHandleStyle: React.PropTypes.object,
-  children: validateChoices,
-  className: React.PropTypes.string,
-  defaultValue: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  disabledHandleStyle: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object,
-  firstChoiceProps: React.PropTypes.object,
-  firstChoiceStyle: React.PropTypes.object,
-  focusStyle: React.PropTypes.object,
-  handleProps: React.PropTypes.shape({
-    onMouseDown: React.PropTypes.func,
-    onMouseMove: React.PropTypes.func,
-    onMouseUp: React.PropTypes.func,
-    onMouseLeave: React.PropTypes.func,
-    onTouchStart: React.PropTypes.func,
-    onTouchMove: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func
-  }),
-  handleStyle: React.PropTypes.object,
-  hoverHandleStyle: React.PropTypes.object,
-  onBlur: React.PropTypes.func,
-  onUpdate: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onKeyDown: React.PropTypes.func,
-  onMouseDown: React.PropTypes.func,
-  onMouseEnter: React.PropTypes.func,
-  onMouseLeave: React.PropTypes.func,
-  onMouseUp: React.PropTypes.func,
-  onTouchStart: React.PropTypes.func,
-  secondChoiceProps: React.PropTypes.object,
-  secondChoiceStyle: React.PropTypes.object,
-  sliderProps: React.PropTypes.shape({
-    onClick: React.PropTypes.func,
-    onTouchStart: React.PropTypes.func,
-    onTouchMove: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func
-  }),
-  sliderStyle: React.PropTypes.object,
-  sliderWrapperProps: React.PropTypes.object,
-  sliderWrapperStyle: React.PropTypes.object,
-  style: React.PropTypes.object,
-  value: React.PropTypes.bool,
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.bool.isRequired,
-    requestChange: React.PropTypes.func.isRequired
-  }),
-  wrapperProps: React.PropTypes.object
-};
-
-Toggle.defaultProps = {
-  disabled: false
-};
