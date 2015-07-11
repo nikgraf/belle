@@ -23,6 +23,22 @@ export default class Placeholder extends Component {
     };
   }
 
+  static displayName = 'Belle Placeholder';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    style: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    _isDisabled: React.PropTypes.bool
+  };
+
+  static defaultProps = {
+    _isDisabled: false
+  };
+
   /**
    * Update the childProps based on the updated properties passed to the
    * Placeholder.
@@ -44,19 +60,3 @@ export default class Placeholder extends Component {
     );
   }
 }
-
-Placeholder.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  style: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object,
-  _isDisabled: React.PropTypes.bool
-};
-
-Placeholder.displayName = 'Belle Placeholder';
-
-Placeholder.defaultProps = {
-  _isDisabled: false
-};
