@@ -246,6 +246,53 @@ export default class Select extends Component {
     };
   }
 
+  static displayName = 'Belle Select';
+
+  static propTypes = {
+    children: validateArrayOfOptionsAndMaximumOnePlaceholder,
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string,
+      React.PropTypes.number,
+      React.PropTypes.instanceOf(Date)
+    ]),
+    defaultValue: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    onUpdate: React.PropTypes.func,
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.string.isRequired,
+      requestChange: React.PropTypes.func.isRequired
+    }),
+    className: React.PropTypes.string,
+    shouldPositionOptions: React.PropTypes.bool,
+    positionOptions: React.PropTypes.func,
+    style: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    wrapperStyle: React.PropTypes.object,
+    menuStyle: React.PropTypes.object,
+    caretToOpenStyle: React.PropTypes.object,
+    caretToCloseStyle: React.PropTypes.object,
+    wrapperProps: React.PropTypes.object,
+    menuProps: React.PropTypes.object,
+    caretProps: React.PropTypes.object,
+    disabled: React.PropTypes.bool,
+    disabledStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
+    disabledCaretToOpenStyle: React.PropTypes.object,
+    onClick: React.PropTypes.func,
+    onTouchCancel: React.PropTypes.func,
+    onTouchEnd: React.PropTypes.func,
+    onTouchStart: React.PropTypes.func
+  };
+
+  static defaultProps = {
+    disabled: false
+  };
+
   /**
    * Generates the style-id & inject the focus & hover style.
    *
@@ -783,50 +830,3 @@ export default class Select extends Component {
     );
   }
 }
-
-Select.displayName = 'Belle Select';
-
-Select.propTypes = {
-  children: validateArrayOfOptionsAndMaximumOnePlaceholder,
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.string,
-    React.PropTypes.number,
-    React.PropTypes.instanceOf(Date)
-  ]),
-  defaultValue: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.string,
-    React.PropTypes.number
-  ]),
-  onUpdate: React.PropTypes.func,
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.string.isRequired,
-    requestChange: React.PropTypes.func.isRequired
-  }),
-  className: React.PropTypes.string,
-  shouldPositionOptions: React.PropTypes.bool,
-  positionOptions: React.PropTypes.func,
-  style: React.PropTypes.object,
-  focusStyle: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  wrapperStyle: React.PropTypes.object,
-  menuStyle: React.PropTypes.object,
-  caretToOpenStyle: React.PropTypes.object,
-  caretToCloseStyle: React.PropTypes.object,
-  wrapperProps: React.PropTypes.object,
-  menuProps: React.PropTypes.object,
-  caretProps: React.PropTypes.object,
-  disabled: React.PropTypes.bool,
-  disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
-  disabledCaretToOpenStyle: React.PropTypes.object,
-  onClick: React.PropTypes.func,
-  onTouchCancel: React.PropTypes.func,
-  onTouchEnd: React.PropTypes.func,
-  onTouchStart: React.PropTypes.func
-};
-
-Select.defaultProps = {
-  disabled: false
-};
