@@ -143,8 +143,7 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 ## Future Plans
 
 - Make sure components don't break when rendered by the backend
-- Make sure the components work great on Mobile
-- Components to add: rating, autocomplete, dateformatter, datepicker, toggle, checkbox, tooltip, popover, menu/dropdown, NumberInput, EmailInput , anchor?, code?
+- Components to add: Dateformatter, Datepicker, Tooltip, Popover, Modal, Navigation Menu, NumberInput, EmailInput, Anchor, DropZone
 
 ## Special Thanks
 
