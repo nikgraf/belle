@@ -1,6 +1,7 @@
 import React from 'react';
 import belle, {Card, Option, Select} from 'belle';
-import bootstrap3Theme from './theme/bootstrap3';
+import bootstrap3Theme from './theme/bootstrap-3';
+import belleWithClassicFocusTheme from './theme/belle-with-classic-focus';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
 import ViewportMixin from './mixin/viewport';
@@ -34,12 +35,16 @@ export default React.createClass({
   },
 
   _onChangeTheme(info) {
-    if (info.value === 'belle') {
-      updateStructure(belle.style, this.belleStyle);
-      updateStructure(belle.config, this.belleConfig);
-    } else {
+    if (info.value === 'bootstrap') {
       updateStructure(belle.style, bootstrap3Theme.style);
       updateStructure(belle.config, bootstrap3Theme.config);
+    } else if (info.value === 'belle-with-classic-focus') {
+      updateStructure(belle.style, this.belleStyle);
+      updateStructure(belle.style, belleWithClassicFocusTheme.style);
+      updateStructure(belle.config, belleWithClassicFocusTheme.config);
+    } else {
+      updateStructure(belle.style, this.belleStyle);
+      updateStructure(belle.config, this.belleConfig);
     }
 
     this.forceUpdate();
@@ -102,6 +107,7 @@ export default React.createClass({
                     shouldPositionOptions={ false }>
               <Option value={ "belle" }>Belle</Option>
               <Option value={ "bootstrap" }>Bootstrap</Option>
+              <Option value={ "belle-with-classic-focus" }>Belle without custom Focus behaviour</Option>
             </Select>
           </div>
 
