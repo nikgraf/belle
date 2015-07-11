@@ -107,6 +107,55 @@ export default class Rating extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
+  static displayName = 'Belle Rating';
+
+  static propTypes = {
+    defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+    value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
+      requestChange: React.PropTypes.func.isRequired
+    }),
+    disabled: React.PropTypes.bool,
+    tabIndex: React.PropTypes.number,
+    character: React.PropTypes.string,
+    characterProps: React.PropTypes.object,
+    preventFocusStyleForTouchAndClick: React.PropTypes.bool,
+    'aria-label': React.PropTypes.string,
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
+    focusStyle: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
+    characterStyle: React.PropTypes.object,
+    activeCharacterStyle: React.PropTypes.object,
+    hoverCharacterStyle: React.PropTypes.object,
+    onUpdate: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseMove: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
+    onTouchStart: React.PropTypes.func,
+    onTouchMove: React.PropTypes.func,
+    onTouchEnd: React.PropTypes.func,
+    onTouchCancel: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    onKeyDown: React.PropTypes.func
+  };
+
+  /**
+   * Setting default prop values.
+   */
+  static defaultProps = {
+    disabled: false,
+    tabIndex: 0,
+    character: '★',
+    'aria-label': 'rating'
+  };
+
   /**
    * Apply pseudo class styling to the wrapper div.
    */
@@ -576,52 +625,3 @@ export default class Rating extends Component {
     );
   }
 }
-
-Rating.displayName = 'Belle Rating';
-
-Rating.propTypes = {
-  defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
-  value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
-    requestChange: React.PropTypes.func.isRequired
-  }),
-  disabled: React.PropTypes.bool,
-  tabIndex: React.PropTypes.number,
-  character: React.PropTypes.string,
-  characterProps: React.PropTypes.object,
-  preventFocusStyleForTouchAndClick: React.PropTypes.bool,
-  'aria-label': React.PropTypes.string,
-  style: React.PropTypes.object,
-  className: React.PropTypes.string,
-  focusStyle: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
-  characterStyle: React.PropTypes.object,
-  activeCharacterStyle: React.PropTypes.object,
-  hoverCharacterStyle: React.PropTypes.object,
-  onUpdate: React.PropTypes.func,
-  onMouseDown: React.PropTypes.func,
-  onMouseUp: React.PropTypes.func,
-  onMouseEnter: React.PropTypes.func,
-  onMouseMove: React.PropTypes.func,
-  onMouseLeave: React.PropTypes.func,
-  onTouchStart: React.PropTypes.func,
-  onTouchMove: React.PropTypes.func,
-  onTouchEnd: React.PropTypes.func,
-  onTouchCancel: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  onKeyDown: React.PropTypes.func
-};
-
-/**
- * Setting default prop values.
- */
-Rating.defaultProps = {
-  disabled: false,
-  tabIndex: 0,
-  character: '★',
-  'aria-label': 'rating'
-};
