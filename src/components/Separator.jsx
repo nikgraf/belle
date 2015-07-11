@@ -23,6 +23,16 @@ export default class Separator extends Component {
     };
   }
 
+  static displayName = 'Belle Separator';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    style: React.PropTypes.object
+  };
+
   /**
    * Update the childProperties based on the updated properties passed to the
    * Separator.
@@ -41,13 +51,3 @@ export default class Separator extends Component {
     );
   }
 }
-
-Separator.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  style: React.PropTypes.object
-};
-
-Separator.displayName = 'Belle Separator';

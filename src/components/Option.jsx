@@ -32,6 +32,33 @@ export default class Option extends Component {
     };
   }
 
+  static displayName = 'Belle Option';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    style: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    selectStyle: React.PropTypes.object,
+    disabledSelectStyle: React.PropTypes.object,
+    _isDisabled: React.PropTypes.bool,
+    _isHovered: React.PropTypes.bool,
+    _isDisplayedAsSelected: React.PropTypes.bool,
+    value: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]).isRequired
+  };
+
+  static defaultProps = {
+    _isHovered: false,
+    _isDisplayedAsSelected: false,
+    _isDisabled: false
+  };
+
   /**
    * Update the childProps based on the updated properties passed to the
    * Option.
@@ -64,30 +91,3 @@ export default class Option extends Component {
     );
   }
 }
-
-Option.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  style: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  selectStyle: React.PropTypes.object,
-  disabledSelectStyle: React.PropTypes.object,
-  _isDisabled: React.PropTypes.bool,
-  _isHovered: React.PropTypes.bool,
-  _isDisplayedAsSelected: React.PropTypes.bool,
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.string,
-    React.PropTypes.number
-  ]).isRequired
-};
-
-Option.displayName = 'Belle Option';
-
-Option.defaultProps = {
-  _isHovered: false,
-  _isDisplayedAsSelected: false,
-  _isDisabled: false
-};

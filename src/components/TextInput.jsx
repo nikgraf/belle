@@ -90,6 +90,32 @@ export default class TextInput extends Component {
     };
   }
 
+  static displayName = 'Belle TextInput';
+
+  static propTypes = {
+    className: React.PropTypes.string,
+    minHeight: React.PropTypes.number,
+    maxHeight: React.PropTypes.number,
+    style: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    allowNewLine: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    disabledStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
+    onUpdate: React.PropTypes.func,
+    onKeyDown: React.PropTypes.func,
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.string.isRequired,
+      requestChange: React.PropTypes.func.isRequired
+    })
+  };
+
+  static defaultProps = {
+    allowNewLine: false,
+    disabled: false
+  };
+
   /**
    * Generates the style-id & inject the focus & hover style.
    *
@@ -215,29 +241,3 @@ export default class TextInput extends Component {
     );
   }
 }
-
-TextInput.displayName = 'Belle TextInput';
-
-TextInput.propTypes = {
-  className: React.PropTypes.string,
-  minHeight: React.PropTypes.number,
-  maxHeight: React.PropTypes.number,
-  style: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  focusStyle: React.PropTypes.object,
-  allowNewLine: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
-  onUpdate: React.PropTypes.func,
-  onKeyDown: React.PropTypes.func,
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.string.isRequired,
-    requestChange: React.PropTypes.func.isRequired
-  })
-};
-
-TextInput.defaultProps = {
-  allowNewLine: false,
-  disabled: false
-};

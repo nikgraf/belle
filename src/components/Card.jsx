@@ -24,6 +24,17 @@ export default class Card extends Component {
     };
   }
 
+  static displayName = 'Belle Card';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    style: React.PropTypes.object,
+    test: React.PropTypes.object
+  };
+
   /**
    * Update the _childProperties based on the updated properties passed to the
    * card.
@@ -42,13 +53,3 @@ export default class Card extends Component {
     );
   }
 }
-
-Card.displayName = 'Belle Card';
-
-Card.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  style: React.PropTypes.object
-};

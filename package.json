@@ -25,8 +25,8 @@
     "underscore": ">=1.8.2"
   },
   "scripts": {
-    "start": "babel --watch --source-maps-inline --out-dir='lib' src",
-    "build": "babel --out-dir='lib' src",
+    "start": "babel --watch --source-maps-inline --optional='es7.classProperties' --out-dir='lib' src",
+    "build": "babel --out-dir='lib' --optional='es7.classProperties' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
     "postinstall": "rm -rf node_modules/react/ && rm -rf node_modules/underscore/",
