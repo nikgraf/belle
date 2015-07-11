@@ -150,6 +150,14 @@ export default class Rating extends Component {
    * on the value of the targeted span.
    */
   _onMouseEnter(event) {
+    // In case the user pressed the mouse and then hovers over the rating and
+    // releases the mousUp should no be trigger. Only when the mouseDown starts
+    // inside.
+    // Activating inside, going out & coming back should still be possible.
+    if (!this.state.isActive) {
+      this.preventNextMouseUpTriggerUpdate = true;
+    }
+
     if (!this.props.disabled) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
@@ -211,6 +219,7 @@ export default class Rating extends Component {
   _onMouseDown(event) {
     if (!this.props.disabled && event.buttons === 1) {
       this.setState({ isActive: true });
+      this.preventNextMouseUpTriggerUpdate = false;
     }
 
     if (this.props.onMouseDown) {
@@ -222,7 +231,7 @@ export default class Rating extends Component {
    * Sets isActive state to false.
    */
   _onMouseUp(event) {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.preventNextMouseUpTriggerUpdate) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this._updateComponent(value);
     }
