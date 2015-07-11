@@ -1,8 +1,24 @@
 import React from 'react';
-import {Card} from 'belle';
+import belle, {Card, Option, Select} from 'belle';
+import bootstrap3Theme from './theme/bootstrap3';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
 import ViewportMixin from './mixin/viewport';
+
+/**
+ * Updates the deepest structure while keeping the original reference of the outer objects.
+ */
+function updateStructure(targetObject, object) {
+  for (const componentName in object) {
+    if (object.hasOwnProperty(componentName)) {
+      for (const styleName in object[componentName]) {
+        if (object[componentName].hasOwnProperty(styleName)) {
+          targetObject[componentName][styleName] = object[componentName][styleName];
+        }
+      }
+    }
+  }
+}
 
 export default React.createClass({
 
@@ -11,6 +27,23 @@ export default React.createClass({
   },
 
   mixins: [ViewportMixin],
+
+  componentWillMount() {
+    this.belleConfig = JSON.parse(JSON.stringify(belle.config));
+    this.belleStyle = JSON.parse(JSON.stringify(belle.style));
+  },
+
+  _onChangeTheme(info) {
+    if (info.value === 'belle') {
+      updateStructure(belle.style, this.belleStyle);
+      updateStructure(belle.config, this.belleConfig);
+    } else {
+      updateStructure(belle.style, bootstrap3Theme.style);
+      updateStructure(belle.config, bootstrap3Theme.config);
+    }
+
+    this.forceUpdate();
+  },
 
   render() {
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
@@ -61,8 +94,16 @@ export default React.createClass({
             scrolling="0"
             width="78px"
             height="30px"
-            style={ { 'float': 'right', marginTop: 20 } }>
+            style={{ 'float': 'right', marginTop: 20 }}>
           </iframe>
+
+          <div style={{ display: 'inline-block' }}>
+            <Select onUpdate={ this._onChangeTheme }
+                    shouldPositionOptions={ false }>
+              <Option value={ "belle" }>Belle</Option>
+              <Option value={ "bootstrap" }>Bootstrap</Option>
+            </Select>
+          </div>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
