@@ -599,19 +599,6 @@ const bootstrap3Theme = {
         WebkitBoxShadow: '0 6px 12px rgba(0,0,0,.175)',
         boxShadow: '0 6px 12px rgba(0,0,0,.175)',
 
-
-        // display: 'block',
-        // listStyleType: 'none',
-        // background: '#FFF',
-        // padding: '6px 0',
-        // margin: 0,
-        // position: 'absolute',
-        // width: '100%',
-        // zIndex: 10000,
-        // borderRadius: 2,
-        // boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-        // borderTop: '1px solid #f2f2f2',
-        // top: 0,
         /* Improve scrolling for mobile Safari */
         WebkitOverflowScrolling: 'touch'
       },

@@ -102,12 +102,106 @@ export default React.createClass({
             style={{ 'float': 'right', marginTop: 20 }}>
           </iframe>
 
-          <div style={{ display: 'inline-block' }}>
+          <div style={{ display: 'inline-block',
+                        width: 250,
+                        'float': 'right',
+                        marginTop: 15,
+                        marginRight: 15 }}>
             <Select onUpdate={ this._onChangeTheme }
-                    shouldPositionOptions={ false }>
-              <Option value={ "belle" }>Belle</Option>
-              <Option value={ "bootstrap" }>Bootstrap</Option>
-              <Option value={ "belle-with-classic-focus" }>Belle without custom Focus behaviour</Option>
+                    shouldPositionOptions={ false }
+                    style={{
+                      border: '1px solid #CCC',
+                      borderRadius: 2,
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      padding: '3px 0px 3px 10px',
+
+                      borderBottom: '1px solid #CCC',
+                      boxSizing: 'border-box',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      /* overwrite bootstrap */
+                      display: 'block',
+                      fontSize: 14,
+                      fontWeight: 'normal',
+                      lineHeight: 1.42857143,
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap',
+                      verticalAlign: 'middle',
+                      msTouchAction: 'manipulation',
+                      touchAction: 'manipulation',
+                      WebkitUserSelect: 'none',
+                      MozUserSelect: 'none',
+                      msUserSelect: 'none',
+                      userSelect: 'none',
+                      backgroundImage: 'none'
+                    }}
+                    focusStyle={{
+                      border: '1px solid #6EB8D4',
+                      /* overwrite bootstrap */
+                      outline: 0,
+                      outlineOffset: 0,
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      borderColor: '#6EB8D4'
+                    }}
+                    hoverStyle={{
+                      border: '1px solid #92D6EF',
+                      /* overwrite bootstrap */
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      borderColor: '#92D6EF'
+                    }}
+                    menuStyle={{
+                      top: 32,
+                      display: 'block',
+                      listStyleType: 'none',
+                      background: '#FFF',
+                      padding: '6px 0',
+                      margin: 0,
+                      position: 'absolute',
+                      width: '100%',
+                      zIndex: 10000,
+                      boxSizing: 'border-box',
+                      borderRadius: 2,
+                      boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+                      WebkitBoxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+                      borderTop: '1px solid #f2f2f2',
+                      border: '1px solid #f2f2f2',
+                      left: 0,
+                      'float': 'none',
+                      minWidth: 0,
+                      fontSize: 14,
+                      textAlign: 'left',
+                      listStyle: 'none',
+                      backgroundColor: '#fff',
+                      WebkitBackgroundClip: 'padding-box',
+                      backgroundClip: 'padding-box'
+                    }}
+                    caretToOpenStyle={{
+                      height: 0,
+                      width: 0,
+                      position: 'absolute',
+                      top: 11,
+                      right: 8,
+                      borderTop: '6px solid #666',
+                      borderLeft: '5px solid transparent',
+                      borderRight: '5px solid transparent'
+                    }}
+                    caretToCloseStyle={{
+                      height: 0,
+                      width: 0,
+                      position: 'absolute',
+                      top: 11,
+                      right: 8,
+                      borderTop: '0px solid transparent',
+                      borderBottom: '6px solid #666',
+                      borderLeft: '5px solid transparent',
+                      borderRight: '5px solid transparent'
+                    }}>
+              <Option value={ "belle" } style={{ padding: 10 }}>Belle</Option>
+              <Option value={ "bootstrap" } style={{ padding: 10 }}>Bootstrap</Option>
+              <Option value={ "belle-with-classic-focus" } style={{ padding: 10 }}>Belle with classic focus behaviour</Option>
             </Select>
           </div>
 
