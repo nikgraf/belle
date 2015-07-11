@@ -125,7 +125,7 @@ export default React.createClass({
 
         <h3>Select with Separators</h3>
         <Select>
-          <Separator>Amerika</Separator>
+          <Separator>America</Separator>
           <Option value="san-francisco">San Francisco</Option>
           <Option value="vancouver">Vancouver</Option>
           <Separator>Asia</Separator>
