@@ -17,6 +17,7 @@ import SelectDocumentation from './SelectDocumentation';
 import SeparatorDocumentation from './SeparatorDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
 import ToggleDocumentation from './ToggleDocumentation';
+import FormComponents from './FormComponents';
 
 const routes = (
   <Route name="app" path="/" handler={Base}>
@@ -32,6 +33,7 @@ const routes = (
     <Route name="component/separator" handler={SeparatorDocumentation}/>
     <Route name="component/text-input" handler={TextInputDocumentation}/>
     <Route name="component/toggle" handler={ToggleDocumentation}/>
+    <Route name="guide/formComponents" handler={FormComponents}/>
     <Route name="configuration" handler={Configuration}/>
     <Route name="philosophy" handler={Philosophy}/>
     <Route name="future-work" handler={FuturePlans}/>
