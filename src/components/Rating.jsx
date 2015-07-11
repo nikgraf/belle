@@ -515,7 +515,7 @@ export default class Rating extends Component {
         wrapperStyle = extend(wrapperStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
       }
     } else {
-      if (this.state.isFocus && this.props.preventFocusStyleForTouchAndClick) {
+      if (this.state.isFocus && this.preventFocusStyleForTouchAndClick) {
         wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
       }
       if (this.state.isHover) {
