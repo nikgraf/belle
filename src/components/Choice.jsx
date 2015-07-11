@@ -9,16 +9,17 @@ export default class Choice extends Component {
     super(properties);
   }
 
+  static displayName = 'Belle Choice';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    value: React.PropTypes.bool.isRequired
+  };
+
   render() {
     return <div>{this.props.children}</div>;
   }
 }
-
-Choice.displayName = 'Belle Choice';
-Choice.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  value: React.PropTypes.bool.isRequired
-};
