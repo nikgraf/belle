@@ -144,6 +144,58 @@ export default class ComboBox extends Component {
     };
   }
 
+  static displayName = 'Belle ComboBox';
+
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    defaultValue: React.PropTypes.string,
+    value: React.PropTypes.string,
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.string,
+      requestChange: React.PropTypes.func.isRequired
+    }),
+    placeholder: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    wrapperProps: React.PropTypes.object,
+    menuProps: React.PropTypes.object,
+    caretProps: React.PropTypes.object,
+    onUpdate: React.PropTypes.func,
+    tabIndex: React.PropTypes.number,
+    onKeyDown: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    className: React.PropTypes.string,
+    caretClassName: React.PropTypes.string,
+    style: React.PropTypes.object,
+    wrapperStyle: React.PropTypes.object,
+    hintStyle: React.PropTypes.object,
+    menuStyle: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    caretToOpenStyle: React.PropTypes.object,
+    caretToCloseStyle: React.PropTypes.object,
+    disabledCaretToOpenStyle: React.PropTypes.object,
+    maxOptions: React.PropTypes.number,
+    displayCaret: React.PropTypes.bool,
+    enableHint: React.PropTypes.bool,
+    filterFunc: React.PropTypes.func,
+    'aria-label': React.PropTypes.string
+  };
+
+  static defaultProps = {
+    disabled: false,
+    displayCaret: false,
+    enableHint: false,
+    'aria-label': 'ComboBox',
+    filterFunc: filterFunc,
+    tabIndex: 0
+  };
+
   /**
    * This method will calculate the hint that should be present in comboBox at some point in time. Rules:
    * 1. If menu is not open hint is undefined
@@ -620,55 +672,3 @@ export default class ComboBox extends Component {
     );
   }
 }
-
-ComboBox.displayName = 'Belle ComboBox';
-
-ComboBox.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  defaultValue: React.PropTypes.string,
-  value: React.PropTypes.string,
-  valueLink: React.PropTypes.shape({
-    value: React.PropTypes.string,
-    requestChange: React.PropTypes.func.isRequired
-  }),
-  placeholder: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  wrapperProps: React.PropTypes.object,
-  menuProps: React.PropTypes.object,
-  caretProps: React.PropTypes.object,
-  onUpdate: React.PropTypes.func,
-  tabIndex: React.PropTypes.number,
-  onKeyDown: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  className: React.PropTypes.string,
-  caretClassName: React.PropTypes.string,
-  style: React.PropTypes.object,
-  wrapperStyle: React.PropTypes.object,
-  hintStyle: React.PropTypes.object,
-  menuStyle: React.PropTypes.object,
-  focusStyle: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  caretToOpenStyle: React.PropTypes.object,
-  caretToCloseStyle: React.PropTypes.object,
-  disabledCaretToOpenStyle: React.PropTypes.object,
-  maxOptions: React.PropTypes.number,
-  displayCaret: React.PropTypes.bool,
-  enableHint: React.PropTypes.bool,
-  filterFunc: React.PropTypes.func,
-  'aria-label': React.PropTypes.string
-};
-
-ComboBox.defaultProps = {
-  disabled: false,
-  displayCaret: false,
-  enableHint: false,
-  'aria-label': 'ComboBox',
-  filterFunc: filterFunc,
-  tabIndex: 0
-};
