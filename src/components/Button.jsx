@@ -112,6 +112,39 @@ export default class Button extends Component {
     this.focused = false;
   }
 
+  static displayName = 'Belle Button';
+
+  static propTypes = {
+    activeStyle: React.PropTypes.object,
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    className: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    type: React.PropTypes.oneOf(buttonTypes),
+    style: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
+    onTouchStart: React.PropTypes.func,
+    onTouchEnd: React.PropTypes.func,
+    onTouchCancel: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    preventFocusStyleForTouchAndClick: React.PropTypes.bool,
+    primary: React.PropTypes.bool
+  };
+
+  static defaultProps = {
+    primary: false,
+    disabled: false,
+    type: 'button'
+  };
+
   /**
    * Generates the style-id & inject the focus, hover & active style.
    *
@@ -275,36 +308,3 @@ export default class Button extends Component {
     );
   }
 }
-
-Button.displayName = 'Belle Button';
-
-Button.propTypes = {
-  activeStyle: React.PropTypes.object,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
-  ]),
-  className: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  type: React.PropTypes.oneOf(buttonTypes),
-  style: React.PropTypes.object,
-  focusStyle: React.PropTypes.object,
-  hoverStyle: React.PropTypes.object,
-  disabledStyle: React.PropTypes.object,
-  disabledHoverStyle: React.PropTypes.object,
-  onTouchStart: React.PropTypes.func,
-  onTouchEnd: React.PropTypes.func,
-  onTouchCancel: React.PropTypes.func,
-  onMouseDown: React.PropTypes.func,
-  onMouseUp: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  preventFocusStyleForTouchAndClick: React.PropTypes.bool,
-  primary: React.PropTypes.bool
-};
-
-Button.defaultProps = {
-  primary: false,
-  disabled: false,
-  type: 'button'
-};
