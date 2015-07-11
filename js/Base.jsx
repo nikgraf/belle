@@ -1,8 +1,25 @@
 import React from 'react';
-import {Card} from 'belle';
+import belle, {Card, Option, Select} from 'belle';
+import bootstrap3Theme from './theme/bootstrap-3';
+import belleWithClassicFocusTheme from './theme/belle-with-classic-focus';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
 import ViewportMixin from './mixin/viewport';
+
+/**
+ * Updates the deepest structure while keeping the original reference of the outer objects.
+ */
+function updateStructure(targetObject, object) {
+  for (const componentName in object) {
+    if (object.hasOwnProperty(componentName)) {
+      for (const styleName in object[componentName]) {
+        if (object[componentName].hasOwnProperty(styleName)) {
+          targetObject[componentName][styleName] = object[componentName][styleName];
+        }
+      }
+    }
+  }
+}
 
 export default React.createClass({
 
@@ -11,6 +28,27 @@ export default React.createClass({
   },
 
   mixins: [ViewportMixin],
+
+  componentWillMount() {
+    this.belleConfig = JSON.parse(JSON.stringify(belle.config));
+    this.belleStyle = JSON.parse(JSON.stringify(belle.style));
+  },
+
+  _onChangeTheme(info) {
+    if (info.value === 'bootstrap') {
+      updateStructure(belle.style, bootstrap3Theme.style);
+      updateStructure(belle.config, bootstrap3Theme.config);
+    } else if (info.value === 'belle-with-classic-focus') {
+      updateStructure(belle.style, this.belleStyle);
+      updateStructure(belle.style, belleWithClassicFocusTheme.style);
+      updateStructure(belle.config, belleWithClassicFocusTheme.config);
+    } else {
+      updateStructure(belle.style, this.belleStyle);
+      updateStructure(belle.config, this.belleConfig);
+    }
+
+    this.forceUpdate();
+  },
 
   render() {
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
@@ -61,8 +99,111 @@ export default React.createClass({
             scrolling="0"
             width="78px"
             height="30px"
-            style={ { 'float': 'right', marginTop: 20 } }>
+            style={{ 'float': 'right', marginTop: 20 }}>
           </iframe>
+
+          <div style={{ display: 'inline-block',
+                        width: 250,
+                        'float': 'right',
+                        marginTop: 15,
+                        marginRight: 15 }}>
+            <Select onUpdate={ this._onChangeTheme }
+                    shouldPositionOptions={ false }
+                    style={{
+                      border: '1px solid #CCC',
+                      borderRadius: 2,
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      padding: '3px 0px 3px 10px',
+
+                      borderBottom: '1px solid #CCC',
+                      boxSizing: 'border-box',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      /* overwrite bootstrap */
+                      display: 'block',
+                      fontSize: 14,
+                      fontWeight: 'normal',
+                      lineHeight: 1.42857143,
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap',
+                      verticalAlign: 'middle',
+                      msTouchAction: 'manipulation',
+                      touchAction: 'manipulation',
+                      WebkitUserSelect: 'none',
+                      MozUserSelect: 'none',
+                      msUserSelect: 'none',
+                      userSelect: 'none',
+                      backgroundImage: 'none'
+                    }}
+                    focusStyle={{
+                      border: '1px solid #6EB8D4',
+                      /* overwrite bootstrap */
+                      outline: 0,
+                      outlineOffset: 0,
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      borderColor: '#6EB8D4'
+                    }}
+                    hoverStyle={{
+                      border: '1px solid #92D6EF',
+                      /* overwrite bootstrap */
+                      color: '#333',
+                      backgroundColor: '#fff',
+                      borderColor: '#92D6EF'
+                    }}
+                    menuStyle={{
+                      top: 32,
+                      display: 'block',
+                      listStyleType: 'none',
+                      background: '#FFF',
+                      padding: '6px 0',
+                      margin: 0,
+                      position: 'absolute',
+                      width: '100%',
+                      zIndex: 10000,
+                      boxSizing: 'border-box',
+                      borderRadius: 2,
+                      boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+                      WebkitBoxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+                      borderTop: '1px solid #f2f2f2',
+                      border: '1px solid #f2f2f2',
+                      left: 0,
+                      'float': 'none',
+                      minWidth: 0,
+                      fontSize: 14,
+                      textAlign: 'left',
+                      listStyle: 'none',
+                      backgroundColor: '#fff',
+                      WebkitBackgroundClip: 'padding-box',
+                      backgroundClip: 'padding-box'
+                    }}
+                    caretToOpenStyle={{
+                      height: 0,
+                      width: 0,
+                      position: 'absolute',
+                      top: 11,
+                      right: 8,
+                      borderTop: '6px solid #666',
+                      borderLeft: '5px solid transparent',
+                      borderRight: '5px solid transparent'
+                    }}
+                    caretToCloseStyle={{
+                      height: 0,
+                      width: 0,
+                      position: 'absolute',
+                      top: 11,
+                      right: 8,
+                      borderTop: '0px solid transparent',
+                      borderBottom: '6px solid #666',
+                      borderLeft: '5px solid transparent',
+                      borderRight: '5px solid transparent'
+                    }}>
+              <Option value={ "belle" } style={{ padding: 10 }}>Belle</Option>
+              <Option value={ "bootstrap" } style={{ padding: 10 }}>Bootstrap</Option>
+              <Option value={ "belle-with-classic-focus" } style={{ padding: 10 }}>Belle with classic focus behaviour</Option>
+            </Select>
+          </div>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
