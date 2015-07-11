@@ -33,7 +33,7 @@ export default class Card extends Component {
     ]),
     style: React.PropTypes.object,
     test: React.PropTypes.object
-  }
+  };
 
   /**
    * Update the _childProperties based on the updated properties passed to the
