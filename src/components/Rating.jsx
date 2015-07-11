@@ -17,7 +17,6 @@ function sanitizeWrapperProps(properties) {
   return omit(properties, [
     'className',
     'onKeyDown',
-    'onClick',
     'onMouseEnter',
     'onMouseMove',
     'onMouseLeave',
@@ -115,6 +114,9 @@ export default class Rating extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
+
+    this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+    document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
   }
 
   componentWillReceiveProps(properties) {
@@ -140,6 +142,7 @@ export default class Rating extends Component {
    */
   componentWillUnmount() {
     removeStyle(this.ratingWrapperStyleId);
+    document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
   }
 
   /**
@@ -206,8 +209,8 @@ export default class Rating extends Component {
    * Sets isActive state to true.
    */
   _onMouseDown(event) {
-    if (!this.props.disabled) {
-      this.setState({isActive: true});
+    if (!this.props.disabled && event.buttons === 1) {
+      this.setState({ isActive: true });
     }
 
     if (this.props.onMouseDown) {
@@ -220,7 +223,8 @@ export default class Rating extends Component {
    */
   _onMouseUp(event) {
     if (!this.props.disabled) {
-      this.setState({isActive: false});
+      const value = Number(event.target.getAttribute('data-belle-value'));
+      this._updateComponent(value);
     }
 
     if (this.props.onMouseUp) {
@@ -228,18 +232,12 @@ export default class Rating extends Component {
     }
   }
 
-  /**
-   * update component when clicked
-   */
-  _onClick(event) {
-    if (!this.props.disabled) {
-      const value = Number(event.target.getAttribute('data-belle-value'));
-      this._updateComponent(value);
-    }
+  _onMouseUpOnDocument() {
+    this.setState({ isActive: false });
+  }
 
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
+  _onContextMenu() {
+    this.setState({ isActive: false });
   }
 
   /**
@@ -338,7 +336,8 @@ export default class Rating extends Component {
     if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
-        isFocus: false
+        isFocus: false,
+        isActive: false
       });
     }
     if (this.props.onBlur) {
@@ -367,15 +366,18 @@ export default class Rating extends Component {
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
-        focusedValue: undefined
+        focusedValue: undefined,
+        isActive: false
       });
     } else if (has(this.props, 'value')) {
       this.setState({
-        focusedValue: undefined
+        focusedValue: undefined,
+        isActive: false
       });
     } else {
       this.setState({
         focusedValue: undefined,
+        isActive: false,
         value: value
       });
     }
@@ -528,7 +530,6 @@ export default class Rating extends Component {
            style={ wrapperStyle }
            className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
            onKeyDown={ this._onKeyDown.bind(this) }
-           onClick = { this._onClick.bind(this) }
            onMouseEnter={ this._onMouseEnter.bind(this) }
            onMouseMove={ this._onMouseMove.bind(this) }
            onMouseLeave={ this._onMouseLeave.bind(this) }
@@ -538,6 +539,7 @@ export default class Rating extends Component {
            onTouchMove={ this._onTouchMove.bind(this) }
            onTouchEnd={ this._onTouchEnd.bind(this) }
            onTouchCancel={ this._onTouchCancel.bind(this) }
+           onContextMenu={ this._onContextMenu.bind(this) }
            onBlur={ this._onBlur.bind(this) }
            onFocus={ this._onFocus.bind(this) }
            tabIndex={ tabIndex }
@@ -602,7 +604,6 @@ Rating.propTypes = {
   onTouchCancel: React.PropTypes.func,
   onFocus: React.PropTypes.func,
   onBlur: React.PropTypes.func,
-  onClick: React.PropTypes.func,
   onKeyDown: React.PropTypes.func
 };
 
