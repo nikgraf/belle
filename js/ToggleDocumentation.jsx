@@ -17,7 +17,8 @@ const choiceCodeExample = `<!-- toggle with custom choices -->
 
 const htmlStructure = `<div style={ wrapperStyle }
      tabIndex={ tabIndex } >
-  <div style={ sliderWrapperStyle }>
+  <div ref="sliderWrapper"
+       style={ sliderWrapperStyle }>
     <div style={ sliderStyle }>
       <div ref="firstChoice"
            style={ firstChoiceStyle }>
