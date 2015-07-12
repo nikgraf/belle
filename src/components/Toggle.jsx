@@ -46,6 +46,7 @@ function sanitizeSliderProps(properties) {
 
 function sanitizeSliderWrapperProps(properties) {
   return omit(properties, [
+    'ref',
     'style'
   ]);
 }
@@ -184,7 +185,9 @@ export default class Toggle extends Component {
     disabledHandleStyle: React.PropTypes.object,
     disabledStyle: React.PropTypes.object,
     firstChoiceProps: React.PropTypes.object,
-    firstChoiceStyle: React.PropTypes.object,
+    firstChoiceStyle: React.PropTypes.shape({
+      width: React.PropTypes.number
+    }),
     focusStyle: React.PropTypes.object,
     handleProps: React.PropTypes.shape({
       onMouseDown: React.PropTypes.func,
@@ -196,7 +199,10 @@ export default class Toggle extends Component {
       onTouchEnd: React.PropTypes.func,
       onTouchCancel: React.PropTypes.func
     }),
-    handleStyle: React.PropTypes.object,
+    handleStyle: React.PropTypes.shape({
+      height: React.PropTypes.number,
+      width: React.PropTypes.number
+    }),
     hoverHandleStyle: React.PropTypes.object,
     onBlur: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
@@ -208,7 +214,9 @@ export default class Toggle extends Component {
     onMouseUp: React.PropTypes.func,
     onTouchStart: React.PropTypes.func,
     secondChoiceProps: React.PropTypes.object,
-    secondChoiceStyle: React.PropTypes.object,
+    secondChoiceStyle: React.PropTypes.shape({
+      width: React.PropTypes.number
+    }),
     sliderProps: React.PropTypes.shape({
       onClick: React.PropTypes.func,
       onTouchStart: React.PropTypes.func,
@@ -219,7 +227,9 @@ export default class Toggle extends Component {
     sliderStyle: React.PropTypes.object,
     sliderWrapperProps: React.PropTypes.object,
     sliderWrapperStyle: React.PropTypes.object,
-    style: React.PropTypes.object,
+    style: React.PropTypes.shape({
+      width: React.PropTypes.number
+    }),
     value: React.PropTypes.bool,
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.bool.isRequired,
@@ -645,8 +655,8 @@ export default class Toggle extends Component {
     }
   }
 
-  _getToggleWidth() {
-    return has(this.props.style, 'width') ? this.props.style.width : style.style.width;
+  _getHandleHeight() {
+    return has(this.props.handleStyle, 'height') ? this.props.handleStyle.height : style.handleStyle.height;
   }
 
   _getHandleWidth() {
@@ -657,6 +667,10 @@ export default class Toggle extends Component {
     const firstChoiceWidth = has(this.props.firstChoiceStyle, 'width') ? this.props.firstChoiceStyle.width : style.firstChoiceStyle.width;
 
     return firstChoiceWidth - this._getHandleWidth() / 2;
+  }
+
+  _getToggleWidth() {
+    return has(this.props.style, 'width') ? this.props.style.width : style.style.width;
   }
 
   _triggerChange(value) {
@@ -724,13 +738,17 @@ export default class Toggle extends Component {
   }
 
   _triggerUpdateComponentOnTouchMoveAtHandle(touch) {
-    const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const handleNode = React.findDOMNode(this.refs.handle);
-
+    const sliderWrapperNode = React.findDOMNode(this.refs.sliderWrapper);
+    const rect = sliderWrapperNode.getBoundingClientRect();
     const difference = touch.pageX - this._touchDragStart;
+    const horizontalTolerance = this._getHandleWidth() * 2;
+    const verticalTolerance = this._getHandleHeight() * 2;
 
-    // touch left the handle
-    if (touchedElement !== handleNode) {
+    // touch left the allowed handle drag area
+    if (touch.clientX < rect.left - horizontalTolerance ||
+        touch.clientX > rect.right + horizontalTolerance ||
+        touch.clientY < rect.top - verticalTolerance ||
+        touch.clientY > rect.bottom + verticalTolerance) {
       if (this._preventTouchSwitch) {
         const value = difference > (this._getHandleWidth() / 2);
         this._triggerChange(value);
@@ -831,6 +849,7 @@ export default class Toggle extends Component {
            aria-checked={ this.state.value }
            {...this.state.childProps} >
         <div style={ sliderWrapperStyle }
+             ref="sliderWrapper"
              {...this.state.sliderWrapperProps}>
           <div style={ computedSliderStyle }
                onClick={ this._onClickAtSlider.bind(this) }
