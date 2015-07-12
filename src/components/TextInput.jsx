@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend} from 'underscore';
+import {omit, extend, has} from 'underscore';
 import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;
@@ -84,8 +84,19 @@ export default class TextInput extends Component {
 
   constructor(properties) {
     super(properties);
+    let inputValue;
+
+    if (has(properties, 'valueLink')) {
+      inputValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      inputValue = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      inputValue = properties.defaultValue;
+    }
+
     this.state = {
       height: 'auto',
+      inputValue: inputValue,
       textareaProps: sanitizeChildProps(properties)
     };
   }
@@ -139,7 +150,17 @@ export default class TextInput extends Component {
    * properties the height might have changed.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ textareaProps: sanitizeChildProps(properties) });
+    let inputValue;
+    if (has(properties, 'valueLink')) {
+      inputValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      inputValue = properties.value;
+    }
+
+    this.setState({
+      textareaProps: sanitizeChildProps(properties),
+      inputValue: inputValue
+    });
     removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
     this._triggerResize();
@@ -181,31 +202,20 @@ export default class TextInput extends Component {
 
     if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
       value = value.replace(newLineRegex, ' ');
-
-      // controlled textarea must have value
-      if (this.state.textareaProps.value) {
-        this.setState({ textareaProps: { value: value } });
-        this.forceUpdate(this._triggerResize);
-      // uncontrolled textarea must be updated with value, but then released again
-      } else {
-        this.setState({ textareaProps: { value: value } });
-        this.forceUpdate(() => {
-          this._triggerResize();
-          this.setState({ textareaProps: { value: undefined } });
-        });
-      }
-    } else {
-      this._triggerResize();
     }
 
-    const valueLink = this.props.valueLink;
-    if (typeof valueLink === 'object' && typeof valueLink.requestChange === 'function') {
-      valueLink.requestChange(value);
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
+    } else if (has(this.props, 'defaultValue')) {
+      this.setState({
+        inputValue: value
+      });
     }
 
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
+    this._triggerResize();
   }
 
   /**
@@ -235,6 +245,7 @@ export default class TextInput extends Component {
     textareaStyle.height = this.state.height;
     return (
       <textarea style={ textareaStyle }
+                value = {this.state.inputValue}
                 className={ unionClassNames(this.props.className, this._styleId) }
                 onChange={ this._onChange.bind(this) }
                 onKeyDown={ this._onKeyDown.bind(this) }
