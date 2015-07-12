@@ -272,6 +272,7 @@ export default class Toggle extends Component {
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
+    removeStyle(this.styleId);
     updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 

@@ -94,6 +94,16 @@ export function removeStyle(styleId) {
 }
 
 /**
+ * Removes all pseudoClass styles based on all provided styleIds.
+ */
+export function removeAllStyles(styleIds) {
+  styleIds.forEach((styleId) => {
+    delete styleStorage[styleId];
+  });
+  updateStyling();
+}
+
+/**
  * Injects a style tag and adds the passed style for the provided pseudoClass.
  */
 export default function(styleId, style, pseudoClass, disabled) {

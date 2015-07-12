@@ -183,6 +183,7 @@ export default class Rating extends Component {
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
+    removeStyle(this.ratingWrapperStyleId);
     updatePseudoClassStyle(this._styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 

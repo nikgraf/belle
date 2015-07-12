@@ -322,6 +322,7 @@ export default class Select extends Component {
     }
 
     this.setState(newState);
+    removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
   }
 

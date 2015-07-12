@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {injectStyles, removeStyle} from '../utils/inject-style';
+import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {omit, extend, filter, has, map} from 'underscore';
 import style from '../style/combo-box';
@@ -263,6 +263,7 @@ export default class ComboBox extends Component {
     }
 
     this.setState(newState);
+    removeAllStyles([this._styleId, this._caretStyleId]);
     updatePseudoClassStyle(this._styleId, this._caretStyleId, properties);
   }
 
@@ -270,7 +271,7 @@ export default class ComboBox extends Component {
    * Remove a component's associated styles whenever it gets removed from the DOM.
    */
   componentWillUnmount() {
-    removeStyle(this._styleId);
+    removeAllStyles([this._styleId, this._caretStyleId]);
   }
 
   /**

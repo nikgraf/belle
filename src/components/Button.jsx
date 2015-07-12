@@ -165,6 +165,7 @@ export default class Button extends Component {
     this.setState({
       childProps: sanitizeChildProps(properties)
     });
+    removeStyle(this.styleId);
     updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
