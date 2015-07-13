@@ -25,6 +25,10 @@ const comboBoxStyle = {
     boxSizing: 'border-box',
     position: 'relative',
 
+    /* animations */
+    transition: 'border-bottom 0.2s',
+    transitionTimingFunction: 'ease-out',
+
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',

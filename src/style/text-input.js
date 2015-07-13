@@ -19,7 +19,11 @@ const textInputStyle = {
     borderBottom: '1px solid #ccc',
     background: 'none',
     display: 'block',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+
+    /* animations */
+    transition: 'border-bottom 0.2s',
+    transitionTimingFunction: 'ease-out'
   },
 
   hoverStyle: {
