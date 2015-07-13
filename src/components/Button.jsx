@@ -30,6 +30,7 @@ function sanitizeChildProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
+    'onMouseDown',
     'onFocus',
     'onBlur'
   ]);
@@ -108,6 +109,9 @@ export default class Button extends Component {
     // As it is reset after every render it can't be set inside state as this
     // would trigger an endless loop.
     this.focused = false;
+
+    // This used to determine if the one-time focus animation should be prevented.
+    this.mouseDownOnButton = false;
   }
 
   static displayName = 'Belle Button';
@@ -129,6 +133,7 @@ export default class Button extends Component {
     onTouchStart: React.PropTypes.func,
     onTouchEnd: React.PropTypes.func,
     onTouchCancel: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     preventFocusStyleForTouchAndClick: React.PropTypes.bool,
@@ -172,6 +177,7 @@ export default class Button extends Component {
    */
   componentDidUpdate() {
     this.focused = false;
+    this.mouseDownOnButton = false;
   }
 
   /**
@@ -204,6 +210,16 @@ export default class Button extends Component {
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
+    }
+  }
+
+  _onMouseDown(event) {
+    if (event.button === 0 && !this.props.disabled) {
+      this.mouseDownOnButton = true;
+    }
+
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(event);
     }
   }
 
@@ -257,7 +273,10 @@ export default class Button extends Component {
       if (this.state.active) {
         const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
         buttonStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
-      } else if (this.focused && !this.state.active && this.preventFocusStyleForTouchAndClick) {
+      } else if (this.focused &&
+                 !this.state.active &&
+                 !this.mouseDownOnButton &&
+                 this.preventFocusStyleForTouchAndClick) {
         const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
         buttonStyle = extend({}, baseButtonStyle, baseFocusStyle, this.props.focusStyle);
       } else {
@@ -273,6 +292,7 @@ export default class Button extends Component {
               onTouchCancel={ this._onTouchCancel.bind(this) }
               onFocus={ this._onFocus.bind(this) }
               onBlur={ this._onBlur.bind(this) }
+              onMouseDown={ this._onMouseDown.bind(this) }
               {...this.state.childProps}>
         { this.props.children }
       </button>
