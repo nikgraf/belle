@@ -35,9 +35,9 @@ export default class Why extends Component {
 
       <h4>Toggle component with Belle & Bootstrap style</h4>
 
-      <img src="/images/why/toggle-desktop.gif" style={{ width: 97, height: 62 }} />
+      <img src="images/why/toggle-desktop.gif" style={{ width: 97, height: 62 }} />
       <br />
-      <img src="/images/why/toggle-bootstrap-desktop.gif" style={{ width: 107, height: 62 }} />
+      <img src="images/why/toggle-bootstrap-desktop.gif" style={{ width: 107, height: 62 }} />
       <br />
       Try it yourself here:
       <br /><br />
@@ -45,11 +45,11 @@ export default class Why extends Component {
 
       <h4>Select component with Belle style</h4>
 
-      <img src="/images/why/select-dektop.gif" style={{ height: 220 }} />
+      <img src="images/why/select-dektop.gif" style={{ height: 220 }} />
       <br /><br /><br />
 
       <h4>Select component with Bootstrap style</h4>
-      <img src="/images/why/select-desktop-bootstrap.gif" style={{ height: 200 }} />
+      <img src="images/why/select-desktop-bootstrap.gif" style={{ height: 200 }} />
       <br />
 
       <p>
