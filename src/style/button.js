@@ -88,7 +88,7 @@ const buttonStyle = {
     verticalAlign: 'bottom',
 
     /* animations */
-    transition: 'background 0.1s, border-top 0.1s, border-bottom 0.1s, color 0.1s',
+    transition: 'border-top 0.1s, border-bottom 0.1s, color 0.1s',
     transitionTimingFunction: 'ease-out',
 
     /*
