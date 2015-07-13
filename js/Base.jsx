@@ -57,7 +57,7 @@ export default React.createClass({
     if (this.context.router.getCurrentPath() === '/') {
       header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 820, paddingLeft: 160 }}>
+                mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 52, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
@@ -92,7 +92,7 @@ export default React.createClass({
     } else {
       header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 820}}>
+                mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
@@ -229,7 +229,7 @@ export default React.createClass({
       { header }
 
       <Column smallScreenStyle={{ width: '100%' }}
-              mediumScreenStyle={{margin: '0 auto', width: 820 }}>
+              mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
 
         <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
                 mediumScreenStyle={{ 'float': 'left', width: 160 }}
@@ -302,7 +302,7 @@ export default React.createClass({
         </Column>
 
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
-                mediumScreenStyle={{ 'float': 'left', width: 660 }}>
+                mediumScreenStyle={{ 'float': 'left', width: 640 }}>
           <Card style={ cardContentStyle }>
             <RouteHandler/>
           </Card>
