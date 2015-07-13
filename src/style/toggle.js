@@ -51,7 +51,7 @@ const toggleStyle = {
     boxShadow: '0 1px 0px 0px rgb(185, 185, 185)',
 
     /* animations */
-    transition: 'left 0.1s, background-color 0.1s, boxShadow 0.1s, height 0.1s',
+    transition: 'left 0.1s',
     transitionTimingFunction: 'ease-in-out',
 
     /*
