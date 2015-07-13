@@ -5,6 +5,7 @@ const optionStyle = {
     color: '#666',
     cursor: 'pointer',
     padding: 10,
+    fontSize: 15,
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the option text
@@ -32,6 +33,7 @@ const optionStyle = {
     boxSizing: 'border-box',
     color: '#666',
     padding: 0,
+    fontSize: 15,
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the button text

@@ -12,7 +12,7 @@ const textInputStyle = {
     overflow: 'hidden',
     resize: 'none',
     width: '100%',
-    fontSize: 14,
+    fontSize: 15,
     padding: '7px 0 5px 0',
     color: '#505050',
     border: '0 solid #fff',

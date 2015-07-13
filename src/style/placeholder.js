@@ -5,6 +5,7 @@ const placeholderStyle = {
     color: '#666',
     cursor: 'pointer',
     padding: 0,
+    fontSize: 15,
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the button text

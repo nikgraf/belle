@@ -50,7 +50,6 @@ if (true) {
     borderBottomColor: '#D0D0D0',
     color: 'brown',
     verticalAlign: 'bottom',
-    fontSize: 16,
     lineHeight: '26px'
   };
 
