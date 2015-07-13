@@ -30,8 +30,6 @@ function sanitizeChildProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
-    'onMouseDown',
-    'onMouseUp',
     'onFocus',
     'onBlur'
   ]);
@@ -131,8 +129,6 @@ export default class Button extends Component {
     onTouchStart: React.PropTypes.func,
     onTouchEnd: React.PropTypes.func,
     onTouchCancel: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onMouseUp: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     preventFocusStyleForTouchAndClick: React.PropTypes.bool,
@@ -214,30 +210,6 @@ export default class Button extends Component {
   /**
    * Updates the button to be pressed.
    */
-  _onMouseDown(event) {
-    if (event.button === 0 && !this.props.disabled) {
-      this.setState({ active: true });
-    }
-
-    if (this.props.onMouseDown) {
-      this.props.onMouseDown(event);
-    }
-  }
-
-  /**
-   * Updates the button to be released.
-   */
-  _onMouseUp(event) {
-    this.setState({ active: false });
-
-    if (this.props.onMouseUp) {
-      this.props.onMouseUp(event);
-    }
-  }
-
-  /**
-   * Updates the button to be pressed.
-   */
   _onTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
       this.setState({ active: true });
@@ -301,8 +273,6 @@ export default class Button extends Component {
               onTouchCancel={ this._onTouchCancel.bind(this) }
               onFocus={ this._onFocus.bind(this) }
               onBlur={ this._onBlur.bind(this) }
-              onMouseDown={ this._onMouseDown.bind(this) }
-              onMouseUp={ this._onMouseUp.bind(this) }
               {...this.state.childProps}>
         { this.props.children }
       </button>
