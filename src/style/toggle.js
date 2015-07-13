@@ -151,9 +151,7 @@ const toggleStyle = {
   activeHandleStyle: {
     height: 28,
     backgroundColor: 'rgb(246, 246, 246)',
-    boxShadow: '0 0 0 0 rgb(189, 189, 189)',
-
-    transition: 'background-color 0.1s, boxShadow 0.1s, height 0.1s'
+    boxShadow: '0 0 0 0 rgb(189, 189, 189)'
   },
 
   disabledHandleStyle: {
