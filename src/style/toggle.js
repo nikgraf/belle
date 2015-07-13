@@ -2,9 +2,9 @@ const toggleStyle = {
 
   style: {
     boxSizing: 'border-box',
-    borderRadius: 28,
-    height: 28,
-    width: 60,
+    borderRadius: 32,
+    height: 32,
+    width: 68,
     WebkitUserSelect: 'none',
     position: 'relative',
     cursor: 'pointer',
@@ -25,7 +25,7 @@ const toggleStyle = {
     boxSizing: 'border-box',
     position: 'relative',
     // Calculated with 2 * the width of choice area
-    width: 92,
+    width: 104,
     transition: 'left 0.1s',
     transitionTimingFunction: 'ease-in-out'
   },
@@ -33,7 +33,7 @@ const toggleStyle = {
   sliderWrapperStyle: {
     boxSizing: 'border-box',
     overflow: 'hidden',
-    borderRadius: 28,
+    borderRadius: 32,
     boxShadow: 'inset 0 1px 0px 0px rgba(0,0,0,0.6)'
   },
 
@@ -42,10 +42,10 @@ const toggleStyle = {
     top: 0,
     left: 0,
     boxSizing: 'border-box',
-    borderRadius: 28,
+    borderRadius: 32,
     backgroundColor: 'rgb(243, 243, 243)',
-    height: 27,
-    width: 28,
+    height: 31,
+    width: 32,
     cursor: 'pointer',
     border: '1px solid rgb(220, 220, 220)',
     boxShadow: '0 1px 0px 0px rgb(185, 185, 185)',
@@ -77,13 +77,13 @@ const toggleStyle = {
   firstChoiceStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
-    height: 28,
+    height: 32,
     // Calculated with the width of the whole toggle - half of the width from the handle
     //
     // This allows to have a round handle that is position exactly in on top of the
     // border between the two choice areas.
-    width: 46,
-    lineHeight: 28 + 'px',
+    width: 52,
+    lineHeight: 32 + 'px',
     textAlign: 'center',
     color: '#FFF',
     backgroundColor: 'rgba(43, 206, 56, 0.8)',
@@ -112,13 +112,13 @@ const toggleStyle = {
   secondChoiceStyle: {
     display: 'inline-block',
     boxSizing: 'border-box',
-    height: 28,
+    height: 32,
     // Calculated with the width of the whole toggle - half of the width from the handle
     //
     // This allows to have a round handle that is position exactly in on top of the
     // border between the two choice areas.
-    width: 46,
-    lineHeight: 28 + 'px',
+    width: 52,
+    lineHeight: 32 + 'px',
     textAlign: 'center',
     color: '#FFF',
     backgroundColor: 'rgba(205, 205, 205, 0.8)',
@@ -149,7 +149,7 @@ const toggleStyle = {
   },
 
   activeHandleStyle: {
-    height: 28,
+    height: 32,
     backgroundColor: 'rgb(246, 246, 246)',
     boxShadow: '0 0 0 0 rgb(189, 189, 189)'
   },
