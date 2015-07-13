@@ -26,7 +26,8 @@ const toggleStyle = {
     position: 'relative',
     // Calculated with 2 * the width of choice area
     width: 92,
-    transition: 'left 0.1s ease-in-out'
+    transition: 'left 0.1s',
+    transitionTimingFunction: 'ease-in-out'
   },
 
   sliderWrapperStyle: {
@@ -48,7 +49,10 @@ const toggleStyle = {
     cursor: 'pointer',
     border: '1px solid rgb(220, 220, 220)',
     boxShadow: '0 1px 0px 0px rgb(185, 185, 185)',
-    transition: 'left 0.1s ease-in-out',
+
+    /* animations */
+    transition: 'left 0.1s, background-color 0.1s, boxShadow 0.1s, height 0.1s',
+    transitionTimingFunction: 'ease-in-out',
 
     /*
     To avoid any kind of flickering the user won't get feedback
@@ -148,7 +152,8 @@ const toggleStyle = {
     height: 28,
     backgroundColor: 'rgb(246, 246, 246)',
     boxShadow: '0 0 0 0 rgb(189, 189, 189)',
-    cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
+
+    transition: 'background-color 0.1s, boxShadow 0.1s, height 0.1s'
   },
 
   disabledHandleStyle: {

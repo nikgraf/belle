@@ -50,7 +50,12 @@ const ratingStyle = {
 
   characterStyle: {
     color: '#FFCC00',
-    textShadow: '0px 1px 0px #DCB000'
+    textShadow: '0px 1px 0px #DCB000',
+    top: 0,
+
+    /* animations */
+    transition: 'color 0.1s',
+    transitionTimingFunction: 'ease-out'
   },
 
   hoverCharacterStyle: {

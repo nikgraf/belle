@@ -17,6 +17,10 @@ const buttonStyle = {
     textDecoration: 'none',
     verticalAlign: 'bottom',
 
+    /* animations */
+    transition: 'background 0.1s, border-top 0.1s, border-bottom 0.1s, color 0.1s',
+    transitionTimingFunction: 'ease-out',
+
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the button text
@@ -82,6 +86,10 @@ const buttonStyle = {
     textAlign: 'center',
     textDecoration: 'none',
     verticalAlign: 'bottom',
+
+    /* animations */
+    transition: 'background 0.1s, border-top 0.1s, border-bottom 0.1s, color 0.1s',
+    transitionTimingFunction: 'ease-out',
 
     /*
     To avoid any kind of flickering the user won't get feedback

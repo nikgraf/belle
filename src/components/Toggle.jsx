@@ -796,9 +796,10 @@ export default class Toggle extends Component {
       });
       // right now even when handle is clicked, it momentarily shows this grabbing styles
       // may be this.state.isDraggingWithMouse should be set to true only after mouse movement starts
-      handleStyle = extend({}, style.handleStyle, this.props.handleStyle, style.activeHandleStyle, this.props.activeHandleStyle, {
+      const activeStyle = extend({}, style.activeHandleStyle, this.props.handleStyle);
+      handleStyle = extend({}, style.handleStyle, activeStyle, this.props.activeHandleStyle, {
         left: this.state.sliderOffset,
-        transition: 'none'
+        transition: activeStyle.transition ? activeStyle.transition : 'none'
       });
     } else {
       handleStyle = extend({}, style.handleStyle, this.props.handleStyle);

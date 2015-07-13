@@ -12,6 +12,10 @@ const selectStyle = {
     padding: '7px 0 4px 0',
     position: 'relative',
 
+    /* animations */
+    transition: 'border-bottom 0.2s',
+    transitionTimingFunction: 'ease-out',
+
     /*
     To avoid any kind of flickering the user won't get feedback
     for selecting the button text
