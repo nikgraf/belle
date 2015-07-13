@@ -57,7 +57,7 @@ export default class Why extends Component {
          <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
          <a href="https://twitter.com/jyoti_puri_1"> @jyoti_puri_1</a> or contact us
         via mail
-        <a href="mailto:nik@nikgraf.com?cc=jyotipuri@gmail.com ">Nik Graf & Jyoti Puri</a>.
+        <a href="mailto:nik@nikgraf.com?cc=jyotipuri@gmail.com "> Nik Graf & Jyoti Puri</a>.
         We want to release Belle soon and need help promoting it.
         Of course we are also happy to receive any feedback that comes to your mind.
       </p>
