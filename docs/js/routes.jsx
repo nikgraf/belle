@@ -18,6 +18,7 @@ import SeparatorDocumentation from './SeparatorDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
 import ToggleDocumentation from './ToggleDocumentation';
 import FormComponents from './FormComponents';
+import WhyGuide from './guides/Why';
 
 const routes = (
   <Route name="app" path="/" handler={Base}>
@@ -37,6 +38,7 @@ const routes = (
     <Route name="configuration" handler={Configuration}/>
     <Route name="philosophy" handler={Philosophy}/>
     <Route name="future-work" handler={FuturePlans}/>
+    <Route name="guide/why" handler={WhyGuide}/>
 
     <DefaultRoute handler={GettingStarted}/>
   </Route>
