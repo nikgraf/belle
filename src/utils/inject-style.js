@@ -79,7 +79,7 @@ function updateStyling() {
  */
 export function injectStyles(styles) {
   injectStyleTag();
-  styles.forEach((style) => {
+  each(styles, (style) => {
     updateStore(style.id, style.style, style.pseudoClass, style.disabled);
   });
   updateStyling();
