@@ -1,4 +1,4 @@
-import {map, each, flatten} from 'underscore';
+import {map, flatten} from '../utils/helpers';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
 import animations from '../style/animations';
 
@@ -79,7 +79,7 @@ function updateStyling() {
  */
 export function injectStyles(styles) {
   injectStyleTag();
-  each(styles, (style) => {
+  styles.forEach((style) => {
     updateStore(style.id, style.style, style.pseudoClass, style.disabled);
   });
   updateStyling();

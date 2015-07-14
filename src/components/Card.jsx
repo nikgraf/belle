@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {omit, extend} from 'underscore';
+import {omit, extend} from '../utils/helpers';
 import style from '../style/card';
 
 /**

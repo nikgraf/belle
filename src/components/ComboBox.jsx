@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filter, has, map} from 'underscore';
+import {omit, extend, filter, has, map} from '../utils/helpers';
 import style from '../style/combo-box';
 
 // Enable React Touch Events

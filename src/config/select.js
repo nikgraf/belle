@@ -1,6 +1,6 @@
 import React from 'react';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
-import {filter, findIndex} from 'underscore';
+import {filter, findIndex} from '../utils/helpers';
 
 /**
  * Returns the index of the entry with a certain value from the component's

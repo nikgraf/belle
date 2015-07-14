@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {extend, omit} from 'underscore';
+import {extend, omit} from '../utils/helpers';
 import style from '../style/placeholder';
 
 /**
