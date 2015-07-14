@@ -1,4 +1,4 @@
-import {map, each, flatten} from 'underscore';
+import {each, map, flatten} from '../utils/helpers';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
 import animations from '../style/animations';
 
@@ -97,7 +97,7 @@ export function removeStyle(styleId) {
  * Removes all pseudoClass styles based on all provided styleIds.
  */
 export function removeAllStyles(styleIds) {
-  styleIds.forEach((styleId) => {
+  each(styleIds, (styleId) => {
     delete styleStorage[styleId];
   });
   updateStyling();

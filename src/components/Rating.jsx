@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {extend, omit, has} from 'underscore';
+import {extend, omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';

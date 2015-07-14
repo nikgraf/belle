@@ -153,4 +153,5 @@ The implementation of the TextInput component was heavily inspired by implementa
 
 MIT
 
-This library also contains a copy of the React Software which is licensed under BSD.
+This library also contains a copy of the React Software which is licensed under BSD as well
+as a copy of Underscore.js which is licensed under MIT.

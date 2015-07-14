@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, some, uniqueId, has} from 'underscore';
+import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, some, uniqueId, has} from '../utils/helpers';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, has} from 'underscore';
+import {omit, extend, has} from '../utils/helpers';
 import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;

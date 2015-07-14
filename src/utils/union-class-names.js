@@ -1,4 +1,4 @@
-import {union} from 'underscore';
+import {union} from '../utils/helpers';
 
 /**
  * Returns a string containing all classes without duplicates.

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend, first, has, omit, last} from 'underscore';
+import {extend, omit, has, last, first} from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentTypeOf from '../utils/is-component-of-type.js';
