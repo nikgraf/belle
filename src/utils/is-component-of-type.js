@@ -8,8 +8,8 @@
  * // Checks if the component is an Autocomplete
  * isComponentType('Autocomplete', this.props.children[0]);
  */
-export default function isComponentOfType(componentName, reactElement) {
+export default function isComponentOfType(displayName, reactElement) {
   return reactElement._isReactElement &&
-    reactElement.type &&
-    reactElement.type.name === componentName;
+         reactElement.type &&
+         reactElement.type.displayName === displayName;
 }

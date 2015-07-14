@@ -1,5 +1,5 @@
 import React from 'react';
-import isComponentTypeOf from '../utils/is-component-of-type.js';
+import isComponentOfType from '../utils/is-component-of-type.js';
 import {filter, findIndex} from '../utils/helpers';
 
 /**
@@ -9,7 +9,7 @@ import {filter, findIndex} from '../utils/helpers';
  * The index search includes separator & option components.
  */
 const findIndexOfSelectedOption = (component) => {
-  const filterFunction = (child) => (isComponentTypeOf('Option', child) || isComponentTypeOf('Separator', child));
+  const filterFunction = (child) => (isComponentOfType('Belle Option', child) || isComponentOfType('Belle Separator', child));
   return findIndex(filter(component.props.children, filterFunction), (element) => {
     return element.props.value === component.state.selectedValue;
   });

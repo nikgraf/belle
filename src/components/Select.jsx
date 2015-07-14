@@ -4,7 +4,7 @@ import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 import config from '../config/select';
-import isComponentTypeOf from '../utils/is-component-of-type.js';
+import isComponentOfType from '../utils/is-component-of-type.js';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -13,21 +13,21 @@ React.initializeTouchEvents(true);
  * Returns true if the provided property is a Placeholder component from Belle.
  */
 function isPlaceholder(reactElement) {
-  return isComponentTypeOf('Placeholder', reactElement);
+  return isComponentOfType('Belle Placeholder', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Option component from Belle.
  */
 function isOption(reactElement) {
-  return isComponentTypeOf('Option', reactElement);
+  return isComponentOfType('Belle Option', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Separator component from Belle.
  */
 function isSeparator(reactElement) {
-  return isComponentTypeOf('Separator', reactElement);
+  return isComponentOfType('Belle Separator', reactElement);
 }
 
 /**
