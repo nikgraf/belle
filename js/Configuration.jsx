@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Card} from 'belle';
 import Code from './Code';
+import ThemeSwitch from './theme/ThemeSwitch';
 
 const overwriteCardStyleExample = `var belle = require('belle');
 
@@ -168,7 +169,7 @@ export default class Configuration extends Component {
 
       <p style={ {marginTop: 40} }>
         In case you only want to change a couple parameters you easily can do it
-        by leveraging ES6 Object.assign() or Underscores' extend for example.
+        by leveraging e.g. ES6 Object.assign() or Underscores' extend.
         This is possible because all styles are simply plain JavaScript objects.
         Of course you also can overwrite the hoverStyle as well.
       </p>
@@ -185,6 +186,13 @@ export default class Configuration extends Component {
                            borderBottomColor: '#555'}}>
         Follow
       </Button>
+
+      <h4>Themes</h4>
+
+      This global configuration enables to create custom Belle component themes. For demonstration
+      we enabled to switch between 3 different themes.
+
+      <ThemeSwitch />
 
       <h4>Structure</h4>
 
