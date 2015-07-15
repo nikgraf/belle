@@ -639,15 +639,13 @@ export default class SelectDocumentation extends Component {
         <Placeholder>Choose your next Vacation</Placeholder>
         <Option value="santorini"
                 style={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   background: 'url(images/santorini_100.jpg) no-repeat',
                   backgroundSize: '50px 50px',
                   backgroundColor: '#FFEE82'
                 }}
                 hoverStyle={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   background: 'url(images/santorini_100.jpg) no-repeat',
                   backgroundSize: '50px 50px',
                   backgroundColor: '#FFE95D'
@@ -657,14 +655,12 @@ export default class SelectDocumentation extends Component {
         <Separator style={{ height: 4, padding: 0 }}/>
         <Option value="yosemite"
                 style={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   background: 'url(images/yosemite_100.jpg) no-repeat',
                   backgroundSize: '50px 50px'
                 }}
                 hoverStyle={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   backgroundColor: '#F5F5F5',
                   background: 'url(images/yosemite_100.jpg) no-repeat',
                   backgroundSize: '50px 50px'
@@ -674,14 +670,12 @@ export default class SelectDocumentation extends Component {
         <Separator style={{ height: 4, padding: 0 }}/>
         <Option value="croatia"
                 style={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   background: 'url(images/croatia_100.jpg) no-repeat',
                   backgroundSize: '50px 50px'
                 }}
                 hoverStyle={{
-                  padding: '15px 0 0 60px',
-                  height: 50,
+                  padding: '15px 0 10px 60px',
                   backgroundColor: '#F5F5F5',
                   background: 'url(images/croatia_100.jpg) no-repeat',
                   backgroundSize: '50px 50px'
