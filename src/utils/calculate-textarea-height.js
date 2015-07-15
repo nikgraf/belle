@@ -59,7 +59,7 @@ export default function(textareaElement) {
   const {style, verticalPadding} = calculateStyling(textareaElement);
 
   hiddenTextarea.setAttribute('style', `${style};${hiddenTextareaStyle}`);
-  hiddenTextarea.value = textareaElement.value;
+  hiddenTextarea.value = textareaElement.value ? textareaElement.value: 'dummy';
 
   return (hiddenTextarea.scrollHeight - verticalPadding);
 }
