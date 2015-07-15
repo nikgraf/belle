@@ -158,6 +158,12 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 The implementation of the TextInput component was heavily inspired by implementations of [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github.com/eugene1g).
 
+Thanks to [https://github.com/andreypopp](Andrey Popp) & [https://github.com/eugene1g](Eugene) for their inspiring work on [https://github.com/andreypopp/react-textarea-autosize](React TextArea Autosize) which kind of ignited the idea of Belle.
+
+Thanks to Christian Steiner from [http://www.cropd.at/](cropd.at) for creating the logo and helping out with the design.
+
+Special thanks to [https://github.com/jpuri](Jyoti Puri) for the tremendous amount of work she put into this endeavor.
+
 ## License
 
 MIT
