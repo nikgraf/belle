@@ -36,56 +36,83 @@ export default class Why extends Component {
         With Belle we aim to provide the best possible UX while making the components highly configurable to allow users applying their own theme. For demonstration purposes Belle comes with two themes (Belle, Bootstrap3) and we aim to add more like Elemental UI or Material Design soon.
       </p>
 
+      <div style={{ marginTop: 20, marginBottom: 40 }}>
+        <p style={{ borderRadius: 2,
+                    clear: 'both',
+                    padding: 5 }}>
+          <span style={{ fontSize: 32, color: '#ccc'}}>“ </span>
+          This is so good. I like the effort you put into tweaking the UX.
+          <span style={{ fontSize: 32,
+                         display: 'inline-block',
+                         position: 'relative',
+                         top: 26,
+                         color: '#ccc',
+                         left: 4 }}> ”</span>
+        </p>
+        <div style={{ marginLeft: 30 }}>
+          <img src="images/vjeux.jpeg"
+               style={{ height: 50,
+                        'float': 'left',
+                        borderRadius: 50 }} />
+          <div style={{ fontSize: 18,
+                        marginLeft: 60 }}>Christopher Chedeau (Vjeux)</div>
+          <div style={{ color: '#888',
+                        marginLeft: 60 }}>React Core Team</div>
+        </div>
+        <div stlye={{ clear: 'both' }}></div>
+      </div>
+
       <p>Let’s have a look at two of the components and walk you through some of the details we took care of.</p>
 
-      <h3 style={{ marginBottom: 20}}>Let's see the Toggle for example</h3>
+      <h3 style={{ marginBottom: 20}}>Toggle</h3>
 
-      <p>The handle can be grabbed and dragged on mobile as well as on desktop devices. In addition a
-      simple click or tap initiates switching the state. Of course there is more to it. There are many small details like the possibility to slightly leave the toggle area while continuing to slide. Another one is preventing scrolling while the Toggle being active. All done to enhance the user experience.</p>
+      <p>The handle can be grabbed and dragged on mobile as well as on desktop devices. In addition a simple tap or click also initiates switching the state. As like with the native iOS Toggle it is possible to slightly leave the bounding area while continuing to slide. In order to prevent shaky page behaviour and delayed animations is scrolling is prevented while the Toggle is active.
+      </p>
 
-      <h4>On Mobile</h4>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/ImtZ-EDjfc8" frameBorder="0" allowFullScreen></iframe>
 
-      <img src="http://static.nikgraf.com/belle/why-belle/toggle-mobile.gif" style={{ width: 366, height: 270 }} />
+        <br />
+          <br />
 
-      <h4>On Mobile with Bootstrap Style</h4>
-
-      <img src="http://static.nikgraf.com/belle/why-belle/toggle-bootstrap.gif" style={{ width: 372, height: 268 }} />
-
-      <h4>With custom Styles</h4>
-
+      <span>With custom Styles</span>
+      <br />
       <img src="http://static.nikgraf.com/belle/why-belle/toggle-desktop.gif" style={{ width: 97, height: 62 }} />
       <br />
+
+      <span>Bootstrap Styles</span><br />
+      <img src="http://static.nikgraf.com/belle/why-belle/toogle-bootstrap-dektop.gif" style={{ height: 71 }} />
+
+      <br />
+
       Try it yourself here:
       <br /><br />
       <Toggle defaultValue style={{ marginLeft: 12 }}/>
 
-      <h3>Let's checkout the Select next</h3>
 
       <p>
-        Its appearance can be modified while it will continue to work well on mobile & desktop devices. See the last example with a Bootstrap variation of the Select component.
+        Let’s look at another component.
       </p>
 
-      <img src="http://static.nikgraf.com/belle/why-belle/select-dektop.gif" style={{ height: 332 }} />
-
-      <h4>Select on Mobile</h4>
-
-      <img src="http://static.nikgraf.com/belle/why-belle/select-mobile.gif" style={{ height: 270 }} />
-
-      <h4>Select with Bootstrap style</h4>
-      <img src="http://static.nikgraf.com/belle/why-belle/select-desktop-bootstrap.gif" style={{ height: 280 }} />
-      <br />
-      <br />
+      <h3>Select</h3>
 
       <p>
-        In case we caught your interest please reach out to us via Twitter
-         <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
-         <a href="https://twitter.com/jyo_pur"> @jyo_pur</a> or mail us at
-        <a href="mailto:nik@nikgraf.com?cc=jyotipuri@gmail.com "> nik@nikgraf.com & jyotipuri@gmail.com</a>.
-        We look forward to your feedback.
+        While the HTML native select-tag is a great component it’s styling capabilities are very limited. Adding images is not possible. That’s why we built a Select component allowing you to modify its appearance.
       </p>
+
+      <img src="http://static.nikgraf.com/belle/why-belle/fancy-select.gif" style={{ height: 240 }} />
+
+      <h4 style={{ marginTop: 0 }}>Select on Mobile</h4>
+
       <p>
-        As we want to release Belle soon and we could also use your help in promoting it. Please help us sharing.
+        As promised before the Select component even works well on mobile devices. Even if scrolling is involved. You will notice that the menu will always positioned in a way that the focused Option is always visible and right above the selected one.
       </p>
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/rBbc3hRyyGw" frameBorder="0" allowFullScreen></iframe>
+
+      <p style={{ paddingTop: 40 }}>
+        I hope Belle caught your interest. In case you want to give it a try please checkout our example projects like <a href="https://github.com/nikgraf/react-starter-with-belle">react-starter-with-belle</a> or <a href="https://github.com/nikgraf/react-server-example">react-server-example</a>. We look forward to your feedback. Feel free to reach out to us via Twitter <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
+<a href="https://twitter.com/jyopur"> @jyopur</a>.
+</p>
 
     </div>);
   }
