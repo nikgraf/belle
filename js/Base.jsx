@@ -150,7 +150,10 @@ export default React.createClass({
           <span style={ { color: '#738088' } } >Guides</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="guide/formComponents">Form Components</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="guide/introducing-belle">Introducing Belle</Link>
+            </li>
+            <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="guide/form-components">Form Components</Link>
             </li>
           </ul>
           <span style={ { color: '#738088' } } >General</span>
