@@ -1,5 +1,22 @@
 import React, {Component} from 'react';
 import {Card, Toggle} from 'belle';
+import Code from '../Code';
+
+const basicToggleExample = `<!-- all the JSX code you need -->
+<Toggle defaultValue={ true }/>`;
+
+const selectExample = `<!-- all the JSX code you need for the example above -->
+<Select defaultValue="tokyo"
+        menuStyle={ { height: 160,
+                             overflow: 'scroll' } }>
+  <Option value="berlin">Berlin</Option>
+  <Option value="hong-kong">Hong Kong</Option>
+  <Option value="istanbul">Istanbul</Option>
+  <Option value="rome">Rome</Option>
+  <Option value="san-francisco">San Francisco</Option>
+  <Option value="tokyo">Tokyo</Option>
+  <Option value="vienna">Vienna</Option>
+</Select>`;
 
 export default class Why extends Component {
 
@@ -89,6 +106,7 @@ export default class Why extends Component {
       <br /><br />
       <Toggle defaultValue style={{ marginLeft: 12 }}/>
 
+      <Code value={ basicToggleExample } style={ {marginTop: 20, marginBottom: 20} } />
 
       <p>
         Let’s look at another component.
@@ -109,6 +127,8 @@ export default class Why extends Component {
       </p>
 
       <iframe width="560" height="315" src="https://www.youtube.com/embed/rBbc3hRyyGw" frameBorder="0" allowFullScreen></iframe>
+
+      <Code value={ selectExample } style={ {marginTop: 20, marginBottom: 20} } />
 
       <p style={{ paddingTop: 40 }}>
         I hope Belle caught your interest. In case you want to give it a try please checkout our example projects like <a href="https://github.com/nikgraf/react-starter-with-belle">react-starter-with-belle</a> or <a href="https://github.com/nikgraf/react-server-example">react-server-example</a>. We look forward to your feedback. Feel free to reach out to us via Twitter <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
