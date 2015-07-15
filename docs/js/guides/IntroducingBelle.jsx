@@ -13,24 +13,30 @@ export default class Why extends Component {
              style={{ width: 490 }} />
       </Card>
 
-      <h3 style={ {marginTop: 0, marginBottom: 40} }>Wait, but why yet another component library?</h3>
+      <p>
+        Belle is a set of React components including Toggle, ComboBox, Rating, TextInput, Button, Card & Select. Many more like DatePicker, NumberInput, DropZone & Menu will come soon. As of today we hit version 1.0.0 :)
+      </p>
+
+      <h3 style={ {marginTop: 40, marginBottom: 20} }>Wait, but why yet another component library?</h3>
 
       <p>
-        The web platform is a fantastic environment! Still it has certain limitations that are holding you back as a developer. Luckily React was invented and opened up new opportunities.
+        The web platform is a fantastic environment. Still it has certain limitations that are holding you back as a developer. React opened up new opportunities and I finally had tools in my hand to make the kind of UI components I always wanted to.
       </p>
-      <p>
-        Jyoti & I started to explore them and as a result we compiled Belle - a set of configurable components with all these features included:
+      <p>Don't get me wrong. There are a ton of really great UI libraries out there like jQuery UI, Bootstrap, Polymer, you name it. They are super useful and to me often a source for inspiration. Through them I learned a lot about the details to take care of when developing user interface elements. Nevertheless always some feature was missing or the UX not as good as we imagined it. That’s why Jyoti & I started to research and explore building our own components. Quickly it became clear others might benefit from sharing our lessons learned and our endeavour shifted to creating Belle  - a set of configurable components with all these features included:
       </p>
       <ul>
         <li>Encapsulated components</li>
         <li>Mobile support built-in</li>
         <li>ARIA Support</li>
         <li>Customizable styles / themes (right now there is Belle & Bootstrap 3)</li>
-        <li>Advanced localized styling on each individual component</li>
+        <li>Advanced localized styling for each individual component</li>
       </ul>
+
       <p>
-        Don't get me wrong. There are a ton of great UI libraries out there like jQuery UI, Bootstrap, Polymer, you name it. They are super useful and to me often a source for inspiration. Through them I learned a lot about the details to take care of when developing a user interface. While I enjoyed working on these details, I believe developers should get them in form of a set of configurable, but still easy to use components. That's exactly what Belle is aiming to be.
+        With Belle we aim to provide the best possible UX while making the components highly configurable to allow users applying their own theme. For demonstration purposes Belle comes with two themes (Belle, Bootstrap3) and we aim to add more like Elemental UI or Material Design soon.
       </p>
+
+      <p>Let’s have a look at two of the components and walk you through some of the details we took care of.</p>
 
       <h3 style={{ marginBottom: 20}}>Let's see the Toggle for example</h3>
 
