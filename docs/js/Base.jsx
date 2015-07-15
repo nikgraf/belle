@@ -22,18 +22,27 @@ export default React.createClass({
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
 
           <Link style={{ display: 'inline' }} to="app">
-            <h1 style={{ fontSize: 52, margin: 0, paddingTop: 110, color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
+            <h1 style={{ fontSize: 80,
+                         margin: 0,
+                         paddingTop: 110,
+                         color: '#FFF',
+                         fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
+                         position: 'relative'
+                       }}>
               <svg version="1.1"
-                   viewBox="0 0 80 80"
-                   style={{ width: 50,
-                            height: 50,
+                   viewBox="0 0 160 160"
+                   style={{ width: 120,
+                            height: 120,
                             position: 'relative',
-                            top: 3,
-                            marginRight: 12 }}>
-                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
-                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
+                            top: 23,
+                            marginRight: 12,
+                            marginLeft: -7 }}>
+                <circle cx="80" cy="80" r="70" fill="white" data-reactid=".0.0.0.2.0"></circle>
+                <circle cx="80" cy="80" r="64" fill="#53C7F2" data-reactid=".0.0.0.2.1"></circle>
               </svg>
-              Belle
+              <img src="images/belle.png"
+                   style={{ width: 62, position: 'absolute', left: 24, top: 149 }} />
+                 <span style={{ marginTop: -10 }}>Belle</span>
             </h1>
           </Link>
 
