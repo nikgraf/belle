@@ -18,7 +18,7 @@ export default class Why extends Component {
         <li>Mobile support built-in</li>
         <li>ARIA Support</li>
         <li>Customizable styles / themes (right now there is Belle & Bootstrap 3)</li>
-        <li>Advanced localized styling on a component level</li>
+        <li>Advanced localized styling on each individual component</li>
       </ul>
       <p>
         Don't get me wrong. There are a ton of great UI libraries out there like jQuery UI, Bootstrap, Polymer, you name it. They are super useful and to me often a source for inspiration. Through them I learned a lot about the details to take care of when developing a user interface. While I enjoyed working on these details, I believe developers should get them in form of a set of configurable, but still easy to use components. That's exactly what Belle is aiming to be.
