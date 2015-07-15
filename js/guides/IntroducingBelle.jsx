@@ -5,8 +5,9 @@ export default class Why extends Component {
 
   render() {
     return (<div>
+      <p style={{ color: '#999', marginTop: 19, fontSize: 15, 'float': 'right' }}>Nik Graf, 15th July 2015 </p>
 
-      <h2 style={ {marginTop: 0, marginBottom: 20} }>Introducing Belle</h2>
+      <h1 style={ {marginTop: 0, marginBottom: 20} }>Introducing Belle</h1>
 
       <Card style={{ borderTop: '1px solid #f2f2f2' }}>
         <img src="images/overview.png"
@@ -113,6 +114,10 @@ export default class Why extends Component {
         I hope Belle caught your interest. In case you want to give it a try please checkout our example projects like <a href="https://github.com/nikgraf/react-starter-with-belle">react-starter-with-belle</a> or <a href="https://github.com/nikgraf/react-server-example">react-server-example</a>. We look forward to your feedback. Feel free to reach out to us via Twitter <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
 <a href="https://twitter.com/jyopur"> @jyopur</a>.
 </p>
+
+<div>
+  <a href="https://twitter.com/share" className="twitter-share-button" data-url="http://nikgraf.github.io/belle/#/guide/introducing-belle" data-text="I just discovered Belle - configurable React components with really good UX #ReactJS #UX #UI" data-size="large">Tweet</a>
+</div>
 
     </div>);
   }
