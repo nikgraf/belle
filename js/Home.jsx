@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ThemeSwitch from './theme/ThemeSwitch';
 import GettingStarted from './GettingStarted';
+import {Card} from 'belle';
 
 export default class Home extends Component {
 
@@ -10,9 +11,17 @@ export default class Home extends Component {
         <p>
           Belle provides you with a set of React components like Toggle, ComboBox, Rating, TextInput, Button, Card, Select and soon many more.
         </p>
+
         <p>
           All of the components are optimized to work both on <b>mobile & desktop devices</b>. The styles are highly customizable on two levels. You can <b>configure the base styles</b> of all the components as well as <b>modify each one of them individually</b>.
         </p>
+
+        <h3 style={{ marginTop: 40 }}>Overview</h3>
+
+        <Card style={{ borderTop: '1px solid #f2f2f2' }}>
+          <img src="images/overview.png"
+               style={{ width: 490 }} />
+        </Card>
 
         <div style={{ marginTop: 40 }}>
           <p style={{ borderRadius: 2,
