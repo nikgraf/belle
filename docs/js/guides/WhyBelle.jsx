@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
-import {Toggle} from 'belle';
+import {Card, Toggle} from 'belle';
 
 export default class Why extends Component {
 
   render() {
     return (<div>
-      <h2 style={ {marginTop: 0, marginBottom: 40} }>Wait, but why yet another component library?</h2>
+
+      <h2 style={ {marginTop: 0, marginBottom: 20} }>Introducing Belle</h2>
+
+      <Card style={{ borderTop: '1px solid #f2f2f2' }}>
+        <img src="images/overview.png"
+             style={{ width: 490 }} />
+      </Card>
+
+      <h3 style={ {marginTop: 0, marginBottom: 40} }>Wait, but why yet another component library?</h3>
 
       <p>
         The web platform is a fantastic environment! Still it has certain limitations that are holding you back as a developer. Luckily React was invented and opened up new opportunities.
