@@ -40,7 +40,7 @@ export default React.createClass({
                 <circle cx="80" cy="80" r="70" fill="white" data-reactid=".0.0.0.2.0"></circle>
                 <circle cx="80" cy="80" r="64" fill="#53C7F2" data-reactid=".0.0.0.2.1"></circle>
               </svg>
-              <img src="images/belle.png"
+              <img src="images/belle_logo.png"
                    style={{ width: 62, position: 'absolute', left: 24, top: 149 }} />
                  <span style={{ marginTop: -10 }}>Belle</span>
             </h1>
@@ -152,13 +152,14 @@ export default React.createClass({
           <span style={ { color: '#738088' } } >General</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="configuration">Configuration / Styling</Link>
+            </li>
+            <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="philosophy">Philosophy</Link>
             </li>
+
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="configuration">Configuration</Link>
-            </li>
-            <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="future-work">Future Plans</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="about">About</Link>
             </li>
             <li>
               <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>

@@ -8,7 +8,7 @@ import CardDocumentation from './CardDocumentation';
 import ChoiceDocumentation from './ChoiceDocumentation';
 import Configuration from './Configuration';
 import GettingStarted from './GettingStarted';
-import FuturePlans from './FuturePlans';
+import About from './About';
 import Home from './Home';
 import OptionDocumentation from './OptionDocumentation';
 import Philosophy from './Philosophy';
@@ -38,7 +38,7 @@ const routes = (
     <Route name="guide/formComponents" handler={FormComponents}/>
     <Route name="configuration" handler={Configuration}/>
     <Route name="philosophy" handler={Philosophy}/>
-    <Route name="future-work" handler={FuturePlans}/>
+    <Route name="about" handler={About}/>
     <Route name="guide/why-belle" handler={WhyBelleGuide}/>
 
     <DefaultRoute handler={Home}/>
