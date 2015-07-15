@@ -17,36 +17,38 @@ export default React.createClass({
 
     let header;
     if (this.context.router.getCurrentPath() === '/') {
-      header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+      header = (<header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
 
-          <Link style={{ display: 'inline' }} to="app">
+          <Link to="app">
             <h1 style={{ fontSize: 80,
                          margin: 0,
-                         paddingTop: 110,
+                         paddingTop: 80,
                          color: '#FFF',
                          fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
                          position: 'relative'
                        }}>
-              <svg version="1.1"
-                   viewBox="0 0 160 160"
-                   style={{ width: 120,
-                            height: 120,
-                            position: 'relative',
-                            top: 23,
-                            marginRight: 12,
-                            marginLeft: -7 }}>
-                <circle cx="80" cy="80" r="70" fill="white" data-reactid=".0.0.0.2.0"></circle>
-                <circle cx="80" cy="80" r="64" fill="#53C7F2" data-reactid=".0.0.0.2.1"></circle>
-              </svg>
-              <img src="images/belle_logo.png"
-                   style={{ width: 62, position: 'absolute', left: 24, top: 149 }} />
-                 <span style={{ marginTop: -10 }}>Belle</span>
+              <div style={{ borderRadius: 100,
+                            width: 100,
+                            height: 100,
+                            border: '4px solid #fff',
+                            paddingLeft: 18,
+                            display: 'block',
+                            'float': 'left',
+                            marginRight: 12 }}>
+                <img src="images/belle_logo.png"
+                     style={{ width: 62, height: 88 }} />
+              </div>
+              <span style={{ marginTop: -6,
+                             display: 'block',
+                             'float': 'left' }}>
+                Belle
+              </span>
             </h1>
           </Link>
 
-          <p style={{ fontSize: 22, marginTop: 0, paddingBottom: 26, color: '#FEFEFE'}}>
+          <p style={{ fontSize: 22, marginTop: 0, paddingTop: 20, color: '#FEFEFE', clear: 'both'}}>
             Configurable React Components with great UX
           </p>
 
@@ -61,7 +63,7 @@ export default React.createClass({
         </Column>
       </header>);
     } else {
-      header = (<header style={ {background: '#0A202D', width: '100%', marginBottom: 40} }>
+      header = (<header style={ {background: 'linear-gradient(150deg, #0A202D, rgb(1, 95, 130))', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
           <iframe
@@ -75,16 +77,18 @@ export default React.createClass({
 
           <Link style={{ display: 'inline' }} to="app">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
-              <svg version="1.1"
-                   viewBox="0 0 80 80"
-                   style={{ width: 22,
-                            height: 22,
-                            position: 'relative',
-                            top: 2,
-                            marginRight: 6 }}>
-                <circle cx="40" cy="40" r="40" fill="#53C7F2" data-reactid=".0.0.0.2.0"></circle>
-                <circle cx="44" cy="44" r="30" fill="white" data-reactid=".0.0.0.2.1"></circle>
-              </svg>
+              <div style={{ borderRadius: 26,
+                            width: 26,
+                            height: 26,
+                            border: '2px solid #fff',
+                            paddingLeft: 5,
+                            display: 'block',
+                            'float': 'left',
+                            marginRight: 6,
+                            marginTop: 6 }}>
+                <img src="images/belle_logo.png"
+                     style={{ height: 19, top: -7, position: 'relative' }} />
+              </div>
               Belle
             </h1>
           </Link>
