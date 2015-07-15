@@ -9,6 +9,7 @@ import ChoiceDocumentation from './ChoiceDocumentation';
 import Configuration from './Configuration';
 import GettingStarted from './GettingStarted';
 import FuturePlans from './FuturePlans';
+import Home from './Home';
 import OptionDocumentation from './OptionDocumentation';
 import Philosophy from './Philosophy';
 import PlaceholderDocumentation from './PlaceholderDocumentation';
@@ -40,7 +41,7 @@ const routes = (
     <Route name="future-work" handler={FuturePlans}/>
     <Route name="guide/why-belle" handler={WhyBelleGuide}/>
 
-    <DefaultRoute handler={GettingStarted}/>
+    <DefaultRoute handler={Home}/>
   </Route>
 );
 

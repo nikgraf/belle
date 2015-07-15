@@ -54,6 +54,13 @@ React.render(<App/>, document.getElementById('react-root'));
 
 In addition you can dig through the [documentation](http://nikgraf.github.io/belle/) to learn about how to modify Belle components.
 
+## Browser Support
+
+- Chrome (mobile and desktop)
+- Safari (mobile and desktop)
+- Firefox
+- Internet Explorer 9, 10, 11
+
 ## Philosophy
 
 "Great UX starts with a good UI"
