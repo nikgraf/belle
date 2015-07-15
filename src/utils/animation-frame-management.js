@@ -5,7 +5,7 @@ export let cancelAnimationFrame;
 
 let lastTime = 0;
 
-if(window) {
+if(typeof window != 'undefined') {
   requestAnimationFrame = window.requestAnimationFrame;
   cancelAnimationFrame = window.cancelAnimationFrame;
 
