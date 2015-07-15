@@ -19,7 +19,7 @@ import SeparatorDocumentation from './SeparatorDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
 import ToggleDocumentation from './ToggleDocumentation';
 import FormComponents from './FormComponents';
-import WhyBelleGuide from './guides/WhyBelle';
+import IntroducingBelleGuide from './guides/IntroducingBelle';
 
 const routes = (
   <Route name="app" path="/" handler={Base}>
@@ -35,11 +35,11 @@ const routes = (
     <Route name="component/separator" handler={SeparatorDocumentation}/>
     <Route name="component/text-input" handler={TextInputDocumentation}/>
     <Route name="component/toggle" handler={ToggleDocumentation}/>
-    <Route name="guide/formComponents" handler={FormComponents}/>
+    <Route name="guide/form-components" handler={FormComponents}/>
     <Route name="configuration" handler={Configuration}/>
     <Route name="philosophy" handler={Philosophy}/>
     <Route name="about" handler={About}/>
-    <Route name="guide/why-belle" handler={WhyBelleGuide}/>
+    <Route name="guide/introducing-belle" handler={IntroducingBelleGuide}/>
 
     <DefaultRoute handler={Home}/>
   </Route>
