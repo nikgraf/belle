@@ -13,3 +13,6 @@ bundle.js
 
 # NPM debug
 npm-debug.log
+
+tests
+docs
