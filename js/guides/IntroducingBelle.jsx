@@ -112,12 +112,17 @@ export default class Why extends Component {
 
       <p style={{ paddingTop: 40 }}>
         I hope Belle caught your interest. In case you want to give it a try please checkout our example projects like <a href="https://github.com/nikgraf/react-starter-with-belle">react-starter-with-belle</a> or <a href="https://github.com/nikgraf/react-server-example">react-server-example</a>. We look forward to your feedback. Feel free to reach out to us via Twitter <a href="https://twitter.com/nikgraf"> @nikgraf</a> &
-<a href="https://twitter.com/jyopur"> @jyopur</a>.
-</p>
+        <a href="https://twitter.com/jyopur"> @jyopur</a>.
+      </p>
 
-<div>
-  <a href="https://twitter.com/share" className="twitter-share-button" data-url="http://nikgraf.github.io/belle/#/guide/introducing-belle" data-text="I just discovered Belle - configurable React components with really good UX #ReactJS #UX #UI" data-size="large">Tweet</a>
-</div>
+      <div>
+        <a href="https://twitter.com/share" className="twitter-share-button" data-url="http://nikgraf.github.io/belle/#/guide/introducing-belle" data-text="I just discovered Belle - configurable React components with really good UX #ReactJS #UX #UI" data-size="large">Tweet</a>
+
+      </div>
+      <div>
+        <div className="fb-like" data-href="http://nikgraf.github.io/belle/#/guide/introducing-belle" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+      </div>
+
 
     </div>);
   }
