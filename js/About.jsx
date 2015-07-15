@@ -17,7 +17,7 @@ export default class FuturePlans extends Component {
       </p>
 
       <p>
-        Special thanks to <a href="https://github.com/jpuri">Jyoti Puri</a> for her tremendous amount of work put into this endevour.
+        Special thanks to <a href="https://github.com/jpuri">Jyoti Puri</a> for the tremendous amount of work she put into this endeavor.
       </p>
 
       <h2 style={ {marginTop: 40, marginBottom: 40} }>Future Plans</h2>
