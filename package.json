@@ -18,7 +18,8 @@
     "ux",
     "components",
     "widget",
-    "javascript"
+    "javascript",
+    "react-component"
   ],
   "peerDependencies": {
     "react": ">=0.13.0"
