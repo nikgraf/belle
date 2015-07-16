@@ -20,7 +20,7 @@ export default class Home extends Component {
 
         <Card style={{ borderTop: '1px solid #f2f2f2' }}>
           <img src="images/overview.png"
-               style={{ width: 490 }} />
+               style={{ width: '100%' }} />
         </Card>
 
         <div style={{ marginTop: 40 }}>
