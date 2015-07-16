@@ -28,7 +28,7 @@ export default class Why extends Component {
 
       <Card style={{ borderTop: '1px solid #f2f2f2' }}>
         <img src="images/overview.png"
-             style={{ width: 490 }} />
+             style={{ width: '100%' }} />
       </Card>
 
       <p>
@@ -87,7 +87,9 @@ export default class Why extends Component {
       <p>The handle can be grabbed and dragged on mobile as well as on desktop devices. In addition a simple tap or click also initiates switching the state. As like with the native iOS Toggle it is possible to slightly leave the bounding area while continuing to slide. In order to prevent shaky page behaviour and delayed animations is scrolling is prevented while the Toggle is active.
       </p>
 
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/ImtZ-EDjfc8" frameBorder="0" allowFullScreen></iframe>
+      <div style={{width: '100%'}}>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/ImtZ-EDjfc8" frameBorder="0" allowFullScreen></iframe>
+      </div>
 
         <br />
           <br />
@@ -126,7 +128,9 @@ export default class Why extends Component {
         As promised before the Select component even works well on mobile devices. Even if scrolling is involved. You will notice that the menu will always positioned in a way that the focused Option is always visible and right above the selected one.
       </p>
 
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/rBbc3hRyyGw" frameBorder="0" allowFullScreen></iframe>
+      <div style={{width: '100%'}}>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/rBbc3hRyyGw" frameBorder="0" allowFullScreen></iframe>
+      </div>
 
       <Code value={ selectExample } style={ {marginTop: 20, marginBottom: 20} } />
 
