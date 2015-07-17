@@ -7,7 +7,7 @@
     "email": "nik@nikgraf.com",
     "url": "http://www.nikgraf.com"
   },
-  "main": "js/App.jsx",
+  "main": "js/app.jsx",
   "repository": {
     "type": "git",
     "url": "http://github.com/nikgraf/belle.git"
@@ -17,9 +17,9 @@
     "underscore": "=1.8.3"
   },
   "devDependencies": {
-    "babelify": "^6.1.2",
-    "browserify": "^10.2.4",
-    "watchify": "^3.2.3"
+    "babelify": "=6.1.2",
+    "browserify": "=10.2.4",
+    "watchify": "=3.2.3"
   },
   "scripts": {
     "start": "watchify -o js/bundle.js --extension=.jsx -v -d js/app.jsx",
