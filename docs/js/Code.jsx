@@ -24,10 +24,6 @@ export default class Code extends Component {
     this.childProperties = omit(properties, 'style');
   }
 
-  componentDidUpdate() {
-    highlightJs.highlightBlock(React.findDOMNode(this));
-  }
-
   render() {
     const style = extend({}, defaultStyle, this.props.style);
 
