@@ -57,10 +57,10 @@ export default class GettingStarted extends Component {
 
       <Code value={ usageExampleJavaScript } style={ {marginTop: 40} } />
 
-      <h3>Learn more</h3>
+      <h3>Discussion or need help?</h3>
 
       <p>
-        In addition you can dig through the documentation to learn about how to modify Belle components.
+        Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community.
       </p>
 
     </div>);

@@ -149,9 +149,12 @@ To run the examples or docs you should run `npm install` and `npm start` in the 
 
 Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localhost.
 
+## Discussion or need help?
+
+Join us at the **#belle** channel of the [Reactiflux](http://reactiflux.com/) Slack community
+
 ## Future Plans
 
-- Make sure components don't break when rendered by the backend
 - Components to add: Dateformatter, Datepicker, Tooltip, Popover, Modal, Navigation Menu, NumberInput, EmailInput, Anchor, DropZone
 
 ## Special Thanks
