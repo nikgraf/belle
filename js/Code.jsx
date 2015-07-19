@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import highlightJs from 'highlight.js';
-import {omit, extend} from 'underscore';
+import {isEqual, omit, extend} from 'underscore';
 
 const defaultStyle = {
   fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
@@ -22,6 +22,16 @@ export default class Code extends Component {
 
   componentWillReceiveProps(properties) {
     this.childProperties = omit(properties, 'style');
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.value === this.props.value && isEqual(nextProps.style, this.props.style)) {
+      return false;
+    }
+  }
+
+  componentDidUpdate() {
+    highlightJs.highlightBlock(React.findDOMNode(this));
   }
 
   render() {
