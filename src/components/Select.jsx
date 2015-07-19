@@ -721,7 +721,7 @@ export default class Select extends Component {
       });
 
       if (selectedEntry) {
-        selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedEntry, {
+        selectedOptionOrPlaceholder = React.cloneElement(selectedEntry, {
           _isDisplayedAsSelected: true
         });
       }
@@ -735,7 +735,7 @@ export default class Select extends Component {
 
     let selectedOptionWrapperStyle;
     if (this.props.disabled) {
-      selectedOptionOrPlaceholder = React.addons.cloneWithProps(selectedOptionOrPlaceholder, {
+      selectedOptionOrPlaceholder = React.cloneElement(selectedOptionOrPlaceholder, {
         _isDisabled: true
       });
       if (this.state.isTouchedToToggle) {
@@ -798,7 +798,7 @@ export default class Select extends Component {
             React.Children.map(this.props.children, (entry, index) => {
               if (isOption(entry)) { // filter out all non-Option Components
                 const isHovered = entry.props.value === this.state.focusedOptionValue;
-                const option = React.addons.cloneWithProps(entry, {
+                const option = React.cloneElement(entry, {
                   _isHovered: isHovered
                 });
 

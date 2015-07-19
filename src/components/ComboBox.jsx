@@ -646,8 +646,7 @@ export default class ComboBox extends Component {
           {
             React.Children.map(this.state.filteredOptions, (entry, index) => {
               const isHovered = this.state.focusedOptionIndex === index;
-              //TODO: get rid of cloneWithProps
-              const option = React.addons.cloneWithProps(entry, {
+              const option = React.cloneElement(entry, {
                 _isHovered: isHovered
               });
 
