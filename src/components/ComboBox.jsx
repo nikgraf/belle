@@ -193,7 +193,8 @@ export default class ComboBox extends Component {
     enableHint: false,
     'aria-label': 'ComboBox',
     filterFunc: filterFunc,
-    tabIndex: 0
+    tabIndex: 0,
+    children: []
   };
 
   /**
