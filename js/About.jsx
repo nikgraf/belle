@@ -7,7 +7,7 @@ export default class FuturePlans extends Component {
       <h2 style={{ marginTop: 0, marginBottom: 40}}>Discussion or need help?</h2>
 
       <p>
-        Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community.
+        Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community or our <a href="https://gitter.im/nikgraf/belle">Gitter room</a>.
       </p>
 
       <h2 style={ {marginTop: 40, marginBottom: 40} }>Special Thanks</h2>
