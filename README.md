@@ -1,5 +1,7 @@
 # Belle
 
+[![Join the chat at https://gitter.im/nikgraf/belle](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikgraf/belle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Configurable React Components with great UX.
 
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
