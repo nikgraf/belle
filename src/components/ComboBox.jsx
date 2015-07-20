@@ -136,7 +136,7 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      filteredOptions: this.filterOptions(inputValue),
+      filteredOptions: this.filterOptions(inputValue, properties.children, properties.maxOptions),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -248,20 +248,23 @@ export default class ComboBox extends Component {
   }
 
   componentWillReceiveProps(properties) {
+    let inputValue;
+    if (has(properties, 'valueLink')) {
+      inputValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      inputValue = properties.value;
+    } else {
+      inputValue = this.state.inputValue;
+    }
+
     const newState = {
+      inputValue: inputValue,
+      filteredOptions: this.filterOptions(inputValue, properties.children, properties.maxOptions),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
       menuProps: sanitizeMenuProps(properties.menuProps)
     };
-
-    if (has(properties, 'valueLink')) {
-      newState.inputValue = properties.valueLink.value;
-      newState.filteredOption = this.filterOptions(properties.valueLink.value);
-    } else if (has(properties, 'value')) {
-      newState.inputValue = properties.value;
-      newState.filteredOption = this.filterOptions(properties.value);
-    }
 
     this.setState(newState);
     removeAllStyles([this._styleId, this._caretStyleId]);
@@ -503,7 +506,7 @@ export default class ComboBox extends Component {
         inputValue: value,
         isOpen: false,
         focusedOptionIndex: undefined,
-        filteredOptions: this.filterOptions(value)
+        filteredOptions: this.filterOptions(value, this.props.children, this.props.maxOptions)
       });
     }
 
@@ -543,7 +546,7 @@ export default class ComboBox extends Component {
         focusedOptionIndex: undefined
       });
     } else {
-      const filteredOptions = this.filterOptions(value);
+      const filteredOptions = this.filterOptions(value, this.props.children, this.props.maxOptions);
       this.setState({
         inputValue: value,
         isOpen: true,
@@ -560,18 +563,18 @@ export default class ComboBox extends Component {
   /**
    * Function to filter options using input value.
    */
-  filterOptions(inputValue) { /*eslint react/sort-comp:0*/
+  filterOptions(inputValue, options, max) { /*eslint react/sort-comp:0*/
     let filteredOptions = [];
-    if (this.props.children.length > 0) {
+    if (options.length > 0) {
       if (inputValue) {
-        filteredOptions = filter(this.props.children, (entry) => {
+        filteredOptions = filter(options, (entry) => {
           return this.props.filterFunc(inputValue, entry.props.value);
         });
       } else {
-        filteredOptions = map(this.props.children, (entry) => { return entry; });
+        filteredOptions = map(options, (entry) => { return entry; });
       }
-      if (this.props.maxOptions) {
-        filteredOptions = filteredOptions.splice(0, this.props.maxOptions);
+      if (max) {
+        filteredOptions = filteredOptions.splice(0, max);
       }
     }
     return filteredOptions;
