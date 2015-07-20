@@ -151,7 +151,7 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 ## Discussion or need help?
 
-Join us at the **#belle** channel of the [Reactiflux](http://reactiflux.com/) Slack community
+Join us at the **#belle** channel of the [Reactiflux](http://reactiflux.com/) Slack community or our [Gitter room](https://gitter.im/nikgraf/belle).
 
 ## Future Plans
 

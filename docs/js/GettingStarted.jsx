@@ -60,7 +60,7 @@ export default class GettingStarted extends Component {
       <h3>Discussion or need help?</h3>
 
       <p>
-        Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community.
+        Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community or our <a href="https://gitter.im/nikgraf/belle">Gitter room</a>.
       </p>
 
     </div>);
