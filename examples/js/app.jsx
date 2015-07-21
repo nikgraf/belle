@@ -4,6 +4,7 @@ import {config} from 'belle';
 import {extend} from 'underscore';
 import ButtonPlayground from './ButtonPlayground';
 import CardPlayground from './CardPlayground';
+import ModalPlayground from './ModalPlayground';
 import SelectPlayground from './SelectPlayground';
 import TextInputPlayground from './TextInputPlayground';
 import RatingPlayground from './RatingPlayground';
@@ -76,6 +77,8 @@ class App extends Component {
         <SelectPlayground />
 
         <ButtonPlayground />
+
+        <ModalPlayground />
 
         <TextInputPlayground />
 

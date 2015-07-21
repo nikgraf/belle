@@ -1,6 +1,7 @@
 import Button from './components/Button';
 import Card from './components/Card';
 import Choice from './components/Choice';
+import Modal from './components/Modal';
 import Option from './components/Option';
 import Placeholder from './components/Placeholder';
 import Select from './components/Select';
@@ -30,6 +31,7 @@ module.exports = {
   Button: Button,
   Card: Card,
   Choice: Choice,
+  Modal: Modal,
   Option: Option,
   Placeholder: Placeholder,
   Select: Select,
