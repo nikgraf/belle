@@ -10,6 +10,10 @@ export default class FuturePlans extends Component {
         Join us at the <b>#belle</b> channel of the <a href="http://reactiflux.com/">Reactiflux</a> Slack community or our <a href="https://gitter.im/nikgraf/belle">Gitter room</a>.
       </p>
 
+      <p>
+        In addition you can ask the community by <a href="http://stackoverflow.com/questions/ask?tags=belle"> posting your question to StackOverflow with the <b>belle</b> tag</a>.
+      </p>
+
       <h2 style={ {marginTop: 40, marginBottom: 40} }>Special Thanks</h2>
 
       <p>

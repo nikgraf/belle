@@ -153,6 +153,8 @@ Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localh
 
 Join us at the **#belle** channel of the [Reactiflux](http://reactiflux.com/) Slack community or our [Gitter room](https://gitter.im/nikgraf/belle).
 
+In addition you can ask the community by [posting your question to StackOverflow with the **belle** tag.](http://stackoverflow.com/questions/ask?tags=belle).
+
 ## Future Plans
 
 - Components to add: Dateformatter, Datepicker, Tooltip, Popover, Modal, Navigation Menu, NumberInput, EmailInput, Anchor, DropZone
