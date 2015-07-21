@@ -161,9 +161,7 @@ In addition you can ask the community by [posting your question to StackOverflow
 
 ## Special Thanks
 
-The implementation of the TextInput component was heavily inspired by implementations of [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github.com/eugene1g).
-
-Thanks to [https://github.com/andreypopp](Andrey Popp) & [https://github.com/eugene1g](Eugene) for their inspiring work on [https://github.com/andreypopp/react-textarea-autosize](React TextArea Autosize) which kind of ignited the idea of Belle.
+Thanks to [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github.com/eugene1g) for their inspiring work on [React TextArea Autosize](https://github.com/andreypopp/react-textarea-autosize) which kind of ignited the idea of Belle.
 
 Thanks to Christian Steiner from [http://www.cropd.at/](cropd.at) for creating the logo and helping out with the design.
 
