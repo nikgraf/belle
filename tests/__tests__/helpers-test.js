@@ -5,7 +5,6 @@ jest.dontMock('../lib/utils/utility');
 const helpers = require('../lib/utils/utility');
 
 describe('helpers has method', () => {
-
   const obj = {test: true};
 
   it('should return true if object has the field', () => {
@@ -29,8 +28,7 @@ describe('helpers has method', () => {
 });
 
 describe('helpers omit method', () => {
-
-  const obj = {test1: 123, test2: 'abc', test3: (function(){}), test4: undefined};
+  const obj = {test1: 123, test2: 'abc', test3: function(){}, test4: undefined};
 
   it('should return new object with keys omitted', () => {
     const keys = ['test1', 'test2'];
@@ -86,7 +84,6 @@ describe('helpers omit method', () => {
 
 
 describe('helpers filter method', () => {
-
   const arr = [123, 'abc', (function(){}), undefined];
   const predicate = function(obj) {
     return obj !== 123;
@@ -99,7 +96,7 @@ describe('helpers filter method', () => {
   });
 
   it('should not alter original array', () => {
-    const filteredArr = helpers.filter(arr, predicate);
+    helpers.filter(arr, predicate);
     expect(arr.length).toBe(4);
     expect(arr.indexOf(123)).toBe(0);
   });
@@ -124,12 +121,10 @@ describe('helpers filter method', () => {
     filteredArr = helpers.filter(arr, predicate);
     expect(filteredArr.length).toBe(0);
   });
-
 });
 
 
-describe('helpers map method', () => {
-
+describe('helpers map method for arrays', () => {
   const arr = [5, 10, 50, 100];
   const predicate = function(obj) {
     return obj/5;
@@ -167,11 +162,24 @@ describe('helpers map method', () => {
     mapArr = helpers.filter(arr, predicate);
     expect(mapArr.length).toBe(0);
   });
+});
 
+describe('helpers map method for object', () => {
+  const obj = {five:5, ten: 10, fifty: 50, hundred: 100};
+  const predicate = function(obj) {
+    return obj/5;
+  };
+
+  it('should map to an output array as per predicate', () => {
+    const resultObj = helpers.map(obj, predicate);
+    expect(resultObj[0]).toBe(1);
+    expect(resultObj[1]).toBe(2);
+    expect(resultObj[2]).toBe(10);
+    expect(resultObj[3]).toBe(20);
+  });
 });
 
 describe('helpers find method', () => {
-
   const arr = [123, 'abc', (function(){}), undefined];
   const predicate = function(obj) {
     return typeof obj === 'number';
@@ -208,13 +216,11 @@ describe('helpers find method', () => {
     obj = helpers.find(arr, predicate);
     expect(obj).toBeFalsy();
   });
-
 });
 
 describe('helpers isEmpty method', () => {
-
   it('should return false for non-empty array', () => {
-    expect(helpers.isEmpty([1,2,3])).toBeFalsy();
+    expect(helpers.isEmpty([1, 2, 3])).toBeFalsy();
   });
 
   it('should return true for empty array', () => {
@@ -225,7 +231,6 @@ describe('helpers isEmpty method', () => {
 });
 
 describe('helpers findIndex method', () => {
-
   const arr = [123, 'abc', (function(){}), undefined];
   const predicate = function(obj) {
     return typeof obj === 'number';
@@ -262,15 +267,13 @@ describe('helpers findIndex method', () => {
     obj = helpers.findIndex(arr, predicate);
     expect(obj).toBeFalsy();
   });
-
 });
 
 describe('helpers last method', () => {
-
   it('should find last element of an array', () => {
-    expect(helpers.last([1,2,3])).toBe(3);
-    expect(helpers.last([1,2,3, null])).toBe(null);
-    expect(helpers.last([1,2,3, undefined])).toBe(undefined);
+    expect(helpers.last([1, 2, 3])).toBe(3);
+    expect(helpers.last([1, 2, 3, null])).toBe(null);
+    expect(helpers.last([1, 2, 3, undefined])).toBe(undefined);
   });
 
   it('should not break for empty array', () => {
@@ -278,13 +281,11 @@ describe('helpers last method', () => {
     expect(helpers.last(null)).toBeFalsy();
     expect(helpers.last([])).toBeFalsy();
   });
-
 });
 
 describe('helpers size method', () => {
-
   it('should return size of an array', () => {
-    expect(helpers.size([1,2,3])).toBe(3);
+    expect(helpers.size([1, 2, 3])).toBe(3);
   });
 
   it('should not break for empty array', () => {
@@ -292,11 +293,9 @@ describe('helpers size method', () => {
     expect(helpers.size(null)).toBe(0);
     expect(helpers.size([])).toBe(0);
   });
-
 });
 
 describe('helpers some method', () => {
-
   const arr = [123, 'abc', (function(){}), undefined];
   const predicate = function(obj) {
     return typeof obj === 'number';
@@ -314,30 +313,28 @@ describe('helpers some method', () => {
   });
 
   it('should not break if array is undefined or null or has length 0', () => {
-    let arr = undefined;
-    let obj = helpers.some(arr, predicate);
+    let arr1;
+    let obj = helpers.some(arr1, predicate);
     expect(obj).toBeFalsy();
-    arr = null;
-    obj = helpers.some(arr, predicate);
+    arr1 = null;
+    obj = helpers.some(arr1, predicate);
     expect(obj).toBeFalsy();
-    arr = [];
-    obj = helpers.some(arr, predicate);
+    arr1 = [];
+    obj = helpers.some(arr1, predicate);
     expect(obj).toBeFalsy();
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate = undefined;
-    let obj = helpers.some(arr, predicate);
+    let predicate2 = undefined;
+    let obj = helpers.some(arr, predicate2);
     expect(obj).toBeFalsy();
-    predicate = null;
-    obj = helpers.some(arr, predicate);
+    predicate2 = null;
+    obj = helpers.some(arr, predicate2);
     expect(obj).toBeFalsy();
   });
-
 });
 
 describe('helpers union method', () => {
-
   const arr1 = [123, 456, 789];
   const arr2 = ['abc', 'def', 'ghi'];
   const arr3 = [true, false];
@@ -348,24 +345,21 @@ describe('helpers union method', () => {
   });
 
   it('should not alter original arrays', () => {
-    const resultArr = helpers.union(arr1, arr2);
+    helpers.union(arr1, arr2);
     expect(arr1.length).toBe(3);
     expect(arr2.length).toBe(3);
   });
 
   it('should not break if array is undefined or null or has length 0', () => {
-    const resultArr = helpers.union(undefined, null, []);
+    helpers.union(undefined, null, []);
     expect(helpers.size([])).toBe(0);
   });
-
 });
 
 describe('helpers extend method', () => {
-
   const obj1 = {};
   const obj2 = {a: 1, b: 2, c: 3};
   const obj3 = {a: 10, 1: 'abc', 2: undefined, 3: null};
-  const obj4 = {has: true, is: false};
 
   it('should add (key, value) of objects passed to first object', () => {
     const resultObj = helpers.extend(obj1, obj2);
@@ -383,11 +377,9 @@ describe('helpers extend method', () => {
     helpers.extend(obj1, obj2, obj3);
     expect(obj2.a).toBe(1);
   });
-
 });
 
 describe('helpers uniqueId method', () => {
-
   it('should return unique value each time', () => {
     const id1 = helpers.uniqueId('abc');
     const id2 = helpers.uniqueId('abc');
@@ -403,5 +395,4 @@ describe('helpers uniqueId method', () => {
     const id1 = helpers.uniqueId();
     expect(id1).toBeTruthy();
   });
-
 });
