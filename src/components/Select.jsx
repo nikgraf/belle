@@ -47,10 +47,10 @@ const findIndexOfFocusedOption = (component) => {
  */
 function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) {
   if (!(props[propName] &&
-    isOption(props[propName]) ||
-    isPlaceholder(props[propName]) ||
-    isSeparator(props[propName]))
-  ) {
+        isOption(props[propName]) ||
+        isPlaceholder(props[propName]) ||
+        isSeparator(props[propName]))
+     ) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
   }
 }
@@ -358,7 +358,7 @@ export default class Select extends Component {
       if (!previousState.isOpen && this.state.isOpen) {
         const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
         positionOptions(this);
-        // restore the old scrollTop position
+      // restore the old scrollTop position
       } else {
         menuNode.scrollTop = this.cachedMenuScrollTop;
       }
@@ -623,8 +623,8 @@ export default class Select extends Component {
       if (filter(this.props.children, isOption).length > 0) {
         if (!this.state.isOpen) {
           if (event.key === 'ArrowDown' ||
-            event.key === 'ArrowUp' ||
-            event.key === ' ') {
+              event.key === 'ArrowUp' ||
+              event.key === ' ') {
             event.preventDefault();
             this.setState({ isOpen: true });
           }
@@ -770,7 +770,7 @@ export default class Select extends Component {
            onBlur={ this._onBlur.bind( this) }
            onFocus={ this._onFocus.bind( this) }
            ref="wrapper"
-        {...this.state.wrapperProps} >
+           {...this.state.wrapperProps} >
 
         <div onClick={ this._onClickToggleMenu.bind(this) }
              onTouchStart={ this._onTouchStartToggleMenu.bind(this) }
@@ -782,7 +782,7 @@ export default class Select extends Component {
              role="button"
              aria-expanded={ this.state.isOpen }
              id={ this.state.selectedOptionWrapperId }
-          {...this.state.selectedOptionWrapperProps} >
+             {...this.state.selectedOptionWrapperProps} >
           { selectedOptionOrPlaceholder }
           <span style={ caretStyle }
             {...this.state.caretProps}>
@@ -793,7 +793,7 @@ export default class Select extends Component {
             role="listbox"
             aria-labelledby={ this.state.selectedOptionWrapperId }
             ref="menu"
-          {...this.state.menuProps} >
+            {...this.state.menuProps} >
           {
             React.Children.map(this.props.children, (entry, index) => {
               if (isOption(entry)) { // filter out all non-Option Components
