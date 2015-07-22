@@ -269,6 +269,20 @@ describe('helpers findIndex method', () => {
   });
 });
 
+describe('helpers first method', () => {
+  it('should find first element of an array', () => {
+    expect(helpers.first([1, 2, 3])).toBe(1);
+    expect(helpers.first([null, 1, 2, 3, null])).toBe(null);
+    expect(helpers.first([undefined, 1, 2, 3])).toBe(undefined);
+  });
+
+  it('should not break for empty array', () => {
+    expect(helpers.first(undefined)).toBeFalsy();
+    expect(helpers.first(null)).toBeFalsy();
+    expect(helpers.first([])).toBeFalsy();
+  });
+});
+
 describe('helpers last method', () => {
   it('should find last element of an array', () => {
     expect(helpers.last([1, 2, 3])).toBe(3);
@@ -394,5 +408,33 @@ describe('helpers uniqueId method', () => {
   it('should not break if prefix is null', () => {
     const id1 = helpers.uniqueId();
     expect(id1).toBeTruthy();
+  });
+});
+
+describe('helpers flatten method', () => {
+  const arr1 = [123, 456, 789];
+  const arr2 = ['abc', 'def', 'ghi'];
+  const arr3 = [true, false, 123];
+
+  it('should return all elements from all arrays', () => {
+    const resultArr = helpers.flatten(arr1, arr2, arr3);
+    expect(resultArr.length).toBe(9);
+  });
+
+  it('should not remove duplicates', () => {
+    const resultArr = helpers.flatten(arr1, arr3);
+    expect(resultArr[0]).toBe(123);
+    expect(resultArr[5]).toBe(123);
+  });
+
+  it('should not alter original arrays', () => {
+    helpers.flatten(arr1, arr2);
+    expect(arr1.length).toBe(3);
+    expect(arr2.length).toBe(3);
+  });
+
+  it('should not break if array is undefined or null or has length 0', () => {
+    helpers.flatten(undefined, null, []);
+    expect(helpers.size([])).toBe(0);
   });
 });
