@@ -385,3 +385,23 @@ describe('helpers extend method', () => {
   });
 
 });
+
+describe('helpers uniqueId method', () => {
+
+  it('should return unique value each time', () => {
+    const id1 = helpers.uniqueId('abc');
+    const id2 = helpers.uniqueId('abc');
+    expect(id1 === id2).toBeFalsy();
+  });
+
+  it('should use prefix for building id', () => {
+    const id1 = helpers.uniqueId('abc');
+    expect(id1.indexOf('abc')).toBeGreaterThan(-1);
+  });
+
+  it('should not break if prefix is null', () => {
+    const id1 = helpers.uniqueId();
+    expect(id1).toBeTruthy();
+  });
+
+});
