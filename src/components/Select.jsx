@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, some, uniqueId, has} from '../utils/helpers';
+import {omit, extend, filter, find, isEmpty, findIndex, last, size, some, uniqueId, has} from '../utils/helpers';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -226,10 +226,10 @@ export default class Select extends Component {
       selectedValue = properties.defaultValue;
       focusedOptionValue = selectedValue;
     } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
-      selectedValue = first(filter(properties.children, isOption)).props.value;
+      selectedValue = filter(properties.children, isOption)[0].props.value;
       focusedOptionValue = selectedValue;
     } else if (!isEmpty(properties.children)) {
-      focusedOptionValue = first(filter(properties.children, isOption)).props.value;
+      focusedOptionValue = filter(properties.children, isOption)[0].props.value;
     }
 
     this.state = {
@@ -567,7 +567,7 @@ export default class Select extends Component {
       }
     } else {
       this.setState({
-        focusedOptionValue: first(filter(this.props.children, isOption)).props.value
+        focusedOptionValue: filter(this.props.children, isOption)[0].props.value
       });
     }
   }

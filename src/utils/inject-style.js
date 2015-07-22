@@ -1,4 +1,4 @@
-import {each, map, flatten} from '../utils/helpers';
+import {map, flatten} from '../utils/helpers';
 import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
 import animations from '../style/animations';
 
@@ -79,7 +79,7 @@ function updateStyling() {
  */
 export function injectStyles(styles) {
   injectStyleTag();
-  each(styles, (style) => {
+  styles.forEach((style) => {
     updateStore(style.id, style.style, style.pseudoClass, style.disabled);
   });
   updateStyling();
@@ -97,7 +97,7 @@ export function removeStyle(styleId) {
  * Removes all pseudoClass styles based on all provided styleIds.
  */
 export function removeAllStyles(styleIds) {
-  each(styleIds, (styleId) => {
+  styleIds.forEach((styleId) => {
     delete styleStorage[styleId];
   });
   updateStyling();
