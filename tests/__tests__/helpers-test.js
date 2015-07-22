@@ -166,8 +166,12 @@ describe('helpers map method for arrays', () => {
 
 describe('helpers map method for object', () => {
   const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
-  const predicate = function(value) {
+  const predicate = function(value, id) {
     return value / 5;
+  };
+  const objIdTest = {50: 5, 100: 10, 500: 50, 1000: 100};
+  const predicateIdTest = function(value, id) {
+    return id / value;
   };
 
   it('should map to an output array as per predicate', () => {
@@ -176,6 +180,14 @@ describe('helpers map method for object', () => {
     expect(resultObj[1]).toBe(2);
     expect(resultObj[2]).toBe(10);
     expect(resultObj[3]).toBe(20);
+  });
+
+  it('should pass second parameter value to predicate', () => {
+    const resultObj = helpers.map(objIdTest, predicateIdTest);
+    expect(resultObj[0]).toBe(10);
+    expect(resultObj[1]).toBe(10);
+    expect(resultObj[2]).toBe(10);
+    expect(resultObj[3]).toBe(10);
   });
 });
 
@@ -415,6 +427,7 @@ describe('helpers flatten method', () => {
   const arr1 = [123, 456, 789];
   const arr2 = ['abc', 'def', 'ghi'];
   const arr3 = [true, false, 123];
+  const arr4 = [true, false, ['lmn', 'opq', [98, 45]]];
 
   it('should return all elements from all arrays', () => {
     const resultArr = helpers.flatten(arr1, arr2, arr3);
@@ -436,5 +449,10 @@ describe('helpers flatten method', () => {
   it('should not break if array is undefined or null or has length 0', () => {
     helpers.flatten(undefined, null, []);
     expect(helpers.size([])).toBe(0);
+  });
+
+  it('should be able to flatten to any level', () => {
+    const result = helpers.flatten(arr1, arr4);
+    expect(helpers.size(result)).toBe(9);
   });
 });
