@@ -10,6 +10,7 @@ import TextInputPlayground from './TextInputPlayground';
 import RatingPlayground from './RatingPlayground';
 import ComboBoxPlayground from './ComboBoxPlayground';
 import TogglePlayground from './TogglePlayground';
+import Modal from 'react-modal';
 
 // TODO create a button to switch between those stylings for testing purposes
 if (true) {
@@ -66,11 +67,31 @@ if (true) {
 // export for http://fb.me/react-devtools
 window.React = React;
 
+const appElement = document.getElementById('react');
+
+Modal.setAppElement(appElement);
+Modal.injectCSS();
+
 class App extends Component {
 
   render() {
     return (<div style={ {margin: '0 auto', width: 300} }>
         <h1>Belle Playground</h1>
+
+        <Modal
+          isOpen
+        >
+          <h2>Hello</h2>
+          <button onClick={this.closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
 
         <TogglePlayground />
 
@@ -92,4 +113,4 @@ class App extends Component {
   }
 }
 
-React.render(<App/>, document.getElementById('react'));
+React.render(<App/>, appElement);
