@@ -17,7 +17,7 @@ export function omit(obj, fields) {
 export function filter(iterable, predicate, context) {
   if (iterable) {
     const result = [];
-    iterable.forEach(function(obj) {
+    iterable.forEach((obj) => {
       if (predicate && predicate.call(context, obj)) {
         result.push(obj);
       }
@@ -126,9 +126,9 @@ export function some(iterable, predicate, context) {
 export function union(...arrs) {
   if (arrs) {
     const result = [];
-    arrs.forEach(function(arr) {
+    arrs.forEach((arr) => {
       if (arr) {
-        arr.forEach(function(obj) {
+        arr.forEach((obj) => {
           if (result.indexOf(obj) < 0) {
             result.push(obj);
           }
@@ -147,7 +147,7 @@ export function uniqueId(prefix) {
 
 export function extend(obj1, ...objs) {
   if (obj1 && objs) {
-    objs.forEach(function(obj) {
+    objs.forEach((obj) => {
       if (obj) {
         for (const key in obj) {
           if (obj.hasOwnProperty(key)) {
@@ -162,7 +162,7 @@ export function extend(obj1, ...objs) {
 
 function flattenInternal(output, element) {
   if (element) {
-    element.forEach(function(obj) {
+    element.forEach((obj) => {
       if (Array.isArray(obj)) {
         flattenInternal(output, obj);
       } else {
@@ -180,4 +180,3 @@ export function flatten(...arrays) {
     return result;
   }
 }
-
