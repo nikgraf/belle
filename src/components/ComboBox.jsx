@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filter, has, map} from '../utils/helpers';
+import {omit, extend, filter, has, map, find} from '../utils/helpers';
 import style from '../style/combo-box';
 
 // Enable React Touch Events
@@ -71,6 +71,7 @@ function sanitizeInputProps(properties) {
     'className',
     'style',
     'onUpdate',
+    'onInputMatch',
     'tabIndex',
     'onBlur',
     'onFocus',
@@ -136,7 +137,7 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      filteredOptions: this.filterOptions(inputValue, properties.children, properties.maxOptions),
+      filteredOptions: this.filterOptions(inputValue, properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -163,6 +164,7 @@ export default class ComboBox extends Component {
     menuProps: React.PropTypes.object,
     caretProps: React.PropTypes.object,
     onUpdate: React.PropTypes.func,
+    onInputMatch: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
     onKeyDown: React.PropTypes.func,
     onFocus: React.PropTypes.func,
@@ -259,7 +261,7 @@ export default class ComboBox extends Component {
 
     const newState = {
       inputValue: inputValue,
-      filteredOptions: this.filterOptions(inputValue, properties.children, properties.maxOptions),
+      filteredOptions: this.filterOptions(inputValue, properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -417,10 +419,12 @@ export default class ComboBox extends Component {
           event.preventDefault();
           this._onArrowUpKeyDown();
         } else if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          const hint = this._getHint();
-          if (hint) {
-            this._userUpdateValue(hint);
+          if (this.props.enableHint) {
+            event.preventDefault();
+            const hint = this._getHint();
+            if (hint) {
+              this._userUpdateValue(hint);
+            }
           }
         } else if (event.key === 'Enter') {
           event.preventDefault();
@@ -484,6 +488,15 @@ export default class ComboBox extends Component {
   }
 
   /**
+   * The function will return options (if any) who's value is same as value of the combo-box input.
+   */
+  _findMatch(value) {
+    return find(this.state.filteredOptions, (entry) => {
+      return entry.props.value === value;
+    });
+  }
+
+  /**
    * The function is called when user selects an option. Function will do following:
    * 1. Close the options
    * 2. Change value of input depending on whether its has value, defaultValue or valueLink property
@@ -506,12 +519,16 @@ export default class ComboBox extends Component {
         inputValue: value,
         isOpen: false,
         focusedOptionIndex: undefined,
-        filteredOptions: this.filterOptions(value, this.props.children, this.props.maxOptions)
+        filteredOptions: this.filterOptions(value, this.props)
       });
     }
 
+    const obj = {value: value, optionSelect: true, optionMatch: true};
+    const matchedOption = this._findMatch(value);
+    obj.identifier = matchedOption ? matchedOption.props.identifier : undefined;
+
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate(obj);
     }
   }
 
@@ -546,7 +563,7 @@ export default class ComboBox extends Component {
         focusedOptionIndex: undefined
       });
     } else {
-      const filteredOptions = this.filterOptions(value, this.props.children, this.props.maxOptions);
+      const filteredOptions = this.filterOptions(value, this.props);
       this.setState({
         inputValue: value,
         isOpen: true,
@@ -555,26 +572,34 @@ export default class ComboBox extends Component {
       });
     }
 
+    const obj = {value: value, optionSelect: false, optionMatch: false};
+
+    const matchedOption = this._findMatch(value);
+    if (matchedOption) {
+      obj.identifier = matchedOption.props.identifier;
+      obj.optionMatch = true;
+    }
+
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate(obj);
     }
   }
 
   /**
    * Function to filter options using input value.
    */
-  filterOptions(inputValue, options, max) { /*eslint react/sort-comp:0*/
+  filterOptions(inputValue, properties) { /*eslint react/sort-comp:0*/
     let filteredOptions = [];
-    if (options.length > 0) {
+    if (properties.children.length > 0) {
       if (inputValue) {
-        filteredOptions = filter(options, (entry) => {
-          return this.props.filterFunc(inputValue, entry.props.value);
+        filteredOptions = filter(properties.children, (entry) => {
+          return properties.filterFunc(inputValue, entry.props.value);
         });
       } else {
-        filteredOptions = map(options, (entry) => { return entry; });
+        filteredOptions = map(properties.children, (entry) => { return entry; });
       }
-      if (max) {
-        filteredOptions = filteredOptions.splice(0, max);
+      if (properties.maxOptions) {
+        filteredOptions = filteredOptions.splice(0, properties.maxOptions);
       }
     }
     return filteredOptions;
