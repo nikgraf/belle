@@ -279,6 +279,14 @@ describe('helpers findIndex method', () => {
     obj = helpers.findIndex(arr, predicate);
     expect(obj).toBeFalsy();
   });
+
+  it('should return undefined in case the entry could not be found', () => {
+    const customPredicate = (obj) => {
+      return obj === 567;
+    };
+    const index = helpers.findIndex(arr, customPredicate);
+    expect(index).toBeUndefined();
+  });
 });
 
 describe('helpers first method', () => {
