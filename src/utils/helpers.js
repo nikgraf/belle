@@ -1,5 +1,5 @@
 export function has(obj, key) {
-  return obj !== null && Object.prototype.hasOwnProperty.call(obj, key);
+  return obj !== undefined && obj !== null && Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 export function omit(obj, fields) {
