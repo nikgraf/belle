@@ -28,7 +28,7 @@ describe('helpers has method', () => {
 });
 
 describe('helpers omit method', () => {
-  const obj = {test1: 123, test2: 'abc', test3: function() {}, test4: undefined};
+  const obj = {test1: 123, test2: 'abc', test3: () => {}, test4: undefined};
 
   it('should return new object with keys omitted', () => {
     const keys = ['test1', 'test2'];
@@ -84,8 +84,8 @@ describe('helpers omit method', () => {
 
 
 describe('helpers filter method', () => {
-  const arr = [123, 'abc', function() {}, undefined];
-  const predicate = function(obj) {
+  const arr = [123, 'abc', () => {}, undefined];
+  const predicate = (obj) => {
     return obj !== 123;
   };
 
@@ -126,7 +126,7 @@ describe('helpers filter method', () => {
 
 describe('helpers map method for arrays', () => {
   const arr = [5, 10, 50, 100];
-  const predicate = function(obj) {
+  const predicate = (obj) => {
     return obj / 5;
   };
 
@@ -166,11 +166,11 @@ describe('helpers map method for arrays', () => {
 
 describe('helpers map method for object', () => {
   const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
-  const predicate = function(value, id) {
+  const predicate = (value) => {
     return value / 5;
   };
   const objIdTest = {50: 5, 100: 10, 500: 50, 1000: 100};
-  const predicateIdTest = function(value, id) {
+  const predicateIdTest = (value, id) => {
     return id / value;
   };
 
@@ -192,8 +192,8 @@ describe('helpers map method for object', () => {
 });
 
 describe('helpers find method', () => {
-  const arr = [123, 'abc', function() {}, undefined];
-  const predicate = function(obj) {
+  const arr = [123, 'abc', () => {}, undefined];
+  const predicate = (obj) => {
     return typeof obj === 'number';
   };
 
@@ -243,8 +243,8 @@ describe('helpers isEmpty method', () => {
 });
 
 describe('helpers findIndex method', () => {
-  const arr = [123, 'abc', function() {}, undefined];
-  const predicate = function(obj) {
+  const arr = [123, 'abc', () => {}, undefined];
+  const predicate = (obj) => {
     return typeof obj === 'number';
   };
 
@@ -322,8 +322,8 @@ describe('helpers size method', () => {
 });
 
 describe('helpers some method', () => {
-  const arr = [123, 'abc', function() {}, undefined];
-  const predicate = function(obj) {
+  const arr = [123, 'abc', () => {}, undefined];
+  const predicate = (obj) => {
     return typeof obj === 'number';
   };
 
