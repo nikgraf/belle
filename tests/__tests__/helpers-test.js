@@ -83,10 +83,48 @@ describe('helpers omit method', () => {
 });
 
 
+describe('helpers each method', () => {
+  let count = 0;
+  const arr = [123, 'abc', () => {}, undefined];
+  const obj = 123;
+  const predicate = () => {
+    return count++;
+  };
+
+  it('should execute predicate for each element of array', () => {
+    count = 0;
+    helpers.each(arr, predicate);
+    expect(count).toBe(4);
+  });
+
+  it('should execute predicate if parameter passed is not array but simple object', () => {
+    count = 0;
+    helpers.each(obj, predicate);
+    expect(count).toBe(1);
+  });
+
+  it('should not alter original array', () => {
+    helpers.each(arr, predicate);
+    expect(arr.length).toBe(4);
+    expect(arr.indexOf(123)).toBe(0);
+  });
+});
+
+describe('helpers isArrayLike method', () => {
+  it('should return true for array', () => {
+    expect(helpers.isArrayLike([123, 'abc', () => {}, undefined])).toBeTruthy();
+  });
+
+  it('should return false for non-arrays', () => {
+    expect(helpers.isArrayLike(123)).toBeFalsy();
+    expect(helpers.isArrayLike('abc')).toBeFalsy();
+  });
+});
+
 describe('helpers filter method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return obj !== 123;
+  const predicate = (object) => {
+    return object !== 123;
   };
 
   it('should filter out objects from iterable as per predicate', () => {
@@ -193,13 +231,19 @@ describe('helpers map method for object', () => {
 
 describe('helpers find method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return typeof obj === 'number';
+  const obj = 100;
+  const predicate = (object) => {
+    return typeof object === 'number';
   };
 
   it('should find first numeric value in array', () => {
-    const obj = helpers.find(arr, predicate);
-    expect(obj).toBe(123);
+    const resultObj = helpers.find(arr, predicate);
+    expect(resultObj).toBe(123);
+  });
+
+  it('should execute predicate test if parameter passed is not an array but simple object', () => {
+    const resultObj = helpers.find(obj, predicate);
+    expect(resultObj).toBe(100);
   });
 
   it('should not alter original array', () => {
@@ -210,23 +254,23 @@ describe('helpers find method', () => {
 
   it('should not break if array is undefined or null or has length 0', () => {
     let arr2;
-    let obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
     arr2 = null;
-    obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
     arr2 = [];
-    obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should not break if predicate is undefined or null', () => {
     let predicate2;
-    let obj = helpers.find(arr, predicate2);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.find(arr, predicate2);
+    expect(resultObj).toBeFalsy();
     predicate2 = null;
-    obj = helpers.find(arr, predicate2);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr, predicate2);
+    expect(resultObj).toBeFalsy();
   });
 });
 
@@ -244,13 +288,19 @@ describe('helpers isEmpty method', () => {
 
 describe('helpers findIndex method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return typeof obj === 'number';
+  const obj = 100;
+  const predicate = (object) => {
+    return typeof object === 'number';
   };
 
   it('should find index of first numeric value in array', () => {
     const index = helpers.findIndex(arr, predicate);
     expect(index).toBe(0);
+  });
+
+  it('should execute predicate test if parameter passed is not an array but simple object', () => {
+    const resultObj = helpers.findIndex(obj, predicate);
+    expect(resultObj).toBe(0);
   });
 
   it('should not alter original array', () => {
@@ -261,28 +311,28 @@ describe('helpers findIndex method', () => {
 
   it('should not break if array is undefined or null or has length 0', () => {
     let obj2;
-    let obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
     obj2 = null;
-    obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
     obj2 = [];
-    obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should not break if predicate is undefined or null', () => {
     let predicate2;
-    let obj = helpers.findIndex(arr, predicate2);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.findIndex(arr, predicate2);
+    expect(resultObj).toBeFalsy();
     predicate2 = null;
-    obj = helpers.findIndex(arr, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(arr, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should return undefined in case the entry could not be found', () => {
-    const customPredicate = (obj) => {
-      return obj === 567;
+    const customPredicate = (resultObj) => {
+      return resultObj === 567;
     };
     const index = helpers.findIndex(arr, customPredicate);
     expect(index).toBeUndefined();
@@ -294,6 +344,10 @@ describe('helpers first method', () => {
     expect(helpers.first([1, 2, 3])).toBe(1);
     expect(helpers.first([null, 1, 2, 3, null])).toBe(null);
     expect(helpers.first([undefined, 1, 2, 3])).toBe(undefined);
+  });
+
+  it('should work for non-array value and return the value itself', () => {
+    expect(helpers.first('abc')).toBe('abc');
   });
 
   it('should not break for empty array', () => {
@@ -315,11 +369,19 @@ describe('helpers last method', () => {
     expect(helpers.last(null)).toBeFalsy();
     expect(helpers.last([])).toBeFalsy();
   });
+
+  it('should work for non-array value and return the value itself', () => {
+    expect(helpers.last('abc')).toBe('abc');
+  });
 });
 
 describe('helpers size method', () => {
   it('should return size of an array', () => {
     expect(helpers.size([1, 2, 3])).toBe(3);
+  });
+
+  it('should return 0 for non-array argument', () => {
+    expect(helpers.size('abc')).toBe(1);
   });
 
   it('should not break for empty array', () => {
@@ -337,6 +399,11 @@ describe('helpers some method', () => {
 
   it('should return true is predicate is true for some element', () => {
     const result = helpers.some(arr, predicate);
+    expect(result).toBe(true);
+  });
+
+  it('should work well if argument is not array but simple object', () => {
+    const result = helpers.some(100, predicate);
     expect(result).toBe(true);
   });
 
