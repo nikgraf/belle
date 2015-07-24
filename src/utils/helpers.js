@@ -1,4 +1,4 @@
-// The following helper functions are based on Underscore.js
+// The following helper functions are based on Underscore.js and tailored to specific needs of react / belle
 
 /**
  * Returns true if the object contain the given key.
@@ -29,8 +29,30 @@ export function omit(obj, fields) {
 }
 
 /**
+ * The function will execute predicate for each object in iterable object passed. Its different from javascript forEach in ways:
+ * 1. In case obj is undefined / null it will not break but will just return undefined.
+ * 2. In case obj is not iterable it will consider obj as single element array and iterate over it (unlike underscore it will not iterate over each field of the object).
+ *
+ * @param {object} obj - object to be iterated
+ * @param {function} predicate - function to be called for each element in the object
+ * @param {object} [context] - context for the predicate function call
+ */
+export function each(obj, predicate, context) {
+  if (obj) {
+    if (isArrayLike(obj)) {
+      obj.forEach((elm) => {
+        predicate.call(context, elm);
+      });
+    } else {
+      predicate.call(context, obj);
+    }
+  }
+}
+
+/**
  * Looks through each value in the list, returning an array of all the values
  * that pass a truth test (predicate).
+ * In case the parameter passed is not iterable the function will execute predicate for single object and return array of that object is its filtered.
  *
  * @param {array} iterable - the iterable object to be filtered
  * @param {function} predicate - function returning true when provided with an entry as argument
@@ -39,7 +61,7 @@ export function omit(obj, fields) {
 export function filter(iterable, predicate, context) {
   if (iterable) {
     const result = [];
-    iterable.forEach((obj) => {
+    each(iterable, (obj) => {
       if (predicate && predicate.call(context, obj)) {
         result.push(obj);
       }
@@ -53,7 +75,9 @@ export function filter(iterable, predicate, context) {
  *
  * @param {object} obj - object to be inspected
  */
-function isArrayLike(obj) {
+export function isArrayLike(obj) {
+  if (Array.isArray(obj)) return true;
+  if (typeof obj === 'string') return false;
   const length = obj.length;
   return typeof length === 'number' && length >= 0;
 }
@@ -70,7 +94,8 @@ function keys(obj) {
 }
 
 /**
- * Returns a new array of values by mapping each value in list through a transformation function (predicate). If object is a not an array, predicate's arguments will be (value, key, list).
+ * Returns a new array of values by mapping each value in list through a transformation function (predicate).
+ * If object is a not an array, predicate's arguments will be (value, key).
  *
  * @param {object|array} obj - object to be based upon
  * @param {function} predicate - function returning the a new version of the entry
@@ -94,6 +119,7 @@ export function map(obj, predicate, context) {
 /**
  * Returns the first value that passes a truth test (predicate), or undefined if
  * no value passes the test. Only works for iterable objects e.g. arrays.
+ * In case the parameter passed is not iterable the function will execute predicate for it considering it to be a single element array.
  *
  * @param {array} iterable - the iterable object to be searched
  * @param {function} predicate - function returning true in case of a positive match
@@ -101,10 +127,16 @@ export function map(obj, predicate, context) {
  */
 export function find(iterable, predicate, context) {
   if (iterable) {
+    let source;
+    if (isArrayLike(iterable)) {
+      source = iterable;
+    } else {
+      source = [iterable];
+    }
     let result;
-    for (let index = 0; index < iterable.length; index++) {
-      if (predicate && predicate.call(context, iterable[index])) {
-        result = iterable[index];
+    for (let index = 0; index < source.length; index++) {
+      if (predicate && predicate.call(context, source[index])) {
+        result = source[index];
         break;
       }
     }
@@ -124,6 +156,7 @@ export function isEmpty(iterable) {
 /**
  * Returns the index of the first value that passes a truth test (predicate), or undefined if
  * no value passes the test. Only works for iterable objects e.g. arrays.
+ * In case the parameter passed is not iterable the function will execute predicate for it considering it to be a single element array.
  *
  * @param {array} iterable - the iterable object to be searched
  * @param {function} predicate - function returning true in case of a positive match
@@ -131,9 +164,15 @@ export function isEmpty(iterable) {
  */
 export function findIndex(iterable, predicate, context) {
   if (iterable) {
+    let source;
+    if (isArrayLike(iterable)) {
+      source = iterable;
+    } else {
+      source = [iterable];
+    }
     let result;
-    for (let index = 0; index < iterable.length; index++) {
-      if (predicate && predicate.call(context, iterable[index])) {
+    for (let index = 0; index < source.length; index++) {
+      if (predicate && predicate.call(context, source[index])) {
         result = index;
         break;
       }
@@ -144,40 +183,62 @@ export function findIndex(iterable, predicate, context) {
 
 /**
  * Returns the first element of an iterable object.
+ * In case a single object is passed as parameter the function will return the object as is.
  *
  * @param {array} iterable - must be an iterable object
  */
 export function first(iterable) {
-  if (iterable && iterable.length > 0) {
-    return iterable[0];
+  if (iterable) {
+    if (isArrayLike(iterable)) {
+      if (iterable.length > 0) {
+        return iterable[0];
+      }
+    } else {
+      return iterable;
+    }
   }
 }
 
 /**
  * Returns the last element of an iterable object.
+ * In case a single object is passed as parameter the function will return the object as is.
  *
  * @param {array} iterable - must be an iterable object
  */
 export function last(iterable) {
-  if (iterable && iterable.length > 0) {
-    return iterable[iterable.length - 1];
+  if (iterable) {
+    if (isArrayLike(iterable)) {
+      if (iterable.length > 0) {
+        return iterable[iterable.length - 1];
+      }
+    } else {
+      return iterable;
+    }
   }
 }
 
 /**
  * Return the number of values in the list.
+ * For non-iterable objects it will return 1.
  *
  * @param {array} iterable - must be an iterable object
  */
 export function size(iterable) {
   if (iterable) {
-    return iterable.length;
+    let source;
+    if (isArrayLike(iterable)) {
+      source = iterable;
+    } else {
+      source = [iterable];
+    }
+    return source.length;
   }
   return 0;
 }
 
 /**
  * Returns true if any of the values in the list pass the predicate truth test.
+ * In case the parameter passed is not iterable the function will execute predicate for it considering it to be a single element array.
  *
  * @param {array} iterable - iterable object to be searched
  * @param {function} predicate - function returning true in case of a positive match
@@ -185,9 +246,15 @@ export function size(iterable) {
  */
 export function some(iterable, predicate, context) {
   if (iterable) {
+    let source;
+    if (isArrayLike(iterable)) {
+      source = iterable;
+    } else {
+      source = [iterable];
+    }
     let result;
-    for (let index = 0; index < iterable.length; index++) {
-      if (predicate && predicate.call(context, iterable[index])) {
+    for (let index = 0; index < source.length; index++) {
+      if (predicate && predicate.call(context, source[index])) {
         result = true;
         break;
       }
@@ -206,7 +273,7 @@ export function union(...arrs) {
     const result = [];
     arrs.forEach((arr) => {
       if (arr) {
-        arr.forEach((obj) => {
+        each(arr, (obj) => {
           if (result.indexOf(obj) < 0) {
             result.push(obj);
           }
@@ -258,7 +325,7 @@ export function extend(obj1, ...objs) {
  */
 function flattenInternal(output, element) {
   if (element) {
-    element.forEach((obj) => {
+    each(element, (obj) => {
       if (Array.isArray(obj)) {
         flattenInternal(output, obj);
       } else {

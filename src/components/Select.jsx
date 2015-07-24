@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, some, uniqueId, has} from '../utils/helpers';
+import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -217,19 +217,17 @@ export default class Select extends Component {
     let focusedOptionValue;
 
     if (has(properties, 'valueLink')) {
-      selectedValue = properties.valueLink.value;
-      focusedOptionValue = selectedValue;
+      focusedOptionValue = selectedValue = properties.valueLink.value;
     } else if (has(properties, 'value')) {
-      selectedValue = properties.value;
-      focusedOptionValue = selectedValue;
+      focusedOptionValue = selectedValue = properties.value;
     } else if (has(properties, 'defaultValue')) {
-      selectedValue = properties.defaultValue;
-      focusedOptionValue = selectedValue;
+      focusedOptionValue = selectedValue = properties.defaultValue;
     } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
-      selectedValue = first(filter(properties.children, isOption)).props.value;
-      focusedOptionValue = selectedValue;
+      const firstOption = first(filter(properties.children, isOption));
+      focusedOptionValue = selectedValue = firstOption ? firstOption.props.value : void 0;
     } else if (!isEmpty(properties.children)) {
-      focusedOptionValue = first(filter(properties.children, isOption)).props.value;
+      const firstOption = first(filter(properties.children, isOption));
+      focusedOptionValue = firstOption ? firstOption.props.value : void 0;
     }
 
     this.state = {
@@ -355,17 +353,12 @@ export default class Select extends Component {
       const menuNode = React.findDOMNode(this.refs.menu);
 
       // the menu was just opened
-      if (!previousState.isOpen && this.state.isOpen) {
+      if (!previousState.isOpen && this.state.isOpen && this.props.children && this.props.children.length > 0) {
         const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
         positionOptions(this);
       // restore the old scrollTop position
       } else {
         menuNode.scrollTop = this.cachedMenuScrollTop;
-      }
-
-      if (!previousState.isOpen && this.state.isOpen) {
-        const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
-        menuNode.style.display = menuStyle.display;
       }
     }
   }
@@ -708,7 +701,7 @@ export default class Select extends Component {
     const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
     const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
     const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
-    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle, { display: 'block' });
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const disabledCaretToOpenStyle = extend({}, caretToOpenStyle, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
@@ -729,7 +722,10 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
     }
 
-    const computedMenuStyle = this.state.isOpen && !this.props.disabled ? menuStyle : { display: 'none' };
+    const options = filter(this.props.children, isOption);
+    const separators = filter(this.props.children, isSeparator);
+    const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
+    const computedMenuStyle = this.props.disabled || !this.state.isOpen || childrenLength === 0 ? { display: 'none' } : menuStyle;
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
 
