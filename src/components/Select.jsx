@@ -217,14 +217,18 @@ export default class Select extends Component {
     let focusedOptionValue;
 
     if (has(properties, 'valueLink')) {
-      focusedOptionValue = selectedValue = properties.valueLink.value;
+      selectedValue = properties.valueLink.value;
+      focusedOptionValue = selectedValue;
     } else if (has(properties, 'value')) {
-      focusedOptionValue = selectedValue = properties.value;
+      selectedValue = properties.value;
+      focusedOptionValue = selectedValue;
     } else if (has(properties, 'defaultValue')) {
-      focusedOptionValue = selectedValue = properties.defaultValue;
+      selectedValue = properties.defaultValue;
+      focusedOptionValue = selectedValue;
     } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
       const firstOption = first(filter(properties.children, isOption));
-      focusedOptionValue = selectedValue = firstOption ? firstOption.props.value : void 0;
+      selectedValue = firstOption ? firstOption.props.value : void 0;
+      focusedOptionValue = selectedValue;
     } else if (!isEmpty(properties.children)) {
       const firstOption = first(filter(properties.children, isOption));
       focusedOptionValue = firstOption ? firstOption.props.value : void 0;
@@ -359,6 +363,14 @@ export default class Select extends Component {
       // restore the old scrollTop position
       } else {
         menuNode.scrollTop = this.cachedMenuScrollTop;
+      }
+
+      const options = filter(this.props.children, isOption);
+      const separators = filter(this.props.children, isSeparator);
+      const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
+      if (!previousState.isOpen && this.state.isOpen && childrenLength) {
+        const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+        menuNode.style.display = menuStyle.display;
       }
     }
   }
@@ -701,7 +713,7 @@ export default class Select extends Component {
     const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
     const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
     const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
-    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle, { display: 'block' });
+    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
     const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
     const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
     const disabledCaretToOpenStyle = extend({}, caretToOpenStyle, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);

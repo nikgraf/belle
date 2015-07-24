@@ -121,6 +121,21 @@ describe('helpers isArrayLike method', () => {
   });
 });
 
+describe('helpers keys method', () => {
+  it('should return all keys in an object', () => {
+    const keys = helpers.keys({a: 1, b: 2, c: 3});
+    expect(keys.length).toBe(3);
+    expect(keys.indexOf('a')).toBeGreaterThan(-1);
+    expect(keys.indexOf('toString')).toBeLessThan(0);
+  });
+
+  it('should should not break for undefined/ null objects', () => {
+    expect(helpers.keys(undefined).length).toBe(0);
+    expect(helpers.keys(null).length).toBe(0);
+    expect(helpers.keys({}).length).toBe(0);
+  });
+});
+
 describe('helpers filter method', () => {
   const arr = [123, 'abc', () => {}, undefined];
   const predicate = (object) => {
@@ -202,7 +217,7 @@ describe('helpers map method for arrays', () => {
   });
 });
 
-describe('helpers map method for object', () => {
+describe('helpers mapObject method', () => {
   const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
   const predicate = (value) => {
     return value / 5;
@@ -213,7 +228,7 @@ describe('helpers map method for object', () => {
   };
 
   it('should map to an output array as per predicate', () => {
-    const resultObj = helpers.map(obj, predicate);
+    const resultObj = helpers.mapObject(obj, predicate);
     expect(resultObj[0]).toBe(1);
     expect(resultObj[1]).toBe(2);
     expect(resultObj[2]).toBe(10);
@@ -221,7 +236,7 @@ describe('helpers map method for object', () => {
   });
 
   it('should pass second parameter value to predicate', () => {
-    const resultObj = helpers.map(objIdTest, predicateIdTest);
+    const resultObj = helpers.mapObject(objIdTest, predicateIdTest);
     expect(resultObj[0]).toBe(10);
     expect(resultObj[1]).toBe(10);
     expect(resultObj[2]).toBe(10);
@@ -449,6 +464,14 @@ describe('helpers union method', () => {
     helpers.union(arr1, arr2);
     expect(arr1.length).toBe(3);
     expect(arr2.length).toBe(3);
+  });
+
+  it('should work well if single object/array is passed', () => {
+    let resultArr = helpers.union(arr1);
+    expect(resultArr.length).toBe(3);
+    resultArr = helpers.union('abc');
+    expect(resultArr.length).toBe(1);
+    expect(resultArr[0]).toBe('abc');
   });
 
   it('should not break if array is undefined or null or has length 0', () => {
