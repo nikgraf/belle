@@ -1,5 +1,5 @@
 import {map, flatten} from '../utils/helpers';
-import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
+import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import animations from '../style/animations';
 
