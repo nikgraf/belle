@@ -1,11 +1,13 @@
 // Inspired by https://gist.github.com/paulirish/1579671
 
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+
 export let requestAnimationFrame;
 export let cancelAnimationFrame;
 
 let lastTime = 0;
 
-if(typeof window != 'undefined') {
+if (canUseDOM) {
   requestAnimationFrame = window.requestAnimationFrame;
   cancelAnimationFrame = window.cancelAnimationFrame;
 

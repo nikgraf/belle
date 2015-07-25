@@ -1,5 +1,6 @@
 import {map, flatten} from '../utils/helpers';
-import CSSPropertyOperations from '../vendor/react/lib/CSSPropertyOperations';
+import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import animations from '../style/animations';
 
 let styleElement;
@@ -9,7 +10,7 @@ const styleStorage = {};
  * Injects the provided style into the styleStore.
  */
 function injectStyleTag() {
-  if (!styleElement) {
+  if (!styleElement && canUseDOM) {
     styleElement = document.createElement('style');
     document.body.appendChild(styleElement);
     styleElement.setAttribute('class', 'belle-style');
@@ -57,7 +58,9 @@ function updateStyling() {
 
     return pseudoClassesArray;
   });
-  styleElement.innerHTML = flatten([animations, styles]).join(' ');
+  if (styleElement) {
+    styleElement.innerHTML = flatten([animations, styles]).join(' ');
+  }
 }
 
 /**
