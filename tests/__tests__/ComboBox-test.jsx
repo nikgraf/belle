@@ -53,6 +53,27 @@ describe('ComboBox', () => {
     expect(wasCalled).toBeTruthy();
   });
 
+  it('should provide a parameter with 2 fields: value and identifier in onUpdate callback', () => {
+    let value;
+    let identifier;
+    let isMatch;
+    let isSelect;
+
+    const combobox = TestUtils.renderIntoDocument(
+      <ComboBox onUpdate={ (obj) => { value = obj.value; identifier = obj.identifier; isMatch = obj.optionMatch; isSelect = obj.optionSelect; } }>
+        <Option value="rome" identifier={1}>Rome</Option>
+        <Option value="vienna" identifier={2} className="vienna-option">Vienna</Option>
+      </ComboBox>
+    );
+
+    const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(combobox, 'vienna-option');
+    TestUtils.Simulate.click(viennaOptionNode);
+
+    expect(value).toBe('vienna');
+    expect(identifier).toBe(2);
+    expect(isMatch).toBe(true);
+    expect(isSelect).toBe(true);
+  });
 
   it('should be able to provide a valueLink', () => {
     // let wasCalled = false;

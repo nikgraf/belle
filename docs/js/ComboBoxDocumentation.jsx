@@ -27,6 +27,34 @@ const currencies = [
   {code: 'USD', name: 'United States Dollar'}
 ];
 
+const destinations = [
+  {code: '1', name: 'Marrakech, Morocco'},
+  {code: '2', name: 'Siem Reap, Cambodia'},
+  {code: '3', name: 'Istanbul, Turkey'},
+  {code: '4', name: 'Hanoi, Vietnam'},
+  {code: '6', name: 'London, United Kingdom'},
+  {code: '7', name: 'Rome, Italy'},
+  {code: '5', name: 'Prague, Czech Republic'},
+  {code: '8', name: 'Buenos Aires, Argentina'},
+  {code: '9', name: 'Paris, France'},
+  {code: '10', name: 'Cape Town Central, South Africa'},
+  {code: '11', name: 'New York City, New York'},
+  {code: '12', name: 'Zermatt, Switzerland'},
+  {code: '13', name: 'Barcelona, Spain'},
+  {code: '14', name: 'Goreme, Turkey'},
+  {code: '15', name: 'Ubud, Indonesia'},
+  {code: '16', name: 'Cusco, Peru'},
+  {code: '17', name: 'St. Petersburg, Russia'},
+  {code: '18', name: 'Bangkok, Thailand'},
+  {code: '19', name: 'Kathmandu, Nepal'},
+  {code: '20', name: 'Athens, Greece'},
+  {code: '21', name: 'Budapest, Hungary'},
+  {code: '22', name: 'Queenstown, New Zealand'},
+  {code: '23', name: 'Hong Kong, China'},
+  {code: '24', name: 'Dubai, United Arab Emirates'},
+  {code: '25', name: 'Sydney, Australia'}
+];
+
 const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];
 
 function customFilterFunc(inputValue, optionValue) {
@@ -35,6 +63,13 @@ function customFilterFunc(inputValue, optionValue) {
   }
   return false;
 }
+
+const onUpdateCode = `{
+  value: value string,
+  identifier: identifier of the type you passed
+  optionMatch: true/false
+  optionSelect: true/false
+}`;
 
 const basicCodeExample = `<ComboBox placeholder="Choose a State">
   <Option value="Alabama">Alabama</Option>
@@ -90,52 +125,67 @@ const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' 
   }
 </ComboBox>`;
 
-const dataCodeExampleTwoPartOne = `const currencies = [
-  {code: 'AUD', name: 'Australia Dollar'},
-  {code: 'BRL', name: 'Brazil Real'},
-  {code: 'CAD', name: 'Canada Dollar'},
-  {code: 'CNY', name: 'China Yuan Renminbi'},
-  {code: 'CRC', name: 'Costa Rica Colon'},
-  {code: 'CUP', name: 'Cuba Peso'},
-  {code: 'EGP', name: 'Egypt Pound'},
-  {code: 'HKD', name: 'Hong Kong Dollar'},
-  {code: 'NZD', name: 'New Zealand Dollar'},
-  {code: 'SEK', name: 'Sweden Krona'},
-  {code: 'GBP', name: 'United Kingdom Pound'},
-  {code: 'USD', name: 'United States Dollar'}
+const dataCodeExampleTwoPartOne = `const destinations = [
+  {code: '1', name: 'Marrakech, Morocco'},
+  {code: '2', name: 'Siem Reap, Cambodia'},
+  {code: '3', name: 'Istanbul, Turkey'},
+  {code: '4', name: 'Hanoi, Vietnam'},
+  {code: '5', name: 'Prague, Czech Republic'},
+  ...
 ];`;
 
-const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
-              onUpdate={ function(event) { console.log(event.value); } }
-              maxOptions = { 5 }
-              filterFunc = { customFilterFunc }>
+const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Destination' }
+          menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
+          onUpdate={ (event) => {
+            if (event.optionMatch) {
+              console.log(event.identifier);
+            }
+          }}>
   {
-    currencies.map(function(currency, index) {
+    destinations.map((destination, index) => {
       return (
-        <Option value={ currency.code }
+        <Option value={ destination.name }
+                identifier={ destination.code }
                 key={ index }>
-          <span style={ {fontWeight: 'bold', fontSize: '14px', marginRight: '10px'} }>
-            { currency.code }
-          </span>
-          <span style={ {fontSize: '12px'} }>
-            { currency.name }
-          </span>
+            { destination.name }
         </Option>
       );
     })
   }
 </ComboBox>`;
 
-const dataCodeExampleTwoPartThree = `const customFilterFunc = function(inputValue, optionValue) {
-  if(inputValue && optionValue) {
-    return optionValue.indexOf(inputValue) === 0;
+const dataCodeExampleThreePartOne = `const currencies = [
+  {code: 'AUD', name: 'Australia Dollar'},
+  {code: 'BRL', name: 'Brazil Real'},
+  {code: 'CAD', name: 'Canada Dollar'},
+  {code: 'CNY', name: 'China Yuan Renminbi'},
+  {code: 'CRC', name: 'Costa Rica Colon'},
+  ...
+];`;
+
+const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
+              onUpdate={ (event) => {
+                console.log(event.value);
+                console.log(event.identifier);
+                console.log(event.optionMatch);
+                console.log(event.optionSelect); }}
+              maxOptions = { 5 }>
+  {
+    currencies.map((currency, index) => {
+      return (
+        <Option value={ currency.name }
+                identifier={ currency.code }
+                key={ index }>
+          { currency.name }
+        </Option>
+      );
+    })
   }
-  return false;
-};`;
+</ComboBox>`;
 
-const dataCodeExampleThreePartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
+const dataCodeExampleFourPartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
 
-const dataCodeExampleThreePartTwo = `<ComboBox enableHint = { true }
+const dataCodeExampleFourPartTwo = `<ComboBox enableHint = { true }
           filterFunc = { customFilterFunc }
           placeholder = { 'Select Baby Name' }>
   {
@@ -181,6 +231,7 @@ export default React.createClass({
       </ComboBox>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+
 
       <h3>Properties</h3>
 
@@ -253,8 +304,19 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              Callback executed every time an Option is selected or a user inputs some value. onUpdate has one argument which is an object containing the value e.g. {'{'} value: 'Rome' {'}'}.
+              This callback is executed every time the combo-box value changes. This could happen when: <br/>
+              1. user selects an option.<br/>
+              2. user types value(function will be called on each keypress).<br/>
+              3. user paste some value.<br/>
+              4. if hints are enabled and user hits right-arrow key on keyboard.<br/>
+              <br/>
+              onUpdate has one argument which is an object containing 4 fields:<br/>
+              1. value, the value of the combo-box.<br/>
+              2. identifier, identifier of the matching option (optional). This is passed only if the options have identifiers and the value of the combo-box exactly matches one of the options.<br/>
+              3. optionSelect, true when combo-box is updated by user selecting an option (point:1 above).<br/>
+              4. optionMatch, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
             </p>
+            <Code value={ onUpdateCode } style={ {marginTop: 40} } />
           </td>
         </tr>
 
@@ -623,13 +685,13 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <h3>ComboBox with each option having an image, description and caret</h3>
+      <h3>ComboBox with a caret and each option having an image & description</h3>
 
       <ComboBox placeholder = { 'Choose an Animal' }
-                    defaultValue = "Ant"
-                    displayCaret = { true }>
+                defaultValue = "Ant"
+                displayCaret>
         {
-          animals.map(function(animal, index) {
+          animals.map((animal, index) => {
             return (
               <Option value={ animal.name }
                       style={{
@@ -666,23 +728,22 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleOnePartTwo } style={ {marginTop: 40} } />
 
-      <h3>ComboBox with custom filtering, onUpdate callback & maxOptions set to 5</h3>
+      <h3>ComboBox only logging in case of an exact match of the passed Options</h3>
 
-      <ComboBox placeholder = { 'Choose a Currency' }
-                    onUpdate={ (event) => { console.log(event.value); } }
-                    maxOptions = { 5 }
-                    filterFunc = { customFilterFunc }>
+      <ComboBox placeholder = { 'Choose a Destination' }
+                menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
+                onUpdate={ (event) => {
+                  if (event.optionMatch) {
+                    console.log(event.identifier);
+                  }
+                }}>
         {
-          currencies.map(function(currency, index) {
+          destinations.map((destination, index) => {
             return (
-              <Option value={ currency.code }
+              <Option value={ destination.name }
+                      identifier={ destination.code }
                       key={ index }>
-                <span style={ {fontWeight: 'bold', fontSize: '14px', marginRight: '10px'} }>
-                  { currency.code }
-                </span>
-                <span style={ {fontSize: '12px'} }>
-                  { currency.name }
-                </span>
+                  { destination.name }
               </Option>
             );
           })
@@ -693,7 +754,32 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleTwoPartTwo } style={ {marginTop: 40} } />
 
-      <Code value={ dataCodeExampleTwoPartThree } style={ {marginTop: 40} } />
+      <h3>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h3>
+
+      <ComboBox placeholder = { 'Choose a Currency' }
+                    onUpdate={ (event) => {
+                      console.log(event.value);
+                      console.log(event.identifier);
+                      console.log(event.optionMatch);
+                      console.log(event.optionSelect);
+                    }}
+                    maxOptions = { 5 }>
+        {
+          currencies.map((currency, index) => {
+            return (
+              <Option value={ currency.name }
+                      identifier={ currency.code }
+                      key={ index }>
+                { currency.name }
+              </Option>
+            );
+          })
+        }
+      </ComboBox>
+
+      <Code value={ dataCodeExampleThreePartOne } style={ {marginTop: 40} } />
+
+      <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
 
       <h3>ComboBox with custom filtering, and hints enabled</h3>
 
@@ -701,7 +787,7 @@ export default React.createClass({
                 filterFunc = { customFilterFunc }
                 placeholder = { 'Select Baby Name' }>
         {
-          babyNames.map(function(name, index) {
+          babyNames.map((name, index) => {
             return (
               <Option value={ name }
                       key={ index }>
@@ -712,9 +798,9 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleThreePartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleFourPartOne } style={ {marginTop: 40} } />
 
-      <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleFourPartTwo } style={ {marginTop: 40} } />
 
     </div>);
   }
