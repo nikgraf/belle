@@ -64,6 +64,13 @@ function customFilterFunc(inputValue, optionValue) {
   return false;
 }
 
+const onUpdateCode = `{
+  value: value string,
+  identifier: identifier of the type you passed
+  optionMatch: true/false
+  optionSelect: true/false
+}`;
+
 const basicCodeExample = `<ComboBox placeholder="Choose a State">
   <Option value="Alabama">Alabama</Option>
   <Option value="Alaska">Alaska</Option>
@@ -128,10 +135,14 @@ const dataCodeExampleTwoPartOne = `const destinations = [
 ];`;
 
 const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Destination' }
-          menuStyle = { {height: 250, overflow: 'scroll'} }
-          onInputMatch={ (event) => { console.log(event.value); console.log(event.identifier); } }>
+          menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
+          onUpdate={ (event) => {
+            if (event.optionMatch) {
+              console.log(event.identifier);
+            }
+          }}>
   {
-    destinations.map(function(destination, index) {
+    destinations.map((destination, index) => {
       return (
         <Option value={ destination.name }
                 identifier={ destination.code }
@@ -153,7 +164,11 @@ const dataCodeExampleThreePartOne = `const currencies = [
 ];`;
 
 const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currency' }
-              onUpdate={ (event) => { console.log(event.value); console.log(event.identifier); console.log(event.optionMatch); console.log(event.optionSelect); } }
+              onUpdate={ (event) => {
+                console.log(event.value);
+                console.log(event.identifier);
+                console.log(event.optionMatch);
+                console.log(event.optionSelect); }}
               maxOptions = { 5 }>
   {
     currencies.map((currency, index) => {
@@ -167,13 +182,6 @@ const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currenc
     })
   }
 </ComboBox>`;
-
-const dataCodeExampleThreePartThree = `const customFilterFunc = function(inputValue, optionValue) {
-  if(inputValue && optionValue) {
-    return optionValue.indexOf(inputValue) === 0;
-  }
-  return false;
-};`;
 
 const dataCodeExampleFourPartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
 
@@ -223,6 +231,7 @@ export default React.createClass({
       </ComboBox>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+
 
       <h3>Properties</h3>
 
@@ -295,7 +304,7 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              This callback is executed every time combo-box value changes. This could happen when: <br/>
+              This callback is executed every time the combo-box value changes. This could happen when: <br/>
               1. user selects an option.<br/>
               2. user types value(function will be called on each keypress).<br/>
               3. user paste some value.<br/>
@@ -307,6 +316,7 @@ export default React.createClass({
               3. optionSelect, true when combo-box is updated by user selecting an option (point:1 above).<br/>
               4. optionMatch, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
             </p>
+            <Code value={ onUpdateCode } style={ {marginTop: 40} } />
           </td>
         </tr>
 
@@ -675,11 +685,11 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <h3>ComboBox with each option having an image, description and caret</h3>
+      <h3>ComboBox with a caret and each option having an image & description</h3>
 
       <ComboBox placeholder = { 'Choose an Animal' }
-                    defaultValue = "Ant"
-                    displayCaret = { true }>
+                defaultValue = "Ant"
+                displayCaret>
         {
           animals.map((animal, index) => {
             return (
@@ -717,16 +727,16 @@ export default React.createClass({
       <Code value={ dataCodeExampleOnePartOne } style={ {marginTop: 40} } />
 
       <Code value={ dataCodeExampleOnePartTwo } style={ {marginTop: 40} } />
-      { /*
-      callBack 'onInputMatch' is no longer relevant thus commenting out this example
-      <h3>ComboBox with callback onInputMatch and identifier for options</h3>
 
-      <p>onInputMatch and identifier for options are useful in case the usecase is for a component which is more like select and you
-        need to know when user entered a value which exactly matches one of the options. Or you need to attach an identifier to each option.</p>
+      <h3>ComboBox only logging in case of an exact match of the passed Options</h3>
 
       <ComboBox placeholder = { 'Choose a Destination' }
-                menuStyle = { {height: 250, overflow: 'scroll'} }
-                onInputMatch={ (event) => { console.log(event.value); console.log(event.identifier); } }>
+                menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
+                onUpdate={ (event) => {
+                  if (event.optionMatch) {
+                    console.log(event.identifier);
+                  }
+                }}>
         {
           destinations.map((destination, index) => {
             return (
@@ -740,15 +750,19 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleThreePartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleTwoPartOne } style={ {marginTop: 40} } />
 
       <Code value={ dataCodeExampleTwoPartTwo } style={ {marginTop: 40} } />
-      */ }
 
       <h3>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h3>
 
       <ComboBox placeholder = { 'Choose a Currency' }
-                    onUpdate={ (event) => { console.log(event.value); console.log(event.identifier); console.log(event.optionMatch); console.log(event.optionSelect); } }
+                    onUpdate={ (event) => {
+                      console.log(event.value);
+                      console.log(event.identifier);
+                      console.log(event.optionMatch);
+                      console.log(event.optionSelect);
+                    }}
                     maxOptions = { 5 }>
         {
           currencies.map((currency, index) => {
