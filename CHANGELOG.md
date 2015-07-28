@@ -8,6 +8,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - [Combobox] The onUpdate callback now includes 3 more properties in the argument.  [#146](https://github.com/nikgraf/belle/pull/146)
 
+```
+onUpdate({
+  value: value string,
+  identifier: identifier of the type you passed,
+  isMatchingOption: true/false,
+  isOptionSelection: true/false
+})
+```
+
 ### Changed
 - Instead of using a copy of React 0.13.3 to create Markup for custom styles now the locally installed React version is used. [#150](https://github.com/nikgraf/belle/pull/150)
 

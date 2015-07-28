@@ -60,7 +60,7 @@ describe('ComboBox', () => {
     let isSelect;
 
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox onUpdate={ (obj) => { value = obj.value; identifier = obj.identifier; isMatch = obj.optionMatch; isSelect = obj.optionSelect; } }>
+      <ComboBox onUpdate={ (obj) => { value = obj.value; identifier = obj.identifier; isMatch = obj.isMatchingOption; isSelect = obj.isOptionSelection; } }>
         <Option value="rome" identifier={1}>Rome</Option>
         <Option value="vienna" identifier={2} className="vienna-option">Vienna</Option>
       </ComboBox>
