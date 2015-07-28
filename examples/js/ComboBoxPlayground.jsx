@@ -34,7 +34,7 @@ export default React.createClass({
           <h3>Value Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <ComboBox value={ this.state.comboValue }
-                      onUpdate={ (event) => {console.log(event.value + ' - ' + event.identifier + ' - ' + event.optionSelect + ' - ' + event.optionMatch); } }>
+                      onUpdate={ (event) => {console.log(event.value + ' - ' + event.identifier + ' - ' + event.isOptionSelection + ' - ' + event.isMatchingOption); } }>
               <Option value="te" identifier="123">Te</Option>
               <Option value="tes" identifier="123">Tes</Option>
               <Option value="test" identifier="123">Test</Option>

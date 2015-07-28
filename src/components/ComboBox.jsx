@@ -523,7 +523,7 @@ export default class ComboBox extends Component {
       });
     }
 
-    const obj = {value: value, optionSelect: true, optionMatch: true};
+    const obj = {value: value, isOptionSelection: true, isMatchingOption: true};
     const matchedOption = this._findMatch(value);
     obj.identifier = matchedOption ? matchedOption.props.identifier : undefined;
 
@@ -572,12 +572,12 @@ export default class ComboBox extends Component {
       });
     }
 
-    const obj = {value: value, optionSelect: false, optionMatch: false};
+    const obj = {value: value, isOptionSelection: false, isMatchingOption: false};
 
     const matchedOption = this._findMatch(value);
     if (matchedOption) {
       obj.identifier = matchedOption.props.identifier;
-      obj.optionMatch = true;
+      obj.isMatchingOption = true;
     }
 
     if (this.props.onUpdate) {
