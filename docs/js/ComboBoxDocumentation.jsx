@@ -66,8 +66,8 @@ function customFilterFunc(inputValue, optionValue) {
 
 const onUpdateCode = `{
   value: value string,
-  identifier: identifier of the type you passed
-  isMatchingOption: true/false
+  identifier: identifier of the type you passed,
+  isMatchingOption: true/false,
   isOptionSelection: true/false
 }`;
 
