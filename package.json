@@ -29,7 +29,7 @@
     "build": "babel --out-dir='lib' --optional='es7.classProperties' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "postinstall": "rm -rf node_modules/react/",
+    "pretest": "rm -rf node_modules/react",
     "test": "babel --out-dir='lib' --optional='es7.classProperties' src && cd tests && npm install && ln -snf ../lib lib && cd .. && jest tests/"
   },
   "devDependencies": {

@@ -25,6 +25,7 @@
     "watchify": "=3.2.3"
   },
   "scripts": {
+    "prestart": "rm -rf ../node_modules/react",
     "start": "watchify -o js/bundle.js --extension=.jsx -v -d js/App.jsx",
     "build": "browserify --extension=.jsx . | uglifyjs -c > js/bundle.js",
     "postinstall": "cp node_modules/highlight.js/styles/googlecode.css css/googlecode.css && ln -snf ../../ node_modules/belle"
