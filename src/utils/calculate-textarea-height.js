@@ -1,3 +1,5 @@
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+
 let hiddenTextarea;
 const computedStyleCache = {};
 const hiddenTextareaStyle = 'height:0;visibility:hidden;overflow:hidden;position:absolute;z-index:-1000;top:0;right:0';
@@ -50,6 +52,8 @@ function calculateStyling(node) {
  * is cached to improve performance.
  */
 export default function(textareaElement, textareaValue) {
+  if (!canUseDOM) { return 0; }
+
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
     document.body.appendChild(hiddenTextarea);
