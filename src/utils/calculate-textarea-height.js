@@ -49,7 +49,7 @@ function calculateStyling(node) {
  * and used for further caluculations. In addition the styling of each textarea
  * is cached to improve performance.
  */
-export default function(textareaElement) {
+export default function(textareaElement, textareaValue) {
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
     document.body.appendChild(hiddenTextarea);
@@ -59,7 +59,8 @@ export default function(textareaElement) {
   const {style, verticalPadding} = calculateStyling(textareaElement);
 
   hiddenTextarea.setAttribute('style', `${style};${hiddenTextareaStyle}`);
-  hiddenTextarea.value = textareaElement.value ? textareaElement.value: 'dummy';
+
+  hiddenTextarea.value = textareaValue ? textareaValue : 'dummy';
 
   return (hiddenTextarea.scrollHeight - verticalPadding);
 }

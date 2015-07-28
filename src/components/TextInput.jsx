@@ -142,7 +142,7 @@ export default class TextInput extends Component {
    * Right after the component go injected into the DOM it should be resized.
    */
   componentDidMount() {
-    this._triggerResize();
+    this._triggerResize(this.state.inputValue);
   }
 
   /**
@@ -163,7 +163,7 @@ export default class TextInput extends Component {
     });
     removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
-    this._triggerResize();
+    this._triggerResize(inputValue);
   }
 
   /**
@@ -215,14 +215,14 @@ export default class TextInput extends Component {
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
-    this._triggerResize();
+    this._triggerResize(value);
   }
 
   /**
    * Calculate the height and store the new height in the state to trigger a render.
    */
-  _triggerResize() {
-    let height = calculateTextareaHeight(React.findDOMNode(this));
+  _triggerResize(textareaValue) {
+    let height = calculateTextareaHeight(React.findDOMNode(this), textareaValue);
 
     if (this.props.minHeight && this.props.minHeight > height) {
       height = this.props.minHeight;
