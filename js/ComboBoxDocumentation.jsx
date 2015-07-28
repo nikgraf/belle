@@ -67,8 +67,8 @@ function customFilterFunc(inputValue, optionValue) {
 const onUpdateCode = `{
   value: value string,
   identifier: identifier of the type you passed
-  optionMatch: true/false
-  optionSelect: true/false
+  isMatchingOption: true/false
+  isOptionSelection: true/false
 }`;
 
 const basicCodeExample = `<ComboBox placeholder="Choose a State">
@@ -137,7 +137,7 @@ const dataCodeExampleTwoPartOne = `const destinations = [
 const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Destination' }
           menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
           onUpdate={ (event) => {
-            if (event.optionMatch) {
+            if (event.isMatchingOption) {
               console.log(event.identifier);
             }
           }}>
@@ -167,8 +167,8 @@ const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currenc
               onUpdate={ (event) => {
                 console.log(event.value);
                 console.log(event.identifier);
-                console.log(event.optionMatch);
-                console.log(event.optionSelect); }}
+                console.log(event.isMatchingOption);
+                console.log(event.isOptionSelection); }}
               maxOptions = { 5 }>
   {
     currencies.map((currency, index) => {
@@ -313,8 +313,8 @@ export default React.createClass({
               onUpdate has one argument which is an object containing 4 fields:<br/>
               1. value, the value of the combo-box.<br/>
               2. identifier, identifier of the matching option (optional). This is passed only if the options have identifiers and the value of the combo-box exactly matches one of the options.<br/>
-              3. optionSelect, true when combo-box is updated by user selecting an option (point:1 above).<br/>
-              4. optionMatch, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
+              3. isOptionSelection, true when combo-box is updated by user selecting an option (point:1 above).<br/>
+              4. isMatchingOption, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
             </p>
             <Code value={ onUpdateCode } style={ {marginTop: 40} } />
           </td>
@@ -733,7 +733,7 @@ export default React.createClass({
       <ComboBox placeholder = { 'Choose a Destination' }
                 menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
                 onUpdate={ (event) => {
-                  if (event.optionMatch) {
+                  if (event.isMatchingOption) {
                     console.log(event.identifier);
                   }
                 }}>
@@ -760,8 +760,8 @@ export default React.createClass({
                     onUpdate={ (event) => {
                       console.log(event.value);
                       console.log(event.identifier);
-                      console.log(event.optionMatch);
-                      console.log(event.optionSelect);
+                      console.log(event.isMatchingOption);
+                      console.log(event.isOptionSelection);
                     }}
                     maxOptions = { 5 }>
         {
