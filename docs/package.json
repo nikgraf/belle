@@ -12,11 +12,9 @@
     "type": "git",
     "url": "http://github.com/nikgraf/belle.git"
   },
-  "peerDependencies": {
-    "react": "=0.13.3"
-  },
   "dependencies": {
     "highlight.js": "=8.6.0",
+    "react": "=0.13.3",
     "uglify-js": "=2.4.23",
     "underscore": "=1.8.3",
     "react-router": "=0.13.3"
