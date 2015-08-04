@@ -52,6 +52,26 @@ export default React.createClass({
           <option value="C">Cranberry</option>
         </select>
 
+        <h3>Select with one option</h3>
+        <Select>
+          <Option value={ "vienna" }>Vienna</Option>
+        </Select>
+
+        <h3>Select with placeholder, option array combined and a single option combined.</h3>
+        <Select>
+          <Placeholder>Lala</Placeholder>
+          {
+            fruits.map((fruit) => {
+              return (
+                <Option value={ fruit.value }>
+                  { fruit.content }
+                </Option>
+              );
+            })
+          }
+          <Option value={ "newyork" }>New York</Option>
+        </Select>
+
         <h3>Select with onUpdate</h3>
         <Select onUpdate={ (event) => console.log(event.value) }>
           <Option value={ "vienna" }>Vienna</Option>
