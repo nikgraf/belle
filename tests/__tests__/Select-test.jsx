@@ -80,6 +80,71 @@ describe('Select', () => {
     expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
   });
 
+  it('should work with one option provided', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select>
+        <Option value="rome">Rome</Option>
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Rome');
+  });
+
+  it('should work with a placehoder and an array of options provided', () => {
+    const options = [
+      { value: 'rome', content: 'Rome' },
+      { value: 'vienna', content: 'Vienna' }
+    ];
+
+    const select = TestUtils.renderIntoDocument(
+      <Select>
+        <Placeholder>Select a City</Placeholder>
+        {
+          options.map((option) => {
+            return (<Option value={ option.value } >{ option.content }</Option>);
+          })
+        }
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
+
+    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
+    expect(entries[0].props.children._store.props.children).toBe('Rome');
+    expect(entries[1].props.children._store.props.children).toBe('Vienna');
+  });
+
+  it('should work with a placehoder and a combination of single options and an array of options provided', () => {
+    const options = [
+      { value: 'rome', content: 'Rome' },
+      { value: 'vienna', content: 'Vienna' }
+    ];
+
+    const select = TestUtils.renderIntoDocument(
+      <Select>
+        <Placeholder>Select a City</Placeholder>
+        <Option value="boston">Boston</Option>
+        {
+          options.map((option) => {
+            return (<Option value={ option.value } >{ option.content }</Option>);
+          })
+        }
+        <Option value="newyork">New York</Option>
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
+
+    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
+    expect(entries[0].props.children._store.props.children).toBe('Boston');
+    expect(entries[1].props.children._store.props.children).toBe('Rome');
+    expect(entries[2].props.children._store.props.children).toBe('Vienna');
+    expect(entries[3].props.children._store.props.children).toBe('New York');
+  });
+
   it('should be able to provide a valueLink', () => {
     let wasCalled = false;
 
