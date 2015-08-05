@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, has, map} from '../utils/helpers';
-import {getWeekArrayForMonth, MONTHS} from '../utils/date-helpers';
+import {omit, extend, map} from '../utils/helpers';
+import {getWeekArrayForMonth, MONTHS, DAYS_ABBR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 
 // Enable React Touch Events
@@ -94,6 +94,15 @@ export default class DatePicker extends Component {
         </div>
         <div>
           {
+            map(DAYS_ABBR, (dayAbbr) => {
+              return (
+                <span style={style.dayHeaderStyle}>{dayAbbr}</span>
+              );
+            })
+          }
+        </div>
+        <div>
+          {
             map(weekArray, (week) => {
               return (
                 <div>
@@ -120,4 +129,5 @@ export default class DatePicker extends Component {
  * 1. Setting default year and month
  * 2. Decide on call-backs when day / month / year changes
  * 3. Handling touch events
+ * 4. Discuss styling api
  **/
