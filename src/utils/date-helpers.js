@@ -40,7 +40,7 @@ export const TODAY = new Date();
 
 export const CURRENT_DATE = TODAY.getDate();
 
-export const CURRENT_MONTH = TODAY.getMonth() + 1;
+export const CURRENT_MONTH = TODAY.getMonth();
 
 export const CURRENT_YEAR = TODAY.getFullYear();
 
