@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
 // import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
-import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
+import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMaxDateForMonth} from '../utils/date-helpers';
 import style from '../style/date-picker';
 
 // Enable React Touch Events
@@ -110,42 +110,54 @@ export default class DatePicker extends Component {
   _onKeyDown(event) {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      if (this.state.focusedDay > 0) {
+      if (this.state.focusedDay) {
         this._focusNextWeeksDay();
       }
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
-      if (this.state.focusedDay > 0) {
+      if (this.state.focusedDay) {
         this._focusPreviousWeeksDay();
       }
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault();
-      if (this.state.focusedDay > 0) {
+      if (this.state.focusedDay) {
         this._focusPreviousDay();
       } else if (this.state.isWrapperFocused) {
         this._decreaseMonth();
       }
     } else if (event.key === 'ArrowRight') {
       event.preventDefault();
-      if (this.state.focusedDay > 0) {
+      if (this.state.focusedDay) {
         this._focusNextDay();
       } else if (this.state.isWrapperFocused) {
         this._increaseMonth();
       }
     } else if (event.key === 'Enter') {
       event.preventDefault();
-      if (this.state.focusedDay > 0) {
+      if (this.state.focusedDay) {
         this._onDateSelection(this.state.focusedDay);
       }
     }
   }
 
   _focusPreviousDay() {
-  // implement logic to focus previous day
+    if (this.state.focusedDay > 1) {
+      React.findDOMNode(this.refs['day-' + (this.state.focusedDay - 1)]).focus();
+    } else {
+      this._decreaseMonth(() => {
+        React.findDOMNode(this.refs['day-' + (getMaxDateForMonth(this.state.month, this.state.year))]).focus();
+      });
+    }
   }
 
   _focusNextDay() {
-    // implement logic to focus next day
+    if (this.state.focusedDay < getMaxDateForMonth(this.state.month, this.state.year)) {
+      React.findDOMNode(this.refs['day-' + (this.state.focusedDay + 1)]).focus();
+    } else {
+      this._increaseMonth(() => {
+        React.findDOMNode(this.refs['day-1']).focus();
+      });
+    }
   }
 
   _focusPreviousWeeksDay() {
@@ -156,30 +168,44 @@ export default class DatePicker extends Component {
     // implement logic to focus same day of next week day
   }
 
-  _decreaseMonth() {
+  _decreaseMonth(postStateUpdateFunc) {
+    let newMonth;
+    let newYear;
     if (this.state.month === 0) {
-      this.setState({
-        month: 11,
-        year: this.state.year - 1
-      });
+      newMonth = 11;
+      newYear = this.state.year - 1;
     } else {
-      this.setState({
-        month: this.state.month - 1
-      });
+      newMonth = this.state.month - 1;
+      newYear = this.state.year;
     }
+    this.setState({
+      month: newMonth,
+      year: newYear
+    }, () => {
+      if (postStateUpdateFunc) {
+        postStateUpdateFunc.call(this);
+      }
+    });
   }
 
-  _increaseMonth() {
+  _increaseMonth(postStateUpdateFunc) {
+    let newMonth;
+    let newYear;
     if (this.state.month === 11) {
-      this.setState({
-        month: 0,
-        year: this.state.year + 1
-      });
+      newMonth = 0;
+      newYear = this.state.year + 1;
     } else {
-      this.setState({
-        month: this.state.month + 1
-      });
+      newMonth = this.state.month + 1;
+      newYear = this.state.year;
     }
+    this.setState({
+      month: newMonth,
+      year: newYear
+    }, () => {
+      if (postStateUpdateFunc) {
+        postStateUpdateFunc.call(this);
+      }
+    });
   }
 
   _onDateSelection(date) {
@@ -239,7 +265,8 @@ export default class DatePicker extends Component {
     }
     const tabIndex = day ? this.props.tabIndex : -1;
     return (<span tabIndex={ tabIndex }
-                  key={ 'Day-' + index }
+                  key={ 'day-' + index }
+                  ref={ 'day-' + day }
                   style={ dayStyle }
                   onClick={ this._onDateSelection.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
