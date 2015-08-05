@@ -45,7 +45,7 @@ export const CURRENT_MONTH = TODAY.getMonth();
 export const CURRENT_YEAR = TODAY.getFullYear();
 
 export function getMaxDateForMonth(month, year) {
-  if (month && year) {
+  if (month !== undefined && month !== null && year) {
     return new Date(year, month + 1, 0).getDate();
   }
 }
