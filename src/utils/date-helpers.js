@@ -14,7 +14,7 @@ export function getWeekArrayForMonth(month, year) {
   for (let index = 1; index <= lastDate; ) {
     const newWeek = [];
     if (index === 1) {
-      for (;dayCounter < firstDay; dayCounter++) {
+      for (;dayCounter <= firstDay; dayCounter++) {
         newWeek.push(undefined);
       }
     }
