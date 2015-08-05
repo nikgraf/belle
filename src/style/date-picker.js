@@ -13,6 +13,13 @@ const datePickerStyle = {
     border: '1px solid black',
     height: 20,
     cursor: 'pointer'
+  },
+
+  dayHeaderStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20
   }
 };
 
