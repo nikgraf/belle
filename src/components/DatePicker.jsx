@@ -95,6 +95,30 @@ export default class DatePicker extends Component {
     });
   }
 
+  _onNavBarPrevMonthFocus() {
+    this.setState({
+      isNavBarPrevMonthFocused: true
+    });
+  }
+
+  _onNavBarPrevMonthBlur() {
+    this.setState({
+      isNavBarPrevMonthFocused: false
+    });
+  }
+
+  _onNavBarNextMonthFocus() {
+    this.setState({
+      isNavBarNextMonthFocused: true
+    });
+  }
+
+  _onNavBarNextMonthBlur() {
+    this.setState({
+      isNavBarNextMonthFocused: false
+    });
+  }
+
   _onDayFocus(day) {
     this.setState({
       focusedDay: day
@@ -136,8 +160,117 @@ export default class DatePicker extends Component {
       event.preventDefault();
       if (this.state.focusedDay) {
         this._onDateSelection(this.state.focusedDay);
+      } else if (this.state.isNavBarPrevMonthFocused) {
+        this._decreaseMonth();
+      } else if (this.state.isNavBarNextMonthFocused) {
+        this._increaseMonth();
       }
     }
+  }
+
+  _onDateSelection(date) {
+    const dateValue = new Date(this.state.year, this.state.month, date);
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(dateValue);
+    } else if (!has(this.props, 'value')) {
+      this.setState({
+        dateValue: dateValue
+      });
+    }
+
+    if (this.props.onUpdate) {
+      this.props.onUpdate({
+        value: dateValue
+      });
+    }
+  }
+
+  _getNavBar() {
+    return (
+      <div>
+          <span tabIndex={ this.props.tabIndex }
+                onMouseDown={ this._onNavBarPrevMonthClick.bind(this) }
+                onTouchStart={ this._onNavBarPrevMonthClick.bind(this) }
+                style= { style.navButtonStyle }
+                onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
+                onBlur={ this._onNavBarPrevMonthBlur.bind(this)}>&lt;</span>
+        { MONTHS[this.state.month] + '-' + this.state.year }
+          <span tabIndex={ this.props.tabIndex }
+                onMouseDown={ this._onNavBarNextMonthClick.bind(this) }
+                onTouchStart={ this._onNavBarNextMonthClick.bind(this) }
+                style= { style.navButtonStyle }
+                onFocus={ this._onNavBarNextMonthFocus.bind(this)}
+                onBlur={ this._onNavBarNextMonthBlur.bind(this)}>&gt;</span>
+      </div>
+    );
+  }
+
+  _getDaysHeader() {
+    return (
+      <div>
+        {
+          map(DAYS_ABBR, (dayAbbr, index) => {
+            return (
+              <span key={ 'dayAbbr' + index }
+                    style={ style.dayHeaderStyle }>
+                  { dayAbbr }
+                </span>
+            );
+          })
+        }
+      </div>
+    );
+  }
+
+  _getDayFragment(day, index) {
+    let dayStyle = extend({}, style.dayStyle);
+    const dateValue = this.state.dateValue;
+    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+      dayStyle = extend(dayStyle, style.todayStyle);
+    }
+    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
+      dayStyle = extend(dayStyle, style.selectedDayStyle);
+    }
+    const tabIndex = day ? this.props.tabIndex : -1;
+    return (<span tabIndex={ tabIndex }
+                  key={ 'day-' + index }
+                  ref={ 'day-' + day }
+                  style={ dayStyle }
+                  onMouseDown={ this._onDateSelection.bind(this, day) }
+                  onTouchStart={ this._onDateSelection.bind(this, day) }
+                  onFocus={ this._onDayFocus.bind(this, day) }
+                  onBlur={ this._onDayBlur.bind(this, day) }>
+              { day }
+            </span>);
+  }
+
+  render() {
+    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
+
+    return (
+      <div tabIndex={ this.props.tabIndex }
+           onFocus={ this._onWrapperFocus.bind(this) }
+           onBlur={ this._onWrapperBlur.bind(this) }
+           onKeyDown={ this._onKeyDown.bind(this) }>
+        { this._getNavBar() }
+        { this._getDaysHeader() }
+        <div>
+          {
+            map(weekArray, (week, weekIndex) => {
+              return (
+                <div key={ 'week-' + weekIndex }>
+                  {
+                    map(week, (day, dayIndex) => {
+                      return this._getDayFragment(day, dayIndex);
+                    })
+                  }
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    );
   }
 
   _focusPreviousDay() {
@@ -183,6 +316,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  _onNavBarPrevMonthClick() {
+    this._decreaseMonth();
+  }
+
   _decreaseMonth(postStateUpdateFunc) {
     let newMonth;
     let newYear;
@@ -201,6 +338,10 @@ export default class DatePicker extends Component {
         postStateUpdateFunc.call(this);
       }
     });
+  }
+
+  _onNavBarNextMonthClick() {
+    this._increaseMonth();
   }
 
   _increaseMonth(postStateUpdateFunc) {
@@ -223,110 +364,13 @@ export default class DatePicker extends Component {
     });
   }
 
-  _onDateSelection(date) {
-    const dateValue = new Date(this.state.year, this.state.month, date);
-    if (has(this.props, 'valueLink')) {
-      this.props.valueLink.requestChange(dateValue);
-    } else if (!has(this.props, 'value')) {
-      this.setState({
-        dateValue: dateValue
-      });
-    }
-
-    if (this.props.onUpdate) {
-      this.props.onUpdate({
-        value: dateValue
-      });
-    }
-  }
-
-  _getNavBar() {
-    return (
-      <div>
-          <span onClick={ this._decreaseMonth.bind(this) }
-                style= { style.navButtonStyle }>&lt;</span>
-        { MONTHS[this.state.month] + '-' + this.state.year }
-          <span onClick={ this._increaseMonth.bind(this) }
-                style= { style.navButtonStyle }>&gt;</span>
-      </div>
-    );
-  }
-
-  _getDaysHeader() {
-    return (
-      <div>
-        {
-          map(DAYS_ABBR, (dayAbbr, index) => {
-            return (
-              <span key={ 'dayAbbr' + index }
-                    style={ style.dayHeaderStyle }>
-                  { dayAbbr }
-                </span>
-            );
-          })
-        }
-      </div>
-    );
-  }
-
-  _getDayFragment(day, index) {
-    let dayStyle = extend({}, style.dayStyle);
-    const dateValue = this.state.dateValue;
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-      dayStyle = extend(dayStyle, style.todayStyle);
-    }
-    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-      dayStyle = extend(dayStyle, style.selectedDayStyle);
-    }
-    const tabIndex = day ? this.props.tabIndex : -1;
-    return (<span tabIndex={ tabIndex }
-                  key={ 'day-' + index }
-                  ref={ 'day-' + day }
-                  style={ dayStyle }
-                  onClick={ this._onDateSelection.bind(this, day) }
-                  onFocus={ this._onDayFocus.bind(this, day) }
-                  onBlur={ this._onDayBlur.bind(this, day) }>
-              { day }
-            </span>);
-  }
-
-  render() {
-    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
-
-    return (
-      <div tabIndex={ this.props.tabIndex }
-           onFocus={ this._onWrapperFocus.bind(this) }
-           onBlur={ this._onWrapperBlur.bind(this) }
-           onKeyDown={ this._onKeyDown.bind(this) }>
-        { this._getNavBar() }
-        { this._getDaysHeader() }
-        <div>
-          {
-            map(weekArray, (week, weekIndex) => {
-              return (
-                <div key={ 'week-' + weekIndex }>
-                  {
-                    map(week, (day, dayIndex) => {
-                      return this._getDayFragment(day, dayIndex);
-                    })
-                  }
-                </div>
-              );
-            })
-          }
-        </div>
-      </div>
-    );
-  }
-
 }
 
 /**
  * TODO-S:
- * 3. Handling touch events
  * 4. Discuss styling api
  * 6. ARIA support
- * 7. Adding support of disabled / display-only component (we might consider renaming got calendar in case we support a component for date display also)
+ * 7. Adding support of disabled / display-only component (we might consider renaming to calendar in case we support a component for date display also)
  * 9. Localization support
  * 10. Implement default belle styling and bootstrap styling for date-picker
  *
