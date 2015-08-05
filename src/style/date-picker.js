@@ -11,6 +11,11 @@ const datePickerStyle = {
     color: 'red'
   },
 
+  selectedDayStyle: {
+    backgroundColor: 'blue',
+    color: 'white'
+  },
+
   navButtonStyle: {
     display: 'inline-block',
     width: 20,

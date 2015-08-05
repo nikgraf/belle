@@ -17,7 +17,7 @@ export default class DatePicker extends Component {
     super(properties);
 
     this.state = {
-      month: properties.month,
+      month: properties.month - 1,
       year: properties.year
     };
   }
@@ -26,14 +26,13 @@ export default class DatePicker extends Component {
 
   static propTypes = {
     month: React.PropTypes.number,
-    year: React.PropTypes.number
+    year: React.PropTypes.number,
+    onUpdate: React.PropTypes.func
   };
 
   static defaultProps = {
-    month: CURRENT_MONTH,
-    year: CURRENT_YEAR,
-    disabled: false,
-    tabIndex: 0
+    month: CURRENT_MONTH + 1,
+    year: CURRENT_YEAR
   };
 
   /**
@@ -45,7 +44,7 @@ export default class DatePicker extends Component {
 
   componentWillReceiveProps(properties) {
     this.setState({
-      month: properties.month,
+      month: properties.month - 1,
       year: properties.year
     });
   }
@@ -57,9 +56,9 @@ export default class DatePicker extends Component {
   }
 
   _onDecreaseMonthClick() {
-    if (this.state.month === 1) {
+    if (this.state.month === 0) {
       this.setState({
-        month: 12,
+        month: 11,
         year: this.state.year - 1
       });
     } else {
@@ -70,9 +69,9 @@ export default class DatePicker extends Component {
   }
 
   _onIncreaseMonthClick() {
-    if (this.state.month === 12) {
+    if (this.state.month === 11) {
       this.setState({
-        month: 1,
+        month: 0,
         year: this.state.year + 1
       });
     } else {
@@ -82,45 +81,78 @@ export default class DatePicker extends Component {
     }
   }
 
-  _getDayFragment(day) {
-    let dayStyle;
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-      dayStyle = extend({}, style.dayStyle, style.todayStyle);
-    } else {
-      dayStyle = style.dayStyle;
+  _onDateClick(date) {
+    const selectedDate = new Date(this.state.year, this.state.month, date);
+    this.setState({
+      selectedDate: selectedDate
+    });
+    if (this.props.onUpdate) {
+      this.props.onUpdate({
+        value: selectedDate
+      });
     }
-    return (<span style={dayStyle}>{day}</span>);
+  }
+
+  _getNavBar() {
+    return (
+      <div>
+          <span onClick={ this._onDecreaseMonthClick.bind(this) }
+                style= { style.navButtonStyle }>&lt;</span>
+        { MONTHS[this.state.month] + '-' + this.state.year }
+          <span onClick={ this._onIncreaseMonthClick.bind(this) }
+                style= { style.navButtonStyle }>&gt;</span>
+      </div>
+    );
+  }
+
+  _getDaysHeader() {
+    return (
+      <div>
+        {
+          map(DAYS_ABBR, (dayAbbr, index) => {
+            return (
+              <span key={ 'dayAbbr' + index }
+                    style={ style.dayHeaderStyle }>
+                  { dayAbbr }
+                </span>
+            );
+          })
+        }
+      </div>
+    );
+  }
+
+  _getDayFragment(day, index) {
+    let dayStyle = extend({}, style.dayStyle);
+    const selectedDate = this.state.selectedDate;
+    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+      dayStyle = extend(dayStyle, style.todayStyle);
+    }
+    if (selectedDate && day === selectedDate.getDate() && this.state.month === selectedDate.getMonth() && this.state.year === selectedDate.getFullYear()) {
+      dayStyle = extend(dayStyle, style.selectedDayStyle);
+    }
+    return (<span key={ 'Day-' + index }
+                  style={ dayStyle }
+                  onClick={ this._onDateClick.bind(this, day) }>
+              { day }
+            </span>);
   }
 
   render() {
-    const weekArray = getWeekArrayForMonth(this.state.month - 1, this.state.year);
+    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
 
     return (
       <div>
-        <div>
-          <span onClick={this._onDecreaseMonthClick.bind(this)}
-                style= {style.navButtonStyle}>&lt;</span>
-          {MONTHS[this.state.month - 1] + '-' + this.state.year}
-          <span onClick={this._onIncreaseMonthClick.bind(this)}
-                style= {style.navButtonStyle}>&gt;</span>
-        </div>
+        { this._getNavBar() }
+        { this._getDaysHeader() }
         <div>
           {
-            map(DAYS_ABBR, (dayAbbr) => {
+            map(weekArray, (week, weekIndex) => {
               return (
-                <span style={style.dayHeaderStyle}>{dayAbbr}</span>
-              );
-            })
-          }
-        </div>
-        <div>
-          {
-            map(weekArray, (week) => {
-              return (
-                <div>
+                <div key={ 'week-' + weekIndex }>
                   {
-                    map(week, (day) => {
-                      return this._getDayFragment(day);
+                    map(week, (day, dayIndex) => {
+                      return this._getDayFragment(day, dayIndex);
                     })
                   }
                 </div>
@@ -135,11 +167,12 @@ export default class DatePicker extends Component {
 }
 
 /**
- * TODOS:
- * 1. Setting default year and month
- * 2. Decide on call-backs when day / month / year changes
+ * TODO-S:
  * 3. Handling touch events
  * 4. Discuss styling api
  * 5. keyboard event support
  * 6. ARIA support
+ * 7. Adding support of disabled / display-only component (we might consider renaming got calendar in case we support a component for date display also)
+ * 8. Adding tab-index property
+ * 9. Localization support
  **/
