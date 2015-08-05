@@ -161,11 +161,26 @@ export default class DatePicker extends Component {
   }
 
   _focusPreviousWeeksDay() {
-    // implement logic to focus same day of previous week day
+    const newDate = this.state.focusedDay - 7;
+    if (newDate <= 0) {
+      this._decreaseMonth(() => {
+        React.findDOMNode(this.refs['day-' + (getMaxDateForMonth(this.state.month, this.state.year) + newDate)]).focus();
+      });
+    } else {
+      React.findDOMNode(this.refs['day-' + newDate]).focus();
+    }
   }
 
   _focusNextWeeksDay() {
-    // implement logic to focus same day of next week day
+    const newDate = this.state.focusedDay + 7;
+    const maxDateForCurrentMonth = getMaxDateForMonth(this.state.month, this.state.year);
+    if (newDate > maxDateForCurrentMonth) {
+      this._increaseMonth(() => {
+        React.findDOMNode(this.refs['day-' + (newDate - maxDateForCurrentMonth)]).focus();
+      });
+    } else {
+      React.findDOMNode(this.refs['day-' + newDate]).focus();
+    }
   }
 
   _decreaseMonth(postStateUpdateFunc) {
@@ -310,9 +325,11 @@ export default class DatePicker extends Component {
  * TODO-S:
  * 3. Handling touch events
  * 4. Discuss styling api
- * 5. keyboard event support
  * 6. ARIA support
  * 7. Adding support of disabled / display-only component (we might consider renaming got calendar in case we support a component for date display also)
  * 9. Localization support
  * 10. Implement default belle styling and bootstrap styling for date-picker
+ *
+ * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
+ * in case we prefer to use pseudo classes for focus styles we can safely remove these from sate
  **/
