@@ -36,3 +36,11 @@ export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
 
 export const DAYS_ABBR = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
+export const TODAY = new Date();
+
+export const CURRENT_DATE = TODAY.getDate();
+
+export const CURRENT_MONTH = TODAY.getMonth() + 1;
+
+export const CURRENT_YEAR = TODAY.getFullYear();
+

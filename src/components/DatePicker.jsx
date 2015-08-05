@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {omit, extend, map} from '../utils/helpers';
-import {getWeekArrayForMonth, MONTHS, DAYS_ABBR} from '../utils/date-helpers';
+import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 
 // Enable React Touch Events
@@ -30,6 +30,8 @@ export default class DatePicker extends Component {
   };
 
   static defaultProps = {
+    month: CURRENT_MONTH,
+    year: CURRENT_YEAR,
     disabled: false,
     tabIndex: 0
   };
@@ -80,6 +82,16 @@ export default class DatePicker extends Component {
     }
   }
 
+  _getDayFragment(day) {
+    let dayStyle;
+    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+      dayStyle = extend({}, style.dayStyle, style.todayStyle);
+    } else {
+      dayStyle = style.dayStyle;
+    }
+    return (<span style={dayStyle}>{day}</span>);
+  }
+
   render() {
     const weekArray = getWeekArrayForMonth(this.state.month - 1, this.state.year);
 
@@ -88,7 +100,7 @@ export default class DatePicker extends Component {
         <div>
           <span onClick={this._onDecreaseMonthClick.bind(this)}
                 style= {style.navButtonStyle}>&lt;</span>
-          {MONTHS[this.state.month - 1]}
+          {MONTHS[this.state.month - 1] + '-' + this.state.year}
           <span onClick={this._onIncreaseMonthClick.bind(this)}
                 style= {style.navButtonStyle}>&gt;</span>
         </div>
@@ -108,9 +120,7 @@ export default class DatePicker extends Component {
                 <div>
                   {
                     map(week, (day) => {
-                      return (
-                        <span style={style.dayStyle}>{day}</span>
-                      );
+                      return this._getDayFragment(day);
                     })
                   }
                 </div>
@@ -130,4 +140,6 @@ export default class DatePicker extends Component {
  * 2. Decide on call-backs when day / month / year changes
  * 3. Handling touch events
  * 4. Discuss styling api
+ * 5. keyboard event support
+ * 6. ARIA support
  **/
