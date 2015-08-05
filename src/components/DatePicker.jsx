@@ -43,12 +43,14 @@ export default class DatePicker extends Component {
     }),
     month: React.PropTypes.number,
     year: React.PropTypes.number,
-    onUpdate: React.PropTypes.func
+    onUpdate: React.PropTypes.func,
+    tabIndex: React.PropTypes.number
   };
 
   static defaultProps = {
     month: CURRENT_MONTH + 1,
-    year: CURRENT_YEAR
+    year: CURRENT_YEAR,
+    tabIndex: 0
   };
 
   /**
@@ -81,7 +83,80 @@ export default class DatePicker extends Component {
   componentWillUnmount() {
   }
 
-  _onDecreaseMonthClick() {
+  _onWrapperFocus() {
+    this.setState({
+      isWrapperFocused: true
+    });
+  }
+
+  _onWrapperBlur() {
+    this.setState({
+      isWrapperFocused: false
+    });
+  }
+
+  _onDayFocus(day) {
+    this.setState({
+      focusedDay: day
+    });
+  }
+
+  _onDayBlur() {
+    this.setState({
+      focusedDay: 0
+    });
+  }
+
+  _onKeyDown(event) {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (this.state.focusedDay > 0) {
+        this._focusNextWeeksDay();
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (this.state.focusedDay > 0) {
+        this._focusPreviousWeeksDay();
+      }
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      if (this.state.focusedDay > 0) {
+        this._focusPreviousDay();
+      } else if (this.state.isWrapperFocused) {
+        this._decreaseMonth();
+      }
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      if (this.state.focusedDay > 0) {
+        this._focusNextDay();
+      } else if (this.state.isWrapperFocused) {
+        this._increaseMonth();
+      }
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (this.state.focusedDay > 0) {
+        this._onDateSelection(this.state.focusedDay);
+      }
+    }
+  }
+
+  _focusPreviousDay() {
+  // implement logic to focus previous day
+  }
+
+  _focusNextDay() {
+    // implement logic to focus next day
+  }
+
+  _focusPreviousWeeksDay() {
+    // implement logic to focus same day of previous week day
+  }
+
+  _focusNextWeeksDay() {
+    // implement logic to focus same day of next week day
+  }
+
+  _decreaseMonth() {
     if (this.state.month === 0) {
       this.setState({
         month: 11,
@@ -94,7 +169,7 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onIncreaseMonthClick() {
+  _increaseMonth() {
     if (this.state.month === 11) {
       this.setState({
         month: 0,
@@ -107,7 +182,7 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onDateClick(date) {
+  _onDateSelection(date) {
     const dateValue = new Date(this.state.year, this.state.month, date);
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(dateValue);
@@ -127,10 +202,10 @@ export default class DatePicker extends Component {
   _getNavBar() {
     return (
       <div>
-          <span onClick={ this._onDecreaseMonthClick.bind(this) }
+          <span onClick={ this._decreaseMonth.bind(this) }
                 style= { style.navButtonStyle }>&lt;</span>
         { MONTHS[this.state.month] + '-' + this.state.year }
-          <span onClick={ this._onIncreaseMonthClick.bind(this) }
+          <span onClick={ this._increaseMonth.bind(this) }
                 style= { style.navButtonStyle }>&gt;</span>
       </div>
     );
@@ -162,9 +237,13 @@ export default class DatePicker extends Component {
     if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
       dayStyle = extend(dayStyle, style.selectedDayStyle);
     }
-    return (<span key={ 'Day-' + index }
+    const tabIndex = day ? this.props.tabIndex : -1;
+    return (<span tabIndex={ tabIndex }
+                  key={ 'Day-' + index }
                   style={ dayStyle }
-                  onClick={ this._onDateClick.bind(this, day) }>
+                  onClick={ this._onDateSelection.bind(this, day) }
+                  onFocus={ this._onDayFocus.bind(this, day) }
+                  onBlur={ this._onDayBlur.bind(this, day) }>
               { day }
             </span>);
   }
@@ -173,7 +252,10 @@ export default class DatePicker extends Component {
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
 
     return (
-      <div>
+      <div tabIndex={ this.props.tabIndex }
+           onFocus={ this._onWrapperFocus.bind(this) }
+           onBlur={ this._onWrapperBlur.bind(this) }
+           onKeyDown={ this._onKeyDown.bind(this) }>
         { this._getNavBar() }
         { this._getDaysHeader() }
         <div>
@@ -204,6 +286,6 @@ export default class DatePicker extends Component {
  * 5. keyboard event support
  * 6. ARIA support
  * 7. Adding support of disabled / display-only component (we might consider renaming got calendar in case we support a component for date display also)
- * 8. Adding tab-index property
  * 9. Localization support
+ * 10. Implement default belle styling and bootstrap styling for date-picker
  **/
