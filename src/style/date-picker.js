@@ -7,6 +7,10 @@ const datePickerStyle = {
     height: 20
   },
 
+  todayStyle: {
+    color: 'red'
+  },
+
   navButtonStyle: {
     display: 'inline-block',
     width: 20,
