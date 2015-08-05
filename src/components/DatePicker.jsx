@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
-import unionClassNames from '../utils/union-class-names';
-import {omit, extend, map} from '../utils/helpers';
+// import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
+// import unionClassNames from '../utils/union-class-names';
+import {has, extend, map} from '../utils/helpers';
 import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 
@@ -15,8 +15,18 @@ export default class DatePicker extends Component {
 
   constructor(properties) {
     super(properties);
+    let dateValue;
+
+    if (has(properties, 'valueLink')) {
+      dateValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      dateValue = properties.value;
+    } else if (has(properties, 'defaultValue')) {
+      dateValue = properties.defaultValue;
+    }
 
     this.state = {
+      dateValue: dateValue,
       month: properties.month - 1,
       year: properties.year
     };
@@ -25,6 +35,12 @@ export default class DatePicker extends Component {
   static displayName = 'Belle DatePicker';
 
   static propTypes = {
+    defaultValue: React.PropTypes.instanceOf(Date),
+    value: React.PropTypes.instanceOf(Date),
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.instanceOf(Date),
+      requestChange: React.PropTypes.func.isRequired
+    }),
     month: React.PropTypes.number,
     year: React.PropTypes.number,
     onUpdate: React.PropTypes.func
@@ -43,7 +59,17 @@ export default class DatePicker extends Component {
   }
 
   componentWillReceiveProps(properties) {
+    let dateValue;
+    if (has(properties, 'valueLink')) {
+      dateValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      dateValue = properties.value;
+    } else {
+      dateValue = this.state.dateValue;
+    }
+
     this.setState({
+      dateValue: dateValue,
       month: properties.month - 1,
       year: properties.year
     });
@@ -82,13 +108,18 @@ export default class DatePicker extends Component {
   }
 
   _onDateClick(date) {
-    const selectedDate = new Date(this.state.year, this.state.month, date);
-    this.setState({
-      selectedDate: selectedDate
-    });
+    const dateValue = new Date(this.state.year, this.state.month, date);
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(dateValue);
+    } else if (!has(this.props, 'value')) {
+      this.setState({
+        dateValue: dateValue
+      });
+    }
+
     if (this.props.onUpdate) {
       this.props.onUpdate({
-        value: selectedDate
+        value: dateValue
       });
     }
   }
@@ -124,11 +155,11 @@ export default class DatePicker extends Component {
 
   _getDayFragment(day, index) {
     let dayStyle = extend({}, style.dayStyle);
-    const selectedDate = this.state.selectedDate;
+    const dateValue = this.state.dateValue;
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
       dayStyle = extend(dayStyle, style.todayStyle);
     }
-    if (selectedDate && day === selectedDate.getDate() && this.state.month === selectedDate.getMonth() && this.state.year === selectedDate.getFullYear()) {
+    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
       dayStyle = extend(dayStyle, style.selectedDayStyle);
     }
     return (<span key={ 'Day-' + index }

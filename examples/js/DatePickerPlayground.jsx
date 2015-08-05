@@ -4,6 +4,9 @@ import {Card, DatePicker} from 'belle';
 export default React.createClass({
 
   render() {
+    const selectedDate = new Date();
+    selectedDate.setDate(selectedDate.getDate() + 5);
+
     return (
       <div>
 
@@ -12,7 +15,7 @@ export default React.createClass({
         <Card>
           <h3>Default Value Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker/>
+            <DatePicker defaultValue={ selectedDate }/>
           </div>
         </Card>
 

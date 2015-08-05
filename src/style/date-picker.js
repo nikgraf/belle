@@ -4,7 +4,8 @@ const datePickerStyle = {
     display: 'inline-block',
     width: 20,
     border: '1px solid black',
-    height: 20
+    height: 20,
+    cursor: 'pointer'
   },
 
   todayStyle: {
