@@ -46,8 +46,7 @@ const findIndexOfFocusedOption = (component) => {
  * Verifies that the provided property is an Option or Placeholder component from Belle.
  */
 function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) {
-  if (!(props[propName] &&
-        isOption(props[propName]) ||
+  if (props[propName] && !(isOption(props[propName]) ||
         isPlaceholder(props[propName]) ||
         isSeparator(props[propName]))
      ) {
@@ -218,7 +217,9 @@ export default class Select extends Component {
     let selectedValue;
     let focusedOptionValue;
 
-    this.children = flatten(properties.children);
+    if (properties.children) {
+      this.children = flatten(properties.children);
+    }
 
     if (has(properties, 'valueLink')) {
       selectedValue = properties.valueLink.value;
