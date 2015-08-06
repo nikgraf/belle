@@ -539,12 +539,14 @@ const bootstrap3Theme = {
       },
 
       focusStyle: {
-        outline: '5px auto -webkit-focus-ring-color',
-        outlineOffset: -2,
-
         color: '#333',
         backgroundColor: '#e6e6e6',
         borderColor: '#8c8c8c'
+      },
+
+      activeStyle: {
+        outline: '5px auto -webkit-focus-ring-color',
+        outlineOffset: -2
       },
 
       hoverStyle: {
