@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {omit, extend, filter, find, first, flatten, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -37,7 +37,7 @@ function isSeparator(reactElement) {
  * The index search includes only option components.
  */
 const findIndexOfFocusedOption = (component) => {
-  return findIndex(filter(component.props.children, isOption), (element) => {
+  return findIndex(filter(component.children, isOption), (element) => {
     return element.props.value === component.state.focusedOptionValue;
   });
 };
@@ -59,11 +59,13 @@ function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) 
  * Verifies that the children is an array containing only Options & at maximum
  * one Placeholder.
  */
-function validateArrayOfOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
-  const error = React.PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(props, propName, componentName);
+function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
+  const sanitizedProps = { children: flatten(props[propName]) };
+
+  const error = PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(sanitizedProps, 'children', componentName);
   if (error) return error;
 
-  const placeholders = filter(props[propName], isPlaceholder);
+  const placeholders = filter(sanitizedProps.children, isPlaceholder);
   if (size(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
@@ -227,12 +229,12 @@ export default class Select extends Component {
     } else if (has(properties, 'defaultValue')) {
       selectedValue = properties.defaultValue;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
-      const firstOption = first(filter(properties.children, isOption));
+    } else if (!isEmpty(this.children) && !some(this.children, isPlaceholder)) {
+      const firstOption = first(filter(this.children, isOption));
       selectedValue = firstOption ? firstOption.props.value : void 0;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(properties.children)) {
-      const firstOption = first(filter(properties.children, isOption));
+    } else if (!isEmpty(this.children)) {
+      const firstOption = first(filter(this.children, isOption));
       focusedOptionValue = firstOption ? firstOption.props.value : void 0;
     }
 
@@ -253,44 +255,44 @@ export default class Select extends Component {
   static displayName = 'Belle Select';
 
   static propTypes = {
-    children: validateArrayOfOptionsAndMaximumOnePlaceholder,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
-      React.PropTypes.instanceOf(Date)
+    children: validateChildrenAreOptionsAndMaximumOnePlaceholder,
+    value: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.instanceOf(Date)
     ]),
-    defaultValue: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number
+    defaultValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number
     ]),
-    onUpdate: React.PropTypes.func,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
-      requestChange: React.PropTypes.func.isRequired
+    onUpdate: PropTypes.func,
+    valueLink: PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      requestChange: PropTypes.func.isRequired
     }),
-    className: React.PropTypes.string,
-    shouldPositionOptions: React.PropTypes.bool,
-    positionOptions: React.PropTypes.func,
-    style: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    wrapperStyle: React.PropTypes.object,
-    menuStyle: React.PropTypes.object,
-    caretToOpenStyle: React.PropTypes.object,
-    caretToCloseStyle: React.PropTypes.object,
-    wrapperProps: React.PropTypes.object,
-    menuProps: React.PropTypes.object,
-    caretProps: React.PropTypes.object,
-    disabled: React.PropTypes.bool,
-    disabledStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
-    disabledCaretToOpenStyle: React.PropTypes.object,
-    onClick: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchStart: React.PropTypes.func
+    className: PropTypes.string,
+    shouldPositionOptions: PropTypes.bool,
+    positionOptions: PropTypes.func,
+    style: PropTypes.object,
+    focusStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    wrapperStyle: PropTypes.object,
+    menuStyle: PropTypes.object,
+    caretToOpenStyle: PropTypes.object,
+    caretToCloseStyle: PropTypes.object,
+    wrapperProps: PropTypes.object,
+    menuProps: PropTypes.object,
+    caretProps: PropTypes.object,
+    disabled: PropTypes.bool,
+    disabledStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
+    disabledCaretToOpenStyle: PropTypes.object,
+    onClick: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchStart: PropTypes.func
   };
 
   static defaultProps = {
