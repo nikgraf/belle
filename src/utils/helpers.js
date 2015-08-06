@@ -1,5 +1,3 @@
-// The following helper functions are based on Underscore.js
-
 /**
  * Returns true if the object contain the given key.
  *
@@ -49,44 +47,61 @@ export function filter(iterable, predicate, context) {
 }
 
 /**
- * Returns true if the provided object is an array.
+ * Returns true if the provided object is an iterable, except for strings for which it will return false.
  *
  * @param {object} obj - object to be inspected
  */
-function isArrayLike(obj) {
+export function isArrayLike(obj) {
+  if (Array.isArray(obj)) return true;
+  if (typeof obj === 'string') return false;
   const length = obj.length;
   return typeof length === 'number' && length >= 0;
 }
 
 /**
- * Returns all the names of the object's properties.
+ * Returns all the names of the object's own properties. This will not include properties inherited through prototypes.
  *
  * @param {object} obj - object to be used
  */
-function keys(obj) {
+export function keys(obj) {
   const objKeys = [];
   for (const key in obj) if (has(obj, key)) objKeys.push(key);
   return objKeys;
 }
 
 /**
- * Returns a new array of values by mapping each value in list through a transformation function (predicate). If object is a not an array, predicate's arguments will be (value, key, list).
+ * Returns a new array of values by mapping each value in list through a transformation function (predicate).
  *
- * @param {object|array} obj - object to be based upon
- * @param {function} predicate - function returning the a new version of the entry
- * @param {object} [context] - context for the predicate function call
+ * @param {array} iterable - source iterable
+ * @param {function} predicate - function returning the transformed array entry
  */
-export function map(obj, predicate, context) {
+export function map(iterable, predicate) {
+  if (iterable) {
+    const result = [];
+    iterable.forEach((elm, index) => {
+      if (predicate) {
+        result[index] = predicate(elm);
+      }
+    });
+    return result;
+  }
+}
+
+/**
+ * Returns a new object by mapping each property in an object through a transformation function (predicate).
+ *
+ * @param {object} obj - object to be based upon
+ * @param {function} predicate - function to transform the property
+ */
+export function mapObject(obj, predicate) {
   if (obj) {
     const result = [];
-    const objKeys = !isArrayLike(obj) && keys(obj);
-    const length = (objKeys || obj).length;
-    for (let index = 0; index < length; index++) {
-      const currentKey = objKeys ? objKeys[index] : index;
+    const objKeys = keys(obj);
+    objKeys.forEach( (key, index) => {
       if (predicate) {
-        result[index] = predicate.call(context, obj[currentKey], currentKey);
+        result[index] = predicate(obj[key], key);
       }
-    }
+    });
     return result;
   }
 }

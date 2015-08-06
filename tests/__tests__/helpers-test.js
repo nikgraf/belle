@@ -82,11 +82,36 @@ describe('helpers omit method', () => {
   });
 });
 
+describe('helpers isArrayLike method', () => {
+  it('should return true for array', () => {
+    expect(helpers.isArrayLike([123, 'abc', () => {}, undefined])).toBeTruthy();
+  });
+
+  it('should return false for non-arrays', () => {
+    expect(helpers.isArrayLike(123)).toBeFalsy();
+    expect(helpers.isArrayLike('abc')).toBeFalsy();
+  });
+});
+
+describe('helpers keys method', () => {
+  it('should return all keys in an object', () => {
+    const keys = helpers.keys({a: 1, b: 2, c: 3});
+    expect(keys.length).toBe(3);
+    expect(keys.indexOf('a')).toBeGreaterThan(-1);
+    expect(keys.indexOf('toString')).toBeLessThan(0);
+  });
+
+  it('should should not break for undefined/ null objects', () => {
+    expect(helpers.keys(undefined).length).toBe(0);
+    expect(helpers.keys(null).length).toBe(0);
+    expect(helpers.keys({}).length).toBe(0);
+  });
+});
 
 describe('helpers filter method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return obj !== 123;
+  const predicate = (object) => {
+    return object !== 123;
   };
 
   it('should filter out objects from iterable as per predicate', () => {
@@ -164,7 +189,7 @@ describe('helpers map method for arrays', () => {
   });
 });
 
-describe('helpers map method for object', () => {
+describe('helpers mapObject method', () => {
   const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
   const predicate = (value) => {
     return value / 5;
@@ -175,7 +200,7 @@ describe('helpers map method for object', () => {
   };
 
   it('should map to an output array as per predicate', () => {
-    const resultObj = helpers.map(obj, predicate);
+    const resultObj = helpers.mapObject(obj, predicate);
     expect(resultObj[0]).toBe(1);
     expect(resultObj[1]).toBe(2);
     expect(resultObj[2]).toBe(10);
@@ -183,7 +208,7 @@ describe('helpers map method for object', () => {
   });
 
   it('should pass second parameter value to predicate', () => {
-    const resultObj = helpers.map(objIdTest, predicateIdTest);
+    const resultObj = helpers.mapObject(objIdTest, predicateIdTest);
     expect(resultObj[0]).toBe(10);
     expect(resultObj[1]).toBe(10);
     expect(resultObj[2]).toBe(10);
@@ -193,13 +218,14 @@ describe('helpers map method for object', () => {
 
 describe('helpers find method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return typeof obj === 'number';
+  const obj = 100;
+  const predicate = (object) => {
+    return typeof object === 'number';
   };
 
   it('should find first numeric value in array', () => {
-    const obj = helpers.find(arr, predicate);
-    expect(obj).toBe(123);
+    const resultObj = helpers.find(arr, predicate);
+    expect(resultObj).toBe(123);
   });
 
   it('should not alter original array', () => {
@@ -210,23 +236,23 @@ describe('helpers find method', () => {
 
   it('should not break if array is undefined or null or has length 0', () => {
     let arr2;
-    let obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
     arr2 = null;
-    obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
     arr2 = [];
-    obj = helpers.find(arr2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr2, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should not break if predicate is undefined or null', () => {
     let predicate2;
-    let obj = helpers.find(arr, predicate2);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.find(arr, predicate2);
+    expect(resultObj).toBeFalsy();
     predicate2 = null;
-    obj = helpers.find(arr, predicate2);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.find(arr, predicate2);
+    expect(resultObj).toBeFalsy();
   });
 });
 
@@ -244,8 +270,9 @@ describe('helpers isEmpty method', () => {
 
 describe('helpers findIndex method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const predicate = (obj) => {
-    return typeof obj === 'number';
+  const obj = 100;
+  const predicate = (object) => {
+    return typeof object === 'number';
   };
 
   it('should find index of first numeric value in array', () => {
@@ -261,28 +288,28 @@ describe('helpers findIndex method', () => {
 
   it('should not break if array is undefined or null or has length 0', () => {
     let obj2;
-    let obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
     obj2 = null;
-    obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
     obj2 = [];
-    obj = helpers.findIndex(obj2, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(obj2, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should not break if predicate is undefined or null', () => {
     let predicate2;
-    let obj = helpers.findIndex(arr, predicate2);
-    expect(obj).toBeFalsy();
+    let resultObj = helpers.findIndex(arr, predicate2);
+    expect(resultObj).toBeFalsy();
     predicate2 = null;
-    obj = helpers.findIndex(arr, predicate);
-    expect(obj).toBeFalsy();
+    resultObj = helpers.findIndex(arr, predicate);
+    expect(resultObj).toBeFalsy();
   });
 
   it('should return undefined in case the entry could not be found', () => {
-    const customPredicate = (obj) => {
-      return obj === 567;
+    const customPredicate = (resultObj) => {
+      return resultObj === 567;
     };
     const index = helpers.findIndex(arr, customPredicate);
     expect(index).toBeUndefined();
@@ -320,6 +347,10 @@ describe('helpers last method', () => {
 describe('helpers size method', () => {
   it('should return size of an array', () => {
     expect(helpers.size([1, 2, 3])).toBe(3);
+  });
+
+  it('should return string length for strings', () => {
+    expect(helpers.size('abc')).toBe(3);
   });
 
   it('should not break for empty array', () => {

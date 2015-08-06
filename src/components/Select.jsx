@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {omit, extend, filter, find, first, isEmpty, findIndex, last, size, some, uniqueId, has} from '../utils/helpers';
+import React, {Component, PropTypes} from 'react';
+import {omit, extend, filter, find, first, flatten, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -37,7 +37,7 @@ function isSeparator(reactElement) {
  * The index search includes only option components.
  */
 const findIndexOfFocusedOption = (component) => {
-  return findIndex(filter(component.props.children, isOption), (element) => {
+  return findIndex(filter(component.children, isOption), (element) => {
     return element.props.value === component.state.focusedOptionValue;
   });
 };
@@ -46,8 +46,7 @@ const findIndexOfFocusedOption = (component) => {
  * Verifies that the provided property is an Option or Placeholder component from Belle.
  */
 function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) {
-  if (!(props[propName] &&
-        isOption(props[propName]) ||
+  if (props[propName] && !(isOption(props[propName]) ||
         isPlaceholder(props[propName]) ||
         isSeparator(props[propName]))
      ) {
@@ -59,11 +58,13 @@ function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) 
  * Verifies that the children is an array containing only Options & at maximum
  * one Placeholder.
  */
-function validateArrayOfOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
-  const error = React.PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(props, propName, componentName);
+function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
+  const sanitizedProps = { children: flatten(props[propName]) };
+
+  const error = PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(sanitizedProps, 'children', componentName);
   if (error) return error;
 
-  const placeholders = filter(props[propName], isPlaceholder);
+  const placeholders = filter(sanitizedProps.children, isPlaceholder);
   if (size(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
@@ -216,6 +217,10 @@ export default class Select extends Component {
     let selectedValue;
     let focusedOptionValue;
 
+    if (properties.children) {
+      this.children = flatten(properties.children);
+    }
+
     if (has(properties, 'valueLink')) {
       selectedValue = properties.valueLink.value;
       focusedOptionValue = selectedValue;
@@ -225,11 +230,13 @@ export default class Select extends Component {
     } else if (has(properties, 'defaultValue')) {
       selectedValue = properties.defaultValue;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(properties.children) && !some(properties.children, isPlaceholder)) {
-      selectedValue = first(filter(properties.children, isOption)).props.value;
+    } else if (!isEmpty(this.children) && !some(this.children, isPlaceholder)) {
+      const firstOption = first(filter(this.children, isOption));
+      selectedValue = firstOption ? firstOption.props.value : void 0;
       focusedOptionValue = selectedValue;
-    } else if (!isEmpty(properties.children)) {
-      focusedOptionValue = first(filter(properties.children, isOption)).props.value;
+    } else if (!isEmpty(this.children)) {
+      const firstOption = first(filter(this.children, isOption));
+      focusedOptionValue = firstOption ? firstOption.props.value : void 0;
     }
 
     this.state = {
@@ -249,44 +256,44 @@ export default class Select extends Component {
   static displayName = 'Belle Select';
 
   static propTypes = {
-    children: validateArrayOfOptionsAndMaximumOnePlaceholder,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
-      React.PropTypes.instanceOf(Date)
+    children: validateChildrenAreOptionsAndMaximumOnePlaceholder,
+    value: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.instanceOf(Date)
     ]),
-    defaultValue: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number
+    defaultValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number
     ]),
-    onUpdate: React.PropTypes.func,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
-      requestChange: React.PropTypes.func.isRequired
+    onUpdate: PropTypes.func,
+    valueLink: PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      requestChange: PropTypes.func.isRequired
     }),
-    className: React.PropTypes.string,
-    shouldPositionOptions: React.PropTypes.bool,
-    positionOptions: React.PropTypes.func,
-    style: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    wrapperStyle: React.PropTypes.object,
-    menuStyle: React.PropTypes.object,
-    caretToOpenStyle: React.PropTypes.object,
-    caretToCloseStyle: React.PropTypes.object,
-    wrapperProps: React.PropTypes.object,
-    menuProps: React.PropTypes.object,
-    caretProps: React.PropTypes.object,
-    disabled: React.PropTypes.bool,
-    disabledStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
-    disabledCaretToOpenStyle: React.PropTypes.object,
-    onClick: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchStart: React.PropTypes.func
+    className: PropTypes.string,
+    shouldPositionOptions: PropTypes.bool,
+    positionOptions: PropTypes.func,
+    style: PropTypes.object,
+    focusStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    wrapperStyle: PropTypes.object,
+    menuStyle: PropTypes.object,
+    caretToOpenStyle: PropTypes.object,
+    caretToCloseStyle: PropTypes.object,
+    wrapperProps: PropTypes.object,
+    menuProps: PropTypes.object,
+    caretProps: PropTypes.object,
+    disabled: PropTypes.bool,
+    disabledStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
+    disabledCaretToOpenStyle: PropTypes.object,
+    onClick: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchStart: PropTypes.func
   };
 
   static defaultProps = {
@@ -305,6 +312,10 @@ export default class Select extends Component {
   }
 
   componentWillReceiveProps(properties) {
+    if (properties.children) {
+      this.children = flatten(properties.children);
+    }
+
     const newState = {
       selectedOptionWrapperProps: sanitizeSelectedOptionWrapperProps(properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
@@ -355,7 +366,7 @@ export default class Select extends Component {
       const menuNode = React.findDOMNode(this.refs.menu);
 
       // the menu was just opened
-      if (!previousState.isOpen && this.state.isOpen) {
+      if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
         const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
         positionOptions(this);
       // restore the old scrollTop position
@@ -363,7 +374,10 @@ export default class Select extends Component {
         menuNode.scrollTop = this.cachedMenuScrollTop;
       }
 
-      if (!previousState.isOpen && this.state.isOpen) {
+      const options = filter(this.children, isOption);
+      const separators = filter(this.children, isSeparator);
+      const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
+      if (!previousState.isOpen && this.state.isOpen && childrenLength) {
         const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
         menuNode.style.display = menuStyle.display;
       }
@@ -560,14 +574,14 @@ export default class Select extends Component {
     if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
-      if (hasNext(filter(this.props.children, isOption), indexOfFocusedOption)) {
+      if (hasNext(filter(this.children, isOption), indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: filter(this.props.children, isOption)[indexOfFocusedOption + 1].props.value
+          focusedOptionValue: filter(this.children, isOption)[indexOfFocusedOption + 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: first(filter(this.props.children, isOption)).props.value
+        focusedOptionValue: first(filter(this.children, isOption)).props.value
       });
     }
   }
@@ -585,14 +599,14 @@ export default class Select extends Component {
     if (this.state.focusedOptionValue) {
       const indexOfFocusedOption = findIndexOfFocusedOption(this);
 
-      if (hasPrevious(filter(this.props.children, isOption), indexOfFocusedOption)) {
+      if (hasPrevious(filter(this.children, isOption), indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: filter(this.props.children, isOption)[indexOfFocusedOption - 1].props.value
+          focusedOptionValue: filter(this.children, isOption)[indexOfFocusedOption - 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: last(filter(this.props.children, isOption)).props.value
+        focusedOptionValue: last(filter(this.children, isOption)).props.value
       });
     }
   }
@@ -620,7 +634,7 @@ export default class Select extends Component {
    */
   _onKeyDown(event) {
     if (!this.props.disabled) {
-      if (filter(this.props.children, isOption).length > 0) {
+      if (filter(this.children, isOption).length > 0) {
         if (!this.state.isOpen) {
           if (event.key === 'ArrowDown' ||
               event.key === 'ArrowUp' ||
@@ -716,7 +730,7 @@ export default class Select extends Component {
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {
-      const selectedEntry = find(this.props.children, (entry) => {
+      const selectedEntry = find(this.children, (entry) => {
         return entry.props.value === this.state.selectedValue;
       });
 
@@ -726,10 +740,13 @@ export default class Select extends Component {
         });
       }
     } else {
-      selectedOptionOrPlaceholder = find(this.props.children, isPlaceholder);
+      selectedOptionOrPlaceholder = find(this.children, isPlaceholder);
     }
 
-    const computedMenuStyle = this.state.isOpen && !this.props.disabled ? menuStyle : { display: 'none' };
+    const options = filter(this.children, isOption);
+    const separators = filter(this.children, isSeparator);
+    const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
+    const computedMenuStyle = this.props.disabled || !this.state.isOpen || childrenLength === 0 ? { display: 'none' } : menuStyle;
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
 
@@ -795,7 +812,7 @@ export default class Select extends Component {
             ref="menu"
             {...this.state.menuProps} >
           {
-            React.Children.map(this.props.children, (entry, index) => {
+            React.Children.map(this.children, (entry, index) => {
               if (isOption(entry)) { // filter out all non-Option Components
                 const isHovered = entry.props.value === this.state.focusedOptionValue;
                 const option = React.cloneElement(entry, {
