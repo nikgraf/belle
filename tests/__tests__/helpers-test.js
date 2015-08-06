@@ -189,6 +189,33 @@ describe('helpers map method for arrays', () => {
   });
 });
 
+describe('helpers mapObject method', () => {
+  const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
+  const predicate = (value) => {
+    return value / 5;
+  };
+  const objIdTest = {50: 5, 100: 10, 500: 50, 1000: 100};
+  const predicateIdTest = (value, id) => {
+    return id / value;
+  };
+
+  it('should map to an output array as per predicate', () => {
+    const resultObj = helpers.mapObject(obj, predicate);
+    expect(resultObj[0]).toBe(1);
+    expect(resultObj[1]).toBe(2);
+    expect(resultObj[2]).toBe(10);
+    expect(resultObj[3]).toBe(20);
+  });
+
+  it('should pass second parameter value to predicate', () => {
+    const resultObj = helpers.mapObject(objIdTest, predicateIdTest);
+    expect(resultObj[0]).toBe(10);
+    expect(resultObj[1]).toBe(10);
+    expect(resultObj[2]).toBe(10);
+    expect(resultObj[3]).toBe(10);
+  });
+});
+
 describe('helpers find method', () => {
   const arr = [123, 'abc', () => {}, undefined];
   const obj = 100;

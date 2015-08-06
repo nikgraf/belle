@@ -1,4 +1,4 @@
-import {flatten, map} from '../utils/helpers';
+import {flatten, mapObject} from '../utils/helpers';
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import animations from '../style/animations';
@@ -35,7 +35,7 @@ function updateStore(styleId, style, pseudoClass, disabled) {
  * Constructs all the stored styles & injects them to the DOM.
  */
 function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
-  return map(pseudoClasses, (style, pseudoClass) => {
+  return mapObject(pseudoClasses, (style, pseudoClass) => {
     const styleString = CSSPropertyOperations.createMarkupForStyles(style);
     const styleWithImportant = styleString.replace(/;/g, ' !important;');
 
@@ -46,7 +46,7 @@ function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
 }
 
 function updateStyling() {
-  const styles = map(styleStorage, (storageEntry, id) => {
+  const styles = mapObject(styleStorage, (storageEntry, id) => {
     const pseudoClassesArray = [];
 
     if (storageEntry.pseudoClasses) {
