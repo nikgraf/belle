@@ -101,8 +101,8 @@ describe('Select', () => {
       <Select>
         <Placeholder>Select a City</Placeholder>
         {
-          options.map((option) => {
-            return (<Option value={ option.value } >{ option.content }</Option>);
+          options.map((option, index) => {
+            return (<Option key={ index } value={ option.value } >{ option.content }</Option>);
           })
         }
       </Select>
@@ -127,8 +127,8 @@ describe('Select', () => {
         <Placeholder>Select a City</Placeholder>
         <Option value="boston">Boston</Option>
         {
-          options.map((option) => {
-            return (<Option value={ option.value } >{ option.content }</Option>);
+          options.map((option, index) => {
+            return (<Option key={ index } value={ option.value } >{ option.content }</Option>);
           })
         }
         <Option value="newyork">New York</Option>

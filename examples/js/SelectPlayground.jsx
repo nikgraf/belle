@@ -61,9 +61,9 @@ export default React.createClass({
         <Select>
           <Placeholder>Lala</Placeholder>
           {
-            fruits.map((fruit) => {
+            fruits.map((fruit, index) => {
               return (
-                <Option value={ fruit.value }>
+                <Option key={ index } value={ fruit.value }>
                   { fruit.content }
                 </Option>
               );
