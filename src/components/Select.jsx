@@ -312,7 +312,9 @@ export default class Select extends Component {
   }
 
   componentWillReceiveProps(properties) {
-    this.children = flatten(properties.children);
+    if (properties.children) {
+      this.children = flatten(properties.children);
+    }
 
     const newState = {
       selectedOptionWrapperProps: sanitizeSelectedOptionWrapperProps(properties),
