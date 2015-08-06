@@ -44,13 +44,17 @@ export default class DatePicker extends Component {
     month: React.PropTypes.number,
     year: React.PropTypes.number,
     onUpdate: React.PropTypes.func,
-    tabIndex: React.PropTypes.number
+    tabIndex: React.PropTypes.number,
+    'aria-label': React.PropTypes.string,
+    disabled: React.PropTypes.bool
   };
 
   static defaultProps = {
     month: CURRENT_MONTH + 1,
     year: CURRENT_YEAR,
-    tabIndex: 0
+    tabIndex: 0,
+    'aria-label': 'Calendar',
+    disabled: false
   };
 
   /**
@@ -222,14 +226,19 @@ export default class DatePicker extends Component {
     );
   }
 
+  // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
   _getDayFragment(day, index) {
     let dayStyle = extend({}, style.dayStyle);
     const dateValue = this.state.dateValue;
+    let ariaCurrent = '';
+    let ariaSelected = false;
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
       dayStyle = extend(dayStyle, style.todayStyle);
+      ariaCurrent = 'date';
     }
     if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
       dayStyle = extend(dayStyle, style.selectedDayStyle);
+      ariaSelected = true;
     }
     const tabIndex = day ? this.props.tabIndex : -1;
     return (<span tabIndex={ tabIndex }
@@ -239,7 +248,9 @@ export default class DatePicker extends Component {
                   onMouseDown={ this._onDateSelection.bind(this, day) }
                   onTouchStart={ this._onDateSelection.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
-                  onBlur={ this._onDayBlur.bind(this, day) }>
+                  onBlur={ this._onDayBlur.bind(this, day) }
+                  aria-current={ ariaCurrent }
+                  aria-selected={ ariaSelected }>
               { day }
             </span>);
   }
@@ -251,7 +262,9 @@ export default class DatePicker extends Component {
       <div tabIndex={ this.props.tabIndex }
            onFocus={ this._onWrapperFocus.bind(this) }
            onBlur={ this._onWrapperBlur.bind(this) }
-           onKeyDown={ this._onKeyDown.bind(this) }>
+           onKeyDown={ this._onKeyDown.bind(this) }
+           aria-label = { this.props['aria-label'] }
+           aria-disabled = { this.props.disabled }>
         { this._getNavBar() }
         { this._getDaysHeader() }
         <div>
@@ -369,10 +382,12 @@ export default class DatePicker extends Component {
 /**
  * TODO-S:
  * 4. Discuss styling api
+ * 5. Deciding upon event props that component should handle
  * 6. ARIA support
  * 7. Adding support of disabled / display-only component (we might consider renaming to calendar in case we support a component for date display also)
  * 9. Localization support
  * 10. Implement default belle styling and bootstrap styling for date-picker
+ * 11. handling onContextMenu
  *
  * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
  * in case we prefer to use pseudo classes for focus styles we can safely remove these from sate
