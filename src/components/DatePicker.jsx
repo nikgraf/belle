@@ -46,7 +46,8 @@ export default class DatePicker extends Component {
     onUpdate: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
     'aria-label': React.PropTypes.string,
-    disabled: React.PropTypes.bool
+    disabled: React.PropTypes.bool,
+    readOnly: React.PropTypes.bool
   };
 
   static defaultProps = {
@@ -54,7 +55,8 @@ export default class DatePicker extends Component {
     year: CURRENT_YEAR,
     tabIndex: 0,
     'aria-label': 'Calendar',
-    disabled: false
+    disabled: false,
+    readOnly: false
   };
 
   /**
@@ -263,8 +265,9 @@ export default class DatePicker extends Component {
            onFocus={ this._onWrapperFocus.bind(this) }
            onBlur={ this._onWrapperBlur.bind(this) }
            onKeyDown={ this._onKeyDown.bind(this) }
-           aria-label = { this.props['aria-label'] }
-           aria-disabled = { this.props.disabled }>
+           aria-label={ this.props['aria-label'] }
+           aria-disabled={ this.props.disabled }
+           aria-readonly={ this.props.readOnly }>
         { this._getNavBar() }
         { this._getDaysHeader() }
         <div>
@@ -383,8 +386,7 @@ export default class DatePicker extends Component {
  * TODO-S:
  * 4. Discuss styling api
  * 5. Deciding upon event props that component should handle
- * 6. ARIA support
- * 7. Adding support of disabled / display-only component (we might consider renaming to calendar in case we support a component for date display also)
+ * 7. Adding support of disabled / read-only component (we might consider renaming to calendar in case we support a component for date display also)
  * 9. Localization support
  * 10. Implement default belle styling and bootstrap styling for date-picker
  * 11. handling onContextMenu
