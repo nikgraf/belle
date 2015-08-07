@@ -90,104 +90,124 @@ export default class DatePicker extends Component {
   }
 
   _onWrapperFocus() {
-    this.setState({
-      isWrapperFocused: true
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isWrapperFocused: true
+      });
+    }
   }
 
   _onWrapperBlur() {
-    this.setState({
-      isWrapperFocused: false
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isWrapperFocused: false
+      });
+    }
   }
 
   _onNavBarPrevMonthFocus() {
-    this.setState({
-      isNavBarPrevMonthFocused: true
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isNavBarPrevMonthFocused: true
+      });
+    }
   }
 
   _onNavBarPrevMonthBlur() {
-    this.setState({
-      isNavBarPrevMonthFocused: false
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isNavBarPrevMonthFocused: false
+      });
+    }
   }
 
   _onNavBarNextMonthFocus() {
-    this.setState({
-      isNavBarNextMonthFocused: true
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isNavBarNextMonthFocused: true
+      });
+    }
   }
 
   _onNavBarNextMonthBlur() {
-    this.setState({
-      isNavBarNextMonthFocused: false
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        isNavBarNextMonthFocused: false
+      });
+    }
   }
 
   _onDayFocus(day) {
-    this.setState({
-      focusedDay: day
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        focusedDay: day
+      });
+    }
   }
 
   _onDayBlur() {
-    this.setState({
-      focusedDay: 0
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        focusedDay: 0
+      });
+    }
   }
 
   _onKeyDown(event) {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      if (this.state.focusedDay) {
-        this._focusNextWeeksDay();
-      }
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      if (this.state.focusedDay) {
-        this._focusPreviousWeeksDay();
-      }
-    } else if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      if (this.state.focusedDay) {
-        this._focusPreviousDay();
-      } else if (this.state.isWrapperFocused) {
-        this._decreaseMonth();
-      }
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      if (this.state.focusedDay) {
-        this._focusNextDay();
-      } else if (this.state.isWrapperFocused) {
-        this._increaseMonth();
-      }
-    } else if (event.key === 'Enter') {
-      event.preventDefault();
-      if (this.state.focusedDay) {
-        this._onDateSelection(this.state.focusedDay);
-      } else if (this.state.isNavBarPrevMonthFocused) {
-        this._decreaseMonth();
-      } else if (this.state.isNavBarNextMonthFocused) {
-        this._increaseMonth();
+    if (!this.props.disabled) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (this.state.focusedDay) {
+          this._focusNextWeeksDay();
+        }
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (this.state.focusedDay) {
+          this._focusPreviousWeeksDay();
+        }
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        if (this.state.focusedDay) {
+          this._focusPreviousDay();
+        } else if (this.state.isWrapperFocused) {
+          this._decreaseMonth();
+        }
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        if (this.state.focusedDay) {
+          this._focusNextDay();
+        } else if (this.state.isWrapperFocused) {
+          this._increaseMonth();
+        }
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        if (this.state.focusedDay) {
+          this._onDateSelection(this.state.focusedDay);
+        } else if (this.state.isNavBarPrevMonthFocused) {
+          this._decreaseMonth();
+        } else if (this.state.isNavBarNextMonthFocused) {
+          this._increaseMonth();
+        }
       }
     }
   }
 
   _onDateSelection(date) {
-    const dateValue = new Date(this.state.year, this.state.month, date);
-    if (has(this.props, 'valueLink')) {
-      this.props.valueLink.requestChange(dateValue);
-    } else if (!has(this.props, 'value')) {
-      this.setState({
-        dateValue: dateValue
-      });
-    }
+    if (!this.props.disabled) {
+      const dateValue = new Date(this.state.year, this.state.month, date);
+      if (has(this.props, 'valueLink')) {
+        this.props.valueLink.requestChange(dateValue);
+      } else if (!has(this.props, 'value')) {
+        this.setState({
+          dateValue: dateValue
+        });
+      }
 
-    if (this.props.onUpdate) {
-      this.props.onUpdate({
-        value: dateValue
-      });
+      if (this.props.onUpdate) {
+        this.props.onUpdate({
+          value: dateValue
+        });
+      }
     }
   }
 
@@ -343,7 +363,9 @@ export default class DatePicker extends Component {
   }
 
   _onNavBarPrevMonthClick() {
-    this._decreaseMonth();
+    if (!this.props.disabled) {
+      this._decreaseMonth();
+    }
   }
 
   _decreaseMonth(postStateUpdateFunc) {
@@ -367,7 +389,9 @@ export default class DatePicker extends Component {
   }
 
   _onNavBarNextMonthClick() {
-    this._increaseMonth();
+    if (!this.props.disabled) {
+      this._increaseMonth();
+    }
   }
 
   _increaseMonth(postStateUpdateFunc) {
