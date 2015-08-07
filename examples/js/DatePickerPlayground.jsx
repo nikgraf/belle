@@ -13,9 +13,14 @@ export default React.createClass({
         <h2>ComboBox</h2>
 
         <Card>
-          <h3>Default Value Example</h3>
+          <div tabIndex={false}>testing</div>
+          <h3>Default Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <DatePicker defaultValue={ selectedDate }/>
+          </div>
+          <h3>Disabled Calendar Example</h3>
+          <div style={ { 'marginBottom': '20px' } }>
+            <DatePicker defaultValue={ selectedDate } disabled={true}/>
           </div>
         </Card>
 
