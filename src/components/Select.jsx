@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {omit, extend, filter, find, first, flatten, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -316,8 +317,10 @@ export default class Select extends Component {
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
 
-    this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
-    document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    if (canUseDOM) {
+      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+      document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   componentWillReceiveProps(properties) {
@@ -398,7 +401,9 @@ export default class Select extends Component {
    */
   componentWillUnmount() {
     removeStyle(this._styleId);
-    document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    if (canUseDOM) {
+      document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   /**
