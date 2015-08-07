@@ -195,15 +195,13 @@ export default class DatePicker extends Component {
     return (
       <div>
           <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onNavBarPrevMonthClick.bind(this) }
-                onTouchStart={ this._onNavBarPrevMonthClick.bind(this) }
+                onClick={ this._onNavBarPrevMonthClick.bind(this) }
                 style= { style.navButtonStyle }
                 onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
                 onBlur={ this._onNavBarPrevMonthBlur.bind(this)}>&lt;</span>
         { MONTHS[this.state.month] + '-' + this.state.year }
           <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onNavBarNextMonthClick.bind(this) }
-                onTouchStart={ this._onNavBarNextMonthClick.bind(this) }
+                onClick={ this._onNavBarNextMonthClick.bind(this) }
                 style= { style.navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
                 onBlur={ this._onNavBarNextMonthBlur.bind(this)}>&gt;</span>
@@ -247,8 +245,7 @@ export default class DatePicker extends Component {
                   key={ 'day-' + index }
                   ref={ 'day-' + day }
                   style={ dayStyle }
-                  onMouseDown={ this._onDateSelection.bind(this, day) }
-                  onTouchStart={ this._onDateSelection.bind(this, day) }
+                  onClick={ this._onDateSelection.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
                   onBlur={ this._onDayBlur.bind(this, day) }
                   aria-current={ ariaCurrent }
@@ -384,13 +381,18 @@ export default class DatePicker extends Component {
 
 /**
  * TODO-S:
- * 4. Discuss styling api
- * 5. Deciding upon event props that component should handle
+ * 4. Discuss styling api - is active state is needed ?
+ * 10. Implement default belle styling and bootstrap styling for date-picker
+
+ * 5. Deciding upon event & props that component should handle
+ *
  * 7. Adding support of disabled / read-only component (we might consider renaming to calendar in case we support a component for date display also)
  * 9. Localization support
- * 10. Implement default belle styling and bootstrap styling for date-picker
- * 11. handling onContextMenu
+ *
+ * using onClick will make a delay on touch devices - I tried to use onTouchStart on mobile devices but that results in event being fired twice
+ * (once for onClick and once for touchStart)
+ * if I use mouseDown instead of onClick - selection happens even for right click (onContextMenu) which is not desirable.
  *
  * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
- * in case we prefer to use pseudo classes for focus styles we can safely remove these from sate
+ * in case we prefer to use pseudo classes for focus styles we can safely remove these from state
  **/
