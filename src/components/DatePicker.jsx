@@ -192,17 +192,21 @@ export default class DatePicker extends Component {
   }
 
   _getNavBar() {
+    let navButtonStyle = extend({}, style.navButtonStyle);
+    if (this.props.disabled) {
+      navButtonStyle = extend(navButtonStyle, style.disabledNavButtonStyle);
+    }
     return (
       <div>
           <span tabIndex={ this.props.tabIndex }
                 onClick={ this._onNavBarPrevMonthClick.bind(this) }
-                style= { style.navButtonStyle }
+                style= { navButtonStyle }
                 onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
                 onBlur={ this._onNavBarPrevMonthBlur.bind(this)}>&lt;</span>
         { MONTHS[this.state.month] + '-' + this.state.year }
           <span tabIndex={ this.props.tabIndex }
                 onClick={ this._onNavBarNextMonthClick.bind(this) }
-                style= { style.navButtonStyle }
+                style= { navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
                 onBlur={ this._onNavBarNextMonthBlur.bind(this)}>&gt;</span>
       </div>
@@ -210,13 +214,17 @@ export default class DatePicker extends Component {
   }
 
   _getDaysHeader() {
+    let dayHeaderStyle = extend({}, style.dayHeaderStyle);
+    if (this.props.disabled) {
+      dayHeaderStyle = extend(dayHeaderStyle, style.disabledDayHeaderStyle);
+    }
     return (
       <div>
         {
           map(DAYS_ABBR, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ style.dayHeaderStyle }>
+                    style={ dayHeaderStyle }>
                   { dayAbbr }
                 </span>
             );
@@ -240,7 +248,11 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.selectedDayStyle);
       ariaSelected = true;
     }
-    const tabIndex = day ? this.props.tabIndex : -1;
+    if (this.props.disabled) {
+      dayStyle = extend(dayStyle, style.disabledDayStyle);
+    }
+    // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
+    const tabIndex = (!this.props.disabled && day) ? this.props.tabIndex : false;
     return (<span tabIndex={ tabIndex }
                   key={ 'day-' + index }
                   ref={ 'day-' + day }
@@ -256,9 +268,10 @@ export default class DatePicker extends Component {
 
   render() {
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
+    const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
     return (
-      <div tabIndex={ this.props.tabIndex }
+      <div tabIndex={ tabIndex }
            onFocus={ this._onWrapperFocus.bind(this) }
            onBlur={ this._onWrapperBlur.bind(this) }
            onKeyDown={ this._onKeyDown.bind(this) }
