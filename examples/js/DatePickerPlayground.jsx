@@ -22,6 +22,10 @@ export default React.createClass({
           <div style={ { 'marginBottom': '20px' } }>
             <DatePicker defaultValue={ selectedDate } disabled={true}/>
           </div>
+          <h3>Read-Only Calendar Example</h3>
+          <div style={ { 'marginBottom': '20px' } }>
+            <DatePicker defaultValue={ selectedDate } readOnly={true}/>
+          </div>
         </Card>
 
       </div>
