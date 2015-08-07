@@ -82,7 +82,7 @@ export function map(iterable, predicate) {
     const result = [];
     iterable.forEach((elm, index) => {
       if (predicate) {
-        result[index] = predicate(elm);
+        result[index] = predicate(elm, index);
       }
     });
     return result;

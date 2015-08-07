@@ -215,7 +215,7 @@ export default class DatePicker extends Component {
         {
           map(DAYS_ABBR, (dayAbbr, index) => {
             return (
-              <span key={ 'dayAbbr' + index }
+              <span key={ 'dayAbbr-' + index }
                     style={ style.dayHeaderStyle }>
                   { dayAbbr }
                 </span>
