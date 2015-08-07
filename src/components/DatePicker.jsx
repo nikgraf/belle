@@ -193,7 +193,7 @@ export default class DatePicker extends Component {
   }
 
   _onDateSelection(date) {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.props.readOnly) {
       const dateValue = new Date(this.state.year, this.state.month, date);
       if (has(this.props, 'valueLink')) {
         this.props.valueLink.requestChange(dateValue);
@@ -272,7 +272,7 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.disabledDayStyle);
     }
     // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
-    const tabIndex = (!this.props.disabled && day) ? this.props.tabIndex : false;
+    const tabIndex = (!this.props.disabled && !this.props.readOnly && day) ? this.props.tabIndex : false;
     return (<span tabIndex={ tabIndex }
                   key={ 'day-' + index }
                   ref={ 'day-' + day }
@@ -423,7 +423,6 @@ export default class DatePicker extends Component {
 
  * 5. Deciding upon event & props that component should handle
  *
- * 7. Adding support of disabled / read-only component (we might consider renaming to calendar in case we support a component for date display also)
  * 9. Localization support
  *
  * using onClick will make a delay on touch devices - I tried to use onTouchStart on mobile devices but that results in event being fired twice
@@ -432,4 +431,8 @@ export default class DatePicker extends Component {
  *
  * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
  * in case we prefer to use pseudo classes for focus styles we can safely remove these from state
+ *
+ * We can rename component to calendar also as this compoenent is used for date display also.
+ *
+ * Do we need separate styles for read-only calendar.
  **/
