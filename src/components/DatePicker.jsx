@@ -43,7 +43,14 @@ export default class DatePicker extends Component {
     }),
     month: React.PropTypes.number,
     year: React.PropTypes.number,
+    onFocus: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
+    onKeyDown: React.PropTypes.func,
+    onDayFocus: React.PropTypes.func,
+    onDayBlur: React.PropTypes.func,
+    onDayKeyDown: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
+    onMonthChange: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -89,19 +96,27 @@ export default class DatePicker extends Component {
   componentWillUnmount() {
   }
 
-  _onWrapperFocus() {
+  _onWrapperFocus(event) {
     if (!this.props.disabled) {
       this.setState({
         isWrapperFocused: true
       });
     }
+
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
   }
 
-  _onWrapperBlur() {
+  _onWrapperBlur(event) {
     if (!this.props.disabled) {
       this.setState({
         isWrapperFocused: false
       });
+    }
+
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
     }
   }
 
@@ -137,19 +152,27 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onDayFocus(day) {
+  _onDayFocus(day, event) {
     if (!this.props.disabled) {
       this.setState({
         focusedDay: day
       });
     }
+
+    if (this.props.onDayFocus) {
+      this.props.onDayFocus(event);
+    }
   }
 
-  _onDayBlur() {
+  _onDayBlur(event) {
     if (!this.props.disabled) {
       this.setState({
         focusedDay: 0
       });
+    }
+
+    if (this.props.onDayBlur) {
+      this.props.onDayBlur(event);
     }
   }
 
@@ -190,6 +213,13 @@ export default class DatePicker extends Component {
         }
       }
     }
+
+    if (this.state.focusedDay && this.props.onDayKeyDown) {
+      this.onDayKeyDown(event);
+    } if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+
   }
 
   _onDateSelection(date) {
@@ -279,7 +309,7 @@ export default class DatePicker extends Component {
                   style={ dayStyle }
                   onClick={ this._onDateSelection.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
-                  onBlur={ this._onDayBlur.bind(this, day) }
+                  onBlur={ this._onDayBlur.bind(this) }
                   aria-current={ ariaCurrent }
                   aria-selected={ ariaSelected }>
               { day }
@@ -386,6 +416,9 @@ export default class DatePicker extends Component {
         postStateUpdateFunc.call(this);
       }
     });
+    if (this.props.onMonthChange) {
+      this.props.onMonthChange(newMonth);
+    }
   }
 
   _onNavBarNextMonthClick() {
@@ -412,6 +445,9 @@ export default class DatePicker extends Component {
         postStateUpdateFunc.call(this);
       }
     });
+    if (this.props.onMonthChange) {
+      this.props.onMonthChange(newMonth);
+    }
   }
 
 }
@@ -421,8 +457,6 @@ export default class DatePicker extends Component {
  * 4. Discuss styling api - is active state is needed ?
  * 10. Implement default belle styling and bootstrap styling for date-picker
 
- * 5. Deciding upon event & props that component should handle
- *
  * 9. Localization support
  *
  * using onClick will make a delay on touch devices - I tried to use onTouchStart on mobile devices but that results in event being fired twice
@@ -435,4 +469,7 @@ export default class DatePicker extends Component {
  * We can rename component to calendar also as this compoenent is used for date display also.
  *
  * Do we need separate styles for read-only calendar.
+ *
+ * should we have separate props.onKeyDown for days (currently we have onKeyDown for whole component).
+ *
  **/
