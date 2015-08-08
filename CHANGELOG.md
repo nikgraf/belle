@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
+- Issues when using select with less than 2 children (placeholder, options or separators). [#147](https://github.com/nikgraf/belle/issues/147)
+- Issue in using placeholder together with array of options in select. [#161](https://github.com/nikgraf/belle/issues/161)
 
 ## 1.1.1 - 2015-07-28
 ### Fixed
