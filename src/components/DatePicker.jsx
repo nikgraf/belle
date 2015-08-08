@@ -457,7 +457,8 @@ export default class DatePicker extends Component {
  * 4. Discuss styling api - is active state is needed ?
  * 10. Implement default belle styling and bootstrap styling for date-picker
 
- * 9. Localization support
+ * Localization support is required mainly to format month names and day names, start of week day - we can also use moment.js for localization by default,
+ * Will babel suppprt creating addons for belle where we can include moment.js.
  *
  * using onClick will make a delay on touch devices - I tried to use onTouchStart on mobile devices but that results in event being fired twice
  * (once for onClick and once for touchStart)
@@ -466,10 +467,10 @@ export default class DatePicker extends Component {
  * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
  * in case we prefer to use pseudo classes for focus styles we can safely remove these from state
  *
- * We can rename component to calendar also as this compoenent is used for date display also.
+ * We can rename component to calendar also as this component as its used for date display also.
  *
  * Do we need separate styles for read-only calendar.
  *
- * should we have separate props.onKeyDown for days (currently we have onKeyDown for whole component).
+ *
  *
  **/
