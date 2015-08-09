@@ -57,3 +57,38 @@ const datePickerStyle = {
 };
 
 export default datePickerStyle;
+
+/**
+ * API for styling:
+ *
+ * Calendar:
+ * - style
+ * - focusStyle
+ * - hoverStyle
+ * - disabledStyle
+ * - disabledHoverStyle
+ *
+ * Day:
+ * - dayStyle
+ * - dayFocusStyle
+ * - dayHoverStyle
+ * - daySelectedStyle
+ * - dayDisabledStyle
+ * - dayDisabledHoverStyle
+ *
+ * NavBar:
+ * - navBarStyle
+ * - navBarHoverStyle
+ * - navBarDisabledStyle
+ * - navBarDisabledHoverStyle
+ * - leftNavStyle
+ * - leftNavFocusStyle
+ * - leftNavHoverStyle
+ * - leftNavDisabledStyle
+ * - leftNavDisabledHoverStyle
+ * - rightNavStyle
+ * - rightNavFocusStyle
+ * - rightNavHoverStyle
+ * - rightNavDisabledStyle
+ * - rightNavDisabledHoverStyle
+ */
