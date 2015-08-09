@@ -49,6 +49,8 @@ export default class DatePicker extends Component {
     onDayFocus: React.PropTypes.func,
     onDayBlur: React.PropTypes.func,
     onDayKeyDown: React.PropTypes.func,
+    onDayMouseDown: React.PropTypes.func,
+    onDayTouchStart: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
@@ -205,7 +207,7 @@ export default class DatePicker extends Component {
       } else if (event.key === 'Enter') {
         event.preventDefault();
         if (this.state.focusedDay) {
-          this._onDateSelection(this.state.focusedDay);
+          this._selectDate(this.state.focusedDay);
         } else if (this.state.isNavBarPrevMonthFocused) {
           this._decreaseMonth();
         } else if (this.state.isNavBarNextMonthFocused) {
@@ -219,10 +221,30 @@ export default class DatePicker extends Component {
     } if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
-
   }
 
-  _onDateSelection(date) {
+  // mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
+  _onDayMouseDown(date, event) {
+    if (event.button === 0) {
+      this._selectDate(date);
+    }
+
+    if (this.props.onDayMouseDown) {
+      this.props.onDayMouseDown(event);
+    }
+  }
+
+  _onDayTouchStart(date) {
+    if (event.touches.length === 1) {
+      this._selectDate(date);
+    }
+
+    if (this.props.onDayTouchStart) {
+      this.props.onDayTouchStart(event);
+    }
+  }
+
+  _selectDate(date) {
     if (!this.props.disabled && !this.props.readOnly) {
       const dateValue = new Date(this.state.year, this.state.month, date);
       if (has(this.props, 'valueLink')) {
@@ -249,13 +271,15 @@ export default class DatePicker extends Component {
     return (
       <div>
           <span tabIndex={ this.props.tabIndex }
-                onClick={ this._onNavBarPrevMonthClick.bind(this) }
+                onMouseDown={ this._onPrevNavMouseDown.bind(this) }
+                onTouchStart={ this._onPrevNavTouchStart.bind(this) }
                 style= { navButtonStyle }
                 onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
                 onBlur={ this._onNavBarPrevMonthBlur.bind(this)}>&lt;</span>
         { MONTHS[this.state.month] + '-' + this.state.year }
           <span tabIndex={ this.props.tabIndex }
-                onClick={ this._onNavBarNextMonthClick.bind(this) }
+                onMouseDown={ this._onNextNavMouseDown.bind(this) }
+                onTouchStart={ this._onNextNavTouchStart.bind(this) }
                 style= { navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
                 onBlur={ this._onNavBarNextMonthBlur.bind(this)}>&gt;</span>
@@ -307,7 +331,8 @@ export default class DatePicker extends Component {
                   key={ 'day-' + index }
                   ref={ 'day-' + day }
                   style={ dayStyle }
-                  onClick={ this._onDateSelection.bind(this, day) }
+                  onMouseDown={ this._onDayMouseDown.bind(this, day) }
+                  onTouchState={ this._onDayTouchStart.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
                   onBlur={ this._onDayBlur.bind(this) }
                   aria-current={ ariaCurrent }
@@ -392,9 +417,27 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onNavBarPrevMonthClick() {
+  _onPrevNavMouseDown(event) {
+    if (event.button === 0 && !this.props.disabled) {
+      this._decreaseMonth();
+    }
+  }
+
+  _onPrevNavTouchStart() {
     if (!this.props.disabled) {
       this._decreaseMonth();
+    }
+  }
+
+  _onNextNavMouseDown(event) {
+    if (event.button === 0 && !this.props.disabled) {
+      this._increaseMonth();
+    }
+  }
+
+  _onNextNavTouchStart() {
+    if (!this.props.disabled) {
+      this._increaseMonth();
     }
   }
 
@@ -458,7 +501,8 @@ export default class DatePicker extends Component {
  * 10. Implement default belle styling and bootstrap styling for date-picker
 
  * Localization support is required mainly to format month names and day names, start of week day - we can also use moment.js for localization by default,
- * Will babel suppprt creating addons for belle where we can include moment.js.
+ * Will babel suppport creating add-ons for belle where we can include moment.js.
+ * I would rather prefer to create our own small lib for localization user JS date api underneath.
  *
  * using onClick will make a delay on touch devices - I tried to use onTouchStart on mobile devices but that results in event being fired twice
  * (once for onClick and once for touchStart)
@@ -470,7 +514,4 @@ export default class DatePicker extends Component {
  * We can rename component to calendar also as this component as its used for date display also.
  *
  * Do we need separate styles for read-only calendar.
- *
- *
- *
  **/
