@@ -10,6 +10,12 @@ const datePickerStyle = {
   hoverWrapperStyle: {
   },
 
+  activeWrapperStyle: {
+  },
+
+  focusWrapperStyle: {
+  },
+
   disabledHoverWrapperStyle: {
   },
 
@@ -42,6 +48,12 @@ const datePickerStyle = {
   hoverLeftNavStyle: {
   },
 
+  activeLeftNavStyle: {
+  },
+
+  focusLeftNavStyle: {
+  },
+
   disabledHoverLeftNavStyle: {
   },
 
@@ -59,6 +71,12 @@ const datePickerStyle = {
   },
 
   hoverRightNavStyle: {
+  },
+
+  activeRightNavStyle: {
+  },
+
+  focusRightNavStyle: {
   },
 
   disabledHoverRightNavStyle: {
@@ -131,17 +149,15 @@ const datePickerStyle = {
   hoverDayStyle: {
   },
 
-  hoverDayDisabledStyle: {
+  activeDayStyle: {
+  },
+
+  focusDayStyle: {
+  },
+
+  disabledHoverDayStyle: {
   }
 
 };
 
 export default datePickerStyle;
-
-/**
- * tasks remaining:
- * -implementing focus styles
- * -implementing active styles
- *
- * We might need separate styles for wrapper of day-labels and days.
- */
