@@ -1,27 +1,33 @@
 const datePickerStyle = {
 
-  wrapperHoverStyle: {
+  wrapperStyle: {
   },
 
-  wrapperDisabledHoverStyle: {
+  disabledWrapperStyle: {
   },
 
-  navBarHoverStyle: {
+  hoverWrapperStyle: {
   },
 
-  navBarDisabledHoverStyle: {
+  disabledHoverWrapperStyle: {
   },
 
-  leftNavHoverStyle: {
+  hoverNavBarStyle: {
   },
 
-  leftNavDisabledHoverStyle: {
+  disabledHoverNavBarStyle: {
   },
 
-  rightNavHoverStyle: {
+  hoverLeftNavStyle: {
   },
 
-  rightNavDisabledHoverStyle: {
+  hoverLeftNavDisabledStyle: {
+  },
+
+  hoverRightNavStyle: {
+  },
+
+  disabledHoverRightNavStyle: {
   },
 
   navButtonStyle: {
@@ -36,10 +42,10 @@ const datePickerStyle = {
     display: 'none'
   },
 
-  monthLblHoverStyle: {
+  hoverMonthLblStyle: {
   },
 
-  monthLblDisabledHoverStyle: {
+  disabledHoverMonthLblStyle: {
   },
 
   dayLblStyle: {
@@ -58,10 +64,10 @@ const datePickerStyle = {
     backgroundColor: 'lightGray'
   },
 
-  dayLblHoverStyle: {
+  hoverDayLblStyle: {
   },
 
-  dayLblDisabledHoverStyle: {
+  hoverDayLblDisabledStyle: {
   },
 
   dayStyle: {
@@ -91,10 +97,10 @@ const datePickerStyle = {
     color: 'white'
   },
 
-  dayHoverStyle: {
+  hoverDayStyle: {
   },
 
-  dayDisabledHoverStyle: {
+  hoverDayDisabledStyle: {
   }
 
 };
@@ -141,4 +147,6 @@ export default datePickerStyle;
  * tasks:
  * -implementing focus styles for calendar
  * -implementing focus styles for days
+ *
+ * We might need separate styles for wrapper of day-labels and days.
  */

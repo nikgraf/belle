@@ -58,20 +58,20 @@ export default class DatePicker extends Component {
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
     // styling api related props - hover, disabledHover styles
-    wrapperHoverStyle: React.PropTypes.object,
-    wrapperDisabledHoverStyle: React.PropTypes.object,
-    navBarHoverStyle: React.PropTypes.object,
-    navBarDisabledHoverStyle: React.PropTypes.object,
-    leftNavHoverStyle: React.PropTypes.object,
-    leftNavDisabledHoverStyle: React.PropTypes.object,
-    rightNavHoverStyle: React.PropTypes.object,
-    rightNavDisabledHoverStyle: React.PropTypes.object,
-    monthLblHoverStyle: React.PropTypes.object,
-    monthLblDisabledHoverStyle: React.PropTypes.object,
-    dayLblHoverStyle: React.PropTypes.object,
-    dayLblDisabledHoverStyle: React.PropTypes.object,
-    dayHoverStyle: React.PropTypes.object,
-    dayDisabledHoverStyle: React.PropTypes.object,
+    hoverWrapperStyle: React.PropTypes.object,
+    disabledHoverWrapperStyle: React.PropTypes.object,
+    hoverNavBarStyle: React.PropTypes.object,
+    disabledHoverNavBarStyle: React.PropTypes.object,
+    hoverLeftNavStyle: React.PropTypes.object,
+    disabledHoverLeftNavStyle: React.PropTypes.object,
+    hoverRightNavStyle: React.PropTypes.object,
+    disabledHoverRightNavStyle: React.PropTypes.object,
+    hoverMonthLblStyle: React.PropTypes.object,
+    disabledHoverMonthLblStyle: React.PropTypes.object,
+    hoverDayLblStyle: React.PropTypes.object,
+    disabledHoverDayLblStyle: React.PropTypes.object,
+    hoverDayStyle: React.PropTypes.object,
+    disabledHoverDayStyle: React.PropTypes.object,
     // ClassNames
     wrapperClassName: React.PropTypes.object,
     navBarClassName: React.PropTypes.object,
@@ -97,14 +97,15 @@ export default class DatePicker extends Component {
   static updatePseudoClassStyle(pseudoStyleIds, properties) {
     const styles = [];
     ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day'].forEach((elm) => {
+      const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       styles.push({
         id: pseudoStyleIds[elm + 'StyleId'],
-        style: extend({}, style[elm + 'HoverStyle'], properties[elm + 'HoverStyle']),
+        style: extend({}, style['hover' + elmFirstCaps + 'Style'], properties['hover' + elmFirstCaps + 'Style']),
         pseudoClass: 'hover'
       });
       styles.push({
         id: pseudoStyleIds.wrapperStyleId,
-        style: extend({}, style[elm + 'DisabledHoverStyle'], properties[elm + 'DisabledHoverStyle']),
+        style: extend({}, style['disabledHover' + elmFirstCaps + 'Style'], properties['disabledHover' + elmFirstCaps + 'Style']),
         pseudoClass: 'hover',
         disabled: true
       });
@@ -145,7 +146,7 @@ export default class DatePicker extends Component {
       year: properties.year
     });
 
-    removeAllStyles([this.pseudoStyleIds.keys()]);
+    removeAllStyles(Object.keys(this.pseudoStyleIds));
     DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props);
   }
 
@@ -153,7 +154,7 @@ export default class DatePicker extends Component {
    * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
-    removeAllStyles([this.pseudoStyleIds.keys()]);
+    removeAllStyles(Object.keys(this.pseudoStyleIds));
   }
 
   _onWrapperFocus(event) {
