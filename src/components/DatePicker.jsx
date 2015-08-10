@@ -57,7 +57,7 @@ export default class DatePicker extends Component {
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
-    // styling api related props
+    // styling api related props - hover, disabledHover styles
     wrapperHoverStyle: React.PropTypes.object,
     wrapperDisabledHoverStyle: React.PropTypes.object,
     navBarHoverStyle: React.PropTypes.object,
@@ -80,7 +80,6 @@ export default class DatePicker extends Component {
     monthLblClassName: React.PropTypes.object,
     dayLblClassName: React.PropTypes.object,
     dayClassName: React.PropTypes.object
-
   };
 
   static defaultProps = {
@@ -345,7 +344,7 @@ export default class DatePicker extends Component {
                 style= { navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
                 onBlur={ this._onNavBarNextMonthBlur.bind(this)}
-                className={ unionClassNames(this.props.rightNavStyleId, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
+                className={ unionClassNames(this.props.rightNavClassName, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
       </div>
     );
   }
@@ -407,24 +406,6 @@ export default class DatePicker extends Component {
   }
 
   render() {
-/*
-    wrapperClassName: React.PropTypes.object,
-      navBarClassName: React.PropTypes.object,
-      leftNavClassName: React.PropTypes.object,
-      rightNavClassName: React.PropTypes.object,
-      monthLblClassName: React.PropTypes.object,
-      dayLblClassName: React.PropTypes.object,
-      dayClassName: React.PropTypes.object
-
- this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
- this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
- this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
- this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
- this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
- this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
- this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
-    */
-
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
@@ -581,19 +562,14 @@ export default class DatePicker extends Component {
 
 /**
  * TODO-S:
- * - implement styling-api, is active state is needed ?
  * - Implement default belle styling and bootstrap styling for date-picker
  * - images for left and right nav buttonStyle
  *
  * Localization support is required mainly to format month names and day names, start of week day - we can also use moment.js for localization by default,
- * Will babel suppport creating add-ons for belle where we can include moment.js.
- * I would rather prefer to create our own small lib for localization user JS date api underneath.
- *
- * I have kept isWrapperFocused and focussedDay in state as we might need to re-render to show focus styles,
- * in case we prefer to use pseudo classes for focus styles we can safely remove these from state
+ * Will babel support creating add-ons for belle where we can include moment.js.
+ * I would rather prefer to create our own small lib for localization use JS date api underneath.
  *
  * We can rename component to calendar also as this component as its used for date display also.
  *
  * Do we need separate styles for read-only calendar.
- *
  **/

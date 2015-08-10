@@ -42,12 +42,6 @@ const datePickerStyle = {
   monthLblDisabledHoverStyle: {
   },
 
-  dayLblHoverStyle: {
-  },
-
-  dayLblDisabledHoverStyle: {
-  },
-
   dayLblStyle: {
     display: 'inline-block',
     width: 20,
@@ -62,6 +56,12 @@ const datePickerStyle = {
     height: 20,
     color: 'gray',
     backgroundColor: 'lightGray'
+  },
+
+  dayLblHoverStyle: {
+  },
+
+  dayLblDisabledHoverStyle: {
   },
 
   dayStyle: {
@@ -113,6 +113,7 @@ export default datePickerStyle;
  *
  * Day:
  * - dayStyle
+ * - dayActiveStyle
  * - dayFocusStyle
  * - dayHoverStyle
  * - daySelectedStyle
@@ -125,18 +126,19 @@ export default datePickerStyle;
  * - navBarDisabledStyle
  * - navBarDisabledHoverStyle
  * - leftNavStyle
+ * - leftNavActiveStyle
  * - leftNavFocusStyle
  * - leftNavHoverStyle
  * - leftNavDisabledStyle
  * - leftNavDisabledHoverStyle
  * - rightNavStyle
- * - rightNavFocusStyle
+ * - leftNavActiveStyle
+ * - leftNavFocusStyle
  * - rightNavHoverStyle
  * - rightNavDisabledStyle
  * - rightNavDisabledHoverStyle
  *
  * tasks:
- * -implementing hover styles using pseudo classes
  * -implementing focus styles for calendar
  * -implementing focus styles for days
  */
