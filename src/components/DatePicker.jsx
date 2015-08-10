@@ -90,7 +90,13 @@ export default class DatePicker extends Component {
     rightNavStyle: React.PropTypes.object,
     disabledRightNavStyle: React.PropTypes.object,
     monthLblStyle: React.PropTypes.object,
-    disabledMonthLblStyle: React.PropTypes.object
+    disabledMonthLblStyle: React.PropTypes.object,
+    dayLblStyle: React.PropTypes.object,
+    disabledDayLblStyle: React.PropTypes.object,
+    dayStyle: React.PropTypes.object,
+    disabledDayStyle: React.PropTypes.object,
+    todayStyle: React.PropTypes.object,
+    selectedDayStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -371,10 +377,11 @@ export default class DatePicker extends Component {
   }
 
   _getDaysHeader() {
-    let dayLblStyle = extend({}, style.dayLblStyle);
+    let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
     if (this.props.disabled) {
-      dayLblStyle = extend(dayLblStyle, style.dayLblDisabledStyle);
+      dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
     }
+
     return (
       <div>
         {
@@ -394,33 +401,35 @@ export default class DatePicker extends Component {
 
   // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
   _getDayFragment(day, index) {
-    let dayStyle = extend({}, style.dayStyle);
     const dateValue = this.state.dateValue;
     let ariaCurrent = '';
     let ariaSelected = false;
+
+    let dayStyle = extend({}, style.dayStyle, this.props.dayStyle);
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-      dayStyle = extend(dayStyle, style.todayStyle);
+      dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
     }
     if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-      dayStyle = extend(dayStyle, style.selectedDayStyle);
+      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
       ariaSelected = true;
     }
     if (this.props.disabled) {
-      dayStyle = extend(dayStyle, style.disabledDayStyle);
+      dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
     }
+
     // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
     const tabIndex = (!this.props.disabled && !this.props.readOnly && day) ? this.props.tabIndex : false;
     return (<span tabIndex={ tabIndex }
                   key={ 'day-' + index }
                   ref={ 'day-' + day }
-                  style={ dayStyle }
                   onMouseDown={ this._onDayMouseDown.bind(this, day) }
                   onTouchState={ this._onDayTouchStart.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
                   onBlur={ this._onDayBlur.bind(this) }
                   aria-current={ ariaCurrent }
                   aria-selected={ ariaSelected }
+                  style={ dayStyle }
                   className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
               { day }
             </span>);
