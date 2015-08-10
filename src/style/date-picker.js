@@ -55,10 +55,10 @@ const datePickerStyle = {
   },
 
   disabledRightNavStyle: {
+    display: 'none'
   },
 
   hoverRightNavStyle: {
-    display: 'none'
   },
 
   disabledHoverRightNavStyle: {
@@ -77,6 +77,7 @@ const datePickerStyle = {
   disabledHoverMonthLblStyle: {
   },
 
+  // styling for week's day label
   dayLblStyle: {
     display: 'inline-block',
     width: 20,
@@ -84,7 +85,7 @@ const datePickerStyle = {
     height: 20
   },
 
-  dayLblDisabledStyle: {
+  disabledDayLblStyle: {
     display: 'inline-block',
     width: 20,
     border: '1px solid black',
@@ -96,9 +97,10 @@ const datePickerStyle = {
   hoverDayLblStyle: {
   },
 
-  hoverDayLblDisabledStyle: {
+  disabledHoverDayLblStyle: {
   },
 
+  // styling for individual day
   dayStyle: {
     display: 'inline-block',
     width: 20,
@@ -137,45 +139,9 @@ const datePickerStyle = {
 export default datePickerStyle;
 
 /**
- * API for styling:
- *
- * Wrapper:
- * - style
- * - focusStyle
- * - hoverStyle
- * - disabledStyle
- * - disabledHoverStyle
- *
- * Day:
- * - dayStyle
- * - dayActiveStyle
- * - dayFocusStyle
- * - dayHoverStyle
- * - daySelectedStyle
- * - dayDisabledStyle
- * - dayDisabledHoverStyle
- *
- * NavBar:
- * - navBarStyle
- * - navBarHoverStyle
- * - navBarDisabledStyle
- * - navBarDisabledHoverStyle
- * - leftNavStyle
- * - leftNavActiveStyle
- * - leftNavFocusStyle
- * - leftNavHoverStyle
- * - leftNavDisabledStyle
- * - leftNavDisabledHoverStyle
- * - rightNavStyle
- * - leftNavActiveStyle
- * - leftNavFocusStyle
- * - rightNavHoverStyle
- * - rightNavDisabledStyle
- * - rightNavDisabledHoverStyle
- *
- * tasks:
- * -implementing focus styles for calendar
- * -implementing focus styles for days
+ * tasks remaining:
+ * -implementing focus styles
+ * -implementing active styles
  *
  * We might need separate styles for wrapper of day-labels and days.
  */
