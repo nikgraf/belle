@@ -1,5 +1,69 @@
 const datePickerStyle = {
 
+  wrapperHoverStyle: {
+  },
+
+  wrapperDisabledHoverStyle: {
+  },
+
+  navBarHoverStyle: {
+  },
+
+  navBarDisabledHoverStyle: {
+  },
+
+  leftNavHoverStyle: {
+  },
+
+  leftNavDisabledHoverStyle: {
+  },
+
+  rightNavHoverStyle: {
+  },
+
+  rightNavDisabledHoverStyle: {
+  },
+
+  navButtonStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20,
+    cursor: 'pointer'
+  },
+
+  disabledNavButtonStyle: {
+    display: 'none'
+  },
+
+  monthLblHoverStyle: {
+  },
+
+  monthLblDisabledHoverStyle: {
+  },
+
+  dayLblHoverStyle: {
+  },
+
+  dayLblDisabledHoverStyle: {
+  },
+
+  dayLblStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20
+  },
+
+  dayLblDisabledStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20,
+    color: 'gray',
+    backgroundColor: 'lightGray'
+  },
+
   dayStyle: {
     display: 'inline-block',
     width: 20,
@@ -27,33 +91,12 @@ const datePickerStyle = {
     color: 'white'
   },
 
-  navButtonStyle: {
-    display: 'inline-block',
-    width: 20,
-    border: '1px solid black',
-    height: 20,
-    cursor: 'pointer'
+  dayHoverStyle: {
   },
 
-  disabledNavButtonStyle: {
-    display: 'none'
-  },
-
-  dayHeaderStyle: {
-    display: 'inline-block',
-    width: 20,
-    border: '1px solid black',
-    height: 20
-  },
-
-  disabledDayHeaderStyle: {
-    display: 'inline-block',
-    width: 20,
-    border: '1px solid black',
-    height: 20,
-    color: 'gray',
-    backgroundColor: 'lightGray'
+  dayDisabledHoverStyle: {
   }
+
 };
 
 export default datePickerStyle;
@@ -61,7 +104,7 @@ export default datePickerStyle;
 /**
  * API for styling:
  *
- * Calendar:
+ * Wrapper:
  * - style
  * - focusStyle
  * - hoverStyle
@@ -91,4 +134,9 @@ export default datePickerStyle;
  * - rightNavHoverStyle
  * - rightNavDisabledStyle
  * - rightNavDisabledHoverStyle
+ *
+ * tasks:
+ * -implementing hover styles using pseudo classes
+ * -implementing focus styles for calendar
+ * -implementing focus styles for days
  */
