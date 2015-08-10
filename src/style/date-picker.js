@@ -1,5 +1,6 @@
 const datePickerStyle = {
 
+  // wrapper of entire component
   wrapperStyle: {
   },
 
@@ -12,25 +13,21 @@ const datePickerStyle = {
   disabledHoverWrapperStyle: {
   },
 
+  // nav-bar at top for month navigation
+  navBarStyle: {
+  },
+
+  disabledNavBarStyle: {
+  },
+
   hoverNavBarStyle: {
   },
 
   disabledHoverNavBarStyle: {
   },
 
-  hoverLeftNavStyle: {
-  },
-
-  hoverLeftNavDisabledStyle: {
-  },
-
-  hoverRightNavStyle: {
-  },
-
-  disabledHoverRightNavStyle: {
-  },
-
-  navButtonStyle: {
+  // left button in nav-bar to go to previous month
+  leftNavStyle: {
     display: 'inline-block',
     width: 20,
     border: '1px solid black',
@@ -38,8 +35,40 @@ const datePickerStyle = {
     cursor: 'pointer'
   },
 
-  disabledNavButtonStyle: {
+  disabledLeftNavStyle: {
     display: 'none'
+  },
+
+  hoverLeftNavStyle: {
+  },
+
+  disabledHoverLeftNavStyle: {
+  },
+
+  // right button in nav-bar to go to previous month
+  rightNavStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20,
+    cursor: 'pointer'
+  },
+
+  disabledRightNavStyle: {
+  },
+
+  hoverRightNavStyle: {
+    display: 'none'
+  },
+
+  disabledHoverRightNavStyle: {
+  },
+
+  // styling for month label on top of calendar
+  monthLblStyle: {
+  },
+
+  disabledMonthLblStyle: {
   },
 
   hoverMonthLblStyle: {
