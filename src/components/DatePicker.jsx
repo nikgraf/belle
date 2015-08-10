@@ -4,6 +4,7 @@ import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
 import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMaxDateForMonth} from '../utils/date-helpers';
 import style from '../style/date-picker';
+import config from '../config/datePicker';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -30,6 +31,8 @@ export default class DatePicker extends Component {
       month: properties.month - 1,
       year: properties.year
     };
+
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
   static displayName = 'Belle DatePicker';
@@ -96,7 +99,12 @@ export default class DatePicker extends Component {
     dayStyle: React.PropTypes.object,
     disabledDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
-    selectedDayStyle: React.PropTypes.object
+    selectedDayStyle: React.PropTypes.object,
+    // active styles and focus styles
+    activeLeftNavStyle: React.PropTypes.object,
+    focusLeftNavStyle: React.PropTypes.object,
+    activeRightNavStyle: React.PropTypes.object,
+    focusRightNavStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -111,7 +119,7 @@ export default class DatePicker extends Component {
   /**
    * Injects pseudo classes for styles into the DOM.
    */
-  static updatePseudoClassStyle(pseudoStyleIds, properties) {
+  static updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
     const styles = [];
     ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day'].forEach((elm) => {
       const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
@@ -121,10 +129,21 @@ export default class DatePicker extends Component {
         pseudoClass: 'hover'
       });
       styles.push({
-        id: pseudoStyleIds.wrapperStyleId,
+        id: pseudoStyleIds[elm + 'StyleId'],
         style: extend({}, style['disabledHover' + elmFirstCaps + 'Style'], properties['disabledHover' + elmFirstCaps + 'Style']),
         pseudoClass: 'hover',
         disabled: true
+      });
+      let focusStyle;
+      if (preventFocusStyleForTouchAndClick) {
+        focusStyle = { outline: 0 };
+      } else {
+        focusStyle = extend({}, style['focus' + elmFirstCaps + 'Style'], properties['focus' + elmFirstCaps + 'Style']);
+      }
+      styles.push({
+        id: pseudoStyleIds[elm + 'StyleId'],
+        style: focusStyle,
+        pseudoClass: 'focus'
       });
     });
     injectStyles(styles);
@@ -144,7 +163,7 @@ export default class DatePicker extends Component {
     this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
     this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
     this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
-    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props);
+    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
   componentWillReceiveProps(properties) {
@@ -163,8 +182,10 @@ export default class DatePicker extends Component {
       year: properties.year
     });
 
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+
     removeAllStyles(Object.keys(this.pseudoStyleIds));
-    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props);
+    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -195,38 +216,6 @@ export default class DatePicker extends Component {
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
-    }
-  }
-
-  _onNavBarPrevMonthFocus() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNavBarPrevMonthFocused: true
-      });
-    }
-  }
-
-  _onNavBarPrevMonthBlur() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNavBarPrevMonthFocused: false
-      });
-    }
-  }
-
-  _onNavBarNextMonthFocus() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNavBarNextMonthFocused: true
-      });
-    }
-  }
-
-  _onNavBarNextMonthBlur() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNavBarNextMonthFocused: false
-      });
     }
   }
 
@@ -350,15 +339,27 @@ export default class DatePicker extends Component {
       rightNavStyle = extend(rightNavStyle, style.disabledRightNavStyle, this.props.disabledRightNavStyle);
       monthLblStyle = extend(monthLblStyle, style.disabledMonthLblStyle, this.props.disabledMonthLblStyle);
     }
+    if (this.state.isLeftNavActive) {
+      leftNavStyle = extend(leftNavStyle, style.activeLeftNavStyle, this.props.activeLeftNavStyle);
+    } else if (this.preventFocusStyleForTouchAndClick && this.state.isLeftNavFocused) {
+      leftNavStyle = extend(leftNavStyle, style.focusLeftNavStyle, this.props.focusLeftNavStyle);
+    }
+    if (this.state.isRightNavActive) {
+      rightNavStyle = extend(rightNavStyle, style.activeRightNavStyle, this.props.activeRightNavStyle);
+    } else if (this.preventFocusStyleForTouchAndClick && this.state.isRightNavFocused) {
+      rightNavStyle = extend(rightNavStyle, style.focusRightNavStyle, this.props.focusRightNavStyle);
+    }
 
     return (
       <div style={ navBarStyle }
            className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
           <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onPrevNavMouseDown.bind(this) }
-                onTouchStart={ this._onPrevNavTouchStart.bind(this) }
-                onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
-                onBlur={ this._onNavBarPrevMonthBlur.bind(this)}
+                onMouseDown={ this._onLeftNavMouseDown.bind(this) }
+                onMouseUp={ this._onLeftNavMouseUp.bind(this) }
+                onTouchStart={ this._onLeftNavTouchStart.bind(this) }
+                onTouchEnd={ this._onLeftNavTouchEnd.bind(this) }
+                onFocus={ this._onLeftNavFocus.bind(this)}
+                onBlur={ this._onLeftNavBlur.bind(this)}
                 style= { leftNavStyle }
                 className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }>&lt;</span>
           <span style={ monthLblStyle }
@@ -366,10 +367,12 @@ export default class DatePicker extends Component {
             { MONTHS[this.state.month] + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onNextNavMouseDown.bind(this) }
-                onTouchStart={ this._onNextNavTouchStart.bind(this) }
-                onFocus={ this._onNavBarNextMonthFocus.bind(this)}
-                onBlur={ this._onNavBarNextMonthBlur.bind(this)}
+                onMouseDown={ this._onRightNavMouseDown.bind(this) }
+                onMouseUp={ this._onRightNavMouseUp.bind(this) }
+                onTouchStart={ this._onRightNavTouchStart.bind(this) }
+                onTouchEnd={ this._onRightNavTouchEnd.bind(this) }
+                onFocus={ this._onRightNavFocus.bind(this)}
+                onBlur={ this._onRightNavBlur.bind(this)}
                 style= { rightNavStyle }
                 className={ unionClassNames(this.props.rightNavClassName, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
       </div>
@@ -518,27 +521,104 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onPrevNavMouseDown(event) {
+  _onLeftNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
       this._decreaseMonth();
+      this.setState({
+        isLeftNavActive: true
+      });
     }
   }
 
-  _onPrevNavTouchStart() {
+  _onLeftNavMouseUp(event) {
+    if (event.button === 0 && !this.props.disabled) {
+      this.setState({
+        isLeftNavActive: false
+      });
+    }
+  }
+
+  _onLeftNavTouchStart() {
     if (!this.props.disabled) {
       this._decreaseMonth();
+      this.setState({
+        isLeftNavActive: true
+      });
     }
   }
 
-  _onNextNavMouseDown(event) {
+  _onLeftNavTouchEnd() {
+    if (!this.props.disabled) {
+      this._decreaseMonth();
+      this.setState({
+        isLeftNavActive: false
+      });
+    }
+  }
+
+  _onLeftNavFocus() {
+    if (!this.props.disabled) {
+      this.setState({
+        isLeftNavFocused: true
+      });
+    }
+  }
+
+  _onLeftNavBlur() {
+    if (!this.props.disabled) {
+      this.setState({
+        isLeftNavFocused: false
+      });
+    }
+  }
+
+  _onRightNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
       this._increaseMonth();
+      this.setState({
+        isRightNavActive: true
+      });
     }
   }
 
-  _onNextNavTouchStart() {
+  _onRightNavMouseUp(event) {
+    if (event.button === 0 && !this.props.disabled) {
+      this.setState({
+        isRightNavActive: false
+      });
+    }
+  }
+
+  _onRightNavTouchStart() {
     if (!this.props.disabled) {
       this._increaseMonth();
+      this.setState({
+        isRightNavActive: true
+      });
+    }
+  }
+
+  _onRightNavTouchEnd() {
+    if (!this.props.disabled) {
+      this.setState({
+        isRightNavActive: false
+      });
+    }
+  }
+
+  _onRightNavFocus() {
+    if (!this.props.disabled) {
+      this.setState({
+        isRightNavFocused: true
+      });
+    }
+  }
+
+  _onRightNavBlur() {
+    if (!this.props.disabled) {
+      this.setState({
+        isRightNavFocused: false
+      });
     }
   }
 
@@ -565,7 +645,7 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onNavBarNextMonthClick() {
+  _onRightNavMonthClick() {
     if (!this.props.disabled) {
       this._increaseMonth();
     }
@@ -608,4 +688,8 @@ export default class DatePicker extends Component {
  * We can rename component to calendar also as this component as its used for date display also.
  *
  * Do we need separate styles for read-only calendar.
+ *
+ *  * We might need separate styles for wrapper of day-labels and days.
+
+ add method to unset date
  **/
