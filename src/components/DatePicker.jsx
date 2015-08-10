@@ -79,7 +79,18 @@ export default class DatePicker extends Component {
     rightNavClassName: React.PropTypes.object,
     monthLblClassName: React.PropTypes.object,
     dayLblClassName: React.PropTypes.object,
-    dayClassName: React.PropTypes.object
+    dayClassName: React.PropTypes.object,
+    // other styles in style api
+    wrapperStyle: React.PropTypes.object,
+    disabledWrapperStyle: React.PropTypes.object,
+    navBarStyle: React.PropTypes.object,
+    disabledNavBarStyle: React.PropTypes.object,
+    leftNavStyle: React.PropTypes.object,
+    disabledLeftNavStyle: React.PropTypes.object,
+    rightNavStyle: React.PropTypes.object,
+    disabledRightNavStyle: React.PropTypes.object,
+    monthLblStyle: React.PropTypes.object,
+    disabledMonthLblStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -323,28 +334,37 @@ export default class DatePicker extends Component {
   }
 
   _getNavBar() {
-    let navButtonStyle = extend({}, style.navButtonStyle);
+    let navBarStyle = extend({}, style.navBarStyle, this.props.navBarStyle);
+    let leftNavStyle = extend({}, style.leftNavStyle, this.props.leftNavStyle);
+    let rightNavStyle = extend({}, style.rightNavStyle, this.props.rightNavStyle);
+    let monthLblStyle = extend({}, style.monthLblStyle, this.props.monthLblStyle);
     if (this.props.disabled) {
-      navButtonStyle = extend(navButtonStyle, style.disabledNavButtonStyle);
+      navBarStyle = extend(navBarStyle, style.disabledNavBarStyle, this.props.disabledNavBarStyle);
+      leftNavStyle = extend(leftNavStyle, style.disabledLeftNavStyle, this.props.disabledLeftNavStyle);
+      rightNavStyle = extend(rightNavStyle, style.disabledRightNavStyle, this.props.disabledRightNavStyle);
+      monthLblStyle = extend(monthLblStyle, style.disabledMonthLblStyle, this.props.disabledMonthLblStyle);
     }
+
     return (
-      <div className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
+      <div style={ navBarStyle }
+           className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onPrevNavMouseDown.bind(this) }
                 onTouchStart={ this._onPrevNavTouchStart.bind(this) }
-                style= { navButtonStyle }
                 onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
                 onBlur={ this._onNavBarPrevMonthBlur.bind(this)}
+                style= { leftNavStyle }
                 className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }>&lt;</span>
-          <span className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
+          <span style={ monthLblStyle }
+                className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
             { MONTHS[this.state.month] + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onNextNavMouseDown.bind(this) }
                 onTouchStart={ this._onNextNavTouchStart.bind(this) }
-                style= { navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
                 onBlur={ this._onNavBarNextMonthBlur.bind(this)}
+                style= { rightNavStyle }
                 className={ unionClassNames(this.props.rightNavClassName, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
       </div>
     );
@@ -407,6 +427,11 @@ export default class DatePicker extends Component {
   }
 
   render() {
+    let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    if (this.props.disabled) {
+      wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
+    }
+
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
@@ -418,6 +443,7 @@ export default class DatePicker extends Component {
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
+           style={ wrapperStyle }
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
         { this._getNavBar() }
         { this._getDaysHeader() }
