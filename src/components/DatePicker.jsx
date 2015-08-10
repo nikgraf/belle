@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-// import {injectStyles, removeAllStyles, removeStyle} from '../utils/inject-style';
-// import unionClassNames from '../utils/union-class-names';
+import {injectStyles, removeAllStyles} from '../utils/inject-style';
+import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
 import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMaxDateForMonth} from '../utils/date-helpers';
 import style from '../style/date-picker';
@@ -56,7 +56,31 @@ export default class DatePicker extends Component {
     tabIndex: React.PropTypes.number,
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
-    readOnly: React.PropTypes.bool
+    readOnly: React.PropTypes.bool,
+    // styling api related props
+    wrapperHoverStyle: React.PropTypes.object,
+    wrapperDisabledHoverStyle: React.PropTypes.object,
+    navBarHoverStyle: React.PropTypes.object,
+    navBarDisabledHoverStyle: React.PropTypes.object,
+    leftNavHoverStyle: React.PropTypes.object,
+    leftNavDisabledHoverStyle: React.PropTypes.object,
+    rightNavHoverStyle: React.PropTypes.object,
+    rightNavDisabledHoverStyle: React.PropTypes.object,
+    monthLblHoverStyle: React.PropTypes.object,
+    monthLblDisabledHoverStyle: React.PropTypes.object,
+    dayLblHoverStyle: React.PropTypes.object,
+    dayLblDisabledHoverStyle: React.PropTypes.object,
+    dayHoverStyle: React.PropTypes.object,
+    dayDisabledHoverStyle: React.PropTypes.object,
+    // ClassNames
+    wrapperClassName: React.PropTypes.object,
+    navBarClassName: React.PropTypes.object,
+    leftNavClassName: React.PropTypes.object,
+    rightNavClassName: React.PropTypes.object,
+    monthLblClassName: React.PropTypes.object,
+    dayLblClassName: React.PropTypes.object,
+    dayClassName: React.PropTypes.object
+
   };
 
   static defaultProps = {
@@ -69,10 +93,41 @@ export default class DatePicker extends Component {
   };
 
   /**
-   * Generates the style-id & inject the focus & hover style.
+   * Injects pseudo classes for styles into the DOM.
+   */
+  static updatePseudoClassStyle(pseudoStyleIds, properties) {
+    const styles = [];
+    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day'].forEach((elm) => {
+      styles.push({
+        id: pseudoStyleIds[elm + 'StyleId'],
+        style: extend({}, style[elm + 'HoverStyle'], properties[elm + 'HoverStyle']),
+        pseudoClass: 'hover'
+      });
+      styles.push({
+        id: pseudoStyleIds.wrapperStyleId,
+        style: extend({}, style[elm + 'DisabledHoverStyle'], properties[elm + 'DisabledHoverStyle']),
+        pseudoClass: 'hover',
+        disabled: true
+      });
+    });
+    injectStyles(styles);
+  }
+
+  /**
+   * Generates the style-id & inject the hover styles.
    * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
+    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    this.pseudoStyleIds = {};
+    this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
+    this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
+    this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
+    this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
+    this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
+    this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
+    this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
+    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props);
   }
 
   componentWillReceiveProps(properties) {
@@ -90,12 +145,16 @@ export default class DatePicker extends Component {
       month: properties.month - 1,
       year: properties.year
     });
+
+    removeAllStyles([this.pseudoStyleIds.keys()]);
+    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props);
   }
 
   /**
-   * Remove a component's associated styles whenever it gets removed from the DOM.
+   * Removes pseudo classes from the DOM once component gets removed.
    */
   componentWillUnmount() {
+    removeAllStyles([this.pseudoStyleIds.keys()]);
   }
 
   _onWrapperFocus(event) {
@@ -269,28 +328,32 @@ export default class DatePicker extends Component {
       navButtonStyle = extend(navButtonStyle, style.disabledNavButtonStyle);
     }
     return (
-      <div>
+      <div className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onPrevNavMouseDown.bind(this) }
                 onTouchStart={ this._onPrevNavTouchStart.bind(this) }
                 style= { navButtonStyle }
                 onFocus={ this._onNavBarPrevMonthFocus.bind(this)}
-                onBlur={ this._onNavBarPrevMonthBlur.bind(this)}>&lt;</span>
-        { MONTHS[this.state.month] + '-' + this.state.year }
+                onBlur={ this._onNavBarPrevMonthBlur.bind(this)}
+                className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }>&lt;</span>
+          <span className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
+            { MONTHS[this.state.month] + '-' + this.state.year }
+          </span>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onNextNavMouseDown.bind(this) }
                 onTouchStart={ this._onNextNavTouchStart.bind(this) }
                 style= { navButtonStyle }
                 onFocus={ this._onNavBarNextMonthFocus.bind(this)}
-                onBlur={ this._onNavBarNextMonthBlur.bind(this)}>&gt;</span>
+                onBlur={ this._onNavBarNextMonthBlur.bind(this)}
+                className={ unionClassNames(this.props.rightNavStyleId, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
       </div>
     );
   }
 
   _getDaysHeader() {
-    let dayHeaderStyle = extend({}, style.dayHeaderStyle);
+    let dayLblStyle = extend({}, style.dayLblStyle);
     if (this.props.disabled) {
-      dayHeaderStyle = extend(dayHeaderStyle, style.disabledDayHeaderStyle);
+      dayLblStyle = extend(dayLblStyle, style.dayLblDisabledStyle);
     }
     return (
       <div>
@@ -298,7 +361,8 @@ export default class DatePicker extends Component {
           map(DAYS_ABBR, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ dayHeaderStyle }>
+                    style={ dayLblStyle }
+                    className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
                   { dayAbbr }
                 </span>
             );
@@ -336,12 +400,31 @@ export default class DatePicker extends Component {
                   onFocus={ this._onDayFocus.bind(this, day) }
                   onBlur={ this._onDayBlur.bind(this) }
                   aria-current={ ariaCurrent }
-                  aria-selected={ ariaSelected }>
+                  aria-selected={ ariaSelected }
+                  className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
               { day }
             </span>);
   }
 
   render() {
+/*
+    wrapperClassName: React.PropTypes.object,
+      navBarClassName: React.PropTypes.object,
+      leftNavClassName: React.PropTypes.object,
+      rightNavClassName: React.PropTypes.object,
+      monthLblClassName: React.PropTypes.object,
+      dayLblClassName: React.PropTypes.object,
+      dayClassName: React.PropTypes.object
+
+ this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
+ this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
+ this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
+ this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
+ this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
+ this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
+ this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
+    */
+
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
@@ -352,7 +435,8 @@ export default class DatePicker extends Component {
            onKeyDown={ this._onKeyDown.bind(this) }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
-           aria-readonly={ this.props.readOnly }>
+           aria-readonly={ this.props.readOnly }
+           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
         { this._getNavBar() }
         { this._getDaysHeader() }
         <div>
