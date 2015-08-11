@@ -102,6 +102,9 @@ export default class DatePicker extends Component {
     disabledDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
     selectedDayStyle: React.PropTypes.object,
+    weekHeaderStyle: React.PropTypes.object,
+    weekStyle: React.PropTypes.object,
+    dayWrapperStyle: React.PropTypes.object,
     // active styles and focus styles
     activeWrapperStyle: React.PropTypes.object,
     focusWrapperStyle: React.PropTypes.object,
@@ -110,7 +113,15 @@ export default class DatePicker extends Component {
     activeRightNavStyle: React.PropTypes.object,
     focusRightNavStyle: React.PropTypes.object,
     activeDayStyle: React.PropTypes.object,
-    focusDayStyle: React.PropTypes.object
+    focusDayStyle: React.PropTypes.object,
+    // styling for readOnly component
+    readOnlyNavBarStyle: React.PropTypes.object,
+    readOnlyLeftNavStyle: React.PropTypes.object,
+    readOnlyRightNavStyle: React.PropTypes.object,
+    readOnlyMonthLblStyle: React.PropTypes.object,
+    readOnlyDayLblStyle: React.PropTypes.object,
+    readOnlyDayStyle: React.PropTypes.object,
+    readOnlyWrapperStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -454,6 +465,7 @@ export default class DatePicker extends Component {
 
   _getDaysHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
+    const weekHeaderStyle = extend({}, style.weekHeaderStyle, this.props.weekHeaderStyle);
     if (this.props.readOnly) {
       dayLblStyle = extend(dayLblStyle, style.readOnlyDayLblStyle, this.props.readOnlyDayLblStyle);
     }
@@ -462,7 +474,7 @@ export default class DatePicker extends Component {
     }
 
     return (
-      <div>
+      <div style={ weekHeaderStyle }>
         {
           map(DAYS_ABBR, (dayAbbr, index) => {
             return (
@@ -491,19 +503,21 @@ export default class DatePicker extends Component {
     }
     if (this.props.disabled) {
       dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
-    } else if (this.state.activeDay === day) {
+    } else if (day && this.state.activeDay === day) {
       dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
-    } else if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
-      dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+    } else {
+      if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
+        dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+      }
+      if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
+        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+        ariaSelected = true;
+      }
     }
 
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
       dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
-    }
-    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-      ariaSelected = true;
     }
 
     // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
@@ -527,6 +541,8 @@ export default class DatePicker extends Component {
 
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    const dayWrapperStyle = extend({}, style.dayWrapperStyle, this.props.dayWrapperStyle);
+    const weekStyle = extend({}, style.weekStyle, this.props.weekStyle);
     if (this.props.readOnly) {
       wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
     }
@@ -557,11 +573,12 @@ export default class DatePicker extends Component {
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
         { this._getNavBar() }
         { this._getDaysHeader() }
-        <div>
+        <div style={ dayWrapperStyle }>
           {
             map(weekArray, (week, weekIndex) => {
               return (
-                <div key={ 'week-' + weekIndex }>
+                <div key={ 'week-' + weekIndex }
+                     style={ weekStyle }>
                   {
                     map(week, (day, dayIndex) => {
                       return this._getDayFragment(day, dayIndex);
