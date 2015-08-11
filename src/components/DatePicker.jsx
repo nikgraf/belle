@@ -55,6 +55,7 @@ export default class DatePicker extends Component {
     onDayMouseDown: React.PropTypes.func,
     onDayMouseUp: React.PropTypes.func,
     onDayTouchStart: React.PropTypes.func,
+    onDayTouchEnd: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
     tabIndex: React.PropTypes.number,
@@ -238,6 +239,22 @@ export default class DatePicker extends Component {
     }
   }
 
+  _onWrapperTouchStart() {
+    if (!this.props.disabled) {
+      this.setState({
+        isWrapperActive: true
+      });
+    }
+  }
+
+  _onWrapperTouchEnd() {
+    if (!this.props.disabled) {
+      this.setState({
+        isWrapperActive: false
+      });
+    }
+  }
+
   _onWrapperKeyDown(event) {
     if (!this.props.disabled) {
       if (event.key === 'ArrowDown') {
@@ -336,10 +353,25 @@ export default class DatePicker extends Component {
   _onDayTouchStart(day) {
     if (event.touches.length === 1) {
       this._selectDate(day);
+      this.setState({
+        activeDay: day
+      });
     }
 
     if (this.props.onDayTouchStart) {
       this.props.onDayTouchStart(event);
+    }
+  }
+
+  _onDayTouchEnd(day) {
+    if (event.touches.length === 1 && this.state.activeDay === day) {
+      this.setState({
+        activeDay: 0
+      });
+    }
+
+    if (this.props.onDayTouchEnd) {
+      this.props.onDayTouchEnd(event);
     }
   }
 
@@ -367,6 +399,12 @@ export default class DatePicker extends Component {
     let leftNavStyle = extend({}, style.leftNavStyle, this.props.leftNavStyle);
     let rightNavStyle = extend({}, style.rightNavStyle, this.props.rightNavStyle);
     let monthLblStyle = extend({}, style.monthLblStyle, this.props.monthLblStyle);
+    if (this.props.readOnly) {
+      navBarStyle = extend(navBarStyle, style.readOnlyNavBarStyle, this.props.readOnlyNavBarStyle);
+      leftNavStyle = extend(leftNavStyle, style.readOnlyLeftNavStyle, this.props.readOnlyLeftNavStyle);
+      rightNavStyle = extend(rightNavStyle, style.readOnlyRightNavStyle, this.props.readOnlyRightNavStyle);
+      monthLblStyle = extend(monthLblStyle, style.readOnlyMonthLblStyle, this.props.readOnlyMonthLblStyle);
+    }
     if (this.props.disabled) {
       navBarStyle = extend(navBarStyle, style.disabledNavBarStyle, this.props.disabledNavBarStyle);
       leftNavStyle = extend(leftNavStyle, style.disabledLeftNavStyle, this.props.disabledLeftNavStyle);
@@ -416,6 +454,9 @@ export default class DatePicker extends Component {
 
   _getDaysHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
+    if (this.props.readOnly) {
+      dayLblStyle = extend(dayLblStyle, style.readOnlyDayLblStyle, this.props.readOnlyDayLblStyle);
+    }
     if (this.props.disabled) {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
     }
@@ -445,6 +486,9 @@ export default class DatePicker extends Component {
 
     let dayStyle = extend({}, style.dayStyle, this.props.dayStyle);
 
+    if (this.props.readOnly) {
+      dayStyle = extend(dayStyle, style.readOnlyDayStyle, this.props.readOnlyDayStyle);
+    }
     if (this.props.disabled) {
       dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
     } else if (this.state.activeDay === day) {
@@ -469,7 +513,8 @@ export default class DatePicker extends Component {
                   ref={ 'day-' + day }
                   onMouseDown={ this._onDayMouseDown.bind(this, day) }
                   onMouseUp={ this._onDayMouseUp.bind(this, day) }
-                  onTouchState={ this._onDayTouchStart.bind(this, day) }
+                  onTouchStart={ this._onDayTouchStart.bind(this, day) }
+                  onTouchEnd={ this._onDayTouchEnd.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
                   onBlur={ this._onDayBlur.bind(this) }
                   aria-current={ ariaCurrent }
@@ -482,6 +527,9 @@ export default class DatePicker extends Component {
 
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    if (this.props.readOnly) {
+      wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
+    }
     if (this.props.disabled) {
       wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
     } else if (this.state.isWrapperActive) {
@@ -500,6 +548,8 @@ export default class DatePicker extends Component {
            onKeyDown={ this._onWrapperKeyDown.bind(this) }
            onMouseDown={ this._onWrapperMouseDown.bind(this) }
            onMouseUp={ this._onWrapperMouseUp.bind(this) }
+           onMouseStart={ this._onWrapperTouchStart.bind(this) }
+           onMouseEnd={ this._onWrapperTouchEnd.bind(this) }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
@@ -726,8 +776,9 @@ export default class DatePicker extends Component {
 
 /**
  * TODO-S:
- * - Implement default belle styling and bootstrap styling for date-picker
- * - images for left and right nav buttonStyle
+ * - Implement default belle styling
+ * - Implement bootstrap styling for date-picker
+ * - Images for left and right nav buttonStyle
  *
  * Localization support is required mainly to format month names and day names, start of week day - we can also use moment.js for localization by default,
  * Will babel support creating add-ons for belle where we can include moment.js.
@@ -736,8 +787,7 @@ export default class DatePicker extends Component {
  * We can rename component to calendar also as this component as its used for date display also.
  *
  * We might need separate styles for wrapper of day-labels and days, or remove style for nav-bar even.
+ *
  * add method to unset date
  *
- *
- * actve state in touch methods
  **/

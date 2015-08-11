@@ -7,6 +7,9 @@ const datePickerStyle = {
   disabledWrapperStyle: {
   },
 
+  readOnlyWrapperStyle: {
+  },
+
   hoverWrapperStyle: {
   },
 
@@ -26,6 +29,9 @@ const datePickerStyle = {
   disabledNavBarStyle: {
   },
 
+  readOnlyNavBarStyle: {
+  },
+
   hoverNavBarStyle: {
   },
 
@@ -43,6 +49,9 @@ const datePickerStyle = {
 
   disabledLeftNavStyle: {
     display: 'none'
+  },
+
+  readOnlyLeftNavStyle: {
   },
 
   hoverLeftNavStyle: {
@@ -70,6 +79,9 @@ const datePickerStyle = {
     display: 'none'
   },
 
+  readOnlyRightNavStyle: {
+  },
+
   hoverRightNavStyle: {
   },
 
@@ -87,6 +99,9 @@ const datePickerStyle = {
   },
 
   disabledMonthLblStyle: {
+  },
+
+  readOnlyMonthLblStyle: {
   },
 
   hoverMonthLblStyle: {
@@ -112,6 +127,13 @@ const datePickerStyle = {
     backgroundColor: 'lightGray'
   },
 
+  readOnlyDayLblStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20
+  },
+
   hoverDayLblStyle: {
   },
 
@@ -135,6 +157,14 @@ const datePickerStyle = {
     cursor: 'auto',
     color: 'gray',
     backgroundColor: 'lightGray'
+  },
+
+  readOnlyDayStyle: {
+    display: 'inline-block',
+    width: 20,
+    border: '1px solid black',
+    height: 20,
+    cursor: 'auto'
   },
 
   todayStyle: {
