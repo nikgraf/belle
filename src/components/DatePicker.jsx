@@ -211,8 +211,7 @@ export default class DatePicker extends Component {
   }
 
   _onWrapperFocus(event) {
-    console.log('wrapper focussed');
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.state.isWrapperActive) {
       this.setState({
         isWrapperFocused: true
       });
@@ -313,7 +312,7 @@ export default class DatePicker extends Component {
   }
 
   _onDayFocus(day, event) {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !( this.state.activeDay && this.state.activeDay === day)) {
       this.setState({
         focusedDay: day
       });
@@ -674,7 +673,7 @@ export default class DatePicker extends Component {
   }
 
   _onLeftNavFocus() {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.state.isLeftNavActive) {
       this.setState({
         isLeftNavFocused: true
       });
@@ -724,7 +723,7 @@ export default class DatePicker extends Component {
   }
 
   _onRightNavFocus() {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.state.isRightNavActive) {
       this.setState({
         isRightNavFocused: true
       });
