@@ -117,10 +117,23 @@ const datePickerStyle = {
   disabledHoverMonthLblStyle: {
   },
 
+  // styling for week's header bar
   weekHeaderStyle: {
     display: 'flex',
     justifyContent: 'space-between',
     margin: '5px 10px'
+  },
+
+  disabledWeekHeaderStyle: {
+  },
+
+  readOnlyHeaderStyle: {
+  },
+
+  hoverHeaderStyle: {
+  },
+
+  disabledHoverWeekHeaderStyle: {
   },
 
   // styling for week's day label
@@ -135,21 +148,11 @@ const datePickerStyle = {
   },
 
   disabledDayLblStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
-    marginRight: 2,
-    borderRadius: 4,
     color: 'gray',
     backgroundColor: 'lightGray'
   },
 
   readOnlyDayLblStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
-    marginRight: 2,
-    borderRadius: 4
   },
 
   hoverDayLblStyle: {
@@ -158,14 +161,24 @@ const datePickerStyle = {
   disabledHoverDayLblStyle: {
   },
 
-  dayWrapperStyle: {
-    textAlign: 'center'
-  },
-
+  // styling for week's row
   weekStyle: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '5px 10px'
+    margin: '5px 10px',
+    textAlign: 'center'
+  },
+
+  disabledWeekStyle: {
+  },
+
+  readOnlyWeekStyle: {
+  },
+
+  hoverWeekStyle: {
+  },
+
+  disabledHoverWeekStyle: {
   },
 
   // styling for individual day
@@ -180,32 +193,14 @@ const datePickerStyle = {
   },
 
   disabledDayStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
-    cursor: 'auto',
     color: 'gray',
     backgroundColor: 'lightGray'
   },
 
   readOnlyDayStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
-    cursor: 'auto'
-  },
-
-  todayStyle: {
-    color: 'red'
-  },
-
-  selectedDayStyle: {
-    backgroundColor: 'blue',
-    color: 'white'
   },
 
   hoverDayStyle: {
-    //boxShadow: '0px 0px 2px gray'
   },
 
   activeDayStyle: {
@@ -217,16 +212,17 @@ const datePickerStyle = {
   },
 
   disabledHoverDayStyle: {
+  },
+
+  todayStyle: {
+    color: 'red'
+  },
+
+  selectedDayStyle: {
+    backgroundColor: 'blue',
+    color: 'white'
   }
 
 };
 
 export default datePickerStyle;
-
-/*
-Belle styling for date-picker:
-- adding separate class for non-selectable days
-- adding more classes for - weekStyle, dayWrapperStyle...
-
-focus styles broken for preventFocusStyleForTouchAndClick
- */
