@@ -62,21 +62,6 @@ export default class DatePicker extends Component {
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
-    // styling api related props - hover, disabledHover styles
-    hoverWrapperStyle: React.PropTypes.object,
-    disabledHoverWrapperStyle: React.PropTypes.object,
-    hoverNavBarStyle: React.PropTypes.object,
-    disabledHoverNavBarStyle: React.PropTypes.object,
-    hoverLeftNavStyle: React.PropTypes.object,
-    disabledHoverLeftNavStyle: React.PropTypes.object,
-    hoverRightNavStyle: React.PropTypes.object,
-    disabledHoverRightNavStyle: React.PropTypes.object,
-    hoverMonthLblStyle: React.PropTypes.object,
-    disabledHoverMonthLblStyle: React.PropTypes.object,
-    hoverDayLblStyle: React.PropTypes.object,
-    disabledHoverDayLblStyle: React.PropTypes.object,
-    hoverDayStyle: React.PropTypes.object,
-    disabledHoverDayStyle: React.PropTypes.object,
     // ClassNames
     wrapperClassName: React.PropTypes.object,
     navBarClassName: React.PropTypes.object,
@@ -85,43 +70,70 @@ export default class DatePicker extends Component {
     monthLblClassName: React.PropTypes.object,
     dayLblClassName: React.PropTypes.object,
     dayClassName: React.PropTypes.object,
-    // other styles in style api
+    // wrapper styles
     wrapperStyle: React.PropTypes.object,
     disabledWrapperStyle: React.PropTypes.object,
-    navBarStyle: React.PropTypes.object,
-    disabledNavBarStyle: React.PropTypes.object,
-    leftNavStyle: React.PropTypes.object,
-    disabledLeftNavStyle: React.PropTypes.object,
-    rightNavStyle: React.PropTypes.object,
-    disabledRightNavStyle: React.PropTypes.object,
-    monthLblStyle: React.PropTypes.object,
-    disabledMonthLblStyle: React.PropTypes.object,
-    dayLblStyle: React.PropTypes.object,
-    disabledDayLblStyle: React.PropTypes.object,
-    dayStyle: React.PropTypes.object,
-    disabledDayStyle: React.PropTypes.object,
-    todayStyle: React.PropTypes.object,
-    selectedDayStyle: React.PropTypes.object,
-    weekHeaderStyle: React.PropTypes.object,
-    weekStyle: React.PropTypes.object,
-    dayWrapperStyle: React.PropTypes.object,
-    // active styles and focus styles
+    readOnlyWrapperStyle: React.PropTypes.object,
+    hoverWrapperStyle: React.PropTypes.object,
     activeWrapperStyle: React.PropTypes.object,
     focusWrapperStyle: React.PropTypes.object,
+    disabledHoverWrapperStyle: React.PropTypes.object,
+    // navbar styles
+    navBarStyle: React.PropTypes.object,
+    disabledNavBarStyle: React.PropTypes.object,
+    readOnlyNavBarStyle: React.PropTypes.object,
+    hoverNavBarStyle: React.PropTypes.object,
+    disabledHoverNavBarStyle: React.PropTypes.object,
+    // leftnav styles
+    leftNavStyle: React.PropTypes.object,
+    disabledLeftNavStyle: React.PropTypes.object,
+    readOnlyLeftNavStyle: React.PropTypes.object,
+    hoverLeftNavStyle: React.PropTypes.object,
     activeLeftNavStyle: React.PropTypes.object,
     focusLeftNavStyle: React.PropTypes.object,
+    disabledHoverLeftNavStyle: React.PropTypes.object,
+    // rightnav styles
+    rightNavStyle: React.PropTypes.object,
+    disabledRightNavStyle: React.PropTypes.object,
+    readOnlyRightNavStyle: React.PropTypes.object,
+    hoverRightNavStyle: React.PropTypes.object,
     activeRightNavStyle: React.PropTypes.object,
     focusRightNavStyle: React.PropTypes.object,
+    disabledHoverRightNavStyle: React.PropTypes.object,
+    // monthlbl styles
+    monthLblStyle: React.PropTypes.object,
+    disabledMonthLblStyle: React.PropTypes.object,
+    readOnlyMonthLblStyle: React.PropTypes.object,
+    hoverMonthLblStyle: React.PropTypes.object,
+    disabledHoverMonthLblStyle: React.PropTypes.object,
+    // week header style
+    weekHeaderStyle: React.PropTypes.object,
+    disabledWeekHeaderStyle: React.PropTypes.object,
+    readOnlyWeekHeaderStyle: React.PropTypes.object,
+    hoverWeekHeaderStyle: React.PropTypes.object,
+    disabledHoverWeekHeaderStyle: React.PropTypes.object,
+    // daylbl styles
+    dayLblStyle: React.PropTypes.object,
+    disabledDayLblStyle: React.PropTypes.object,
+    readOnlyDayLblStyle: React.PropTypes.object,
+    hoverDayLblStyle: React.PropTypes.object,
+    disabledHoverDayLblStyle: React.PropTypes.object,
+    // week style
+    weekStyle: React.PropTypes.object,
+    disabledWeekStyle: React.PropTypes.object,
+    readOnlyWeekStyle: React.PropTypes.object,
+    hoverWeekStyle: React.PropTypes.object,
+    disabledHoverWeekStyle: React.PropTypes.object,
+    // day styles
+    dayStyle: React.PropTypes.object,
+    disabledDayStyle: React.PropTypes.object,
+    readOnlyDayStyle: React.PropTypes.object,
+    hoverDayStyle: React.PropTypes.object,
     activeDayStyle: React.PropTypes.object,
     focusDayStyle: React.PropTypes.object,
-    // styling for readOnly component
-    readOnlyNavBarStyle: React.PropTypes.object,
-    readOnlyLeftNavStyle: React.PropTypes.object,
-    readOnlyRightNavStyle: React.PropTypes.object,
-    readOnlyMonthLblStyle: React.PropTypes.object,
-    readOnlyDayLblStyle: React.PropTypes.object,
-    readOnlyDayStyle: React.PropTypes.object,
-    readOnlyWrapperStyle: React.PropTypes.object
+    disabledHoverDayStyle: React.PropTypes.object,
+    todayStyle: React.PropTypes.object,
+    selectedDayStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -136,7 +148,7 @@ export default class DatePicker extends Component {
    */
   static updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
     const styles = [];
-    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day'].forEach((elm) => {
+    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day', 'weekHeader'].forEach((elm) => {
       const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       styles.push({
         id: pseudoStyleIds[elm + 'StyleId'],
@@ -465,12 +477,14 @@ export default class DatePicker extends Component {
 
   _getDaysHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
-    const weekHeaderStyle = extend({}, style.weekHeaderStyle, this.props.weekHeaderStyle);
+    let weekHeaderStyle = extend({}, style.weekHeaderStyle, this.props.weekHeaderStyle);
     if (this.props.readOnly) {
       dayLblStyle = extend(dayLblStyle, style.readOnlyDayLblStyle, this.props.readOnlyDayLblStyle);
+      weekHeaderStyle = extend(weekHeaderStyle, style.weekHeaderStyle, this.props.weekHeaderStyle);
     }
     if (this.props.disabled) {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
+      weekHeaderStyle = extend(weekHeaderStyle, style.weekHeaderStyle, this.props.weekHeaderStyle);
     }
 
     return (
@@ -541,13 +555,14 @@ export default class DatePicker extends Component {
 
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    const dayWrapperStyle = extend({}, style.dayWrapperStyle, this.props.dayWrapperStyle);
-    const weekStyle = extend({}, style.weekStyle, this.props.weekStyle);
+    let weekStyle = extend({}, style.weekStyle, this.props.weekStyle);
     if (this.props.readOnly) {
       wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
+      weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
     }
     if (this.props.disabled) {
       wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
+      weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
     } else if (this.state.isWrapperActive) {
       wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
     } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused &&
@@ -574,7 +589,7 @@ export default class DatePicker extends Component {
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
         { this._getNavBar() }
         { this._getDaysHeader() }
-        <div style={ dayWrapperStyle }>
+        <div>
           {
             map(weekArray, (week, weekIndex) => {
               return (
@@ -798,14 +813,12 @@ export default class DatePicker extends Component {
  * - Implement bootstrap styling for date-picker
  * - Images for left and right nav buttonStyle
  *
- * Localization support is required mainly to format month names and day names, start of week day - we can also use moment.js for localization by default,
- * Will babel support creating add-ons for belle where we can include moment.js.
- * I would rather prefer to create our own small lib for localization use JS date api underneath.
+ * Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
  * We can rename component to calendar also as this component as its used for date display also.
  *
- * We might need separate styles for wrapper of day-labels and days, or remove style for nav-bar even.
- *
  * add method to unset date
+ *
+ * hoverStyle in pseudo class override active style - may be we should handle hover style also in state like focus style.
  *
  **/
