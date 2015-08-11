@@ -20,11 +20,11 @@ export default React.createClass({
           </div>
           <h3>Disabled Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker defaultValue={ selectedDate } disabled={true}/>
+            <DatePicker defaultValue={ selectedDate } disabled/>
           </div>
           <h3>Read-Only Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker defaultValue={ selectedDate } readOnly={true}/>
+            <DatePicker defaultValue={ selectedDate } readOnly/>
           </div>
         </Card>
 
