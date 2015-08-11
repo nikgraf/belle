@@ -805,20 +805,35 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Reset the value to undefined.
+   *
+   * This can be used in case you as developer want to reset the rating manually.
+   */
+  resetValue() {
+    this.setState({
+      dateValue: undefined
+    });
+  }
 }
 
 /**
  * TODO-S:
+ *
+ * 1. Styling:
  * - Implement default belle styling
  * - Implement bootstrap styling for date-picker
  * - Images for left and right nav buttonStyle
+ * (hoverStyle in pseudo class override active style - may be we should handle hover style also in state like focus style.)
  *
- * Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
+ * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
- * We can rename component to calendar also as this component as its used for date display also.
+ * 3. Rename: We can rename component to calendar also as this component as its used for date display also.
  *
- * add method to unset date
+ * 4. Comments: to be added
  *
- * hoverStyle in pseudo class override active style - may be we should handle hover style also in state like focus style.
+ * 5. Test coverage
+ *
+ * 6. Docs
  *
  **/

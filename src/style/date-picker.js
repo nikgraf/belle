@@ -4,7 +4,26 @@ const datePickerStyle = {
   wrapperStyle: {
     padding: '5px 10px',
     backgroundColor: '#00D1FF',
-    borderRadius: 5
+    borderRadius: 5,
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent'
   },
 
   disabledWrapperStyle: {
@@ -53,7 +72,26 @@ const datePickerStyle = {
 
   // left button in nav-bar to go to previous month
   leftNavStyle: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent'
   },
 
   disabledLeftNavStyle: {
@@ -78,7 +116,26 @@ const datePickerStyle = {
 
   // right button in nav-bar to go to previous month
   rightNavStyle: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent'
   },
 
   disabledRightNavStyle: {
@@ -166,7 +223,26 @@ const datePickerStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     margin: '5px 10px',
-    textAlign: 'center'
+    textAlign: 'center',
+
+    /*
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
+     */
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
+
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent'
   },
 
   disabledWeekStyle: {

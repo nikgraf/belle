@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, DatePicker} from 'belle';
+import {Card, DatePicker, Button} from 'belle';
 
 export default React.createClass({
 
@@ -13,11 +13,11 @@ export default React.createClass({
         <h2>ComboBox</h2>
 
         <Card>
-          <div tabIndex={false}>testing</div>
           <h3>Default Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker defaultValue={ selectedDate }/>
+            <DatePicker ref="calendar1" defaultValue={ selectedDate }/>
           </div>
+          <Button onClick={ this._resetValue }>Reset Date</Button>
           <h3>Disabled Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
             <DatePicker defaultValue={ selectedDate } disabled/>
@@ -30,5 +30,9 @@ export default React.createClass({
 
       </div>
     );
+  },
+
+  _resetValue() {
+    this.refs.calendar1.resetValue();
   }
 });
