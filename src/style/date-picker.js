@@ -21,7 +21,7 @@ const datePickerStyle = {
   },
 
   focusWrapperStyle: {
-    outline: '1px solid blue'
+    border: '1px solid blue'
   },
 
   disabledHoverWrapperStyle: {
@@ -70,6 +70,7 @@ const datePickerStyle = {
   },
 
   focusLeftNavStyle: {
+    border: '1px solid blue'
   },
 
   disabledHoverLeftNavStyle: {
@@ -94,6 +95,7 @@ const datePickerStyle = {
   },
 
   focusRightNavStyle: {
+    border: '1px solid blue'
   },
 
   disabledHoverRightNavStyle: {
@@ -211,7 +213,7 @@ const datePickerStyle = {
   },
 
   focusDayStyle: {
-    outline: '1px solid blue'
+    border: '1px solid blue'
   },
 
   disabledHoverDayStyle: {
@@ -225,8 +227,6 @@ export default datePickerStyle;
 Belle styling for date-picker:
 - adding separate class for non-selectable days
 - adding more classes for - weekStyle, dayWrapperStyle...
-
-might be it will be good idea to not use pseudo classes for hover and have box-shadow outset
 
 focus styles broken for preventFocusStyleForTouchAndClick
  */
