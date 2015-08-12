@@ -618,6 +618,9 @@ export default class DatePicker extends Component {
         wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
       }
     }
+    if (this.preventFocusStyleForTouchAndClick && !this.state.isWrapperFocused) {
+      wrapperStyle = extend(wrapperStyle, { outline: 0 });
+    }
 
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
