@@ -301,6 +301,7 @@ const datePickerStyle = {
   },
 
   disabledHoverDayStyle: {
+    cursor: 'auto'
   },
 
   todayStyle: {
