@@ -83,7 +83,6 @@ export default class DatePicker extends Component {
     disabledNavBarStyle: React.PropTypes.object,
     readOnlyNavBarStyle: React.PropTypes.object,
     hoverNavBarStyle: React.PropTypes.object,
-    disabledHoverNavBarStyle: React.PropTypes.object,
     // leftnav styles
     leftNavStyle: React.PropTypes.object,
     disabledLeftNavStyle: React.PropTypes.object,
@@ -91,7 +90,6 @@ export default class DatePicker extends Component {
     hoverLeftNavStyle: React.PropTypes.object,
     activeLeftNavStyle: React.PropTypes.object,
     focusLeftNavStyle: React.PropTypes.object,
-    disabledHoverLeftNavStyle: React.PropTypes.object,
     // rightnav styles
     rightNavStyle: React.PropTypes.object,
     disabledRightNavStyle: React.PropTypes.object,
@@ -99,31 +97,26 @@ export default class DatePicker extends Component {
     hoverRightNavStyle: React.PropTypes.object,
     activeRightNavStyle: React.PropTypes.object,
     focusRightNavStyle: React.PropTypes.object,
-    disabledHoverRightNavStyle: React.PropTypes.object,
     // monthlbl styles
     monthLblStyle: React.PropTypes.object,
     disabledMonthLblStyle: React.PropTypes.object,
     readOnlyMonthLblStyle: React.PropTypes.object,
     hoverMonthLblStyle: React.PropTypes.object,
-    disabledHoverMonthLblStyle: React.PropTypes.object,
     // week header style
     weekHeaderStyle: React.PropTypes.object,
     disabledWeekHeaderStyle: React.PropTypes.object,
     readOnlyWeekHeaderStyle: React.PropTypes.object,
     hoverWeekHeaderStyle: React.PropTypes.object,
-    disabledHoverWeekHeaderStyle: React.PropTypes.object,
     // daylbl styles
     dayLblStyle: React.PropTypes.object,
     disabledDayLblStyle: React.PropTypes.object,
     readOnlyDayLblStyle: React.PropTypes.object,
     hoverDayLblStyle: React.PropTypes.object,
-    disabledHoverDayLblStyle: React.PropTypes.object,
     // week style
     weekStyle: React.PropTypes.object,
     disabledWeekStyle: React.PropTypes.object,
     readOnlyWeekStyle: React.PropTypes.object,
     hoverWeekStyle: React.PropTypes.object,
-    disabledHoverWeekStyle: React.PropTypes.object,
     // day styles
     dayStyle: React.PropTypes.object,
     disabledDayStyle: React.PropTypes.object,
@@ -157,12 +150,6 @@ export default class DatePicker extends Component {
         id: pseudoStyleIds[elm + 'StyleId'],
         style: extend({}, style['hover' + elmFirstCaps + 'Style'], properties['hover' + elmFirstCaps + 'Style']),
         pseudoClass: 'hover'
-      });
-      styles.push({
-        id: pseudoStyleIds[elm + 'StyleId'],
-        style: extend({}, style['disabledHover' + elmFirstCaps + 'Style'], properties['disabledHover' + elmFirstCaps + 'Style']),
-        pseudoClass: 'hover',
-        disabled: true
       });
       let focusStyle;
       if (preventFocusStyleForTouchAndClick) {

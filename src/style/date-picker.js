@@ -43,7 +43,6 @@ const datePickerStyle = {
     backgroundColor: '#92D6EF'
   },
 
-  // can be deprecated
   activeWrapperStyle: {
   },
 
@@ -73,9 +72,6 @@ const datePickerStyle = {
   },
 
   hoverNavBarStyle: {
-  },
-
-  disabledHoverNavBarStyle: {
   },
 
   // left button in nav-bar to go to previous month
@@ -120,9 +116,6 @@ const datePickerStyle = {
     outline: 0
   },
 
-  disabledHoverLeftNavStyle: {
-  },
-
   // right button in nav-bar to go to previous month
   rightNavStyle: {
     cursor: 'pointer',
@@ -165,12 +158,10 @@ const datePickerStyle = {
     outline: 0
   },
 
-  disabledHoverRightNavStyle: {
-  },
-
   // styling for month label on top of calendar
   monthLblStyle: {
-    fontSize: 15
+    fontSize: 15,
+    width: 125
   },
 
   disabledMonthLblStyle: {
@@ -180,9 +171,6 @@ const datePickerStyle = {
   },
 
   hoverMonthLblStyle: {
-  },
-
-  disabledHoverMonthLblStyle: {
   },
 
   // styling for week's header bar
@@ -202,9 +190,6 @@ const datePickerStyle = {
   hoverHeaderStyle: {
   },
 
-  disabledHoverWeekHeaderStyle: {
-  },
-
   // styling for week's day label
   dayLblStyle: {
     width: 40,
@@ -222,9 +207,6 @@ const datePickerStyle = {
   },
 
   hoverDayLblStyle: {
-  },
-
-  disabledHoverDayLblStyle: {
   },
 
   // styling for week's row
@@ -260,9 +242,6 @@ const datePickerStyle = {
   },
 
   hoverWeekStyle: {
-  },
-
-  disabledHoverWeekStyle: {
   },
 
   // styling for individual day
