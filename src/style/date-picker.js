@@ -284,6 +284,7 @@ const datePickerStyle = {
   },
 
   readOnlyDayStyle: {
+    cursor: 'auto'
   },
 
   hoverDayStyle: {

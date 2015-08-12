@@ -538,7 +538,9 @@ export default class DatePicker extends Component {
       if (day && this.state.hoveredDay === day) {
         dayStyle = extend(dayStyle, style.disabledHoverDayStyle, this.props.disabledHoverDayStyle);
       }
-    } else {
+    }
+
+    if (!this.props.readOnly && !this.props.disabled) {
       if (day && this.state.hoveredDay === day) {
         dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
