@@ -141,7 +141,9 @@ export default class DatePicker extends Component {
     month: CURRENT_MONTH + 1,
     year: CURRENT_YEAR,
     tabIndex: 0,
-    'aria-label': 'Calendar'
+    'aria-label': 'Calendar',
+    disabled: false,
+    readOnly: false
   };
 
   /**
@@ -149,7 +151,7 @@ export default class DatePicker extends Component {
    */
   static updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
     const styles = [];
-    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'weekHeader'].forEach((elm) => {
+    ['navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'weekHeader'].forEach((elm) => {
       const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       styles.push({
         id: pseudoStyleIds[elm + 'StyleId'],
@@ -261,6 +263,18 @@ export default class DatePicker extends Component {
         isWrapperActive: false
       });
     }
+  }
+
+  _onWrapperMouseEnter() {
+    this.setState({
+      isWrapperHovered: true
+    });
+  }
+
+  _onWrapperMouseLeave() {
+    this.setState({
+      isWrapperHovered: false
+    });
   }
 
   _onWrapperTouchStart() {
@@ -501,7 +515,7 @@ export default class DatePicker extends Component {
     }
     if (this.props.disabled) {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
-      weekHeaderStyle = extend(weekHeaderStyle, style.weekHeaderStyle, this.props.weekHeaderStyle);
+      weekHeaderStyle = extend(weekHeaderStyle, style.disabledWeekHeaderStyle, this.props.disabledWeekHeaderStyle);
     }
 
     return (
@@ -602,11 +616,20 @@ export default class DatePicker extends Component {
     if (this.props.disabled) {
       wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
       weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
-    } else if (this.state.isWrapperActive) {
-      wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
-    } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused &&
-      !(this.state.isLeftNavFocused || this.state.isRightNavFocused || this.state.focusedDay > 0)) {
-      wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
+      console.log('this.state.isWrapperHovered', this.state.isWrapperHovered);
+      if (this.state.isWrapperHovered) {
+        wrapperStyle = extend(wrapperStyle, style.disabledHoverWrapperStyle, this.props.disabledHoverWrapperStyle);
+      }
+    } else {
+      if (this.state.isWrapperHovered) {
+        wrapperStyle = extend(wrapperStyle, style.hoverWrapperStyle, this.props.hoverWrapperStyle);
+      }
+      if (this.state.isWrapperActive) {
+        wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
+      } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused &&
+        !(this.state.isLeftNavFocused || this.state.isRightNavFocused || this.state.focusedDay > 0)) {
+        wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
+      }
     }
 
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
@@ -619,8 +642,11 @@ export default class DatePicker extends Component {
            onKeyDown={ this._onWrapperKeyDown.bind(this) }
            onMouseDown={ this._onWrapperMouseDown.bind(this) }
            onMouseUp={ this._onWrapperMouseUp.bind(this) }
-           onMouseStart={ this._onWrapperTouchStart.bind(this) }
-           onMouseEnd={ this._onWrapperTouchEnd.bind(this) }
+           onMouseEnter={ this._onWrapperMouseEnter.bind(this) }
+           onMouseLeave={ this._onWrapperMouseLeave.bind(this) }
+           onTouchStart={ this._onWrapperTouchStart.bind(this) }
+           onTouchEnd={ this._onWrapperTouchEnd.bind(this) }
+           disabled={ this.props.disabled }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
@@ -860,10 +886,11 @@ export default class DatePicker extends Component {
  * TODO-S:
  *
  * 1. Styling:
- * - Implement default belle styling
+ * - Improve default belle styling
  * - Implement bootstrap styling for date-picker
  * - Images for left and right nav buttonStyle
  * - Animated focus style for wrapper
+ * - Some of styles in api can be removed (which are not used)
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
