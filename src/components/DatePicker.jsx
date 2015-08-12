@@ -564,7 +564,7 @@ export default class DatePicker extends Component {
       ariaCurrent = 'date';
     }
 
-    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
+    if (this.state.activeDay !== day && dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
       dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
       ariaSelected = true;
     }
