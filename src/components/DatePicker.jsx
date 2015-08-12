@@ -133,7 +133,8 @@ export default class DatePicker extends Component {
     focusDayStyle: React.PropTypes.object,
     disabledHoverDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
-    selectedDayStyle: React.PropTypes.object
+    selectedDayStyle: React.PropTypes.object,
+    otherMonthDayStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -531,6 +532,7 @@ export default class DatePicker extends Component {
     if (this.props.readOnly) {
       dayStyle = extend(dayStyle, style.readOnlyDayStyle, this.props.readOnlyDayStyle);
     }
+
     if (this.props.disabled) {
       dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
       if (day && this.state.hoveredDay === day) {
@@ -546,12 +548,13 @@ export default class DatePicker extends Component {
         if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
           dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
         }
-        if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-          dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-          ariaSelected = true;
-        }
       }
     }
+
+    if (!day) {
+      dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
+    }
+
     if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay !== day) {
       dayStyle = extend(dayStyle, { outline: 0 });
     }
@@ -559,6 +562,11 @@ export default class DatePicker extends Component {
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
       dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
+    }
+
+    if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
+      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+      ariaSelected = true;
     }
 
     // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
@@ -853,12 +861,11 @@ export default class DatePicker extends Component {
  * - Implement default belle styling
  * - Implement bootstrap styling for date-picker
  * - Images for left and right nav buttonStyle
- * - separate styles for non-selectable month squares
  * - Animated focus style for wrapper
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
- * 3. Rename: We can rename component to calendar also as this component as its used for date display also.
+ * 3. Rename: We can rename component to calendar as its used for date display also.
  *
  * 4. Comments: to be added
  *
