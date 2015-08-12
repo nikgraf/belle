@@ -167,22 +167,23 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Generates the style-id & inject the hover styles.
-   * The style-id is based on React's unique DOM node id.
+   * Generates the style-id based on React's unique DOM node id.
+   * Calls function to inject the pseudo classes into the dom.
    */
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.pseudoStyleIds = {};
-    this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
     this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
     this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
     this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
     this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
     this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
-    this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
     DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
+  /**
+   * FUnction will update component state and styles as new props are received.
+   */
   componentWillReceiveProps(properties) {
     let dateValue;
     if (has(properties, 'valueLink')) {
@@ -212,6 +213,10 @@ export default class DatePicker extends Component {
     removeAllStyles(Object.keys(this.pseudoStyleIds));
   }
 
+  /**
+   * Callback is called when wrapper is focused.
+   * It will conditionally set isWrapperFocused and call props.onFocus.
+   */
   _onWrapperFocus(event) {
     if (!this.props.disabled && !this.state.isWrapperActive) {
       this.setState({
@@ -224,6 +229,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when wrapper is blurred.
+   * It will reset isWrapperFocused and call props.onBlur.
+   */
   _onWrapperBlur(event) {
     if (!this.props.disabled) {
       this.setState({
@@ -236,42 +245,66 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onWrapperMouseDown() {
-    if (!this.props.disabled) {
+  /**
+   * Callback is called when wrapper receives mouseDown.
+   * Conditionally set isWrapperActive.
+   */
+  _onWrapperMouseDown(event) {
+    if (!this.props.disabled && event.button === 0) {
       this.setState({
         isWrapperActive: true
       });
     }
   }
 
-  _onWrapperMouseUp() {
-    if (!this.props.disabled) {
+  /**
+   * Callback is called when wrapper receives mouseUp.
+   * Reset isWrapperActive.
+   */
+  _onWrapperMouseUp(event) {
+    if (!this.props.disabled && event.button === 0) {
       this.setState({
         isWrapperActive: false
       });
     }
   }
 
+  /**
+   * Callback is called when mouse enters wrapper.
+   * Conditionally set isWrapperHovered.
+   */
   _onWrapperMouseEnter() {
     this.setState({
       isWrapperHovered: true
     });
   }
 
+  /**
+   * Callback is called when mouse leaves wrapper.
+   * Reset isWrapperHovered.
+   */
   _onWrapperMouseLeave() {
     this.setState({
       isWrapperHovered: false
     });
   }
 
+  /**
+   * Callback is called when touch starts on wrapper.
+   * Conditionally sets isWrapperActive.
+   */
   _onWrapperTouchStart() {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && event.touches.length === 1) {
       this.setState({
         isWrapperActive: true
       });
     }
   }
 
+  /**
+   * Callback is called when touch ends on wrapper.
+   * Reset isWrapperActive.
+   */
   _onWrapperTouchEnd() {
     if (!this.props.disabled) {
       this.setState({
@@ -280,6 +313,14 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * The callback is called when wrapper receives keyDown event.
+   * 1. If wrapper is focused: ArrowLeft/ ArrowRight keys will increase or decrease month.
+   * 2. If left nav if focused: Enter key will decrease month.
+   * 3. If right nav is focused: Enter key will increase the month.
+   * 4. Id some day is focused: arrow keys will navigate calendar and enter key will change dateValue of component.
+   * Function will call props.onDayKeyDown or props.onKeyDown depending on whether wrapper or day is focused.
+   */
   _onWrapperKeyDown(event) {
     if (!this.props.disabled) {
       if (event.key === 'ArrowDown') {
@@ -310,23 +351,27 @@ export default class DatePicker extends Component {
         event.preventDefault();
         if (this.state.focusedDay) {
           this._selectDate(this.state.focusedDay);
-        } else if (this.state.isNavBarPrevMonthFocused) {
+        } else if (this.state.isLeftNavFocused) {
           this._decreaseMonth();
-        } else if (this.state.isNavBarNextMonthFocused) {
+        } else if (this.state.isRightNavFocused) {
           this._increaseMonth();
         }
       }
     }
 
     if (this.state.focusedDay && this.props.onDayKeyDown) {
-      this.onDayKeyDown(event);
+      this.props.onDayKeyDown(event);
     } if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
   }
 
+  /**
+   * Callback is called when some day received focus.
+   * It will conditionally set this.state.focusedDay to value of focused day and call props.onDayFocus.
+   */
   _onDayFocus(day, event) {
-    if (!this.props.disabled && !( this.state.activeDay && this.state.activeDay === day)) {
+    if (!this.props.disabled && !(this.state.activeDay && this.state.activeDay === day)) {
       this.setState({
         focusedDay: day
       });
@@ -337,8 +382,12 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onDayBlur(event) {
-    if (!this.props.disabled) {
+  /**
+   * Callback is called when some day received blur.
+   * It will reset this.state.focusedDay and call props.onDayBlur.
+   */
+  _onDayBlur(day, event) {
+    if (!this.props.disabled && this.state.focusedDay && this.state.focusedDay === day) {
       this.setState({
         focusedDay: 0
       });
@@ -558,7 +607,7 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
     }
 
-    if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay !== day) {
+    if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay !== day) {
       dayStyle = extend(dayStyle, { outline: 0 });
     }
 
@@ -584,7 +633,7 @@ export default class DatePicker extends Component {
                   onTouchStart={ this._onDayTouchStart.bind(this, day) }
                   onTouchEnd={ this._onDayTouchEnd.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
-                  onBlur={ this._onDayBlur.bind(this) }
+                  onBlur={ this._onDayBlur.bind(this, day) }
                   aria-current={ ariaCurrent }
                   aria-selected={ ariaSelected }
                   style={ dayStyle }
