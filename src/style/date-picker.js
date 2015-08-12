@@ -33,6 +33,7 @@ const datePickerStyle = {
   },
 
   disabledWrapperStyle: {
+    backgroundColor: '#D8D8D8'
   },
 
   readOnlyWrapperStyle: {
@@ -52,6 +53,7 @@ const datePickerStyle = {
   },
 
   disabledHoverWrapperStyle: {
+    backgroundColor: '#E1E9EC'
   },
 
   // nav-bar at top for month navigation
@@ -191,6 +193,7 @@ const datePickerStyle = {
   },
 
   disabledWeekHeaderStyle: {
+    color: '#C1BABA'
   },
 
   readOnlyHeaderStyle: {
@@ -213,8 +216,6 @@ const datePickerStyle = {
   },
 
   disabledDayLblStyle: {
-    color: 'gray',
-    backgroundColor: 'lightGray'
   },
 
   readOnlyDayLblStyle: {
@@ -279,8 +280,7 @@ const datePickerStyle = {
   },
 
   disabledDayStyle: {
-    color: 'gray',
-    backgroundColor: 'lightGray'
+    color: '#C1BABA'
   },
 
   readOnlyDayStyle: {
