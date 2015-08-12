@@ -148,7 +148,7 @@ export default class DatePicker extends Component {
    */
   static updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
     const styles = [];
-    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'day', 'weekHeader'].forEach((elm) => {
+    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'weekHeader'].forEach((elm) => {
       const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       styles.push({
         id: pseudoStyleIds[elm + 'StyleId'],
@@ -373,6 +373,22 @@ export default class DatePicker extends Component {
     }
   }
 
+  _onDayMouseEnter(day, event) {
+    if (event.button === 0) {
+      this.setState({
+        hoveredDay: day
+      });
+    }
+  }
+
+  _onDayMouseLeave(day, event) {
+    if (event.button === 0 && this.state.hoveredDay === day) {
+      this.setState({
+        hoveredDay: 0
+      });
+    }
+  }
+
   _onDayTouchStart(day) {
     if (event.touches.length === 1) {
       this._selectDate(day);
@@ -517,16 +533,27 @@ export default class DatePicker extends Component {
     }
     if (this.props.disabled) {
       dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
-    } else if (day && this.state.activeDay === day) {
-      dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+      if (day && this.state.hoveredDay === day) {
+        dayStyle = extend(dayStyle, style.disabledHoverDayStyle, this.props.disabledHoverDayStyle);
+      }
     } else {
-      if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
-        dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+      if (day && this.state.hoveredDay === day) {
+        dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
-      if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-        ariaSelected = true;
+      if (day && this.state.activeDay === day) {
+        dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+      } else {
+        if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
+          dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+        }
+        if (dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
+          dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+          ariaSelected = true;
+        }
       }
+    }
+    if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay !== day) {
+      dayStyle = extend(dayStyle, { outline: 0 });
     }
 
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
@@ -541,6 +568,8 @@ export default class DatePicker extends Component {
                   ref={ 'day-' + day }
                   onMouseDown={ this._onDayMouseDown.bind(this, day) }
                   onMouseUp={ this._onDayMouseUp.bind(this, day) }
+                  onMouseEnter={ this._onDayMouseEnter.bind(this, day) }
+                  onMouseLeave={ this._onDayMouseLeave.bind(this, day) }
                   onTouchStart={ this._onDayTouchStart.bind(this, day) }
                   onTouchEnd={ this._onDayTouchEnd.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
@@ -824,7 +853,8 @@ export default class DatePicker extends Component {
  * - Implement default belle styling
  * - Implement bootstrap styling for date-picker
  * - Images for left and right nav buttonStyle
- * (hoverStyle in pseudo class override active style - may be we should handle hover style also in state like focus style.)
+ * - separate styles for non-selectable month squares
+ * - Animated focus style for wrapper
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
