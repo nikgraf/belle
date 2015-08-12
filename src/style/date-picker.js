@@ -2,11 +2,11 @@ const datePickerStyle = {
 
   // wrapper of entire component
   wrapperStyle: {
-    padding: '5px 10px',
-    backgroundColor: '#00D1FF',
+    padding: 8,
+    backgroundColor: '#C5E6F2',
     borderRadius: 5,
     width: 275,
-    height: 275,
+    height: 287,
     textAlign: 'center',
 
     /*
@@ -26,7 +26,10 @@ const datePickerStyle = {
      Prevent flickering while tapping on WebKit
      http://stackoverflow.com/a/3516243/837709
      */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
+
+    transition: 'color 0.1s',
+    transitionTimingFunction: 'ease-out'
   },
 
   disabledWrapperStyle: {
@@ -36,14 +39,16 @@ const datePickerStyle = {
   },
 
   hoverWrapperStyle: {
-    //backgroundColor: '#92D6EF'
+    backgroundColor: '#92D6EF'
   },
 
+  // can be deprecated
   activeWrapperStyle: {
   },
 
   focusWrapperStyle: {
-    border: '1px solid blue'
+    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
+    outline: 0
   },
 
   disabledHoverWrapperStyle: {
@@ -54,10 +59,9 @@ const datePickerStyle = {
     display: 'flex',
     justifyContent: 'space-around',
     height: 35,
-    paddingTop: 5,
-    backgroundColor: '#00D1FF',
-    color: 'white',
-    borderRadius: 5
+    lineHeight: '30px',
+    verticalAlign: 'middle',
+    color: 'white'
   },
 
   disabledNavBarStyle: {
@@ -110,7 +114,8 @@ const datePickerStyle = {
   },
 
   focusLeftNavStyle: {
-    border: '1px solid blue'
+    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6)',
+    outline: 0
   },
 
   disabledHoverLeftNavStyle: {
@@ -154,7 +159,8 @@ const datePickerStyle = {
   },
 
   focusRightNavStyle: {
-    border: '1px solid blue'
+    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6)',
+    outline: 0
   },
 
   disabledHoverRightNavStyle: {
@@ -180,7 +186,8 @@ const datePickerStyle = {
   // styling for week's header bar
   weekHeaderStyle: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    color: '#716D6D'
   },
 
   disabledWeekHeaderStyle: {
@@ -198,10 +205,11 @@ const datePickerStyle = {
   // styling for week's day label
   dayLblStyle: {
     width: 40,
-    height: 30,
+    height: 35,
+    lineHeight: '35px',
+    verticalAlign: 'middle',
     backgroundColor: 'white',
-    margin: 0.5,
-    borderRadius: 0
+    margin: 0.5
   },
 
   disabledDayLblStyle: {
@@ -222,6 +230,7 @@ const datePickerStyle = {
   weekStyle: {
     display: 'flex',
     justifyContent: 'space-between',
+    color: '#716D6D',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -258,11 +267,15 @@ const datePickerStyle = {
   // styling for individual day
   dayStyle: {
     width: 40,
-    height: 30,
-    backgroundColor: 'white',
+    height: 35,
+    lineHeight: '35px',
+    verticalAlign: 'middle',
     margin: 0.5,
-    borderRadius: 0,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    backgroundColor: '#F8F8F8',
+
+    transition: 'color 0.1s',
+    transitionTimingFunction: 'ease-out'
   },
 
   disabledDayStyle: {
@@ -274,25 +287,27 @@ const datePickerStyle = {
   },
 
   hoverDayStyle: {
+    backgroundColor: '#DEF1F7'
   },
 
   activeDayStyle: {
-    boxShadow: 'gray 0px 0px 2px inset'
+    backgroundColor: '#E8E8E8'
   },
 
   focusDayStyle: {
-    border: '1px solid blue'
+    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
+    outline: 0
   },
 
   disabledHoverDayStyle: {
   },
 
   todayStyle: {
-    color: 'red'
+    color: '#E24545'
   },
 
   selectedDayStyle: {
-    backgroundColor: 'blue',
+    backgroundColor: '#1E90FF',
     color: 'white'
   }
 
