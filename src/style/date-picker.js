@@ -309,8 +309,11 @@ const datePickerStyle = {
   selectedDayStyle: {
     backgroundColor: '#1E90FF',
     color: 'white'
-  }
+  },
 
+  otherMonthDayStyle: {
+    cursor: 'auto'
+  }
 };
 
 export default datePickerStyle;
