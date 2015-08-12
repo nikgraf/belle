@@ -5,6 +5,9 @@ const datePickerStyle = {
     padding: '5px 10px',
     backgroundColor: '#00D1FF',
     borderRadius: 5,
+    width: 275,
+    height: 275,
+    textAlign: 'center',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -33,7 +36,7 @@ const datePickerStyle = {
   },
 
   hoverWrapperStyle: {
-    backgroundColor: '#92D6EF'
+    //backgroundColor: '#92D6EF'
   },
 
   activeWrapperStyle: {
@@ -50,12 +53,11 @@ const datePickerStyle = {
   navBarStyle: {
     display: 'flex',
     justifyContent: 'space-around',
-    height: 22,
-    padding: '4px 0',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    textAlign: 'center',
-    marginBottom: 5
+    height: 35,
+    paddingTop: 5,
+    backgroundColor: '#00D1FF',
+    color: 'white',
+    borderRadius: 5
   },
 
   disabledNavBarStyle: {
@@ -160,6 +162,7 @@ const datePickerStyle = {
 
   // styling for month label on top of calendar
   monthLblStyle: {
+    fontSize: 15
   },
 
   disabledMonthLblStyle: {
@@ -177,8 +180,7 @@ const datePickerStyle = {
   // styling for week's header bar
   weekHeaderStyle: {
     display: 'flex',
-    justifyContent: 'space-between',
-    margin: '5px 10px'
+    justifyContent: 'space-between'
   },
 
   disabledWeekHeaderStyle: {
@@ -195,13 +197,11 @@ const datePickerStyle = {
 
   // styling for week's day label
   dayLblStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 30,
     backgroundColor: 'white',
-    marginRight: 2,
-    borderRadius: 4,
-    textAlign: 'center'
+    margin: 0.5,
+    borderRadius: 0
   },
 
   disabledDayLblStyle: {
@@ -222,8 +222,6 @@ const datePickerStyle = {
   weekStyle: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '5px 10px',
-    textAlign: 'center',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -259,12 +257,11 @@ const datePickerStyle = {
 
   // styling for individual day
   dayStyle: {
-    display: 'inline-block',
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 30,
     backgroundColor: 'white',
-    marginRight: 2,
-    borderRadius: 4,
+    margin: 0.5,
+    borderRadius: 0,
     cursor: 'pointer'
   },
 
