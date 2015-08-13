@@ -63,13 +63,13 @@ export default class DatePicker extends Component {
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
     // ClassNames
-    wrapperClassName: React.PropTypes.object,
-    navBarClassName: React.PropTypes.object,
-    leftNavClassName: React.PropTypes.object,
-    rightNavClassName: React.PropTypes.object,
-    monthLblClassName: React.PropTypes.object,
-    dayLblClassName: React.PropTypes.object,
-    dayClassName: React.PropTypes.object,
+    wrapperClassName: React.PropTypes.string,
+    navBarClassName: React.PropTypes.string,
+    leftNavClassName: React.PropTypes.string,
+    rightNavClassName: React.PropTypes.string,
+    monthLblClassName: React.PropTypes.string,
+    dayLblClassName: React.PropTypes.string,
+    dayClassName: React.PropTypes.string,
     // wrapper styles
     wrapperStyle: React.PropTypes.object,
     disabledWrapperStyle: React.PropTypes.object,
@@ -278,7 +278,7 @@ export default class DatePicker extends Component {
    * Callback is called when mouse enters wrapper.
    * Conditionally set isWrapperHovered.
    */
-  _onWrapperMouseEnter() {
+  _onWrapperMouseOver() {
     this.setState({
       isWrapperHovered: true
     });
@@ -288,7 +288,7 @@ export default class DatePicker extends Component {
    * Callback is called when mouse leaves wrapper.
    * Reset isWrapperHovered.
    */
-  _onWrapperMouseLeave() {
+  _onWrapperMouseOut() {
     this.setState({
       isWrapperHovered: false
     });
@@ -298,7 +298,7 @@ export default class DatePicker extends Component {
    * Callback is called when touch starts on wrapper.
    * Conditionally sets isWrapperActive.
    */
-  _onWrapperTouchStart() {
+  _onWrapperTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
       this.setState({
         isWrapperActive: true
@@ -438,10 +438,10 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives mouseEnter.
+   * Callback is called when some day receives MouseOver.
    * It will conditionally set this.state.hoveredDay.
    */
-  _onDayMouseEnter(day, event) {
+  _onDayMouseOver(day, event) {
     if (!this.props.disabled && !this.props.readOnly && event.button === 0) {
       this.setState({
         hoveredDay: day
@@ -450,10 +450,10 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives mouseLeave.
+   * Callback is called when some day receives MouseOut.
    * It will reset this.state.hoveredDay.
    */
-  _onDayMouseLeave(day, event) {
+  _onDayMouseOut(day, event) {
     if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === day) {
       this.setState({
         hoveredDay: 0
@@ -465,7 +465,7 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives touchStart.
    * It will conditionally set this.state.activeDay and call props.onDayTouchStart.
    */
-  _onDayTouchStart(day) {
+  _onDayTouchStart(day, event) {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
       this._selectDate(day);
       this.setState({
@@ -687,8 +687,8 @@ export default class DatePicker extends Component {
                   ref={ 'day-' + day }
                   onMouseDown={ this._onDayMouseDown.bind(this, day) }
                   onMouseUp={ this._onDayMouseUp.bind(this, day) }
-                  onMouseEnter={ this._onDayMouseEnter.bind(this, day) }
-                  onMouseLeave={ this._onDayMouseLeave.bind(this, day) }
+                  onMouseOver={ this._onDayMouseOver.bind(this, day) }
+                  onMouseOut={ this._onDayMouseOut.bind(this, day) }
                   onTouchStart={ this._onDayTouchStart.bind(this, day) }
                   onTouchEnd={ this._onDayTouchEnd.bind(this, day) }
                   onFocus={ this._onDayFocus.bind(this, day) }
@@ -755,8 +755,8 @@ export default class DatePicker extends Component {
            onKeyDown={ this._onWrapperKeyDown.bind(this) }
            onMouseDown={ this._onWrapperMouseDown.bind(this) }
            onMouseUp={ this._onWrapperMouseUp.bind(this) }
-           onMouseEnter={ this._onWrapperMouseEnter.bind(this) }
-           onMouseLeave={ this._onWrapperMouseLeave.bind(this) }
+           onMouseOver={ this._onWrapperMouseOver.bind(this) }
+           onMouseOut={ this._onWrapperMouseOut.bind(this) }
            onTouchStart={ this._onWrapperTouchStart.bind(this) }
            onTouchEnd={ this._onWrapperTouchEnd.bind(this) }
            disabled={ this.props.disabled }
@@ -1019,7 +1019,7 @@ export default class DatePicker extends Component {
       }
     });
     if (this.props.onMonthChange) {
-      this.props.onMonthChange(newMonth);
+      this.props.onMonthChange(newMonth + 1);
     }
   }
 
@@ -1047,7 +1047,7 @@ export default class DatePicker extends Component {
       }
     });
     if (this.props.onMonthChange) {
-      this.props.onMonthChange(newMonth);
+      this.props.onMonthChange(newMonth + 1);
     }
   }
 
