@@ -702,8 +702,23 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Function will render the main calendar component and will apply styles sequentially according to following rules:
-   * 1.
+   * Function will render:
+   * - main calendar component
+   * - call methods to render navBar and week header
+   * - get array of weeks in a month and for each day in the week call method to render day
+   *
+   * It will apply styles sequentially according to following rules:
+   * Wrapper:
+   * 1. If component is readOnly apply readOnlyWrapperStyle
+   * 2. If component is disabled apply disabledWrapperStyle
+   *    - If disabled component is hovered apply disabledHoverWrapperStyle
+   * 3. If component is not disabled:
+   *    - If component is hivered apply hover style
+   *    - If component is hovered and active apply hover + active styles
+   *    - If component is hovered and focused but not active and preventFocusStyleForTouchAndClick is true apply focusStyles
+   * Week:
+   * 1. If component is readOnly apply readOnlyWrapperStyle
+   * 2. If component is disabled apply disabledWrapperStyle
    */
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
@@ -772,6 +787,10 @@ export default class DatePicker extends Component {
     );
   }
 
+  /**
+   * Function is called when some day if focused and ArrowLeft is pressed.
+   * It will set focus to previous day, if it was first day of the month it will decrease month and set focus to last day of previous month.
+   */
   _focusPreviousDay() {
     if (this.state.focusedDay > 1) {
       React.findDOMNode(this.refs['day-' + (this.state.focusedDay - 1)]).focus();
@@ -782,6 +801,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Function is called when some day if focused and ArrowRight is pressed.
+   * It will set focus to next day, if it was last day of the month it will increase month and set focus to first day of next month.
+   */
   _focusNextDay() {
     if (this.state.focusedDay < getMaxDateForMonth(this.state.month, this.state.year)) {
       React.findDOMNode(this.refs['day-' + (this.state.focusedDay + 1)]).focus();
@@ -792,6 +815,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Function is called when some day if focused and ArrowUp is pressed.
+   * It will set focus to same day of previous week, if same day of previous week lies in last month it will decrease month and focus that day.
+   */
   _focusPreviousWeeksDay() {
     const newDate = this.state.focusedDay - 7;
     if (newDate <= 0) {
@@ -803,6 +830,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Function is called when some day if focused and ArrowDown is pressed.
+   * It will set focus to same day of next week, if same day of next week lies in next month it will increase month and focus that day.
+   */
   _focusNextWeeksDay() {
     const newDate = this.state.focusedDay + 7;
     const maxDateForCurrentMonth = getMaxDateForMonth(this.state.month, this.state.year);
@@ -815,6 +846,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when leftNav receives mouse down.
+   * If component is not disabled it will decrease the month and set active state for left nav.
+   */
   _onLeftNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
       this._decreaseMonth();
@@ -824,6 +859,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when leftNav receives mouse up.
+   * It will reset active state for left nav.
+   */
   _onLeftNavMouseUp(event) {
     if (event.button === 0 && !this.props.disabled) {
       this.setState({
@@ -832,8 +871,12 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onLeftNavTouchStart() {
-    if (!this.props.disabled) {
+  /**
+   * Callback is called when leftNav receives touch start.
+   * If component is not disabled it will decrease the month and set active state for left nav.
+   */
+  _onLeftNavTouchStart(event) {
+    if (!this.props.disabled && event.touches.length === 1) {
       this._decreaseMonth();
       this.setState({
         isLeftNavActive: true
@@ -841,6 +884,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when leftNav receives touch end.
+   * It will reset active state for left nav.
+   */
   _onLeftNavTouchEnd() {
     if (!this.props.disabled) {
       this._decreaseMonth();
@@ -850,6 +897,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when leftNav receives focus.
+   * It will set left nav to focused, if component is not disabled and left nav is not active.
+   */
   _onLeftNavFocus() {
     if (!this.props.disabled && !this.state.isLeftNavActive) {
       this.setState({
@@ -858,6 +909,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when leftNav receives blur.
+   * It will reset leftNav focused state.
+   */
   _onLeftNavBlur() {
     if (!this.props.disabled) {
       this.setState({
@@ -866,6 +921,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when rightNav receives mouseDown.
+   * If component is not disabled it will increase the month and set active state for right nav.
+   */
   _onRightNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
       this._increaseMonth();
@@ -875,6 +934,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when rightNav receives mouse up.
+   * It will reset active state for right nav.
+   */
   _onRightNavMouseUp(event) {
     if (event.button === 0 && !this.props.disabled) {
       this.setState({
@@ -883,8 +946,12 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onRightNavTouchStart() {
-    if (!this.props.disabled) {
+  /**
+   * Callback is called when rightNav receives touch start.
+   * If component is not disabled it will increase the month and set active state for right nav.
+   */
+  _onRightNavTouchStart(event) {
+    if (!this.props.disabled && event.touches.length === 1) {
       this._increaseMonth();
       this.setState({
         isRightNavActive: true
@@ -892,6 +959,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when rightNav receives touch end.
+   * It will reset active state for right nav.
+   */
   _onRightNavTouchEnd() {
     if (!this.props.disabled) {
       this.setState({
@@ -900,6 +971,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when rightNav receives focus.
+   * It will set right nav to focused, if component is not disabled and right nav is not active.
+   */
   _onRightNavFocus() {
     if (!this.props.disabled && !this.state.isRightNavActive) {
       this.setState({
@@ -908,6 +983,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when rightNav receives blur.
+   * It will reset rightNav focused state.
+   */
   _onRightNavBlur() {
     if (!this.props.disabled) {
       this.setState({
@@ -916,6 +995,11 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * The function will decrease current month in state and call props.onMonthChange.
+   * Function takes closure as argument. Right now its used when user uses keys for navigation,
+   * we want to decrease month and focus some of its specific date.
+   */
   _decreaseMonth(postStateUpdateFunc) {
     let newMonth;
     let newYear;
@@ -939,12 +1023,11 @@ export default class DatePicker extends Component {
     }
   }
 
-  _onRightNavMonthClick() {
-    if (!this.props.disabled) {
-      this._increaseMonth();
-    }
-  }
-
+  /**
+   * The function will increase current month in state and call props.onMonthChange.
+   * Function takes closure as argument. Right now its used when user uses keys for navigation,
+   * we want to decrease month and focus some of its specific date.
+   */
   _increaseMonth(postStateUpdateFunc) {
     let newMonth;
     let newYear;
@@ -994,10 +1077,8 @@ export default class DatePicker extends Component {
  *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
- * 4. Comments: to be added
+ * 4. Test coverage
  *
- * 5. Test coverage
- *
- * 6. Docs
+ * 5. Docs
  *
  **/
