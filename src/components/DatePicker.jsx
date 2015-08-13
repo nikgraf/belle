@@ -176,13 +176,13 @@ export default class DatePicker extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.pseudoStyleIds = {};
-    this.pseudoStyleIds.navBarStyleId = `wrapper-style-id${id}`;
+    this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
     this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
     this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
     this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
     this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
     this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
-    this.pseudoStyleIds.dayLblStyleId = `day-style-id${id}`;
+    this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
     DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
@@ -376,7 +376,7 @@ export default class DatePicker extends Component {
    * It will conditionally set this.state.focusedDay to value of focused day and call props.onDayFocus.
    */
   _onDayFocus(day, event) {
-    if (!this.props.disabled && !(this.state.activeDay && this.state.activeDay === day)) {
+    if (!this.props.disabled && !this.props.readOnly && !(this.state.activeDay && this.state.activeDay === day)) {
       this.setState({
         focusedDay: day
       });
@@ -522,8 +522,9 @@ export default class DatePicker extends Component {
    * Depending on following rules it will apply various styles:
    * 1. If component is readOnly apply readOnly styles
    * 2. If component is disabled apply disabled styles
-   * 3. If component is not disabled and is active apply activeStyles
-   * 4. If component is not disabled and not active and is focused also preventFocusStyleForTouchAndClick is true apply focus styles
+   * 3. If component is not disabled
+   *    - If its active apply activeStyles
+   *    - If its not active and is focused also preventFocusStyleForTouchAndClick is true apply focus styles
    * (If preventFocusStyleForTouchAndClick is false focus styles already get applied by pseudo classes).
    */
   _getNavBar() {
@@ -625,6 +626,7 @@ export default class DatePicker extends Component {
    * It will apply various styles in sequence as below (styles will be additive):
    * 1. If component is readOnly apply readOnly styles
    * 2. If component is disabled apply disabled styles
+   *    - If component is disabled and hovered apply diableHover styles
    * 3. If its day in current month and component is not disabled or readOnly:
    *    - If component is hovered apply hover styles
    *    - If component is hovered and active apply hoveredStyles + activeStyles
@@ -699,6 +701,10 @@ export default class DatePicker extends Component {
             </span>);
   }
 
+  /**
+   * Function will render the main calendar component and will apply styles sequentially according to following rules:
+   * 1.
+   */
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     let weekStyle = extend({}, style.weekStyle, this.props.weekStyle);
@@ -709,7 +715,6 @@ export default class DatePicker extends Component {
     if (this.props.disabled) {
       wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
       weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
-      console.log('this.state.isWrapperHovered', this.state.isWrapperHovered);
       if (this.state.isWrapperHovered) {
         wrapperStyle = extend(wrapperStyle, style.disabledHoverWrapperStyle, this.props.disabledHoverWrapperStyle);
       }
