@@ -441,8 +441,8 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives MouseOver.
    * It will conditionally set this.state.hoveredDay.
    */
-  _onDayMouseOver(day, event) {
-    if (!this.props.disabled && !this.props.readOnly && event.button === 0) {
+  _onDayMouseOver(day) {
+    if (!this.props.disabled && !this.props.readOnly) {
       this.setState({
         hoveredDay: day
       });
@@ -482,7 +482,7 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives touchEnd.
    * It will reset this.state.activeDay and call props.onDayTouchEnd.
    */
-  _onDayTouchEnd(day) {
+  _onDayTouchEnd(day, event) {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === day) {
       this.setState({
         activeDay: 0
