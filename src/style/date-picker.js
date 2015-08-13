@@ -18,7 +18,6 @@ const datePickerStyle = {
     MsUserSelect: 'none',
     userSelect: 'none',
 
-    /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
 
@@ -215,15 +214,6 @@ const datePickerStyle = {
     justifyContent: 'space-between',
     color: '#716D6D',
 
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
     touchAction: 'manipulation',
@@ -253,6 +243,14 @@ const datePickerStyle = {
     margin: 0.5,
     cursor: 'pointer',
     backgroundColor: '#F8F8F8',
+
+    /*
+     User should be able to copy date.
+     */
+    WebkitUserSelect: 'initial',
+    MozUserSelect: 'initial',
+    MsUserSelect: 'initial',
+    userSelect: 'initial',
 
     transition: 'color 0.1s',
     transitionTimingFunction: 'ease-out'
