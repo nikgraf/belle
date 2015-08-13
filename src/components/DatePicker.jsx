@@ -567,7 +567,7 @@ export default class DatePicker extends Component {
                 onFocus={ this._onLeftNavFocus.bind(this)}
                 onBlur={ this._onLeftNavBlur.bind(this)}
                 style= { leftNavStyle }
-                className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }>&lt;</span>
+                className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }></span>
           <span style={ monthLblStyle }
                 className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
             { MONTHS[this.state.month] + '-' + this.state.year }
@@ -580,7 +580,7 @@ export default class DatePicker extends Component {
                 onFocus={ this._onRightNavFocus.bind(this)}
                 onBlur={ this._onRightNavBlur.bind(this)}
                 style= { rightNavStyle }
-                className={ unionClassNames(this.props.rightNavClassName, this.pseudoStyleIds.rightNavStyleId) }>&gt;</span>
+                className={ unionClassNames(this.props.rightNavClassName, this.pseudoStyleIds.rightNavStyleId) }></span>
       </div>
     );
   }
@@ -1067,9 +1067,8 @@ export default class DatePicker extends Component {
  * TODO-S:
  *
  * 1. Styling:
- * - Improve default belle styling
+ * - Improve default belle styling - (Abhinav getting new arrow images)
  * - Implement bootstrap styling for date-picker
- * - Images for left and right nav buttonStyle
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
  *
@@ -1077,7 +1076,7 @@ export default class DatePicker extends Component {
  *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
- * 4. Test coverage
+ * 4. Test coverage - In progress
  *
  * 5. Docs
  *
