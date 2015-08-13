@@ -160,7 +160,15 @@ const datePickerStyle = {
   // styling for month label on top of calendar
   monthLblStyle: {
     fontSize: 15,
-    width: 125
+    width: 125,
+
+    /*
+     User should be able to copy date.
+     */
+    WebkitUserSelect: 'initial',
+    MozUserSelect: 'initial',
+    MsUserSelect: 'initial',
+    userSelect: 'initial'
   },
 
   disabledMonthLblStyle: {
@@ -196,7 +204,15 @@ const datePickerStyle = {
     lineHeight: '35px',
     verticalAlign: 'middle',
     backgroundColor: 'white',
-    margin: 0.5
+    margin: 0.5,
+
+    /*
+     User should be able to copy date.
+     */
+    WebkitUserSelect: 'initial',
+    MozUserSelect: 'initial',
+    MsUserSelect: 'initial',
+    userSelect: 'initial'
   },
 
   disabledDayLblStyle: {
@@ -212,17 +228,7 @@ const datePickerStyle = {
   weekStyle: {
     display: 'flex',
     justifyContent: 'space-between',
-    color: '#716D6D',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-     Prevent flickering while tapping on WebKit
-     http://stackoverflow.com/a/3516243/837709
-     */
-    WebkitTapHighlightColor: 'transparent'
+    color: '#716D6D'
   },
 
   disabledWeekStyle: {
@@ -252,12 +258,23 @@ const datePickerStyle = {
     MsUserSelect: 'initial',
     userSelect: 'initial',
 
+    /* This button can only be pressed */
+    MsTouchAction: 'manipulation',
+    touchAction: 'manipulation',
+
+    /*
+     Prevent flickering while tapping on WebKit
+     http://stackoverflow.com/a/3516243/837709
+     */
+    WebkitTapHighlightColor: 'transparent',
+
     transition: 'color 0.1s',
     transitionTimingFunction: 'ease-out'
   },
 
   disabledDayStyle: {
-    color: '#C1BABA'
+    color: '#C1BABA',
+    cursor: 'auto'
   },
 
   readOnlyDayStyle: {
