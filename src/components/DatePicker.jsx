@@ -151,6 +151,9 @@ export default class DatePicker extends Component {
         style: extend({}, style['hover' + elmFirstCaps + 'Style'], properties['hover' + elmFirstCaps + 'Style']),
         pseudoClass: 'hover'
       });
+    });
+    ['wrapper', 'navBar', 'leftNav', 'rightNav', 'monthLbl', 'dayLbl', 'weekHeader', 'day'].forEach((elm) => {
+      const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       let focusStyle;
       if (preventFocusStyleForTouchAndClick) {
         focusStyle = { outline: 0 };
@@ -173,11 +176,13 @@ export default class DatePicker extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.pseudoStyleIds = {};
+    this.pseudoStyleIds.navBarStyleId = `wrapper-style-id${id}`;
     this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
     this.pseudoStyleIds.leftNavStyleId = `leftNav-style-id${id}`;
     this.pseudoStyleIds.rightNavStyleId = `rightNav-style-id${id}`;
     this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
     this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
+    this.pseudoStyleIds.dayLblStyleId = `day-style-id${id}`;
     DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
@@ -383,7 +388,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day received blur.
+   * Callback is called when some day receives blur.
    * It will reset this.state.focusedDay and call props.onDayBlur.
    */
   _onDayBlur(day, event) {
@@ -399,8 +404,12 @@ export default class DatePicker extends Component {
   }
 
   // mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
+  /**
+   * Callback is called when some day receives mouseDown.
+   * It will conditionally set this.state.activeDay and call props.onDayMouseDown.
+   */
   _onDayMouseDown(day, event) {
-    if (event.button === 0) {
+    if (event.button === 0 && !this.props.disabled && !this.props.readOnly) {
       this._selectDate(day);
       this.setState({
         activeDay: day
@@ -412,8 +421,12 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when some day receives mouseUp.
+   * It will reset this.state.activeDay and call props.onDayMouseUp.
+   */
   _onDayMouseUp(day, event) {
-    if (event.button === 0 && this.state.activeDay === day) {
+    if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === day) {
       this.setState({
         activeDay: 0
       });
@@ -424,24 +437,36 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when some day receives mouseEnter.
+   * It will conditionally set this.state.hoveredDay.
+   */
   _onDayMouseEnter(day, event) {
-    if (event.button === 0) {
+    if (!this.props.disabled && !this.props.readOnly && event.button === 0) {
       this.setState({
         hoveredDay: day
       });
     }
   }
 
+  /**
+   * Callback is called when some day receives mouseLeave.
+   * It will reset this.state.hoveredDay.
+   */
   _onDayMouseLeave(day, event) {
-    if (event.button === 0 && this.state.hoveredDay === day) {
+    if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === day) {
       this.setState({
         hoveredDay: 0
       });
     }
   }
 
+  /**
+   * Callback is called when some day receives touchStart.
+   * It will conditionally set this.state.activeDay and call props.onDayTouchStart.
+   */
   _onDayTouchStart(day) {
-    if (event.touches.length === 1) {
+    if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
       this._selectDate(day);
       this.setState({
         activeDay: day
@@ -453,8 +478,12 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Callback is called when some day receives touchEnd.
+   * It will reset this.state.activeDay and call props.onDayTouchEnd.
+   */
   _onDayTouchEnd(day) {
-    if (event.touches.length === 1 && this.state.activeDay === day) {
+    if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === day) {
       this.setState({
         activeDay: 0
       });
@@ -465,6 +494,10 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Depending on whether component is controlled or uncontrolled the function will update this.state.dateValue.constructor.
+   * It will also call props.onUpdate.
+   */
   _selectDate(date) {
     if (!this.props.disabled && !this.props.readOnly) {
       const dateValue = new Date(this.state.year, this.state.month, date);
@@ -484,6 +517,15 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Function will return jsx for rendering the nav bar for calendar.
+   * Depending on following rules it will apply various styles:
+   * 1. If component is readOnly apply readOnly styles
+   * 2. If component is disabled apply disabled styles
+   * 3. If component is not disabled and is active apply activeStyles
+   * 4. If component is not disabled and not active and is focused also preventFocusStyleForTouchAndClick is true apply focus styles
+   * (If preventFocusStyleForTouchAndClick is false focus styles already get applied by pseudo classes).
+   */
   _getNavBar() {
     let navBarStyle = extend({}, style.navBarStyle, this.props.navBarStyle);
     let leftNavStyle = extend({}, style.leftNavStyle, this.props.leftNavStyle);
@@ -542,6 +584,12 @@ export default class DatePicker extends Component {
     );
   }
 
+  /**
+   * Function will return jsx for rendering the week header for calendar.
+   * Depending on following rules it will apply various styles:
+   * 1. If component is readOnly apply readOnly styles
+   * 2. If component is disabled apply disabled styles
+   */
   _getDaysHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
     let weekHeaderStyle = extend({}, style.weekHeaderStyle, this.props.weekHeaderStyle);
@@ -572,6 +620,19 @@ export default class DatePicker extends Component {
   }
 
   // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
+  /**
+   * Function will return jsx for rendering the a day.
+   * It will apply various styles in sequence as below (styles will be additive):
+   * 1. If component is readOnly apply readOnly styles
+   * 2. If component is disabled apply disabled styles
+   * 3. If its day in current month and component is not disabled or readOnly:
+   *    - If component is hovered apply hover styles
+   *    - If component is hovered and active apply hoveredStyles + activeStyles
+   *    - If component is hovered and not active but focused and preventFocusStyleForTouchAndClick apply focus styles
+   * 4. If current day represents other months day in calendar apply otherMonthDayStyle
+   * 5. If its current day apply todayStyle
+   * 6. If this is selected day apply selectedDayStyle
+   */
   _getDayFragment(day, index) {
     const dateValue = this.state.dateValue;
     let ariaCurrent = '';
@@ -590,14 +651,14 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (!this.props.readOnly && !this.props.disabled) {
-      if (day && this.state.hoveredDay === day) {
+    if (day && !this.props.readOnly && !this.props.disabled) {
+      if (this.state.hoveredDay === day) {
         dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
-      if (day && this.state.activeDay === day) {
+      if (this.state.activeDay === day) {
         dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
       } else {
-        if (day && this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
+        if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay === day) {
           dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
         }
       }
@@ -605,10 +666,6 @@ export default class DatePicker extends Component {
 
     if (!day) {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
-    }
-
-    if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay !== day) {
-      dayStyle = extend(dayStyle, { outline: 0 });
     }
 
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
@@ -666,9 +723,6 @@ export default class DatePicker extends Component {
         !(this.state.isLeftNavFocused || this.state.isRightNavFocused || this.state.focusedDay > 0)) {
         wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
       }
-    }
-    if (this.preventFocusStyleForTouchAndClick && !this.state.isWrapperFocused) {
-      wrapperStyle = extend(wrapperStyle, { outline: 0 });
     }
 
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
