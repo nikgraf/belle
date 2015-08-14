@@ -1082,6 +1082,7 @@ export default class DatePicker extends Component {
  * 4. Docs
  *
  * 5. It will be nice to have for users ability highlight certain days - as holidays / birthdays
- *    .
+ *
+ * 6 Dull shade for sunday.
  *
  **/

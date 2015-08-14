@@ -26,6 +26,10 @@ export default React.createClass({
           <div style={ { 'marginBottom': '20px' } }>
             <DatePicker defaultValue={ selectedDate } readOnly/>
           </div>
+          <h3>Calendar in dutch locale !!!</h3>
+          <div style={ { 'marginBottom': '20px' } }>
+            <DatePicker defaultValue={ selectedDate } locale="ar"/>
+          </div>
         </Card>
 
       </div>

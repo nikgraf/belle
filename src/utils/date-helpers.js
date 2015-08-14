@@ -63,7 +63,7 @@ export function getDayAbbrArrayInLocale(locale) {
   const dateWeekDay = date.getDate() + (7 - date.getDay());
   for (let index = 0; index < 7; index++) {
     date.setDate(dateWeekDay + index);
-    weekDayAbbr.push(date.toLocaleString(locale, { weekday: 'short' }).substr(0, 2));
+    weekDayAbbr.push(date.toLocaleString(locale, { weekday: 'short' }));
   }
   return weekDayAbbr;
 }
