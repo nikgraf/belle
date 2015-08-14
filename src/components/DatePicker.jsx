@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
-import {getWeekArrayForMonth, MONTHS, DAYS_ABBR, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMaxDateForMonth} from '../utils/date-helpers';
+import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMaxDateForMonth, getMonthStringInLocale, getDayAbbrArrayInLocale} from '../utils/date-helpers';
 import style from '../style/date-picker';
 import config from '../config/datePicker';
 
@@ -44,6 +44,7 @@ export default class DatePicker extends Component {
       value: React.PropTypes.instanceOf(Date),
       requestChange: React.PropTypes.func.isRequired
     }),
+    locale: React.PropTypes.string,
     month: React.PropTypes.number,
     year: React.PropTypes.number,
     onFocus: React.PropTypes.func,
@@ -136,7 +137,8 @@ export default class DatePicker extends Component {
     tabIndex: 0,
     'aria-label': 'Calendar',
     disabled: false,
-    readOnly: false
+    readOnly: false,
+    locale: 'en'
   };
 
   /**
@@ -570,7 +572,7 @@ export default class DatePicker extends Component {
                 className={ unionClassNames(this.props.leftNavClassName, this.pseudoStyleIds.leftNavStyleId) }></span>
           <span style={ monthLblStyle }
                 className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
-            { MONTHS[this.state.month] + '-' + this.state.year }
+            { getMonthStringInLocale(this.state.month, this.props.locale) + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onRightNavMouseDown.bind(this) }
@@ -606,7 +608,7 @@ export default class DatePicker extends Component {
     return (
       <div style={ weekHeaderStyle }>
         {
-          map(DAYS_ABBR, (dayAbbr, index) => {
+          map(getDayAbbrArrayInLocale(this.props.locale), (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ dayLblStyle }
@@ -1071,12 +1073,15 @@ export default class DatePicker extends Component {
  * - Implement bootstrap styling for date-picker
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
- * - might be we can show dates on other month lyting in calendar un dull shade
+ * - might be we can show dates on other month lying in calendar in dull shade
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
  * 4. Docs
+ *
+ * 5. It will be nice to have for users ability highlight certain days - as holidays / birthdays
+ *    .
  *
  **/
