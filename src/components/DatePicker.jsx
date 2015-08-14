@@ -1071,13 +1071,12 @@ export default class DatePicker extends Component {
  * - Implement bootstrap styling for date-picker
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
+ * - might be we can show dates on other month lyting in calendar un dull shade
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
- * 4. Test coverage - In progress
- *
- * 5. Docs
+ * 4. Docs
  *
  **/
