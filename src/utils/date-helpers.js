@@ -49,3 +49,21 @@ export function getMaxDateForMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();
   }
 }
+
+export function getMonthStringInLocale(month, locale) {
+  const date = new Date();
+  date.setMonth(month);
+  return date.toLocaleString(locale, { month: 'long' });
+}
+
+export function getDayAbbrArrayInLocale(locale) {
+  const weekDayAbbr = new Array(7);
+  const date = new Date();
+  date.setDate(1);
+  const dateWeekDay = date.getDate() + (7 - date.getDay());
+  for (let index = 0; index < 7; index++) {
+    date.setDate(dateWeekDay + index);
+    weekDayAbbr.push(date.toLocaleString(locale, { weekday: 'short' }).substr(0, 2));
+  }
+  return weekDayAbbr;
+}
