@@ -300,4 +300,42 @@ describe('DatePicker', () => {
     datePicker.resetValue();
     expect(datePicker.state.dateValue).toBeUndefined();
   });
+
+  it('should apply hover styles to wrapper when mouse is over', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker wrapperClassName="wrapper_test" hoverWrapperStyle={ {backgroundColor: 'red'} }/>
+    );
+    const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
+    TestUtils.Simulate.mouseOver(wrapper);
+    expect(datePicker.state.isWrapperHovered).toBeTruthy();
+    expect(wrapper.props.style.backgroundColor).toBe('red');
+    TestUtils.Simulate.mouseOut(wrapper);
+    expect(datePicker.state.isWrapperHovered).toBeFalsy();
+  });
+
+  it('should apply activeDayStyle to day when touchStart but immediately after touchEnd should apply selectedDayStyle', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker activeDayStyle={ {color: 'blue'} } selectedDayStyle={ {color: 'red'} } dayClassName="day_test"/>
+    );
+    expect(datePicker.state.dateValue).toBeUndefined();
+    const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    TestUtils.Simulate.touchStart(day, {touches: {length: 1}});
+    expect(datePicker.state.dateValue.getDay()).toBeGreaterThan(0);
+    expect(day.props.style.color).toBe('blue');
+    TestUtils.Simulate.touchEnd(day, {touches: {length: 1}});
+    expect(day.props.style.color).toBe('red');
+  });
+
+  it('should not apply focusDayStyles for mouseDown by default', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker focusDayStyle={ {color: 'blue'} } activeDayStyle={ {backgroundColor: 'blue'} } preventFocusStyleForTouchAndClick={ false } dayClassName="day_test"/>
+    );
+    const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    TestUtils.Simulate.mouseDown(day, {button: 0});
+    expect(datePicker.state.dateValue.getDay()).toBeGreaterThan(0);
+    expect(day.props.style.backgroundColor).toBe('blue');
+    expect(day.props.style.color === 'blue').toBeFalsy();
+    TestUtils.Simulate.mouseUp(day, {button: 0});
+    expect(day.props.style.color === 'blue').toBeFalsy();
+  });
 });
