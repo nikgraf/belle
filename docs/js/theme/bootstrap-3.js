@@ -547,6 +547,17 @@ const bootstrap3Theme = {
         borderColor: '#8c8c8c'
       },
 
+      activeStyle: {
+        color: '#333',
+        backgroundColor: '#e6e6e6',
+        borderColor: '#adadad',
+
+        backgroundImage: 'none',
+        outline: 0,
+        WebkitBoxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
+        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)'
+      },
+
       hoverStyle: {
         color: '#333',
         textDecoration: 'none',

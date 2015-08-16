@@ -40,6 +40,10 @@ const selectStyle = {
     borderBottom: '1px solid #6EB8D4'
   },
 
+  activeStyle: {
+    borderBottom: '1px solid #6EB8D4'
+  },
+
   hoverStyle: {
     borderBottom: '1px solid #92D6EF'
   },

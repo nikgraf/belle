@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {omit, extend, filter, find, first, flatten, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -124,6 +125,7 @@ function sanitizeSelectedOptionWrapperProps(properties) {
     'positionOptions',
     'focusStyle',
     'hoverStyle',
+    'activeStyle',
     'wrapperStyle',
     'menuStyle',
     'caretToOpenStyle',
@@ -139,6 +141,8 @@ function sanitizeSelectedOptionWrapperProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
+    'onMouseDown',
+    'onMouseUp',
     'disabledStyle',
     'disabledHoverStyle'
   ]);
@@ -279,6 +283,7 @@ export default class Select extends Component {
     style: PropTypes.object,
     focusStyle: PropTypes.object,
     hoverStyle: PropTypes.object,
+    activeStyle: PropTypes.object,
     wrapperStyle: PropTypes.object,
     menuStyle: PropTypes.object,
     caretToOpenStyle: PropTypes.object,
@@ -292,6 +297,8 @@ export default class Select extends Component {
     disabledCaretToOpenStyle: PropTypes.object,
     onClick: PropTypes.func,
     onTouchCancel: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseUp: PropTypes.func,
     onTouchEnd: PropTypes.func,
     onTouchStart: PropTypes.func
   };
@@ -309,6 +316,11 @@ export default class Select extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
+
+    if (canUseDOM) {
+      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+      document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   componentWillReceiveProps(properties) {
@@ -389,6 +401,9 @@ export default class Select extends Component {
    */
   componentWillUnmount() {
     removeStyle(this._styleId);
+    if (canUseDOM) {
+      document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   /**
@@ -507,7 +522,7 @@ export default class Select extends Component {
    */
   _onTouchStartToggleMenu(event) {
     if (event.touches.length === 1) {
-      this.setState({ isTouchedToToggle: true });
+      this.setState({ isTouchedToToggle: true, isActive: true });
     } else {
       this.setState({ isTouchedToToggle: false });
     }
@@ -543,7 +558,7 @@ export default class Select extends Component {
         this.setState({ isOpen: true });
       }
     }
-    this.setState({ isTouchedToToggle: false });
+    this.setState({ isTouchedToToggle: false, isActive: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -554,11 +569,47 @@ export default class Select extends Component {
    * Reset the precondition to initialize a toggle of the menu.
    */
   _onTouchCancelToggleMenu(event) {
-    this.setState({ isTouchedToToggle: false });
+    this.setState({ isTouchedToToggle: false, isActive: false });
 
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
+  }
+
+  /**
+   * Set isActive to true on mouse-down.
+   */
+  _onMouseDown(event) {
+    this.setState({isActive: true});
+
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(event);
+    }
+  }
+
+  /**
+   * Set isActive to false on mouse-up.
+   */
+  _onMouseUp(event) {
+    this.setState({isActive: false});
+
+    if (this.props.onMouseUp) {
+      this.props.onMouseUp(event);
+    }
+  }
+
+  /**
+   * Set isActive to false on mouse-up.
+   */
+  _onMouseUpOnDocument() {
+    this.setState({ isActive: false });
+  }
+
+  /**
+   * Set isActive to false on is context menu opens on select's div.
+   */
+  _onContextMenu() {
+    this.setState({ isActive: false });
   }
 
   /**
@@ -720,6 +771,7 @@ export default class Select extends Component {
     const defaultStyle = extend({}, style.style, this.props.style);
     const hoverStyle = extend({}, defaultStyle, style.hoverStyle, this.props.hoverStyle);
     const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
+    const activeStyle = extend({}, defaultStyle, style.activeStyle, this.props.activeStyle);
     const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
     const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
     const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
@@ -762,7 +814,9 @@ export default class Select extends Component {
       }
       tabIndex = -1;
     } else {
-      if (this.state.isFocused) {
+      if (this.state.isActive) {
+        selectedOptionWrapperStyle = activeStyle;
+      } else if (this.state.isFocused) {
         selectedOptionWrapperStyle = focusStyle;
       } else if (this.state.isTouchedToToggle) {
         selectedOptionWrapperStyle = hoverStyle;
@@ -793,6 +847,9 @@ export default class Select extends Component {
              onTouchStart={ this._onTouchStartToggleMenu.bind(this) }
              onTouchEnd={ this._onTouchEndToggleMenu.bind(this) }
              onTouchCancel={ this._onTouchCancelToggleMenu.bind(this) }
+             onContextMenu={ this._onContextMenu.bind(this) }
+             onMouseDown = { this._onMouseDown.bind(this) }
+             onMouseUp = { this._onMouseUp.bind(this) }
              style={ selectedOptionWrapperStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"

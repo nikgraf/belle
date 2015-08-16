@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import {extend, omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -164,8 +165,10 @@ export default class Rating extends Component {
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
 
-    this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
-    document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    if (canUseDOM) {
+      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+      document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   componentWillReceiveProps(properties) {
@@ -192,7 +195,9 @@ export default class Rating extends Component {
    */
   componentWillUnmount() {
     removeStyle(this.ratingWrapperStyleId);
-    document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    if (canUseDOM) {
+      document.removeEventListener('mouseup', this.mouseUpOnDocumentCallback);
+    }
   }
 
   /**
