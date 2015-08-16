@@ -21,7 +21,7 @@ const usageExampleHtml = `<!doctype html>
 
 const usageExampleJavaScript = `var React = require('react');
 var belle = require('belle');
-TextInput = belle.TextInput;
+var TextInput = belle.TextInput;
 
 var App = React.createClass({
 
