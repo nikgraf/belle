@@ -21,34 +21,34 @@ describe('DatePicker', () => {
     expect(datePicker.state.dateValue).toBeUndefined();
   });
 
-  it('should decrease month when left nav is focused and enter is pressed', () => {
+  it('should decrease month when prevMonth is focused and enter is pressed', () => {
     let componentMonth;
     const currentMonth = (new Date()).getMonth();
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker leftNavClassName="left_nav_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
+      <DatePicker prevMonthClassName="prev_month_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
     );
 
     expect(datePicker.props.month).toBe(currentMonth + 1);
     expect(datePicker.state.month).toBe(currentMonth);
-    const leftNav = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'left_nav_test');
-    TestUtils.Simulate.focus(leftNav);
-    TestUtils.Simulate.keyDown(leftNav, {key: 'Enter'});
+    const prevMonth = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'prev_month_test');
+    TestUtils.Simulate.focus(prevMonth);
+    TestUtils.Simulate.keyDown(prevMonth, {key: 'Enter'});
     expect(componentMonth).toBe(currentMonth);
     expect(datePicker.state.month).toBe(currentMonth - 1);
   });
 
-  it('should increase month when right nav is focused and enter is pressed', () => {
+  it('should increase month when nextMonth is focused and enter is pressed', () => {
     let componentMonth;
     const currentMonth = (new Date()).getMonth();
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker rightNavClassName="right_nav_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
+      <DatePicker nextMonthClassName="next_month_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
     );
 
     expect(datePicker.props.month).toBe(currentMonth + 1);
     expect(datePicker.state.month).toBe(currentMonth);
-    const rightNav = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'right_nav_test');
-    TestUtils.Simulate.focus(rightNav);
-    TestUtils.Simulate.keyDown(rightNav, {key: 'Enter'});
+    const nextMonth = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'next_month_test');
+    TestUtils.Simulate.focus(nextMonth);
+    TestUtils.Simulate.keyDown(nextMonth, {key: 'Enter'});
     expect(componentMonth).toBe(currentMonth + 2);
     expect(datePicker.state.month).toBe(currentMonth + 1);
   });
@@ -146,8 +146,8 @@ describe('DatePicker', () => {
     expect(DatePicker.updatePseudoClassStyle.mock.calls.length).toBe(1);
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].wrapperStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].navBarStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].leftNavStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].rightNavStyleId).toBeDefined();
+    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].prevMonthStyleId).toBeDefined();
+    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].nextMonthStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].monthLblStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].dayLblStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].dayStyleId).toBeDefined();
