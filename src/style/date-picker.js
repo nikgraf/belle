@@ -293,11 +293,13 @@ const datePickerStyle = {
   },
 
   hoverDayStyle: {
-    backgroundColor: '#DEF1F7'
+    backgroundColor: '#87CEFA',
+    color: 'white'
   },
 
   activeDayStyle: {
-    backgroundColor: '#E8E8E8'
+    backgroundColor: '#DEF1F7',
+    color: '#716D6D'
   },
 
   focusDayStyle: {
