@@ -6,26 +6,18 @@
  * @returns {Array}: Array of weeks in a month, each week is in turn array of days in that week
  */
 export function getWeekArrayForMonth(month, year) {
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
+  const monthDay = new Date(year, month, 1);
+  monthDay.setDate(monthDay.getDate() - monthDay.getDay());
+  const lastDate = new Date(year, month + 1, 0);
 
   const weekArray = [];
-  let dayCounter = 1;
-  for (let index = 1; index <= lastDate; ) {
+  while (monthDay <= lastDate) {
     const newWeek = [];
-    if (index === 1) {
-      for (;dayCounter <= firstDay; dayCounter++) {
-        newWeek.push(undefined);
-      }
+    for (let dayCounter = 0; dayCounter < 7; dayCounter++) {
+      const weekDate = new Date(monthDay.getFullYear(), monthDay.getMonth(), monthDay.getDate());
+      newWeek.push(weekDate);
+      monthDay.setDate(monthDay.getDate() + 1);
     }
-    for (;dayCounter <= 7 && index <= lastDate; dayCounter++) {
-      newWeek.push(index);
-      index++;
-    }
-    for (;dayCounter <= 7; dayCounter++) {
-      newWeek.push(undefined);
-    }
-    dayCounter = 1;
     weekArray.push(newWeek);
   }
   return weekArray;

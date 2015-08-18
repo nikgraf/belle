@@ -321,6 +321,7 @@ const datePickerStyle = {
   },
 
   otherMonthDayStyle: {
+    color: '#D3D0D0',
     cursor: 'auto'
   }
 };
