@@ -36,7 +36,7 @@ export const CURRENT_MONTH = TODAY.getMonth();
 
 export const CURRENT_YEAR = TODAY.getFullYear();
 
-// method is no longer used and canbe removed later
+// method is no longer used and can be removed later
 export function getMaxDateForMonth(month, year) {
   if (month !== undefined && month !== null && year) {
     return new Date(year, month + 1, 0).getDate();
