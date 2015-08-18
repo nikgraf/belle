@@ -47,6 +47,8 @@ export default class DatePicker extends Component {
     locale: React.PropTypes.string,
     month: React.PropTypes.number,
     year: React.PropTypes.number,
+    showOtherMonthDate: React.PropTypes.bool,
+    styleWeekend: React.PropTypes.bool,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
@@ -113,6 +115,7 @@ export default class DatePicker extends Component {
     disabledDayLblStyle: React.PropTypes.object,
     readOnlyDayLblStyle: React.PropTypes.object,
     hoverDayLblStyle: React.PropTypes.object,
+    weekendLblStyle: React.PropTypes.object,
     // week style
     weekStyle: React.PropTypes.object,
     disabledWeekStyle: React.PropTypes.object,
@@ -128,7 +131,8 @@ export default class DatePicker extends Component {
     disabledHoverDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
     selectedDayStyle: React.PropTypes.object,
-    otherMonthDayStyle: React.PropTypes.object
+    otherMonthDayStyle: React.PropTypes.object,
+    weekendStyle: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -138,7 +142,9 @@ export default class DatePicker extends Component {
     'aria-label': 'Calendar',
     disabled: false,
     readOnly: false,
-    locale: 'en'
+    locale: 'en',
+    showOtherMonthDate: true,
+    styleWeekend: true
   };
 
   /**
@@ -393,7 +399,7 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives blur.
    * It will reset this.state.focusedDay and call props.onDayBlur.
    */
-  _onDayBlur(day, event) {
+  _onDayBlur(dayKey, event) {
     if (!this.props.disabled && this.state.focusedDay && this.state.focusedDay === dayKey) {
       this.setState({
         focusedDay: 0
@@ -484,7 +490,7 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives touchEnd.
    * It will reset this.state.activeDay and call props.onDayTouchEnd.
    */
-  _onDayTouchEnd(day, event) {
+  _onDayTouchEnd(dayKey, event) {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === dayKey) {
       this.setState({
         activeDay: 0
@@ -604,6 +610,7 @@ export default class DatePicker extends Component {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
       weekHeaderStyle = extend(weekHeaderStyle, style.disabledWeekHeaderStyle, this.props.disabledWeekHeaderStyle);
     }
+    const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
 
     return (
       <div style={ weekHeaderStyle }>
@@ -611,7 +618,7 @@ export default class DatePicker extends Component {
           map(getDayAbbrArrayInLocale(this.props.locale), (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ dayLblStyle }
+                    style={ (index === 0 && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
                     className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
                   { dayAbbr }
                 </span>
@@ -673,6 +680,10 @@ export default class DatePicker extends Component {
       }
     }
 
+    if (currentDate.getDay() === 0 && this.props.styleWeekend) {
+      dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
+    }
+
     if (!isCurrentMonth) {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
     }
@@ -704,7 +715,7 @@ export default class DatePicker extends Component {
                   aria-selected={ ariaSelected }
                   style={ dayStyle }
                   className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
-              { day }
+              { (isCurrentMonth || this.props.showOtherMonthDate) ? day : ''}
             </span>);
   }
 
@@ -1074,11 +1085,10 @@ export default class DatePicker extends Component {
  * TODO-S:
  *
  * 1. Styling:
- * - Improve default belle styling - (Abhinav getting new arrow images)
+ * - Improve default belle styling
  * - Implement bootstrap styling for date-picker
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
- * - might be we can show dates on other month lying in calendar in dull shade
  *
  * 2. Localization: I would  prefer to create our own small lib for localization use JS date api underneath.
  *
@@ -1087,7 +1097,5 @@ export default class DatePicker extends Component {
  * 4. Docs
  *
  * 5. It will be nice to have for users ability highlight certain days - as holidays / birthdays
- *
- * 6 Dull shade for sunday.
  *
  **/

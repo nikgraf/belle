@@ -20,11 +20,11 @@ export default React.createClass({
           <Button onClick={ this._resetValue }>Reset Date</Button>
           <h3>Disabled Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker defaultValue={ selectedDate } disabled/>
+            <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate } disabled/>
           </div>
           <h3>Read-Only Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker defaultValue={ selectedDate } readOnly/>
+            <DatePicker styleWeekend={ false } defaultValue={ selectedDate } readOnly/>
           </div>
           <h3>Calendar in dutch locale !!!</h3>
           <div style={ { 'marginBottom': '20px' } }>

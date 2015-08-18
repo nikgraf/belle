@@ -49,7 +49,7 @@ export function getMonthStringInLocale(month, locale) {
 }
 
 export function getDayAbbrArrayInLocale(locale) {
-  const weekDayAbbr = new Array(7);
+  const weekDayAbbr = [];
   const date = new Date();
   date.setDate(1);
   const dateWeekDay = date.getDate() + (7 - date.getDay());
