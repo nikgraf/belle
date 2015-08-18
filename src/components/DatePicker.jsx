@@ -637,7 +637,10 @@ export default class DatePicker extends Component {
    * 5. If its current day apply todayStyle
    * 6. If this is selected day apply selectedDayStyle
    */
-  _getDayFragment(day, index) {
+  _getDayFragment(currentDate, index) {
+    const day = currentDate.getDate();
+    const isCurrentMonth = currentDate.getMonth() === this.state.month;
+
     const dateValue = this.state.dateValue;
     let ariaCurrent = '';
     let ariaSelected = false;
@@ -650,12 +653,12 @@ export default class DatePicker extends Component {
 
     if (this.props.disabled) {
       dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
-      if (day && this.state.hoveredDay === day) {
+      if (isCurrentMonth && this.state.hoveredDay === day) {
         dayStyle = extend(dayStyle, style.disabledHoverDayStyle, this.props.disabledHoverDayStyle);
       }
     }
 
-    if (day && !this.props.readOnly && !this.props.disabled) {
+    if (isCurrentMonth && !this.props.readOnly && !this.props.disabled) {
       if (this.state.hoveredDay === day) {
         dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
@@ -668,7 +671,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (!day) {
+    if (!isCurrentMonth) {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
     }
 
@@ -686,7 +689,7 @@ export default class DatePicker extends Component {
     const tabIndex = (!this.props.disabled && !this.props.readOnly && day) ? this.props.tabIndex : false;
     return (<span tabIndex={ tabIndex }
                   key={ 'day-' + index }
-                  ref={ 'day-' + day }
+                  ref={ 'day-' + currentDate.getMonth() + day }
                   onMouseDown={ this._onDayMouseDown.bind(this, day) }
                   onMouseUp={ this._onDayMouseUp.bind(this, day) }
                   onMouseOver={ this._onDayMouseOver.bind(this, day) }
@@ -795,10 +798,10 @@ export default class DatePicker extends Component {
    */
   _focusPreviousDay() {
     if (this.state.focusedDay > 1) {
-      React.findDOMNode(this.refs['day-' + (this.state.focusedDay - 1)]).focus();
+      React.findDOMNode(this.refs['day-' + this.state.month + (this.state.focusedDay - 1)]).focus();
     } else {
       this._decreaseMonth(() => {
-        React.findDOMNode(this.refs['day-' + (getMaxDateForMonth(this.state.month, this.state.year))]).focus();
+        React.findDOMNode(this.refs['day-' + this.state.month + (getMaxDateForMonth(this.state.month, this.state.year))]).focus();
       });
     }
   }
@@ -809,10 +812,10 @@ export default class DatePicker extends Component {
    */
   _focusNextDay() {
     if (this.state.focusedDay < getMaxDateForMonth(this.state.month, this.state.year)) {
-      React.findDOMNode(this.refs['day-' + (this.state.focusedDay + 1)]).focus();
+      React.findDOMNode(this.refs['day-' + this.state.month + (this.state.focusedDay + 1)]).focus();
     } else {
       this._increaseMonth(() => {
-        React.findDOMNode(this.refs['day-1']).focus();
+        React.findDOMNode(this.refs['day-' + this.state.month + '1']).focus();
       });
     }
   }
@@ -825,10 +828,10 @@ export default class DatePicker extends Component {
     const newDate = this.state.focusedDay - 7;
     if (newDate <= 0) {
       this._decreaseMonth(() => {
-        React.findDOMNode(this.refs['day-' + (getMaxDateForMonth(this.state.month, this.state.year) + newDate)]).focus();
+        React.findDOMNode(this.refs['day-' + this.state.month + (getMaxDateForMonth(this.state.month, this.state.year) + newDate)]).focus();
       });
     } else {
-      React.findDOMNode(this.refs['day-' + newDate]).focus();
+      React.findDOMNode(this.refs['day-' + this.state.month + newDate]).focus();
     }
   }
 
@@ -841,10 +844,10 @@ export default class DatePicker extends Component {
     const maxDateForCurrentMonth = getMaxDateForMonth(this.state.month, this.state.year);
     if (newDate > maxDateForCurrentMonth) {
       this._increaseMonth(() => {
-        React.findDOMNode(this.refs['day-' + (newDate - maxDateForCurrentMonth)]).focus();
+        React.findDOMNode(this.refs['day-' + this.state.month + (newDate - maxDateForCurrentMonth)]).focus();
       });
     } else {
-      React.findDOMNode(this.refs['day-' + newDate]).focus();
+      React.findDOMNode(this.refs['day-' + this.state.month + newDate]).focus();
     }
   }
 
