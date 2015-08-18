@@ -235,6 +235,10 @@ const datePickerStyle = {
   hoverDayLblStyle: {
   },
 
+  weekendLblStyle: {
+    backgroundColor: '#F0F0F0'
+  },
+
   // styling for week's row
   weekStyle: {
     display: 'flex',
@@ -313,6 +317,10 @@ const datePickerStyle = {
 
   todayStyle: {
     color: '#E24545'
+  },
+
+  weekendStyle: {
+    backgroundColor: '#F0F0F0'
   },
 
   selectedDayStyle: {
