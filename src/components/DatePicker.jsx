@@ -671,21 +671,26 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
     }
 
-    if (isCurrentMonth && !this.props.readOnly && !this.props.disabled) {
-      if (this.state.hoveredDay === dayKey) {
-        dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
-      }
-      if (this.state.activeDay === dayKey) {
-        dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
-      } else {
-        if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay === dayKey) {
-          dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+    if (!isCurrentMonth) {
+      dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
+    } else {
+      if (isCurrentMonth && !this.props.readOnly && !this.props.disabled) {
+        if (this.state.hoveredDay === dayKey) {
+          dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
+        }
+        if (this.state.activeDay === dayKey) {
+          dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+        } else {
+          if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay === dayKey) {
+            dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+          }
         }
       }
     }
 
-    if (!isCurrentMonth) {
-      dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
+    if (this.state.activeDay !== dayKey && dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && dateValue.getMonth() === currentDate.getMonth() && this.state.year === dateValue.getFullYear()) {
+      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+      ariaSelected = true;
     }
 
     if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
@@ -693,29 +698,28 @@ export default class DatePicker extends Component {
       ariaCurrent = 'date';
     }
 
-    if (this.state.activeDay !== dayKey && dateValue && day === dateValue.getDate() && this.state.month === dateValue.getMonth() && this.state.year === dateValue.getFullYear()) {
-      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-      ariaSelected = true;
-    }
-
     // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
     const tabIndex = (!this.props.disabled && !this.props.readOnly && isCurrentMonth) ? this.props.tabIndex : false;
-    return (<span tabIndex={ tabIndex }
-                  key={ 'day-' + index }
-                  ref={ 'day-' + dayKey }
-                  onMouseDown={ this._onDayMouseDown.bind(this, dayKey, day) }
-                  onMouseUp={ this._onDayMouseUp.bind(this, dayKey) }
-                  onMouseOver={ this._onDayMouseOver.bind(this, dayKey) }
-                  onMouseOut={ this._onDayMouseOut.bind(this, dayKey) }
-                  onTouchStart={ this._onDayTouchStart.bind(this, dayKey, day) }
-                  onTouchEnd={ this._onDayTouchEnd.bind(this, dayKey) }
-                  onFocus={ this._onDayFocus.bind(this, dayKey) }
-                  onBlur={ this._onDayBlur.bind(this, dayKey) }
-                  aria-current={ ariaCurrent }
-                  aria-selected={ ariaSelected }
-                  style={ dayStyle }
-                  className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
-              { (isCurrentMonth || this.props.showOtherMonthDate) ? day : ''}
+    return isCurrentMonth ? (<span tabIndex={ tabIndex }
+              key={ 'day-' + index }
+              ref={ 'day-' + dayKey }
+              onMouseDown={ this._onDayMouseDown.bind(this, dayKey, day) }
+              onMouseUp={ this._onDayMouseUp.bind(this, dayKey) }
+              onMouseOver={ this._onDayMouseOver.bind(this, dayKey) }
+              onMouseOut={ this._onDayMouseOut.bind(this, dayKey) }
+              onTouchStart={ this._onDayTouchStart.bind(this, dayKey, day) }
+              onTouchEnd={ this._onDayTouchEnd.bind(this, dayKey) }
+              onFocus={ this._onDayFocus.bind(this, dayKey) }
+              onBlur={ this._onDayBlur.bind(this, dayKey) }
+              aria-current={ ariaCurrent }
+              aria-selected={ ariaSelected }
+              style={ dayStyle }
+              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
+              { day }
+            </span>) : (<span key={ 'day-' + index }
+              style={ dayStyle }
+              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
+              { this.props.showOtherMonthDate ? day : ''}
             </span>);
   }
 
