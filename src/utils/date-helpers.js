@@ -23,11 +23,6 @@ export function getWeekArrayForMonth(month, year) {
   return weekArray;
 }
 
-export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'];
-
-export const DAYS_ABBR = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
 export const TODAY = new Date();
 
 export const CURRENT_DATE = TODAY.getDate();
@@ -35,28 +30,3 @@ export const CURRENT_DATE = TODAY.getDate();
 export const CURRENT_MONTH = TODAY.getMonth();
 
 export const CURRENT_YEAR = TODAY.getFullYear();
-
-// method is no longer used and can be removed later
-export function getMaxDateForMonth(month, year) {
-  if (month !== undefined && month !== null && year) {
-    return new Date(year, month + 1, 0).getDate();
-  }
-}
-
-export function getMonthStringInLocale(month, locale) {
-  const date = new Date();
-  date.setMonth(month);
-  return date.toLocaleString(locale, { month: 'long' });
-}
-
-export function getDayAbbrArrayInLocale(locale) {
-  const weekDayAbbr = [];
-  const date = new Date();
-  date.setDate(1);
-  const dateWeekDay = date.getDate() + (7 - date.getDay());
-  for (let index = 0; index < 7; index++) {
-    date.setDate(dateWeekDay + index);
-    weekDayAbbr.push(date.toLocaleString(locale, { weekday: 'short' }));
-  }
-  return weekDayAbbr;
-}
