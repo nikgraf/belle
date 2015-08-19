@@ -81,6 +81,11 @@ export default React.createClass({
           <TextInput placeholder="Hello" maxRows={ 2 } maxHeight={ 300 }/>
         </div>
 
+        <h3>style minHeight 80</h3>
+        <div style={{width: 250 }}>
+          <TextInput style={{ minHeight: 80 }}/>
+        </div>
+
         {/* Value test */}
         <div style={ {width: 250} }>
           <textarea value="abc" onChange={ (event) => console.log(event.target.value) }/>

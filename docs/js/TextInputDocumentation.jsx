@@ -10,7 +10,7 @@ const exampleCode = `<!-- TextInput with a defaultValue -->
 <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
            allowNewLine={ true } />`;
 
-const advancedExampleCode = `<TextInput minHeight={ 120 }
+const advancedExampleCode = `<TextInput minRows={ 3 }
        valueLink={ this.linkState('customTextInputValue') }
        placeholder="Just fill in whatever you like :)"
        style={{
@@ -38,7 +38,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      customTextInputValue: 'What is going on? Ohh, we provided minHeight and custom styles. Please be so kind and add a little bit more text here.'
+      customTextInputValue: 'What is going on? Ohh, we provided minRows and custom styles. Please be so kind and add a little bit more text here.'
     };
   },
 
@@ -202,6 +202,11 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
+              Will be deprecated with Belle 2.0.0. We recommend to use minRows.
+              In case you need it based on pixels you can set minHeight via the
+              style property: <TextInput style={{ minHeight: 80 }}/>
+            </p>
+            <p>
               Once set the TextInput will always keep a minimum height. This can be useful to indicate
               to users that it is expected from them to provide a certain amount of text input.
             </p>
@@ -222,6 +227,11 @@ export default React.createClass({
               <i>Integer</i>
               <br />
               optional</p>
+            <p>
+              Will be deprecated with Belle 2.0.0. We recommend to use maxRows.
+              In case you need it based on pixels you can set manHeight via the
+              style property: <TextInput style={{ maxHeight: 300 }}/>
+            </p>
             <p>
               Once set the TextInput will always keep a maximum height. This
               can be useful to keep your layout sane even with a lot of text input.
@@ -320,7 +330,7 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <TextInput minHeight={ 120 }
+      <TextInput minRows={ 3 }
                  valueLink={ this.linkState('customTextInputValue') }
                  placeholder="Just fill in whatever you like :)"
                  style={{
