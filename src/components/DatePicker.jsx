@@ -163,7 +163,7 @@ export default class DatePicker extends Component {
     ['wrapper', 'navBar', 'prevMonth', 'nextMonth', 'monthLbl', 'dayLbl', 'weekHeader', 'day'].forEach((elm) => {
       const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
       let focusStyle;
-      if (preventFocusStyleForTouchAndClick) {
+      if (preventFocusStyleForTouchAndClick && elm !== 'day') {
         focusStyle = { outline: 0 };
       } else {
         focusStyle = extend({}, style['focus' + elmFirstCaps + 'Style'], properties['focus' + elmFirstCaps + 'Style']);
@@ -384,7 +384,7 @@ export default class DatePicker extends Component {
    * It will conditionally set this.state.focusedDay to value of focused day and call props.onDayFocus.
    */
   _onDayFocus(dayKey, event) {
-    if (!this.props.disabled && !this.props.readOnly && !(this.state.activeDay && this.state.activeDay === dayKey)) {
+    if (!this.props.disabled && !this.props.readOnly) {
       this.setState({
         focusedDay: dayKey
       });
@@ -680,10 +680,6 @@ export default class DatePicker extends Component {
         }
         if (this.state.activeDay === dayKey) {
           dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
-        } else {
-          if (this.preventFocusStyleForTouchAndClick && this.state.focusedDay === dayKey) {
-            dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
-          }
         }
       }
     }
