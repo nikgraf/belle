@@ -11,6 +11,7 @@ React.initializeTouchEvents(true);
  * Update hover style for the specified styleId.
  *
  * @param styleId {string} - a unique id that exists as class attribute in the DOM
+ * @param caretStyleId {string} - unique is assigned as class to caret span
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
 function updatePseudoClassStyle(styleId, caretStyleId, properties) {
@@ -137,12 +138,13 @@ export default class ComboBox extends Component {
       isOpen: false,
       focusedOptionIndex: undefined,
       inputValue: inputValue,
-      filteredOptions: this.filterOptions(inputValue, properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
       menuProps: sanitizeMenuProps(properties.menuProps)
     };
+
+    this.filteredOptions = ComboBox.filterOptions(inputValue, properties);
   }
 
   static displayName = 'Belle ComboBox';
@@ -212,7 +214,7 @@ export default class ComboBox extends Component {
    */
   _getHint() {
     if (this.state.isOpen) {
-      const filteredOptions = this.state.filteredOptions;
+      const filteredOptions = this.filteredOptions;
       if (filteredOptions && filteredOptions.length > 0) {
         let hint;
         const focusedOptionIndex = this.state.focusedOptionIndex;
@@ -261,7 +263,6 @@ export default class ComboBox extends Component {
 
     const newState = {
       inputValue: inputValue,
-      filteredOptions: this.filterOptions(inputValue, properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -269,6 +270,8 @@ export default class ComboBox extends Component {
     };
 
     this.setState(newState);
+    this.filteredOptions = ComboBox.filterOptions(inputValue, properties);
+
     removeAllStyles([this._styleId, this._caretStyleId]);
     updatePseudoClassStyle(this._styleId, this._caretStyleId, properties);
   }
@@ -454,7 +457,7 @@ export default class ComboBox extends Component {
    */
   _onArrowDownKeyDown() {
     let index = 0;
-    if (this.state.focusedOptionIndex !== undefined && (this.state.focusedOptionIndex + 1) < this.state.filteredOptions.length) {
+    if (this.state.focusedOptionIndex !== undefined && (this.state.focusedOptionIndex + 1) < this.filteredOptions.length) {
       index = this.state.focusedOptionIndex + 1;
     }
     this.setState({
@@ -467,8 +470,8 @@ export default class ComboBox extends Component {
    * Highlight last option if currently first option is focused.
    */
   _onArrowUpKeyDown() {
-    if (this.state.filteredOptions.length > 0) {
-      let index = this.state.filteredOptions.length - 1;
+    if (this.filteredOptions.length > 0) {
+      let index = this.filteredOptions.length - 1;
       if (this.state.focusedOptionIndex) {
         index = this.state.focusedOptionIndex - 1;
       }
@@ -483,7 +486,7 @@ export default class ComboBox extends Component {
    */
   _onEnterOrTabKeyDown() {
     if (this.state.focusedOptionIndex >= 0) {
-      this._triggerChange(this.state.filteredOptions[this.state.focusedOptionIndex].props.value);
+      this._triggerChange(this.filteredOptions[this.state.focusedOptionIndex].props.value);
     }
   }
 
@@ -491,7 +494,7 @@ export default class ComboBox extends Component {
    * The function will return options (if any) who's value is same as value of the combo-box input.
    */
   _findMatch(value) {
-    return find(this.state.filteredOptions, (entry) => {
+    return find(this.filteredOptions, (entry) => {
       return entry.props.value === value;
     });
   }
@@ -518,9 +521,9 @@ export default class ComboBox extends Component {
       this.setState({
         inputValue: value,
         isOpen: false,
-        focusedOptionIndex: undefined,
-        filteredOptions: this.filterOptions(value, this.props)
+        focusedOptionIndex: undefined
       });
+      this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
 
     const obj = {value: value, isOptionSelection: true, isMatchingOption: true};
@@ -563,13 +566,12 @@ export default class ComboBox extends Component {
         focusedOptionIndex: undefined
       });
     } else {
-      const filteredOptions = this.filterOptions(value, this.props);
       this.setState({
         inputValue: value,
         isOpen: true,
-        filteredOptions: filteredOptions,
         focusedOptionIndex: undefined
       });
+      this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
 
     const obj = {value: value, isOptionSelection: false, isMatchingOption: false};
@@ -588,7 +590,7 @@ export default class ComboBox extends Component {
   /**
    * Function to filter options using input value.
    */
-  filterOptions(inputValue, properties) { /*eslint react/sort-comp:0*/
+  static filterOptions(inputValue, properties) { /*eslint react/sort-comp:0*/
     let filteredOptions = [];
     if (properties.children.length > 0) {
       if (inputValue) {
@@ -633,7 +635,7 @@ export default class ComboBox extends Component {
       }
     }
 
-    const computedMenuStyle = (this.state.isOpen && !this.props.disabled && this.state.filteredOptions && this.state.filteredOptions.length > 0) ? menuStyle : { display: 'none' };
+    const computedMenuStyle = (this.state.isOpen && !this.props.disabled && this.filteredOptions && this.filteredOptions.length > 0) ? menuStyle : { display: 'none' };
 
     // using value for input makes it a controlled component and it will be changed in controlled manner if (1) user enters value, (2) user selects some option
     // value will be updated depending on whether user has passed value / valueLink / defaultValue as property
@@ -673,7 +675,7 @@ export default class ComboBox extends Component {
             aria-expanded={ this.state.isOpen }
             {...this.state.menuProps} >
           {
-            React.Children.map(this.state.filteredOptions, (entry, index) => {
+            React.Children.map(this.filteredOptions, (entry, index) => {
               const isHovered = this.state.focusedOptionIndex === index;
               const option = React.cloneElement(entry, {
                 _isHovered: isHovered

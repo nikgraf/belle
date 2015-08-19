@@ -22,7 +22,7 @@ describe('ComboBox', () => {
     );
 
     expect(combobox.state.inputValue).toBe('vie');
-    expect(combobox.state.filteredOptions.length).toBe(1);
+    expect(combobox.filteredOptions.length).toBe(1);
   });
 
   it('should filter all values case no value, defaultValue or valueLink is defined', () => {
@@ -34,7 +34,7 @@ describe('ComboBox', () => {
     );
 
     expect(combobox.state.inputValue).toBe(undefined);
-    expect(combobox.state.filteredOptions.length).toBe(2);
+    expect(combobox.filteredOptions.length).toBe(2);
   });
 
   it('should be able to provide a onUpdate callback', () => {
@@ -92,7 +92,7 @@ describe('ComboBox', () => {
       </ComboBox>
     );
 
-    expect(combobox.state.filteredOptions.length).toBe(2);
+    expect(combobox.filteredOptions.length).toBe(2);
 
     const viennaOptionNode = TestUtils.scryRenderedDOMComponentsWithClass(combobox, 'vienna-option');
     TestUtils.Simulate.click(viennaOptionNode);
