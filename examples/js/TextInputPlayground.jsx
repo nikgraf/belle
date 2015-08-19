@@ -66,11 +66,30 @@ export default React.createClass({
                  focusStyle={ { borderBottom: '1px brown solid' } } />
         </div>
 
+        <h3>Test with 3 min rows & 5 max rows</h3>
+        <div style={ {width: 250} }>
+          <TextInput placeholder="Hello" minRows={ 3 } maxRows={ 5 }/>
+        </div>
+
+        <h3>Test 4 min rows & minHeight 80</h3>
+        <div style={ {width: 250} }>
+          <TextInput placeholder="Hello" minRows={ 4 } minHeight={ 80 }/>
+        </div>
+
+        <h3>Test 2 max rows & maxHeight 300</h3>
+        <div style={ {width: 250} }>
+          <TextInput placeholder="Hello" maxRows={ 2 } maxHeight={ 300 }/>
+        </div>
+
+        <h3>style minHeight 80</h3>
+        <div style={{width: 250 }}>
+          <TextInput style={{ minHeight: 80 }}/>
+        </div>
+
         {/* Value test */}
         <div style={ {width: 250} }>
           <textarea value="abc" onChange={ (event) => console.log(event.target.value) }/>
         </div>
-        <br />
       </Card>
     );
   },
