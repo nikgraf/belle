@@ -20,6 +20,8 @@ function sanitizeChildProps(properties) {
     'onKeyDown',
     'minHeight',
     'maxHeight',
+    'minRows',
+    'maxRows',
     'className',
     'style',
     'hoverStyle',
@@ -107,6 +109,8 @@ export default class TextInput extends Component {
     className: React.PropTypes.string,
     minHeight: React.PropTypes.number,
     maxHeight: React.PropTypes.number,
+    minRows: React.PropTypes.number,
+    maxRows: React.PropTypes.number,
     style: React.PropTypes.object,
     hoverStyle: React.PropTypes.object,
     focusStyle: React.PropTypes.object,
@@ -218,18 +222,33 @@ export default class TextInput extends Component {
     this._triggerResize(value);
   }
 
+  _getHeightBound(pixelBound, rowBound) {
+    if (pixelBound !== undefined) {
+      return pixelBound;
+    }
+
+    if (rowBound !== undefined) {
+      const newlines = Array(rowBound).join('\n');
+      return calculateTextareaHeight(React.findDOMNode(this), newlines);
+    }
+
+    return undefined;
+  }
+
   /**
    * Calculate the height and store the new height in the state to trigger a render.
    */
   _triggerResize(textareaValue) {
     let height = calculateTextareaHeight(React.findDOMNode(this), textareaValue);
 
-    if (this.props.minHeight && this.props.minHeight > height) {
-      height = this.props.minHeight;
+    const minHeight = this._getHeightBound(this.props.minHeight, this.props.minRows);
+    if (minHeight && minHeight > height) {
+      height = minHeight;
     }
 
-    if (this.props.maxHeight && this.props.maxHeight < height) {
-      height = this.props.maxHeight;
+    const maxHeight = this._getHeightBound(this.props.maxHeight, this.props.maxRows);
+    if (maxHeight && maxHeight < height) {
+      height = maxHeight;
     }
 
     this.setState({ height: height});

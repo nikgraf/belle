@@ -152,6 +152,46 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            minRows
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Integer</i>
+              <br />
+              optional</p>
+            <p>
+              Once set the TextInput will always keep a minimum height to fit
+              this amount of text input lines.
+              This can be useful to indicate to users that it is expected from
+              them to provide a certain amount of text input.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            maxRows
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Integer</i>
+              <br />
+              optional</p>
+            <p>
+              Once set the TextInput will always keep a maximum height to fit
+              this amount of text input lines.
+              This can be useful to keep your layout sane even with a lot of
+              text input.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             minHeight
           </td>
         </tr>
@@ -164,6 +204,30 @@ export default React.createClass({
             <p>
               Once set the TextInput will always keep a minimum height. This can be useful to indicate
               to users that it is expected from them to provide a certain amount of text input.
+            </p>
+            <p>
+              Note that when specifying both minRows and minHeight that minRows is ignored.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            maxHeight
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Integer</i>
+              <br />
+              optional</p>
+            <p>
+              Once set the TextInput will always keep a maximum height. This
+              can be useful to keep your layout sane even with a lot of text input.
+            </p>
+            <p>
+              Note that when specifying both maxRows and maxHeight that maxRows is ignored.
             </p>
           </td>
         </tr>
