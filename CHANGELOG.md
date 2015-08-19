@@ -3,8 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
-- Avoid printing a PropTypes warning when a Select has less than 2 children. [#147](https://github.com/nikgraf/belle/issues/147)
-- Allowing to mix single components together with arrays of components as children.
+
+### Added
+- [TextInput] Added minRows and maxRows properties
+[#146](https://github.com/nikgraf/belle/pull/146)
+
+```
+<TextInput minRows={ 5 } placeholder="Please fill in description …">
+```
+
+### Fixed
+- [Select] Avoid printing a PropTypes warning when a Select has less than 2 children. [#147](https://github.com/nikgraf/belle/issues/147)
+- [Select] Allowing to mix single components together with arrays of components as children.
 
 ```
 <Select>
@@ -22,7 +32,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ```
 
 [#161](https://github.com/nikgraf/belle/issues/161)
-- Fix detecting isMatchingOption after pressing backspace.
+- [ComboBox] Fix detecting isMatchingOption after pressing backspace.
 [#162](https://github.com/nikgraf/belle/issues/162)
 
 ## 1.1.1 - 2015-07-28
@@ -32,7 +42,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.1.0 - 2015-07-28
 ### Added
-- [Combobox] The onUpdate callback now includes 3 more properties in the argument.  [#146](https://github.com/nikgraf/belle/pull/146)
+- [ComboBox] The onUpdate callback now includes 3 more properties in the argument.  [#146](https://github.com/nikgraf/belle/pull/146)
 
 ```
 onUpdate({
@@ -52,7 +62,7 @@ onUpdate({
 
 ## 1.0.2 - 2015-07-23
 ### Fixed
-- [Combobox] Filtered options are now updated when the ComboBox receives new props. [#141](https://github.com/nikgraf/belle/issues/141)
+- [ComboBox] Filtered options are now updated when the ComboBox receives new props. [#141](https://github.com/nikgraf/belle/issues/141)
 
 ## 1.0.1 - 2015-07-20
 ### Fixed
