@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
-import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMonthStringInLocale, getDayAbbrArrayInLocale} from '../utils/date-helpers';
+import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 import config, {localeData} from '../config/datePicker';
 
@@ -33,6 +33,7 @@ export default class DatePicker extends Component {
     };
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.localeData = localeData[this.props.locale];
   }
 
   static displayName = 'Belle DatePicker';
@@ -142,7 +143,7 @@ export default class DatePicker extends Component {
     'aria-label': 'Calendar',
     disabled: false,
     readOnly: false,
-    locale: 'en',
+    locale: 'en-GB',
     showOtherMonthDate: true,
     styleWeekend: true
   };
@@ -578,7 +579,7 @@ export default class DatePicker extends Component {
                 className={ unionClassNames(this.props.prevMonthClassName, this.pseudoStyleIds.prevMonthStyleId) }></span>
           <span style={ monthLblStyle }
                 className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
-            { getMonthStringInLocale(this.state.month, this.props.locale) + '-' + this.state.year }
+            { this.localeData.monthNames[this.state.month] + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onNextMonthMouseDown.bind(this) }
@@ -615,7 +616,7 @@ export default class DatePicker extends Component {
     return (
       <div style={ weekHeaderStyle }>
         {
-          map(getDayAbbrArrayInLocale(this.props.locale), (dayAbbr, index) => {
+          map(this.localeData.dayNamesMin, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ (index === 0 && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
