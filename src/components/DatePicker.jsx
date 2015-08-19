@@ -4,7 +4,7 @@ import unionClassNames from '../utils/union-class-names';
 import {has, extend, map} from '../utils/helpers';
 import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getMonthStringInLocale, getDayAbbrArrayInLocale} from '../utils/date-helpers';
 import style from '../style/date-picker';
-import config from '../config/datePicker';
+import config, {localeData} from '../config/datePicker';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -758,7 +758,7 @@ export default class DatePicker extends Component {
       if (this.state.isWrapperActive) {
         wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
       } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused &&
-        !(this.state.isPrevMonthFocused || this.state.isNextMonthFocused || this.state.focusedDay > 0)) {
+        !(this.state.isPrevMonthFocused || this.state.isNextMonthFocused || this.state.focusedDay)) {
         wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
       }
     }
@@ -1065,7 +1065,7 @@ export default class DatePicker extends Component {
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
  *
- * 2. Localization: I would  prefer to create our own small lib for localization.
+ * 2. Localization: I would  prefer to create our own small lib for localization - In progress.
  *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
@@ -1073,9 +1073,7 @@ export default class DatePicker extends Component {
  *
  * 5. It will be nice to have for users ability highlight certain days - as holidays / birthdays
  *
- * 6. Focus and highlight style issues.
+ * 6. Date range
  *
- * 7. Date range
- *
- * 8. Date input
+ * 7. Date input
  **/
