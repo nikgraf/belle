@@ -47,7 +47,7 @@ var App = React.createClass({
       <TextInput defaultValue="Update here and see how the input grows …" />
     </div>;
   }
-}
+} )
 
 React.render(<App/>, document.getElementById('react-root'));
 ```
