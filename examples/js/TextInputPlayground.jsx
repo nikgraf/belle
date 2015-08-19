@@ -66,11 +66,15 @@ export default React.createClass({
                  focusStyle={ { borderBottom: '1px brown solid' } } />
         </div>
 
+        <h3>Test min rows & max rows</h3>
+        <div style={ {width: 250} }>
+          <TextInput placeholder="Hello" minRows={ 3 } maxRows={ 5 }/>
+        </div>
+
         {/* Value test */}
         <div style={ {width: 250} }>
           <textarea value="abc" onChange={ (event) => console.log(event.target.value) }/>
         </div>
-        <br />
       </Card>
     );
   },

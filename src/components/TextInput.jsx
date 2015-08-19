@@ -222,36 +222,25 @@ export default class TextInput extends Component {
     this._triggerResize(value);
   }
 
-  _getHeightBound(pixelBound, rowBound) {
-    if (pixelBound !== undefined) {
-      return pixelBound;
-    }
-
-    if (rowBound !== undefined) {
-      const newlines = Array(rowBound).join('\n');
-      return calculateTextareaHeight(React.findDOMNode(this), newlines);
-    }
-
-    return undefined;
-  }
-
   /**
    * Calculate the height and store the new height in the state to trigger a render.
    */
   _triggerResize(textareaValue) {
-    let height = calculateTextareaHeight(React.findDOMNode(this), textareaValue);
+    const heights = calculateTextareaHeight(React.findDOMNode(this), textareaValue, this.props.minRows, this.props.maxRows);
 
-    const minHeight = this._getHeightBound(this.props.minHeight, this.props.minRows);
+    let height = heights.height;
+
+    const minHeight = this.props.minHeight || heights.minHeight;
     if (minHeight && minHeight > height) {
       height = minHeight;
     }
 
-    const maxHeight = this._getHeightBound(this.props.maxHeight, this.props.maxRows);
+    const maxHeight = this.props.maxHeight || heights.maxHeight;
     if (maxHeight && maxHeight < height) {
       height = maxHeight;
     }
 
-    this.setState({ height: height});
+    this.setState({ height: height });
   }
 
   render() {
