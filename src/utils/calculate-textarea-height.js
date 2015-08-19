@@ -87,7 +87,7 @@ function calculateStyling(node) {
  * and used for further caluculations. In addition the styling of each textarea
  * is cached to improve performance.
  */
-export default function calculateTextareaHeight(textareaElement, textareaValue, minRows = null, maxRows = null) {
+export default function calculateTextareaHeight(textareaElement, textareaValue, minRows = null, maxRows = null, minHeight = null, maxHeight = null) {
   if (!canUseDOM) { return 0; }
 
   if (!hiddenTextarea) {
@@ -103,8 +103,8 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
   // reducing the size to 0 we simply use a dummy text.
   hiddenTextarea.value = textareaValue ? textareaValue : '-';
 
-  let minHeight = 0;
-  let maxHeight = Infinity;
+  let calculatedMinHeight = 0;
+  let calculatedMaxHeight = Infinity;
   let height = hiddenTextarea.scrollHeight;
 
   // for a textarea with border-box, the border width has to be added while
@@ -117,26 +117,35 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
     height = height - verticalPaddingSize;
   }
 
-  if (minRows !== null || maxRows !== null) {
+  if (minRows !== null && minHeight === null ||
+      maxRows !== null && maxHeight === null) {
     // measure height of a textarea with a single row
     hiddenTextarea.value = '-';
     const singleRowHeight = hiddenTextarea.scrollHeight - verticalPaddingSize;
 
-    if (minRows !== null) {
-      minHeight = singleRowHeight * minRows;
+    if (minRows !== null && minHeight === null) {
+      calculatedMinHeight = singleRowHeight * minRows;
       if (boxSizing === 'border-box') {
-        minHeight = minHeight + verticalPaddingSize + verticalBorderSize;
+        calculatedMinHeight = calculatedMinHeight + verticalPaddingSize + verticalBorderSize;
       }
-      height = Math.max(minHeight, height);
     }
-    if (maxRows !== null) {
-      maxHeight = singleRowHeight * maxRows;
+    if (maxRows !== null && maxHeight === null) {
+      calculatedMaxHeight = singleRowHeight * maxRows;
       if (boxSizing === 'border-box') {
-        maxHeight = maxHeight + verticalPaddingSize + verticalBorderSize;
+        calculatedMaxHeight = calculatedMaxHeight + verticalPaddingSize + verticalBorderSize;
       }
-      height = Math.min(maxHeight, height);
     }
   }
 
-  return { height, minHeight, maxHeight };
+  const finalMinHeight = minHeight || calculatedMinHeight;
+  if (finalMinHeight) {
+    height = Math.max(finalMinHeight, height);
+  }
+
+  const finalMaxHeight = maxHeight || calculatedMaxHeight;
+  if (finalMaxHeight) {
+    height = Math.min(finalMaxHeight, height);
+  }
+
+  return height;
 }
