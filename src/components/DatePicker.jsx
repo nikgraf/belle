@@ -402,7 +402,7 @@ export default class DatePicker extends Component {
   _onDayBlur(dayKey, event) {
     if (!this.props.disabled && this.state.focusedDay && this.state.focusedDay === dayKey) {
       this.setState({
-        focusedDay: 0
+        focusedDay: null
       });
     }
 
@@ -436,7 +436,7 @@ export default class DatePicker extends Component {
   _onDayMouseUp(dayKey, event) {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
       this.setState({
-        activeDay: 0
+        activeDay: null
       });
     }
 
@@ -493,7 +493,7 @@ export default class DatePicker extends Component {
   _onDayTouchEnd(dayKey, event) {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === dayKey) {
       this.setState({
-        activeDay: 0
+        activeDay: null
       });
     }
 

@@ -286,10 +286,11 @@ describe('DatePicker', () => {
       <DatePicker dayClassName="day_test"/>
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    expect(datePicker.state.activeDay).toBeFalsy();
     TestUtils.Simulate.touchStart(day, {touches: {length: 1}});
-    expect(datePicker.state.activeDay).toBeGreaterThan(0);
+    expect(datePicker.state.activeDay).toBeTruthy();
     TestUtils.Simulate.touchEnd(day, {touches: {length: 1}});
-    expect(datePicker.state.activeDay).toBe(0);
+    expect(datePicker.state.activeDay).toBeFalsy();
   });
 
   it('should set dateValue to undefined when calling resetValue', () => {
