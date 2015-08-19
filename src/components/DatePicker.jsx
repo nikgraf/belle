@@ -363,7 +363,7 @@ export default class DatePicker extends Component {
       } else if (event.key === 'Enter') {
         event.preventDefault();
         if (this.state.focusedDay) {
-          this._selectDate(this.state.focusedDay);
+          this._selectDate(new Date(this.state.focusedDay).getDate());
         } else if (this.state.isPrevMonthFocused) {
           this._decreaseMonth();
         } else if (this.state.isNextMonthFocused) {
@@ -1079,4 +1079,7 @@ export default class DatePicker extends Component {
  *
  * 6. Focus and highlight style issues.
  *
+ * 7. Date range
+ *
+ * 8. Date input
  **/
