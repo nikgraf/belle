@@ -204,7 +204,8 @@ export default React.createClass({
             <p>
               Will be deprecated with Belle 2.0.0. We recommend to use minRows.
               In case you need it based on pixels you can set minHeight via the
-              style property: <TextInput style={{ minHeight: 80 }}/>
+              style property:
+              <Code value={ '<TextInput style={{ minHeight: 80 }} />' } />
             </p>
             <p>
               Once set the TextInput will always keep a minimum height. This can be useful to indicate
@@ -230,7 +231,8 @@ export default React.createClass({
             <p>
               Will be deprecated with Belle 2.0.0. We recommend to use maxRows.
               In case you need it based on pixels you can set manHeight via the
-              style property: <TextInput style={{ maxHeight: 300 }}/>
+              style property:
+              <Code value={ '<TextInput style={{ maxHeight: 300 }} />' } />
             </p>
             <p>
               Once set the TextInput will always keep a maximum height. This
