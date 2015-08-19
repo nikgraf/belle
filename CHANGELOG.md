@@ -5,8 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## To Be Released
 
 ### Added
-- [TextInput] Added minRows and maxRows properties
-[#146](https://github.com/nikgraf/belle/pull/146)
+- [TextInput] Added minRows and maxRows properties [#146](https://github.com/nikgraf/belle/pull/146)
 
 ```
 <TextInput minRows={ 5 } placeholder="Please fill in description …">
@@ -14,7 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - [Select] Avoid printing a PropTypes warning when a Select has less than 2 children. [#147](https://github.com/nikgraf/belle/issues/147)
-- [Select] Allowing to mix single components together with arrays of components as children.
+- [Select] Allowing to a mix single components together with arrays of components as children. [#161](https://github.com/nikgraf/belle/issues/161)
 
 ```
 <Select>
@@ -31,9 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 </Select>
 ```
 
-[#161](https://github.com/nikgraf/belle/issues/161)
-- [ComboBox] Fix detecting isMatchingOption after pressing backspace.
-[#162](https://github.com/nikgraf/belle/issues/162)
+- [ComboBox] Fix detecting isMatchingOption after pressing backspace. [#162](https://github.com/nikgraf/belle/issues/162)
 
 ## 1.1.1 - 2015-07-28
 ### Fixed
