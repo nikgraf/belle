@@ -103,8 +103,8 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
   // reducing the size to 0 we simply use a dummy text.
   hiddenTextarea.value = textareaValue ? textareaValue : '-';
 
-  let calculatedMinHeight = 0;
-  let calculatedMaxHeight = Infinity;
+  let calculatedMinHeight;
+  let calculatedMaxHeight;
   let height = hiddenTextarea.scrollHeight;
 
   // for a textarea with border-box, the border width has to be added while
