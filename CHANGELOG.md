@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 1.2.0 - 2015-08-19
+
 ### Added
 - [TextInput] Added minRows and maxRows properties [#146](https://github.com/nikgraf/belle/pull/146)
 
