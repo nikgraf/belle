@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {has, extend, map} from '../utils/helpers';
-import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
+import {has, extend, map, shift, reverse} from '../utils/helpers';
+import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getLocaleData} from '../utils/date-helpers';
 import style from '../style/date-picker';
-import config, {localeData} from '../config/datePicker';
+import config from '../config/datePicker';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
@@ -33,7 +33,7 @@ export default class DatePicker extends Component {
     };
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
-    this.localeData = localeData[this.props.locale];
+    this.localeData = getLocaleData(this.props.locale);
   }
 
   static displayName = 'Belle DatePicker';
@@ -143,7 +143,7 @@ export default class DatePicker extends Component {
     'aria-label': 'Calendar',
     disabled: false,
     readOnly: false,
-    locale: 'en-GB',
+    locale: 'en',
     showOtherMonthDate: true,
     styleWeekend: true
   };
@@ -612,14 +612,15 @@ export default class DatePicker extends Component {
       weekHeaderStyle = extend(weekHeaderStyle, style.disabledWeekHeaderStyle, this.props.disabledWeekHeaderStyle);
     }
     const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
-
+    let dayNames = shift(this.localeData.dayNamesMin, this.localeData.firstDay);
+    dayNames = this.localeData.isRTL ? reverse(dayNames) : dayNames;
     return (
       <div style={ weekHeaderStyle }>
         {
-          map(this.localeData.dayNamesMin, (dayAbbr, index) => {
+          map(dayNames, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (index === 0 && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
+                    style={ (index === ((7 - this.localeData.firstDay) % 7) && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
                     className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
                   { dayAbbr }
                 </span>
@@ -764,7 +765,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year);
+    let weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.localeData.firstDay);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
     return (
@@ -789,11 +790,12 @@ export default class DatePicker extends Component {
         <div>
           {
             map(weekArray, (week, weekIndex) => {
+              const weekDays = this.localeData.isRTL ? reverse(week) : week;
               return (
                 <div key={ 'week-' + weekIndex }
                      style={ weekStyle }>
                   {
-                    map(week, (day, dayIndex) => {
+                    map(weekDays, (day, dayIndex) => {
                       return this._getDayFragment(day, dayIndex);
                     })
                   }
@@ -1066,8 +1068,6 @@ export default class DatePicker extends Component {
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
  *
- * 2. Localization: I would  prefer to create our own small lib for localization - In progress.
- *
  * 3. Rename: We can rename component to calendar as its used for date display also.
  *
  * 4. Docs
@@ -1077,4 +1077,6 @@ export default class DatePicker extends Component {
  * 6. Date range
  *
  * 7. Date input
+ *
+ * 8. Weekend issue
  **/
