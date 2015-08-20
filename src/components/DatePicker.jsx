@@ -614,13 +614,16 @@ export default class DatePicker extends Component {
     const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
     let dayNames = shift(this.localeData.dayNamesMin, this.localeData.firstDay);
     dayNames = this.localeData.isRTL ? reverse(dayNames) : dayNames;
+
     return (
       <div style={ weekHeaderStyle }>
         {
           map(dayNames, (dayAbbr, index) => {
+            let weekendIndex = ((7 - this.localeData.firstDay) % 7);
+            weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (index === ((7 - this.localeData.firstDay) % 7) && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
+                    style={ (index === weekendIndex && this.props.styleWeekend) ? weekendLblStyle : dayLblStyle }
                     className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
                   { dayAbbr }
                 </span>
@@ -765,7 +768,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    let weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.localeData.firstDay);
+    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.localeData.firstDay);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
     return (
