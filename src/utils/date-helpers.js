@@ -1,13 +1,16 @@
+import {localeData} from '../config/datePicker';
+
 /**
  * The function will take a month and year value and will return an array of weeks for that month.
  * Each element in this array will be in-turn an array of days in the week.
  * @param {number} month: the month for which array of weeks is needed
  * @param {number} year: the year for which array of weeks is needed
+ * @param {number} firstDayOfWeek: first day of the week in the locale
  * @returns {Array}: Array of weeks in a month, each week is in turn array of days in that week
  */
-export function getWeekArrayForMonth(month, year) {
+export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
   const monthDay = new Date(year, month, 1);
-  monthDay.setDate(monthDay.getDate() - monthDay.getDay());
+  monthDay.setDate(monthDay.getDate() - monthDay.getDay() + firstDayOfWeek);
   const lastDate = new Date(year, month + 1, 0);
 
   const weekArray = [];
@@ -21,6 +24,25 @@ export function getWeekArrayForMonth(month, year) {
     weekArray.push(newWeek);
   }
   return weekArray;
+}
+
+/**
+ * Function will return locale data for locale. If data is not available in config files it will return default data.
+ * @param locale - locale for which data is needed.
+ * @returns {Object}: Object containing locale data.
+ */
+export function getLocaleData(locale) {
+  const localeResult = {};
+  let lData;
+  if (locale) {
+    lData = localeData[locale];
+  }
+  localeResult.monthNames = (lData && lData.monthNames) ? lData.monthNames : ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  localeResult.dayNamesMin = (lData && lData.dayNamesMin) ? lData.dayNamesMin : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  localeResult.firstDay = (lData && lData.firstDay) ? lData.firstDay : 0;
+  localeResult.isRTL = (lData && lData.isRTL) ? lData.isRTL : false;
+  return localeResult;
 }
 
 export const TODAY = new Date();
