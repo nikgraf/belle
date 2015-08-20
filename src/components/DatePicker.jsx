@@ -49,7 +49,8 @@ export default class DatePicker extends Component {
     month: React.PropTypes.number,
     year: React.PropTypes.number,
     showOtherMonthDate: React.PropTypes.bool,
-    styleWeekendOn: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
+    styleWeekendOn: React.PropTypes.oneOf([-1, 0, 1, 2, 3, 4, 5, 6]),
+    renderDay: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
@@ -716,11 +717,11 @@ export default class DatePicker extends Component {
               aria-selected={ ariaSelected }
               style={ dayStyle }
               className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
-              { day }
+              { this.props.renderDay ? this.props.renderDay(currentDate) : day }
             </span>) : (<span key={ 'day-' + index }
               style={ dayStyle }
               className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
-              { this.props.showOtherMonthDate ? day : ''}
+              { this.props.showOtherMonthDate ? (this.props.renderDay ? this.props.renderDay(currentDate) : day) : ''}
             </span>);
   }
 
@@ -1081,5 +1082,4 @@ export default class DatePicker extends Component {
  *
  * 7. Date input
  *
- * 8. Weekend issue
  **/
