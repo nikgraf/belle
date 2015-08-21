@@ -49,7 +49,6 @@ export default React.createClass({
   },
 
   renderDay(day) {
-    console.log('rendegdfg');
     const date = day.getDate();
     return (
       <div>

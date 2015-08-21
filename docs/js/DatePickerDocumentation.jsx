@@ -1,14 +1,13 @@
-import React from 'react';
+import React from 'react/addons';
 import {DatePicker} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 const TODAY = new Date();
 
-const basicCodeExample = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) +  `) }/>`;
+const basicCodeExample = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }/>`;
 
-const htmlStructure = `<div tabIndex="0"
-     style={ wrapperStyle }>
+const htmlStructure = `<div style={ wrapperStyle }>
   <div>
     <div style={ navBarStyle }>
       <div style={ prevMonthStyle }></div>
@@ -27,7 +26,47 @@ const htmlStructure = `<div tabIndex="0"
   </div>
 </div>`;
 
+const advanceCodeExample1 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+        showOtherMonthDate={ false } styleWeekend={ true }/>`;
+
+const advanceCodeExample2 = `<DatePicker readOnly={ true } renderDay={ this.renderDay } month={ 12 }/>`;
+
+const advanceCodeExample3 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+        locale="ar"/>`;
+
+const advanceCodeExample4 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+        readOnly/>`;
+
+const advanceCodeExample5 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+        disabled/>`;
+
+const advanceCodeExample6 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+        disabled/>`;
+
+const renderDayFunction = `renderDay(day) {
+    if (day.getDate() === 25 && day.getMonth() === 11) {
+      return (
+        <div>
+          🎁{ day.getDate() }
+        </div>
+      );
+    }
+    return (
+      day.getDate()
+    );
+  }
+`;
+
 export default React.createClass({
+
+  mixins: [React.addons.LinkedStateMixin],
+
+  getInitialState() {
+    return {
+      selectedMonth: TODAY.getMonth() + 1,
+      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2)
+    };
+  },
 
   render() {
     return (<div>
@@ -408,14 +447,83 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <h3>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h3>
+      <h3>DatePicker with other month days hidden but weekends styled differently:</h3>
 
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }/>
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+        showOtherMonthDate={ false } styleWeekend={ true }/>
 
-      <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+      <Code value={ advanceCodeExample1 } style={ {marginTop: 40} } />
+
+      <h3>DatePicker highlighting special day:</h3>
+
+      <DatePicker renderDay={ this.renderDay } month={ 12 }/>
+
+      <Code value={ advanceCodeExample2 } style={ {marginTop: 40} } />
+
+      <Code value={ renderDayFunction } style={ {marginTop: 40} } />
+
+      <h3>Localization support in DatePicker, arabic locale:</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+        locale="ar"/>
+
+      <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
+
+      <h3>Read only DatePicker:</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+        readOnly/>
+
+      <Code value={ advanceCodeExample4 } style={ {marginTop: 40} } />
+
+      <h3>Disabled DatePicker:</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+                  disabled/>
+
+      <Code value={ advanceCodeExample5 } style={ {marginTop: 40} } />
+
+      <h3>DatePicker with onUpdate and onMonthChange callBacks and resetValue method used:</h3>
+
+      <DatePicker ref="datePicker"
+                  onMonthChange={ this.onMonthChange }
+                  month={ this.state.selectedMonth }
+                  valueLink={ this.linkState('selectedDate') }
+                  onUpdate = { (date) => {console.log('Date Updated...', date); } }/>
+      <div style={ {display: 'inline-block',
+                    width: 200,
+                    marginLeft: 20} }>
+      <span style={ {display: 'block'} }>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</span>
+      <span style={ {display: 'block'} }>Month: {this.state.selectedMonth}</span>
+      <span style={ {display: 'block'} }><a onClick={ (() => { this.refs.datePicker.resetValue(); }).bind(this) }
+         style={ {
+         textDecoration: 'underline',
+         cursor: 'pointer'
+        } }>Reset Date</a></span>
+      </div>
+
+      <Code value={ advanceCodeExample5 } style={ {marginTop: 40} } />
 
       </div>
 
     );
+  },
+
+  renderDay(day) {
+    if (day.getDate() === 25 && day.getMonth() === 11) {
+      return (
+        <div>
+          🎁{ day.getDate() }
+        </div>
+      );
+    }
+    return (
+      day.getDate()
+    );
+  },
+
+  onMonthChange(month) {
+    this.setState({ selectedMonth: month });
   }
+
 });
