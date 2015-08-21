@@ -26,22 +26,55 @@ const htmlStructure = `<div style={ wrapperStyle }>
   </div>
 </div>`;
 
-const advanceCodeExample1 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-        showOtherMonthDate={ false } styleWeekend={ true }/>`;
+const advanceCodeExample1 = `
+<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+            showOtherMonthDate={ false }
+            styleWeekend={ true }/>`;
 
-const advanceCodeExample2 = `<DatePicker readOnly={ true } renderDay={ this.renderDay } month={ 12 }/>`;
+const advanceCodeExample2 = `
+<DatePicker readOnly={ true }
+            renderDay={ this.renderDay }
+            month={ 12 }/>`;
 
-const advanceCodeExample3 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-        locale="ar"/>`;
+const advanceCodeExample3 = `
+<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+            locale="ar"/>`;
 
-const advanceCodeExample4 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-        readOnly/>`;
+const advanceCodeExample4 = `
+<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+            readOnly/>`;
 
-const advanceCodeExample5 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-        disabled/>`;
+const advanceCodeExample5 = `
+<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
+            disabled/>`;
 
-const advanceCodeExample6 = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-        disabled/>`;
+const advanceCodeExample6 = `
+<DatePicker ref="datePicker"
+            onMonthChange={ this.onMonthChange }
+            month={ this.state.selectedMonth }
+            valueLink={ this.linkState('selectedDate') }
+            onUpdate = { (date) =>
+              {console.log('Date Updated...', date); } }/>
+<div style={ {display: 'inline-block',
+     width: 200,
+     marginLeft: 20} }>
+  <span style={ {display: 'block'} }>
+    Date: { this.state.selectedDate ?
+            this.state.selectedDate.getMonth() + '/' +
+            this.state.selectedDate.getDate() + '/' +
+            this.state.selectedDate.getFullYear() : '-'}
+  </span>
+  <span style={ {display: 'block'} }>
+    Month: {this.state.selectedMonth}
+  </span>
+  <span style={ {display: 'block'} }>
+    <a onClick={ this.resetDate }
+       style={ {
+       textDecoration: 'underline',
+       cursor: 'pointer'
+    } }>Reset Date</a>
+  </span>
+</div>`;
 
 const renderDayFunction = `renderDay(day) {
     if (day.getDate() === 25 && day.getMonth() === 11) {
@@ -502,7 +535,7 @@ export default React.createClass({
         } }>Reset Date</a></span>
       </div>
 
-      <Code value={ advanceCodeExample5 } style={ {marginTop: 40} } />
+      <Code value={ advanceCodeExample6 } style={ {marginTop: 40} } />
 
       </div>
 
