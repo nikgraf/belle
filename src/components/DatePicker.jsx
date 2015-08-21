@@ -74,6 +74,7 @@ export default class DatePicker extends Component {
     nextMonthClassName: React.PropTypes.string,
     monthLblClassName: React.PropTypes.string,
     dayLblClassName: React.PropTypes.string,
+    weekClassName: React.PropTypes.string,
     dayClassName: React.PropTypes.string,
     // wrapper styles
     wrapperStyle: React.PropTypes.object,
@@ -797,7 +798,8 @@ export default class DatePicker extends Component {
               const weekDays = this.localeData.isRTL ? reverse(week) : week;
               return (
                 <div key={ 'week-' + weekIndex }
-                     style={ weekStyle }>
+                     style={ weekStyle }
+                     className= { this.props.weekClassName }>
                   {
                     map(weekDays, (day, dayIndex) => {
                       return this._getDayFragment(day, dayIndex);
@@ -1062,16 +1064,3 @@ export default class DatePicker extends Component {
     });
   }
 }
-
-/**
- * TODO-S:
- * 1. Styling:
- * - Improve default belle styling
- * - Implement bootstrap styling for date-picker
- * - Animated focus style for wrapper
- * - Some of styles in api can be removed (which are not used)
- * 2. Docs
- * 3. Date range
- * 4. Date input
- * 5. Should weekend data put in internationalization file with a sensible default ?
- **/

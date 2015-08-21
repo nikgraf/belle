@@ -24,7 +24,7 @@ export default React.createClass({
           </div>
           <h3>Read-Only Calendar Example</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker styleWeekendOn={ 2 } defaultValue={ selectedDate } readOnly renderDay={ this.renderDay }/>
+            <DatePicker styleWeekend={ true } defaultValue={ selectedDate } readOnly renderDay={ this.renderDay }/>
           </div>
           <h3>Calendar in dutch french !!!</h3>
           <div style={ { 'marginBottom': '20px' } }>
@@ -36,7 +36,7 @@ export default React.createClass({
           </div>
           <h3>Calendar in dutch hebrew !!!</h3>
           <div style={ { 'marginBottom': '20px' } }>
-            <DatePicker styleWeekendOn={ 2 } defaultValue={ selectedDate } locale="he"/>
+            <DatePicker styleWeekend={ true } defaultValue={ selectedDate } locale="he"/>
           </div>
         </Card>
 
