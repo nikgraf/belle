@@ -46,7 +46,7 @@ export default class DatePicker extends Component {
       requestChange: React.PropTypes.func.isRequired
     }),
     locale: React.PropTypes.string,
-    month: React.PropTypes.number,
+    month: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
     year: React.PropTypes.number,
     showOtherMonthDate: React.PropTypes.bool,
     styleWeekend: React.PropTypes.bool,
@@ -67,6 +67,7 @@ export default class DatePicker extends Component {
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
+    'preventFocusStyleForTouchAndClick': React.PropTypes.bool,
     // ClassNames
     wrapperClassName: React.PropTypes.string,
     navBarClassName: React.PropTypes.string,
