@@ -49,7 +49,7 @@ export default class DatePicker extends Component {
     month: React.PropTypes.number,
     year: React.PropTypes.number,
     showOtherMonthDate: React.PropTypes.bool,
-    styleWeekendOn: React.PropTypes.oneOf([-1, 0, 1, 2, 3, 4, 5, 6]),
+    styleWeekend: React.PropTypes.bool,
     renderDay: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
@@ -146,7 +146,7 @@ export default class DatePicker extends Component {
     readOnly: false,
     locale: 'en',
     showOtherMonthDate: true,
-    styleWeekendOn: -1
+    styleWeekend: false
   };
 
   /**
@@ -620,11 +620,11 @@ export default class DatePicker extends Component {
       <div style={ weekHeaderStyle }>
         {
           map(dayNames, (dayAbbr, index) => {
-            let weekendIndex = ((7 - this.localeData.firstDay) % 7) + this.props.styleWeekendOn;
+            let weekendIndex = ((7 - this.localeData.firstDay) % 7) + this.localeData.weekEnd;
             weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (index === weekendIndex && this.props.styleWeekendOn >= 0) ? weekendLblStyle : dayLblStyle }
+                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
                     className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
                   { dayAbbr }
                 </span>
@@ -673,7 +673,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (currentDate.getDay() === this.props.styleWeekendOn) {
+    if (this.props.styleWeekend && currentDate.getDay() === this.localeData.weekEnd) {
       dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
     }
 
@@ -1073,4 +1073,5 @@ export default class DatePicker extends Component {
  * 2. Docs
  * 3. Date range
  * 4. Date input
+ * 5. Should weekend data put in internationalization file with a sensible default ?
  **/

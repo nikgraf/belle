@@ -41,6 +41,7 @@ export function getLocaleData(locale) {
     'July', 'August', 'September', 'October', 'November', 'December'];
   localeResult.dayNamesMin = (lData && lData.dayNamesMin) ? lData.dayNamesMin : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   localeResult.firstDay = (lData && lData.firstDay) ? lData.firstDay : 0;
+  localeResult.weekEnd = (lData && lData.weekEnd) ? lData.weekEnd : 0;
   localeResult.isRTL = (lData && lData.isRTL) ? lData.isRTL : false;
   return localeResult;
 }
