@@ -1065,21 +1065,12 @@ export default class DatePicker extends Component {
 
 /**
  * TODO-S:
- *
  * 1. Styling:
  * - Improve default belle styling
  * - Implement bootstrap styling for date-picker
  * - Animated focus style for wrapper
  * - Some of styles in api can be removed (which are not used)
- *
- * 3. Rename: We can rename component to calendar as its used for date display also.
- *
- * 4. Docs
- *
- * 5. It will be nice to have for users ability highlight certain days - as holidays / birthdays
- *
- * 6. Date range
- *
- * 7. Date input
- *
+ * 2. Docs
+ * 3. Date range
+ * 4. Date input
  **/

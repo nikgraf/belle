@@ -8,6 +8,7 @@ const datePickerStyle = {
     width: 275,
     height: 287,
     textAlign: 'center',
+    boxSizing: 'content-box',
 
     /*
      To avoid any kind of flickering the user won't get feedback
