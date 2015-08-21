@@ -495,7 +495,7 @@ export default React.createClass({
                     marginLeft: 20} }>
       <span style={ {display: 'block'} }>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</span>
       <span style={ {display: 'block'} }>Month: {this.state.selectedMonth}</span>
-      <span style={ {display: 'block'} }><a onClick={ (() => { this.refs.datePicker.resetValue(); }).bind(this) }
+      <span style={ {display: 'block'} }><a onClick={ this.resetDate }
          style={ {
          textDecoration: 'underline',
          cursor: 'pointer'
@@ -524,6 +524,11 @@ export default React.createClass({
 
   onMonthChange(month) {
     this.setState({ selectedMonth: month });
+  },
+
+  resetDate() {
+    this.setState({ selectedDate: undefined });
+    this.refs.datePicker.resetValue();
   }
 
 });
