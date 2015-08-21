@@ -336,3 +336,13 @@ const datePickerStyle = {
 };
 
 export default datePickerStyle;
+
+
+/**
+ * TODO-S:
+ * - Improve default belle styling
+ * - Implement bootstrap styling for date-picker
+ * - Animated focus style for wrapper
+ * - better icons needed for left/ right nav buttons
+ * - Some of styles in api can be removed (which are not used)
+ **/

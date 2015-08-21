@@ -3,6 +3,9 @@ import {DatePicker} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
+const TODAY = new Date();
+const basicCodeExample = `<DatePicker ref="calendar1" defaultValue={ new Date(` + TODAY.getFullYear() + ` ,` + TODAY.getMonth() + ` ,` + (TODAY.getDate() + 2) +  `) }/>`;
+
 export default React.createClass({
 
   render() {
@@ -10,7 +13,9 @@ export default React.createClass({
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>DatePicker</h2>
 
-      <DatePicker ref="calendar1" defaultValue={ new Date() }/>
+      <DatePicker ref="calendar1" defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }/>
+
+      <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
       <h3>Properties</h3>
 
