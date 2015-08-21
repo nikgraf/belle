@@ -4,7 +4,28 @@ import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 const TODAY = new Date();
+
 const basicCodeExample = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) +  `) }/>`;
+
+const htmlStructure = `<div tabIndex="0"
+     style={ wrapperStyle }>
+  <div>
+    <div style={ navBarStyle }>
+      <div style={ prevMonthStyle }></div>
+      <div style={ monthLblStyle }></div>
+      <div style={ nextMonthStyle }></div>
+    </div>
+    <div style={ weekStyle }>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+      <div style={ dayStyle }></div>
+    </div>
+  </div>
+</div>`;
 
 export default React.createClass({
 
@@ -378,7 +399,23 @@ export default React.createClass({
 
       <h3>Internal HTML Structure</h3>
 
+      <p>
+        This should help developer to understand how the DatePicker is structured
+        in order to use the API
+      </p>
+
+      <Code value={ htmlStructure } style={ {marginTop: 40} } />
+
+      <h3>More Examples</h3>
+
+      <h3>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }/>
+
+      <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+
       </div>
+
     );
   }
 });
