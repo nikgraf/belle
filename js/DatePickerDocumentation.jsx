@@ -100,7 +100,8 @@ export default React.createClass({
   getInitialState() {
     return {
       selectedMonth: TODAY.getMonth() + 1,
-      selectedLocale: 'ar'
+      selectedLocale: 'ar',
+      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2)
     };
   },
 
@@ -518,37 +519,26 @@ export default React.createClass({
 
       <h3>Localization support in DatePicker:</h3>
 
-        <Select valueLink={ this.linkState('selectedLocale') }
-                menuStyle={ { height: 160,
-                width: '25%',
-                overflow: 'scroll' } }
-                style={ { width: '25%',
-                marginBottom: 20}}>
-          <Option value="ar">Arabic</Option>
-          <Option value="fr">French</Option>
-          <Option value="he">Hebrew</Option>
-          <Option value="nl">Dutch</Option>
-          <Option value="zh-CN">Chinese</Option>
-        </Select>
+      <p>Belle has inbuilt support for following locales: Arabic, French, Hebrew, Dutch, Chinese.
+        Adding support for a new locale is very easy, check <a href="#/configuration">Configuration</a>.</p>
 
-        <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
-        locale={ this.state.selectedLocale }/>
+      <Select valueLink={ this.linkState('selectedLocale') }
+            menuStyle={ { height: 160,
+            width: '25%',
+            overflow: 'scroll' } }
+            style={ { width: '25%',
+            marginBottom: 20}}>
+        <Option value="ar">Arabic</Option>
+        <Option value="fr">French</Option>
+        <Option value="he">Hebrew</Option>
+        <Option value="nl">Dutch</Option>
+        <Option value="zh-CN">Chinese</Option>
+      </Select>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+      locale={ this.state.selectedLocale }/>
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
-
-      <h3>Read only DatePicker:</h3>
-
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
-        readOnly/>
-
-      <Code value={ advanceCodeExample4 } style={ {marginTop: 40} } />
-
-      <h3>Disabled DatePicker:</h3>
-
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
-                  disabled/>
-
-      <Code value={ advanceCodeExample5 } style={ {marginTop: 40} } />
 
       <h3>DatePicker with onUpdate and onMonthChange callBacks and resetValue method used:</h3>
 
@@ -556,7 +546,7 @@ export default React.createClass({
                   onMonthChange={ this.onMonthChange }
                   month={ this.state.selectedMonth }
                   defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
-                  onUpdate = { (date) => {console.log('Date Updated...', date); } }/>
+                  onUpdate = { this.onUpdate }/>
       <div style={ {display: 'inline-block',
                     width: 200,
                     marginLeft: 20} }>
@@ -570,6 +560,20 @@ export default React.createClass({
       </div>
 
       <Code value={ advanceCodeExample6 } style={ {marginTop: 40} } />
+
+      <h3>Read only DatePicker:</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+                  readOnly/>
+
+      <Code value={ advanceCodeExample4 } style={ {marginTop: 40} } />
+
+      <h3>Disabled DatePicker:</h3>
+
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+                  disabled/>
+
+      <Code value={ advanceCodeExample5 } style={ {marginTop: 40} } />
 
       </div>
 
@@ -592,6 +596,10 @@ export default React.createClass({
 
   onMonthChange(month) {
     this.setState({ selectedMonth: month });
+  },
+
+  onUpdate(obj) {
+    this.setState({ selectedDate: obj.value });
   },
 
   resetDate() {
