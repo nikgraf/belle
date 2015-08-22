@@ -3,7 +3,7 @@ const datePickerConfig = {
   preventFocusStyleForTouchAndClick: true,
 
   localeData: {
-    'nl': {
+    nl: {
       monthNames: ['januari', 'februari', 'maart', 'april', 'mei', 'juni',
         'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
       dayNamesMin: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
@@ -11,7 +11,7 @@ const datePickerConfig = {
       weekEnd: 0,
       isRTL: false
     },
-    'ar': {
+    ar: {
       monthNames: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
         'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
       dayNamesMin: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'],
@@ -19,7 +19,7 @@ const datePickerConfig = {
       weekEnd: 5,
       isRTL: true
     },
-    'he': {
+    he: {
       monthNames: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
         'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
       dayNamesMin: ['א\'', 'ב\'', 'ג\'', 'ד\'', 'ה\'', 'ו\'', 'שבת'],
@@ -27,7 +27,7 @@ const datePickerConfig = {
       weekEnd: 6,
       isRTL: true
     },
-    'fr': {
+    fr: {
       monthNames: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
         'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
       dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
@@ -35,7 +35,7 @@ const datePickerConfig = {
       weekEnd: 0,
       isRTL: false
     },
-    'zh-CN': {
+    zh-CN: {
       monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
         '七月', '八月', '九月', '十月', '十一月', '十二月'],
       dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],

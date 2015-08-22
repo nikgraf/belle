@@ -64,7 +64,69 @@ const styleStructure = `style = {
     disabledCaretToOpenStyle: { … },
     caretToCloseStyle: { … },
     caretToOpenStyle: { … }
-  }
+  },
+  datePicker: {
+    // Wrapper for entire date picker
+    wrapperStyle: { … },
+    disabledWrapperStyle: { … },
+    readOnlyWrapperStyle: { … },
+    hoverWrapperStyle: { … },
+    activeWrapperStyle: { … },
+    focusWrapperStyle: { … },
+    disabledHoverWrapperStyle: { … },
+    // Top navigation bar of date picker
+    navBarStyle: { … },
+    disabledNavBarStyle: { … },
+    readOnlyNavBarStyle: { … },
+    hoverNavBarStyle: { … },
+    // Navigation link to previous month in date picker
+    prevMonthStyle: { … },
+    disabledPrevMonthStyle: { … },
+    readOnlyPrevMonthStyle: { … },
+    hoverPrevMonthStyle: { … },
+    activePrevMonthStyle: { … },
+    focusPrevMonthStyle: { … },
+    // Navigation link to next month in date picker
+    nextMonthStyle: { … },
+    disabledNextMonthStyle: { … },
+    readOnlyNextMonthStyle: { … },
+    hoverNextMonthStyle: { … },
+    activeNextMonthStyle: { … },
+    focusNextMonthStyle: { … },
+    // Month label at top of date picker
+    monthLblStyle: { … },
+    disabledMonthLblStyle: { … },
+    readOnlyMonthLblStyle: { … },
+    hoverMonthLblStyle: { … },
+    // Div below navigation bar containing day short names
+    weekHeaderStyle: { … },
+    disabledWeekHeaderStyle: { … },
+    readOnlyHeaderStyle: { … },
+    hoverHeaderStyle: { … },
+    // Day short names inside week header
+    dayLblStyle: { … },
+    disabledDayLblStyle: { … },
+    readOnlyDayLblStyle: { … },
+    hoverDayLblStyle: { … },
+    weekendLblStyle: { … },
+    // Row for a single week
+    weekStyle: { … },
+    disabledWeekStyle: { … },
+    readOnlyWeekStyle: { … },
+    hoverWeekStyle: { … },
+    // Each day
+    dayStyle: { … },
+    disabledDayStyle: { … },
+    readOnlyDayStyle: { … },
+    hoverDayStyle: { … },
+    activeDayStyle: { … },
+    focusDayStyle: { … },
+    disabledHoverDayStyle: { … },
+    todayStyle: { … },
+    weekendStyle: { … },
+    selectedDayStyle: { … },
+    otherMonthDayStyle: { … }
+  },
   select: {
     style: { … },
     focusStyle: { … },
@@ -134,6 +196,18 @@ const configStructure = `config = {
   },
   toggle: {
     preventFocusStyleForTouchAndClick: true/false
+  },
+  datePickerConfig = {
+    preventFocusStyleForTouchAndClick: true/false,
+    localeData: {
+      locale: {
+        monthNames: [],
+        dayNamesMin: [],
+        firstDay: 0-6,
+        weekEnd: 0-6,
+        isRTL: true/false
+      },
+      ...
   }
 }
 `;

@@ -154,17 +154,16 @@ export default class TextInput extends Component {
    * properties the height might have changed.
    */
   componentWillReceiveProps(properties) {
-    let inputValue;
+    const newState = {
+      textareaProps: sanitizeChildProps(properties)
+    };
     if (has(properties, 'valueLink')) {
-      inputValue = properties.valueLink.value;
+      newState.inputValue = properties.valueLink.value;
     } else if (has(properties, 'value')) {
-      inputValue = properties.value;
+      newState.inputValue = properties.value;
     }
 
-    this.setState({
-      textareaProps: sanitizeChildProps(properties),
-      inputValue: inputValue
-    });
+    this.setState(newState);
     removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
     this._triggerResize(inputValue);

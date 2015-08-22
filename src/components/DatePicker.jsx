@@ -202,22 +202,20 @@ export default class DatePicker extends Component {
    * FUnction will update component state and styles as new props are received.
    */
   componentWillReceiveProps(properties) {
-    let dateValue;
-    if (has(properties, 'valueLink')) {
-      dateValue = properties.valueLink.value;
-    } else if (has(properties, 'value')) {
-      dateValue = properties.value;
-    } else {
-      dateValue = this.state.dateValue;
-    }
 
-    this.setState({
-      dateValue: dateValue,
+    const newState = {
       month: properties.month - 1,
       year: properties.year,
       localeData: getLocaleData(properties.locale)
-    });
+    };
 
+    if (has(properties, 'valueLink')) {
+      newState.dateValue = properties.valueLink.value;
+    } else if (has(properties, 'value')) {
+      newState.dateValue = properties.value;
+    }
+
+    this.setState(newState);
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
