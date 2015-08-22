@@ -1058,6 +1058,8 @@ export default class DatePicker extends Component {
    * Reset the value to undefined.
    *
    * This can be used in case you as developer want to reset the rating manually.
+   * This function is not very useful when user uses value/ valueLink,
+   * in those cases user can directly update props to undefined and that will be reflected by the component.
    */
   resetValue() {
     this.setState({
