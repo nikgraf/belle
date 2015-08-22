@@ -10,7 +10,10 @@ import {localeData} from '../config/datePicker';
  */
 export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
   const monthDay = new Date(year, month, 1);
-  monthDay.setDate(1 - monthDay.getDay());
+  // Todo: simplify this calculation of first date
+  let firstDate = (1 + firstDayOfWeek) - monthDay.getDay();
+  firstDate = firstDate <= 1 ? firstDate : firstDate - 7;
+  monthDay.setDate(firstDate);
   const lastDate = new Date(year, month + 1, 0);
 
   const weekArray = [];
