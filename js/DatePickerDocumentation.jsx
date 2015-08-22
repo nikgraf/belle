@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {DatePicker} from 'belle';
+import {DatePicker, Select, Option} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
@@ -38,7 +38,7 @@ const advanceCodeExample2 = `
 
 const advanceCodeExample3 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
-            locale="ar"/>`;
+            locale={ this.state.selectedLocale }/>`;
 
 const advanceCodeExample4 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
@@ -100,7 +100,7 @@ export default React.createClass({
   getInitialState() {
     return {
       selectedMonth: TODAY.getMonth() + 1,
-      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2)
+      selectedLocale: 'ar'
     };
   },
 
@@ -516,10 +516,23 @@ export default React.createClass({
 
       <Code value={ renderDayFunction } style={ {marginTop: 40} } />
 
-      <h3>Localization support in DatePicker, arabic locale:</h3>
+      <h3>Localization support in DatePicker:</h3>
 
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
-        locale="ar"/>
+        <Select valueLink={ this.linkState('selectedLocale') }
+                menuStyle={ { height: 160,
+                width: '25%',
+                overflow: 'scroll' } }
+                style={ { width: '25%',
+                marginBottom: 20}}>
+          <Option value="ar">Arabic</Option>
+          <Option value="fr">French</Option>
+          <Option value="he">Hebrew</Option>
+          <Option value="nl">Dutch</Option>
+          <Option value="zh-CN">Chinese</Option>
+        </Select>
+
+        <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
+        locale={ this.state.selectedLocale }/>
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
 
