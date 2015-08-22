@@ -29,11 +29,11 @@ export default class DatePicker extends Component {
     this.state = {
       dateValue: dateValue,
       month: properties.month - 1,
-      year: properties.year
+      year: properties.year,
+      localeData: getLocaleData(properties.locale)
     };
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
-    this.localeData = getLocaleData(this.props.locale);
   }
 
   static displayName = 'Belle DatePicker';
@@ -214,7 +214,8 @@ export default class DatePicker extends Component {
     this.setState({
       dateValue: dateValue,
       month: properties.month - 1,
-      year: properties.year
+      year: properties.year,
+      localeData: getLocaleData(properties.locale)
     });
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
@@ -582,7 +583,7 @@ export default class DatePicker extends Component {
                 className={ unionClassNames(this.props.prevMonthClassName, this.pseudoStyleIds.prevMonthStyleId) }></span>
           <span style={ monthLblStyle }
                 className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
-            { this.localeData.monthNames[this.state.month] + '-' + this.state.year }
+            { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
                 onMouseDown={ this._onNextMonthMouseDown.bind(this) }
@@ -615,15 +616,15 @@ export default class DatePicker extends Component {
       weekHeaderStyle = extend(weekHeaderStyle, style.disabledWeekHeaderStyle, this.props.disabledWeekHeaderStyle);
     }
     const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
-    let dayNames = shift(this.localeData.dayNamesMin, this.localeData.firstDay);
-    dayNames = this.localeData.isRTL ? reverse(dayNames) : dayNames;
+    let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
+    dayNames = this.state.localeData.isRTL ? reverse(dayNames) : dayNames;
 
     return (
       <div style={ weekHeaderStyle }>
         {
           map(dayNames, (dayAbbr, index) => {
-            let weekendIndex = ((7 - this.localeData.firstDay) % 7) + this.localeData.weekEnd;
-            weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
+            let weekendIndex = ((7 - this.state.localeData.firstDay) % 7) + this.state.localeData.weekEnd;
+            weekendIndex = this.state.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
@@ -675,7 +676,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (this.props.styleWeekend && currentDate.getDay() === this.localeData.weekEnd) {
+    if (this.props.styleWeekend && currentDate.getDay() === this.state.localeData.weekEnd) {
       dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
     }
 
@@ -771,7 +772,7 @@ export default class DatePicker extends Component {
       }
     }
 
-    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.localeData.firstDay);
+    const weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.state.localeData.firstDay);
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
     return (
@@ -796,7 +797,7 @@ export default class DatePicker extends Component {
         <div>
           {
             map(weekArray, (week, weekIndex) => {
-              const weekDays = this.localeData.isRTL ? reverse(week) : week;
+              const weekDays = this.state.localeData.isRTL ? reverse(week) : week;
               return (
                 <div key={ 'week-' + weekIndex }
                      style={ weekStyle }
