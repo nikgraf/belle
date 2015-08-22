@@ -290,6 +290,27 @@ export default class Configuration extends Component {
         setting `preventFocusStyleForTouchAndClick` to false.
       </p>
 
+      <h4>DatePicker</h4>
+
+      <p>
+        Support for new locale in date picker can be added using this config. Following parameters are required to be provided for a locale:
+        <ul>
+          <li><span style={ {fontWeight: 'bold'} }>monthNames</span>: Array for month names from January to December</li>
+          <li><span style={ {fontWeight: 'bold'} }>dayNamesMin</span>: Array for day short names</li>
+          <li><span style={ {fontWeight: 'bold'} }>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={ {fontWeight: 'bold'} }>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={ {fontWeight: 'bold'} }>isRTL</span>: The text in that locale is written from right to left</li>
+        </ul>
+        In case any of these fields is not provided the defaults for English calendar will be used.
+      </p>
+
+      <p>
+        In the DatePicker component wrapper and links for previous and next month the focus style is not
+        applied in case the component is focused on by a touch or click event.
+        This default behaviour can be deactivated by setting
+        `preventFocusStyleForTouchAndClick` to false.
+      </p>
+
       <h4>Select</h4>
 
       <p>
@@ -307,7 +328,7 @@ export default class Configuration extends Component {
       <h4>Rating</h4>
 
       <p>
-        Similar to the Button for the Rating component the focus style is not
+        In the Rating component the focus style is not
         applied in case the component is focused on by a touch or click event.
         This default behaviour can be deactivated by setting
         `preventFocusStyleForTouchAndClick` to false.
