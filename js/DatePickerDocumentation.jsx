@@ -80,7 +80,10 @@ const renderDayFunction = `renderDay(day) {
     if (day.getDate() === 25 && day.getMonth() === 11) {
       return (
         <div>
-          🎁{ day.getDate() }
+          <span style={ {color: '#FFDA46'} }>✵</span>
+          <span style={ {color: 'red'} }>
+            { day.getDate() }
+          </span>
         </div>
       );
     }
@@ -469,6 +472,24 @@ export default React.createClass({
           so on for prevMonth, nextMonth, monthLbl, weekHeader, dayLbl, week and day</span><br />
       </p>
 
+      <h3>Methods</h3>
+
+      <table>
+        <tr>
+          <td style={ propertyNameStyle }>
+            resetValue
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              This method can be called to reset the date picker's value to undefined.<br/>
+              (Note: This method is not so much useful for controlled components. In those cases to set value to undefined props can be updated.)
+            </p>
+          </td>
+        </tr>
+      </table>
+
       <h3>Internal HTML Structure</h3>
 
       <p>
@@ -521,7 +542,7 @@ export default React.createClass({
       <DatePicker ref="datePicker"
                   onMonthChange={ this.onMonthChange }
                   month={ this.state.selectedMonth }
-                  valueLink={ this.linkState('selectedDate') }
+                  defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2) }
                   onUpdate = { (date) => {console.log('Date Updated...', date); } }/>
       <div style={ {display: 'inline-block',
                     width: 200,
@@ -546,7 +567,8 @@ export default React.createClass({
     if (day.getDate() === 25 && day.getMonth() === 11) {
       return (
         <div>
-          🎁{ day.getDate() }
+          <span style={ {color: '#FFDA46'} }>✵</span>
+          <span style={ {color: 'red'} }>{ day.getDate() }</span>
         </div>
       );
     }
@@ -560,7 +582,6 @@ export default React.createClass({
   },
 
   resetDate() {
-    this.setState({ selectedDate: undefined });
     this.refs.datePicker.resetValue();
   }
 

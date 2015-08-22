@@ -366,8 +366,9 @@ export default React.createClass({
         </tr>
         <tr>
           <td style={ propertyDescriptionStyle }>
-            <p>
-              This method can be called to reset the Rating's value to undefined.
+            <p style={ {display: 'block'} }>
+              This method can be called to reset the Rating's value to undefined.<br/>
+              (Note: This method is not so much useful for controlled components. In those cases to set value to undefined props can be updated.)
             </p>
           </td>
         </tr>
