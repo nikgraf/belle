@@ -52,7 +52,7 @@ const advanceCodeExample6 = `
 <DatePicker ref="datePicker"
             onMonthChange={ this.onMonthChange }
             month={ this.state.selectedMonth }
-            valueLink={ this.linkState('selectedDate') }
+            defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + (TODAY.getDate() + 2) + `) }
             onUpdate = { (date) =>
               {console.log('Date Updated...', date); } }/>
 <div style={ {display: 'inline-block',
