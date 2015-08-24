@@ -3,6 +3,7 @@ import Card from './components/Card';
 import Choice from './components/Choice';
 import Option from './components/Option';
 import Placeholder from './components/Placeholder';
+import Popover from './components/Popover';
 import Select from './components/Select';
 import Separator from './components/Separator';
 import TextInput from './components/TextInput';
@@ -32,6 +33,7 @@ module.exports = {
   Choice: Choice,
   Option: Option,
   Placeholder: Placeholder,
+  Popover: Popover,
   Select: Select,
   Separator: Separator,
   TextInput: TextInput,

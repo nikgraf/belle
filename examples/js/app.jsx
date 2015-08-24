@@ -8,6 +8,7 @@ import SelectPlayground from './SelectPlayground';
 import TextInputPlayground from './TextInputPlayground';
 import RatingPlayground from './RatingPlayground';
 import ComboBoxPlayground from './ComboBoxPlayground';
+import PopoverPlayground from './PopoverPlayground';
 import TogglePlayground from './TogglePlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
@@ -70,6 +71,8 @@ class App extends Component {
   render() {
     return (<div style={ {margin: '0 auto', width: 300} }>
         <h1>Belle Playground</h1>
+
+        <PopoverPlayground />
 
         <TogglePlayground />
 
