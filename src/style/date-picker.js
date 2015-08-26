@@ -66,15 +66,6 @@ const datePickerStyle = {
     color: 'white'
   },
 
-  disabledNavBarStyle: {
-  },
-
-  readOnlyNavBarStyle: {
-  },
-
-  hoverNavBarStyle: {
-  },
-
   // left button in nav-bar to go to previous month
   prevMonthStyle: {
     cursor: 'pointer',
@@ -106,10 +97,9 @@ const datePickerStyle = {
   },
 
   disabledPrevMonthStyle: {
+    // todo: logic to be moved to render menthod
+    // to be removed then
     display: 'none'
-  },
-
-  readOnlyPrevMonthStyle: {
   },
 
   hoverPrevMonthStyle: {
@@ -153,10 +143,8 @@ const datePickerStyle = {
   },
 
   disabledNextMonthStyle: {
+    // todo: remove
     display: 'none'
-  },
-
-  readOnlyNextMonthStyle: {
   },
 
   hoverNextMonthStyle: {
@@ -184,30 +172,11 @@ const datePickerStyle = {
     userSelect: 'initial'
   },
 
-  disabledMonthLblStyle: {
-  },
-
-  readOnlyMonthLblStyle: {
-  },
-
-  hoverMonthLblStyle: {
-  },
-
   // styling for week's header bar
   weekHeaderStyle: {
     display: 'flex',
     justifyContent: 'space-between',
     color: '#716D6D'
-  },
-
-  disabledWeekHeaderStyle: {
-    color: '#C1BABA'
-  },
-
-  readOnlyHeaderStyle: {
-  },
-
-  hoverHeaderStyle: {
   },
 
   // styling for week's day label
@@ -229,12 +198,7 @@ const datePickerStyle = {
   },
 
   disabledDayLblStyle: {
-  },
-
-  readOnlyDayLblStyle: {
-  },
-
-  hoverDayLblStyle: {
+    color: '#C1BABA'
   },
 
   weekendLblStyle: {
@@ -246,15 +210,6 @@ const datePickerStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     color: '#716D6D'
-  },
-
-  disabledWeekStyle: {
-  },
-
-  readOnlyWeekStyle: {
-  },
-
-  hoverWeekStyle: {
   },
 
   // styling for individual day
@@ -337,13 +292,3 @@ const datePickerStyle = {
 };
 
 export default datePickerStyle;
-
-
-/**
- * TODO-S:
- * - Improve default belle styling
- * - Implement bootstrap styling for date-picker
- * - Animated focus style for wrapper
- * - better icons needed for left/ right nav buttons
- * - Some of styles in api can be removed (which are not used)
- **/
