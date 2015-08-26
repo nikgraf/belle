@@ -604,7 +604,7 @@ export default class Select extends Component {
    */
   _onArrowDownKeyDown() {
     if (this.state.focusedOptionValue) {
-      const indexOfFocusedOption = this.findIndexOfFocusedOption();
+      const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
       if (hasNext(this.options, indexOfFocusedOption)) {
         this.setState({
@@ -629,7 +629,7 @@ export default class Select extends Component {
    */
   _onArrowUpKeyDown() {
     if (this.state.focusedOptionValue) {
-      const indexOfFocusedOption = this.findIndexOfFocusedOption();
+      const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
       if (hasPrevious(this.options, indexOfFocusedOption)) {
         this.setState({
@@ -746,6 +746,18 @@ export default class Select extends Component {
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
+  }
+
+  /**
+   * Returns the index of the entry with a certain value from the component's
+   * children.
+   *
+   * The index search includes only option components.
+   */
+  _getIndexOfFocusedOption() {
+    return findIndex(this.options, (element) => {
+      return element.props.value === this.state.focusedOptionValue;
+    });
   }
 
   render() {
@@ -883,17 +895,5 @@ export default class Select extends Component {
 
       </div>
     );
-  }
-
-  /**
-   * Returns the index of the entry with a certain value from the component's
-   * children.
-   *
-   * The index search includes only option components.
-   */
-  findIndexOfFocusedOption() {
-    return findIndex(this.options, (element) => {
-      return element.props.value === this.state.focusedOptionValue;
-    });
   }
 }
