@@ -1,4 +1,4 @@
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { canUseDOM } from 'exenv';
 
 let hiddenTextarea;
 const computedStyleCache = {};

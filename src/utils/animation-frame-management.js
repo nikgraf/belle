@@ -1,6 +1,6 @@
 // Inspired by https://gist.github.com/paulirish/1579671
 
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { canUseDOM } from 'exenv';
 
 export let requestAnimationFrame;
 export let cancelAnimationFrame;
