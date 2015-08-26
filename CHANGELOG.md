@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 1.2.1 - 2015-08-26
+- [Combobox, Select] Improve children manipulation to make Belle work with Radium [#170](https://github.com/nikgraf/belle/issues/170)
+
 ## 1.2.0 - 2015-08-19
 
 ### Added
