@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {omit, extend, filter, find, first, flatten, isEmpty, findIndex, last, size, uniqueId, has, some} from '../utils/helpers';
+import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
 import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -32,41 +32,21 @@ function isSeparator(reactElement) {
 }
 
 /**
- * Returns the index of the entry with a certain value from the component's
- * children.
- *
- * The index search includes only option components.
- */
-const findIndexOfFocusedOption = (component) => {
-  return findIndex(filter(component.children, isOption), (element) => {
-    return element.props.value === component.state.focusedOptionValue;
-  });
-};
-
-/**
- * Verifies that the provided property is an Option or Placeholder component from Belle.
- */
-function optionOrPlaceholderOrSeparatorPropType(props, propName, componentName) {
-  if (props[propName] && !(isOption(props[propName]) ||
-        isPlaceholder(props[propName]) ||
-        isSeparator(props[propName]))
-     ) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
-  }
-}
-
-/**
  * Verifies that the children is an array containing only Options & at maximum
  * one Placeholder.
  */
 function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
-  const sanitizedProps = { children: flatten(props[propName]) };
+  const validChildren = filterReactChildren(props[propName], (node) => {
+    return (isOption(node) || isSeparator(node) || isPlaceholder(node));
+  });
+  if (React.Children.count(props[propName]) !== React.Children.count(validChildren)) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option, Separator or Placeholder component from Belle.`);
+  }
 
-  const error = PropTypes.arrayOf(optionOrPlaceholderOrSeparatorPropType).isRequired(sanitizedProps, 'children', componentName);
-  if (error) return error;
-
-  const placeholders = filter(sanitizedProps.children, isPlaceholder);
-  if (size(placeholders) > 1) {
+  const placeholders = filterReactChildren(props[propName], (node) => {
+    return isPlaceholder(node);
+  });
+  if (React.Children.count(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
 }
@@ -222,7 +202,8 @@ export default class Select extends Component {
     let focusedOptionValue;
 
     if (properties.children) {
-      this.children = flatten(properties.children);
+      this.children = flattenReactChildren(properties.children);
+      this.options = filter(this.children, isOption);
     }
 
     if (has(properties, 'valueLink')) {
@@ -235,11 +216,11 @@ export default class Select extends Component {
       selectedValue = properties.defaultValue;
       focusedOptionValue = selectedValue;
     } else if (!isEmpty(this.children) && !some(this.children, isPlaceholder)) {
-      const firstOption = first(filter(this.children, isOption));
+      const firstOption = first(this.options);
       selectedValue = firstOption ? firstOption.props.value : void 0;
       focusedOptionValue = selectedValue;
     } else if (!isEmpty(this.children)) {
-      const firstOption = first(filter(this.children, isOption));
+      const firstOption = first(this.options);
       focusedOptionValue = firstOption ? firstOption.props.value : void 0;
     }
 
@@ -325,7 +306,8 @@ export default class Select extends Component {
 
   componentWillReceiveProps(properties) {
     if (properties.children) {
-      this.children = flatten(properties.children);
+      this.children = flattenReactChildren(properties.children);
+      this.options = filter(this.children, isOption);
     }
 
     const newState = {
@@ -386,10 +368,9 @@ export default class Select extends Component {
         menuNode.scrollTop = this.cachedMenuScrollTop;
       }
 
-      const options = filter(this.children, isOption);
       const separators = filter(this.children, isSeparator);
-      const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
-      if (!previousState.isOpen && this.state.isOpen && childrenLength) {
+      const childrenPresent = !isEmpty(this.options) || !isEmpty(separators);
+      if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
         const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
         menuNode.style.display = menuStyle.display;
       }
@@ -623,16 +604,16 @@ export default class Select extends Component {
    */
   _onArrowDownKeyDown() {
     if (this.state.focusedOptionValue) {
-      const indexOfFocusedOption = findIndexOfFocusedOption(this);
+      const indexOfFocusedOption = this.findIndexOfFocusedOption();
 
-      if (hasNext(filter(this.children, isOption), indexOfFocusedOption)) {
+      if (hasNext(this.options, indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: filter(this.children, isOption)[indexOfFocusedOption + 1].props.value
+          focusedOptionValue: this.options[indexOfFocusedOption + 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: first(filter(this.children, isOption)).props.value
+        focusedOptionValue: first(this.options).props.value
       });
     }
   }
@@ -648,16 +629,16 @@ export default class Select extends Component {
    */
   _onArrowUpKeyDown() {
     if (this.state.focusedOptionValue) {
-      const indexOfFocusedOption = findIndexOfFocusedOption(this);
+      const indexOfFocusedOption = this.findIndexOfFocusedOption();
 
-      if (hasPrevious(filter(this.children, isOption), indexOfFocusedOption)) {
+      if (hasPrevious(this.options, indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: filter(this.children, isOption)[indexOfFocusedOption - 1].props.value
+          focusedOptionValue: this.options[indexOfFocusedOption - 1].props.value
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: last(filter(this.children, isOption)).props.value
+        focusedOptionValue: last(this.options).props.value
       });
     }
   }
@@ -685,7 +666,7 @@ export default class Select extends Component {
    */
   _onKeyDown(event) {
     if (!this.props.disabled) {
-      if (filter(this.children, isOption).length > 0) {
+      if (!isEmpty(this.options)) {
         if (!this.state.isOpen) {
           if (event.key === 'ArrowDown' ||
               event.key === 'ArrowUp' ||
@@ -795,10 +776,9 @@ export default class Select extends Component {
       selectedOptionOrPlaceholder = find(this.children, isPlaceholder);
     }
 
-    const options = filter(this.children, isOption);
     const separators = filter(this.children, isSeparator);
-    const childrenLength = (options ? options.length : 0) + (separators ? separators.length : 0);
-    const computedMenuStyle = this.props.disabled || !this.state.isOpen || childrenLength === 0 ? { display: 'none' } : menuStyle;
+    const childrenNotPresent = isEmpty(this.options) && isEmpty(separators);
+    const computedMenuStyle = this.props.disabled || !this.state.isOpen || childrenNotPresent ? { display: 'none' } : menuStyle;
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
 
@@ -903,5 +883,17 @@ export default class Select extends Component {
 
       </div>
     );
+  }
+
+  /**
+   * Returns the index of the entry with a certain value from the component's
+   * children.
+   *
+   * The index search includes only option components.
+   */
+  findIndexOfFocusedOption() {
+    return findIndex(this.options, (element) => {
+      return element.props.value === this.state.focusedOptionValue;
+    });
   }
 }
