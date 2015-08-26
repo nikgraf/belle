@@ -7,7 +7,7 @@ import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
-// Enable React Touch Events    
+// Enable React Touch Events
 React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**

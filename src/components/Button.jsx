@@ -7,7 +7,7 @@ import config from '../config/button';
 
 const buttonTypes = ['button', 'submit', 'reset'];
 
-// Enable React Touch Events    
+// Enable React Touch Events
 React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
