@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {omit, extend, filter, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
+import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
 import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -36,22 +36,17 @@ function isSeparator(reactElement) {
  * one Placeholder.
  */
 function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
-  let placeHolderCount = 0;
-  let validType = true;
-  React.Children.forEach(props[propName], (elm) => {
-    let isPlaceholderElm = false;
-    if (isPlaceholder(elm)) {
-      isPlaceholderElm = true;
-      placeHolderCount++;
-    }
-    if (!isOption(elm) && !isSeparator(elm) && !isPlaceholderElm) {
-      validType = false;
-    }
+  const validChildren = filterReactChildren(props[propName], (node) => {
+    return (isOption(node) || isSeparator(node) || isPlaceholder(node));
   });
-  if (!validType) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option or Placeholder component from Belle.`);
+  if (React.Children.count(props[propName]) !== React.Children.count(validChildren)) {
+    return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option, Separator or Placeholder component from Belle.`);
   }
-  if (placeHolderCount > 1) {
+
+  const placeholders = filterReactChildren(props[propName], (node) => {
+    return isPlaceholder(node);
+  });
+  if (React.Children.count(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
 }
