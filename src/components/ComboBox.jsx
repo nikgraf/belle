@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filter, has, map, find} from '../utils/helpers';
+import {omit, extend, filterReactChildren, has, isEmpty, find} from '../utils/helpers';
 import style from '../style/combo-box';
 
 // Enable React Touch Events
@@ -150,10 +150,7 @@ export default class ComboBox extends Component {
   static displayName = 'Belle ComboBox';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
-    ]),
+    children: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]),
     defaultValue: React.PropTypes.string,
     value: React.PropTypes.string,
     valueLink: React.PropTypes.shape({
@@ -592,13 +589,13 @@ export default class ComboBox extends Component {
    */
   static filterOptions(inputValue, properties) { /*eslint react/sort-comp:0*/
     let filteredOptions = [];
-    if (properties.children.length > 0) {
+    if (!isEmpty(properties.children)) {
       if (inputValue) {
-        filteredOptions = filter(properties.children, (entry) => {
+        filteredOptions = filterReactChildren(properties.children, (entry) => {
           return properties.filterFunc(inputValue, entry.props.value);
         });
       } else {
-        filteredOptions = map(properties.children, (entry) => { return entry; });
+        filteredOptions = React.Children.map(properties.children, (entry) => { return entry; });
       }
       if (properties.maxOptions) {
         filteredOptions = filteredOptions.splice(0, properties.maxOptions);

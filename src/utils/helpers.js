@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Returns true if the object contain the given key.
  *
@@ -128,12 +130,17 @@ export function find(iterable, predicate, context) {
 }
 
 /**
- * Returns true if object contains no values (no enumerable own-properties).
+ * Returns true if object is:
+ * 1. Falsy
+ * 2. An array of size 0
+ * 3. An object with no key-values
  *
- * @param {array} iterable - an iterable object
+ * @param {Object} obj - an object
  */
-export function isEmpty(iterable) {
-  return !iterable || iterable.length === 0;
+export function isEmpty(obj) {
+  return !obj ||
+    (Array.isArray(obj) && obj.length === 0) ||
+    (Object.keys(obj).length === 0);
 }
 
 /**
@@ -295,3 +302,38 @@ export function flatten(...arrays) {
     return result;
   }
 }
+
+/**
+ * Looks through a collection of React children elements, filtering them according to the predicate passed.
+ *
+ * @param {Array/Object} children - colleciton of >=1 react elements
+ * @param {function} predicate - function returning true when provided with an entry as argument
+ */
+export function filterReactChildren(children, predicate) {
+  if (children) {
+    const result = [];
+    React.Children.forEach(children, (entry) => {
+      if (predicate && predicate.call(this, entry)) {
+        result.push(entry);
+      }
+    });
+    return result;
+  }
+}
+
+
+/**
+ * Looks through a collection of React children elements, filtering them according to the predicate passed.
+ *
+ * @param {Array/Object} children - collection of >=1 react elements
+ */
+export function getArrayForReactChildren(children) {
+  if (children) {
+    const result = [];
+    React.Children.forEach(children, (entry) => {
+      result.push(entry);
+    });
+    return result;
+  }
+}
+
