@@ -7,6 +7,9 @@ import isComponentOfType from '../utils/is-component-of-type.js';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
 
+// Enable React Touch Events    
+React.initializeTouchEvents && React.initializeTouchEvents(true);
+
 function sanitizeChildProps(properties) {
   return omit(properties, [
     'className',

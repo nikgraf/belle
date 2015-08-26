@@ -4,6 +4,9 @@ import unionClassNames from '../utils/union-class-names';
 import {omit, extend, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
 import style from '../style/combo-box';
 
+// Enable React Touch Events    
+React.initializeTouchEvents && React.initializeTouchEvents(true);
+
 /**
  * Update hover style for the specified styleId.
  *

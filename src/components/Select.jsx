@@ -7,6 +7,9 @@ import style from '../style/select';
 import config from '../config/select';
 import isComponentOfType from '../utils/is-component-of-type.js';
 
+// Enable React Touch Events    
+React.initializeTouchEvents && React.initializeTouchEvents(true);
+
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
  */

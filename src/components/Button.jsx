@@ -7,6 +7,9 @@ import config from '../config/button';
 
 const buttonTypes = ['button', 'submit', 'reset'];
 
+// Enable React Touch Events    
+React.initializeTouchEvents && React.initializeTouchEvents(true);
+
 /**
  * Returns an object with properties that are relevant for the button element.
  *
