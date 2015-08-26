@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filterReactChildren, has, isEmpty, find} from '../utils/helpers';
+import {omit, extend, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
 import style from '../style/combo-box';
 
 // Enable React Touch Events
@@ -595,7 +595,7 @@ export default class ComboBox extends Component {
           return properties.filterFunc(inputValue, entry.props.value);
         });
       } else {
-        filteredOptions = React.Children.map(properties.children, (entry) => { return entry; });
+        filteredOptions = getArrayForReactChildren(properties.children, (entry) => { return entry; });
       }
       if (properties.maxOptions) {
         filteredOptions = filteredOptions.splice(0, properties.maxOptions);

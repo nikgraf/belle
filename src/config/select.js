@@ -1,6 +1,6 @@
 import React from 'react';
 import isComponentOfType from '../utils/is-component-of-type.js';
-import {filter, findIndex} from '../utils/helpers';
+import {filterReactChildren, findIndex} from '../utils/helpers';
 
 /**
  * Returns the index of the entry with a certain value from the component's
@@ -10,7 +10,7 @@ import {filter, findIndex} from '../utils/helpers';
  */
 const findIndexOfSelectedOption = (component) => {
   const filterFunction = (child) => (isComponentOfType('Belle Option', child) || isComponentOfType('Belle Separator', child));
-  return findIndex(filter(component.props.children, filterFunction), (element) => {
+  return findIndex(filterReactChildren(component.props.children, filterFunction), (element) => {
     return element.props.value === component.state.selectedValue;
   });
 };

@@ -337,3 +337,11 @@ export function getArrayForReactChildren(children) {
   }
 }
 
+export function flattenReactChildren(children) {
+  if (!isEmpty(children)) {
+    if (Array.isArray(children)) {
+      return flatten(children);
+    }
+    return getArrayForReactChildren(children);
+  }
+}
