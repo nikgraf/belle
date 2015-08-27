@@ -143,7 +143,7 @@ export default class DatePicker extends Component {
     month: CURRENT_MONTH + 1,
     year: CURRENT_YEAR,
     tabIndex: 0,
-    'aria-label': 'Calendar',
+    'aria-label': 'DatePicker',
     disabled: false,
     readOnly: false,
     locale: 'en',
@@ -579,7 +579,9 @@ export default class DatePicker extends Component {
                 style= { prevMonthStyle }
                 className={ unionClassNames(this.props.prevMonthClassName, this.pseudoStyleIds.prevMonthStyleId) }></span>
           <span style={ monthLblStyle }
-                className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }>
+                className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }
+                role="heading"
+                id={ this.state.month + '-' + this.state.year }>
             { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
           </span>
           <span tabIndex={ this.props.tabIndex }
@@ -625,7 +627,8 @@ export default class DatePicker extends Component {
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
-                    className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }>
+                    className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }
+                    role="columnheader">
                   { dayAbbr }
                 </span>
             );
@@ -716,11 +719,13 @@ export default class DatePicker extends Component {
               aria-current={ ariaCurrent }
               aria-selected={ ariaSelected }
               style={ dayStyle }
-              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
+              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }
+              role="gridcell">
               { this.props.renderDay ? this.props.renderDay(currentDate) : day }
             </span>) : (<span key={ 'day-' + index }
               style={ dayStyle }
-              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }>
+              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }
+              role="gridcell">
               { this.props.showOtherMonthDate ? (this.props.renderDay ? this.props.renderDay(currentDate) : day) : ''}
             </span>);
   }
@@ -790,8 +795,8 @@ export default class DatePicker extends Component {
            style={ wrapperStyle }
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
         { this._getNavBar() }
-        { this._getDaysHeader() }
-        <div>
+        <div role="grid">
+          { this._getDaysHeader() }
           {
             map(weekArray, (week, weekIndex) => {
               const weekDays = this.state.localeData.isRTL ? reverse(week) : week;

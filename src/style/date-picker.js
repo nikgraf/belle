@@ -172,11 +172,18 @@ const datePickerStyle = {
     userSelect: 'initial'
   },
 
+  // weekHeaderStyle, weekStyle (2 below) I needed just for setting display properly, there might be better ways to do this.
+
   // styling for week's header bar
   weekHeaderStyle: {
     display: 'flex',
-    justifyContent: 'space-between',
-    color: '#716D6D'
+    justifyContent: 'space-between'
+  },
+
+  // styling for week's row
+  weekStyle: {
+    display: 'flex',
+    justifyContent: 'space-between'
   },
 
   // styling for week's day label
@@ -187,6 +194,7 @@ const datePickerStyle = {
     verticalAlign: 'middle',
     backgroundColor: 'white',
     margin: 0.5,
+    color: '#716D6D',
 
     /*
      User should be able to copy date.
@@ -205,13 +213,6 @@ const datePickerStyle = {
     backgroundColor: '#F0F0F0'
   },
 
-  // styling for week's row
-  weekStyle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    color: '#716D6D'
-  },
-
   // styling for individual day
   dayStyle: {
     width: 40,
@@ -221,6 +222,7 @@ const datePickerStyle = {
     margin: 0.5,
     cursor: 'pointer',
     backgroundColor: '#F8F8F8',
+    color: '#716D6D',
 
     /*
      User should be able to copy date.
