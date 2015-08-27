@@ -54,8 +54,6 @@ export default class DatePicker extends Component {
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
-    onDayFocus: React.PropTypes.func,
-    onDayBlur: React.PropTypes.func,
     onDayKeyDown: React.PropTypes.func,
     onDayMouseDown: React.PropTypes.func,
     onDayMouseUp: React.PropTypes.func,
@@ -111,7 +109,7 @@ export default class DatePicker extends Component {
     readOnlyDayStyle: React.PropTypes.object,
     hoverDayStyle: React.PropTypes.object,
     activeDayStyle: React.PropTypes.object,
-    focusDayStyle: React.PropTypes.object,
+    highlightedDayStyle: React.PropTypes.object,
     disabledHoverDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
     selectedDayStyle: React.PropTypes.object,
@@ -134,29 +132,28 @@ export default class DatePicker extends Component {
   /**
    * Injects pseudo classes for styles into the DOM.
    */
-  static updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
-    const styles = [];
-    ['navBar', 'prevMonthNav', 'nextMonthNav', 'monthLbl', 'dayLbl', 'weekHeader'].forEach((elm) => {
-      const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
-      styles.push({
-        id: pseudoStyleIds[elm + 'StyleId'],
-        style: extend({}, style['hover' + elmFirstCaps + 'Style'], properties['hover' + elmFirstCaps + 'Style']),
-        pseudoClass: 'hover'
-      });
-    });
-    ['wrapper', 'navBar', 'prevMonthNav', 'nextMonthNav', 'monthLbl', 'dayLbl', 'weekHeader', 'day'].forEach((elm) => {
-      const elmFirstCaps = elm[0].toUpperCase() + elm.substr(1, elm.length);
-      let focusStyle;
-      if (preventFocusStyleForTouchAndClick && elm !== 'day') {
-        focusStyle = { outline: 0 };
-      } else {
-        focusStyle = extend({}, style['focus' + elmFirstCaps + 'Style'], properties['focus' + elmFirstCaps + 'Style']);
-      }
-      styles.push({
-        id: pseudoStyleIds[elm + 'StyleId'],
-        style: focusStyle,
-        pseudoClass: 'focus'
-      });
+  static updatePseudoClassStyle(properties, preventFocusStyleForTouchAndClick) {
+    const styles = [{
+      id: 'prevMonthNavStyleId',
+      style: extend({}, style.hoverPrevMonthNavStyle, properties.hoverPrevMonthNavStyle),
+      pseudoClass: 'hover'
+
+    }, {
+      id: 'nextMonthNavStyleId',
+      style: extend({}, style.hoverNextMonthNavStyle, properties.hoverNextMonthNavStyle),
+      pseudoClass: 'hover'
+
+    }];
+    let focusStyle;
+    if (preventFocusStyleForTouchAndClick) {
+      focusStyle = { outline: 0 };
+    } else {
+      focusStyle = extend({}, style.focusWrapperStyle, properties.focusWrapperStyle);
+    }
+    styles.push({
+      id: 'wrapperStyleId',
+      style: focusStyle,
+      pseudoClass: 'focus'
     });
     injectStyles(styles);
   }
@@ -169,13 +166,9 @@ export default class DatePicker extends Component {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.pseudoStyleIds = {};
     this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
-    this.pseudoStyleIds.navBarStyleId = `navBar-style-id${id}`;
     this.pseudoStyleIds.prevMonthNavStyleId = `prevMonthNav-style-id${id}`;
     this.pseudoStyleIds.nextMonthNavStyleId = `nextMonthNav-style-id${id}`;
-    this.pseudoStyleIds.monthLblStyleId = `monthLbl-style-id${id}`;
-    this.pseudoStyleIds.dayLblStyleId = `dayLbl-style-id${id}`;
-    this.pseudoStyleIds.dayStyleId = `day-style-id${id}`;
-    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.preventFocusStyleForTouchAndClick);
+    DatePicker.updatePseudoClassStyle(this.props, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -198,7 +191,7 @@ export default class DatePicker extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
-    DatePicker.updatePseudoClassStyle(this.pseudoStyleIds, properties, this.preventFocusStyleForTouchAndClick);
+    DatePicker.updatePseudoClassStyle(properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -214,9 +207,14 @@ export default class DatePicker extends Component {
    */
   _onWrapperFocus(event) {
     if (!this.props.disabled && !this.state.isWrapperActive) {
-      this.setState({
+      const newState = {
         isWrapperFocused: true
-      });
+      };
+      if (this.state.month === CURRENT_MONTH) {
+        newState.highlightedDay = (CURRENT_MONTH + 1) + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+        //React.findDOMNode(this.refs[newState.highlightedDay]).focus();
+      }
+      this.setState(newState);
     }
 
     if (this.props.onFocus) {
@@ -231,7 +229,8 @@ export default class DatePicker extends Component {
   _onWrapperBlur(event) {
     if (!this.props.disabled) {
       this.setState({
-        isWrapperFocused: false
+        isWrapperFocused: false,
+        highlightedDay: undefined
       });
     }
 
@@ -311,85 +310,47 @@ export default class DatePicker extends Component {
   /**
    * The callback is called when wrapper receives keyDown event.
    * 1. If wrapper is focused: ArrowLeft/ ArrowRight keys will increase or decrease month.
-   * 2. If previousMonth if focused: Enter key will decrease month.
-   * 3. If nextMonthNav is focused: Enter key will increase the month.
-   * 4. Id some day is focused: arrow keys will navigate calendar and enter key will change dateValue of component.
+   * 3. Id some day is hilighted: arrow keys will navigate calendar and enter key will change dateValue of component.
    * Function will call props.onDayKeyDown or props.onKeyDown depending on whether wrapper or day is focused.
    */
   _onWrapperKeyDown(event) {
     if (!this.props.disabled) {
       if (event.key === 'ArrowDown') {
         event.preventDefault();
-        if (this.state.focusedDay) {
-          this._focusNextDay(7);
+        if (this.state.highlightedDay) {
+          this._highlightNextDay(7);
         }
       } else if (event.key === 'ArrowUp') {
         event.preventDefault();
-        if (this.state.focusedDay) {
-          this._focusPreviousDay(7);
+        if (this.state.highlightedDay) {
+          this._highlightPreviousDay(7);
         }
       } else if (event.key === 'ArrowLeft') {
         event.preventDefault();
-        if (this.state.focusedDay) {
-          this._focusPreviousDay(1);
+        if (this.state.highlightedDay) {
+          this._highlightPreviousDay(1);
         } else if (this.state.isWrapperFocused) {
           this._decreaseMonth();
         }
       } else if (event.key === 'ArrowRight') {
         event.preventDefault();
-        if (this.state.focusedDay) {
-          this._focusNextDay(1);
+        if (this.state.highlightedDay) {
+          this._highlightNextDay(1);
         } else if (this.state.isWrapperFocused) {
           this._increaseMonth();
         }
       } else if (event.key === 'Enter') {
         event.preventDefault();
-        if (this.state.focusedDay) {
-          this._selectDate(new Date(this.state.focusedDay).getDate());
-        } else if (this.state.isPrevMonthNavFocused) {
-          this._decreaseMonth();
-        } else if (this.state.isNextMonthNavFocused) {
-          this._increaseMonth();
+        if (this.state.highlightedDay) {
+          this._selectDate(new Date(this.state.highlightedDay).getDate());
         }
       }
     }
 
-    if (this.state.focusedDay && this.props.onDayKeyDown) {
+    if (this.state.highlightedDay && this.props.onDayKeyDown) {
       this.props.onDayKeyDown(event);
     } if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
-    }
-  }
-
-  /**
-   * Callback is called when some day received focus.
-   * It will conditionally set this.state.focusedDay to value of focused day and call props.onDayFocus.
-   */
-  _onDayFocus(dayKey, event) {
-    if (!this.props.disabled && !this.props.readOnly) {
-      this.setState({
-        focusedDay: dayKey
-      });
-    }
-
-    if (this.props.onDayFocus) {
-      this.props.onDayFocus(event);
-    }
-  }
-
-  /**
-   * Callback is called when some day receives blur.
-   * It will reset this.state.focusedDay and call props.onDayBlur.
-   */
-  _onDayBlur(dayKey, event) {
-    if (!this.props.disabled && this.state.focusedDay && this.state.focusedDay === dayKey) {
-      this.setState({
-        focusedDay: null
-      });
-    }
-
-    if (this.props.onDayBlur) {
-      this.props.onDayBlur(event);
     }
   }
 
@@ -536,17 +497,15 @@ export default class DatePicker extends Component {
 
     return (
       <div style={ navBarStyle }
-           className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
+           className={ this.props.navBarClassName }>
           <span onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
-                onFocus={ this._onPrevMonthNavFocus.bind(this)}
-                onBlur={ this._onPrevMonthNavBlur.bind(this)}
                 style= { prevMonthNavStyle }
                 className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }></span>
           <span style={ monthLblStyle }
-                className={ unionClassNames(this.props.monthLblClassName, this.pseudoStyleIds.monthLblStyleId) }
+                className={ this.props.monthLblClassName }
                 role="heading"
                 id={ this.state.month + '-' + this.state.year }>
             { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
@@ -555,8 +514,6 @@ export default class DatePicker extends Component {
                 onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
-                onFocus={ this._onNextMonthNavFocus.bind(this)}
-                onBlur={ this._onNextMonthNavBlur.bind(this)}
                 style= { nextMonthNavStyle }
                 className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }></span>
       </div>
@@ -588,7 +545,7 @@ export default class DatePicker extends Component {
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
-                    className={ unionClassNames(this.props.dayLblClassName, this.pseudoStyleIds.dayLblStyleId) }
+                    className={ this.props.dayLblClassName }
                     role="columnheader">
                   { dayAbbr }
                 </span>
@@ -641,12 +598,20 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
     }
 
+    // Setting tabIndex
+    let tabIndex = false;
+
     if (!isCurrentMonth) {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
     } else {
       if (isCurrentMonth && !this.props.readOnly && !this.props.disabled) {
         if (this.state.hoveredDay === dayKey) {
           dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
+        }
+        if (this.state.highlightedDay === dayKey) {
+          dayStyle = extend(dayStyle, {outline: 0});
+          dayStyle = extend(dayStyle, style.highlightedDayStyle, this.props.highlightedDayStyle);
+          tabIndex = (!this.props.disabled && !this.props.readOnly) ? this.props.tabIndex : false;
         }
         if (this.state.activeDay === dayKey) {
           dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
@@ -659,9 +624,6 @@ export default class DatePicker extends Component {
       ariaSelected = true;
     }
 
-    // Setting tabIndex
-    let tabIndex = false;
-
     if (day === CURRENT_DATE && isCurrentMonth && this.state.year === currentDate.getFullYear()) {
       dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
@@ -670,24 +632,22 @@ export default class DatePicker extends Component {
 
     return isCurrentMonth ? (<span tabIndex={ tabIndex }
               key={ 'day-' + index }
-              ref={ 'day-' + dayKey }
+              ref={ dayKey }
               onMouseDown={ this._onDayMouseDown.bind(this, dayKey, day) }
               onMouseUp={ this._onDayMouseUp.bind(this, dayKey) }
               onMouseOver={ this._onDayMouseOver.bind(this, dayKey) }
               onMouseOut={ this._onDayMouseOut.bind(this, dayKey) }
               onTouchStart={ this._onDayTouchStart.bind(this, dayKey, day) }
               onTouchEnd={ this._onDayTouchEnd.bind(this, dayKey) }
-              onFocus={ this._onDayFocus.bind(this, dayKey) }
-              onBlur={ this._onDayBlur.bind(this, dayKey) }
               aria-current={ ariaCurrent }
               aria-selected={ ariaSelected }
               style={ dayStyle }
-              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }
+              className={ this.props.dayClassName }
               role="gridcell">
               { this.props.renderDay ? this.props.renderDay(currentDate) : day }
             </span>) : (<span key={ 'day-' + index }
               style={ dayStyle }
-              className={ unionClassNames(this.props.dayClassName, this.pseudoStyleIds.dayStyleId) }
+              className={ this.props.dayClassName }
               role="gridcell">
               { this.props.showOtherMonthDate ? (this.props.renderDay ? this.props.renderDay(currentDate) : day) : ''}
             </span>);
@@ -731,8 +691,7 @@ export default class DatePicker extends Component {
       }
       if (this.state.isWrapperActive) {
         wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
-      } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused &&
-        !(this.state.isPrevMonthNavFocused || this.state.isNextMonthNavFocused || this.state.focusedDay)) {
+      } else if (this.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
         wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
       }
     }
@@ -785,34 +744,34 @@ export default class DatePicker extends Component {
    * Function is called when some day if focused and ArrowLeft is pressed.
    * It will set focus to previous day, if it was first day of the month it will decrease month and set focus to last day of previous month.
    */
-  _focusPreviousDay(days) {
-    const currentFocusedDay = new Date(this.state.focusedDay);
-    const currentMonth = currentFocusedDay.getMonth();
-    currentFocusedDay.setDate(currentFocusedDay.getDate() - days);
-    if (currentFocusedDay.getMonth() === currentMonth) {
-      React.findDOMNode(this.refs['day-' + (currentFocusedDay.getMonth() + 1) + '/' + currentFocusedDay.getDate() + '/' + currentFocusedDay.getFullYear()]).focus();
-    } else {
-      this._decreaseMonth(() => {
-        React.findDOMNode(this.refs['day-' + (currentFocusedDay.getMonth() + 1) + '/' + currentFocusedDay.getDate() + '/' + currentFocusedDay.getFullYear()]).focus();
-      });
+  _highlightPreviousDay(days) {
+    const currentHighlightedDay = new Date(this.state.highlightedDay);
+    const currentMonth = currentHighlightedDay.getMonth();
+    currentHighlightedDay.setDate(currentHighlightedDay.getDate() - days);
+    const currentHighlightedDayKey = (currentHighlightedDay.getMonth() + 1) + '/' + currentHighlightedDay.getDate() + '/' + currentHighlightedDay.getFullYear();
+    if (currentHighlightedDay.getMonth() !== currentMonth) {
+      this._decreaseMonth();
     }
+    this.setState({
+      highlightedDay: currentHighlightedDayKey
+    });
   }
 
   /**
    * Function is called when some day if focused and ArrowRight is pressed.
    * It will set focus to next day, if it was last day of the month it will increase month and set focus to first day of next month.
    */
-  _focusNextDay(days) {
-    const currentFocusedDay = new Date(this.state.focusedDay);
-    const currentMonth = currentFocusedDay.getMonth();
-    currentFocusedDay.setDate(currentFocusedDay.getDate() + days);
-    if (currentFocusedDay.getMonth() === currentMonth) {
-      React.findDOMNode(this.refs['day-' + (currentFocusedDay.getMonth() + 1) + '/' + currentFocusedDay.getDate() + '/' + currentFocusedDay.getFullYear()]).focus();
-    } else {
-      this._increaseMonth(() => {
-        React.findDOMNode(this.refs['day-' + (currentFocusedDay.getMonth() + 1) + '/' + currentFocusedDay.getDate() + '/' + currentFocusedDay.getFullYear()]).focus();
-      });
+  _highlightNextDay(days) {
+    const currentHighlightedDay = new Date(this.state.highlightedDay);
+    const currentMonth = currentHighlightedDay.getMonth();
+    currentHighlightedDay.setDate(currentHighlightedDay.getDate() + days);
+    const currentHighlightedDayKey = (currentHighlightedDay.getMonth() + 1) + '/' + currentHighlightedDay.getDate() + '/' + currentHighlightedDay.getFullYear();
+    if (currentHighlightedDay.getMonth() !== currentMonth) {
+      this._increaseMonth();
     }
+    this.setState({
+      highlightedDay: currentHighlightedDayKey
+    });
   }
 
   /**
@@ -862,30 +821,6 @@ export default class DatePicker extends Component {
       this._decreaseMonth();
       this.setState({
         isPrevMonthNavActive: false
-      });
-    }
-  }
-
-  /**
-   * Callback is called when prevMonthNav receives focus.
-   * It will set prevMonthNav to focused, if component is not disabled and prevMonthNav is not active.
-   */
-  _onPrevMonthNavFocus() {
-    if (!this.props.disabled && !this.state.isPrevMonthNavActive) {
-      this.setState({
-        isPrevMonthNavFocused: true
-      });
-    }
-  }
-
-  /**
-   * Callback is called when prevMonthNav receives blur.
-   * It will reset prevMonthNav focused state.
-   */
-  _onPrevMonthNavBlur() {
-    if (!this.props.disabled) {
-      this.setState({
-        isPrevMonthNavFocused: false
       });
     }
   }
@@ -941,35 +876,9 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when nextMonthNav receives focus.
-   * It will set nextMonthNav to focused, if component is not disabled and nextMonthNav is not active.
-   */
-  _onNextMonthNavFocus() {
-    if (!this.props.disabled && !this.state.isNextMonthNavActive) {
-      this.setState({
-        isNextMonthNavFocused: true
-      });
-    }
-  }
-
-  /**
-   * Callback is called when nextMonthNav receives blur.
-   * It will reset nextMonthNav focused state.
-   */
-  _onNextMonthNavBlur() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNextMonthNavFocused: false
-      });
-    }
-  }
-
-  /**
    * The function will decrease current month in state and call props.onMonthChange.
-   * Function takes closure as argument. Right now its used when user uses keys for navigation,
-   * we want to decrease month and focus some of its specific date.
    */
-  _decreaseMonth(postStateUpdateFunc) {
+  _decreaseMonth() {
     let newMonth;
     let newYear;
     if (this.state.month === 0) {
@@ -982,10 +891,6 @@ export default class DatePicker extends Component {
     this.setState({
       month: newMonth,
       year: newYear
-    }, () => {
-      if (postStateUpdateFunc) {
-        postStateUpdateFunc.call(this);
-      }
     });
     if (this.props.onMonthChange) {
       this.props.onMonthChange(newMonth + 1);
@@ -994,10 +899,8 @@ export default class DatePicker extends Component {
 
   /**
    * The function will increase current month in state and call props.onMonthChange.
-   * Function takes closure as argument. Right now its used when user uses keys for navigation,
-   * we want to decrease month and focus some of its specific date.
    */
-  _increaseMonth(postStateUpdateFunc) {
+  _increaseMonth() {
     let newMonth;
     let newYear;
     if (this.state.month === 11) {
@@ -1010,10 +913,6 @@ export default class DatePicker extends Component {
     this.setState({
       month: newMonth,
       year: newYear
-    }, () => {
-      if (postStateUpdateFunc) {
-        postStateUpdateFunc.call(this);
-      }
     });
     if (this.props.onMonthChange) {
       this.props.onMonthChange(newMonth + 1);
@@ -1033,3 +932,8 @@ export default class DatePicker extends Component {
     });
   }
 }
+
+/**
+ * 1. re-review
+ * 2. updating comments
+ */
