@@ -45,7 +45,6 @@ const datePickerStyle = {
   },
 
   activeWrapperStyle: {
-    outline: 0
   },
 
   focusWrapperStyle: {
@@ -245,7 +244,7 @@ const datePickerStyle = {
     color: '#716D6D'
   },
 
-  highlightedDayStyle: {
+  focusedDayStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
     outline: 0
   },
