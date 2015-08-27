@@ -537,8 +537,7 @@ export default class DatePicker extends Component {
     return (
       <div style={ navBarStyle }
            className={ unionClassNames(this.props.navBarClassName, this.pseudoStyleIds.navBarStyleId) }>
-          <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
+          <span onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
@@ -552,8 +551,7 @@ export default class DatePicker extends Component {
                 id={ this.state.month + '-' + this.state.year }>
             { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
           </span>
-          <span tabIndex={ this.props.tabIndex }
-                onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
+          <span onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
@@ -661,13 +659,15 @@ export default class DatePicker extends Component {
       ariaSelected = true;
     }
 
+    // Setting tabIndex
+    let tabIndex = false;
+
     if (day === CURRENT_DATE && isCurrentMonth && this.state.year === currentDate.getFullYear()) {
       dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
+      tabIndex = (!this.props.disabled && !this.props.readOnly) ? this.props.tabIndex : false;
     }
 
-    // Setting tabIndex to false makes the div non-focuseable, its still focuseable with value of -1.
-    const tabIndex = (!this.props.disabled && !this.props.readOnly && isCurrentMonth) ? this.props.tabIndex : false;
     return isCurrentMonth ? (<span tabIndex={ tabIndex }
               key={ 'day-' + index }
               ref={ 'day-' + dayKey }
