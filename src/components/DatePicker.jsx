@@ -202,7 +202,6 @@ export default class DatePicker extends Component {
    * FUnction will update component state and styles as new props are received.
    */
   componentWillReceiveProps(properties) {
-
     const newState = {
       month: properties.month - 1,
       year: properties.year,
@@ -696,7 +695,7 @@ export default class DatePicker extends Component {
       ariaSelected = true;
     }
 
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+    if (day === CURRENT_DATE && isCurrentMonth && this.state.year === currentDate.getFullYear()) {
       dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
       ariaCurrent = 'date';
     }
