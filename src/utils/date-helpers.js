@@ -1,4 +1,4 @@
-import {localeData} from '../config/datePicker';
+import {localeData} from '../config/i18n';
 
 /**
  * The function will take a month and year value and will return an array of weeks for that month.

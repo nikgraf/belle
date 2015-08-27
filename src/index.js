@@ -27,6 +27,7 @@ import selectConfig from './config/select';
 import buttonConfig from './config/button';
 import ratingConfig from './config/rating';
 import toggleConfig from './config/toggle';
+import i18nConfig from './config/i18n';
 import datePickerConfig from './config/datePicker';
 
 module.exports = {
@@ -60,6 +61,7 @@ module.exports = {
     button: buttonConfig,
     rating: ratingConfig,
     toggle: toggleConfig,
+    i18n: i18nConfig,
     datePicker: datePickerConfig
   }
 };
