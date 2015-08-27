@@ -250,7 +250,6 @@ export default class ComboBox extends Component {
 
   componentWillReceiveProps(properties) {
     const newState = {
-      filteredOptions: this.filterOptions(inputValue, properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -261,6 +260,10 @@ export default class ComboBox extends Component {
       newState.inputValue = properties.valueLink.value;
     } else if (has(properties, 'value')) {
       newState.inputValue = properties.value;
+    }
+
+    if (newState.inputValue) {
+      newState.filteredOptions = this.filterOptions(newState.inputValue, properties);
     }
 
     this.setState(newState);
