@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, extend, map, shift, reverse} from '../utils/helpers';
@@ -35,6 +36,7 @@ export default class DatePicker extends Component {
     };
 
     this.activeKeyStatus = {};
+    this._attachDocumentEventListeners();
   }
 
   static displayName = 'Belle DatePicker';
@@ -203,16 +205,31 @@ export default class DatePicker extends Component {
     removeAllStyles(Object.keys(this.pseudoStyleIds));
   }
 
+  _attachDocumentEventListeners() {
+    if (canUseDOM) {
+      document.addEventListener('keydown', (e) => {
+        if ((e.keyCode || e.which) === 16) {
+          this.activeKeyStatus.shiftKeyActive = true;
+        }
+      });
+      document.addEventListener('keyup', (e) => {
+        if ((e.keyCode || e.which) === 16) {
+          this.activeKeyStatus.shiftKeyActive = false;
+        }
+      });
+    }
+  }
+
   /**
    * Callback is called when wrapper is focused.
    * It will conditionally set isWrapperFocused and call props.onFocus.
    */
   _onWrapperFocus() {
-    if (!this.props.disabled && !this.state.isWrapperActive && !this.activeKeyStatus.shiftAndTabKeyActive) {
+    if (!this.props.disabled && !this.state.isWrapperActive) {
       const newState = {
         isWrapperFocused: true
       };
-      if (this.state.month === CURRENT_MONTH && !this.state.focusedDay) {
+      if (this.state.month === CURRENT_MONTH && !this.state.focusedDay && !this.activeKeyStatus.shiftAndTabKeyActive) {
         React.findDOMNode(this.refs[(CURRENT_MONTH + 1) + '/' + CURRENT_DATE + '/' + CURRENT_YEAR]).focus();
       }
       this.setState(newState);
@@ -331,21 +348,13 @@ export default class DatePicker extends Component {
       } else if (event.key === ' ') {
         event.preventDefault();
         this._selectDeselectDate(new Date(this.state.focusedDay));
-      } else if (event.key === 'Shift') {
-        this.activeKeyStatus.shiftKeyActive = true;
-      } else if (event.key === 'Shift' && this.activeKeyStatus.shiftKeyActive) {
+      } else if (event.key === 'Tab' && this.activeKeyStatus.shiftKeyActive) {
         this.activeKeyStatus.shiftAndTabKeyActive = true;
       }
     }
 
     if (this.props.onDayKeyDown) {
       this.props.onDayKeyDown(event);
-    }
-  }
-
-  _onDayKeyUp(event) {
-    if (event.key === 'Shift') {
-      this.activeKeyStatus.shiftKeyActive = false;
     }
   }
 
@@ -675,7 +684,6 @@ export default class DatePicker extends Component {
               onTouchStart={ this._onDayTouchStart.bind(this, dayKey, day) }
               onTouchEnd={ this._onDayTouchEnd.bind(this, dayKey) }
               onKeyDown={ this._onDayKeyDown.bind(this) }
-              onKeyUp={ this._onDayKeyUp.bind(this) }
               aria-current={ ariaCurrent }
               aria-selected={ ariaSelected }
               style={ dayStyle }
