@@ -685,7 +685,7 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
-      <h3>ComboBox with a caret and each option having an image & description</h3>
+      <h4>ComboBox with a caret and each option having an image & description</h4>
 
       <ComboBox placeholder = { 'Choose an Animal' }
                 defaultValue = "Ant"
@@ -728,7 +728,7 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleOnePartTwo } style={ {marginTop: 40} } />
 
-      <h3>ComboBox only logging in case of an exact match of the passed Options</h3>
+      <h4>ComboBox only logging in case of an exact match of the passed Options</h4>
 
       <ComboBox placeholder = { 'Choose a Destination' }
                 menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
@@ -754,7 +754,7 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleTwoPartTwo } style={ {marginTop: 40} } />
 
-      <h3>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h3>
+      <h4>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h4>
 
       <ComboBox placeholder = { 'Choose a Currency' }
                     onUpdate={ (event) => {
@@ -781,7 +781,7 @@ export default React.createClass({
 
       <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
 
-      <h3>ComboBox with custom filtering, and hints enabled</h3>
+      <h4>ComboBox with custom filtering, and hints enabled</h4>
 
       <ComboBox enableHint = { true }
                 filterFunc = { customFilterFunc }

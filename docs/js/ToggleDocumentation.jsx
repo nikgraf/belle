@@ -34,6 +34,46 @@ const htmlStructure = `<div style={ wrapperStyle }
        style={ handleStyle } />
 </div>`;
 
+const toggleWithSizeStyling = `<Toggle style={{
+          borderRadius: 10,
+          height: 20,
+          width: 50
+        }}
+        sliderStyle={{
+          // Calculated with 2 * the width of choice area
+          width: 80
+        }}
+        sliderWrapperStyle={{
+          borderRadius: 10
+        }}
+        handleStyle={{
+          borderRadius: 10,
+          // 1 px smaller than the width due the border effect
+          height: 19,
+          width: 20
+        }}
+        firstChoiceStyle={{
+          height: 20,
+          // Calculated with the width of the whole toggle - half of the width from the handle
+          width: 40,
+          lineHeight: 20 + 'px',
+          textIndent: -5,
+          fontSize: 12
+        }}
+        secondChoiceStyle={{
+          height: 20,
+          // Calculated with the width of the whole toggle - half of the width from the handle
+          // style.width - (handleStyle.width / 2 )
+          width: 40,
+          lineHeight: 20 + 'px',
+          textIndent: 5,
+          fontSize: 10
+        }}
+        activeHandleStyle={{
+          height: 20
+        }} />
+`;
+
 export default class ToggleDocumentation extends Component {
 
   render() {
@@ -424,7 +464,7 @@ export default class ToggleDocumentation extends Component {
 
         <h3>More Examples</h3>
 
-        <p>Toggle with custom choices</p>
+        <h4>Toggle with custom choices</h4>
 
         <Toggle defaultValue={ true }
                 firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
@@ -433,6 +473,49 @@ export default class ToggleDocumentation extends Component {
         </Toggle>
 
         <Code value={ choiceCodeExample } style={ {marginTop: 40} } />
+
+        <h4 style={{ marginTop: 40 }}>Toggle with adopted size styling</h4>
+
+        <Toggle style={{
+                  borderRadius: 10,
+                  height: 20,
+                  width: 50
+                }}
+                sliderStyle={{
+                  // Calculated with 2 * the width of choice area
+                  width: 80
+                }}
+                sliderWrapperStyle={{
+                  borderRadius: 10
+                }}
+                handleStyle={{
+                  borderRadius: 10,
+                  // 1 px smaller than the width due the border effect
+                  height: 19,
+                  width: 20
+                }}
+                firstChoiceStyle={{
+                  height: 20,
+                  // Calculated with the width of the whole toggle - half of the width from the handle
+                  width: 40,
+                  lineHeight: 20 + 'px',
+                  textIndent: -5,
+                  fontSize: 12
+                }}
+                secondChoiceStyle={{
+                  height: 20,
+                  // Calculated with the width of the whole toggle - half of the width from the handle
+                  // style.width - (handleStyle.width / 2 )
+                  width: 40,
+                  lineHeight: 20 + 'px',
+                  textIndent: 5,
+                  fontSize: 10
+                }}
+                activeHandleStyle={{
+                  height: 20
+                }} />
+
+      <Code value={ toggleWithSizeStyling } style={ {marginTop: 40} } />
 
     </div>);
   }
