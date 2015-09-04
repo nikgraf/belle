@@ -22,7 +22,7 @@
     "react-component"
   ],
   "peerDependencies": {
-    "react": ">=0.13.0 <0.15.0 || ^0.14.0-alpha"
+    "react": ">=0.13.0 || ^0.14.0-beta3"
   },
   "scripts": {
     "start": "babel --watch --source-maps-inline --optional='es7.classProperties' --out-dir='lib' src",
