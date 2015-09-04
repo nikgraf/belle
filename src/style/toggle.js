@@ -34,6 +34,7 @@ const toggleStyle = {
     boxSizing: 'border-box',
     overflow: 'hidden',
     borderRadius: 32,
+    lineHeight: 1,
     boxShadow: 'inset 0 1px 0px 0px rgba(0,0,0,0.6)'
   },
 
@@ -88,6 +89,7 @@ const toggleStyle = {
     color: '#FFF',
     backgroundColor: 'rgba(43, 206, 56, 0.8)',
     textIndent: -10,
+    fontSize: 15,
 
     /*
     To avoid any kind of flickering the user won't get feedback
@@ -123,6 +125,7 @@ const toggleStyle = {
     color: '#FFF',
     backgroundColor: 'rgba(205, 205, 205, 0.8)',
     textIndent: 10,
+    fontSize: 15,
 
     /*
     To avoid any kind of flickering the user won't get feedback
