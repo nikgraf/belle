@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
@@ -8,7 +8,7 @@ import config from '../config/select';
 import isComponentOfType from '../utils/is-component-of-type.js';
 
 // Enable React Touch Events
-React.initializeTouchEvents(true);
+React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.

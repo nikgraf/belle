@@ -22,7 +22,7 @@
     "react-component"
   ],
   "peerDependencies": {
-    "react": ">=0.13.0"
+    "react": ">=0.13.0 <0.15.0 || ^0.14.0-alpha"
   },
   "scripts": {
     "start": "babel --watch --source-maps-inline --optional='es7.classProperties' --out-dir='lib' src",
@@ -47,8 +47,18 @@
       "underscore"
     ],
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": ["jsx", "js"],
-    "moduleFileExtensions": ["js", "json", "jsx"]
+    "testFileExtensions": [
+      "jsx",
+      "js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "exenv": "^1.2.0"
+  }
 }

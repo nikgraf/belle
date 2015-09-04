@@ -5,7 +5,7 @@ import {omit, extend, filterReactChildren, has, isEmpty, find, getArrayForReactC
 import style from '../style/combo-box';
 
 // Enable React Touch Events
-React.initializeTouchEvents(true);
+React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
  * Update hover style for the specified styleId.

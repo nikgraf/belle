@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { canUseDOM } from 'exenv';
 import {extend, omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -8,8 +8,7 @@ import config from '../config/rating';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
 // Enable React Touch Events
-React.initializeTouchEvents(true);
-
+React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
  * sanitize properties for the wrapping div.

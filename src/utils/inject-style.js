@@ -1,6 +1,6 @@
 import {flatten, mapObject} from '../utils/helpers';
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { canUseDOM } from 'exenv';
 import animations from '../style/animations';
 
 let styleElement;
