@@ -332,6 +332,7 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
+      <h4>TextInput with custom styling & two-way data binding</h4>
       <TextInput minRows={ 3 }
                  valueLink={ this.linkState('customTextInputValue') }
                  placeholder="Just fill in whatever you like :)"
@@ -354,7 +355,7 @@ export default React.createClass({
 
       <Code value={ advancedExampleCode } style={ {marginTop: 40} } />
 
-      <h3>Disabled Text Input</h3>
+      <h4>Disabled Text Input</h4>
       <TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis."/>
 
       <Code value={ disabledExampleCode } style={ {marginTop: 40} } />

@@ -375,10 +375,15 @@ export default React.createClass({
 
       <h3>More Examples</h3>
 
+      <h4>Disabled Rating</h4>
       <Rating defaultValue={4} disabled/>
       <Code value= { advanceCodeExample1 } style={ {marginTop: 20, marginBottom: 40} } />
+
+      <h4>Rating with a custom Character</h4>
       <Rating defaultValue={4} character={'✪'}/>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 20, marginBottom: 40} } />
+
+      <h4>Rating with a Reset Link</h4>
       <Rating ref="rating" defaultValue={4}/>
       <a onClick={ (() => { this.refs.rating.resetValue(); }).bind(this) }
          style={ {

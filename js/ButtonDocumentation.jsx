@@ -256,7 +256,7 @@ export default class ButtonDocumentation extends Component {
 
       <h3>More Examples</h3>
 
-      <p>Disabled buttons</p>
+      <h4>Disabled buttons</h4>
 
       <Button primary style={ {marginRight: 15} }>Follow</Button>
 
@@ -268,7 +268,7 @@ export default class ButtonDocumentation extends Component {
 
       <Code value={ disabledButtonCodeExample } style={ {marginTop: 20} } />
 
-      <p>Primary button with custom styles</p>
+      <h4>Primary button with custom styles</h4>
 
       <Button primary={ true }
               style={{

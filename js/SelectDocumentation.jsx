@@ -575,7 +575,7 @@ export default class SelectDocumentation extends Component {
 
       <h3>More Examples</h3>
 
-      <p>Select from a dynamic data set including a defaultValue & onUpdate callback</p>
+      <h4>Select from a dynamic data set including a defaultValue & onUpdate callback</h4>
 
       <Select defaultValue={ fruits[3].value }
               onUpdate={ (event) => { console.log(event.value); } }>
@@ -595,7 +595,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ dataCodeExamplePartTwo } style={ {marginTop: 40} } />
 
-      <h3>Select as part of a form with a scrollable menu</h3>
+      <h4>Select as part of a form with a scrollable menu</h4>
 
       <div style={ { display: 'table' } }>
         <TextInput style={ { width: 138,
@@ -620,7 +620,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ formCodeExample } style={ {marginTop: 40} } />
 
-      <h3>Select with Separators</h3>
+      <h4>Select with Separators</h4>
 
       <Select>
         <Separator>Asia</Separator>
@@ -633,7 +633,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ separatorCodeExample } style={ {marginTop: 40} } />
 
-      <h3>Select with various Option styles</h3>
+      <h4>Select with various Option styles</h4>
 
       <Select menuStyle={{ padding: 6 }}>
         <Placeholder>Choose your next Vacation</Placeholder>
@@ -686,7 +686,7 @@ export default class SelectDocumentation extends Component {
 
       <Code value={ advancedStylingCodeExample } style={ {marginTop: 40} } />
 
-      <h3>Select with a custom positionOptions function</h3>
+      <h4>Select with a custom positionOptions function</h4>
 
       <Select positionOptions={ positionOptions }>
         <Placeholder>Choose a City</Placeholder>

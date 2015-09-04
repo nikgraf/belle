@@ -42,7 +42,7 @@ export default class CardDocumentation extends Component {
 
         <h3>More Examples</h3>
 
-        <p>Card with a full-width image</p>
+        <h4>Card with a full-width image</h4>
 
         <Card style={{ borderTop: '1px solid #f2f2f2',
                        width: 265,
