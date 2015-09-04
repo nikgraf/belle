@@ -4,7 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 1.2.2 - 2015-09-04
+
+### Fixed
+- Support for React 0.14.0-beta3 [#178](https://github.com/nikgraf/belle/pull/178)
+- [Toggle] Fix missing base-styles for Toggle [#179](https://github.com/nikgraf/belle/issues/179)
+
 ## 1.2.1 - 2015-08-26
+
+### Fixed
 - [Combobox, Select] Improve children manipulation to make Belle work with Radium [#170](https://github.com/nikgraf/belle/issues/170)
 
 ## 1.2.0 - 2015-08-19
