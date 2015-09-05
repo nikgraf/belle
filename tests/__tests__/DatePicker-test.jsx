@@ -21,38 +21,6 @@ describe('DatePicker', () => {
     expect(datePicker.state.dateValue).toBeUndefined();
   });
 
-  it('should decrease month when prevMonth is focused and enter is pressed', () => {
-    let componentMonth;
-    const currentMonth = (new Date()).getMonth();
-    const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker prevMonthClassName="prev_month_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
-    );
-
-    expect(datePicker.props.month).toBe(currentMonth + 1);
-    expect(datePicker.state.month).toBe(currentMonth);
-    const prevMonth = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'prev_month_test');
-    TestUtils.Simulate.focus(prevMonth);
-    TestUtils.Simulate.keyDown(prevMonth, {key: 'Enter'});
-    expect(componentMonth).toBe(currentMonth);
-    expect(datePicker.state.month).toBe(currentMonth - 1);
-  });
-
-  it('should increase month when nextMonth is focused and enter is pressed', () => {
-    let componentMonth;
-    const currentMonth = (new Date()).getMonth();
-    const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker nextMonthClassName="next_month_test" onMonthChange={ (newMonth) => componentMonth = newMonth }/>
-    );
-
-    expect(datePicker.props.month).toBe(currentMonth + 1);
-    expect(datePicker.state.month).toBe(currentMonth);
-    const nextMonth = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'next_month_test');
-    TestUtils.Simulate.focus(nextMonth);
-    TestUtils.Simulate.keyDown(nextMonth, {key: 'Enter'});
-    expect(componentMonth).toBe(currentMonth + 2);
-    expect(datePicker.state.month).toBe(currentMonth + 1);
-  });
-
   it('should change date when a day is focused and enter key is pressed', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
@@ -145,12 +113,8 @@ describe('DatePicker', () => {
     );
     expect(DatePicker.updatePseudoClassStyle.mock.calls.length).toBe(1);
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].wrapperStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].navBarStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].prevMonthStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].nextMonthStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].monthLblStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].dayLblStyleId).toBeDefined();
-    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].dayStyleId).toBeDefined();
+    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].prevMonthNavStyleId).toBeDefined();
+    expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].nextMonthNavStyleId).toBeDefined();
     datePicker.componentWillUnmount();
     expect(injectStyle.removeAllStyles.mock.calls.length).toBe(1);
   });
@@ -263,22 +227,24 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.isWrapperHovered).toBeFalsy();
   });
 
-  it('should not focus day on disabled or readOnly component', () => {
+  it('should not focus day on disabled component', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
       <DatePicker disabled dayClassName="day_test"/>
     );
     expect(disabledDatePicker.state.focusedDay).toBeUndefined();
-    let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
+    const day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     expect(disabledDatePicker.state.focusedDay).toBeUndefined();
+  });
 
+  it('should focus readOnly component', () => {
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker readOnly dayClassName="day_test"/>
+      <DatePicker wrapperClassName="date_picker" readOnly dayClassName="day_test"/>
     );
-    expect(disabledDatePicker.state.focusedDay).toBeUndefined();
-    day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
-    TestUtils.Simulate.focus(day);
     expect(readOnlyDatePicker.state.focusedDay).toBeUndefined();
+    const datePicker = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'date_picker')[0];
+    TestUtils.Simulate.focus(datePicker);
+    expect(readOnlyDatePicker.state.isWrapperFocused).toBeTruthy();
   });
 
   it('should not set activeDay when touch starts on a day and reset when touch ends', () => {
