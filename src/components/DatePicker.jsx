@@ -163,7 +163,7 @@ export default class DatePicker extends Component {
     readOnlyDayStyle: React.PropTypes.object,
     hoverDayStyle: React.PropTypes.object,
     activeDayStyle: React.PropTypes.object,
-    focusedDayStyle: React.PropTypes.object,
+    focusDayStyle: React.PropTypes.object,
     disabledHoverDayStyle: React.PropTypes.object,
     todayStyle: React.PropTypes.object,
     selectedDayStyle: React.PropTypes.object,
@@ -534,7 +534,10 @@ export default class DatePicker extends Component {
    */
   _selectDate(date) {
     if (!this.props.disabled && !this.props.readOnly) {
-      const dateValue = new Date(this.state.year, this.state.month, date);
+      let dateValue;
+      if (date) {
+        dateValue = new Date(this.state.year, this.state.month, date);
+      }
       if (has(this.props, 'valueLink')) {
         this.props.valueLink.requestChange(dateValue);
       } else if (!has(this.props, 'value')) {
@@ -553,13 +556,13 @@ export default class DatePicker extends Component {
 
   _selectDeselectDate(date) {
     if (!this.props.disabled && !this.props.readOnly) {
+      let dateValue;
       if (this.state.dateValue && date && this.state.dateValue.getDate() === date.getDate() && this.state.dateValue.getMonth() === date.getMonth() && this.state.dateValue.getYear() === date.getYear()) {
-        this.setState({
-          dateValue: undefined
-        });
+        dateValue = undefined;
       } else {
-        this._selectDate(date.getDate());
+        dateValue = date.getDate();
       }
+      this._selectDate(dateValue);
     }
   }
 
@@ -698,7 +701,7 @@ export default class DatePicker extends Component {
         }
         if (this.state.focusedDay === dayKey) {
           dayStyle = extend(dayStyle, {outline: 0});
-          dayStyle = extend(dayStyle, style.focusedDayStyle, this.props.focusedDayStyle);
+          dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
         }
         if (!this.props.readOnly && this.state.activeDay === dayKey) {
           dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
@@ -1026,15 +1029,12 @@ export default class DatePicker extends Component {
    * in those cases user can directly update props to undefined and that will be reflected by the component.
    */
   resetValue() {
-    this.setState({
-      dateValue: undefined
-    });
+    this._selectDate(undefined);
   }
 }
 
 /**
  * TODO:
- * 1. re-review
  * 2. updating comments / docs
  * 3. review which classes and props.callbacks can be deprecated
  */

@@ -244,7 +244,7 @@ const datePickerStyle = {
     color: '#716D6D'
   },
 
-  focusedDayStyle: {
+  focusDayStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
     outline: 0
   },

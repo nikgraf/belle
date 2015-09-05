@@ -550,14 +550,9 @@ export default class Rating extends Component {
    * Reset the value to undefined.
    *
    * This can be used in case you as developer want to reset the rating manually.
-   * This function is not very useful when user uses value/ valueLink,
-   * in those cases user can directly update props to undefined and that will be reflected by the component.
    */
-  resetValue() { /* eslint react/sort-comp:0*/
-    this.setState({
-      value: undefined,
-      focusedValue: undefined
-    });
+  resetValue() { /*eslint react/sort-comp:0*/
+    this._updateComponent(undefined);
   }
 
   /**
