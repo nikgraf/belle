@@ -285,7 +285,27 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.isWrapperFocused).toBeTruthy();
   });
 
-  it('should not set activeDay when touch starts on a day and reset when touch ends', () => {
+  it('should decrease month when prevMonthNav is clicked', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker prevMonthNavClassName="prev_month"/>
+    );
+    const month = datePicker.state.month > 1 ? datePicker.state.month : 13;
+    const prevMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'prev_month')[0];
+    TestUtils.Simulate.mouseDown(prevMonth, {button: 0});
+    expect(datePicker.state.month).toBe(month - 1);
+  });
+
+  it('should increase month when nextMonthNav is clicked', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker nextMonthNavClassName="next_month"/>
+    );
+    const month = datePicker.state.month > 1 ? datePicker.state.month : 13;
+    const nextMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'next_month')[0];
+    TestUtils.Simulate.mouseDown(nextMonth, {button: 0});
+    expect(datePicker.state.month).toBe(month + 1);
+  });
+
+  it('should set activeDay when touch starts on a day and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test"/>
     );
