@@ -12,7 +12,7 @@ React.initializeTouchEvents(true);
 
 /**
  * Returns an object with properties that are relevant for the wrapping div of
- * the selected option.
+ * the date picker.
  */
 function sanitizeWrapperProps(properties) {
   return omit(properties, [
@@ -32,8 +32,7 @@ function sanitizeWrapperProps(properties) {
 }
 
 /**
- * Returns an object with properties that are relevant for the wrapping div of
- * the selected option.
+ * Returns an object with properties that are relevant for day span.
  */
 function sanitizeDayProps(properties) {
   return omit(properties, [
@@ -249,12 +248,17 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Removes pseudo classes from the DOM once component gets removed.
+   * Removes pseudo classes from the DOM once component gets unmounted.
    */
   componentWillUnmount() {
     removeAllStyles(Object.keys(this.pseudoStyleIds));
   }
 
+  /**
+   * The function will attach keyDown listener to document, this is needed to take care of case when user presses Shift key somewhere in the document
+   * and then uses Tab key to focus elements in reverse order.
+   * In case user does that and focus reached date-picker wrapper, current date should not be focused.
+   */
   _attachDocumentEventListeners() {
     if (canUseDOM) {
       document.addEventListener('keydown', (e) => {
@@ -271,8 +275,11 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper is focused.
-   * It will conditionally set isWrapperFocused and call props.onFocus.
+   * Callback is called when wrapper is focused, it will conditionally set isWrapperFocused.
+   * If month of date-picker is current month and this.state.focusedDay is undefined (component is focused using Tab key),
+   * this.state.focusedDay will be set to current date.
+   * If date-picker is focused using Shift+Tab focus will not be set to current date, in case that is done Shift+Tab will repeatedly
+   * keep focusing the date-picker and focus will never leave from date-picker to next component.
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
@@ -290,8 +297,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper is blurred.
-   * It will reset isWrapperFocused and call props.onBlur.
+   * Callback is called when wrapper is blurred, it will reset isWrapperFocused.
    */
   _onWrapperBlur() {
     if (!this.props.disabled) {
@@ -370,8 +376,11 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * 1. If wrapper is focused: ArrowLeft/ ArrowRight keys will increase or decrease month.
-   * 3. Id some day is hilighted: arrow keys will navigate calendar and enter key will change dateValue of component.
+   * On keyDown on someday:
+   * 1. arrow keys will navigate calendar
+   * 2. enter key will set dateValue of component
+   * 3. space key will set / unset dateValue
+   * 4. if Shift is already pressed and the Tab is pressed this.activeKeyStatus.shiftAndTabKeyActive will be set to true
    * Function will call props.onDayKeyDown or props.onKeyDown depending on whether wrapper or day is focused.
    */
   _onDayKeyDown(event) {
@@ -439,7 +448,7 @@ export default class DatePicker extends Component {
   // mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
   /**
    * Callback is called when some day receives mouseDown.
-   * It will conditionally set this.state.activeDay and call props.onDayMouseDown.
+   * It will conditionally set this.state.activeDay, this.state.focusedDay and call props.onDayMouseDown.
    */
   _onDayMouseDown(dayKey, day, event) {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly) {
@@ -554,6 +563,9 @@ export default class DatePicker extends Component {
     }
   }
 
+  /**
+   * Function will select / deselect date passed to it, it is used in case of 'Space' keyDown on a day.
+   */
   _selectDeselectDate(date) {
     if (!this.props.disabled && !this.props.readOnly) {
       let dateValue;
@@ -568,13 +580,9 @@ export default class DatePicker extends Component {
 
   /**
    * Function will return jsx for rendering the nav bar for calendar.
-   * Depending on following rules it will apply various styles:
-   * 1. If component is readOnly apply readOnly styles
-   * 2. If component is disabled apply disabled styles
-   * 3. If component is not disabled
-   *    - If its active apply activeStyles
-   *    - If its not active and is focused also preventFocusStyleForTouchAndClick is true apply focus styles
-   * (If preventFocusStyleForTouchAndClick is false focus styles already get applied by pseudo classes).
+   * Depending on following rules it will apply styles to prevMonthNav and nextMonthNav:
+   * 1. If disabled apply disabled styles
+   * 2. If not disabled and active apply activeStyles
    */
   _getNavBar() {
     const navBarStyle = extend({}, style.navBarStyle, this.props.navBarStyle);
@@ -620,9 +628,8 @@ export default class DatePicker extends Component {
 
   /**
    * Function will return jsx for rendering the week header for calendar.
-   * Depending on following rules it will apply various styles:
-   * 1. If component is readOnly apply readOnly styles
-   * 2. If component is disabled apply disabled styles
+   * Disabled styles will be applied for disabled date-picker.
+   * Day headers will be rendred using locale information.
    */
   _getDaysHeader() {
     const weekHeaderStyle = extend({}, style.weekHeaderStyle, this.props.weekHeaderStyle);
@@ -660,14 +667,15 @@ export default class DatePicker extends Component {
    * It will apply various styles in sequence as below (styles will be additive):
    * 1. If component is readOnly apply readOnly styles
    * 2. If component is disabled apply disabled styles
-   *    - If component is disabled and hovered apply diableHover styles
-   * 3. If its day in current month and component is not disabled or readOnly:
+   *    - If component is disabled and hovered apply disableHover styles
+   * 3. If day is weekend apply weekendStyle
+   * 4. If its day in current month and component is not disabled or readOnly:
    *    - If component is hovered apply hover styles
    *    - If component is hovered and active apply hoveredStyles + activeStyles
    *    - If component is hovered and not active but focused and preventFocusStyleForTouchAndClick apply focus styles
-   * 4. If current day represents other months day in calendar apply otherMonthDayStyle
-   * 5. If its current day apply todayStyle
-   * 6. If this is selected day apply selectedDayStyle
+   * 5. If current day represents other months day in calendar apply otherMonthDayStyle
+   * 6. If its current day apply todayStyle
+   * 7. If this is selected day apply selectedDayStyle
    */
   _getDayFragment(currentDate, index) {
     const day = currentDate.getDate();
@@ -755,29 +763,23 @@ export default class DatePicker extends Component {
    * - call methods to render navBar and week header
    * - get array of weeks in a month and for each day in the week call method to render day
    *
-   * It will apply styles sequentially according to following rules:
-   * Wrapper:
+   * It will apply styles sequentially according to Wrapper according to following rules:
    * 1. If component is readOnly apply readOnlyWrapperStyle
    * 2. If component is disabled apply disabledWrapperStyle
    *    - If disabled component is hovered apply disabledHoverWrapperStyle
    * 3. If component is not disabled:
-   *    - If component is hivered apply hover style
+   *    - If component is hovered apply hover style
    *    - If component is hovered and active apply hover + active styles
    *    - If component is hovered and focused but not active and preventFocusStyleForTouchAndClick is true apply focusStyles
-   * Week:
-   * 1. If component is readOnly apply readOnlyWrapperStyle
-   * 2. If component is disabled apply disabledWrapperStyle
    */
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
     let weekStyle = extend({}, style.weekStyle, this.props.weekStyle);
     if (this.props.readOnly) {
       wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
-      weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
     }
     if (this.props.disabled) {
       wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
-      weekStyle = extend(weekStyle, style.weekStyle, this.props.weekStyle);
       if (this.state.isWrapperHovered) {
         wrapperStyle = extend(wrapperStyle, style.disabledHoverWrapperStyle, this.props.disabledHoverWrapperStyle);
       }
@@ -838,8 +840,8 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Function is called when some day if focused and ArrowLeft is pressed.
-   * It will set focus to previous day, if it was first day of the month it will decrease month and set focus to last day of previous month.
+   * The function is mainly used when some day is focused and Arrow keys are pressed to navigate to some other day.
+   * days is the number of days by which focused should be moved ahead or behind.
    */
   _focusOtherDay(days) {
     const currentFocusedDay = new Date(this.state.focusedDay);
@@ -960,9 +962,8 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state and call props.onMonthChange.
-   * Function takes closure as argument. Right now its used when user uses keys for navigation,
-   * we want to decrease month and focus some of its specific date.
+   * The function will decrease current month in state and focus this.state.focusedDay day.
+   * It will also call props.onMonthChange.
    */
   _decreaseMonth(focusedDay) {
     let newMonth;
@@ -992,7 +993,8 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will increase current month in state and call props.onMonthChange.
+   * The function will increase current month in state and focus this.state.focusedDay day.
+   * It will also call props.onMonthChange.
    */
   _increaseMonth(focusedDay) {
     let newMonth;
@@ -1023,10 +1025,7 @@ export default class DatePicker extends Component {
 
   /**
    * Reset the value to undefined.
-   *
    * This can be used in case you as developer want to reset the rating manually.
-   * This function is not very useful when user uses value/ valueLink,
-   * in those cases user can directly update props to undefined and that will be reflected by the component.
    */
   resetValue() {
     this._selectDate(undefined);
@@ -1035,6 +1034,6 @@ export default class DatePicker extends Component {
 
 /**
  * TODO:
- * 2. updating comments / docs
+ * 2. updating docs
  * 3. review which classes and props.callbacks can be deprecated
  */
