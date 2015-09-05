@@ -1,14 +1,58 @@
 import React, {Component} from 'react';
-import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {has, extend, map, shift, reverse} from '../utils/helpers';
-import {getWeekArrayForMonth, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR, getLocaleData} from '../utils/date-helpers';
+import {has, extend, map, shift, reverse, omit} from '../utils/helpers';
+import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 import config from '../config/datePicker';
 
 // Enable React Touch Events
 React.initializeTouchEvents(true);
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizeWrapperProps(properties) {
+  return omit(properties, [
+    'tabIndex',
+    'onFocus',
+    'onBlur',
+    'onMouseDown',
+    'onMouseUp',
+    'onMouseOver',
+    'onMouseOut',
+    'onTouchStart',
+    'onTouchEnd',
+    'disabled',
+    'style',
+    'className'
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for the wrapping div of
+ * the selected option.
+ */
+function sanitizeDayProps(properties) {
+  return omit(properties, [
+    'tabIndex',
+    'key',
+    'ref',
+    'onBlur',
+    'onFocus',
+    'onMouseDown',
+    'onMouseUp',
+    'onMouseOver',
+    'onMouseOut',
+    'onTouchStart',
+    'onTouchEnd',
+    'onKeyDown',
+    'style',
+    'className'
+  ]);
+}
 
 /**
  * DatePicker React Component.
@@ -32,6 +76,8 @@ export default class DatePicker extends Component {
       month: properties.month - 1,
       year: properties.year,
       localeData: getLocaleData(properties.locale),
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      dayProps: sanitizeDayProps(properties.dayProps),
       preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick
     };
 
@@ -60,9 +106,8 @@ export default class DatePicker extends Component {
     'aria-label': React.PropTypes.string,
     disabled: React.PropTypes.bool,
     readOnly: React.PropTypes.bool,
-    'preventFocusStyleForTouchAndClick': React.PropTypes.bool,
+    preventFocusStyleForTouchAndClick: React.PropTypes.bool,
     // event callbacks
-    onKeyDown: React.PropTypes.func,
     onDayFocus: React.PropTypes.func,
     onDayBlur: React.PropTypes.func,
     onDayKeyDown: React.PropTypes.func,
@@ -72,6 +117,9 @@ export default class DatePicker extends Component {
     onDayTouchEnd: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
     onMonthChange: React.PropTypes.func,
+    // props for wrapper and day
+    wrapperProps: React.PropTypes.object,
+    dayProps: React.PropTypes.object,
     // ClassNames
     wrapperClassName: React.PropTypes.string,
     navBarClassName: React.PropTypes.string,
@@ -183,6 +231,8 @@ export default class DatePicker extends Component {
       month: properties.month - 1,
       year: properties.year,
       localeData: getLocaleData(properties.locale),
+      wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
+      dayProps: sanitizeDayProps(properties.dayProps),
       preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick
     };
 
@@ -226,13 +276,15 @@ export default class DatePicker extends Component {
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
-      const newState = {
-        isWrapperFocused: true
-      };
       if (this.state.month === CURRENT_MONTH && !this.state.focusedDay && !this.activeKeyStatus.shiftAndTabKeyActive) {
-        React.findDOMNode(this.refs[(CURRENT_MONTH + 1) + '/' + CURRENT_DATE + '/' + CURRENT_YEAR]).focus();
+        const domNode = React.findDOMNode(this.refs[(CURRENT_MONTH + 1) + '/' + CURRENT_DATE + '/' + CURRENT_YEAR]);
+        if (domNode && domNode.focus) {
+          domNode.focus();
+        }
       }
-      this.setState(newState);
+      this.setState({
+        isWrapperFocused: true
+      });
     }
     this.activeKeyStatus.shiftAndTabKeyActive = false;
   }
@@ -246,12 +298,6 @@ export default class DatePicker extends Component {
       this.setState({
         isWrapperFocused: false
       });
-    }
-  }
-
-  _onWrapperKeyDown(event) {
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(event);
     }
   }
 
@@ -688,12 +734,14 @@ export default class DatePicker extends Component {
               aria-selected={ ariaSelected }
               style={ dayStyle }
               className={ this.props.dayClassName }
-              role="gridcell">
+              role="gridcell"
+              {...this.state.dayProps} >
               { this.props.renderDay ? this.props.renderDay(currentDate) : day }
             </span>) : (<span key={ 'day-' + index }
               style={ dayStyle }
               className={ this.props.dayClassName }
-              role="gridcell">
+              role="gridcell"
+              {...this.state.dayProps} >
               { this.props.showOtherMonthDate ? (this.props.renderDay ? this.props.renderDay(currentDate) : day) : ''}
             </span>);
   }
@@ -749,7 +797,6 @@ export default class DatePicker extends Component {
            tabIndex={ tabIndex }
            onFocus={ this._onWrapperFocus.bind(this) }
            onBlur={ this._onWrapperBlur.bind(this) }
-           onKeyDown={ this._onWrapperKeyDown.bind(this) }
            onMouseDown={ this._onWrapperMouseDown.bind(this) }
            onMouseUp={ this._onWrapperMouseUp.bind(this) }
            onMouseOver={ this._onWrapperMouseOver.bind(this) }
@@ -761,7 +808,8 @@ export default class DatePicker extends Component {
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
            style={ wrapperStyle }
-           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }>
+           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }
+           {...this.state.wrapperProps} >
         { this._getNavBar() }
         <div role="grid">
           { this._getDaysHeader() }
@@ -800,7 +848,10 @@ export default class DatePicker extends Component {
     } else if (currentFocusedDay.getMonth() > currentMonth) {
       this._increaseMonth(currentFocusedDayKey);
     } else {
-      React.findDOMNode(this.refs[currentFocusedDayKey]).focus();
+      const domNode = React.findDOMNode(this.refs[currentFocusedDayKey]);
+      if (domNode && domNode.focus) {
+        domNode.focus();
+      }
     }
   }
 
@@ -957,7 +1008,7 @@ export default class DatePicker extends Component {
       const currentFocusedDay = focusedDay || this.state.focusedDay;
       if (currentFocusedDay) {
         const domNode = React.findDOMNode(this.refs[currentFocusedDay]);
-        if (domNode) {
+        if (domNode && domNode.focus) {
           domNode.focus();
         }
       }
@@ -986,7 +1037,4 @@ export default class DatePicker extends Component {
  * 1. re-review
  * 2. updating comments / docs
  * 3. review which classes and props.callbacks can be deprecated
- *
- * To be fixed:
- * 1. Shift + Tab
  */
