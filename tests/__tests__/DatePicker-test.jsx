@@ -12,12 +12,24 @@ const DatePicker = require('../lib/components/DatePicker');
 const injectStyle = require('../lib/utils/inject-style');
 
 describe('DatePicker', () => {
-  it('should initialise current month and year in props', () => {
+  it('should initialise props as expected', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     );
     expect(datePicker.props.month).toBe((new Date()).getMonth() + 1);
     expect(datePicker.props.year).toBe((new Date()).getFullYear());
+    expect(datePicker.props.tabIndex).toBe(0);
+    expect(datePicker.props['aria-label']).toBe('datepicker');
+    expect(datePicker.props.disabled).toBe(false);
+    expect(datePicker.props.readOnly).toBe(false);
+    expect(datePicker.props.showOtherMonthDate).toBe(true);
+    expect(datePicker.props.styleWeekend).toBe(false);
+  });
+
+  it('should have undefined date value if value is not passed in props', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    );
     expect(datePicker.state.dateValue).toBeUndefined();
   });
 
@@ -33,6 +45,23 @@ describe('DatePicker', () => {
     TestUtils.Simulate.keyDown(day, {key: 'Enter'});
     expect(datePicker.state.dateValue).toBeGreaterThan(0);
     expect(dateSelected.getDay()).toBeGreaterThan(0);
+  });
+
+  it('should select / deselect date when space key is pressed', () => {
+    let dateSelected;
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker dayClassName="day_test" onUpdate={ (obj) => dateSelected = obj.value }/>
+    );
+
+    expect(datePicker.state.dateValue).toBeUndefined();
+    const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    TestUtils.Simulate.focus(day);
+    TestUtils.Simulate.keyDown(day, {key: ' '});
+    expect(datePicker.state.dateValue).toBeGreaterThan(0);
+    expect(dateSelected.getDay()).toBeGreaterThan(0);
+    TestUtils.Simulate.keyDown(day, {key: ' '});
+    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(dateSelected).toBeUndefined();
   });
 
   it('should not change date when a day is focused and enter key is pressed if component is disabled or readOnly', () => {
@@ -55,19 +84,20 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.dateValue).toBeUndefined();
   });
 
-  it('should component date should change when a day receives mouseDown with button 0', () => {
+  it('should change dateValue when a day receives mouseDown with button 0', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test" onUpdate={ (obj) => dateSelected = obj.value }/>
     );
 
     expect(datePicker.state.dateValue).toBeUndefined();
-    const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    let day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.mouseDown(day, {button: 0});
     const newDate = datePicker.state.dateValue;
     expect(datePicker.state.dateValue).toBeGreaterThan(0);
     expect(dateSelected.getDay()).toBeGreaterThan(0);
+    day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[10];
     TestUtils.Simulate.mouseDown(day, {button: 1});
     expect(datePicker.state.dateValue).toBe(newDate);
   });
@@ -105,7 +135,7 @@ describe('DatePicker', () => {
     expect(datePicker.state.dateValue).toBe(compDateValue);
   });
 
-  it('should focus next day when a day s focused and component receives rightArrow key press', () => {
+  it('should call function updatePseudoClassStyle when component is created', () => {
     DatePicker.updatePseudoClassStyle = jest.genMockFunction();
     injectStyle.removeAllStyles = jest.genMockFunction();
     const datePicker = TestUtils.renderIntoDocument(
@@ -115,6 +145,14 @@ describe('DatePicker', () => {
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].wrapperStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].prevMonthNavStyleId).toBeDefined();
     expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].nextMonthNavStyleId).toBeDefined();
+  });
+
+  it('should call function removeAllStyles when component will unmount', () => {
+    DatePicker.updatePseudoClassStyle = jest.genMockFunction();
+    injectStyle.removeAllStyles = jest.genMockFunction();
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker />
+    );
     datePicker.componentWillUnmount();
     expect(injectStyle.removeAllStyles.mock.calls.length).toBe(1);
   });
@@ -261,7 +299,7 @@ describe('DatePicker', () => {
 
   it('should set dateValue to undefined when calling resetValue', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker value={ new Date() }/>
+      <DatePicker defaultValue={ new Date() }/>
     );
     expect(datePicker.state.dateValue).toBeDefined();
     datePicker.resetValue();
@@ -293,16 +331,28 @@ describe('DatePicker', () => {
     expect(day.props.style.color).toBe('red');
   });
 
-  it('should not apply focusDayStyles for mouseDown by default', () => {
+  it('should not apply focusDayStyles for mouseDown wrapper', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker focusDayStyle={ {color: 'blue'} } activeDayStyle={ {backgroundColor: 'blue'} } preventFocusStyleForTouchAndClick={ false } dayClassName="day_test"/>
+      <DatePicker wrapperStyle={ {fontSize: '10px'} } focusWrapperStyle={ {fontSize: '5px'} } activeWrapperStyle={ {backgroundColor: 'blue'} } wrapperClassName="date_picker"/>
+    );
+    const picker = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
+    TestUtils.Simulate.mouseDown(picker, {button: 0});
+    expect(picker.props.style.backgroundColor).toBe('blue');
+    expect(picker.props.style.fontSize).toBe('10px');
+    TestUtils.Simulate.mouseUp(picker, {button: 0});
+    expect(picker.props.style.backgroundColor === 'blue').toBeFalsy();
+  });
+
+  it('should apply focusDayStyles for mouseDown by on day', () => {
+    const datePicker = TestUtils.renderIntoDocument(
+      <DatePicker focusDayStyle={ {fontSize: '5px'} } activeDayStyle={ {backgroundColor: 'blue'} } dayClassName="day_test"/>
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.mouseDown(day, {button: 0});
     expect(datePicker.state.dateValue.getDay()).toBeGreaterThan(0);
     expect(day.props.style.backgroundColor).toBe('blue');
-    expect(day.props.style.color === 'blue').toBeFalsy();
+    expect(day.props.style.fontSize).toBe('5px');
     TestUtils.Simulate.mouseUp(day, {button: 0});
-    expect(day.props.style.color === 'blue').toBeFalsy();
+    expect(day.props.style.backgroundColor === 'blue').toBeFalsy();
   });
 });
