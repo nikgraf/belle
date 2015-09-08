@@ -587,7 +587,7 @@ export default class ComboBox extends Component {
   /**
    * Function to filter options using input value.
    */
-  static filterOptions(inputValue, properties) { /*eslint react/sort-comp:0*/
+  static filterOptions(inputValue, properties) { /* eslint react/sort-comp:0*/
     let filteredOptions = [];
     if (!isEmpty(properties.children)) {
       if (inputValue) {

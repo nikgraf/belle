@@ -1,4 +1,4 @@
-/*global jest, describe, it, expect*/
+/* global jest, describe, it, expect*/
 
 jest.dontMock('../utils/union-class-names');
 

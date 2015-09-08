@@ -1,4 +1,4 @@
-/*global jest, describe, it, expect*/
+/* global jest, describe, it, expect*/
 
 jest.dontMock('../utils/helpers');
 
@@ -218,7 +218,6 @@ describe('helpers mapObject method', () => {
 
 describe('helpers find method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const obj = 100;
   const predicate = (object) => {
     return typeof object === 'number';
   };
@@ -270,7 +269,6 @@ describe('helpers isEmpty method', () => {
 
 describe('helpers findIndex method', () => {
   const arr = [123, 'abc', () => {}, undefined];
-  const obj = 100;
   const predicate = (object) => {
     return typeof object === 'number';
   };

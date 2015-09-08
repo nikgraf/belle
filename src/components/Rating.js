@@ -551,7 +551,7 @@ export default class Rating extends Component {
    *
    * This can be used in case you as developer want to reset the rating manually.
    */
-  resetValue() { /*eslint react/sort-comp:0*/
+  resetValue() { /* eslint react/sort-comp:0*/
     this.setState({
       value: undefined,
       focusedValue: undefined

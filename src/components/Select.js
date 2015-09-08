@@ -720,6 +720,18 @@ export default class Select extends Component {
   }
 
   /**
+   * Returns the index of the entry with a certain value from the component's
+   * children.
+   *
+   * The index search includes only option components.
+   */
+  _getIndexOfFocusedOption() {
+    return findIndex(this.options, (element) => {
+      return element.props.value === this.state.focusedOptionValue;
+    });
+  }
+
+  /**
    * After an option has been selected the menu gets closed and the
    * selection processed.
    *
@@ -746,18 +758,6 @@ export default class Select extends Component {
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
-  }
-
-  /**
-   * Returns the index of the entry with a certain value from the component's
-   * children.
-   *
-   * The index search includes only option components.
-   */
-  _getIndexOfFocusedOption() {
-    return findIndex(this.options, (element) => {
-      return element.props.value === this.state.focusedOptionValue;
-    });
   }
 
   render() {

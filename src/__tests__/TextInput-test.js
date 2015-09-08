@@ -1,4 +1,4 @@
-/*global jest, describe, it, expect*/
+/* global jest, describe, it, expect*/
 
 jest.dontMock('../components/TextInput');
 jest.dontMock('../utils/inject-style');
