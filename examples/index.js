@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {style} from 'belle';
 import {config} from 'belle';
 import {extend} from 'underscore';
-import ButtonPlayground from './ButtonPlayground';
-import CardPlayground from './CardPlayground';
-import SelectPlayground from './SelectPlayground';
-import TextInputPlayground from './TextInputPlayground';
-import RatingPlayground from './RatingPlayground';
-import ComboBoxPlayground from './ComboBoxPlayground';
-import TogglePlayground from './TogglePlayground';
+import ButtonPlayground from './components/ButtonPlayground';
+import CardPlayground from './components/CardPlayground';
+import SelectPlayground from './components/SelectPlayground';
+import TextInputPlayground from './components/TextInputPlayground';
+import RatingPlayground from './components/RatingPlayground';
+import ComboBoxPlayground from './components/ComboBoxPlayground';
+import TogglePlayground from './components/TogglePlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
 if (true) {
