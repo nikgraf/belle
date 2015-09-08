@@ -1,15 +1,15 @@
 /*global jest, describe, it, expect*/
 
-jest.dontMock('../lib/components/TextInput');
-jest.dontMock('../lib/utils/inject-style');
+jest.dontMock('../components/TextInput');
+jest.dontMock('../utils/inject-style');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const injectStyle = require('../lib/utils/inject-style');
-const TextInput = require('../lib/components/TextInput');
+const injectStyle = require('../utils/inject-style');
+const TextInput = require('../components/TextInput');
 
 describe('TextInput', () => {
   it('should come with default styles', () => {

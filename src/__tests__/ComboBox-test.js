@@ -1,7 +1,7 @@
 /*global jest describe beforeEach it expect */
 
-jest.dontMock('../lib/components/ComboBox');
-jest.dontMock('../lib/components/Option');
+jest.dontMock('../components/ComboBox');
+jest.dontMock('../components/Option');
 
 import {extend} from 'underscore';
 import React from 'react/addons';
@@ -9,8 +9,8 @@ const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const ComboBox = require('../lib/components/ComboBox');
-const Option = require('../lib/components/Option');
+const ComboBox = require('../components/ComboBox');
+const Option = require('../components/Option');
 
 describe('ComboBox', () => {
   it('should initialise inputValue & filteredOptions during construction', () => {

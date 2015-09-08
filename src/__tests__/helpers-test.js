@@ -1,8 +1,8 @@
 /*global jest, describe, it, expect*/
 
-jest.dontMock('../lib/utils/helpers');
+jest.dontMock('../utils/helpers');
 
-const helpers = require('../lib/utils/helpers');
+const helpers = require('../utils/helpers');
 
 describe('helpers has method', () => {
   const obj = {test: true};

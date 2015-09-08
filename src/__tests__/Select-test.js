@@ -1,9 +1,9 @@
 /*global jest describe beforeEach it expect */
 
-jest.dontMock('../lib/components/Select');
-jest.dontMock('../lib/components/Option');
-jest.dontMock('../lib/components/Placeholder');
-jest.dontMock('../lib/components/Separator');
+jest.dontMock('../components/Select');
+jest.dontMock('../components/Option');
+jest.dontMock('../components/Placeholder');
+jest.dontMock('../components/Separator');
 
 import {extend} from 'underscore';
 import React from 'react/addons';
@@ -11,10 +11,10 @@ const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Select = require('../lib/components/Select');
-const Option = require('../lib/components/Option');
-const Placeholder = require('../lib/components/Placeholder');
-const Separator = require('../lib/components/Separator');
+const Select = require('../components/Select');
+const Option = require('../components/Option');
+const Placeholder = require('../components/Placeholder');
+const Separator = require('../components/Separator');
 
 describe('Select', () => {
   it('should initialise selectedValue & focusedOptionValue during construction', () => {

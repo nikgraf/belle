@@ -1,18 +1,18 @@
 /*global jest describe beforeEach it expect */
 
-jest.dontMock('../lib/components/Button');
-jest.dontMock('../lib/utils/inject-style');
-jest.dontMock('../lib/utils/union-class-names');
+jest.dontMock('../components/Button');
+jest.dontMock('../utils/inject-style');
+jest.dontMock('../utils/union-class-names');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
-const injectStyle = require('../lib/utils/inject-style');
+const injectStyle = require('../utils/inject-style');
 
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Button = require('../lib/components/Button');
+const Button = require('../components/Button');
 
 describe('Button', () => {
   describe('without any properties', () => {

@@ -1,8 +1,8 @@
 /*global jest, describe, it, expect*/
 
-jest.dontMock('../lib/utils/union-class-names');
+jest.dontMock('../utils/union-class-names');
 
-const unionClassNames = require('../lib/utils/union-class-names');
+const unionClassNames = require('../utils/union-class-names');
 
 describe('unionClassNames', () => {
   it('should add a class to existing ones', () => {

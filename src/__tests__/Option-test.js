@@ -1,13 +1,13 @@
 /*global jest describe beforeEach it expect */
 
-jest.dontMock('../lib/components/Option');
+jest.dontMock('../components/Option');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Option = require('../lib/components/Option');
+const Option = require('../components/Option');
 
 describe('Option', () => {
   it('should initialise _isHovered & _isDisplayedAsSelected during construction', () => {
