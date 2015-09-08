@@ -1,7 +1,5 @@
 /* global jest, describe, it, expect*/
 
-jest.dontMock('../utils/union-class-names');
-
 const unionClassNames = require('../utils/union-class-names');
 
 describe('unionClassNames', () => {

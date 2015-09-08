@@ -25,10 +25,10 @@
     "react": ">=0.13.0 || ^0.14.0-beta3"
   },
   "scripts": {
-    "build": "babel --out-dir='lib' src",
+    "build": "babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "test": "jest src/",
+    "test": "BABEL_JEST_STAGE=0 jest src/",
     "lint": "eslint src/"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "eslint": "^1.3.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-react": "^3.3.1",
-    "jest-cli": "^0.5.1",
+    "jest-cli": "^0.5.2",
     "react": "^0.13.3",
     "react-hot-loader": "^1.3.0",
     "react-transform-catch-errors": "^0.1.1",

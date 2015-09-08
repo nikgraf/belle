@@ -12,9 +12,5 @@
       "target": "react-transform-catch-errors",
       "imports": ["react", "redbox-react"]
     }]
-  },
-  "ignore": [
-    "__tests__/*"
-  ]
-
+  }
 }
