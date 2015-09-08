@@ -103,7 +103,7 @@ export default class TextInput extends Component {
     };
   }
 
-  static displayName = 'Belle TextInput';
+  static displayName = 'TextInput';
 
   static propTypes = {
     className: React.PropTypes.string,

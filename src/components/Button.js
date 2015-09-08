@@ -113,7 +113,7 @@ export default class Button extends Component {
     this.mouseDownOnButton = false;
   }
 
-  static displayName = 'Belle Button';
+  static displayName = 'Button';
 
   static propTypes = {
     activeStyle: React.PropTypes.object,

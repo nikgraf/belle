@@ -14,21 +14,21 @@ React.initializeTouchEvents && React.initializeTouchEvents(true);
  * Returns true if the provided property is a Placeholder component from Belle.
  */
 function isPlaceholder(reactElement) {
-  return isComponentOfType('Belle Placeholder', reactElement);
+  return isComponentOfType('Placeholder', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Option component from Belle.
  */
 function isOption(reactElement) {
-  return isComponentOfType('Belle Option', reactElement);
+  return isComponentOfType('Option', reactElement);
 }
 
 /**
  * Returns true if the provided property is a Separator component from Belle.
  */
 function isSeparator(reactElement) {
-  return isComponentOfType('Belle Separator', reactElement);
+  return isComponentOfType('Separator', reactElement);
 }
 
 /**
@@ -238,7 +238,7 @@ export default class Select extends Component {
     };
   }
 
-  static displayName = 'Belle Select';
+  static displayName = 'Select';
 
   static propTypes = {
     children: validateChildrenAreOptionsAndMaximumOnePlaceholder,

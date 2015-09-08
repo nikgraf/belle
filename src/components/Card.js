@@ -24,7 +24,7 @@ export default class Card extends Component {
     };
   }
 
-  static displayName = 'Belle Card';
+  static displayName = 'Card';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([

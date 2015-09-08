@@ -32,7 +32,7 @@ export default class Option extends Component {
     };
   }
 
-  static displayName = 'Belle Option';
+  static displayName = 'Option';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([

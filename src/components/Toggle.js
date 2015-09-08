@@ -77,7 +77,7 @@ function sanitizeHandleProps(properties) {
  * Verifies that the provided property is a Choice from Belle.
  */
 function choicePropType(props, propName, componentName) {
-  if (!(props[propName] && isComponentOfType('Belle Choice', props[propName]))) {
+  if (!(props[propName] && isComponentOfType('Choice', props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
 }
@@ -174,7 +174,7 @@ export default class Toggle extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
-  static displayName = 'Belle Toggle';
+  static displayName = 'Toggle';
 
   static propTypes = {
     activeHandleStyle: React.PropTypes.object,

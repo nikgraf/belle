@@ -9,7 +9,7 @@ export default class Choice extends Component {
     super(properties);
   }
 
-  static displayName = 'Belle Choice';
+  static displayName = 'Choice';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([

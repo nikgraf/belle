@@ -23,7 +23,7 @@ export default class Placeholder extends Component {
     };
   }
 
-  static displayName = 'Belle Placeholder';
+  static displayName = 'Placeholder';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([

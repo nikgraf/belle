@@ -107,7 +107,7 @@ export default class Rating extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
-  static displayName = 'Belle Rating';
+  static displayName = 'Rating';
 
   static propTypes = {
     defaultValue: React.PropTypes.oneOf([1, 2, 3, 4, 5]),

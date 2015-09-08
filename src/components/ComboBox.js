@@ -147,7 +147,7 @@ export default class ComboBox extends Component {
     this.filteredOptions = ComboBox.filterOptions(inputValue, properties);
   }
 
-  static displayName = 'Belle ComboBox';
+  static displayName = 'ComboBox';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]),

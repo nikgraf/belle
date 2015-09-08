@@ -9,7 +9,7 @@ import {filterReactChildren, findIndex} from '../utils/helpers';
  * The index search includes separator & option components.
  */
 const findIndexOfSelectedOption = (component) => {
-  const filterFunction = (child) => (isComponentOfType('Belle Option', child) || isComponentOfType('Belle Separator', child));
+  const filterFunction = (child) => (isComponentOfType('Option', child) || isComponentOfType('Separator', child));
   return findIndex(filterReactChildren(component.props.children, filterFunction), (element) => {
     return element.props.value === component.state.selectedValue;
   });

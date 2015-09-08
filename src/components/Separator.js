@@ -23,7 +23,7 @@ export default class Separator extends Component {
     };
   }
 
-  static displayName = 'Belle Separator';
+  static displayName = 'Separator';
 
   static propTypes = {
     children: React.PropTypes.oneOfType([
