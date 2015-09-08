@@ -122,16 +122,11 @@ You can install the development environment with
 npm install
 ```
 
-Note: In case you want to add a peerDependency please make sure it get's removed
-after running install since peerDependencies should not be in node_modules to
-make them work properly. React & Underscore are removed in the `postinstall`
-script which is defined in `package.json`.
+`npm run build` will trigger a build into the `lib` folder. To develop a component it's convenient to use the examples or docs application.
 
-Whenever you change something in `src/` you can compile it during development with
+### Run the examples or docs application
 
-```
-npm start
-```
+To run the examples or docs you go into the folder `docs` or `examples` and run `npm install` and `npm start`. The app will run with hot reloading on `http://localhost:3000`.
 
 ### Tests
 
@@ -144,12 +139,6 @@ In order to run the tests use
 ```
 npm test
 ```
-
-### Run the examples or docs
-
-To run the examples or docs you should run `npm install` and `npm start` in the examples/docs folder as well.
-
-Use `python -m SimpleHTTPServer 8310` in the examples folder to run it on localhost.
 
 ## Discussion or need help?
 
