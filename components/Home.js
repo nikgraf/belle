@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ThemeSwitch from './theme/ThemeSwitch';
+import ThemeSwitch from '../theme/ThemeSwitch';
 import GettingStarted from './GettingStarted';
 import {Card} from 'belle';
 

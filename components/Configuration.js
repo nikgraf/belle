@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Card} from 'belle';
 import Code from './Code';
-import ThemeSwitch from './theme/ThemeSwitch';
+import ThemeSwitch from '../theme/ThemeSwitch';
 
 const overwriteCardStyleExample = `var belle = require('belle');
 

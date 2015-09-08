@@ -2,7 +2,7 @@ import React from 'react';
 import {Card} from 'belle';
 import {RouteHandler, Link} from 'react-router';
 import Column from './Column';
-import ViewportMixin from './mixin/viewport';
+import ViewportMixin from '../mixin/viewport';
 
 export default React.createClass({
 

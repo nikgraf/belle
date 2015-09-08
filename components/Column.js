@@ -1,6 +1,6 @@
 import React from 'react';
 import {omit} from 'underscore';
-import ViewportMixin from './mixin/viewport';
+import ViewportMixin from '../mixin/viewport';
 
 export default React.createClass({
 
