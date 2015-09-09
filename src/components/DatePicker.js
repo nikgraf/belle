@@ -84,7 +84,7 @@ export default class DatePicker extends Component {
     this._attachDocumentEventListeners();
   }
 
-  static displayName = 'Belle DatePicker';
+  static displayName = 'DatePicker';
 
   static propTypes = {
     // value related props
@@ -1036,4 +1036,5 @@ export default class DatePicker extends Component {
  * TODO:
  * 2. updating docs
  * 3. review which classes and props.callbacks can be deprecated
+ * 4. Day hover style to override selected style
  */
