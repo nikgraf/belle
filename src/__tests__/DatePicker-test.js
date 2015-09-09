@@ -1,7 +1,7 @@
 /* global jest describe beforeEach it expect */
 
-jest.dontMock('../lib/components/DatePicker');
-jest.dontMock('../lib/utils/inject-style');
+jest.dontMock('../components/DatePicker');
+jest.dontMock('../utils/inject-style');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
