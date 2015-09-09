@@ -25,37 +25,43 @@
     "react": ">=0.13.0 || ^0.14.0-beta3"
   },
   "scripts": {
-    "start": "babel --watch --source-maps-inline --optional='es7.classProperties' --out-dir='lib' src",
-    "build": "babel --out-dir='lib' --optional='es7.classProperties' src",
+    "build": "babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "pretest": "rm -rf node_modules/react",
-    "test": "babel --out-dir='lib' --optional='es7.classProperties' src && cd tests && npm install && ln -snf ../lib lib && cd .. && jest tests/"
+    "test": "BABEL_JEST_STAGE=0 jest src/",
+    "lint": "eslint src/"
   },
   "devDependencies": {
-    "babel": "^5.6.14",
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.23",
+    "babel-eslint": "^4.1.1",
     "babel-jest": "^5.3.0",
-    "babel-eslint": "^3.1.20",
-    "eslint": "^0.24.0",
-    "eslint-plugin-react": "^2.6.4",
-    "jest-cli": "^0.4.15",
-    "react": ">=0.13.3"
+    "babel-loader": "^5.3.2",
+    "babel-plugin-react-transform": "^1.0.3",
+    "eslint": "^1.3.1",
+    "eslint-config-airbnb": "0.0.8",
+    "eslint-plugin-react": "^3.3.1",
+    "jest-cli": "^0.5.2",
+    "react": "^0.13.3",
+    "react-hot-loader": "^1.3.0",
+    "react-transform-catch-errors": "^0.1.1",
+    "react-transform-webpack-hmr": "^0.1.4",
+    "redbox-react": "^1.0.2",
+    "underscore": "^1.8.3",
+    "webpack": "^1.12.1",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.10.1",
+    "webpack-hot-middleware": "^2.0.0"
   },
   "jest": {
     "unmockedModulePathPatterns": [
-      "react",
-      "underscore"
+      "<rootDir>/node_modules/react",
+      "underscore",
+      "../utils/helpers",
+      "../utils/union-class-names",
+      "../utils/is-component-of-type"
     ],
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": [
-      "jsx",
-      "js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "jsx"
-    ]
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
   },
   "license": "MIT",
   "dependencies": {

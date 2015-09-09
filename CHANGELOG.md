@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+### Changed
+- [Button, Card, Choice, ComboBox, Option, Placeholder, Rating, Select, Separator, TextInput, Toggle] Removed the 'Belle ' prefix from displayName
+
 ## 1.2.2 - 2015-09-04
 
 ### Fixed
