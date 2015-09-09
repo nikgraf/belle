@@ -1,4 +1,4 @@
-/*global jest describe beforeEach it expect */
+/* global jest describe beforeEach it expect */
 
 jest.dontMock('../lib/components/DatePicker');
 jest.dontMock('../lib/utils/inject-style');
@@ -8,8 +8,8 @@ const TestUtils = React.addons.TestUtils;
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const DatePicker = require('../lib/components/DatePicker');
-const injectStyle = require('../lib/utils/inject-style');
+const DatePicker = require('../components/DatePicker');
+const injectStyle = require('../utils/inject-style');
 
 describe('DatePicker', () => {
   it('should initialise props as expected', () => {
@@ -138,7 +138,7 @@ describe('DatePicker', () => {
   it('should call function updatePseudoClassStyle when component is created', () => {
     DatePicker.updatePseudoClassStyle = jest.genMockFunction();
     injectStyle.removeAllStyles = jest.genMockFunction();
-    const datePicker = TestUtils.renderIntoDocument(
+    TestUtils.renderIntoDocument(
       <DatePicker />
     );
     expect(DatePicker.updatePseudoClassStyle.mock.calls.length).toBe(1);
