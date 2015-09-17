@@ -3,13 +3,16 @@ const datePickerStyle = {
   // wrapper of entire component
   wrapperStyle: {
     padding: 8,
-    backgroundColor: '#C5E6F2',
+    border: '1px solid #ccc',
     borderRadius: 5,
     width: 275,
-    height: 287,
+    height: 250,
     textAlign: 'center',
     boxSizing: 'content-box',
-    display: 'inline-block',
+    display: 'table',
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+    backgroundColor: 'white',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -41,7 +44,7 @@ const datePickerStyle = {
   },
 
   hoverWrapperStyle: {
-    backgroundColor: '#92D6EF'
+    border: '1px solid #92D6EF'
   },
 
   activeWrapperStyle: {
@@ -58,12 +61,11 @@ const datePickerStyle = {
 
   // nav-bar at top for month navigation
   navBarStyle: {
-    display: 'flex',
-    justifyContent: 'space-around',
+    display: 'table-caption',
     height: 35,
     lineHeight: '30px',
-    verticalAlign: 'middle',
-    color: 'white'
+    verticalAlign: 'middle'
+    //color: 'white'
   },
 
   // left button in nav-bar to go to previous month
@@ -155,25 +157,26 @@ const datePickerStyle = {
 
   // styling for week's header bar
   weekHeaderStyle: {
-    display: 'flex',
-    justifyContent: 'space-between'
+    display: 'table-row'
   },
 
   // styling for week's row
   weekStyle: {
-    display: 'flex',
-    justifyContent: 'space-between'
+    display: 'table-row'
   },
 
   // styling for week's day label
   dayLblStyle: {
     width: 40,
-    height: 35,
-    lineHeight: '35px',
+    height: 30,
+    padding: 0,
+    lineHeight: '30px',
     verticalAlign: 'middle',
     backgroundColor: 'white',
     margin: 0.5,
     color: '#716D6D',
+    display: 'table-cell',
+    border: '1px solid #ccc',
 
     /*
      User should be able to copy date.
@@ -195,13 +198,15 @@ const datePickerStyle = {
   // styling for individual day
   dayStyle: {
     width: 40,
-    height: 35,
-    lineHeight: '35px',
+    height: 30,
+    lineHeight: '30px',
     verticalAlign: 'middle',
-    margin: 0.5,
+    //margin: 0.5,
     cursor: 'pointer',
-    backgroundColor: '#F8F8F8',
+    border: '1px solid #ccc',
     color: '#716D6D',
+    display: 'table-cell',
+    padding: 0,
 
     /*
      User should be able to copy date.

@@ -703,30 +703,33 @@ export default class DatePicker extends Component {
     }
 
     if (isNotOtherMonth) {
-      if (!this.props.disabled) {
-        if (this.state.hoveredDay === dayKey) {
-          dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
-        }
-        if (this.state.focusedDay === dayKey) {
+      if (!this.props.disabled && this.state.hoveredDay === dayKey) {
+        dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
+      }
+      if (!this.props.disabled && this.state.focusedDay === dayKey) {
+        dayStyle = extend(dayStyle, {outline: 0});
+        dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+      }
+      if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
+        dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+      } else if (this.state.dateValue && day === this.state.dateValue.getDate()
+        && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
+        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+        ariaSelected = true;
+        if (!this.props.disabled && this.state.focusedDay === dayKey) {
           dayStyle = extend(dayStyle, {outline: 0});
           dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
         }
-        if (!this.props.readOnly && this.state.activeDay === dayKey) {
-          dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+        if (!this.props.disabled && this.state.hoveredDay === dayKey) {
+          dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
         }
+      }
+      if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+        dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
+        ariaCurrent = 'date';
       }
     } else {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
-    }
-
-    if (this.state.activeDay !== dayKey && isNotOtherMonth && this.state.dateValue && day === this.state.dateValue.getDate() && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
-      dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-      ariaSelected = true;
-    }
-
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR && isNotOtherMonth) {
-      dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
-      ariaCurrent = 'date';
     }
 
     return isNotOtherMonth ? (<span tabIndex={ -1 }
@@ -816,7 +819,7 @@ export default class DatePicker extends Component {
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }
            {...this.state.wrapperProps} >
         { this._getNavBar() }
-        <div role="grid">
+        <div role="grid" style={{'display': 'table-row-group'}}>
           { this._getDaysHeader() }
           {
             map(weekArray, (week, weekIndex) => {
@@ -1036,5 +1039,4 @@ export default class DatePicker extends Component {
  * TODO:
  * 2. updating docs
  * 3. review which classes and props.callbacks can be deprecated
- * 4. Day hover style to override selected style
  */
