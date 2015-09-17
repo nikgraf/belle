@@ -9,6 +9,7 @@ import TextInputPlayground from './components/TextInputPlayground';
 import RatingPlayground from './components/RatingPlayground';
 import ComboBoxPlayground from './components/ComboBoxPlayground';
 import TogglePlayground from './components/TogglePlayground';
+import DatePickerPlayground from './components/DatePickerPlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
 if (true) {
