@@ -153,11 +153,9 @@ const datePickerStyle = {
     userSelect: 'initial'
   },
 
-  // weekHeaderStyle, weekStyle (2 below) I needed just for setting display properly, there might be better ways to do this.
-
-  // styling for week's header bar
-  weekHeaderStyle: {
-    display: 'table-row'
+  // styling for entire grid of week-header and weeks
+  weekGroupStyle: {
+    'display': 'table-row-group'
   },
 
   // styling for week's row
