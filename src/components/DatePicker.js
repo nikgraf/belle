@@ -369,41 +369,43 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * On keyDown on someday:
+   * On keyDown on wrapper if some day is focused:
    * 1. arrow keys will navigate calendar
    * 2. enter key will set dateValue of component
    * 3. space key will set / unset dateValue
    * 4. if Shift is already pressed and the Tab is pressed this.activeKeyStatus.shiftAndTabKeyActive will be set to true
-   * Function will call props.onDayKeyDown or props.onKeyDown depending on whether wrapper or day is focused.
+   * Function will call props.onDayKeyDown depending on whether wrapper or day is focused.
    */
-  _onDayKeyDown(event) {
-    console.log('###')
-    if (!this.props.disabled) {
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        this._focusOtherDay(7);
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        this._focusOtherDay(-7);
-      } else if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        this._focusOtherDay(this.state.localeData.isRTL ? 1 : -1);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        this._focusOtherDay(this.state.localeData.isRTL ? -1 : 1);
-      } else if (event.key === 'Enter') {
-        event.preventDefault();
-        this._selectDate(new Date(this.state.focusedDay).getDate());
-      } else if (event.key === ' ') {
-        event.preventDefault();
-        this._selectDeselectDate(new Date(this.state.focusedDay));
-      } else if (event.key === 'Tab' && this.activeKeyStatus.shiftKeyActive) {
-        this.activeKeyStatus.shiftAndTabKeyActive = true;
+  _onWrapperKeyDown(event) {
+    console.log('wraoper key down', this.state.focusedDay);
+    if(this.state.focusedDay) {
+      if (!this.props.disabled) {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          this._focusOtherDay(7);
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          this._focusOtherDay(-7);
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          this._focusOtherDay(this.state.localeData.isRTL ? 1 : -1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          this._focusOtherDay(this.state.localeData.isRTL ? -1 : 1);
+        } else if (event.key === 'Enter') {
+          event.preventDefault();
+          this._selectDate(new Date(this.state.focusedDay).getDate());
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          this._selectDeselectDate(new Date(this.state.focusedDay));
+        } else if (event.key === 'Tab' && this.activeKeyStatus.shiftKeyActive) {
+          this.activeKeyStatus.shiftAndTabKeyActive = true;
+        }
       }
-    }
 
-    if (this.props.onDayKeyDown) {
-      this.props.onDayKeyDown(event);
+      if (this.props.onDayKeyDown) {
+        this.props.onDayKeyDown(event);
+      }
     }
   }
 
@@ -702,7 +704,6 @@ export default class DatePicker extends Component {
               onMouseOut={ this._onDayMouseOut.bind(this, dayKey) }
               onTouchStart={ this._onDayTouchStart.bind(this, dayKey, day) }
               onTouchEnd={ this._onDayTouchEnd.bind(this, dayKey) }
-              onKeyDown={ this._onDayKeyDown.bind(this) }
               aria-current={ ariaCurrent }
               aria-selected={ ariaSelected }
               style={ dayStyle }
@@ -764,6 +765,7 @@ export default class DatePicker extends Component {
            tabIndex={ tabIndex }
            onFocus={ this._onWrapperFocus.bind(this) }
            onBlur={ this._onWrapperBlur.bind(this) }
+           onKeyDown={ this._onWrapperKeyDown.bind(this) }
            onMouseDown={ this._onWrapperMouseDown.bind(this) }
            onMouseUp={ this._onWrapperMouseUp.bind(this) }
            onMouseOver={ this._onWrapperMouseOver.bind(this) }
