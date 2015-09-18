@@ -276,3 +276,7 @@ const datePickerStyle = {
 };
 
 export default datePickerStyle;
+
+/** to fix:
+ * Height of cells should not change when number of weeks in month are less.
+ */
