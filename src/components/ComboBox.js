@@ -263,11 +263,10 @@ export default class ComboBox extends Component {
     }
 
     if (newState.inputValue) {
-      newState.filteredOptions = this.filterOptions(newState.inputValue, properties);
+      newState.filteredOptions = ComboBox.filterOptions(newState.inputValue, properties);
     }
 
     this.setState(newState);
-    this.filteredOptions = ComboBox.filterOptions(inputValue, properties);
 
     removeAllStyles([this._styleId, this._caretStyleId]);
     updatePseudoClassStyle(this._styleId, this._caretStyleId, properties);

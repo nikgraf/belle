@@ -2,6 +2,7 @@
 
 jest.dontMock('../components/DatePicker');
 jest.dontMock('../utils/inject-style');
+jest.dontMock('../utils/date-helpers');
 
 import React from 'react/addons';
 const TestUtils = React.addons.TestUtils;
