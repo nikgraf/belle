@@ -248,8 +248,7 @@ export default class DatePicker extends Component {
 
   /**
    * Callback is called when wrapper is focused, it will conditionally set isWrapperFocused.
-   * If this.state.focusedDay is undefined (component is focused using Tab key),
-   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker.
+   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker, if this.state.focusedDay is undefined.
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
@@ -264,7 +263,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper is blurred, it will reset isWrapperFocused.
+   * Callback is called when wrapper is blurred, it will reset isWrapperFocused, focusedDay.
    */
   _onWrapperBlur() {
     if (!this.props.disabled) {
@@ -516,47 +515,42 @@ export default class DatePicker extends Component {
   /**
    * Function will return jsx for rendering the nav bar for calendar.
    * Depending on following rules it will apply styles to prevMonthNav and nextMonthNav:
-   * 1. If disabled apply disabled styles
-   * 2. If not disabled and active apply activeStyles
+   * 1. If disabled hide navs
+   * 2. If active apply activeStyles
    */
   _renderNavBar() {
     const navBarStyle = extend({}, style.navBarStyle, this.props.navBarStyle);
     const monthLblStyle = extend({}, style.monthLblStyle, this.props.monthLblStyle);
     let prevMonthNavStyle = extend({}, style.prevMonthNavStyle, this.props.prevMonthNavStyle);
     let nextMonthNavStyle = extend({}, style.nextMonthNavStyle, this.props.nextMonthNavStyle);
-    if (this.props.disabled) {
-      prevMonthNavStyle = {display: 'none'};
-      nextMonthNavStyle = {display: 'none'};
-    } else {
-      if (this.state.isPrevMonthNavActive) {
-        prevMonthNavStyle = extend(prevMonthNavStyle, style.activePrevMonthNavStyle, this.props.activePrevMonthNavStyle);
-      }
-      if (this.state.isNextMonthNavActive) {
-        nextMonthNavStyle = extend(nextMonthNavStyle, style.activeNextMonthNavStyle, this.props.activeNextMonthNavStyle);
-      }
+    if (this.state.isPrevMonthNavActive) {
+      prevMonthNavStyle = extend(prevMonthNavStyle, style.activePrevMonthNavStyle, this.props.activePrevMonthNavStyle);
+    }
+    else if (this.state.isNextMonthNavActive) {
+      nextMonthNavStyle = extend(nextMonthNavStyle, style.activeNextMonthNavStyle, this.props.activeNextMonthNavStyle);
     }
 
     return (
       <div style={ navBarStyle }
            className={ this.props.navBarClassName }>
-          <span onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
+           { !this.props.disabled ? <span onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
                 style= { prevMonthNavStyle }
-                className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }></span>
+                className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }></span> : void 0}
           <span style={ monthLblStyle }
                 className={ this.props.monthLblClassName }
                 role="heading"
                 id={ this.state.month + '-' + this.state.year }>
             { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
           </span>
-          <span onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
+          { !this.props.disabled ? <span onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
                 onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
                 onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
                 style= { nextMonthNavStyle }
-                className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }></span>
+                className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }></span> : void 0}
       </div>
     );
   }
@@ -564,7 +558,7 @@ export default class DatePicker extends Component {
   /**
    * Function will return jsx for rendering the week header for calendar.
    * Disabled styles will be applied for disabled date-picker.
-   * Day headers will be rendred using locale information.
+   * Day headers will be rendered using locale information.
    */
   _renderWeekHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
@@ -574,13 +568,13 @@ export default class DatePicker extends Component {
     const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
     let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
     dayNames = this.state.localeData.isRTL ? reverse(dayNames) : dayNames;
+    let weekendIndex = ((7 - this.state.localeData.firstDay) % 7) + this.state.localeData.weekEnd;
+    weekendIndex = this.state.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
     return (
       <div style={ style.weekStyle }>
         {
           map(dayNames, (dayAbbr, index) => {
-            let weekendIndex = ((7 - this.state.localeData.firstDay) % 7) + this.state.localeData.weekEnd;
-            weekendIndex = this.state.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
@@ -604,12 +598,12 @@ export default class DatePicker extends Component {
    *    - If component is disabled and hovered apply disableHover styles
    * 3. If day is weekend apply weekendStyle
    * 4. If its day in current month and component is not disabled or readOnly:
+   *    - If its current day apply todayStyle
+   *    - If this is selected day apply selectedDayStyle
    *    - If component is hovered apply hover styles
    *    - If component is hovered and active apply hoveredStyles + activeStyles
    *    - If component is hovered and not active but focused and preventFocusStyleForTouchAndClick apply focus styles
    * 5. If current day represents other months day in calendar apply otherMonthDayStyle
-   * 6. If its current day apply todayStyle
-   * 7. If this is selected day apply selectedDayStyle
    */
   _renderDay(currentDate, index) {
     const day = currentDate.getDate();
@@ -637,6 +631,15 @@ export default class DatePicker extends Component {
     }
 
     if (isNotOtherMonth) {
+      if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+        dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
+        ariaCurrent = 'date';
+      }
+      if (this.state.dateValue && day === this.state.dateValue.getDate()
+        && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
+        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+        ariaSelected = true;
+      }
       if (!this.props.disabled && this.state.hoveredDay === dayKey) {
         dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
@@ -646,21 +649,6 @@ export default class DatePicker extends Component {
       }
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
         dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
-      } else if (this.state.dateValue && day === this.state.dateValue.getDate()
-        && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
-        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
-        ariaSelected = true;
-        if (!this.props.disabled && this.state.focusedDay === dayKey) {
-          dayStyle = extend(dayStyle, {outline: 0});
-          dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
-        }
-        if (!this.props.disabled && this.state.hoveredDay === dayKey) {
-          dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
-        }
-      }
-      if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-        dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
-        ariaCurrent = 'date';
       }
     } else {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
@@ -707,7 +695,6 @@ export default class DatePicker extends Component {
    */
   render() {
     let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    let weekGroupStyle = extend({}, style.weekGroupStyle, this.props.weekGroupStyle);
     if (this.props.readOnly) {
       wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
     }
@@ -835,7 +822,6 @@ export default class DatePicker extends Component {
    */
   _onPrevMonthNavTouchEnd() {
     if (!this.props.disabled) {
-      this._decreaseMonth();
       this.setState({
         isPrevMonthNavActive: false
       });
@@ -893,7 +879,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state and focus this.state.focusedDay day.
+   * The function will decrease current month in state.
    * It will also call props.onMonthChange.
    */
   _decreaseMonth() {
@@ -916,7 +902,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will increase current month in state and focus this.state.focusedDay day.
+   * The function will increase current month in state.
    * It will also call props.onMonthChange.
    */
   _increaseMonth() {
@@ -946,9 +932,3 @@ export default class DatePicker extends Component {
     this._selectDate(undefined);
   }
 }
-
-/**
- * TODO:
- * 2. updating docs
- * 3. review which classes and props.callbacks can be deprecated
- */
