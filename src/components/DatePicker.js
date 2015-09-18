@@ -79,9 +79,6 @@ export default class DatePicker extends Component {
       dayProps: sanitizeDayProps(properties.dayProps),
       preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick
     };
-
-    this.activeKeyStatus = {};
-    this._attachDocumentEventListeners();
   }
 
   static displayName = 'DatePicker';
@@ -250,43 +247,20 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will attach keyDown listener to document, this is needed to take care of case when user presses Shift key somewhere in the document
-   * and then uses Tab key to focus elements in reverse order.
-   * In case user does that and focus reached date-picker wrapper, current date should not be focused.
-   */
-  _attachDocumentEventListeners() {
-    if (canUseDOM) {
-      document.addEventListener('keydown', (e) => {
-        if ((e.keyCode || e.which) === 16) {
-          this.activeKeyStatus.shiftKeyActive = true;
-        }
-      });
-      document.addEventListener('keyup', (e) => {
-        if ((e.keyCode || e.which) === 16) {
-          this.activeKeyStatus.shiftKeyActive = false;
-        }
-      });
-    }
-  }
-
-  /**
    * Callback is called when wrapper is focused, it will conditionally set isWrapperFocused.
-   * If month of date-picker is current month and this.state.focusedDay is undefined (component is focused using Tab key),
-   * this.state.focusedDay will be set to current date.
-   * If date-picker is focused using Shift+Tab focus will not be set to current date, in case that is done Shift+Tab will repeatedly
-   * keep focusing the date-picker and focus will never leave from date-picker to next component.
+   * If this.state.focusedDay is undefined (component is focused using Tab key),
+   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker.
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
       const newState = {
         isWrapperFocused: true
       };
-      if (this.state.month === CURRENT_MONTH && !this.state.focusedDay && !this.activeKeyStatus.shiftAndTabKeyActive) {
-        newState.focusedDay = CURRENT_MONTH + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+      if (!this.state.focusedDay) {
+        newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
       }
       this.setState(newState);
     }
-    this.activeKeyStatus.shiftAndTabKeyActive = false;
   }
 
   /**
@@ -295,7 +269,8 @@ export default class DatePicker extends Component {
   _onWrapperBlur() {
     if (!this.props.disabled) {
       this.setState({
-        isWrapperFocused: false
+        isWrapperFocused: false,
+        focusedDay: undefined
       });
     }
   }
@@ -373,11 +348,9 @@ export default class DatePicker extends Component {
    * 1. arrow keys will navigate calendar
    * 2. enter key will set dateValue of component
    * 3. space key will set / unset dateValue
-   * 4. if Shift is already pressed and the Tab is pressed this.activeKeyStatus.shiftAndTabKeyActive will be set to true
-   * Function will call props.onDayKeyDown depending on whether wrapper or day is focused.
+   * 4. props.onDayKeyDown will be called
    */
   _onWrapperKeyDown(event) {
-    console.log('wraoper key down', this.state.focusedDay);
     if(this.state.focusedDay) {
       if (!this.props.disabled) {
         if (event.key === 'ArrowDown') {
@@ -398,8 +371,6 @@ export default class DatePicker extends Component {
         } else if (event.key === ' ') {
           event.preventDefault();
           this._selectDeselectDate(new Date(this.state.focusedDay));
-        } else if (event.key === 'Tab' && this.activeKeyStatus.shiftKeyActive) {
-          this.activeKeyStatus.shiftAndTabKeyActive = true;
         }
       }
 
@@ -595,7 +566,7 @@ export default class DatePicker extends Component {
    * Disabled styles will be applied for disabled date-picker.
    * Day headers will be rendred using locale information.
    */
-  _renderDaysHeader() {
+  _renderWeekHeader() {
     let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
     if (this.props.disabled) {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
@@ -640,7 +611,7 @@ export default class DatePicker extends Component {
    * 6. If its current day apply todayStyle
    * 7. If this is selected day apply selectedDayStyle
    */
-  _renderDayFragment(currentDate, index) {
+  _renderDay(currentDate, index) {
     const day = currentDate.getDate();
     const isNotOtherMonth = currentDate.getMonth() === this.state.month;
     const dayKey = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear();
@@ -669,7 +640,6 @@ export default class DatePicker extends Component {
       if (!this.props.disabled && this.state.hoveredDay === dayKey) {
         dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
       }
-      console.log('this.state.focusedDay', this.state.focusedDay);
       if (!this.props.disabled && this.state.focusedDay === dayKey) {
         dayStyle = extend(dayStyle, {outline: 0});
         dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
@@ -781,7 +751,7 @@ export default class DatePicker extends Component {
            {...this.state.wrapperProps} >
         { this._renderNavBar() }
         <div role="grid" style={ style.weekGroupStyle}>
-          { this._renderDaysHeader() }
+          { this._renderWeekHeader() }
           {
             map(weekArray, (week, weekIndex) => {
               const weekDays = this.state.localeData.isRTL ? reverse(week) : week;
@@ -790,7 +760,7 @@ export default class DatePicker extends Component {
                      style={ style.weekStyle }>
                   {
                     map(weekDays, (day, dayIndex) => {
-                      return this._renderDayFragment(day, dayIndex);
+                      return this._renderDay(day, dayIndex);
                     })
                   }
                 </div>
@@ -816,7 +786,6 @@ export default class DatePicker extends Component {
     } else if (currentFocusedDay.getMonth() > currentMonth) {
       this._increaseMonth();
     }
-    console.log('currentFocusedDayKey', currentFocusedDayKey);
     this.setState({
       focusedDay: currentFocusedDayKey
     })
