@@ -11,8 +11,7 @@ import config from '../config/datePicker';
 React.initializeTouchEvents(true);
 
 /**
- * Returns an object with properties that are relevant for the wrapping div of
- * the date picker.
+ * Returns an object with properties that are relevant for the wrapping div of the date picker.
  */
 function sanitizeWrapperProps(properties) {
   return omit(properties, [
@@ -248,7 +247,7 @@ export default class DatePicker extends Component {
 
   /**
    * Callback is called when wrapper is focused, it will conditionally set isWrapperFocused.
-   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker, if this.state.focusedDay is undefined.
+   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
@@ -275,8 +274,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper receives mouseDown.
-   * Conditionally set isWrapperActive.
+   * Callback is called when wrapper receives mouseDown. Conditionally set isWrapperActive.
    */
   _onWrapperMouseDown(event) {
     if (!this.props.disabled && event.button === 0) {
@@ -287,8 +285,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper receives mouseUp.
-   * Reset isWrapperActive.
+   * Callback is called when wrapper receives mouseUp. Reset isWrapperActive.
    */
   _onWrapperMouseUp(event) {
     if (!this.props.disabled && event.button === 0) {
@@ -299,8 +296,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when mouse enters wrapper.
-   * Conditionally set isWrapperHovered.
+   * Callback is called when mouse enters wrapper. Conditionally set isWrapperHovered.
    */
   _onWrapperMouseOver() {
     this.setState({
@@ -309,8 +305,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when mouse leaves wrapper.
-   * Reset isWrapperHovered.
+   * Callback is called when mouse leaves wrapper. Reset isWrapperHovered.
    */
   _onWrapperMouseOut() {
     this.setState({
@@ -319,8 +314,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when touch starts on wrapper.
-   * Conditionally sets isWrapperActive.
+   * Callback is called when touch starts on wrapper. Conditionally sets isWrapperActive.
    */
   _onWrapperTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
@@ -331,8 +325,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when touch ends on wrapper.
-   * Reset isWrapperActive.
+   * Callback is called when touch ends on wrapper. Reset isWrapperActive.
    */
   _onWrapperTouchEnd() {
     if (!this.props.disabled) {
@@ -415,8 +408,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOver.
-   * It will conditionally set this.state.hoveredDay.
+   * Callback is called when some day receives MouseOver. It will conditionally set this.state.hoveredDay.
    */
   _onDayMouseOver(dayKey) {
     if (!this.props.disabled && !this.props.readOnly) {
@@ -427,8 +419,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOut.
-   * It will reset this.state.hoveredDay.
+   * Callback is called when some day receives MouseOut. It will reset this.state.hoveredDay.
    */
   _onDayMouseOut(dayKey, event) {
     if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === dayKey) {
@@ -472,7 +463,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Depending on whether component is controlled or uncontrolled the function will update this.state.dateValue.constructor.
+   * Depending on whether component is controlled or uncontrolled the function will update this.state.dateValue.
    * It will also call props.onUpdate.
    */
   _selectDate(date) {
@@ -817,8 +808,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when prevMonthNav receives touch end.
-   * It will reset active state for prevMonthNav.
+   * Callback is called when prevMonthNav receives touch end. It will reset active state for prevMonthNav.
    */
   _onPrevMonthNavTouchEnd() {
     if (!this.props.disabled) {
@@ -842,8 +832,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when nextMonthNav receives mouse up.
-   * It will reset active state for nextMonthNav.
+   * Callback is called when nextMonthNav receives mouse up. It will reset active state for nextMonthNav.
    */
   _onNextMonthNavMouseUp(event) {
     if (event.button === 0 && !this.props.disabled) {
@@ -867,8 +856,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when nextMonthNav receives touch end.
-   * It will reset active state for nextMonthNav.
+   * Callback is called when nextMonthNav receives touch end. It will reset active state for nextMonthNav.
    */
   _onNextMonthNavTouchEnd() {
     if (!this.props.disabled) {
@@ -879,8 +867,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state.
-   * It will also call props.onMonthChange.
+   * The function will decrease current month in state. It will also call props.onMonthChange.
    */
   _decreaseMonth() {
     let newMonth;
@@ -902,8 +889,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will increase current month in state.
-   * It will also call props.onMonthChange.
+   * The function will increase current month in state. It will also call props.onMonthChange.
    */
   _increaseMonth() {
     let newMonth;
@@ -925,8 +911,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Reset the value to undefined.
-   * This can be used in case you as developer want to reset the rating manually.
+   * Reset the value to undefined. This can be used in case you as developer want to reset the rating manually.
    */
   resetValue() {
     this._selectDate(undefined);
