@@ -20,6 +20,7 @@ const stylesToCopy = [
   'font-family',
   'font-weight',
   'font-size',
+  'text-rendering',
   'text-transform',
   'width',
   'padding-left',
