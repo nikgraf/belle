@@ -140,6 +140,8 @@ In order to run the tests use
 npm test
 ```
 
+To run the test continuously you can use `npm run test:watch`.
+
 ## Discussion or need help?
 
 Join us at the **#belle** channel of the [Reactiflux](http://reactiflux.com/) Slack community or our [Gitter room](https://gitter.im/nikgraf/belle).

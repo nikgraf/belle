@@ -25,33 +25,33 @@
     "react": ">=0.13.0 || ^0.14.0-beta3"
   },
   "scripts": {
-    "build": "babel --out-dir='lib' --ignore='__tests__/*' src",
+    "build": "BABEL_ENV=production babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "test": "BABEL_JEST_STAGE=0 jest src/",
+    "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
+    "test:watch": "npm run test -- --watch",
     "lint": "eslint src/"
   },
   "devDependencies": {
     "babel": "^5.8.23",
-    "babel-core": "^5.8.23",
-    "babel-eslint": "^4.1.1",
+    "babel-core": "^5.8.25",
+    "babel-eslint": "^4.1.3",
     "babel-jest": "^5.3.0",
     "babel-loader": "^5.3.2",
-    "babel-plugin-react-transform": "^1.0.3",
-    "eslint": "^1.3.1",
+    "babel-plugin-react-transform": "^1.0.5",
+    "eslint": "^1.5.0",
     "eslint-config-airbnb": "0.0.8",
-    "eslint-plugin-react": "^3.3.1",
-    "jest-cli": "^0.5.2",
+    "eslint-plugin-react": "^3.4.2",
+    "jest-cli": "^0.5.7",
     "react": "^0.13.3",
-    "react-hot-loader": "^1.3.0",
-    "react-transform-catch-errors": "^0.1.1",
-    "react-transform-webpack-hmr": "^0.1.4",
-    "redbox-react": "^1.0.2",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.0",
+    "redbox-react": "^1.0.6",
     "underscore": "^1.8.3",
-    "webpack": "^1.12.1",
+    "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-dev-server": "^1.10.1",
-    "webpack-hot-middleware": "^2.0.0"
+    "webpack-dev-server": "^1.11.0",
+    "webpack-hot-middleware": "^2.2.0"
   },
   "jest": {
     "unmockedModulePathPatterns": [
@@ -61,7 +61,8 @@
       "../utils/union-class-names",
       "../utils/is-component-of-type"
     ],
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "preprocessCachingDisabled": true
   },
   "license": "MIT",
   "dependencies": {
