@@ -25,10 +25,10 @@
     "react": ">=0.13.0 || ^0.14.0-beta3"
   },
   "scripts": {
-    "build": "babel --out-dir='lib' --ignore='__tests__/*' src",
+    "build": "BABEL_ENV=production babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
-    "test": "BABEL_JEST_STAGE=0 jest src/",
+    "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
     "test:watch": "npm run test -- --watch",
     "lint": "eslint src/"
   },
@@ -62,7 +62,8 @@
       "../utils/union-class-names",
       "../utils/is-component-of-type"
     ],
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "preprocessCachingDisabled": true
   },
   "license": "MIT",
   "dependencies": {
