@@ -5,6 +5,8 @@ Configurable React Components with great UX.
 Website & Documentation: [http://nikgraf.github.io/belle/](http://nikgraf.github.io/belle/)
 
 [![Build Status](https://travis-ci.org/nikgraf/belle.svg)](https://travis-ci.org/nikgraf/belle)
+[![Dependency Status](https://david-dm.org/nikgraf/belle.svg)](https://david-dm.org/nikgraf/belle)
+[![peerDependency Status](https://david-dm.org/nikgraf/belle/peer-status.svg)](https://david-dm.org/nikgraf/belle#info=peerDependencies)
 
 [<img src="https://cloud.githubusercontent.com/assets/223045/8707250/f77634f8-2b34-11e5-92d1-f0b0fe44ade9.png" width="50%">](http://nikgraf.github.io/belle/)
 
