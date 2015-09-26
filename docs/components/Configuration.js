@@ -65,8 +65,8 @@ const styleStructure = `style = {
     caretToCloseStyle: { … },
     caretToOpenStyle: { … }
   },
-  datePicker: {
-    // Wrapper for entire date picker
+  datePicker = {
+    // wrapper of entire component
     wrapperStyle: { … },
     disabledWrapperStyle: { … },
     readOnlyWrapperStyle: { … },
@@ -74,26 +74,27 @@ const styleStructure = `style = {
     activeWrapperStyle: { … },
     focusWrapperStyle: { … },
     disabledHoverWrapperStyle: { … },
-    // Top navigation bar of date picker
+    // nav-bar at top for month navigation
     navBarStyle: { … },
-    // Navigation link to previous month in date picker
-    prevMonthStyle: { … },
-    hoverPrevMonthStyle: { … },
-    activePrevMonthStyle: { … },
-    // Navigation link to next month in date picker
+    // left button in nav-bar to go to previous month
+    prevMonthNavStyle: { … },
+    hoverPrevMonthNavStyle: { … },
+    activePrevMonthNavStyle: { … },
+    // right button in nav-bar to go to previous month
     nextMonthNavStyle: { … },
     hoverNextMonthNavStyle: { … },
     activeNextMonthNavStyle: { … },
-    // Month label at top of date picker
+    // styling for month label on top of calendar
     monthLblStyle: { … },
-    // Div below navigation bar containing day short names
-    weekHeaderStyle: { … },
-    // Row for a single week
+    // styling for entire grid of week-header and weeks
+    weekGroupStyle: { … },
+    // styling for week's row
     weekStyle: { … },
-    // Day short names inside week header
+    // styling for week's day label
     dayLblStyle: { … },
     disabledDayLblStyle: { … },
-    // Each day
+    weekendLblStyle: { … },
+    // styling for individual day
     dayStyle: { … },
     disabledDayStyle: { … },
     readOnlyDayStyle: { … },
@@ -176,8 +177,10 @@ const configStructure = `config = {
   toggle: {
     preventFocusStyleForTouchAndClick: true/false
   },
-  datePickerConfig = {
-    preventFocusStyleForTouchAndClick: true/false,
+  datePickerConfig: {
+    preventFocusStyleForTouchAndClick: true/false
+  },
+  i18nConfig: {
     localeData: {
       locale: {
         monthNames: [],
@@ -272,20 +275,7 @@ export default class Configuration extends Component {
       <h4>DatePicker</h4>
 
       <p>
-        Support for new locale in date picker can be added using this config. Following parameters are required to be provided for a locale:
-        <ul>
-          <li><span style={ {fontWeight: 'bold'} }>monthNames</span>: Array for month names from January to December</li>
-          <li><span style={ {fontWeight: 'bold'} }>dayNamesMin</span>: Array for day short names</li>
-          <li><span style={ {fontWeight: 'bold'} }>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={ {fontWeight: 'bold'} }>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={ {fontWeight: 'bold'} }>isRTL</span>: The text in that locale is written from right to left</li>
-        </ul>
-        In case any of these fields is not provided the defaults for English calendar will be used.
-      </p>
-
-      <p>
-        In the DatePicker component wrapper and links for previous and next month the focus style is not
-        applied in case the component is focused on by a touch or click event.
+        Focus style is not applied to the wrapper of date picker component in case it is focused on by a touch or click event.
         This default behaviour can be deactivated by setting
         `preventFocusStyleForTouchAndClick` to false.
       </p>
@@ -311,6 +301,20 @@ export default class Configuration extends Component {
         applied in case the component is focused on by a touch or click event.
         This default behaviour can be deactivated by setting
         `preventFocusStyleForTouchAndClick` to false.
+      </p>
+
+      <h4>i18n</h4>
+
+      <p>
+        Localization support exist for date picker component. For date picker following parameters are required to be provided for a locale:
+        <ul>
+          <li><span style={ {fontWeight: 'bold'} }>monthNames</span>: Array for month names from January to December</li>
+          <li><span style={ {fontWeight: 'bold'} }>dayNamesMin</span>: Array for day short names</li>
+          <li><span style={ {fontWeight: 'bold'} }>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={ {fontWeight: 'bold'} }>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={ {fontWeight: 'bold'} }>isRTL</span>: The text in that locale is written from right to left</li>
+        </ul>
+        In case any of these fields is not provided the defaults for English calendar will be used.
       </p>
 
       <h4>Structure</h4>
