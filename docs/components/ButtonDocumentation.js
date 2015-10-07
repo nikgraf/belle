@@ -98,7 +98,7 @@ export default class ButtonDocumentation extends Component {
             <p>
               <i>String</i> of 'button', 'submit', 'reset'
               <br />
-              default: 'buttom'
+              default: 'button'
             </p>
             <p>
               This button by is set to type 'button' by default. This different
