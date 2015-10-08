@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Button, TextInput, Select, Separator, Option, Placeholder} from 'belle';
 import {map} from 'underscore';
 
@@ -12,7 +13,7 @@ const fruits = [
 
 export default React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
     return {

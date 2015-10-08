@@ -1,9 +1,10 @@
 import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Card, Rating, Button} from 'belle';
 
 export default React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
     return { ratingValue: 2 };

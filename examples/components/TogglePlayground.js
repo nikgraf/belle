@@ -1,9 +1,10 @@
-import React from 'react/addons';
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Toggle, Choice, Card} from 'belle';
 
 export default React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
     return {
