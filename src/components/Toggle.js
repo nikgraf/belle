@@ -6,6 +6,7 @@ import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
+import Choice from '../components/Choice';
 
 // Enable React Touch Events
 React.initializeTouchEvents && React.initializeTouchEvents(true);
@@ -77,7 +78,7 @@ function sanitizeHandleProps(properties) {
  * Verifies that the provided property is a Choice from Belle.
  */
 function choicePropType(props, propName, componentName) {
-  if (!(props[propName] && isComponentOfType('Choice', props[propName]))) {
+  if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
 }
