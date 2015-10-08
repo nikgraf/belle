@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "highlight.js": "=8.8.0",
-    "react": "=0.13.3",
-    "react-router": "=0.13.3",
+    "react": "=0.14.0",
+    "react-router": "=v1.0.0-rc2",
+    "react-addons-linked-state-mixin": "^=0.14.0",
+    "react-dom": "^=0.14.0",
     "uglify-js": "=2.4.24",
     "underscore": "=1.8.3"
   },
