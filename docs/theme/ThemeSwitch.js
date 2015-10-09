@@ -1,17 +1,14 @@
 import React, { PropTypes } from 'react';
 import {Button} from 'belle';
-import {Navigation, State} from 'react-router';
 
 export default React.createClass({
 
-  propTypes: {
-    location: PropTypes.any.isRequired,
+  contextTypes: {
+    location: PropTypes.object
   },
 
-  mixins: [State, Navigation],
-
   _onSwitchTheme(name) {
-    window.location.hash = `${this.getPathname()}?theme=${name}`;
+    window.location.hash = `${this.context.location.pathname}\?theme=${name}`;
     window.location.reload();
   },
 
