@@ -49,8 +49,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log('***', this.props.location.pathname);
-
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     let header;
