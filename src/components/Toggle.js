@@ -8,9 +8,6 @@ import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-fr
 import unionClassNames from '../utils/union-class-names';
 import Choice from '../components/Choice';
 
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
-
 function sanitizeChildProps(properties) {
   return omit(properties, [
     'className',

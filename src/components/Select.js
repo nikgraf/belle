@@ -10,9 +10,6 @@ import Option from '../components/Option';
 import Placeholder from '../components/Placeholder';
 import Separator from '../components/Separator';
 
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
-
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
  */
