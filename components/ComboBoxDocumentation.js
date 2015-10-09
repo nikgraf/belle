@@ -235,7 +235,7 @@ export default React.createClass({
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -667,7 +667,7 @@ export default React.createClass({
           </td>
         </tr>
 
-      </table>
+      </tbody></table>
 
       <p>
         Any other property valid for an input element like

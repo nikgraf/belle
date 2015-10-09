@@ -192,7 +192,7 @@ export default class SelectDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -556,7 +556,7 @@ export default class SelectDocumentation extends Component {
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <p>
         Any other property valid for a Div element like

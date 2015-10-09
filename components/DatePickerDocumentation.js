@@ -111,7 +111,7 @@ export default React.createClass({
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -446,7 +446,7 @@ export default React.createClass({
           </td>
         </tr>
 
-      </table>
+      </tbody></table>
 
       <p>
         Properties for handling various events(focus, mouse events, touch events):
@@ -476,7 +476,7 @@ export default React.createClass({
 
       <h3>Methods</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             resetValue
@@ -489,7 +489,7 @@ export default React.createClass({
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <h3>Internal HTML Structure</h3>
 

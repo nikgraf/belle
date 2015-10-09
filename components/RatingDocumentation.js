@@ -32,7 +32,7 @@ export default React.createClass({
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             valueLink
@@ -347,7 +347,7 @@ export default React.createClass({
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <p>
       Other supported properties include:
@@ -358,7 +358,7 @@ export default React.createClass({
 
       <h3>Methods</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             resetValue
@@ -371,7 +371,7 @@ export default React.createClass({
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <h3>More Examples</h3>
 

@@ -27,7 +27,7 @@ export default class OptionDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -68,7 +68,7 @@ export default class OptionDocumentation extends Component {
           </td>
         </tr>
 
-      </table>
+      </tbody></table>
 
       <p>
         Any property valid for a HTML div like
