@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, has, last, first} from '../utils/helpers';
 import style from '../style/toggle';
@@ -724,8 +725,8 @@ export default class Toggle extends Component {
 
   _triggerUpdateComponentOnTouchMoveAtSlider(touch) {
     const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const firstChoiceNode = React.findDOMNode(this.refs.firstChoice);
-    const secondChoiceNode = React.findDOMNode(this.refs.secondChoice);
+    const firstChoiceNode = ReactDOM.findDOMNode(this.refs.firstChoice);
+    const secondChoiceNode = ReactDOM.findDOMNode(this.refs.secondChoice);
 
     this._touchEndedNotInSlider = touchedElement !== firstChoiceNode &&
                                   touchedElement !== secondChoiceNode;
@@ -737,7 +738,7 @@ export default class Toggle extends Component {
   }
 
   _triggerUpdateComponentOnTouchMoveAtHandle(touch) {
-    const sliderWrapperNode = React.findDOMNode(this.refs.sliderWrapper);
+    const sliderWrapperNode = ReactDOM.findDOMNode(this.refs.sliderWrapper);
     const rect = sliderWrapperNode.getBoundingClientRect();
     const difference = touch.pageX - this._touchDragStart;
     const horizontalTolerance = this._getHandleWidth() * 2;
