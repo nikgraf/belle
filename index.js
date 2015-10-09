@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import routes from './components/routes';
 import Router from 'react-router';
 import initializeTheme from './theme/initialize';
@@ -12,4 +13,4 @@ initializeTheme();
 const history = createHistory();
 const rootComponent = <Router history={history} children={routes} />;
 
-React.render(rootComponent, document.getElementById('react'));
+ReactDOM.render(rootComponent, document.getElementById('react'));
