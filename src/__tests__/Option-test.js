@@ -2,8 +2,8 @@
 
 jest.dontMock('../components/Option');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -21,7 +21,7 @@ describe('Option', () => {
 
   it('should show the select style in case _isDisplayedAsSelected is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isDisplayedAsSelected={ true }>Rome</Option>
+      <Option value="rome" _isDisplayedAsSelected>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
@@ -30,7 +30,7 @@ describe('Option', () => {
 
   it('should show the hover style in case _isHovered is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isHovered={ true }>Rome</Option>
+      <Option value="rome" _isHovered>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');

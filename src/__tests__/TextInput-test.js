@@ -3,8 +3,8 @@
 jest.dontMock('../components/TextInput');
 jest.dontMock('../utils/inject-style');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -21,7 +21,6 @@ describe('TextInput', () => {
     expect(textareaNode.props.style).toBeDefined();
     expect(textareaNode.props.style.overflow).toBe('hidden');
   });
-
 
   it('should be able to adopt the style of the textInput', () => {
     const textInput = TestUtils.renderIntoDocument(
@@ -77,7 +76,7 @@ describe('TextInput', () => {
 
   it('should re-calculate its height after changing (new lines allowed)', () => {
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput value="some text" allowNewLine={ true }/>
+      <TextInput value="some text" allowNewLine />
     );
 
     textInput._triggerResize = jest.genMockFunction();

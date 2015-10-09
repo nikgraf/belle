@@ -4,8 +4,8 @@ jest.dontMock('../components/Button');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/union-class-names');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 const injectStyle = require('../utils/inject-style');
 
@@ -91,7 +91,7 @@ describe('Button', () => {
     );
 
     const primaryButton = TestUtils.renderIntoDocument(
-      <Button primary={ true }>Follow</Button>
+      <Button primary>Follow</Button>
     );
 
     const defaultButtonNode = TestUtils.findRenderedDOMComponentWithTag(defaultButton, 'button');
