@@ -1,6 +1,5 @@
 import React from 'react';
 import {omit} from 'underscore';
-import ViewportMixin from '../mixin/viewport';
 
 export default React.createClass({
 
@@ -10,7 +9,9 @@ export default React.createClass({
     children: React.PropTypes.any
   },
 
-  mixins: [ViewportMixin],
+  contextTypes: {
+    viewport: React.PropTypes.any
+  },
 
   getInitialState() {
     this.childProperties = omit(this.props, [
@@ -30,7 +31,7 @@ export default React.createClass({
   },
 
   render() {
-    const style = (this.state.viewport.width <= 480) ? this.props.smallScreenStyle : this.props.mediumScreenStyle;
+    const style = (this.context.viewport.width <= 480) ? this.props.smallScreenStyle : this.props.mediumScreenStyle;
 
     return (
       <div style={ style } {...this.childProperties}>

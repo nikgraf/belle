@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import {Card} from 'belle';
 import { Link } from 'react-router';
 import Column from './Column';
-import ViewportMixin from '../mixin/viewport';
 
 export default React.createClass({
 
@@ -11,7 +10,42 @@ export default React.createClass({
     children: PropTypes.any.isRequired
   },
 
-  mixins: [ViewportMixin],
+  childContextTypes: {
+    viewport: PropTypes.any
+  },
+
+  getInitialState() {
+    return {
+      viewport: this._getRetrieveViewport(),
+    };
+  },
+
+  getChildContext() {
+    return {
+      viewport: this._getRetrieveViewport(),
+    };
+  },
+
+  componentWillMount() {
+    window.addEventListener('resize', this._triggerResizeMixinCallback);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._triggerResizeMixinCallback);
+  },
+
+  _getRetrieveViewport() {
+    return {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    };
+  },
+
+  _triggerResizeMixinCallback() {
+    this.setState({
+      viewport: this._getRetrieveViewport()
+    });
+  },
 
   render() {
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
