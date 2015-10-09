@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, DefaultRoute} from 'react-router';
+import { IndexRoute, Route } from 'react-router';
 
 import Base from './Base';
 import ComboBoxDocumentation from './ComboBoxDocumentation';
@@ -22,26 +22,26 @@ import FormComponents from './FormComponents';
 import IntroducingBelleGuide from './guides/IntroducingBelle';
 
 const routes = (
-  <Route name="app" path="/" handler={Base}>
-    <Route name="getting-started" handler={GettingStarted}/>
-    <Route name="component/button" handler={ButtonDocumentation}/>
-    <Route name="component/card" handler={CardDocumentation}/>
-    <Route name="component/choice" handler={ChoiceDocumentation}/>
-    <Route name="component/combo-box" handler={ComboBoxDocumentation}/>
-    <Route name="component/select" handler={SelectDocumentation}/>
-    <Route name="component/option" handler={OptionDocumentation}/>
-    <Route name="component/placeholder" handler={PlaceholderDocumentation}/>
-    <Route name="component/rating" handler={RatingDocumentation}/>
-    <Route name="component/separator" handler={SeparatorDocumentation}/>
-    <Route name="component/text-input" handler={TextInputDocumentation}/>
-    <Route name="component/toggle" handler={ToggleDocumentation}/>
-    <Route name="guide/form-components" handler={FormComponents}/>
-    <Route name="configuration" handler={Configuration}/>
-    <Route name="philosophy" handler={Philosophy}/>
-    <Route name="about" handler={About}/>
-    <Route name="guide/introducing-belle" handler={IntroducingBelleGuide}/>
+  <Route path="/" component={Base}>
+    <Route path="getting-started" component={GettingStarted}/>
+    <Route path="component/button" component={ButtonDocumentation}/>
+    <Route path="component/card" component={CardDocumentation}/>
+    <Route path="component/choice" component={ChoiceDocumentation}/>
+    <Route path="component/combo-box" component={ComboBoxDocumentation}/>
+    <Route path="component/select" component={SelectDocumentation}/>
+    <Route path="component/option" component={OptionDocumentation}/>
+    <Route path="component/placeholder" component={PlaceholderDocumentation}/>
+    <Route path="component/rating" component={RatingDocumentation}/>
+    <Route path="component/separator" component={SeparatorDocumentation}/>
+    <Route path="component/text-input" component={TextInputDocumentation}/>
+    <Route path="component/toggle" component={ToggleDocumentation}/>
+    <Route path="guide/form-components" component={FormComponents}/>
+    <Route path="configuration" component={Configuration}/>
+    <Route path="philosophy" component={Philosophy}/>
+    <Route path="about" component={About}/>
+    <Route path="guide/introducing-belle" component={IntroducingBelleGuide}/>
 
-    <DefaultRoute handler={Home}/>
+    <IndexRoute component={Home}/>
   </Route>
 );
 

@@ -11,8 +11,8 @@ app.use('/icon', express.static('icon'));
 app.use('/images', express.static('images'));
 
 app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
+  noInfo: true,
+  publicPath: config.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
