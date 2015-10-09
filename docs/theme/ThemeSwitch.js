@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {Button} from 'belle';
 import {Navigation, State} from 'react-router';
 
 export default React.createClass({
+
+  propTypes: {
+    location: PropTypes.any.isRequired,
+  },
 
   mixins: [State, Navigation],
 
@@ -12,7 +16,8 @@ export default React.createClass({
   },
 
   render() {
-    const currentTheme = this.getQuery().theme;
+    // TODO
+    const currentTheme = undefined;
 
     return (
       <div>
