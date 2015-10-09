@@ -72,7 +72,7 @@ export default class ButtonDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             primary
@@ -247,7 +247,7 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <p>
         Any other property valid for a HTML button like
