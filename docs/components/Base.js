@@ -7,7 +7,8 @@ export default React.createClass({
 
   propTypes: {
     route: PropTypes.any.isRequired,
-    children: PropTypes.any.isRequired
+    children: PropTypes.any.isRequired,
+    location: PropTypes.object
   },
 
   childContextTypes: {
@@ -48,11 +49,13 @@ export default React.createClass({
   },
 
   render() {
+    console.log('***', this.props.location.pathname);
+
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     let header;
 
-    if (this.props.route.path === '/') {
+    if (this.props.location.pathname === '/') {
       header = (<header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
