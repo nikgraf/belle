@@ -9,7 +9,7 @@ const exampleCode = `<!-- TextInput with a defaultValue -->
 
 <!-- TextInput with allowNewLine set to true -->
 <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } />`;
+           allowNewLine />`;
 
 const advancedExampleCode = `<TextInput minRows={ 3 }
        valueLink={ this.linkState('customTextInputValue') }
@@ -51,7 +51,7 @@ export default React.createClass({
       <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
 
       <TextInput defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
-                 allowNewLine={ true } />
+                 allowNewLine />
 
       <Code value={ exampleCode } style={ {marginTop: 40} } />
 
