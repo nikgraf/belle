@@ -37,8 +37,8 @@ export default React.createClass({
         <div>{ `active: ${this.state.active}` }</div>
 
         <h3>Custom Toggle</h3>
-        <Toggle defaultValue={ true }>
-          <Choice value={ true }>On</Choice>
+        <Toggle defaultValue>
+          <Choice value>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
 

@@ -185,7 +185,7 @@ const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currenc
 
 const dataCodeExampleFourPartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
 
-const dataCodeExampleFourPartTwo = `<ComboBox enableHint = { true }
+const dataCodeExampleFourPartTwo = `<ComboBox enableHint
           filterFunc = { customFilterFunc }
           placeholder = { 'Select Baby Name' }>
   {
@@ -783,7 +783,7 @@ export default React.createClass({
 
       <h4>ComboBox with custom filtering, and hints enabled</h4>
 
-      <ComboBox enableHint = { true }
+      <ComboBox enableHint
                 filterFunc = { customFilterFunc }
                 placeholder = { 'Select Baby Name' }>
         {

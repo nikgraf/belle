@@ -385,14 +385,13 @@ export default React.createClass({
 
       <h4>Rating with a Reset Link</h4>
       <Rating ref="rating" defaultValue={4}/>
-      <a onClick={ (() => { this.refs.rating.resetValue(); }).bind(this) }
-         style={ {
-           marginLeft: 20,
-           position: 'relative',
-           top: -5,
-           textDecoration: 'underline',
-           cursor: 'pointer'
-          } }>Reset</a>
+      <a onClick={ this.refs.rating.resetValue() }
+         style={{ marginLeft: 20,
+                  position: 'relative',
+                  top: -5,
+                  textDecoration: 'underline',
+                  cursor: 'pointer'
+          }}>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 20} } />
     </div>);
   }
