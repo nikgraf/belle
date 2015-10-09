@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 function positionOptions(selectComponent) {
-  const menuNode = React.findDOMNode(selectComponent.refs.menu);
+  const menuNode = ReactDOM.findDOMNode(selectComponent.refs.menu);
   menuNode.style.top = '35px';
 }
 
@@ -138,7 +139,7 @@ const advancedStylingCodeExample = `<!-- select example with more advanced styli
 
 const positionOptionsCodeExample = `<!-- custom positionOptions function in your JS code -->
 function positionOptions (selectComponent) {
-  const menuNode = React.findDOMNode(selectComponent.refs.menu);
+  const menuNode = ReactDOM.findDOMNode(selectComponent.refs.menu);
   menuNode.style.top = '35px';
 }`;
 
