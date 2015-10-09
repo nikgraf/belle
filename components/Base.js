@@ -7,7 +7,7 @@ import ViewportMixin from '../mixin/viewport';
 export default React.createClass({
 
   propTypes: {
-    path: PropTypes.string.isRequired,
+    route: PropTypes.any.isRequired,
     children: PropTypes.any.isRequired
   },
 
@@ -17,7 +17,8 @@ export default React.createClass({
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     let header;
-    if (this.props.path === '/') {
+
+    if (this.props.route.path === '/') {
       header = (<header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
