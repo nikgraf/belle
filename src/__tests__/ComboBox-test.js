@@ -125,7 +125,7 @@ describe('ComboBox', () => {
     );
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(combobox, 'input')[1];
-    expect(selectedAreaNode.getAttribute('style')).toBeDefined();
+    expect(selectedAreaNode.hasAttribute('style')).toBeTruthy();
     expect(selectedAreaNode.getAttribute('style').indexOf('cursor:cross') > -1).toBeTruthy();
   });
 

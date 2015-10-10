@@ -64,7 +64,7 @@ describe('Select', () => {
     );
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedOptionArea.children[0]._store.children).toBe('Vienna');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Vienna');
   });
 
   it('should render the placeholder content', () => {
@@ -78,7 +78,7 @@ describe('Select', () => {
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
   });
 
   it('should work with one option provided', () => {
@@ -89,7 +89,7 @@ describe('Select', () => {
     );
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Rome');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Rome');
   });
 
   it('should work with a placehoder and an array of options provided', () => {
@@ -112,9 +112,9 @@ describe('Select', () => {
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
     const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
-    expect(entries[0].props.children._store.props.children).toBe('Rome');
-    expect(entries[1].props.children._store.props.children).toBe('Vienna');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
+    expect(entries[0].textContent).toBe('Rome');
+    expect(entries[1].textContent).toBe('Vienna');
   });
 
   it('should work with a placehoder and a combination of single options and an array of options provided', () => {
@@ -139,11 +139,11 @@ describe('Select', () => {
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
     const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
-    expect(entries[0].props.children._store.props.children).toBe('Boston');
-    expect(entries[1].props.children._store.props.children).toBe('Rome');
-    expect(entries[2].props.children._store.props.children).toBe('Vienna');
-    expect(entries[3].props.children._store.props.children).toBe('New York');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
+    expect(entries[0].textContent).toBe('Boston');
+    expect(entries[1].textContent).toBe('Rome');
+    expect(entries[2].textContent).toBe('Vienna');
+    expect(entries[3].textContent).toBe('New York');
   });
 
   it('should be able to provide a valueLink', () => {
@@ -222,8 +222,8 @@ describe('Select', () => {
     );
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedAreaNode.getAttribute('style')).toBeDefined();
-    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:#cross') > -1).toBeTruthy();
+    expect(selectedAreaNode.hasAttribute('style')).toBeTruthy();
+    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:cross') > -1).toBeTruthy();
   });
 
   describe('updating props', () => {

@@ -4,7 +4,6 @@ jest.dontMock('../components/Card');
 jest.dontMock('../utils/inject-style');
 
 import React from 'react';
-import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
@@ -17,7 +16,7 @@ describe('Card', () => {
       <Card />
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
-    expect(divNode.getAttribute('style')).toBeDefined();
+    expect(divNode.hasAttribute('style')).toBeTruthy();
     expect(divNode.getAttribute('style').indexOf('background:#fff') > -1).toBeTruthy();
   });
 
@@ -37,7 +36,8 @@ describe('Card', () => {
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
     const spanNode = TestUtils.findRenderedDOMComponentWithTag(card, 'span');
 
-    expect(divNode.props.children.type).toEqual('span');
-    expect(spanNode.children[0]).toEqual('Hello there');
+    expect(divNode.tagName).toEqual('DIV');
+    expect(divNode.childNodes[0].tagName).toEqual('SPAN');
+    expect(spanNode.textContent).toEqual('Hello there');
   });
 });

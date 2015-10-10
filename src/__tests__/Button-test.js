@@ -29,7 +29,7 @@ describe('Button', () => {
 
 
     it('should come with default styles', () => {
-      expect(buttonNode.getAttribute('style')).toBeDefined();
+      expect(buttonNode.hasAttribute('style')).toBeTruthy();
     });
 
 

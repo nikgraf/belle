@@ -16,7 +16,7 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
   });
 
@@ -26,7 +26,7 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
   });
 

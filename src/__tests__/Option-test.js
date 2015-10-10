@@ -25,7 +25,7 @@ describe('Option', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('padding:0') > -1).toBeTruthy();
   });
 
@@ -35,7 +35,7 @@ describe('Option', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('background:#F5F5F5') > -1).toBeTruthy();
   });
 
