@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {filterReactChildren, findIndex} from '../utils/helpers';
