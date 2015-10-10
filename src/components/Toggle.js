@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {extend, omit, has, last, first} from '../utils/helpers';
 import style from '../style/toggle';
@@ -6,9 +7,7 @@ import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
+import Choice from '../components/Choice';
 
 function sanitizeChildProps(properties) {
   return omit(properties, [
@@ -77,7 +76,7 @@ function sanitizeHandleProps(properties) {
  * Verifies that the provided property is a Choice from Belle.
  */
 function choicePropType(props, propName, componentName) {
-  if (!(props[propName] && isComponentOfType('Choice', props[propName]))) {
+  if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
 }
@@ -726,8 +725,8 @@ export default class Toggle extends Component {
 
   _triggerUpdateComponentOnTouchMoveAtSlider(touch) {
     const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const firstChoiceNode = React.findDOMNode(this.refs.firstChoice);
-    const secondChoiceNode = React.findDOMNode(this.refs.secondChoice);
+    const firstChoiceNode = ReactDOM.findDOMNode(this.refs.firstChoice);
+    const secondChoiceNode = ReactDOM.findDOMNode(this.refs.secondChoice);
 
     this._touchEndedNotInSlider = touchedElement !== firstChoiceNode &&
                                   touchedElement !== secondChoiceNode;
@@ -739,7 +738,7 @@ export default class Toggle extends Component {
   }
 
   _triggerUpdateComponentOnTouchMoveAtHandle(touch) {
-    const sliderWrapperNode = React.findDOMNode(this.refs.sliderWrapper);
+    const sliderWrapperNode = ReactDOM.findDOMNode(this.refs.sliderWrapper);
     const rect = sliderWrapperNode.getBoundingClientRect();
     const difference = touch.pageX - this._touchDragStart;
     const horizontalTolerance = this._getHandleWidth() * 2;

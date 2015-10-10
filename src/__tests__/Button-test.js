@@ -4,8 +4,8 @@ jest.dontMock('../components/Button');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/union-class-names');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 const injectStyle = require('../utils/inject-style');
 
@@ -29,12 +29,12 @@ describe('Button', () => {
 
 
     it('should come with default styles', () => {
-      expect(buttonNode.props.style).toBeDefined();
+      expect(buttonNode.hasAttribute('style')).toBeTruthy();
     });
 
 
     it('should set the type to button by default', () => {
-      expect(buttonNode.props.type).toBe('button');
+      expect(buttonNode.type).toBe('button');
     });
 
 
@@ -71,7 +71,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.className).toContain('test-me');
+    expect(buttonNode.className).toContain('test-me');
   });
 
 
@@ -81,7 +81,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.props.style.color).toBe('#F00');
+    expect(buttonNode.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
   });
 
 
@@ -91,13 +91,13 @@ describe('Button', () => {
     );
 
     const primaryButton = TestUtils.renderIntoDocument(
-      <Button primary={ true }>Follow</Button>
+      <Button primary>Follow</Button>
     );
 
     const defaultButtonNode = TestUtils.findRenderedDOMComponentWithTag(defaultButton, 'button');
     const prmaryButtonNode = TestUtils.findRenderedDOMComponentWithTag(primaryButton, 'button');
 
-    expect(prmaryButtonNode.props.style.background).not.toEqual(defaultButtonNode.props.style.background);
+    expect(prmaryButtonNode.getAttribute('style')).not.toEqual(defaultButtonNode.getAttribute('style'));
   });
 
   it('should be able to change the type to submit or reset', () => {
@@ -105,13 +105,13 @@ describe('Button', () => {
       <Button type="submit">Submit</Button>
     );
     const submitButtonNode = TestUtils.findRenderedDOMComponentWithTag(submitButton, 'button');
-    expect(submitButtonNode.props.type).toBe('submit');
+    expect(submitButtonNode.type).toBe('submit');
 
     const resetButton = TestUtils.renderIntoDocument(
       <Button type="reset">Submit</Button>
     );
     const resetButtonNode = TestUtils.findRenderedDOMComponentWithTag(resetButton, 'button');
-    expect(resetButtonNode.props.type).toBe('reset');
+    expect(resetButtonNode.type).toBe('reset');
   });
 
   it('should be able to adopt the pseudoClass styles of the button', () => {

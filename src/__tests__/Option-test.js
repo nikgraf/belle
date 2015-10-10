@@ -2,8 +2,8 @@
 
 jest.dontMock('../components/Option');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -15,26 +15,28 @@ describe('Option', () => {
       <Option value="rome">Rome</Option>
     );
 
-    expect(option.props._isHovered).toBeFalsy();
-    expect(option.props._isDisplayedAsSelected).toBeFalsy();
+    expect(option._isHovered).toBeFalsy();
+    expect(option._isDisplayedAsSelected).toBeFalsy();
   });
 
   it('should show the select style in case _isDisplayedAsSelected is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isDisplayedAsSelected={ true }>Rome</Option>
+      <Option value="rome" _isDisplayedAsSelected>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.props.style.padding).toBe(0);
+    expect(div.hasAttribute('style')).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('padding:0') > -1).toBeTruthy();
   });
 
   it('should show the hover style in case _isHovered is true', () => {
     const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isHovered={ true }>Rome</Option>
+      <Option value="rome" _isHovered>Rome</Option>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.props.style.background).toBe('#F5F5F5');
+    expect(div.hasAttribute('style')).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('background:#F5F5F5') > -1).toBeTruthy();
   });
 
   it('should be able to provide custom properties', () => {
@@ -43,6 +45,6 @@ describe('Option', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.props['data-custom']).toBe('example');
+    expect(div.getAttribute('data-custom')).toBe('example');
   });
 });

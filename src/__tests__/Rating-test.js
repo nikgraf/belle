@@ -4,8 +4,8 @@ jest.dontMock('../components/Rating');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/union-class-names');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.

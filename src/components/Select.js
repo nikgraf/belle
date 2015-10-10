@@ -1,34 +1,35 @@
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 import config from '../config/select';
-import isComponentOfType from '../utils/is-component-of-type.js';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
+import isComponentOfType from '../utils/is-component-of-type';
+import Option from '../components/Option';
+import Placeholder from '../components/Placeholder';
+import Separator from '../components/Separator';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
  */
 function isPlaceholder(reactElement) {
-  return isComponentOfType('Placeholder', reactElement);
+  return isComponentOfType(Placeholder, reactElement);
 }
 
 /**
  * Returns true if the provided property is a Option component from Belle.
  */
 function isOption(reactElement) {
-  return isComponentOfType('Option', reactElement);
+  return isComponentOfType(Option, reactElement);
 }
 
 /**
  * Returns true if the provided property is a Separator component from Belle.
  */
 function isSeparator(reactElement) {
-  return isComponentOfType('Separator', reactElement);
+  return isComponentOfType(Separator, reactElement);
 }
 
 /**
@@ -340,7 +341,7 @@ export default class Select extends Component {
     const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : config.shouldPositionOptions;
 
     if (shouldPositionOptions) {
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
       this.cachedMenuScrollTop = menuNode.scrollTop;
 
       if (!this.state.isOpen && nextState.isOpen) {
@@ -357,7 +358,7 @@ export default class Select extends Component {
     const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : config.shouldPositionOptions;
 
     if (shouldPositionOptions && !this.props.disabled) {
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
 
       // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
@@ -401,7 +402,7 @@ export default class Select extends Component {
       this._touchStartedAt = entry.getAttribute('data-belle-value');
 
       // save the scroll position
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
       if (menuNode.scrollHeight > menuNode.offsetHeight) {
         this._scrollTopPosition = menuNode.scrollTop;
         // Note: don't use setState in here as it would prevent the scrolling
@@ -418,7 +419,7 @@ export default class Select extends Component {
    * Identifies if the menu is scrollable.
    */
   _onTouchMoveAtOption() {
-    const menuNode = React.findDOMNode(this.refs.menu);
+    const menuNode = ReactDOM.findDOMNode(this.refs.menu);
     if (menuNode.scrollTop !== this._scrollTopPosition) {
       this._scrollActive = true;
     }
@@ -527,7 +528,7 @@ export default class Select extends Component {
     event.preventDefault();
 
     /* To avoid weird behaviour we check before focusing again - no specific use-case found */
-    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    const wrapperNode = ReactDOM.findDOMNode(this.refs.wrapper);
     if (document.activeElement !== wrapperNode) {
       wrapperNode.focus();
     }

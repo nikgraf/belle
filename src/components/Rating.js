@@ -7,9 +7,6 @@ import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
-
 /**
  * sanitize properties for the wrapping div.
  */
@@ -186,7 +183,7 @@ export default class Rating extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeStyle(this.ratingWrapperStyleId);
-    updatePseudoClassStyle(this._styleId, properties, this.preventFocusStyleForTouchAndClick);
+    updatePseudoClassStyle(this.ratingWrapperStyleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -544,18 +541,6 @@ export default class Rating extends Component {
       value = (this.state.value) ? this.state.value : 0;
     }
     return value;
-  }
-
-  /**
-   * Reset the value to undefined.
-   *
-   * This can be used in case you as developer want to reset the rating manually.
-   */
-  resetValue() { /* eslint react/sort-comp:0*/
-    this.setState({
-      value: undefined,
-      focusedValue: undefined
-    });
   }
 
   /**

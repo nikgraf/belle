@@ -2,8 +2,8 @@
 
 jest.dontMock('../components/Separator');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -16,7 +16,8 @@ describe('Separator', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
-    expect(div.props.style.color).toBe('#666');
+    expect(div.hasAttribute('style')).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
   });
 
   it('should be able to overwrite the default styles', () => {
@@ -25,7 +26,8 @@ describe('Separator', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
-    expect(div.props.style.color).toBe('#F00');
+    expect(div.hasAttribute('style')).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
   });
 
   it('should be able to provide custom properties', () => {
@@ -34,6 +36,6 @@ describe('Separator', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
-    expect(div.props['data-custom']).toBe('example');
+    expect(div.getAttribute('data-custom')).toBe('example');
   });
 });

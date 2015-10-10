@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {filterReactChildren, findIndex} from '../utils/helpers';
 
@@ -26,7 +27,7 @@ const selectConfig = {
    * @param selectComponent {object} - the Select component itself accessible with `this`
    */
   positionOptions(selectComponent) {
-    const menuNode = React.findDOMNode(selectComponent.refs.menu);
+    const menuNode = ReactDOM.findDOMNode(selectComponent.refs.menu);
     const menuStyle = window.getComputedStyle(menuNode, null);
     const menuWidth = parseFloat(menuStyle.getPropertyValue('width'));
 
@@ -50,7 +51,7 @@ const selectConfig = {
     const optionPaddingTop = parseFloat(optionStyle.getPropertyValue('padding-top'));
     const optionPaddingLeft = parseFloat(optionStyle.getPropertyValue('padding-top'));
 
-    const selectedOptionWrapperNode = React.findDOMNode(selectComponent.refs.selectedOptionWrapper);
+    const selectedOptionWrapperNode = ReactDOM.findDOMNode(selectComponent.refs.selectedOptionWrapper);
     const selectedOptionWrapperStyle = window.getComputedStyle(selectedOptionWrapperNode, null);
     const selectedOptionWrapperPaddingTop = parseFloat(selectedOptionWrapperStyle.getPropertyValue('padding-top'));
 

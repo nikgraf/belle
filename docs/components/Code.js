@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import highlightJs from 'highlight.js';
 import {isEqual, omit, extend} from 'underscore';
 
@@ -17,7 +18,7 @@ export default class Code extends Component {
   }
 
   componentDidMount() {
-    highlightJs.highlightBlock(React.findDOMNode(this));
+    highlightJs.highlightBlock(ReactDOM.findDOMNode(this));
   }
 
   componentWillReceiveProps(properties) {
@@ -31,7 +32,7 @@ export default class Code extends Component {
   }
 
   componentDidUpdate() {
-    highlightJs.highlightBlock(React.findDOMNode(this));
+    highlightJs.highlightBlock(ReactDOM.findDOMNode(this));
   }
 
   render() {

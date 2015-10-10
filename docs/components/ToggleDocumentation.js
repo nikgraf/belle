@@ -6,12 +6,12 @@ import {propertyNameStyle, propertyDescriptionStyle} from './style';
 const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle />
 
-<Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>`;
+<Toggle defaultValue style={ { marginLeft: 20 } }/>`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultValue={ true }
+<Toggle defaultValue
         firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
-  <Choice value={ true }>On</Choice>
+  <Choice value>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
 
@@ -83,13 +83,13 @@ export default class ToggleDocumentation extends Component {
 
       <Toggle />
 
-      <Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>
+      <Toggle defaultValue style={ { marginLeft: 20 } }/>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
         <h3>Properties</h3>
 
-        <table>
+        <table><tbody>
 
           <tr>
             <td style={ propertyNameStyle }>
@@ -446,7 +446,7 @@ export default class ToggleDocumentation extends Component {
             </td>
           </tr>
 
-        </table>
+        </tbody></table>
 
         <p>
           Any property valid for a HTML div like
@@ -466,9 +466,9 @@ export default class ToggleDocumentation extends Component {
 
         <h4>Toggle with custom choices</h4>
 
-        <Toggle defaultValue={ true }
+        <Toggle defaultValue
                 firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
-          <Choice value={ true }>On</Choice>
+          <Choice value>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
@@ -476,11 +476,10 @@ export default class ToggleDocumentation extends Component {
 
         <h4 style={{ marginTop: 40 }}>Toggle with adopted size styling</h4>
 
-        <Toggle style={{
-                  borderRadius: 10,
-                  height: 20,
-                  width: 50
-                }}
+        <Toggle style={{ borderRadius: 10,
+                         height: 20,
+                         width: 50
+                      }}
                 sliderStyle={{
                   // Calculated with 2 * the width of choice area
                   width: 80

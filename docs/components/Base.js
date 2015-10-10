@@ -1,27 +1,64 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {Card} from 'belle';
-import {RouteHandler, Link} from 'react-router';
+import { Link } from 'react-router';
 import Column from './Column';
-import ViewportMixin from '../mixin/viewport';
 
 export default React.createClass({
 
-  contextTypes: {
-    router: React.PropTypes.func
+  propTypes: {
+    route: PropTypes.any.isRequired,
+    children: PropTypes.any.isRequired,
+    location: PropTypes.object
   },
 
-  mixins: [ViewportMixin],
+  childContextTypes: {
+    viewport: PropTypes.any
+  },
+
+  getInitialState() {
+    return {
+      viewport: this._getRetrieveViewport(),
+    };
+  },
+
+  getChildContext() {
+    return {
+      viewport: this._getRetrieveViewport(),
+    };
+  },
+
+  componentWillMount() {
+    window.addEventListener('resize', this._triggerResizeMixinCallback);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._triggerResizeMixinCallback);
+  },
+
+  _getRetrieveViewport() {
+    return {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    };
+  },
+
+  _triggerResizeMixinCallback() {
+    this.setState({
+      viewport: this._getRetrieveViewport()
+    });
+  },
 
   render() {
     const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     let header;
-    if (this.context.router.getCurrentPath() === '/') {
+
+    if (this.props.location.pathname === '/') {
       header = (<header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
 
-          <Link to="app">
+          <Link to="/">
             <h1 style={{ fontSize: 80,
                          margin: 0,
                          paddingTop: 80,
@@ -75,7 +112,7 @@ export default React.createClass({
             style={{ 'float': 'right', marginTop: 20 }}>
           </iframe>
 
-          <Link style={{ display: 'inline' }} to="app">
+          <Link style={{ display: 'inline' }} to="/">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
               <div style={{ borderRadius: 26,
                             width: 26,
@@ -108,65 +145,65 @@ export default React.createClass({
                 className="navigation">
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="getting-started">Getting Started</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/getting-started">Getting Started</Link>
             </li>
           </ul>
           <span style={ { color: '#738088' } } >Components</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="component/button">Button</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/component/button">Button</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="component/card">Card</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/component/card">Card</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="component/combo-box">ComboBox</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/component/combo-box">ComboBox</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="component/select">Select</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/component/select">Select</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block', padding: '1px 0' }} to="component/option">Option</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="/component/option">Option</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block', padding: '1px 0' }} to="component/placeholder">Placeholder</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="/component/placeholder">Placeholder</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block', padding: '1px 0' }} to="component/separator">Separator</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="/component/separator">Separator</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '4px 0' }} to="component/rating">Rating</Link>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="/component/rating">Rating</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '4px 0' }} to="component/text-input">TextInput</Link>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="/component/text-input">TextInput</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '4px 0' }} to="component/toggle">Toggle</Link>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="/component/toggle">Toggle</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>
-              <Link style={{ display: 'block', padding: '1px 0' }} to="component/choice">Choice</Link>
+              <Link style={{ display: 'block', padding: '1px 0' }} to="/component/choice">Choice</Link>
             </li>
           </ul>
           <span style={ { color: '#738088' } } >Guides</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="guide/introducing-belle">Introducing Belle</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/guide/introducing-belle">Introducing Belle</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="guide/form-components">Form Components</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/guide/form-components">Form Components</Link>
             </li>
           </ul>
           <span style={ { color: '#738088' } } >General</span>
           <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="configuration">Configuration / Styling</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/configuration">Configuration / Styling</Link>
             </li>
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="philosophy">Philosophy</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/philosophy">Philosophy</Link>
             </li>
 
             <li>
-              <Link style={{ display: 'block', padding: '3px 0' }} to="about">About</Link>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/about">About</Link>
             </li>
             <li>
               <a style={{ display: 'block', padding: '3px 0' }} href="https://github.com/nikgraf/belle" target="_blank">Code on Github</a>
@@ -180,7 +217,7 @@ export default React.createClass({
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
                 mediumScreenStyle={{ 'float': 'left', width: 640 }}>
           <Card style={ cardContentStyle }>
-            <RouteHandler/>
+            { this.props.children }
           </Card>
         </Column>
         <div style={{ clear: 'left' }}></div>
