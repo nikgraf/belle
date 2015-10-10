@@ -1,6 +1,6 @@
 {
   "name": "belle",
-  "version": "1.2.2",
+  "version": "2.0.0-beta1",
   "description": "Configurable React Components with great UX",
   "author": {
     "name": "Nik Graf",
@@ -22,7 +22,7 @@
     "react-component"
   ],
   "peerDependencies": {
-    "react": ">=0.13.0 || ^0.14.0-beta3"
+    "react": ">=0.14.0"
   },
   "scripts": {
     "build": "BABEL_ENV=production babel --out-dir='lib' --ignore='__tests__/*' src",
