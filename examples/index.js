@@ -72,19 +72,7 @@ class App extends Component {
     return (<div style={ {margin: '0 auto', width: 300} }>
         <h1>Belle Playground</h1>
 
-        <TogglePlayground />
-
-        <SelectPlayground />
-
-        <ButtonPlayground />
-
-        <TextInputPlayground />
-
         <CardPlayground />
-
-        <RatingPlayground />
-
-        <ComboBoxPlayground />
 
       </div>);
   }
