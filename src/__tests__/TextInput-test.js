@@ -18,8 +18,8 @@ describe('TextInput', () => {
     );
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    expect(textareaNode.props.style).toBeDefined();
-    expect(textareaNode.props.style.overflow).toBe('hidden');
+    expect(textareaNode.getAttribute('style')).toBeDefined();
+    expect(textareaNode.getAttribute('style').indexOf('overflow:hidden') > -1).toBeTruthy();
   });
 
   it('should be able to adopt the style of the textInput', () => {
@@ -28,7 +28,8 @@ describe('TextInput', () => {
     );
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    expect(textareaNode.props.style.color).toBe('red');
+    expect(textareaNode.getAttribute('style')).toBeDefined();
+    expect(textareaNode.getAttribute('style').indexOf('color:red') > -1).toBeTruthy();
   });
 
 
@@ -145,7 +146,7 @@ describe('TextInput', () => {
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
-    expect(textareaNode.props.className.indexOf('test-me')).toBeGreaterThan(-1);
+    expect(textareaNode.className.indexOf('test-me')).toBeGreaterThan(-1);
   });
 
 

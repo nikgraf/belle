@@ -64,7 +64,7 @@ describe('Select', () => {
     );
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Vienna');
+    expect(selectedOptionArea.children[0]._store.children).toBe('Vienna');
   });
 
   it('should render the placeholder content', () => {
@@ -222,7 +222,8 @@ describe('Select', () => {
     );
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedAreaNode.props.style.cursor).toBe('cross');
+    expect(selectedAreaNode.getAttribute('style')).toBeDefined();
+    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:#cross') > -1).toBeTruthy();
   });
 
   describe('updating props', () => {

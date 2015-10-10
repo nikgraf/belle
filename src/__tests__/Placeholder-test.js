@@ -16,7 +16,8 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    expect(div.props.style.color).toBe('#666');
+    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
   });
 
   it('should be able to overwrite the default styles', () => {
@@ -25,7 +26,8 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    expect(div.props.style.color).toBe('#F00');
+    expect(div.getAttribute('style')).toBeDefined();
+    expect(div.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
   });
 
   it('should be able to provide custom properties', () => {
@@ -34,6 +36,6 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    expect(div.props['data-custom']).toBe('example');
+    expect(div.getAttribute('data-custom')).toBe('example');
   });
 });
