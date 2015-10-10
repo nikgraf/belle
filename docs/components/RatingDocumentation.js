@@ -2,6 +2,7 @@ import React from 'react';
 import {Rating} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
 
@@ -9,17 +10,32 @@ const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
 
 const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
 
-const advanceCodeExample3 = `<Rating ref="rating" defaultValue={4}></Rating>
-<a onClick={ function() { this.refs.rating.resetValue(); }.bind(this); }
+const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') }/>
+
+<a onClick={ this._resetRating }
    style={ {
      marginLeft: 20,
      position: 'relative',
      top: -5,
      textDecoration: 'underline',
      cursor: 'pointer'
-    } }>Reset</a>`;
+    } }>Reset</a>
+
+_resetRating() {
+  this.setState({
+    customRatingValue: undefined
+  });
+}`;
 
 export default React.createClass({
+
+  mixins: [LinkedStateMixin],
+
+  getInitialState() {
+    return {
+      customRatingValue: 3
+    };
+  },
 
   render() {
     return (<div>
@@ -383,16 +399,24 @@ export default React.createClass({
       <Rating defaultValue={4} character={'✪'}/>
       <Code value= { advanceCodeExample2 } style={ {marginTop: 20, marginBottom: 40} } />
 
-      <h4>Rating with a Reset Link</h4>
-      <Rating ref="rating" defaultValue={4}/>
-      <a onClick={ this.refs.rating.resetValue() }
-         style={{ marginLeft: 20,
-                  position: 'relative',
-                  top: -5,
-                  textDecoration: 'underline',
-                  cursor: 'pointer'
-          }}>Reset</a>
+      <h4>Controlled Rating Component with a Reset Link</h4>
+      <p>Reset rating functionality can be implemented using controlled rating component like this:</p>
+      <Rating valueLink={ this.linkState('customRatingValue') }/>
+      <a onClick={ this._resetRating }
+         style={ {
+           marginLeft: 20,
+           position: 'relative',
+           top: -5,
+           textDecoration: 'underline',
+           cursor: 'pointer'
+          } }>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 20} } />
     </div>);
+  },
+
+  _resetRating() {
+    this.setState({
+      customRatingValue: undefined
+    });
   }
 });
