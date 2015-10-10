@@ -372,23 +372,6 @@ export default React.createClass({
         onKeyDown</span>
       </p>
 
-      <h3>Methods</h3>
-
-      <table><tbody>
-        <tr>
-          <td style={ propertyNameStyle }>
-            resetValue
-          </td>
-        </tr>
-        <tr>
-          <td style={ propertyDescriptionStyle }>
-            <p>
-              This method can be called to reset the Rating's value to undefined.
-            </p>
-          </td>
-        </tr>
-      </tbody></table>
-
       <h3>More Examples</h3>
 
       <h4>Disabled Rating</h4>
