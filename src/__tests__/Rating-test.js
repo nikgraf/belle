@@ -40,7 +40,7 @@ describe('Rating', () => {
   it('should not be able to change value via the user interface if a value property is defined', () => {
     const rating = TestUtils.renderIntoDocument(<Rating value={ 4 } />);
     rating.setState({ focusedValue: 3 });
-    rating._updateComponent();
+    rating._triggerComponentUpdate();
     expect(rating.state.value).toBe( 4 );
   });
 
