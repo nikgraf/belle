@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import cardStyle from '../style/card';
 
 /**
@@ -18,12 +18,12 @@ export default class Card extends Component {
   static displayName = 'Card';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(React.PropTypes.node),
+      PropTypes.node
     ]),
-    style: React.PropTypes.object,
-    test: React.PropTypes.object
+    style: PropTypes.object,
+    test: PropTypes.object
   };
 
   /**
