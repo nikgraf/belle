@@ -11,6 +11,12 @@ export default React.createClass({
         <Card><p>Looks nice!</p></Card>
 
         <Card style={{ color: '#2994BB' }} data-custom-attribute={'custom'}>What about another font color?</Card>
+
+        <Card>
+          <div>Looks nice!</div>
+          <div>Even with multiple elements passed</div>
+        </Card>
+
       </div>
     );
   }

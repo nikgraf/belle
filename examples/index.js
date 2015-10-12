@@ -85,7 +85,6 @@ class App extends Component {
         <RatingPlayground />
 
         <ComboBoxPlayground />
-
       </div>);
   }
 }

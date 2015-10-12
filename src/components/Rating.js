@@ -284,7 +284,7 @@ export default class Rating extends Component {
   _onMouseUp(event) {
     if (!this.props.disabled && !this.preventNextMouseUpTriggerUpdate) {
       const value = Number(event.target.getAttribute('data-belle-value'));
-      this._updateComponent(value);
+      this._triggerComponentUpdate(value);
     }
 
     if (this.props.onMouseUp) {
@@ -319,19 +319,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * The function will be passed to requestAnimationFrame for touchMove
-   */
-  _updateComponentOnTouchMove(touches) {
-    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
-    const value = Number(touchedElement.getAttribute('data-belle-value'));
-    if (value && this.state.focusedValue !== value) {
-      this.setState({
-        focusedValue: value
-      });
-    }
-  }
-
-  /**
    * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
@@ -342,7 +329,7 @@ export default class Rating extends Component {
       // see http://stackoverflow.com/a/9678166/837709
       const animationFrame = requestAnimationFrame.call(
         window,
-        this._updateComponentOnTouchMove.bind(this, touches)
+        this._triggerComponentUpdateOnTouchMove.bind(this, touches)
       );
 
       if (this.previousTouchMoveFrame) {
@@ -366,7 +353,7 @@ export default class Rating extends Component {
       event.preventDefault();
       this.setState({isActive: false});
       const value = this.state.focusedValue;
-      this._updateComponent(value);
+      this._triggerComponentUpdate(value);
     }
 
     if (this.props.onTouchEnd) {
@@ -415,35 +402,6 @@ export default class Rating extends Component {
 
     if (this.props.onFocus) {
       this.props.onFocus(event);
-    }
-  }
-
-  /**
-   * update component when component is clicked, touch ends, enter or space key are hit
-   * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
-   */
-  _updateComponent(value) {
-    if (has(this.props, 'valueLink')) {
-      this.props.valueLink.requestChange(value);
-      this.setState({
-        focusedValue: undefined,
-        isActive: false
-      });
-    } else if (has(this.props, 'value')) {
-      this.setState({
-        focusedValue: undefined,
-        isActive: false
-      });
-    } else {
-      this.setState({
-        focusedValue: undefined,
-        isActive: false,
-        value: value
-      });
-    }
-
-    if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
     }
   }
 
@@ -516,7 +474,7 @@ export default class Rating extends Component {
       } else {
         newValue = this.state.focusedValue;
       }
-      this._updateComponent(newValue);
+      this._triggerComponentUpdate(newValue);
     }
   }
 
@@ -541,6 +499,49 @@ export default class Rating extends Component {
       value = (this.state.value) ? this.state.value : 0;
     }
     return value;
+  }
+
+  /**
+   * The function will be passed to requestAnimationFrame for touchMove
+   */
+  _triggerComponentUpdateOnTouchMove(touches) {
+    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
+    const value = Number(touchedElement.getAttribute('data-belle-value'));
+    if (value && this.state.focusedValue !== value) {
+      this.setState({
+        focusedValue: value
+      });
+    }
+  }
+
+
+  /**
+   * update component when component is clicked, touch ends, enter or space key are hit
+   * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
+   */
+  _triggerComponentUpdate(value) {
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
+      this.setState({
+        focusedValue: undefined,
+        isActive: false
+      });
+    } else if (has(this.props, 'value')) {
+      this.setState({
+        focusedValue: undefined,
+        isActive: false
+      });
+    } else {
+      this.setState({
+        focusedValue: undefined,
+        isActive: false,
+        value: value
+      });
+    }
+
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
+    }
   }
 
   /**
