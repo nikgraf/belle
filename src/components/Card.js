@@ -19,7 +19,7 @@ export default class Card extends Component {
 
   static propTypes = {
     children: PropTypes.oneOfType([
-      PropTypes.arrayOf(React.PropTypes.node),
+      PropTypes.arrayOf(PropTypes.node),
       PropTypes.node
     ]),
     style: PropTypes.object,
