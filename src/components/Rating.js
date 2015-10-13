@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { canUseDOM } from 'exenv';
-import {extend, omit, has} from '../utils/helpers';
+import {omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
@@ -584,7 +584,11 @@ export default class Rating extends Component {
         ...this.props.disabledStyle
       };
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.disabledHoverStyle,
+          ...this.props.disabledHoverStyle
+        };
       }
     } else {
       if (this.state.isFocus && this.preventFocusStyleForTouchAndClick) {
@@ -595,7 +599,11 @@ export default class Rating extends Component {
         };
       }
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.hoverStyle, this.props.hoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.hoverStyle,
+          ...this.props.hoverStyle
+        };
       }
     }
 

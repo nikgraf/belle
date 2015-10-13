@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {extend, omit} from '../utils/helpers';
+import {omit} from '../utils/helpers';
 import style from '../style/placeholder';
 
 /**
@@ -53,7 +53,11 @@ export default class Placeholder extends Component {
       ...this.props.style
     };
     if (this.props._isDisabled) {
-      computedStyle = extend(computedStyle, style.disabledStyle, this.props.disabledStyle);
+      computedStyle = {
+        ...computedStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
     }
 
     return (

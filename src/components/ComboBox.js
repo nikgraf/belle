@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
+import {omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
 import style from '../style/combo-box';
 
 /**
@@ -636,7 +636,11 @@ export default class ComboBox extends Component {
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
 
     if (this.props.disabled) {
-      inputStyle = extend(inputStyle, style.disabledStyle, this.props.disabledStyle);
+      inputStyle = {
+        ...inputStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
     }
 
     // todo: Currently there are no different hover styles for caret, like select they are probably not really needed.

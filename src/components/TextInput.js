@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, has} from '../utils/helpers';
+import {omit, has} from '../utils/helpers';
 import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;
@@ -247,7 +247,11 @@ export default class TextInput extends Component {
     };
 
     if (this.props.disabled) {
-      textareaStyle = extend(textareaStyle, style.disabledStyle, this.props.disabledStyle);
+      textareaStyle = {
+        ...textareaStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
     }
 
     textareaStyle.height = this.state.height;
