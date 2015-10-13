@@ -48,7 +48,10 @@ export default class Placeholder extends Component {
   }
 
   render() {
-    let computedStyle = extend({}, style.style, this.props.style);
+    let computedStyle = {
+      ...style.style,
+      ...this.props.style
+    };
     if (this.props._isDisabled) {
       computedStyle = extend(computedStyle, style.disabledStyle, this.props.disabledStyle);
     }

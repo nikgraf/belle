@@ -42,16 +42,28 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.hoverStyle;
   const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.activeStyle;
   const baseDisabledHoverStyle = properties.primary ? style.primaryDisabledHoverStyle : style.disabledHoverStyle;
-  const hoverStyle = extend({}, baseHoverStyle, properties.hoverStyle);
-  const activeStyle = extend({}, baseActiveStyle, properties.activeStyle);
-  const disabledHoverStyle = extend({}, baseDisabledHoverStyle, properties.disabledHoverStyle);
+  const hoverStyle = {
+    ...baseHoverStyle,
+    ...properties.hoverStyle
+  };
+  const activeStyle = {
+    ...baseActiveStyle,
+    ...properties.activeStyle
+  };
+  const disabledHoverStyle = {
+    ...baseDisabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
 
   let focusStyle;
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
     const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
-    focusStyle = extend({}, baseFocusStyle, properties.focusStyle);
+    focusStyle = {
+      ...baseFocusStyle,
+      ...properties.focusStyle
+    };
   }
 
   const styles = [
@@ -256,25 +268,44 @@ export default class Button extends Component {
 
   render() {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
-    const baseButtonStyle = extend({}, baseStyle, this.props.style);
+    const baseButtonStyle = {
+      ...baseStyle,
+      ...this.props.style
+    };
 
     let buttonStyle;
     if (this.props.disabled) {
       if (this.props.primary) {
-        buttonStyle = extend({}, baseButtonStyle, style.primaryDisabledStyle, this.props.disabledStyle);
+        buttonStyle = {
+          ...baseButtonStyle,
+          ...style.primaryDisabledStyle,
+          ...this.props.disabledStyle
+        };
       } else {
-        buttonStyle = extend({}, baseButtonStyle, style.disabledStyle, this.props.disabledStyle);
+        buttonStyle = {
+          ...baseButtonStyle,
+          ...style.disabledStyle,
+          ...this.props.disabledStyle
+        };
       }
     } else {
       if (this.state.active) {
         const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
-        buttonStyle = extend({}, baseButtonStyle, baseActiveStyle, this.props.activeStyle);
+        buttonStyle = {
+          ...baseButtonStyle,
+          ...baseActiveStyle,
+          ...this.props.activeStyle
+        };
       } else if (this.focused &&
                  !this.state.active &&
                  !this.mouseDownOnButton &&
                  this.preventFocusStyleForTouchAndClick) {
         const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
-        buttonStyle = extend({}, baseButtonStyle, baseFocusStyle, this.props.focusStyle);
+        buttonStyle = {
+          ...baseButtonStyle,
+          ...baseFocusStyle,
+          ...this.props.focusStyle
+        };
       } else {
         buttonStyle = baseButtonStyle;
       }

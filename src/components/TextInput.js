@@ -43,9 +43,18 @@ function sanitizeChildProps(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+  const hoverStyle = {
+    ...style.hoverStyle,
+    ...properties.hoverStyle
+  };
+  const focusStyle = {
+    ...style.focusStyle,
+    ...properties.focusStyle
+  };
+  const disabledHoverStyle = {
+    ...style.disabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
 
   const styles = [
     {
@@ -232,7 +241,10 @@ export default class TextInput extends Component {
   }
 
   render() {
-    let textareaStyle = extend({}, style.style, this.props.style);
+    let textareaStyle = {
+      ...style.style,
+      ...this.props.style
+    };
 
     if (this.props.disabled) {
       textareaStyle = extend(textareaStyle, style.disabledStyle, this.props.disabledStyle);

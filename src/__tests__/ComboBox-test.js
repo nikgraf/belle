@@ -142,7 +142,10 @@ describe('ComboBox', () => {
     });
 
     it('should update it\'s state in case value is provided', () => {
-      const properties = extend({}, combobox.props, {value: 'vienna'});
+      const properties = {
+        ...combobox.props,
+        value: 'vienna'
+      };
       combobox.componentWillReceiveProps(properties);
 
       expect(combobox.state.inputValue).toBe('vienna');
@@ -155,7 +158,10 @@ describe('ComboBox', () => {
         value: 'vienna'
       };
 
-      const properties = extend({}, combobox.props, {valueLink: valueLink});
+      const properties = {
+        ...combobox.props,
+        valueLink: valueLink
+      };
       combobox.componentWillReceiveProps(properties);
 
       expect(combobox.state.inputValue).toBe('vienna');

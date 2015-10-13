@@ -42,7 +42,10 @@ export default class Separator extends Component {
   }
 
   render() {
-    const computedStyle = extend({}, style.style, this.props.style);
+    const computedStyle = {
+      ...style.style,
+      ...this.props.style
+    };
 
     return (
       <div style={ computedStyle } {...this.state.childProps}>
