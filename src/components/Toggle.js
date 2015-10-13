@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend, omit, has, last, first} from '../utils/helpers';
+import {omit, has, last, first} from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';

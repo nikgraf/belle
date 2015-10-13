@@ -5,7 +5,6 @@ jest.dontMock('../components/Option');
 jest.dontMock('../components/Placeholder');
 jest.dontMock('../components/Separator');
 
-import {extend} from 'underscore';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';

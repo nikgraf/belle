@@ -3,7 +3,6 @@
 jest.dontMock('../components/ComboBox');
 jest.dontMock('../components/Option');
 
-import {extend} from 'underscore';
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 

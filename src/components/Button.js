@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {has, omit, extend} from '../utils/helpers';
+import {has, omit} from '../utils/helpers';
 import style from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';

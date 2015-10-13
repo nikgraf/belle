@@ -173,6 +173,3 @@ Special thanks to [https://github.com/jpuri](Jyoti Puri) for the tremendous amou
 ## License
 
 MIT
-
-This library also contains a copy of the React Software which is licensed under BSD as well
-as a copy of Underscore.js which is licensed under MIT.
