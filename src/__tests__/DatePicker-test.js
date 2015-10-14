@@ -459,15 +459,6 @@ describe('DatePicker', () => {
     expect(datePicker.state.activeDay).toBeFalsy();
   });
 
-  it('should set dateValue to undefined when calling resetValue', () => {
-    const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker defaultValue={ new Date() }/>
-    );
-    expect(datePicker.state.dateValue).toBeDefined();
-    datePicker.resetValue();
-    expect(datePicker.state.dateValue).toBeUndefined();
-  });
-
   it('should apply hover styles to wrapper when mouse is over', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="wrapper_test" hoverWrapperStyle={ {backgroundColor: 'red'} }/>
