@@ -6,9 +6,6 @@ import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURREN
 import style from '../style/date-picker';
 import config from '../config/datePicker';
 
-// Enable React Touch Events
-React.initializeTouchEvents(true);
-
 /**
  * Returns an object with properties that are relevant for the wrapping div of the date picker.
  */
