@@ -54,19 +54,28 @@ function sanitizeDayProps(properties) {
 function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
   const styles = [{
     id: pseudoStyleIds.prevMonthNavStyleId,
-    style: extend({}, style.hoverPrevMonthNavStyle, properties.hoverPrevMonthNavStyle),
+    style: {
+      ...style.hoverPrevMonthNavStyle,
+      ...properties.hoverPrevMonthNavStyle
+    },
     pseudoClass: 'hover'
 
   }, {
     id: pseudoStyleIds.nextMonthNavStyleId,
-    style: extend({}, style.hoverNextMonthNavStyle, properties.hoverNextMonthNavStyle),
+    style: {
+      ...style.hoverNextMonthNavStyle,
+      ...properties.hoverNextMonthNavStyle
+    },
     pseudoClass: 'hover'
   }];
   let focusStyle;
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
-    focusStyle = extend({}, style.focusWrapperStyle, properties.focusWrapperStyle);
+    focusStyle = {
+      ...style.focusWrapperStyle,
+      ...properties.focusWrapperStyle
+    };
   }
   styles.push({
     id: pseudoStyleIds.wrapperStyleId,
@@ -666,10 +675,22 @@ export default class DatePicker extends Component {
    * 2. If active apply activeStyles
    */
   _renderNavBar() {
-    const navBarStyle = extend({}, style.navBarStyle, this.props.navBarStyle);
-    const monthLblStyle = extend({}, style.monthLblStyle, this.props.monthLblStyle);
-    let prevMonthNavStyle = extend({}, style.prevMonthNavStyle, this.props.prevMonthNavStyle);
-    let nextMonthNavStyle = extend({}, style.nextMonthNavStyle, this.props.nextMonthNavStyle);
+    const navBarStyle = {
+      ...style.navBarStyle,
+      ...this.props.navBarStyle
+    };
+    const monthLblStyle = {
+      ...style.monthLblStyle,
+      ...this.props.monthLblStyle
+    };
+    let prevMonthNavStyle = {
+      ...style.prevMonthNavStyle,
+      ...this.props.prevMonthNavStyle
+    };
+    let nextMonthNavStyle = {
+      ...style.nextMonthNavStyle,
+      ...this.props.nextMonthNavStyle
+    };
     if (this.state.isPrevMonthNavActive) {
       prevMonthNavStyle = extend(prevMonthNavStyle, style.activePrevMonthNavStyle, this.props.activePrevMonthNavStyle);
     } else if (this.state.isNextMonthNavActive) {
@@ -707,11 +728,18 @@ export default class DatePicker extends Component {
    * Day headers will be rendered using locale information.
    */
   _renderWeekHeader() {
-    let dayLblStyle = extend({}, style.dayLblStyle, this.props.dayLblStyle);
+    let dayLblStyle = {
+      ...style.dayLblStyle,
+      ...this.props.dayLblStyle
+    };
     if (this.props.disabled) {
       dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
     }
-    const weekendLblStyle = extend({}, dayLblStyle, style.weekendLblStyle, this.props.weekendLblStyle);
+    const weekendLblStyle = {
+      ...dayLblStyle,
+      ...style.weekendLblStyle,
+      ...this.props.weekendLblStyle
+    };
     let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
     dayNames = this.state.localeData.isRTL ? reverse(dayNames) : dayNames;
     let weekendIndex = ((7 - this.state.localeData.firstDay) % 7) + this.state.localeData.weekEnd;
@@ -759,7 +787,10 @@ export default class DatePicker extends Component {
     let ariaCurrent = '';
     let ariaSelected = false;
 
-    let dayStyle = extend({}, style.dayStyle, this.props.dayStyle);
+    let dayStyle = {
+      ...style.dayStyle,
+      ...this.props.dayStyle
+    };
 
     if (this.props.readOnly) {
       dayStyle = extend(dayStyle, style.readOnlyDayStyle, this.props.readOnlyDayStyle);
@@ -849,7 +880,10 @@ export default class DatePicker extends Component {
    *    - If component is hovered and focused but not active and preventFocusStyleForTouchAndClick is true apply focusStyles
    */
   render() {
-    let wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    let wrapperStyle = {
+      ...style.wrapperStyle,
+      ...this.props.wrapperStyle
+    };
     if (this.props.readOnly) {
       wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
     }
