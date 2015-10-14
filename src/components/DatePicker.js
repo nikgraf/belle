@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {has, extend, map, shift, reverse, omit} from '../utils/helpers';
+import {has, map, shift, reverse, omit} from '../utils/helpers';
 import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import style from '../style/date-picker';
 import config from '../config/datePicker';
@@ -692,9 +692,17 @@ export default class DatePicker extends Component {
       ...this.props.nextMonthNavStyle
     };
     if (this.state.isPrevMonthNavActive) {
-      prevMonthNavStyle = extend(prevMonthNavStyle, style.activePrevMonthNavStyle, this.props.activePrevMonthNavStyle);
+      prevMonthNavStyle = {
+        ...prevMonthNavStyle,
+        ...style.activePrevMonthNavStyle,
+        ...this.props.activePrevMonthNavStyle
+      };
     } else if (this.state.isNextMonthNavActive) {
-      nextMonthNavStyle = extend(nextMonthNavStyle, style.activeNextMonthNavStyle, this.props.activeNextMonthNavStyle);
+      nextMonthNavStyle = {
+        ...nextMonthNavStyle,
+        ...style.activeNextMonthNavStyle,
+        ...this.props.activeNextMonthNavStyle
+      };
     }
 
     return (
@@ -733,7 +741,11 @@ export default class DatePicker extends Component {
       ...this.props.dayLblStyle
     };
     if (this.props.disabled) {
-      dayLblStyle = extend(dayLblStyle, style.disabledDayLblStyle, this.props.disabledDayLblStyle);
+      dayLblStyle = {
+        ...dayLblStyle,
+        ...style.disabledDayLblStyle,
+        ...this.props.disabledDayLblStyle
+      };
     }
     const weekendLblStyle = {
       ...dayLblStyle,
@@ -793,42 +805,85 @@ export default class DatePicker extends Component {
     };
 
     if (this.props.readOnly) {
-      dayStyle = extend(dayStyle, style.readOnlyDayStyle, this.props.readOnlyDayStyle);
+      dayStyle = {
+        ...dayStyle,
+        ...style.readOnlyDayStyle,
+        ...this.props.readOnlyDayStyle
+      };
     }
 
     if (this.props.disabled) {
-      dayStyle = extend(dayStyle, style.disabledDayStyle, this.props.disabledDayStyle);
+      dayStyle = {
+        ...dayStyle,
+        ...style.disabledDayStyle,
+        ...this.props.disabledDayStyle
+      };
       if (isNotOtherMonth && this.state.hoveredDay === dayKey) {
-        dayStyle = extend(dayStyle, style.disabledHoverDayStyle, this.props.disabledHoverDayStyle);
+        dayStyle = {
+          ...dayStyle,
+          ...style.disabledHoverDayStyle,
+          ...this.props.disabledHoverDayStyle
+        };
       }
     }
 
     if (this.props.styleWeekend && currentDate.getDay() === this.state.localeData.weekEnd) {
-      dayStyle = extend(dayStyle, style.weekendStyle, this.props.weekendStyle);
+      dayStyle = {
+        ...dayStyle,
+        ...style.weekendStyle,
+        ...this.props.weekendStyle
+      };
     }
 
     if (isNotOtherMonth) {
       if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-        dayStyle = extend(dayStyle, style.todayStyle, this.props.todayStyle);
+        dayStyle = {
+          ...dayStyle,
+          ...style.todayStyle,
+          ...this.props.todayStyle
+        };
         ariaCurrent = 'date';
       }
       if (this.state.dateValue && day === this.state.dateValue.getDate()
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
-        dayStyle = extend(dayStyle, style.selectedDayStyle, this.props.selectedDayStyle);
+        dayStyle = {
+          ...dayStyle,
+          ...style.selectedDayStyle,
+          ...this.props.selectedDayStyle
+        };
         ariaSelected = true;
       }
       if (!this.props.disabled && this.state.hoveredDay === dayKey) {
-        dayStyle = extend(dayStyle, style.hoverDayStyle, this.props.hoverDayStyle);
+        dayStyle = {
+          ...dayStyle,
+          ...style.hoverDayStyle,
+          ...this.props.hoverDayStyle
+        };
       }
       if (!this.props.disabled && this.state.focusedDay === dayKey) {
-        dayStyle = extend(dayStyle, {outline: 0});
-        dayStyle = extend(dayStyle, style.focusDayStyle, this.props.focusDayStyle);
+        dayStyle = {
+          ...dayStyle,
+          outline: 0
+        };
+        dayStyle = {
+          ...dayStyle,
+          ...style.focusDayStyle,
+          ...this.props.focusDayStyle
+        };
       }
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
-        dayStyle = extend(dayStyle, style.activeDayStyle, this.props.activeDayStyle);
+        dayStyle = {
+          ...dayStyle,
+          ...style.activeDayStyle,
+          ...this.props.activeDayStyle
+        };
       }
     } else {
-      dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
+      dayStyle = {
+        ...dayStyle,
+        ...style.otherMonthDayStyle,
+        ...this.props.otherMonthDayStyle
+      };
     }
 
     if (isNotOtherMonth) {
@@ -885,21 +940,45 @@ export default class DatePicker extends Component {
       ...this.props.wrapperStyle
     };
     if (this.props.readOnly) {
-      wrapperStyle = extend(wrapperStyle, style.readOnlyWrapperStyle, this.props.readOnlyWrapperStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.readOnlyWrapperStyle,
+        ...this.props.readOnlyWrapperStyle
+      };
     }
     if (this.props.disabled) {
-      wrapperStyle = extend(wrapperStyle, style.disabledWrapperStyle, this.props.disabledWrapperStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.disabledWrapperStyle,
+        ...this.props.disabledWrapperStyle
+      };
       if (this.state.isWrapperHovered) {
-        wrapperStyle = extend(wrapperStyle, style.disabledHoverWrapperStyle, this.props.disabledHoverWrapperStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.disabledHoverWrapperStyle,
+          ...this.props.disabledHoverWrapperStyle
+        };
       }
     } else {
       if (this.state.isWrapperHovered) {
-        wrapperStyle = extend(wrapperStyle, style.hoverWrapperStyle, this.props.hoverWrapperStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.hoverWrapperStyle,
+          ...this.props.hoverWrapperStyle
+        };
       }
       if (this.state.isWrapperActive) {
-        wrapperStyle = extend(wrapperStyle, style.activeWrapperStyle, this.props.activeWrapperStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.activeWrapperStyle,
+          ...this.props.activeWrapperStyle
+        };
       } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
-        wrapperStyle = extend(wrapperStyle, style.focusWrapperStyle, this.props.focusWrapperStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.focusWrapperStyle,
+          ...this.props.focusWrapperStyle
+        };
       }
     }
 
