@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, extend, map, shift, reverse, omit} from '../utils/helpers';
@@ -343,7 +342,7 @@ export default class DatePicker extends Component {
    * 4. props.onDayKeyDown will be called
    */
   _onWrapperKeyDown(event) {
-    if(this.state.focusedDay) {
+    if (this.state.focusedDay) {
       if (!this.props.disabled) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
@@ -516,8 +515,7 @@ export default class DatePicker extends Component {
     let nextMonthNavStyle = extend({}, style.nextMonthNavStyle, this.props.nextMonthNavStyle);
     if (this.state.isPrevMonthNavActive) {
       prevMonthNavStyle = extend(prevMonthNavStyle, style.activePrevMonthNavStyle, this.props.activePrevMonthNavStyle);
-    }
-    else if (this.state.isNextMonthNavActive) {
+    } else if (this.state.isNextMonthNavActive) {
       nextMonthNavStyle = extend(nextMonthNavStyle, style.activeNextMonthNavStyle, this.props.activeNextMonthNavStyle);
     }
 
@@ -766,7 +764,7 @@ export default class DatePicker extends Component {
     }
     this.setState({
       focusedDay: currentFocusedDayKey
-    })
+    });
   }
 
   /**

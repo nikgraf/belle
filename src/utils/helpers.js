@@ -164,7 +164,6 @@ export function shift(iterable, positions) {
 
 /**
  * Returns true if object contains no values (no enumerable own-properties).
->>>>>>> feat(DatePicker): localization
  *
  * @param {Object} obj - an object
  */
