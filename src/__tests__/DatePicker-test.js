@@ -54,12 +54,12 @@ describe('DatePicker', () => {
     );
 
     expect(datePicker.state.dateValue).toBeUndefined();
-    //const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
+    // const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
     expect(datePicker.state.dateValue).toBeGreaterThan(0);
-    //expect(dateSelected.getDay()).toBeGreaterThan(0);
+    // expect(dateSelected.getDay()).toBeGreaterThan(0);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
     expect(datePicker.state.dateValue).toBeUndefined();
     expect(dateSelected).toBeUndefined();
@@ -204,7 +204,7 @@ describe('DatePicker', () => {
     );
 
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_day');
-    let firstDate = new Date(datePickerDays[0]._reactInternalInstance._currentElement.ref);
+    const firstDate = new Date(datePickerDays[0]._reactInternalInstance._currentElement.ref);
     firstDate.setDate(firstDate.getDate() - 1);
     const secondDate = new Date(datePickerDays[1]._reactInternalInstance._currentElement.ref);
     expect(firstDate.getDate() === secondDate.getDate()).toBeTruthy();
@@ -262,7 +262,7 @@ describe('DatePicker', () => {
     const valueLink = {
       value: compDateValue,
       requestChange: () => {
-        //compDateValue = newValue;
+        // compDateValue = newValue;
       }
     };
 

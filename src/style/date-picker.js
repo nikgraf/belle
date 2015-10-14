@@ -65,7 +65,7 @@ const datePickerStyle = {
     height: 35,
     lineHeight: '30px',
     verticalAlign: 'middle'
-    //color: 'white'
+    // color: 'white'
   },
 
   // left button in nav-bar to go to previous month
@@ -199,7 +199,7 @@ const datePickerStyle = {
     height: 30,
     lineHeight: '30px',
     verticalAlign: 'middle',
-    //margin: 0.5,
+    // margin: 0.5,
     cursor: 'pointer',
     border: '1px solid #ccc',
     color: '#716D6D',
