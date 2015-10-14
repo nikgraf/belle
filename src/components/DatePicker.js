@@ -800,7 +800,9 @@ export default class DatePicker extends Component {
       dayStyle = extend(dayStyle, style.otherMonthDayStyle, this.props.otherMonthDayStyle);
     }
 
-    return isNotOtherMonth ? (<span key={ 'day-' + index }
+    if (isNotOtherMonth) {
+      return (
+        <span key={ 'day-' + index }
               ref={ dayKey }
               onMouseDown={ this._onDayMouseDown.bind(this, dayKey, day) }
               onMouseUp={ this._onDayMouseUp.bind(this, dayKey) }
@@ -813,15 +815,22 @@ export default class DatePicker extends Component {
               style={ dayStyle }
               className={ this.props.dayClassName }
               role="gridcell"
-              {...this.state.dayProps} >
-              { this.props.renderDay ? this.props.renderDay(currentDate) : day }
-            </span>) : (<span key={ 'day-' + index }
-              style={ dayStyle }
-              className={ this.props.dayClassName }
-              role="gridcell"
-              {...this.state.dayProps} >
-              { this.props.showOtherMonthDate ? (this.props.renderDay ? this.props.renderDay(currentDate) : day) : ''}
-            </span>);
+          {...this.state.dayProps} >
+          { this.props.renderDay ? this.props.renderDay(currentDate) : day }
+        </span>
+      );
+    }
+
+    const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
+    return (
+      <span key={ 'day-' + index }
+            style={ dayStyle }
+            className={ this.props.dayClassName }
+            role="gridcell"
+        {...this.state.dayProps} >
+        { this.props.showOtherMonthDate ? renderedDay : ''}
+      </span>
+    );
   }
 
   /**
