@@ -4,8 +4,8 @@ import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultValue={ true }>
-  <Choice value={ true }>On</Choice>
+<Toggle defaultValue>
+  <Choice value>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
 
@@ -16,8 +16,8 @@ export default class ChoiceDocumentation extends Component {
 
       <h2 style={ {marginTop: 0, marginBottom: 40} }>Choice</h2>
 
-      <Toggle defaultValue={ true }>
-        <Choice value={ true }>On</Choice>
+      <Toggle defaultValue>
+        <Choice value>On</Choice>
         <Choice value={ false }>Off</Choice>
       </Toggle>
 
@@ -25,7 +25,7 @@ export default class ChoiceDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -44,7 +44,7 @@ export default class ChoiceDocumentation extends Component {
           </td>
         </tr>
 
-      </table>
+      </tbody></table>
 
       <p>
         Any property valid for a HTML div like

@@ -6,12 +6,12 @@ import {propertyNameStyle, propertyDescriptionStyle} from './style';
 const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle />
 
-<Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>`;
+<Toggle defaultValue style={ { marginLeft: 20 } }/>`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
-<Toggle defaultValue={ true }
+<Toggle defaultValue
         firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
-  <Choice value={ true }>On</Choice>
+  <Choice value>On</Choice>
   <Choice value={ false }>Off</Choice>
 </Toggle>`;
 
@@ -34,45 +34,7 @@ const htmlStructure = `<div style={ wrapperStyle }
        style={ handleStyle } />
 </div>`;
 
-const toggleWithSizeStyling = `<Toggle style={{
-          borderRadius: 10,
-          height: 20,
-          width: 50
-        }}
-        sliderStyle={{
-          // Calculated with 2 * the width of choice area
-          width: 80
-        }}
-        sliderWrapperStyle={{
-          borderRadius: 10
-        }}
-        handleStyle={{
-          borderRadius: 10,
-          // 1 px smaller than the width due the border effect
-          height: 19,
-          width: 20
-        }}
-        firstChoiceStyle={{
-          height: 20,
-          // Calculated with the width of the whole toggle - half of the width from the handle
-          width: 40,
-          lineHeight: 20 + 'px',
-          textIndent: -5,
-          fontSize: 12
-        }}
-        secondChoiceStyle={{
-          height: 20,
-          // Calculated with the width of the whole toggle - half of the width from the handle
-          // style.width - (handleStyle.width / 2 )
-          width: 40,
-          lineHeight: 20 + 'px',
-          textIndent: 5,
-          fontSize: 10
-        }}
-        activeHandleStyle={{
-          height: 20
-        }} />
-`;
+const toggleWithSizeStyling = `<Toggle style={{ transform: 'scale(0.6)' }} />`;
 
 export default class ToggleDocumentation extends Component {
 
@@ -83,13 +45,13 @@ export default class ToggleDocumentation extends Component {
 
       <Toggle />
 
-      <Toggle defaultValue={ true } style={ { marginLeft: 20 } }/>
+      <Toggle defaultValue style={ { marginLeft: 20 } }/>
 
       <Code value={ basicCodeExample } style={ {marginTop: 40} } />
 
         <h3>Properties</h3>
 
-        <table>
+        <table><tbody>
 
           <tr>
             <td style={ propertyNameStyle }>
@@ -446,7 +408,7 @@ export default class ToggleDocumentation extends Component {
             </td>
           </tr>
 
-        </table>
+        </tbody></table>
 
         <p>
           Any property valid for a HTML div like
@@ -466,9 +428,9 @@ export default class ToggleDocumentation extends Component {
 
         <h4>Toggle with custom choices</h4>
 
-        <Toggle defaultValue={ true }
+        <Toggle defaultValue
                 firstChoiceStyle={{ backgroundColor: 'rgba(43, 176, 206, 0.8)' }}>
-          <Choice value={ true }>On</Choice>
+          <Choice value>On</Choice>
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
@@ -476,47 +438,15 @@ export default class ToggleDocumentation extends Component {
 
         <h4 style={{ marginTop: 40 }}>Toggle with adopted size styling</h4>
 
-        <Toggle style={{
-                  borderRadius: 10,
-                  height: 20,
-                  width: 50
-                }}
-                sliderStyle={{
-                  // Calculated with 2 * the width of choice area
-                  width: 80
-                }}
-                sliderWrapperStyle={{
-                  borderRadius: 10
-                }}
-                handleStyle={{
-                  borderRadius: 10,
-                  // 1 px smaller than the width due the border effect
-                  height: 19,
-                  width: 20
-                }}
-                firstChoiceStyle={{
-                  height: 20,
-                  // Calculated with the width of the whole toggle - half of the width from the handle
-                  width: 40,
-                  lineHeight: 20 + 'px',
-                  textIndent: -5,
-                  fontSize: 12
-                }}
-                secondChoiceStyle={{
-                  height: 20,
-                  // Calculated with the width of the whole toggle - half of the width from the handle
-                  // style.width - (handleStyle.width / 2 )
-                  width: 40,
-                  lineHeight: 20 + 'px',
-                  textIndent: 5,
-                  fontSize: 10
-                }}
-                activeHandleStyle={{
-                  height: 20
-                }} />
+        <p>
+          When you need to change the size of a component don't forget the CSS
+          transform property. With the -ms- prefix transform is supported
+          back to IE 9.
+        </p>
 
-      <Code value={ toggleWithSizeStyling } style={ {marginTop: 40} } />
+        <Toggle style={{ transform: 'scale(0.6)' }} />
 
+        <Code value={ toggleWithSizeStyling } style={ {marginTop: 40} } />
     </div>);
   }
 }

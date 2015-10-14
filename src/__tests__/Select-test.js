@@ -5,9 +5,9 @@ jest.dontMock('../components/Option');
 jest.dontMock('../components/Placeholder');
 jest.dontMock('../components/Separator');
 
-import {extend} from 'underscore';
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -63,7 +63,7 @@ describe('Select', () => {
     );
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Vienna');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Vienna');
   });
 
   it('should render the placeholder content', () => {
@@ -77,7 +77,7 @@ describe('Select', () => {
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
   });
 
   it('should work with one option provided', () => {
@@ -88,7 +88,7 @@ describe('Select', () => {
     );
 
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Rome');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Rome');
   });
 
   it('should work with a placehoder and an array of options provided', () => {
@@ -111,9 +111,9 @@ describe('Select', () => {
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
     const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
-    expect(entries[0].props.children._store.props.children).toBe('Rome');
-    expect(entries[1].props.children._store.props.children).toBe('Vienna');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
+    expect(entries[0].textContent).toBe('Rome');
+    expect(entries[1].textContent).toBe('Vienna');
   });
 
   it('should work with a placehoder and a combination of single options and an array of options provided', () => {
@@ -138,11 +138,11 @@ describe('Select', () => {
     const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
     const entries = TestUtils.scryRenderedDOMComponentsWithTag(select, 'li');
 
-    expect(selectedOptionArea.props.children[0]._store.props.children).toBe('Select a City');
-    expect(entries[0].props.children._store.props.children).toBe('Boston');
-    expect(entries[1].props.children._store.props.children).toBe('Rome');
-    expect(entries[2].props.children._store.props.children).toBe('Vienna');
-    expect(entries[3].props.children._store.props.children).toBe('New York');
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Select a City');
+    expect(entries[0].textContent).toBe('Boston');
+    expect(entries[1].textContent).toBe('Rome');
+    expect(entries[2].textContent).toBe('Vienna');
+    expect(entries[3].textContent).toBe('New York');
   });
 
   it('should be able to provide a valueLink', () => {
@@ -221,7 +221,8 @@ describe('Select', () => {
     );
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
-    expect(selectedAreaNode.props.style.cursor).toBe('cross');
+    expect(selectedAreaNode.hasAttribute('style')).toBeTruthy();
+    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:cross') > -1).toBeTruthy();
   });
 
   describe('updating props', () => {
@@ -237,7 +238,10 @@ describe('Select', () => {
     });
 
     it('should update it\'s state in case value is provided', () => {
-      const properties = extend({}, select.props, { value: 'vienna' });
+      const properties = {
+        ...select.props,
+        value: 'vienna'
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('vienna');
@@ -249,14 +253,20 @@ describe('Select', () => {
         value: 'vienna'
       };
 
-      const properties = extend({}, select.props, { valueLink: valueLink });
+      const properties = {
+        ...select.props,
+        valueLink: valueLink
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('vienna');
     });
 
     it('should not update it\'s state in case defaultValue is updated', () => {
-      const properties = extend({}, select.props, { defaultValue: 'vienna' });
+      const properties = {
+        ...select.props,
+        defaultValue: 'vienna'
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('rome');
@@ -341,7 +351,7 @@ describe('Select', () => {
           <Option value="berlin">Berlin</Option>
         </Select>
       );
-      container.selectNode = React.findDOMNode(container.select);
+      container.selectNode = ReactDOM.findDOMNode(container.select);
     });
 
     testKeyEvents(container);
@@ -362,7 +372,7 @@ describe('Select', () => {
           <Option value="berlin">Berlin</Option>
         </Select>
       );
-      container.selectNode = React.findDOMNode(container.select);
+      container.selectNode = ReactDOM.findDOMNode(container.select);
     });
 
     testKeyEvents(container);

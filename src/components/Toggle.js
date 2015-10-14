@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {injectStyles, removeStyle} from '../utils/inject-style';
-import {extend, omit, has, last, first} from '../utils/helpers';
+import {omit, has, last, first} from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
+import Choice from '../components/Choice';
 
 function sanitizeChildProps(properties) {
   return omit(properties, [
@@ -77,7 +76,7 @@ function sanitizeHandleProps(properties) {
  * Verifies that the provided property is a Choice from Belle.
  */
 function choicePropType(props, propName, componentName) {
-  if (!(props[propName] && isComponentOfType('Choice', props[propName]))) {
+  if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
 }
@@ -110,7 +109,10 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
-    focusStyle = extend({}, style.focusStyle, properties.focusStyle);
+    focusStyle = {
+      ...style.focusStyle,
+      ...properties.focusStyle
+    };
   }
 
   const styles = [
@@ -726,8 +728,8 @@ export default class Toggle extends Component {
 
   _triggerUpdateComponentOnTouchMoveAtSlider(touch) {
     const touchedElement = document.elementFromPoint(touch.clientX, touch.clientY);
-    const firstChoiceNode = React.findDOMNode(this.refs.firstChoice);
-    const secondChoiceNode = React.findDOMNode(this.refs.secondChoice);
+    const firstChoiceNode = ReactDOM.findDOMNode(this.refs.firstChoice);
+    const secondChoiceNode = ReactDOM.findDOMNode(this.refs.secondChoice);
 
     this._touchEndedNotInSlider = touchedElement !== firstChoiceNode &&
                                   touchedElement !== secondChoiceNode;
@@ -739,7 +741,7 @@ export default class Toggle extends Component {
   }
 
   _triggerUpdateComponentOnTouchMoveAtHandle(touch) {
-    const sliderWrapperNode = React.findDOMNode(this.refs.sliderWrapper);
+    const sliderWrapperNode = ReactDOM.findDOMNode(this.refs.sliderWrapper);
     const rect = sliderWrapperNode.getBoundingClientRect();
     const difference = touch.pageX - this._touchDragStart;
     const horizontalTolerance = this._getHandleWidth() * 2;
@@ -777,60 +779,107 @@ export default class Toggle extends Component {
   }
 
   render() {
-    let wrapperStyle = extend({}, style.style, this.props.style);
+    let wrapperStyle = {
+      ...style.style,
+      ...this.props.style
+    };
 
     if (this.isFocused && !this.state.wasFocusedWithClickOrTouch) {
-      wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.focusStyle,
+        ...this.props.focusStyle
+      };
     }
 
     let computedSliderStyle;
     let handleStyle;
 
-    const sliderWrapperStyle = extend({}, style.sliderWrapperStyle, this.props.sliderWrapperStyle);
+    const sliderWrapperStyle = {
+      ...style.sliderWrapperStyle,
+      ...this.props.sliderWrapperStyle
+    };
     const defaultSliderOffset = this._getSliderOffset();
 
     if (this.state.isDraggingWithMouse || this.state.isDraggingWithTouch) {
-      computedSliderStyle = extend({}, style.sliderStyle, this.props.sliderStyle, {
+      computedSliderStyle = {
+        ...style.sliderStyle,
+        ...this.props.sliderStyle,
         left: this.state.sliderOffset - defaultSliderOffset,
         transition: 'none'
-      });
+      };
       // right now even when handle is clicked, it momentarily shows this grabbing styles
       // may be this.state.isDraggingWithMouse should be set to true only after mouse movement starts
-      const activeStyle = extend({}, style.activeHandleStyle, this.props.handleStyle);
-      handleStyle = extend({}, style.handleStyle, activeStyle, this.props.activeHandleStyle, {
+      const activeStyle = {
+        ...style.activeHandleStyle,
+        ...this.props.handleStyle
+      };
+      handleStyle = {
+        ...style.handleStyle,
+        ...activeStyle,
+        ...this.props.activeHandleStyle,
         left: this.state.sliderOffset,
         transition: activeStyle.transition ? activeStyle.transition : 'none'
-      });
+      };
     } else {
-      handleStyle = extend({}, style.handleStyle, this.props.handleStyle);
-      computedSliderStyle = extend({}, style.sliderStyle, {
+      handleStyle = {
+        ...style.handleStyle,
+        ...this.props.handleStyle
+      };
+      computedSliderStyle = {
+        ...style.sliderStyle,
         left: this.state.value ? 0 : -defaultSliderOffset
-      });
+      };
 
       if (this.state.isActive) {
-        handleStyle = extend({}, handleStyle, style.activeHandleStyle, this.props.activeHandleStyle);
+        handleStyle = {
+          ...handleStyle,
+          ...style.activeHandleStyle,
+          ...this.props.activeHandleStyle
+        };
       } else if (this.state.isHovered) {
-        handleStyle = extend({}, handleStyle, style.hoverHandleStyle, this.props.hoverHandleStyle);
+        handleStyle = {
+          ...handleStyle,
+          ...style.hoverHandleStyle,
+          ...this.props.hoverHandleStyle
+        };
       }
 
       const position = {
         left: this.state.value ? defaultSliderOffset : 0
       };
-      handleStyle = extend({}, handleStyle, position);
+      handleStyle = {
+        ...handleStyle,
+        ...position
+      };
     }
 
     const computedTrueChoice = first(this.props.children) ? first(this.props.children) : '✓';
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : '✘';
 
-    const computedTrueChoiceStyle = extend({}, style.firstChoiceStyle, this.props.firstChoiceStyle);
-    const computedFalseChoiceStyle = extend({}, style.secondChoiceStyle, this.props.secondChoiceStyle);
+    const computedTrueChoiceStyle = {
+      ...style.firstChoiceStyle,
+      ...this.props.firstChoiceStyle
+    };
+    const computedFalseChoiceStyle = {
+      ...style.secondChoiceStyle,
+      ...this.props.secondChoiceStyle
+    };
 
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
     let tabIndex = hasCustomTabIndex ? this.props.wrapperProps.tabIndex : '0';
     if (this.props.disabled) {
       tabIndex = -1;
-      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
-      handleStyle = extend({}, handleStyle, style.disabledHandleStyle, this.props.disabledHandleStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
+      handleStyle = {
+        ...handleStyle,
+        ...style.disabledHandleStyle,
+        ...this.props.disabledHandleStyle
+      };
     }
 
     const role = has(this.state.childProps, 'role') ? this.state.childProps.role : 'checkbox';

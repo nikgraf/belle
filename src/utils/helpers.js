@@ -283,27 +283,6 @@ export function uniqueId(prefix) {
 }
 
 /**
- * Copy all of the properties in the source objects over to the destination object, and return the destination object. It's in-order, so the last source will override properties of the same name in previous arguments.
- *
- * @param {object} obj1 - object to be extended
- * @param {...object} objs - at least one but optionally more objects an be provided
- */
-export function extend(obj1, ...objs) {
-  if (obj1 && objs) {
-    objs.forEach((obj) => {
-      if (obj) {
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            obj1[key] = obj[key];
-          }
-        }
-      }
-    });
-  }
-  return obj1;
-}
-
-/**
  * Recursive function for flattening an iterable.
  *
  * @param {object} output - base object to be updated

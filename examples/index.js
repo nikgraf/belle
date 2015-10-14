@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {style} from 'belle';
 import {config} from 'belle';
 import {extend} from 'underscore';
@@ -87,9 +88,8 @@ class App extends Component {
         <RatingPlayground />
 
         <ComboBoxPlayground />
-
       </div>);
   }
 }
 
-React.render(<App/>, document.getElementById('react'));
+ReactDOM.render(<App/>, document.getElementById('react'));

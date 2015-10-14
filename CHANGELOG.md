@@ -5,7 +5,36 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## To Be Released
 
 ### Changed
+- Require React 0.14.0 [#189](https://github.com/nikgraf/belle/issues/189)
 - [Button, Card, Choice, ComboBox, Option, Placeholder, Rating, Select, Separator, TextInput, Toggle] Removed the 'Belle ' prefix from displayName
+
+### Fixed
+- [Rating] Fix styling the wrapper [82087cb](https://github.com/nikgraf/belle/commit/82087cb220253486e31269c8a989e9cf26fec18e)
+
+### Removed
+- [Rating] Removed the `resetValue` function. Reseting should accomplished by making the Rating a controlled component and passing in the value as `undefined`. See an example below:
+
+```
+export default class extends Component {
+
+  state = {
+    ratingValue: 3
+  }
+
+  reset() {
+    this.setState({ ratingValue: undefined });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={ ::this.reset() }></button>
+        <Rating value={ this.state.ratingValue } />
+      </div>
+    );
+  }
+}
+```
 
 ## 1.2.2 - 2015-09-04
 

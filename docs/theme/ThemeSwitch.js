@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {Button} from 'belle';
-import {Navigation, State} from 'react-router';
 
 export default React.createClass({
 
-  mixins: [State, Navigation],
+  contextTypes: {
+    location: PropTypes.object
+  },
 
   _onSwitchTheme(name) {
-    window.location.hash = `${this.getPathname()}?theme=${name}`;
+    window.location.hash = `${this.context.location.pathname}\?theme=${name}`;
     window.location.reload();
   },
 
   render() {
-    const currentTheme = this.getQuery().theme;
+    // TODO
+    const currentTheme = undefined;
 
     return (
       <div>

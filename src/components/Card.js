@@ -1,13 +1,5 @@
-import React, {Component} from 'react';
-import {omit, extend} from '../utils/helpers';
-import style from '../style/card';
-
-/**
- * Returns an object with properties that are relevant for the wrapping div.
- */
-function sanitizeChildProps(properties) {
-  return omit(properties, ['style']);
-}
+import React, {Component, PropTypes} from 'react';
+import cardStyle from '../style/card';
 
 /**
  * Card component with a light shadow.
@@ -19,35 +11,34 @@ export default class Card extends Component {
 
   constructor(properties) {
     super(properties);
-    this.state = {
-      childProps: sanitizeChildProps(properties)
-    };
+    const { style, ...childProps } = properties;
+    this.childProps = childProps;
   }
 
   static displayName = 'Card';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]),
-    style: React.PropTypes.object,
-    test: React.PropTypes.object
+    style: PropTypes.object,
+    test: PropTypes.object
   };
 
   /**
-   * Update the _childProperties based on the updated properties passed to the
-   * card.
+   * Update the childProps based on the updated properties passed to the card.
    */
   componentWillReceiveProps(properties) {
-    this.setState({ childProps: sanitizeChildProps(properties) });
+    const { style, ...childProps } = properties;
+    this.childProps = childProps;
   }
 
   render() {
-    const divStyle = extend({}, style.style, this.props.style);
+    const divStyle = { ...cardStyle.style, ...this.props.style };
 
     return (
-      <div {...this.state.childProps} style={ divStyle }>
+      <div {...this.childProps} style={ divStyle }>
         { this.props.children }
       </div>
     );

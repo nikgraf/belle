@@ -18,6 +18,12 @@ Belle is available as [npm](http://npmjs.org) package. Once you have npm you can
 npm install belle
 ```
 
+For a version compatible with React 0.14+ please use our beta for Belle 2.0.0 and run:
+
+```
+npm install belle@2.0.0-beta1
+```
+
 ### Import & use Belle Components
 
 We recommend you get started with [React](https://facebook.github.io/react/) first. Once you have a simple application setup you can import any Belle component and use it right away. No stylesheets, font or any other prerequisite needed.
@@ -167,6 +173,3 @@ Special thanks to [https://github.com/jpuri](Jyoti Puri) for the tremendous amou
 ## License
 
 MIT
-
-This library also contains a copy of the React Software which is licensed under BSD as well
-as a copy of Underscore.js which is licensed under MIT.

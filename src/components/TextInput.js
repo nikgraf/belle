@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, has} from '../utils/helpers';
+import {omit, has} from '../utils/helpers';
 import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;
@@ -42,9 +43,18 @@ function sanitizeChildProps(properties) {
  * @param properties {object} - the components properties optionally containing hoverStyle & focusStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+  const hoverStyle = {
+    ...style.hoverStyle,
+    ...properties.hoverStyle
+  };
+  const focusStyle = {
+    ...style.focusStyle,
+    ...properties.focusStyle
+  };
+  const disabledHoverStyle = {
+    ...style.disabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
 
   const styles = [
     {
@@ -225,15 +235,22 @@ export default class TextInput extends Component {
    * Calculate the height and store the new height in the state to trigger a render.
    */
   _triggerResize(textareaValue) {
-    const height = calculateTextareaHeight(React.findDOMNode(this), textareaValue, this.props.minRows, this.props.maxRows, this.props.minHeight, this.props.maxHeight);
+    const height = calculateTextareaHeight(ReactDOM.findDOMNode(this), textareaValue, this.props.minRows, this.props.maxRows, this.props.minHeight, this.props.maxHeight);
     this.setState({ height: height });
   }
 
   render() {
-    let textareaStyle = extend({}, style.style, this.props.style);
+    let textareaStyle = {
+      ...style.style,
+      ...this.props.style
+    };
 
     if (this.props.disabled) {
-      textareaStyle = extend(textareaStyle, style.disabledStyle, this.props.disabledStyle);
+      textareaStyle = {
+        ...textareaStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
     }
 
     textareaStyle.height = this.state.height;

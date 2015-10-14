@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import { canUseDOM } from 'exenv';
-import {extend, omit, has} from '../utils/helpers';
+import {omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
 import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
  * sanitize properties for the wrapping div.
@@ -62,7 +59,10 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusSt
   if (preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
-    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+    ratingFocusStyle = {
+      ...style.focusStyle,
+      ...properties.focusStyle
+    };
   }
   const styles = [
     {
@@ -186,7 +186,7 @@ export default class Rating extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeStyle(this.ratingWrapperStyleId);
-    updatePseudoClassStyle(this._styleId, properties, this.preventFocusStyleForTouchAndClick);
+    updatePseudoClassStyle(this.ratingWrapperStyleId, properties, this.preventFocusStyleForTouchAndClick);
   }
 
   /**
@@ -287,7 +287,7 @@ export default class Rating extends Component {
   _onMouseUp(event) {
     if (!this.props.disabled && !this.preventNextMouseUpTriggerUpdate) {
       const value = Number(event.target.getAttribute('data-belle-value'));
-      this._updateComponent(value);
+      this._triggerComponentUpdate(value);
     }
 
     if (this.props.onMouseUp) {
@@ -322,19 +322,6 @@ export default class Rating extends Component {
   }
 
   /**
-   * The function will be passed to requestAnimationFrame for touchMove
-   */
-  _updateComponentOnTouchMove(touches) {
-    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
-    const value = Number(touchedElement.getAttribute('data-belle-value'));
-    if (value && this.state.focusedValue !== value) {
-      this.setState({
-        focusedValue: value
-      });
-    }
-  }
-
-  /**
    * set the focusedValue depending on mouse position
    */
   _onTouchMove(event) {
@@ -345,7 +332,7 @@ export default class Rating extends Component {
       // see http://stackoverflow.com/a/9678166/837709
       const animationFrame = requestAnimationFrame.call(
         window,
-        this._updateComponentOnTouchMove.bind(this, touches)
+        this._triggerComponentUpdateOnTouchMove.bind(this, touches)
       );
 
       if (this.previousTouchMoveFrame) {
@@ -369,7 +356,7 @@ export default class Rating extends Component {
       event.preventDefault();
       this.setState({isActive: false});
       const value = this.state.focusedValue;
-      this._updateComponent(value);
+      this._triggerComponentUpdate(value);
     }
 
     if (this.props.onTouchEnd) {
@@ -418,35 +405,6 @@ export default class Rating extends Component {
 
     if (this.props.onFocus) {
       this.props.onFocus(event);
-    }
-  }
-
-  /**
-   * update component when component is clicked, touch ends, enter or space key are hit
-   * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
-   */
-  _updateComponent(value) {
-    if (has(this.props, 'valueLink')) {
-      this.props.valueLink.requestChange(value);
-      this.setState({
-        focusedValue: undefined,
-        isActive: false
-      });
-    } else if (has(this.props, 'value')) {
-      this.setState({
-        focusedValue: undefined,
-        isActive: false
-      });
-    } else {
-      this.setState({
-        focusedValue: undefined,
-        isActive: false,
-        value: value
-      });
-    }
-
-    if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
     }
   }
 
@@ -519,7 +477,7 @@ export default class Rating extends Component {
       } else {
         newValue = this.state.focusedValue;
       }
-      this._updateComponent(newValue);
+      this._triggerComponentUpdate(newValue);
     }
   }
 
@@ -547,12 +505,46 @@ export default class Rating extends Component {
   }
 
   /**
-   * Reset the value to undefined.
-   *
-   * This can be used in case you as developer want to reset the rating manually.
+   * The function will be passed to requestAnimationFrame for touchMove
    */
-  resetValue() { /*eslint react/sort-comp:0*/
-    this._updateComponent(undefined);
+  _triggerComponentUpdateOnTouchMove(touches) {
+    const touchedElement = document.elementFromPoint(touches.clientX, touches.clientY);
+    const value = Number(touchedElement.getAttribute('data-belle-value'));
+    if (value && this.state.focusedValue !== value) {
+      this.setState({
+        focusedValue: value
+      });
+    }
+  }
+
+
+  /**
+   * update component when component is clicked, touch ends, enter or space key are hit
+   * different update logic will apply depending on whether component has property defaultValue, value or valueLink specified
+   */
+  _triggerComponentUpdate(value) {
+    if (has(this.props, 'valueLink')) {
+      this.props.valueLink.requestChange(value);
+      this.setState({
+        focusedValue: undefined,
+        isActive: false
+      });
+    } else if (has(this.props, 'value')) {
+      this.setState({
+        focusedValue: undefined,
+        isActive: false
+      });
+    } else {
+      this.setState({
+        focusedValue: undefined,
+        isActive: false,
+        value: value
+      });
+    }
+
+    if (this.props.onUpdate) {
+      this.props.onUpdate({ value: value });
+    }
   }
 
   /**
@@ -562,26 +554,56 @@ export default class Rating extends Component {
     const currentValue = this._getCurrentValue();
     const tabIndex = !this.props.disabled ? this.props.tabIndex : -1;
 
-    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
+    let characterStyle = {
+      ...style.characterStyle,
+      ...this.props.characterStyle
+    };
 
     if (this.state.isActive) {
-      characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+      characterStyle = {
+        ...characterStyle,
+        ...style.activeCharacterStyle,
+        ...this.props.activeCharacterStyle
+      };
     } else if (this.state.isHover) {
-      characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
+      characterStyle = {
+        ...characterStyle,
+        ...style.hoverCharacterStyle,
+        ...this.props.hoverCharacterStyle
+      };
     }
 
-    let wrapperStyle = extend({}, style.style, this.props.style);
+    let wrapperStyle = {
+      ...style.style,
+      ...this.props.style
+    };
     if (this.props.disabled) {
-      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.disabledHoverStyle,
+          ...this.props.disabledHoverStyle
+        };
       }
     } else {
       if (this.state.isFocus && this.preventFocusStyleForTouchAndClick) {
-        wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.focusStyle,
+          ...this.props.focusStyle
+        };
       }
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.hoverStyle, this.props.hoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.hoverStyle,
+          ...this.props.hoverStyle
+        };
       }
     }
 

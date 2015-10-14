@@ -1,34 +1,35 @@
 import React, {Component, PropTypes} from 'react';
-import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
+import ReactDOM from 'react-dom';
+import {omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import style from '../style/select';
 import config from '../config/select';
-import isComponentOfType from '../utils/is-component-of-type.js';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
+import isComponentOfType from '../utils/is-component-of-type';
+import Option from '../components/Option';
+import Placeholder from '../components/Placeholder';
+import Separator from '../components/Separator';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
  */
 function isPlaceholder(reactElement) {
-  return isComponentOfType('Placeholder', reactElement);
+  return isComponentOfType(Placeholder, reactElement);
 }
 
 /**
  * Returns true if the provided property is a Option component from Belle.
  */
 function isOption(reactElement) {
-  return isComponentOfType('Option', reactElement);
+  return isComponentOfType(Option, reactElement);
 }
 
 /**
  * Returns true if the provided property is a Separator component from Belle.
  */
 function isSeparator(reactElement) {
-  return isComponentOfType('Separator', reactElement);
+  return isComponentOfType(Separator, reactElement);
 }
 
 /**
@@ -58,8 +59,14 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+  const hoverStyle = {
+    ...style.hoverStyle,
+    ...properties.hoverStyle
+  };
+  const disabledHoverStyle = {
+    ...style.disabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
 
   const styles = [
     {
@@ -340,7 +347,7 @@ export default class Select extends Component {
     const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : config.shouldPositionOptions;
 
     if (shouldPositionOptions) {
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
       this.cachedMenuScrollTop = menuNode.scrollTop;
 
       if (!this.state.isOpen && nextState.isOpen) {
@@ -357,7 +364,7 @@ export default class Select extends Component {
     const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : config.shouldPositionOptions;
 
     if (shouldPositionOptions && !this.props.disabled) {
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
 
       // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
@@ -371,7 +378,10 @@ export default class Select extends Component {
       const separators = filter(this.children, isSeparator);
       const childrenPresent = !isEmpty(this.options) || !isEmpty(separators);
       if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
-        const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+        const menuStyle = {
+          ...style.menuStyle,
+          ...this.props.menuStyle
+        };
         menuNode.style.display = menuStyle.display;
       }
     }
@@ -401,7 +411,7 @@ export default class Select extends Component {
       this._touchStartedAt = entry.getAttribute('data-belle-value');
 
       // save the scroll position
-      const menuNode = React.findDOMNode(this.refs.menu);
+      const menuNode = ReactDOM.findDOMNode(this.refs.menu);
       if (menuNode.scrollHeight > menuNode.offsetHeight) {
         this._scrollTopPosition = menuNode.scrollTop;
         // Note: don't use setState in here as it would prevent the scrolling
@@ -418,7 +428,7 @@ export default class Select extends Component {
    * Identifies if the menu is scrollable.
    */
   _onTouchMoveAtOption() {
-    const menuNode = React.findDOMNode(this.refs.menu);
+    const menuNode = ReactDOM.findDOMNode(this.refs.menu);
     if (menuNode.scrollTop !== this._scrollTopPosition) {
       this._scrollActive = true;
     }
@@ -527,7 +537,7 @@ export default class Select extends Component {
     event.preventDefault();
 
     /* To avoid weird behaviour we check before focusing again - no specific use-case found */
-    const wrapperNode = React.findDOMNode(this.refs.wrapper);
+    const wrapperNode = ReactDOM.findDOMNode(this.refs.wrapper);
     if (document.activeElement !== wrapperNode) {
       wrapperNode.focus();
     }
@@ -761,17 +771,56 @@ export default class Select extends Component {
   }
 
   render() {
-    const defaultStyle = extend({}, style.style, this.props.style);
-    const hoverStyle = extend({}, defaultStyle, style.hoverStyle, this.props.hoverStyle);
-    const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
-    const activeStyle = extend({}, defaultStyle, style.activeStyle, this.props.activeStyle);
-    const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
-    const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
-    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
-    const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
-    const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
-    const disabledCaretToOpenStyle = extend({}, caretToOpenStyle, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
-    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    const defaultStyle = {
+      ...style.style,
+      ...this.props.style
+    };
+    const hoverStyle = {
+      ...defaultStyle,
+      ...style.hoverStyle,
+      ...this.props.hoverStyle
+    };
+    const focusStyle = {
+      ...defaultStyle,
+      ...style.focusStyle,
+      ...this.props.focusStyle
+    };
+    const activeStyle = {
+      ...defaultStyle,
+      ...style.activeStyle,
+      ...this.props.activeStyle
+    };
+    const disabledStyle = {
+      ...defaultStyle,
+      ...style.disabledStyle,
+      ...this.props.disabledStyle
+    };
+    const disabledHoverStyle = {
+      ...disabledStyle,
+      ...style.disabledHoverStyle,
+      ...this.props.disabledHoverStyle
+    };
+    const menuStyle = {
+      ...style.menuStyle,
+      ...this.props.menuStyle
+    };
+    const caretToCloseStyle = {
+      ...style.caretToCloseStyle,
+      ...this.props.caretToCloseStyle
+    };
+    const caretToOpenStyle = {
+      ...style.caretToOpenStyle,
+      ...this.props.caretToOpenStyle
+    };
+    const disabledCaretToOpenStyle = {
+      ...caretToOpenStyle,
+      ...style.disabledCaretToOpenStyle,
+      ...this.props.disabledCaretToOpenStyle
+    };
+    const wrapperStyle = {
+      ...style.wrapperStyle,
+      ...this.props.wrapperStyle
+    };
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {

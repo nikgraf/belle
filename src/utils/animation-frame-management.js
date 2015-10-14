@@ -12,10 +12,10 @@ if (canUseDOM) {
   cancelAnimationFrame = window.cancelAnimationFrame;
 
   const vendors = ['ms', 'moz', 'webkit', 'o'];
-  for (let x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
-    requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
-      window[vendors[x] + 'CancelRequestAnimationFrame'];
+  for (let index = 0; index < vendors.length && !requestAnimationFrame; ++index) {
+    requestAnimationFrame = window[vendors[index] + 'RequestAnimationFrame'];
+    cancelAnimationFrame = window[vendors[index] + 'CancelAnimationFrame'] ||
+      window[vendors[index] + 'CancelRequestAnimationFrame'];
   }
 }
 

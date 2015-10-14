@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {TextInput} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
@@ -8,7 +9,7 @@ const exampleCode = `<!-- TextInput with a defaultValue -->
 
 <!-- TextInput with allowNewLine set to true -->
 <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
-           allowNewLine={ true } />`;
+           allowNewLine />`;
 
 const advancedExampleCode = `<TextInput minRows={ 3 }
        valueLink={ this.linkState('customTextInputValue') }
@@ -34,7 +35,7 @@ const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu place
 
 export default React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
     return {
@@ -50,7 +51,7 @@ export default React.createClass({
       <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
 
       <TextInput defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
-                 allowNewLine={ true } />
+                 allowNewLine />
 
       <Code value={ exampleCode } style={ {marginTop: 40} } />
 
@@ -60,7 +61,7 @@ export default React.createClass({
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -205,8 +206,8 @@ export default React.createClass({
               Will be deprecated with Belle 2.0.0. We recommend to use minRows.
               In case you need it based on pixels you can set minHeight via the
               style property:
-              <Code value={ '<TextInput style={{ minHeight: 80 }} />' } />
             </p>
+            <Code value={ '<TextInput style={{ minHeight: 80 }} />' } />
             <p>
               Once set the TextInput will always keep a minimum height. This can be useful to indicate
               to users that it is expected from them to provide a certain amount of text input.
@@ -232,8 +233,8 @@ export default React.createClass({
               Will be deprecated with Belle 2.0.0. We recommend to use maxRows.
               In case you need it based on pixels you can set manHeight via the
               style property:
-              <Code value={ '<TextInput style={{ maxHeight: 300 }} />' } />
             </p>
+            <Code value={ '<TextInput style={{ maxHeight: 300 }} />' } />
             <p>
               Once set the TextInput will always keep a maximum height. This
               can be useful to keep your layout sane even with a lot of text input.
@@ -323,7 +324,7 @@ export default React.createClass({
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <p>
         Any other property valid for a HTML textarea like

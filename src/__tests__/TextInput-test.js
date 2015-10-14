@@ -3,8 +3,8 @@
 jest.dontMock('../components/TextInput');
 jest.dontMock('../utils/inject-style');
 
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -18,10 +18,9 @@ describe('TextInput', () => {
     );
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    expect(textareaNode.props.style).toBeDefined();
-    expect(textareaNode.props.style.overflow).toBe('hidden');
+    expect(textareaNode.hasAttribute('style')).toBeTruthy();
+    expect(textareaNode.getAttribute('style').indexOf('overflow:hidden') > -1).toBeTruthy();
   });
-
 
   it('should be able to adopt the style of the textInput', () => {
     const textInput = TestUtils.renderIntoDocument(
@@ -29,7 +28,8 @@ describe('TextInput', () => {
     );
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    expect(textareaNode.props.style.color).toBe('red');
+    expect(textareaNode.hasAttribute('style')).toBeTruthy();
+    expect(textareaNode.getAttribute('style').indexOf('color:red') > -1).toBeTruthy();
   });
 
 
@@ -77,7 +77,7 @@ describe('TextInput', () => {
 
   it('should re-calculate its height after changing (new lines allowed)', () => {
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput value="some text" allowNewLine={ true }/>
+      <TextInput value="some text" allowNewLine />
     );
 
     textInput._triggerResize = jest.genMockFunction();
@@ -146,7 +146,7 @@ describe('TextInput', () => {
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
-    expect(textareaNode.props.className.indexOf('test-me')).toBeGreaterThan(-1);
+    expect(textareaNode.className.indexOf('test-me')).toBeGreaterThan(-1);
   });
 
 

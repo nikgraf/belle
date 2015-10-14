@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, extend, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
+import {omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
 import style from '../style/combo-box';
-
-// Enable React Touch Events
-React.initializeTouchEvents && React.initializeTouchEvents(true);
 
 /**
  * Update hover style for the specified styleId.
@@ -15,10 +12,21 @@ React.initializeTouchEvents && React.initializeTouchEvents(true);
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
 function updatePseudoClassStyle(styleId, caretStyleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const focusStyle = extend({}, style.focusStyle, properties.focusStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
-  const caretFocusStyle = extend({}, style.caretFocusStyle);
+  const hoverStyle = {
+    ...style.hoverStyle,
+    ...properties.hoverStyle
+  };
+  const focusStyle = {
+    ...style.focusStyle,
+    ...properties.focusStyle
+  };
+  const disabledHoverStyle = {
+    ...style.disabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
+  const caretFocusStyle = {
+    ...style.caretFocusStyle
+  };
 
   const styles = [
     {
@@ -604,10 +612,22 @@ export default class ComboBox extends Component {
   }
 
   render() {
-    let inputStyle = extend({}, style.style, this.props.style);
-    const hintStyle = extend({}, style.hintStyle, this.props.hintStyle);
-    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
-    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+    let inputStyle = {
+      ...style.style,
+      ...this.props.style
+    };
+    const hintStyle = {
+      ...style.hintStyle,
+      ...this.props.hintStyle
+    };
+    const wrapperStyle = {
+      ...style.wrapperStyle,
+      ...this.props.wrapperStyle
+    };
+    const menuStyle = {
+      ...style.menuStyle,
+      ...this.props.menuStyle
+    };
 
     const hint = this.props.enableHint ? this._getHint() : undefined;
     const placeHolder = !hint ? this.props.placeholder : undefined;
@@ -615,19 +635,33 @@ export default class ComboBox extends Component {
     const tabIndex = this.props.tabIndex ? this.props.tabIndex : '0';
 
     if (this.props.disabled) {
-      inputStyle = extend(inputStyle, style.disabledStyle, this.props.disabledStyle);
+      inputStyle = {
+        ...inputStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
     }
 
     // todo: Currently there are no different hover styles for caret, like select they are probably not really needed.
     let caretStyle;
     if (this.props.displayCaret) {
       if (this.props.disabled) {
-        caretStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle,
-          style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
+        caretStyle = {
+          ...style.caretToOpenStyle,
+          ...this.props.caretToOpenStyle,
+          ...style.disabledCaretToOpenStyle,
+          ...this.props.disabledCaretToOpenStyle
+        };
       } else if (this.state.isOpen) {
-        caretStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
+        caretStyle = {
+          ...style.caretToCloseStyle,
+          ...this.props.caretToCloseStyle
+        };
       } else {
-        caretStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
+        caretStyle = {
+          ...style.caretToOpenStyle,
+          ...this.props.caretToOpenStyle
+        };
       }
     }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {extend, omit} from '../utils/helpers';
+import {omit} from '../utils/helpers';
 import style from '../style/option';
 
 /**
@@ -71,14 +71,28 @@ export default class Option extends Component {
     let optionStyle;
 
     if (this.props._isDisplayedAsSelected) {
-      optionStyle = extend({}, style.selectStyle, this.props.selectStyle);
+      optionStyle = {
+        ...style.selectStyle,
+        ...this.props.selectStyle
+      };
       if (this.props._isDisabled) {
-        optionStyle = extend(optionStyle, style.disabledSelectStyle, this.props.disabledSelectStyle);
+        optionStyle = {
+          ...optionStyle,
+          ...style.disabledSelectStyle,
+          ...this.props.disabledSelectStyle
+        };
       }
     } else {
-      optionStyle = extend({}, style.style, this.props.style);
+      optionStyle = {
+        ...style.style,
+        ...this.props.style
+      };
       if (this.props._isHovered) {
-        optionStyle = extend(optionStyle, style.hoverStyle, this.props.hoverStyle);
+        optionStyle = {
+          ...optionStyle,
+          ...style.hoverStyle,
+          ...this.props.hoverStyle
+        };
       }
     }
 
