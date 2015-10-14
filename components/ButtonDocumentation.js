@@ -9,7 +9,7 @@ const basicCodeExample = `<!-- primary button -->
 <!-- default button -->
 <Button>Follow</Button>`;
 
-const customStyleCodeExample = `<Button primary={ true }
+const customStyleCodeExample = `<Button primary
         style={{
           marginRight: 10,
           color: '#222',
@@ -72,7 +72,7 @@ export default class ButtonDocumentation extends Component {
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             primary
@@ -247,7 +247,7 @@ export default class ButtonDocumentation extends Component {
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <p>
         Any other property valid for a HTML button like
@@ -270,7 +270,7 @@ export default class ButtonDocumentation extends Component {
 
       <h4>Primary button with custom styles</h4>
 
-      <Button primary={ true }
+      <Button primary
               style={{
                 marginRight: 10,
                 color: '#222',

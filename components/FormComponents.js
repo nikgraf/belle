@@ -24,7 +24,7 @@ const uncontrolledComponentCode = `
   }`;
 
 const reactLinkCode = `var WithLink = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {message: 'Hello!'};
   },

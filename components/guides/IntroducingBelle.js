@@ -3,7 +3,7 @@ import {Card, Toggle} from 'belle';
 import Code from '../Code';
 
 const basicToggleExample = `<!-- all the JSX code you need -->
-<Toggle defaultValue={ true }/>`;
+<Toggle defaultValue/>`;
 
 const selectExample = `<!-- all the JSX code you need for the example above -->
 <Select defaultValue="tokyo"
