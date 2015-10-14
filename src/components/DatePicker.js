@@ -660,13 +660,6 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Reset the value to undefined. This can be used in case you as developer want to reset the rating manually.
-   */
-  resetValue() {
-    this._triggerSelectDate(undefined);
-  }
-
-  /**
    * Function will return jsx for rendering the nav bar for calendar.
    * Depending on following rules it will apply styles to prevMonthNav and nextMonthNav:
    * 1. If disabled hide navs
