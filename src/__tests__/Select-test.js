@@ -5,7 +5,6 @@ jest.dontMock('../components/Option');
 jest.dontMock('../components/Placeholder');
 jest.dontMock('../components/Separator');
 
-import {extend} from 'underscore';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
@@ -239,7 +238,10 @@ describe('Select', () => {
     });
 
     it('should update it\'s state in case value is provided', () => {
-      const properties = extend({}, select.props, { value: 'vienna' });
+      const properties = {
+        ...select.props,
+        value: 'vienna'
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('vienna');
@@ -251,14 +253,20 @@ describe('Select', () => {
         value: 'vienna'
       };
 
-      const properties = extend({}, select.props, { valueLink: valueLink });
+      const properties = {
+        ...select.props,
+        valueLink: valueLink
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('vienna');
     });
 
     it('should not update it\'s state in case defaultValue is updated', () => {
-      const properties = extend({}, select.props, { defaultValue: 'vienna' });
+      const properties = {
+        ...select.props,
+        defaultValue: 'vienna'
+      };
       select.componentWillReceiveProps(properties);
 
       expect(select.state.selectedValue).toBe('rome');

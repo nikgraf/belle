@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { canUseDOM } from 'exenv';
-import {extend, omit, has} from '../utils/helpers';
+import {omit, has} from '../utils/helpers';
 import style from '../style/rating.js';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
@@ -59,7 +59,10 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusSt
   if (preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
-    ratingFocusStyle = extend({}, style.focusStyle, properties.focusStyle);
+    ratingFocusStyle = {
+      ...style.focusStyle,
+      ...properties.focusStyle
+    };
   }
   const styles = [
     {
@@ -551,26 +554,56 @@ export default class Rating extends Component {
     const currentValue = this._getCurrentValue();
     const tabIndex = !this.props.disabled ? this.props.tabIndex : -1;
 
-    let characterStyle = extend({}, style.characterStyle, this.props.characterStyle);
+    let characterStyle = {
+      ...style.characterStyle,
+      ...this.props.characterStyle
+    };
 
     if (this.state.isActive) {
-      characterStyle = extend({}, characterStyle, style.activeCharacterStyle, this.props.activeCharacterStyle);
+      characterStyle = {
+        ...characterStyle,
+        ...style.activeCharacterStyle,
+        ...this.props.activeCharacterStyle
+      };
     } else if (this.state.isHover) {
-      characterStyle = extend({}, characterStyle, style.hoverCharacterStyle, this.props.hoverCharacterStyle);
+      characterStyle = {
+        ...characterStyle,
+        ...style.hoverCharacterStyle,
+        ...this.props.hoverCharacterStyle
+      };
     }
 
-    let wrapperStyle = extend({}, style.style, this.props.style);
+    let wrapperStyle = {
+      ...style.style,
+      ...this.props.style
+    };
     if (this.props.disabled) {
-      wrapperStyle = extend({}, wrapperStyle, style.disabledStyle, this.props.disabledStyle);
+      wrapperStyle = {
+        ...wrapperStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle
+      };
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.disabledHoverStyle,
+          ...this.props.disabledHoverStyle
+        };
       }
     } else {
       if (this.state.isFocus && this.preventFocusStyleForTouchAndClick) {
-        wrapperStyle = extend({}, wrapperStyle, style.focusStyle, this.props.focusStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.focusStyle,
+          ...this.props.focusStyle
+        };
       }
       if (this.state.isHover) {
-        wrapperStyle = extend(wrapperStyle, style.hoverStyle, this.props.hoverStyle);
+        wrapperStyle = {
+          ...wrapperStyle,
+          ...style.hoverStyle,
+          ...this.props.hoverStyle
+        };
       }
     }
 

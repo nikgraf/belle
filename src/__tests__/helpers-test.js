@@ -419,29 +419,6 @@ describe('helpers union method', () => {
   });
 });
 
-describe('helpers extend method', () => {
-  const obj1 = {};
-  const obj2 = {a: 1, b: 2, c: 3};
-  const obj3 = {a: 10, 1: 'abc', 2: undefined, 3: null};
-
-  it('should add (key, value) of objects passed to first object', () => {
-    const resultObj = helpers.extend(obj1, obj2);
-    expect(resultObj).toBe(obj1);
-    expect(resultObj.a).toBe(1);
-    expect(resultObj.b).toBe(2);
-  });
-
-  it('should override existing value', () => {
-    const resultObj = helpers.extend(obj1, obj2, obj3);
-    expect(resultObj.a).toBe(10);
-  });
-
-  it('should not alter objects other than the first one', () => {
-    helpers.extend(obj1, obj2, obj3);
-    expect(obj2.a).toBe(1);
-  });
-});
-
 describe('helpers uniqueId method', () => {
   it('should return unique value each time', () => {
     const id1 = helpers.uniqueId('abc');

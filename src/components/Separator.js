@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {extend, omit} from '../utils/helpers';
+import {omit} from '../utils/helpers';
 import style from '../style/separator';
 
 /**
@@ -42,7 +42,10 @@ export default class Separator extends Component {
   }
 
   render() {
-    const computedStyle = extend({}, style.style, this.props.style);
+    const computedStyle = {
+      ...style.style,
+      ...this.props.style
+    };
 
     return (
       <div style={ computedStyle } {...this.state.childProps}>

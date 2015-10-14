@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import {omit, extend, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
+import {omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -59,8 +59,14 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
  * @param properties {object} - the components properties optionally containing hoverStyle
  */
 function updatePseudoClassStyle(styleId, properties) {
-  const hoverStyle = extend({}, style.hoverStyle, properties.hoverStyle);
-  const disabledHoverStyle = extend({}, style.disabledHoverStyle, properties.disabledHoverStyle);
+  const hoverStyle = {
+    ...style.hoverStyle,
+    ...properties.hoverStyle
+  };
+  const disabledHoverStyle = {
+    ...style.disabledHoverStyle,
+    ...properties.disabledHoverStyle
+  };
 
   const styles = [
     {
@@ -372,7 +378,10 @@ export default class Select extends Component {
       const separators = filter(this.children, isSeparator);
       const childrenPresent = !isEmpty(this.options) || !isEmpty(separators);
       if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
-        const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
+        const menuStyle = {
+          ...style.menuStyle,
+          ...this.props.menuStyle
+        };
         menuNode.style.display = menuStyle.display;
       }
     }
@@ -762,17 +771,56 @@ export default class Select extends Component {
   }
 
   render() {
-    const defaultStyle = extend({}, style.style, this.props.style);
-    const hoverStyle = extend({}, defaultStyle, style.hoverStyle, this.props.hoverStyle);
-    const focusStyle = extend({}, defaultStyle, style.focusStyle, this.props.focusStyle);
-    const activeStyle = extend({}, defaultStyle, style.activeStyle, this.props.activeStyle);
-    const disabledStyle = extend({}, defaultStyle, style.disabledStyle, this.props.disabledStyle);
-    const disabledHoverStyle = extend({}, disabledStyle, style.disabledHoverStyle, this.props.disabledHoverStyle);
-    const menuStyle = extend({}, style.menuStyle, this.props.menuStyle);
-    const caretToCloseStyle = extend({}, style.caretToCloseStyle, this.props.caretToCloseStyle);
-    const caretToOpenStyle = extend({}, style.caretToOpenStyle, this.props.caretToOpenStyle);
-    const disabledCaretToOpenStyle = extend({}, caretToOpenStyle, style.disabledCaretToOpenStyle, this.props.disabledCaretToOpenStyle);
-    const wrapperStyle = extend({}, style.wrapperStyle, this.props.wrapperStyle);
+    const defaultStyle = {
+      ...style.style,
+      ...this.props.style
+    };
+    const hoverStyle = {
+      ...defaultStyle,
+      ...style.hoverStyle,
+      ...this.props.hoverStyle
+    };
+    const focusStyle = {
+      ...defaultStyle,
+      ...style.focusStyle,
+      ...this.props.focusStyle
+    };
+    const activeStyle = {
+      ...defaultStyle,
+      ...style.activeStyle,
+      ...this.props.activeStyle
+    };
+    const disabledStyle = {
+      ...defaultStyle,
+      ...style.disabledStyle,
+      ...this.props.disabledStyle
+    };
+    const disabledHoverStyle = {
+      ...disabledStyle,
+      ...style.disabledHoverStyle,
+      ...this.props.disabledHoverStyle
+    };
+    const menuStyle = {
+      ...style.menuStyle,
+      ...this.props.menuStyle
+    };
+    const caretToCloseStyle = {
+      ...style.caretToCloseStyle,
+      ...this.props.caretToCloseStyle
+    };
+    const caretToOpenStyle = {
+      ...style.caretToOpenStyle,
+      ...this.props.caretToOpenStyle
+    };
+    const disabledCaretToOpenStyle = {
+      ...caretToOpenStyle,
+      ...style.disabledCaretToOpenStyle,
+      ...this.props.disabledCaretToOpenStyle
+    };
+    const wrapperStyle = {
+      ...style.wrapperStyle,
+      ...this.props.wrapperStyle
+    };
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue) {
