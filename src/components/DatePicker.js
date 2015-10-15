@@ -668,6 +668,34 @@ export default class DatePicker extends Component {
     }
   }
 
+  _renderPrevMonthNav(prevMonthNavStyle) {
+    if (this.props.disabled) return undefined;
+    return (
+      <div onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
+           onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
+           onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
+           onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
+           style={ prevMonthNavStyle }
+           className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
+        left
+      </div>
+    );
+  }
+
+  _renderNextMonthNav(nextMonthNavStyle) {
+    if (this.props.disabled) return undefined;
+    return (
+      <div onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
+            onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
+            onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
+            onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
+            style= { nextMonthNavStyle }
+            className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
+        right
+      </div>
+    );
+  }
+
   /**
    * Function will return jsx for rendering the nav bar for calendar.
    * Depending on following rules it will apply styles to prevMonthNav and nextMonthNav:
@@ -708,27 +736,17 @@ export default class DatePicker extends Component {
     return (
       <div style={ navBarStyle }
            className={ this.props.navBarClassName }>
-           { !this.props.disabled ? <span onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
-                onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
-                onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
-                onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
-                style= { prevMonthNavStyle }
-                className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }></span> : void 0}
-          <span style={ monthLabelStyle }
-                className={ this.props.monthLabelClassName }
-                role="heading"
-                /*
-                  This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
-                */
-                id={ `${this.state.month}-${this.state.year}` }>
-            { `${this.state.localeData.monthNames[this.state.month]} ${this.state.year}` }
-          </span>
-          { !this.props.disabled ? <span onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
-                onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
-                onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
-                onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
-                style= { nextMonthNavStyle }
-                className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }></span> : void 0}
+        { this._renderPrevMonthNav(prevMonthNavStyle) }
+        <span style={ monthLabelStyle }
+              className={ this.props.monthLabelClassName }
+              role="heading"
+              /*
+                This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
+              */
+              id={ `${this.state.month}-${this.state.year}` }>
+          { `${this.state.localeData.monthNames[this.state.month]} ${this.state.year}` }
+        </span>
+        { this._renderNextMonthNav(nextMonthNavStyle) }
       </div>
     );
   }
