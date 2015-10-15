@@ -717,8 +717,11 @@ export default class DatePicker extends Component {
           <span style={ monthLblStyle }
                 className={ this.props.monthLblClassName }
                 role="heading"
-                id={ this.state.month + '-' + this.state.year }>
-            { this.state.localeData.monthNames[this.state.month] + '-' + this.state.year }
+                /*
+                  This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
+                */
+                id={ `${this.state.month}-${this.state.year}` }>
+            { `${this.state.localeData.monthNames[this.state.month]} ${this.state.year}` }
           </span>
           { !this.props.disabled ? <span onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
                 onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
