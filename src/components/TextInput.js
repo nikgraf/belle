@@ -177,7 +177,7 @@ export default class TextInput extends Component {
     this.setState(newState);
     removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
-    this._triggerResize(inputValue);
+    this._triggerResize(newState.inputValue);
   }
 
   /**
