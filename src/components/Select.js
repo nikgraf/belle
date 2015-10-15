@@ -61,25 +61,25 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = {
     ...style.hoverStyle,
-    ...properties.hoverStyle
+    ...properties.hoverStyle,
   };
   const disabledHoverStyle = {
     ...style.disabledHoverStyle,
-    ...properties.disabledHoverStyle
+    ...properties.disabledHoverStyle,
   };
 
   const styles = [
     {
       id: styleId,
       style: hoverStyle,
-      pseudoClass: 'hover'
+      pseudoClass: 'hover',
     },
     {
       id: styleId,
       style: disabledHoverStyle,
       pseudoClass: 'hover',
-      disabled: true
-    }
+      disabled: true,
+    },
   ];
   injectStyles(styles);
 }
@@ -131,7 +131,7 @@ function sanitizeSelectedOptionWrapperProps(properties) {
     'onMouseDown',
     'onMouseUp',
     'disabledStyle',
-    'disabledHoverStyle'
+    'disabledHoverStyle',
   ]);
 }
 
@@ -146,7 +146,7 @@ function sanitizeWrapperProps(properties) {
     'tabIndex',
     'onKeyDown',
     'onBlur',
-    'onFocus'
+    'onFocus',
   ]);
 }
 
@@ -159,7 +159,7 @@ function sanitizeMenuProps(properties) {
     'style',
     'ref',
     'aria-labelledby',
-    'role'
+    'role',
   ]);
 }
 
@@ -170,7 +170,7 @@ function sanitizeMenuProps(properties) {
 function sanitizeCaretProps(properties) {
   return omit(properties, [
     'style',
-    'ref'
+    'ref',
   ]);
 }
 
@@ -241,7 +241,7 @@ export default class Select extends Component {
       menuProps: sanitizeMenuProps(properties.menuProps),
       caretProps: sanitizeCaretProps(properties.caretProps),
       selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
-      isTouchedToToggle: false
+      isTouchedToToggle: false,
     };
   }
 
@@ -253,17 +253,17 @@ export default class Select extends Component {
       PropTypes.bool,
       PropTypes.string,
       PropTypes.number,
-      PropTypes.instanceOf(Date)
+      PropTypes.instanceOf(Date),
     ]),
     defaultValue: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.string,
-      PropTypes.number
+      PropTypes.number,
     ]),
     onUpdate: PropTypes.func,
     valueLink: PropTypes.shape({
       value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }),
     className: PropTypes.string,
     shouldPositionOptions: PropTypes.bool,
@@ -288,11 +288,11 @@ export default class Select extends Component {
     onMouseDown: PropTypes.func,
     onMouseUp: PropTypes.func,
     onTouchEnd: PropTypes.func,
-    onTouchStart: PropTypes.func
+    onTouchStart: PropTypes.func,
   };
 
   static defaultProps = {
-    disabled: false
+    disabled: false,
   };
 
   /**
@@ -322,7 +322,7 @@ export default class Select extends Component {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       menuProps: sanitizeMenuProps(properties.menuProps),
       caretProps: sanitizeCaretProps(properties.caretProps),
-      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`
+      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
     };
 
     if (has(properties, 'valueLink')) {
@@ -370,6 +370,7 @@ export default class Select extends Component {
       if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
         const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
         positionOptions(this);
+
       // restore the old scrollTop position
       } else {
         menuNode.scrollTop = this.cachedMenuScrollTop;
@@ -380,7 +381,7 @@ export default class Select extends Component {
       if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
         const menuStyle = {
           ...style.menuStyle,
-          ...this.props.menuStyle
+          ...this.props.menuStyle,
         };
         menuNode.style.display = menuStyle.display;
       }
@@ -414,11 +415,13 @@ export default class Select extends Component {
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
       if (menuNode.scrollHeight > menuNode.offsetHeight) {
         this._scrollTopPosition = menuNode.scrollTop;
+
         // Note: don't use setState in here as it would prevent the scrolling
       } else {
         this._scrollTopPosition = 0;
         this.setState({ focusedOptionValue: this._touchStartedAt });
       }
+
       // reset interaction
       this._scrollActive = false;
     }
@@ -434,7 +437,6 @@ export default class Select extends Component {
     }
   }
 
-
   /**
    * Triggers a change event after the user touched on an Option.
    */
@@ -447,6 +449,7 @@ export default class Select extends Component {
         this._triggerChange(value);
       }
     }
+
     this._touchStartedAt = undefined;
   }
 
@@ -473,7 +476,7 @@ export default class Select extends Component {
   _onBlur(event) {
     this.setState({
       isOpen: false,
-      isFocused: false
+      isFocused: false,
     });
 
     if (this.props.wrapperProps && this.props.wrapperProps.onBlur) {
@@ -488,7 +491,7 @@ export default class Select extends Component {
    */
   _onFocus(event) {
     this.setState({
-      isFocused: true
+      isFocused: true,
     });
 
     if (this.props.wrapperProps && this.props.wrapperProps.onFocus) {
@@ -504,7 +507,7 @@ export default class Select extends Component {
   _onMouseEnterAtOption(event) {
     const entry = event.currentTarget.querySelector('[data-belle-value]');
     this.setState({
-      focusedOptionValue: entry.getAttribute('data-belle-value')
+      focusedOptionValue: entry.getAttribute('data-belle-value'),
     });
   }
 
@@ -549,6 +552,7 @@ export default class Select extends Component {
         this.setState({ isOpen: true });
       }
     }
+
     this.setState({ isTouchedToToggle: false, isActive: false });
 
     if (this.props.onTouchEnd) {
@@ -618,12 +622,12 @@ export default class Select extends Component {
 
       if (hasNext(this.options, indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: this.options[indexOfFocusedOption + 1].props.value
+          focusedOptionValue: this.options[indexOfFocusedOption + 1].props.value,
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: first(this.options).props.value
+        focusedOptionValue: first(this.options).props.value,
       });
     }
   }
@@ -643,12 +647,12 @@ export default class Select extends Component {
 
       if (hasPrevious(this.options, indexOfFocusedOption)) {
         this.setState({
-          focusedOptionValue: this.options[indexOfFocusedOption - 1].props.value
+          focusedOptionValue: this.options[indexOfFocusedOption - 1].props.value,
         });
       }
     } else {
       this.setState({
-        focusedOptionValue: last(this.options).props.value
+        focusedOptionValue: last(this.options).props.value,
       });
     }
   }
@@ -752,19 +756,20 @@ export default class Select extends Component {
     if (has(this.props, 'valueLink')) {
       this.props.valueLink.requestChange(value);
       this.setState({
-        isOpen: false
+        isOpen: false,
       });
     } else if (has(this.props, 'value')) {
       this.setState({
-        isOpen: false
+        isOpen: false,
       });
     } else {
       this.setState({
         focusedOptionValue: value,
         selectedValue: value,
-        isOpen: false
+        isOpen: false,
       });
     }
+
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
@@ -773,53 +778,53 @@ export default class Select extends Component {
   render() {
     const defaultStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
     const hoverStyle = {
       ...defaultStyle,
       ...style.hoverStyle,
-      ...this.props.hoverStyle
+      ...this.props.hoverStyle,
     };
     const focusStyle = {
       ...defaultStyle,
       ...style.focusStyle,
-      ...this.props.focusStyle
+      ...this.props.focusStyle,
     };
     const activeStyle = {
       ...defaultStyle,
       ...style.activeStyle,
-      ...this.props.activeStyle
+      ...this.props.activeStyle,
     };
     const disabledStyle = {
       ...defaultStyle,
       ...style.disabledStyle,
-      ...this.props.disabledStyle
+      ...this.props.disabledStyle,
     };
     const disabledHoverStyle = {
       ...disabledStyle,
       ...style.disabledHoverStyle,
-      ...this.props.disabledHoverStyle
+      ...this.props.disabledHoverStyle,
     };
     const menuStyle = {
       ...style.menuStyle,
-      ...this.props.menuStyle
+      ...this.props.menuStyle,
     };
     const caretToCloseStyle = {
       ...style.caretToCloseStyle,
-      ...this.props.caretToCloseStyle
+      ...this.props.caretToCloseStyle,
     };
     const caretToOpenStyle = {
       ...style.caretToOpenStyle,
-      ...this.props.caretToOpenStyle
+      ...this.props.caretToOpenStyle,
     };
     const disabledCaretToOpenStyle = {
       ...caretToOpenStyle,
       ...style.disabledCaretToOpenStyle,
-      ...this.props.disabledCaretToOpenStyle
+      ...this.props.disabledCaretToOpenStyle,
     };
     const wrapperStyle = {
       ...style.wrapperStyle,
-      ...this.props.wrapperStyle
+      ...this.props.wrapperStyle,
     };
 
     let selectedOptionOrPlaceholder;
@@ -830,7 +835,7 @@ export default class Select extends Component {
 
       if (selectedEntry) {
         selectedOptionOrPlaceholder = React.cloneElement(selectedEntry, {
-          _isDisplayedAsSelected: true
+          _isDisplayedAsSelected: true,
         });
       }
     } else {
@@ -846,13 +851,14 @@ export default class Select extends Component {
     let selectedOptionWrapperStyle;
     if (this.props.disabled) {
       selectedOptionOrPlaceholder = React.cloneElement(selectedOptionOrPlaceholder, {
-        _isDisabled: true
+        _isDisabled: true,
       });
       if (this.state.isTouchedToToggle) {
         selectedOptionWrapperStyle = disabledHoverStyle;
       } else {
         selectedOptionWrapperStyle = disabledStyle;
       }
+
       tabIndex = -1;
     } else {
       if (this.state.isActive) {
@@ -879,8 +885,8 @@ export default class Select extends Component {
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
            onKeyDown={ this._onKeyDown.bind(this) }
-           onBlur={ this._onBlur.bind( this) }
-           onFocus={ this._onFocus.bind( this) }
+           onBlur={ this._onBlur.bind(this) }
+           onFocus={ this._onFocus.bind(this) }
            ref="wrapper"
            {...this.state.wrapperProps} >
 
@@ -914,7 +920,7 @@ export default class Select extends Component {
               if (isOption(entry)) { // filter out all non-Option Components
                 const isHovered = entry.props.value === this.state.focusedOptionValue;
                 const option = React.cloneElement(entry, {
-                  _isHovered: isHovered
+                  _isHovered: isHovered,
                 });
 
                 return (

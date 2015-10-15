@@ -1,7 +1,5 @@
 const datePickerConfig = {
-
-  preventFocusStyleForTouchAndClick: true
-
+  preventFocusStyleForTouchAndClick: true,
 };
 
 export default datePickerConfig;

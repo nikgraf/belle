@@ -20,10 +20,10 @@ export default class Card extends Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
+      PropTypes.node,
     ]),
     style: PropTypes.object,
-    test: PropTypes.object
+    test: PropTypes.object,
   };
 
   /**

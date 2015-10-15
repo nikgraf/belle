@@ -28,7 +28,7 @@ function sanitizeChildProps(properties) {
     'onTouchCancel',
     'onMouseDown',
     'onFocus',
-    'onBlur'
+    'onBlur',
   ]);
 }
 
@@ -44,15 +44,15 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   const baseDisabledHoverStyle = properties.primary ? style.primaryDisabledHoverStyle : style.disabledHoverStyle;
   const hoverStyle = {
     ...baseHoverStyle,
-    ...properties.hoverStyle
+    ...properties.hoverStyle,
   };
   const activeStyle = {
     ...baseActiveStyle,
-    ...properties.activeStyle
+    ...properties.activeStyle,
   };
   const disabledHoverStyle = {
     ...baseDisabledHoverStyle,
-    ...properties.disabledHoverStyle
+    ...properties.disabledHoverStyle,
   };
 
   let focusStyle;
@@ -62,7 +62,7 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
     const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
     focusStyle = {
       ...baseFocusStyle,
-      ...properties.focusStyle
+      ...properties.focusStyle,
     };
   }
 
@@ -70,24 +70,24 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
     {
       id: styleId,
       style: hoverStyle,
-      pseudoClass: 'hover'
+      pseudoClass: 'hover',
     },
     {
       id: styleId,
       style: activeStyle,
-      pseudoClass: 'active'
+      pseudoClass: 'active',
     },
     {
       id: styleId,
       style: disabledHoverStyle,
       pseudoClass: 'hover',
-      disabled: true
+      disabled: true,
     },
     {
       id: styleId,
       style: focusStyle,
-      pseudoClass: 'focus'
-    }
+      pseudoClass: 'focus',
+    },
   ];
 
   injectStyles(styles);
@@ -109,10 +109,12 @@ export default class Button extends Component {
 
     this.state = {
       childProps: sanitizeChildProps(properties),
+
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false
+      active: false,
     };
+
     // The focused attribute is used to apply the one-time focus animation.
     // As it is reset after every render it can't be set inside state as this
     // would trigger an endless loop.
@@ -128,7 +130,7 @@ export default class Button extends Component {
     activeStyle: React.PropTypes.object,
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -145,13 +147,13 @@ export default class Button extends Component {
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     preventFocusStyleForTouchAndClick: React.PropTypes.bool,
-    primary: React.PropTypes.bool
+    primary: React.PropTypes.bool,
   };
 
   static defaultProps = {
     primary: false,
     disabled: false,
-    type: 'button'
+    type: 'button',
   };
 
   /**
@@ -172,7 +174,7 @@ export default class Button extends Component {
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     this.setState({
-      childProps: sanitizeChildProps(properties)
+      childProps: sanitizeChildProps(properties),
     });
     removeStyle(this.styleId);
     updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);
@@ -270,7 +272,7 @@ export default class Button extends Component {
     const baseStyle = this.props.primary ? style.primaryStyle : style.style;
     const baseButtonStyle = {
       ...baseStyle,
-      ...this.props.style
+      ...this.props.style,
     };
 
     let buttonStyle;
@@ -279,13 +281,13 @@ export default class Button extends Component {
         buttonStyle = {
           ...baseButtonStyle,
           ...style.primaryDisabledStyle,
-          ...this.props.disabledStyle
+          ...this.props.disabledStyle,
         };
       } else {
         buttonStyle = {
           ...baseButtonStyle,
           ...style.disabledStyle,
-          ...this.props.disabledStyle
+          ...this.props.disabledStyle,
         };
       }
     } else {
@@ -294,7 +296,7 @@ export default class Button extends Component {
         buttonStyle = {
           ...baseButtonStyle,
           ...baseActiveStyle,
-          ...this.props.activeStyle
+          ...this.props.activeStyle,
         };
       } else if (this.focused &&
                  !this.state.active &&
@@ -304,7 +306,7 @@ export default class Button extends Component {
         buttonStyle = {
           ...baseButtonStyle,
           ...baseFocusStyle,
-          ...this.props.focusStyle
+          ...this.props.focusStyle,
         };
       } else {
         buttonStyle = baseButtonStyle;

@@ -28,7 +28,7 @@ function sanitizeChildProps(properties) {
     'sliderWrapperProps',
     'style',
     'tabIndex',
-    'value'
+    'value',
   ]);
 }
 
@@ -39,21 +39,21 @@ function sanitizeSliderProps(properties) {
     'onTouchStart',
     'onTouchMove',
     'onTouchEnd',
-    'onTouchCancel'
+    'onTouchCancel',
   ]);
 }
 
 function sanitizeSliderWrapperProps(properties) {
   return omit(properties, [
     'ref',
-    'style'
+    'style',
   ]);
 }
 
 function sanitizeChoiceProps(properties) {
   return omit(properties, [
     'ref',
-    'style'
+    'style',
   ]);
 }
 
@@ -68,7 +68,7 @@ function sanitizeHandleProps(properties) {
     'onTouchEnd',
     'onTouchCancel',
     'ref',
-    'style'
+    'style',
   ]);
 }
 
@@ -92,6 +92,7 @@ function validateChoices(props, propName, componentName) {
   if (props.children && props.children.length !== 2) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected exactly two Choice components.`);
   }
+
   if (props.children &&
       first(props.children).props.value === last(props.children).props.value) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
@@ -111,7 +112,7 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   } else {
     focusStyle = {
       ...style.focusStyle,
-      ...properties.focusStyle
+      ...properties.focusStyle,
     };
   }
 
@@ -119,8 +120,8 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
     {
       id: styleId,
       style: focusStyle,
-      pseudoClass: 'focus'
-    }
+      pseudoClass: 'focus',
+    },
   ];
 
   injectStyles(styles);
@@ -156,7 +157,7 @@ export default class Toggle extends Component {
       sliderProps: sanitizeSliderProps(properties.sliderProps),
       sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps),
       value: value,
-      wasFocusedWithClickOrTouch: false
+      wasFocusedWithClickOrTouch: false,
     };
 
     this._touchStartedAtSlider = false;
@@ -188,7 +189,7 @@ export default class Toggle extends Component {
     disabledStyle: React.PropTypes.object,
     firstChoiceProps: React.PropTypes.object,
     firstChoiceStyle: React.PropTypes.shape({
-      width: React.PropTypes.number
+      width: React.PropTypes.number,
     }),
     focusStyle: React.PropTypes.object,
     handleProps: React.PropTypes.shape({
@@ -199,11 +200,11 @@ export default class Toggle extends Component {
       onTouchStart: React.PropTypes.func,
       onTouchMove: React.PropTypes.func,
       onTouchEnd: React.PropTypes.func,
-      onTouchCancel: React.PropTypes.func
+      onTouchCancel: React.PropTypes.func,
     }),
     handleStyle: React.PropTypes.shape({
       height: React.PropTypes.number,
-      width: React.PropTypes.number
+      width: React.PropTypes.number,
     }),
     hoverHandleStyle: React.PropTypes.object,
     onBlur: React.PropTypes.func,
@@ -217,31 +218,31 @@ export default class Toggle extends Component {
     onTouchStart: React.PropTypes.func,
     secondChoiceProps: React.PropTypes.object,
     secondChoiceStyle: React.PropTypes.shape({
-      width: React.PropTypes.number
+      width: React.PropTypes.number,
     }),
     sliderProps: React.PropTypes.shape({
       onClick: React.PropTypes.func,
       onTouchStart: React.PropTypes.func,
       onTouchMove: React.PropTypes.func,
       onTouchEnd: React.PropTypes.func,
-      onTouchCancel: React.PropTypes.func
+      onTouchCancel: React.PropTypes.func,
     }),
     sliderStyle: React.PropTypes.object,
     sliderWrapperProps: React.PropTypes.object,
     sliderWrapperStyle: React.PropTypes.object,
     style: React.PropTypes.shape({
-      width: React.PropTypes.number
+      width: React.PropTypes.number,
     }),
     value: React.PropTypes.bool,
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.bool.isRequired,
-      requestChange: React.PropTypes.func.isRequired
+      requestChange: React.PropTypes.func.isRequired,
     }),
-    wrapperProps: React.PropTypes.object
+    wrapperProps: React.PropTypes.object,
   };
 
   static defaultProps = {
-    disabled: false
+    disabled: false,
   };
 
   /**
@@ -262,7 +263,7 @@ export default class Toggle extends Component {
       secondChoiceProps: sanitizeChoiceProps(properties.secondChoiceProps),
       handleProps: sanitizeHandleProps(properties.handleProps),
       sliderProps: sanitizeSliderProps(properties.sliderProps),
-      sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps)
+      sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps),
     };
 
     if (has(properties, 'valueLink')) {
@@ -270,6 +271,7 @@ export default class Toggle extends Component {
     } else if (has(properties, 'value')) {
       newState.value = properties.value;
     }
+
     this.setState(newState);
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
@@ -326,6 +328,7 @@ export default class Toggle extends Component {
     if (!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true, isActive: true });
     }
+
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
@@ -335,6 +338,7 @@ export default class Toggle extends Component {
     if (!this.props.disabled) {
       this.setState({ isActive: false });
     }
+
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
@@ -344,6 +348,7 @@ export default class Toggle extends Component {
     if (!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true });
     }
+
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
@@ -353,6 +358,7 @@ export default class Toggle extends Component {
     if (!this.props.disabled) {
       this._triggerChange(!this.state.value);
     }
+
     if (this.props.sliderProps && this.props.sliderProps.onClick) {
       this.props.sliderProps.onClick(event);
     }
@@ -367,7 +373,7 @@ export default class Toggle extends Component {
 
       this.setState({
         isDraggingWithMouse: true,
-        sliderOffset: (this.state.value ? defaultSliderOffset : 0)
+        sliderOffset: (this.state.value ? defaultSliderOffset : 0),
       });
     }
 
@@ -390,6 +396,7 @@ export default class Toggle extends Component {
         // see http://stackoverflow.com/a/9678166/837709
         cancelAnimationFrame.call(window, this.previousMouseMoveFrame);
       }
+
       this.previousMouseMoveFrame = animationFrame;
     }
 
@@ -446,7 +453,7 @@ export default class Toggle extends Component {
     if (event.touches.length === 1 && !this.props.disabled) {
       this._touchStartedAtSlider = true;
       this.setState({
-        isActive: true
+        isActive: true,
       });
     }
 
@@ -469,6 +476,7 @@ export default class Toggle extends Component {
         // see http://stackoverflow.com/a/9678166/837709
         cancelAnimationFrame.call(window, this.previousTouchMoveAtSliderFrame);
       }
+
       this.previousTouchMoveAtSliderFrame = animationFrame;
     }
 
@@ -483,12 +491,13 @@ export default class Toggle extends Component {
 
     if (this._touchStartedAtSlider && !this._touchEndedNotInSlider && !this.props.disabled) {
       this.setState({
-        isActive: false
+        isActive: false,
       });
       this._triggerChange(!this.state.value);
     } else {
       this.setState({ isActive: false });
     }
+
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
 
@@ -518,7 +527,7 @@ export default class Toggle extends Component {
       const defaultSliderOffset = this._getSliderOffset();
       this.setState({
         isDraggingWithTouch: true,
-        sliderOffset: (this.state.value ? defaultSliderOffset : 0)
+        sliderOffset: (this.state.value ? defaultSliderOffset : 0),
       });
 
       this._touchDragStart = event.touches[0].pageX - (this.state.value ? defaultSliderOffset : 0);
@@ -543,6 +552,7 @@ export default class Toggle extends Component {
         // see http://stackoverflow.com/a/9678166/837709
         cancelAnimationFrame.call(window, this.previousTouchMoveAtHandleFrame);
       }
+
       this.previousTouchMoveAtHandleFrame = animationFrame;
     }
 
@@ -570,7 +580,7 @@ export default class Toggle extends Component {
     } else {
       this.setState({
         isActive: false,
-        isDraggingWithTouch: false
+        isDraggingWithTouch: false,
       });
     }
 
@@ -585,7 +595,7 @@ export default class Toggle extends Component {
 
   _onTouchCancelHandle(event) {
     this.setState({
-      isDraggingWithTouch: false
+      isDraggingWithTouch: false,
     });
     this._touchDragStart = undefined;
     this._touchDragEnd = undefined;
@@ -609,6 +619,7 @@ export default class Toggle extends Component {
         this._onEnterOrSpaceKeyDown();
       }
     }
+
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
@@ -641,7 +652,7 @@ export default class Toggle extends Component {
 
   _onMouseEnterAtSliderWrapper() {
     this.setState({
-      isHovered: true
+      isHovered: true,
     });
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
@@ -651,7 +662,7 @@ export default class Toggle extends Component {
   _onMouseLeaveAtSliderWrapper() {
     this.setState({
       isHovered: false,
-      isActive: false
+      isActive: false,
     });
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
@@ -682,20 +693,20 @@ export default class Toggle extends Component {
       this.setState({
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
-        isActive: false
+        isActive: false,
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
-        isActive: false
+        isActive: false,
       });
     } else {
       this.setState({
         value: value,
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
-        isActive: false
+        isActive: false,
       });
     }
 
@@ -722,7 +733,7 @@ export default class Toggle extends Component {
     if (difference < 0 || difference > this._getToggleWidth() - this._getHandleWidth()) return;
 
     this.setState({
-      sliderOffset: difference
+      sliderOffset: difference,
     });
   }
 
@@ -773,7 +784,7 @@ export default class Toggle extends Component {
 
       this._touchDragEnd = difference;
       this.setState({
-        sliderOffset: difference
+        sliderOffset: difference,
       });
     }
   }
@@ -781,14 +792,14 @@ export default class Toggle extends Component {
   render() {
     let wrapperStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
 
     if (this.isFocused && !this.state.wasFocusedWithClickOrTouch) {
       wrapperStyle = {
         ...wrapperStyle,
         ...style.focusStyle,
-        ...this.props.focusStyle
+        ...this.props.focusStyle,
       };
     }
 
@@ -797,7 +808,7 @@ export default class Toggle extends Component {
 
     const sliderWrapperStyle = {
       ...style.sliderWrapperStyle,
-      ...this.props.sliderWrapperStyle
+      ...this.props.sliderWrapperStyle,
     };
     const defaultSliderOffset = this._getSliderOffset();
 
@@ -806,51 +817,52 @@ export default class Toggle extends Component {
         ...style.sliderStyle,
         ...this.props.sliderStyle,
         left: this.state.sliderOffset - defaultSliderOffset,
-        transition: 'none'
+        transition: 'none',
       };
+
       // right now even when handle is clicked, it momentarily shows this grabbing styles
       // may be this.state.isDraggingWithMouse should be set to true only after mouse movement starts
       const activeStyle = {
         ...style.activeHandleStyle,
-        ...this.props.handleStyle
+        ...this.props.handleStyle,
       };
       handleStyle = {
         ...style.handleStyle,
         ...activeStyle,
         ...this.props.activeHandleStyle,
         left: this.state.sliderOffset,
-        transition: activeStyle.transition ? activeStyle.transition : 'none'
+        transition: activeStyle.transition ? activeStyle.transition : 'none',
       };
     } else {
       handleStyle = {
         ...style.handleStyle,
-        ...this.props.handleStyle
+        ...this.props.handleStyle,
       };
       computedSliderStyle = {
         ...style.sliderStyle,
-        left: this.state.value ? 0 : -defaultSliderOffset
+        left: this.state.value ? 0 : -defaultSliderOffset,
       };
 
       if (this.state.isActive) {
         handleStyle = {
           ...handleStyle,
           ...style.activeHandleStyle,
-          ...this.props.activeHandleStyle
+          ...this.props.activeHandleStyle,
         };
       } else if (this.state.isHovered) {
         handleStyle = {
           ...handleStyle,
           ...style.hoverHandleStyle,
-          ...this.props.hoverHandleStyle
+          ...this.props.hoverHandleStyle,
         };
       }
 
       const position = {
-        left: this.state.value ? defaultSliderOffset : 0
+        left: this.state.value ? defaultSliderOffset : 0,
       };
       handleStyle = {
         ...handleStyle,
-        ...position
+        ...position,
       };
     }
 
@@ -859,11 +871,11 @@ export default class Toggle extends Component {
 
     const computedTrueChoiceStyle = {
       ...style.firstChoiceStyle,
-      ...this.props.firstChoiceStyle
+      ...this.props.firstChoiceStyle,
     };
     const computedFalseChoiceStyle = {
       ...style.secondChoiceStyle,
-      ...this.props.secondChoiceStyle
+      ...this.props.secondChoiceStyle,
     };
 
     const hasCustomTabIndex = this.props.wrapperProps && this.props.wrapperProps.tabIndex;
@@ -873,12 +885,12 @@ export default class Toggle extends Component {
       wrapperStyle = {
         ...wrapperStyle,
         ...style.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
       handleStyle = {
         ...handleStyle,
         ...style.disabledHandleStyle,
-        ...this.props.disabledHandleStyle
+        ...this.props.disabledHandleStyle,
       };
     }
 

@@ -19,7 +19,7 @@ export default class Placeholder extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProps: sanitizeChildProps(properties)
+      childProps: sanitizeChildProps(properties),
     };
   }
 
@@ -28,15 +28,15 @@ export default class Placeholder extends Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
     style: React.PropTypes.object,
     disabledStyle: React.PropTypes.object,
-    _isDisabled: React.PropTypes.bool
+    _isDisabled: React.PropTypes.bool,
   };
 
   static defaultProps = {
-    _isDisabled: false
+    _isDisabled: false,
   };
 
   /**
@@ -50,13 +50,13 @@ export default class Placeholder extends Component {
   render() {
     let computedStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
     if (this.props._isDisabled) {
       computedStyle = {
         ...computedStyle,
         ...style.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
     }
 
