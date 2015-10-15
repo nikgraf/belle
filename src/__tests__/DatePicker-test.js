@@ -210,7 +210,7 @@ describe('DatePicker', () => {
     expect(firstDay).toBeGreaterThan(secondDay);
   });
 
-  it('should show friday as first day of week according to locale data AR', () => {
+  it('should show friday as first day of week according to locale data in decreasing order', () => {
     const datePickerAr = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="date_picker_day" locale="ar"/>
     );
@@ -220,7 +220,7 @@ describe('DatePicker', () => {
     expect(parseInt(firstDate, 10) + 1).toBe(5);
   });
 
-  it('should show friday as first day of week according to locale data HE', () => {
+  it('should show friday as first day of week according to locale data', () => {
     const datePickerHe = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="date_picker_day" locale="he"/>
     );
@@ -280,17 +280,17 @@ describe('DatePicker', () => {
     expect(datePicker.state.dateValue).toBe(compDateValue);
   });
 
-  // it('should call function updatePseudoClassStyle when component is created', () => {
-  //   DatePicker.updatePseudoClassStyle = jest.genMockFunction();
-  //   injectStyle.removeAllStyles = jest.genMockFunction();
-  //   TestUtils.renderIntoDocument(
-  //     <DatePicker />
-  //   );
-  //   expect(DatePicker.updatePseudoClassStyle.mock.calls.length).toBe(1);
-  //   expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].wrapperStyleId).toBeDefined();
-  //   expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].prevMonthNavStyleId).toBeDefined();
-  //   expect(DatePicker.updatePseudoClassStyle.mock.calls[0][0].nextMonthNavStyleId).toBeDefined();
-  // });
+  it('should inject styles for hover, active & foucs', () => {
+    TestUtils.renderIntoDocument(
+      <DatePicker />
+    );
+
+    expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
+    const styles = injectStyle.injectStyles.mock.calls[0][0];
+    expect(styles.wrapperStyleId).toBeDefined();
+    expect(styles.prevMonthNavStyleId).toBeDefined();
+    expect(styles.nextMonthNavStyleId).toBeDefined();
+  });
 
   it('should call function removeAllStyles when component will unmount', () => {
     DatePicker.updatePseudoClassStyle = jest.genMockFunction();
