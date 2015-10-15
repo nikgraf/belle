@@ -39,6 +39,7 @@ const selectConfig = {
     } else {
       optionIndex = 0;
     }
+
     option = menuNode.children[optionIndex];
 
     const menuHeight = parseFloat(menuStyle.getPropertyValue('height'));
@@ -95,7 +96,7 @@ const selectConfig = {
     // - Adding the padding could cause issue with design as it gets wider than
     // the original field.
     menuNode.style.width = `${menuWidth + newLeft * 2}px`;
-  }
+  },
 };
 
 export default selectConfig;

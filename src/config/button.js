@@ -1,7 +1,5 @@
 const buttonConfig = {
-
-  preventFocusStyleForTouchAndClick: true
-
+  preventFocusStyleForTouchAndClick: true,
 };
 
 export default buttonConfig;

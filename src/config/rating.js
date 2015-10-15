@@ -1,7 +1,5 @@
 const ratingConfig = {
-
-  preventFocusStyleForTouchAndClick: true
-
+  preventFocusStyleForTouchAndClick: true,
 };
 
 export default ratingConfig;
