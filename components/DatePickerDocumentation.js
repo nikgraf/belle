@@ -1,8 +1,9 @@
-import React from 'react/addons';
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {DatePicker, Select, Option} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
-import _ from 'underscore';
+import { extend } from 'underscore';
 
 const TODAY = new Date();
 
@@ -89,7 +90,7 @@ const renderDayFunction = `renderDay(day) {
 
 export default React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
 
   getInitialState() {
     return {
@@ -110,7 +111,7 @@ export default React.createClass({
 
       <h3>Properties</h3>
 
-      <table>
+      <table><tbody>
 
         <tr>
           <td style={ propertyNameStyle }>
@@ -445,7 +446,7 @@ export default React.createClass({
           </td>
         </tr>
 
-      </table>
+      </tbody></table>
 
       <p>
         Properties for handling various events(focus, mouse events, touch events):
@@ -475,20 +476,20 @@ export default React.createClass({
 
       <h3>Methods</h3>
 
-      <table>
+      <table><tbody>
         <tr>
           <td style={ propertyNameStyle }>
             resetValue
           </td>
         </tr>
         <tr>
-          <td style={ _.extend(propertyDescriptionStyle, {paddingBottom: 0}) }>
+          <td style={ extend(propertyDescriptionStyle, {paddingBottom: 0}) }>
             <p>
               This method can be called to reset the date picker's value to undefined.<br/>
             </p>
           </td>
         </tr>
-      </table>
+      </tbody></table>
 
       <h3>Internal HTML Structure</h3>
 
@@ -504,7 +505,8 @@ export default React.createClass({
       <h3>DatePicker with other month days hidden but weekends styled differently:</h3>
 
       <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }
-        showOtherMonthDate={ false } styleWeekend={ true }/>
+                  showOtherMonthDate={ false }
+                  styleWeekend/>
 
       <Code value={ advanceCodeExample1 } style={ {marginTop: 40} } />
 
@@ -551,10 +553,10 @@ export default React.createClass({
       <span style={ {display: 'block'} }>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</span>
       <span style={ {display: 'block'} }>Month: {this.state.selectedMonth}</span>
       <span style={ {display: 'block'} }><a onClick={ this.resetDate }
-         style={ {
-         textDecoration: 'underline',
-         cursor: 'pointer'
-        } }>Reset Date</a></span>
+         style={{
+           textDecoration: 'underline',
+           cursor: 'pointer'
+         }}>Reset Date</a></span>
       </div>
 
       <Code value={ advanceCodeExample6 } style={ {marginTop: 40} } />
