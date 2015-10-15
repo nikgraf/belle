@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, map, shift, reverse, omit} from '../utils/helpers';
@@ -117,81 +117,81 @@ export default class DatePicker extends Component {
 
   static propTypes = {
     // value related props
-    defaultValue: React.PropTypes.instanceOf(Date),
-    value: React.PropTypes.instanceOf(Date),
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.instanceOf(Date),
-      requestChange: React.PropTypes.func.isRequired
+    defaultValue: PropTypes.instanceOf(Date),
+    value: PropTypes.instanceOf(Date),
+    valueLink: PropTypes.shape({
+      value: PropTypes.instanceOf(Date),
+      requestChange: PropTypes.func.isRequired
     }),
     // component config related props
-    locale: React.PropTypes.string,
-    month: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-    year: React.PropTypes.number,
-    showOtherMonthDate: React.PropTypes.bool,
-    styleWeekend: React.PropTypes.bool,
-    renderDay: React.PropTypes.func,
-    tabIndex: React.PropTypes.number,
-    'aria-label': React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    readOnly: React.PropTypes.bool,
-    preventFocusStyleForTouchAndClick: React.PropTypes.bool,
+    locale: PropTypes.string,
+    month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+    year: PropTypes.number,
+    showOtherMonthDate: PropTypes.bool,
+    styleWeekend: PropTypes.bool,
+    renderDay: PropTypes.func,
+    tabIndex: PropTypes.number,
+    'aria-label': PropTypes.string,
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    preventFocusStyleForTouchAndClick: PropTypes.bool,
     // event callbacks
-    onDayFocus: React.PropTypes.func,
-    onDayBlur: React.PropTypes.func,
-    onDayKeyDown: React.PropTypes.func,
-    onDayMouseDown: React.PropTypes.func,
-    onDayMouseUp: React.PropTypes.func,
-    onDayTouchStart: React.PropTypes.func,
-    onDayTouchEnd: React.PropTypes.func,
-    onUpdate: React.PropTypes.func,
-    onMonthChange: React.PropTypes.func,
+    onDayFocus: PropTypes.func,
+    onDayBlur: PropTypes.func,
+    onDayKeyDown: PropTypes.func,
+    onDayMouseDown: PropTypes.func,
+    onDayMouseUp: PropTypes.func,
+    onDayTouchStart: PropTypes.func,
+    onDayTouchEnd: PropTypes.func,
+    onUpdate: PropTypes.func,
+    onMonthChange: PropTypes.func,
     // props for wrapper and day
-    wrapperProps: React.PropTypes.object,
-    dayProps: React.PropTypes.object,
+    wrapperProps: PropTypes.object,
+    dayProps: PropTypes.object,
     // ClassNames
-    wrapperClassName: React.PropTypes.string,
-    navBarClassName: React.PropTypes.string,
-    prevMonthNavClassName: React.PropTypes.string,
-    nextMonthNavClassName: React.PropTypes.string,
-    monthLblClassName: React.PropTypes.string,
-    dayLblClassName: React.PropTypes.string,
-    dayClassName: React.PropTypes.string,
+    wrapperClassName: PropTypes.string,
+    navBarClassName: PropTypes.string,
+    prevMonthNavClassName: PropTypes.string,
+    nextMonthNavClassName: PropTypes.string,
+    monthLblClassName: PropTypes.string,
+    dayLblClassName: PropTypes.string,
+    dayClassName: PropTypes.string,
     // wrapper styles
-    style: React.PropTypes.object,
-    disabledStyle: React.PropTypes.object,
-    readOnlyStyle: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    activeStyle: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
+    style: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    readOnlyStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    activeStyle: PropTypes.object,
+    focusStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
     // navbar styles
-    navBarStyle: React.PropTypes.object,
+    navBarStyle: PropTypes.object,
     // prevMonthNav styles
-    prevMonthNavStyle: React.PropTypes.object,
-    hoverPrevMonthNavStyle: React.PropTypes.object,
-    activePrevMonthNavStyle: React.PropTypes.object,
+    prevMonthNavStyle: PropTypes.object,
+    hoverPrevMonthNavStyle: PropTypes.object,
+    activePrevMonthNavStyle: PropTypes.object,
     // nextMonthNav styles
-    nextMonthNavStyle: React.PropTypes.object,
-    hoverNextMonthNavStyle: React.PropTypes.object,
-    activeNextMonthNavStyle: React.PropTypes.object,
+    nextMonthNavStyle: PropTypes.object,
+    hoverNextMonthNavStyle: PropTypes.object,
+    activeNextMonthNavStyle: PropTypes.object,
     // monthlbl styles
-    monthLblStyle: React.PropTypes.object,
+    monthLblStyle: PropTypes.object,
     // daylbl styles
-    dayLblStyle: React.PropTypes.object,
-    disabledDayLblStyle: React.PropTypes.object,
-    weekendLblStyle: React.PropTypes.object,
+    dayLblStyle: PropTypes.object,
+    disabledDayLblStyle: PropTypes.object,
+    weekendLblStyle: PropTypes.object,
     // day styles
-    dayStyle: React.PropTypes.object,
-    disabledDayStyle: React.PropTypes.object,
-    readOnlyDayStyle: React.PropTypes.object,
-    hoverDayStyle: React.PropTypes.object,
-    activeDayStyle: React.PropTypes.object,
-    focusDayStyle: React.PropTypes.object,
-    disabledHoverDayStyle: React.PropTypes.object,
-    todayStyle: React.PropTypes.object,
-    selectedDayStyle: React.PropTypes.object,
-    otherMonthDayStyle: React.PropTypes.object,
-    weekendStyle: React.PropTypes.object
+    dayStyle: PropTypes.object,
+    disabledDayStyle: PropTypes.object,
+    readOnlyDayStyle: PropTypes.object,
+    hoverDayStyle: PropTypes.object,
+    activeDayStyle: PropTypes.object,
+    focusDayStyle: PropTypes.object,
+    disabledHoverDayStyle: PropTypes.object,
+    todayStyle: PropTypes.object,
+    selectedDayStyle: PropTypes.object,
+    otherMonthDayStyle: PropTypes.object,
+    weekendStyle: PropTypes.object
   };
 
   static defaultProps = {
