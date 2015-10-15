@@ -14,9 +14,9 @@ export default class Choice extends Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
-    value: React.PropTypes.bool.isRequired
+    value: React.PropTypes.bool.isRequired,
   };
 
   render() {
