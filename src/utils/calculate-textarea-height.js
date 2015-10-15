@@ -3,6 +3,8 @@ import { canUseDOM } from 'exenv';
 let hiddenTextarea;
 const computedStyleCache = {};
 const hiddenTextareaStyle = `
+  min-height:none !important;
+  max-height:none !important;
   height:0 !important;
   visibility:hidden !important;
   overflow:hidden !important;
