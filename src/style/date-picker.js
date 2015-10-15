@@ -29,11 +29,11 @@ const datePickerStyle = {
     WebkitTapHighlightColor: 'transparent',
 
     transition: 'color 0.1s',
-    transitionTimingFunction: 'ease-out'
+    transitionTimingFunction: 'ease-out',
   },
 
   disabledStyle: {
-    backgroundColor: '#D8D8D8'
+    backgroundColor: '#D8D8D8',
   },
 
   readOnlyStyle: {
@@ -47,11 +47,11 @@ const datePickerStyle = {
 
   focusStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
-    outline: 0
+    outline: 0,
   },
 
   disabledHoverStyle: {
-    backgroundColor: '#E1E9EC'
+    backgroundColor: '#E1E9EC',
   },
 
   // nav-bar at top for month navigation
@@ -59,7 +59,7 @@ const datePickerStyle = {
     display: 'table-caption',
     height: 30,
     lineHeight: '30px',
-    border: '1px solid #ccc'
+    border: '1px solid #ccc',
   },
 
   // left button in nav-bar to go to previous month
@@ -84,7 +84,7 @@ const datePickerStyle = {
      Prevent flickering while tapping on WebKit
      http://stackoverflow.com/a/3516243/837709
      */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   hoverPrevMonthNavStyle: {
@@ -115,7 +115,7 @@ const datePickerStyle = {
      Prevent flickering while tapping on WebKit
      http://stackoverflow.com/a/3516243/837709
      */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   hoverNextMonthNavStyle: {
@@ -135,17 +135,17 @@ const datePickerStyle = {
     WebkitUserSelect: 'initial',
     MozUserSelect: 'initial',
     MsUserSelect: 'initial',
-    userSelect: 'initial'
+    userSelect: 'initial',
   },
 
   // styling for entire grid of week-header and weeks
   weekGroupStyle: {
-    'display': 'table-row-group'
+    display: 'table-row-group',
   },
 
   // styling for week's row
   weekStyle: {
-    display: 'table-row'
+    display: 'table-row',
   },
 
   // styling for week's day label
@@ -164,15 +164,15 @@ const datePickerStyle = {
     WebkitUserSelect: 'initial',
     MozUserSelect: 'initial',
     MsUserSelect: 'initial',
-    userSelect: 'initial'
+    userSelect: 'initial',
   },
 
   disabledDayLabelStyle: {
-    color: '#C1BABA'
+    color: '#C1BABA',
   },
 
   weekendLabelStyle: {
-    backgroundColor: '#F0F0F0'
+    backgroundColor: '#F0F0F0',
   },
 
   // styling for individual day
@@ -205,54 +205,54 @@ const datePickerStyle = {
     WebkitTapHighlightColor: 'transparent',
 
     transition: 'color 0.1s',
-    transitionTimingFunction: 'ease-out'
+    transitionTimingFunction: 'ease-out',
   },
 
   disabledDayStyle: {
     color: '#C1BABA',
-    cursor: 'auto'
+    cursor: 'auto',
   },
 
   readOnlyDayStyle: {
-    cursor: 'auto'
+    cursor: 'auto',
   },
 
   hoverDayStyle: {
     backgroundColor: '#87CEFA',
-    color: 'white'
+    color: 'white',
   },
 
   activeDayStyle: {
     backgroundColor: '#DEF1F7',
-    color: '#716D6D'
+    color: '#716D6D',
   },
 
   focusDayStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
-    outline: 0
+    outline: 0,
   },
 
   disabledHoverDayStyle: {
-    cursor: 'auto'
+    cursor: 'auto',
   },
 
   todayStyle: {
-    color: '#E24545'
+    color: '#E24545',
   },
 
   weekendStyle: {
-    backgroundColor: '#F0F0F0'
+    backgroundColor: '#F0F0F0',
   },
 
   selectedDayStyle: {
     backgroundColor: '#1E90FF',
-    color: 'white'
+    color: 'white',
   },
 
   otherMonthDayStyle: {
     color: '#D3D0D0',
-    cursor: 'auto'
-  }
+    cursor: 'auto',
+  },
 };
 
 export default datePickerStyle;

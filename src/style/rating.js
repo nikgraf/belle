@@ -1,5 +1,4 @@
 const ratingStyle = {
-
   style: {
     position: 'relative',
     display: 'inline-block',
@@ -26,26 +25,26 @@ const ratingStyle = {
      Prevent flickering while tapping on WebKit
      http://stackoverflow.com/a/3516243/837709
      */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   disabledStyle: {
     opacity: 0.6,
-    cursor: 'not-allowed'
+    cursor: 'not-allowed',
   },
 
   focusStyle: {
     outline: 0,
     WebkitAnimation: 'belle-rating-focus 2s',
-    borderRadius: 2
+    borderRadius: 2,
   },
 
   hoverStyle: {
-    opacity: 1
+    opacity: 1,
   },
 
   disabledHoverStyle: {
-    opacity: 0.6
+    opacity: 0.6,
   },
 
   characterStyle: {
@@ -55,20 +54,19 @@ const ratingStyle = {
 
     /* animations */
     transition: 'color 0.1s',
-    transitionTimingFunction: 'ease-out'
+    transitionTimingFunction: 'ease-out',
   },
 
   hoverCharacterStyle: {
-    color: '#FFDA46'
+    color: '#FFDA46',
   },
 
   activeCharacterStyle: {
     textShadow: '0px -1px 0px #D6AB00',
     color: '#F3C200',
     position: 'relative',
-    top: 1
-  }
-
+    top: 1,
+  },
 };
 
 export default ratingStyle;

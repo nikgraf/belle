@@ -54,6 +54,7 @@ function updateStyling() {
     if (storageEntry.pseudoClasses) {
       pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.pseudoClasses, id, false));
     }
+
     if (storageEntry.disabledPseudoClasses) {
       pseudoClassesArray.push(createMarkupOnPseudoClass(storageEntry.disabledPseudoClasses, id, true));
     }

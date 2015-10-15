@@ -1,5 +1,4 @@
 const placeholderStyle = {
-
   style: {
     boxSizing: 'border-box',
     color: '#666',
@@ -21,14 +20,13 @@ const placeholderStyle = {
     Prevent flickering while tapping on WebKit
     http://stackoverflow.com/a/3516243/837709
     */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   disabledStyle: {
     color: '#9F9F9F',
-    cursor: 'not-allowed'
-  }
-
+    cursor: 'not-allowed',
+  },
 };
 
 export default placeholderStyle;

@@ -26,7 +26,7 @@ const stylesToCopy = [
   'padding-left',
   'padding-right',
   'border-width',
-  'box-sizing'
+  'box-sizing',
 ];
 
 /**
@@ -72,7 +72,7 @@ function calculateStyling(node) {
       style: sizingStyle,
       verticalPaddingSize,
       verticalBorderSize,
-      boxSizing
+      boxSizing,
     };
   }
 
@@ -100,6 +100,7 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
   const {style, verticalPaddingSize, verticalBorderSize, boxSizing} = calculateStyling(textareaElement);
 
   hiddenTextarea.setAttribute('style', `${style};${hiddenTextareaStyle}`);
+
   // IE will return a height of 0 in case the textare is empty. To prevent
   // reducing the size to 0 we simply use a dummy text.
   hiddenTextarea.value = textareaValue ? textareaValue : '-';
@@ -130,6 +131,7 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
         calculatedMinHeight = calculatedMinHeight + verticalPaddingSize + verticalBorderSize;
       }
     }
+
     if (maxRows !== null && maxHeight === null) {
       calculatedMaxHeight = singleRowHeight * maxRows;
       if (boxSizing === 'border-box') {
