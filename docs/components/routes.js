@@ -3,6 +3,7 @@ import { IndexRoute, Route } from 'react-router';
 
 import Base from './Base';
 import ComboBoxDocumentation from './ComboBoxDocumentation';
+import DatePickerDocumentation from './DatePickerDocumentation';
 import ButtonDocumentation from './ButtonDocumentation';
 import CardDocumentation from './CardDocumentation';
 import ChoiceDocumentation from './ChoiceDocumentation';
@@ -28,6 +29,7 @@ const routes = (
     <Route path="component/card" component={CardDocumentation}/>
     <Route path="component/choice" component={ChoiceDocumentation}/>
     <Route path="component/combo-box" component={ComboBoxDocumentation}/>
+    <Route path="component/date-picker" component={DatePickerDocumentation}/>
     <Route path="component/select" component={SelectDocumentation}/>
     <Route path="component/option" component={OptionDocumentation}/>
     <Route path="component/placeholder" component={PlaceholderDocumentation}/>
@@ -40,7 +42,6 @@ const routes = (
     <Route path="philosophy" component={Philosophy}/>
     <Route path="about" component={About}/>
     <Route path="guide/introducing-belle" component={IntroducingBelleGuide}/>
-
     <IndexRoute component={Home}/>
   </Route>
 );

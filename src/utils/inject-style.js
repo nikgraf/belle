@@ -36,12 +36,14 @@ function updateStore(styleId, style, pseudoClass, disabled) {
  */
 function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
   return mapObject(pseudoClasses, (style, pseudoClass) => {
-    const styleString = CSSPropertyOperations.createMarkupForStyles(style);
-    const styleWithImportant = styleString.replace(/;/g, ' !important;');
+    if (style && Object.keys(style).length > 0) {
+      const styleString = CSSPropertyOperations.createMarkupForStyles(style);
+      const styleWithImportant = styleString.replace(/;/g, ' !important;');
 
-    return disabled ?
+      return disabled ?
         `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}` :
         `.${id}:${pseudoClass} {${styleWithImportant}}`;
+    }
   });
 }
 

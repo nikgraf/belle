@@ -9,6 +9,7 @@ import TextInput from './components/TextInput';
 import Rating from './components/Rating';
 import ComboBox from './components/ComboBox';
 import Toggle from './components/Toggle';
+import DatePicker from './components/DatePicker';
 
 import buttonStyle from './style/button';
 import cardStyle from './style/card';
@@ -20,11 +21,14 @@ import textInputStyle from './style/text-input';
 import toggleStyle from './style/toggle';
 import ratingStyle from './style/rating';
 import comboBoxStyle from './style/combo-box';
+import datePickerStyle from './style/date-picker';
 
 import selectConfig from './config/select';
 import buttonConfig from './config/button';
 import ratingConfig from './config/rating';
 import toggleConfig from './config/toggle';
+import i18nConfig from './config/i18n';
+import datePickerConfig from './config/datePicker';
 
 module.exports = {
   Button: Button,
@@ -38,6 +42,7 @@ module.exports = {
   Rating: Rating,
   ComboBox: ComboBox,
   Toggle: Toggle,
+  DatePicker: DatePicker,
   style: {
     button: buttonStyle,
     card: cardStyle,
@@ -48,12 +53,15 @@ module.exports = {
     separator: separatorStyle,
     textInput: textInputStyle,
     toggle: toggleStyle,
-    comboBox: comboBoxStyle
+    comboBox: comboBoxStyle,
+    datePickerStyle: datePickerStyle
   },
   config: {
     select: selectConfig,
     button: buttonConfig,
     rating: ratingConfig,
-    toggle: toggleConfig
+    toggle: toggleConfig,
+    i18n: i18nConfig,
+    datePicker: datePickerConfig
   }
 };

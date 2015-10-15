@@ -160,6 +160,9 @@ export default React.createClass({
               <Link style={{ display: 'block', padding: '3px 0' }} to="/component/combo-box">ComboBox</Link>
             </li>
             <li>
+              <Link style={{ display: 'block', padding: '3px 0' }} to="/component/date-picker">DatePicker</Link>
+            </li>
+            <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/component/select">Select</Link>
             </li>
             <li style={{ paddingLeft: 10 }}>

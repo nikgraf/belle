@@ -10,6 +10,7 @@ import TextInputPlayground from './components/TextInputPlayground';
 import RatingPlayground from './components/RatingPlayground';
 import ComboBoxPlayground from './components/ComboBoxPlayground';
 import TogglePlayground from './components/TogglePlayground';
+import DatePickerPlayground from './components/DatePickerPlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
 if (true) {
@@ -71,6 +72,8 @@ class App extends Component {
   render() {
     return (<div style={ {margin: '0 auto', width: 300} }>
         <h1>Belle Playground</h1>
+
+        <DatePickerPlayground />
 
         <TogglePlayground />
 
