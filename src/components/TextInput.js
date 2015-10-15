@@ -28,11 +28,12 @@ function sanitizeChildProps(properties) {
     'hoverStyle',
     'focusStyle',
     'disabledStyle',
-    'disabledHoverStyle'
+    'disabledHoverStyle',
   ]);
   if (typeof properties.valueLink === 'object') {
     childProps.value = properties.valueLink.value;
   }
+
   return childProps;
 }
 
@@ -45,34 +46,34 @@ function sanitizeChildProps(properties) {
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = {
     ...style.hoverStyle,
-    ...properties.hoverStyle
+    ...properties.hoverStyle,
   };
   const focusStyle = {
     ...style.focusStyle,
-    ...properties.focusStyle
+    ...properties.focusStyle,
   };
   const disabledHoverStyle = {
     ...style.disabledHoverStyle,
-    ...properties.disabledHoverStyle
+    ...properties.disabledHoverStyle,
   };
 
   const styles = [
     {
       id: styleId,
       style: hoverStyle,
-      pseudoClass: 'hover'
+      pseudoClass: 'hover',
     },
     {
       id: styleId,
       style: focusStyle,
-      pseudoClass: 'focus'
+      pseudoClass: 'focus',
     },
     {
       id: styleId,
       style: disabledHoverStyle,
       pseudoClass: 'hover',
-      disabled: true
-    }
+      disabled: true,
+    },
   ];
   injectStyles(styles);
 }
@@ -109,7 +110,7 @@ export default class TextInput extends Component {
     this.state = {
       height: 'auto',
       inputValue: inputValue,
-      textareaProps: sanitizeChildProps(properties)
+      textareaProps: sanitizeChildProps(properties),
     };
   }
 
@@ -132,13 +133,13 @@ export default class TextInput extends Component {
     onKeyDown: React.PropTypes.func,
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.string.isRequired,
-      requestChange: React.PropTypes.func.isRequired
-    })
+      requestChange: React.PropTypes.func.isRequired,
+    }),
   };
 
   static defaultProps = {
     allowNewLine: false,
-    disabled: false
+    disabled: false,
   };
 
   /**
@@ -165,7 +166,7 @@ export default class TextInput extends Component {
    */
   componentWillReceiveProps(properties) {
     const newState = {
-      textareaProps: sanitizeChildProps(properties)
+      textareaProps: sanitizeChildProps(properties),
     };
     if (has(properties, 'valueLink')) {
       newState.inputValue = properties.valueLink.value;
@@ -221,13 +222,14 @@ export default class TextInput extends Component {
       this.props.valueLink.requestChange(value);
     } else if (has(this.props, 'defaultValue')) {
       this.setState({
-        inputValue: value
+        inputValue: value,
       });
     }
 
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
+
     this._triggerResize(value);
   }
 
@@ -242,14 +244,14 @@ export default class TextInput extends Component {
   render() {
     let textareaStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
 
     if (this.props.disabled) {
       textareaStyle = {
         ...textareaStyle,
         ...style.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
     }
 
