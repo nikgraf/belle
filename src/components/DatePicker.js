@@ -3,7 +3,7 @@ import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, map, shift, reverse, omit} from '../utils/helpers';
 import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
-import style from '../style/date-picker';
+import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
 
 /**
@@ -55,7 +55,7 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   const styles = [{
     id: pseudoStyleIds.prevMonthNavStyleId,
     style: {
-      ...style.hoverPrevMonthNavStyle,
+      ...defaultStyle.hoverPrevMonthNavStyle,
       ...properties.hoverPrevMonthNavStyle
     },
     pseudoClass: 'hover'
@@ -63,7 +63,7 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   }, {
     id: pseudoStyleIds.nextMonthNavStyleId,
     style: {
-      ...style.hoverNextMonthNavStyle,
+      ...defaultStyle.hoverNextMonthNavStyle,
       ...properties.hoverNextMonthNavStyle
     },
     pseudoClass: 'hover'
@@ -73,7 +73,7 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
     focusStyle = { outline: 0 };
   } else {
     focusStyle = {
-      ...style.focusWrapperStyle,
+      ...defaultStyle.focusWrapperStyle,
       ...properties.focusWrapperStyle
     };
   }
@@ -676,31 +676,31 @@ export default class DatePicker extends Component {
    */
   _renderNavBar() {
     const navBarStyle = {
-      ...style.navBarStyle,
+      ...defaultStyle.navBarStyle,
       ...this.props.navBarStyle
     };
     const monthLblStyle = {
-      ...style.monthLblStyle,
+      ...defaultStyle.monthLblStyle,
       ...this.props.monthLblStyle
     };
     let prevMonthNavStyle = {
-      ...style.prevMonthNavStyle,
+      ...defaultStyle.prevMonthNavStyle,
       ...this.props.prevMonthNavStyle
     };
     let nextMonthNavStyle = {
-      ...style.nextMonthNavStyle,
+      ...defaultStyle.nextMonthNavStyle,
       ...this.props.nextMonthNavStyle
     };
     if (this.state.isPrevMonthNavActive) {
       prevMonthNavStyle = {
         ...prevMonthNavStyle,
-        ...style.activePrevMonthNavStyle,
+        ...defaultStyle.activePrevMonthNavStyle,
         ...this.props.activePrevMonthNavStyle
       };
     } else if (this.state.isNextMonthNavActive) {
       nextMonthNavStyle = {
         ...nextMonthNavStyle,
-        ...style.activeNextMonthNavStyle,
+        ...defaultStyle.activeNextMonthNavStyle,
         ...this.props.activeNextMonthNavStyle
       };
     }
@@ -737,19 +737,19 @@ export default class DatePicker extends Component {
    */
   _renderWeekHeader() {
     let dayLblStyle = {
-      ...style.dayLblStyle,
+      ...defaultStyle.dayLblStyle,
       ...this.props.dayLblStyle
     };
     if (this.props.disabled) {
       dayLblStyle = {
         ...dayLblStyle,
-        ...style.disabledDayLblStyle,
+        ...defaultStyle.disabledDayLblStyle,
         ...this.props.disabledDayLblStyle
       };
     }
     const weekendLblStyle = {
       ...dayLblStyle,
-      ...style.weekendLblStyle,
+      ...defaultStyle.weekendLblStyle,
       ...this.props.weekendLblStyle
     };
     let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
@@ -758,7 +758,7 @@ export default class DatePicker extends Component {
     weekendIndex = this.state.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
     return (
-      <div style={ style.weekStyle }>
+      <div style={ defaultStyle.weekStyle }>
         {
           map(dayNames, (dayAbbr, index) => {
             return (
@@ -800,14 +800,14 @@ export default class DatePicker extends Component {
     let ariaSelected = false;
 
     let dayStyle = {
-      ...style.dayStyle,
+      ...defaultStyle.dayStyle,
       ...this.props.dayStyle
     };
 
     if (this.props.readOnly) {
       dayStyle = {
         ...dayStyle,
-        ...style.readOnlyDayStyle,
+        ...defaultStyle.readOnlyDayStyle,
         ...this.props.readOnlyDayStyle
       };
     }
@@ -815,13 +815,13 @@ export default class DatePicker extends Component {
     if (this.props.disabled) {
       dayStyle = {
         ...dayStyle,
-        ...style.disabledDayStyle,
+        ...defaultStyle.disabledDayStyle,
         ...this.props.disabledDayStyle
       };
       if (isNotOtherMonth && this.state.hoveredDay === dayKey) {
         dayStyle = {
           ...dayStyle,
-          ...style.disabledHoverDayStyle,
+          ...defaultStyle.disabledHoverDayStyle,
           ...this.props.disabledHoverDayStyle
         };
       }
@@ -830,7 +830,7 @@ export default class DatePicker extends Component {
     if (this.props.styleWeekend && currentDate.getDay() === this.state.localeData.weekEnd) {
       dayStyle = {
         ...dayStyle,
-        ...style.weekendStyle,
+        ...defaultStyle.weekendStyle,
         ...this.props.weekendStyle
       };
     }
@@ -839,7 +839,7 @@ export default class DatePicker extends Component {
       if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
         dayStyle = {
           ...dayStyle,
-          ...style.todayStyle,
+          ...defaultStyle.todayStyle,
           ...this.props.todayStyle
         };
         ariaCurrent = 'date';
@@ -848,7 +848,7 @@ export default class DatePicker extends Component {
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
         dayStyle = {
           ...dayStyle,
-          ...style.selectedDayStyle,
+          ...defaultStyle.selectedDayStyle,
           ...this.props.selectedDayStyle
         };
         ariaSelected = true;
@@ -856,7 +856,7 @@ export default class DatePicker extends Component {
       if (!this.props.disabled && this.state.hoveredDay === dayKey) {
         dayStyle = {
           ...dayStyle,
-          ...style.hoverDayStyle,
+          ...defaultStyle.hoverDayStyle,
           ...this.props.hoverDayStyle
         };
       }
@@ -867,21 +867,21 @@ export default class DatePicker extends Component {
         };
         dayStyle = {
           ...dayStyle,
-          ...style.focusDayStyle,
+          ...defaultStyle.focusDayStyle,
           ...this.props.focusDayStyle
         };
       }
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
         dayStyle = {
           ...dayStyle,
-          ...style.activeDayStyle,
+          ...defaultStyle.activeDayStyle,
           ...this.props.activeDayStyle
         };
       }
     } else {
       dayStyle = {
         ...dayStyle,
-        ...style.otherMonthDayStyle,
+        ...defaultStyle.otherMonthDayStyle,
         ...this.props.otherMonthDayStyle
       };
     }
@@ -936,26 +936,26 @@ export default class DatePicker extends Component {
    */
   render() {
     let wrapperStyle = {
-      ...style.wrapperStyle,
+      ...defaultStyle.wrapperStyle,
       ...this.props.wrapperStyle
     };
     if (this.props.readOnly) {
       wrapperStyle = {
         ...wrapperStyle,
-        ...style.readOnlyWrapperStyle,
+        ...defaultStyle.readOnlyWrapperStyle,
         ...this.props.readOnlyWrapperStyle
       };
     }
     if (this.props.disabled) {
       wrapperStyle = {
         ...wrapperStyle,
-        ...style.disabledWrapperStyle,
+        ...defaultStyle.disabledWrapperStyle,
         ...this.props.disabledWrapperStyle
       };
       if (this.state.isWrapperHovered) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.disabledHoverWrapperStyle,
+          ...defaultStyle.disabledHoverWrapperStyle,
           ...this.props.disabledHoverWrapperStyle
         };
       }
@@ -963,20 +963,20 @@ export default class DatePicker extends Component {
       if (this.state.isWrapperHovered) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.hoverWrapperStyle,
+          ...defaultStyle.hoverWrapperStyle,
           ...this.props.hoverWrapperStyle
         };
       }
       if (this.state.isWrapperActive) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.activeWrapperStyle,
+          ...defaultStyle.activeWrapperStyle,
           ...this.props.activeWrapperStyle
         };
       } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.focusWrapperStyle,
+          ...defaultStyle.focusWrapperStyle,
           ...this.props.focusWrapperStyle
         };
       }
@@ -1005,14 +1005,14 @@ export default class DatePicker extends Component {
            className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }
            {...this.state.wrapperProps} >
         { this._renderNavBar() }
-        <div role="grid" style={ style.weekGroupStyle}>
+        <div role="grid" style={ defaultStyle.weekGroupStyle}>
           { this._renderWeekHeader() }
           {
             map(weekArray, (week, weekIndex) => {
               const weekDays = this.state.localeData.isRTL ? reverse(week) : week;
               return (
                 <div key={ 'week-' + weekIndex }
-                     style={ style.weekStyle }>
+                     style={ defaultStyle.weekStyle }>
                   {
                     map(weekDays, (day, dayIndex) => {
                       return this._renderDay(day, dayIndex);
