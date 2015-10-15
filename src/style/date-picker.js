@@ -1,7 +1,7 @@
 const datePickerStyle = {
 
   // wrapper of entire component
-  wrapperStyle: {
+  style: {
     padding: 8,
     border: '1px solid #ccc',
     borderRadius: 5,
@@ -36,26 +36,26 @@ const datePickerStyle = {
     transitionTimingFunction: 'ease-out'
   },
 
-  disabledWrapperStyle: {
+  disabledStyle: {
     backgroundColor: '#D8D8D8'
   },
 
-  readOnlyWrapperStyle: {
+  readOnlyStyle: {
   },
 
-  hoverWrapperStyle: {
+  hoverStyle: {
     border: '1px solid #92D6EF'
   },
 
-  activeWrapperStyle: {
+  activeStyle: {
   },
 
-  focusWrapperStyle: {
+  focusStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
     outline: 0
   },
 
-  disabledHoverWrapperStyle: {
+  disabledHoverStyle: {
     backgroundColor: '#E1E9EC'
   },
 

@@ -287,7 +287,7 @@ describe('DatePicker', () => {
 
     expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
     const styles = injectStyle.injectStyles.mock.calls[0][0];
-    expect(styles.wrapperStyleId).toBeDefined();
+    expect(styles.styleId).toBeDefined();
     expect(styles.prevMonthNavStyleId).toBeDefined();
     expect(styles.nextMonthNavStyleId).toBeDefined();
   });
@@ -464,7 +464,7 @@ describe('DatePicker', () => {
 
   it('should apply hover styles to wrapper when mouse is over', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test" hoverWrapperStyle={ {backgroundColor: 'red'} }/>
+      <DatePicker wrapperClassName="wrapper_test" hoverStyle={ {backgroundColor: 'red'} }/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseOver(wrapper);
@@ -489,7 +489,7 @@ describe('DatePicker', () => {
 
   it('should not apply focusDayStyles for mouseDown wrapper', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperStyle={ {fontSize: '10px'} } focusWrapperStyle={ {fontSize: '5px'} } activeWrapperStyle={ {backgroundColor: 'blue'} } wrapperClassName="date_picker"/>
+      <DatePicker style={ {fontSize: '10px'} } focusStyle={ {fontSize: '5px'} } activeStyle={ {backgroundColor: 'blue'} } wrapperClassName="date_picker"/>
     );
     const picker = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.mouseDown(picker, {button: 0});

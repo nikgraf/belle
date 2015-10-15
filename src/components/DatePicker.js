@@ -73,12 +73,12 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
     focusStyle = { outline: 0 };
   } else {
     focusStyle = {
-      ...defaultStyle.focusWrapperStyle,
-      ...properties.focusWrapperStyle
+      ...defaultStyle.focusStyle,
+      ...properties.focusStyle
     };
   }
   styles.push({
-    id: pseudoStyleIds.wrapperStyleId,
+    id: pseudoStyleIds.styleId,
     style: focusStyle,
     pseudoClass: 'focus'
   });
@@ -157,13 +157,13 @@ export default class DatePicker extends Component {
     dayLblClassName: React.PropTypes.string,
     dayClassName: React.PropTypes.string,
     // wrapper styles
-    wrapperStyle: React.PropTypes.object,
-    disabledWrapperStyle: React.PropTypes.object,
-    readOnlyWrapperStyle: React.PropTypes.object,
-    hoverWrapperStyle: React.PropTypes.object,
-    activeWrapperStyle: React.PropTypes.object,
-    focusWrapperStyle: React.PropTypes.object,
-    disabledHoverWrapperStyle: React.PropTypes.object,
+    style: React.PropTypes.object,
+    disabledStyle: React.PropTypes.object,
+    readOnlyStyle: React.PropTypes.object,
+    hoverStyle: React.PropTypes.object,
+    activeStyle: React.PropTypes.object,
+    focusStyle: React.PropTypes.object,
+    disabledHoverStyle: React.PropTypes.object,
     // navbar styles
     navBarStyle: React.PropTypes.object,
     // prevMonthNav styles
@@ -212,7 +212,7 @@ export default class DatePicker extends Component {
   componentWillMount() {
     const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
     this.pseudoStyleIds = {};
-    this.pseudoStyleIds.wrapperStyleId = `wrapper-style-id${id}`;
+    this.pseudoStyleIds.styleId = `wrapper-style-id${id}`;
     this.pseudoStyleIds.prevMonthNavStyleId = `prevMonthNav-style-id${id}`;
     this.pseudoStyleIds.nextMonthNavStyleId = `nextMonthNav-style-id${id}`;
     updatePseudoClassStyle(this.pseudoStyleIds, this.props, this.state.preventFocusStyleForTouchAndClick);
@@ -926,58 +926,58 @@ export default class DatePicker extends Component {
    * - get array of weeks in a month and for each day in the week call method to render day
    *
    * It will apply styles sequentially according to Wrapper according to following rules:
-   * 1. If component is readOnly apply readOnlyWrapperStyle
-   * 2. If component is disabled apply disabledWrapperStyle
-   *    - If disabled component is hovered apply disabledHoverWrapperStyle
+   * 1. If component is readOnly apply readOnlyStyle
+   * 2. If component is disabled apply disabledStyle
+   *    - If disabled component is hovered apply disabledHoverStyle
    * 3. If component is not disabled:
    *    - If component is hovered apply hover style
    *    - If component is hovered and active apply hover + active styles
    *    - If component is hovered and focused but not active and preventFocusStyleForTouchAndClick is true apply focusStyles
    */
   render() {
-    let wrapperStyle = {
-      ...defaultStyle.wrapperStyle,
-      ...this.props.wrapperStyle
+    let style = {
+      ...defaultStyle.style,
+      ...this.props.style
     };
     if (this.props.readOnly) {
-      wrapperStyle = {
-        ...wrapperStyle,
-        ...defaultStyle.readOnlyWrapperStyle,
-        ...this.props.readOnlyWrapperStyle
+      style = {
+        ...style,
+        ...defaultStyle.readOnlyStyle,
+        ...this.props.readOnlyStyle
       };
     }
     if (this.props.disabled) {
-      wrapperStyle = {
-        ...wrapperStyle,
-        ...defaultStyle.disabledWrapperStyle,
-        ...this.props.disabledWrapperStyle
+      style = {
+        ...style,
+        ...defaultStyle.disabledStyle,
+        ...this.props.disabledStyle
       };
       if (this.state.isWrapperHovered) {
-        wrapperStyle = {
-          ...wrapperStyle,
-          ...defaultStyle.disabledHoverWrapperStyle,
-          ...this.props.disabledHoverWrapperStyle
+        style = {
+          ...style,
+          ...defaultStyle.disabledHoverStyle,
+          ...this.props.disabledHoverStyle
         };
       }
     } else {
       if (this.state.isWrapperHovered) {
-        wrapperStyle = {
-          ...wrapperStyle,
-          ...defaultStyle.hoverWrapperStyle,
-          ...this.props.hoverWrapperStyle
+        style = {
+          ...style,
+          ...defaultStyle.hoverStyle,
+          ...this.props.hoverStyle
         };
       }
       if (this.state.isWrapperActive) {
-        wrapperStyle = {
-          ...wrapperStyle,
-          ...defaultStyle.activeWrapperStyle,
-          ...this.props.activeWrapperStyle
+        style = {
+          ...style,
+          ...defaultStyle.activeStyle,
+          ...this.props.activeStyle
         };
       } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
-        wrapperStyle = {
-          ...wrapperStyle,
-          ...defaultStyle.focusWrapperStyle,
-          ...this.props.focusWrapperStyle
+        style = {
+          ...style,
+          ...defaultStyle.focusStyle,
+          ...this.props.focusStyle
         };
       }
     }
@@ -1001,8 +1001,8 @@ export default class DatePicker extends Component {
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
-           style={ wrapperStyle }
-           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.wrapperStyleId) }
+           style={ style }
+           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.styleId) }
            {...this.state.wrapperProps} >
         { this._renderNavBar() }
         <div role="grid" style={ defaultStyle.weekGroupStyle}>
