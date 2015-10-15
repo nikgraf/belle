@@ -31,7 +31,9 @@
     "postpublish": "./scripts/publish_gh_pages.sh",
     "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
     "test:watch": "npm run test -- --watch",
-    "lint": "eslint src/"
+    "lint": "npm run lint:eslint && npm run lint:jscs",
+    "lint:eslint": "eslint ./",
+    "lint:jscs": "jscs ./"
   },
   "devDependencies": {
     "babel": "^5.8.23",
@@ -44,6 +46,7 @@
     "eslint-config-airbnb": "0.1.0",
     "eslint-plugin-react": "^3.5.1",
     "jest-cli": "^0.5.10",
+    "jscs": "^2.3.1",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "^0.14.0",
