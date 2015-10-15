@@ -19,7 +19,7 @@ export default class Separator extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProps: sanitizeChildProps(properties)
+      childProps: sanitizeChildProps(properties),
     };
   }
 
@@ -28,9 +28,9 @@ export default class Separator extends Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
-    style: React.PropTypes.object
+    style: React.PropTypes.object,
   };
 
   /**
@@ -44,7 +44,7 @@ export default class Separator extends Component {
   render() {
     const computedStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
 
     return (
