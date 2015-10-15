@@ -14,7 +14,7 @@ function sanitizeChildProps(properties) {
     'value',
     '_isHovered',
     '_isDisplayedAsSelected',
-    '_isDisabled'
+    '_isDisabled',
   ]);
 }
 
@@ -28,7 +28,7 @@ export default class Option extends Component {
   constructor(properties) {
     super(properties);
     this.state = {
-      childProps: sanitizeChildProps(properties)
+      childProps: sanitizeChildProps(properties),
     };
   }
 
@@ -37,7 +37,7 @@ export default class Option extends Component {
   static propTypes = {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+      React.PropTypes.node,
     ]),
     style: React.PropTypes.object,
     hoverStyle: React.PropTypes.object,
@@ -49,14 +49,14 @@ export default class Option extends Component {
     value: React.PropTypes.oneOfType([
       React.PropTypes.bool,
       React.PropTypes.string,
-      React.PropTypes.number
-    ]).isRequired
+      React.PropTypes.number,
+    ]).isRequired,
   };
 
   static defaultProps = {
     _isHovered: false,
     _isDisplayedAsSelected: false,
-    _isDisabled: false
+    _isDisabled: false,
   };
 
   /**
@@ -73,25 +73,25 @@ export default class Option extends Component {
     if (this.props._isDisplayedAsSelected) {
       optionStyle = {
         ...style.selectStyle,
-        ...this.props.selectStyle
+        ...this.props.selectStyle,
       };
       if (this.props._isDisabled) {
         optionStyle = {
           ...optionStyle,
           ...style.disabledSelectStyle,
-          ...this.props.disabledSelectStyle
+          ...this.props.disabledSelectStyle,
         };
       }
     } else {
       optionStyle = {
         ...style.style,
-        ...this.props.style
+        ...this.props.style,
       };
       if (this.props._isHovered) {
         optionStyle = {
           ...optionStyle,
           ...style.hoverStyle,
-          ...this.props.hoverStyle
+          ...this.props.hoverStyle,
         };
       }
     }
