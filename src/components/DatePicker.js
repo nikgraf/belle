@@ -22,7 +22,7 @@ function sanitizeWrapperProps(properties) {
     'onTouchEnd',
     'disabled',
     'style',
-    'className'
+    'className',
   ]);
 }
 
@@ -44,7 +44,7 @@ function sanitizeDayProps(properties) {
     'onTouchEnd',
     'onKeyDown',
     'style',
-    'className'
+    'className',
   ]);
 }
 
@@ -52,35 +52,38 @@ function sanitizeDayProps(properties) {
  * Injects pseudo classes for styles into the DOM.
  */
 function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleForTouchAndClick) {
-  const styles = [{
-    id: pseudoStyleIds.prevMonthNavStyleId,
-    style: {
-      ...defaultStyle.hoverPrevMonthNavStyle,
-      ...properties.hoverPrevMonthNavStyle
-    },
-    pseudoClass: 'hover'
+  const styles = [
+    {
+      id: pseudoStyleIds.prevMonthNavStyleId,
+      style: {
+        ...defaultStyle.hoverPrevMonthNavStyle,
+        ...properties.hoverPrevMonthNavStyle,
+      },
+      pseudoClass: 'hover',
 
-  }, {
-    id: pseudoStyleIds.nextMonthNavStyleId,
-    style: {
-      ...defaultStyle.hoverNextMonthNavStyle,
-      ...properties.hoverNextMonthNavStyle
+    }, {
+      id: pseudoStyleIds.nextMonthNavStyleId,
+      style: {
+        ...defaultStyle.hoverNextMonthNavStyle,
+        ...properties.hoverNextMonthNavStyle,
+      },
+      pseudoClass: 'hover',
     },
-    pseudoClass: 'hover'
-  }];
+  ];
   let focusStyle;
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
     focusStyle = {
       ...defaultStyle.focusStyle,
-      ...properties.focusStyle
+      ...properties.focusStyle,
     };
   }
+
   styles.push({
     id: pseudoStyleIds.styleId,
     style: focusStyle,
-    pseudoClass: 'focus'
+    pseudoClass: 'focus',
   });
   injectStyles(styles);
 }
@@ -109,7 +112,7 @@ export default class DatePicker extends Component {
       localeData: getLocaleData(properties.locale),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       dayProps: sanitizeDayProps(properties.dayProps),
-      preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick
+      preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick,
     };
   }
 
@@ -121,8 +124,9 @@ export default class DatePicker extends Component {
     value: PropTypes.instanceOf(Date),
     valueLink: PropTypes.shape({
       value: PropTypes.instanceOf(Date),
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }),
+
     // component config related props
     locale: PropTypes.string,
     month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
@@ -135,6 +139,7 @@ export default class DatePicker extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     preventFocusStyleForTouchAndClick: PropTypes.bool,
+
     // event callbacks
     onDayFocus: PropTypes.func,
     onDayBlur: PropTypes.func,
@@ -145,9 +150,11 @@ export default class DatePicker extends Component {
     onDayTouchEnd: PropTypes.func,
     onUpdate: PropTypes.func,
     onMonthChange: PropTypes.func,
+
     // props for wrapper and day
     wrapperProps: PropTypes.object,
     dayProps: PropTypes.object,
+
     // ClassNames
     wrapperClassName: PropTypes.string,
     navBarClassName: PropTypes.string,
@@ -156,6 +163,7 @@ export default class DatePicker extends Component {
     monthLabelClassName: PropTypes.string,
     dayLabelClassName: PropTypes.string,
     dayClassName: PropTypes.string,
+
     // wrapper styles
     style: PropTypes.object,
     disabledStyle: PropTypes.object,
@@ -164,22 +172,28 @@ export default class DatePicker extends Component {
     activeStyle: PropTypes.object,
     focusStyle: PropTypes.object,
     disabledHoverStyle: PropTypes.object,
+
     // navbar styles
     navBarStyle: PropTypes.object,
+
     // prevMonthNav styles
     prevMonthNavStyle: PropTypes.object,
     hoverPrevMonthNavStyle: PropTypes.object,
     activePrevMonthNavStyle: PropTypes.object,
+
     // nextMonthNav styles
     nextMonthNavStyle: PropTypes.object,
     hoverNextMonthNavStyle: PropTypes.object,
     activeNextMonthNavStyle: PropTypes.object,
+
     // monthlbl styles
     monthLabelStyle: PropTypes.object,
+
     // daylbl styles
     dayLabelStyle: PropTypes.object,
     disabledDayLabelStyle: PropTypes.object,
     weekendLabelStyle: PropTypes.object,
+
     // day styles
     dayStyle: PropTypes.object,
     disabledDayStyle: PropTypes.object,
@@ -191,7 +205,7 @@ export default class DatePicker extends Component {
     todayStyle: PropTypes.object,
     selectedDayStyle: PropTypes.object,
     otherMonthDayStyle: PropTypes.object,
-    weekendStyle: PropTypes.object
+    weekendStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -202,7 +216,7 @@ export default class DatePicker extends Component {
     disabled: false,
     readOnly: false,
     showOtherMonthDate: true,
-    styleWeekend: false
+    styleWeekend: false,
   };
 
   /**
@@ -228,7 +242,7 @@ export default class DatePicker extends Component {
       localeData: getLocaleData(properties.locale),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       dayProps: sanitizeDayProps(properties.dayProps),
-      preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick
+      preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick,
     };
 
     if (has(properties, 'valueLink')) {
@@ -257,11 +271,12 @@ export default class DatePicker extends Component {
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
       const newState = {
-        isWrapperFocused: true
+        isWrapperFocused: true,
       };
       if (!this.state.focusedDay) {
         newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
       }
+
       this.setState(newState);
     }
   }
@@ -273,7 +288,7 @@ export default class DatePicker extends Component {
     if (!this.props.disabled) {
       this.setState({
         isWrapperFocused: false,
-        focusedDay: undefined
+        focusedDay: undefined,
       });
     }
   }
@@ -284,7 +299,7 @@ export default class DatePicker extends Component {
   _onWrapperMouseDown(event) {
     if (!this.props.disabled && event.button === 0) {
       this.setState({
-        isWrapperActive: true
+        isWrapperActive: true,
       });
     }
   }
@@ -295,7 +310,7 @@ export default class DatePicker extends Component {
   _onWrapperMouseUp(event) {
     if (!this.props.disabled && event.button === 0) {
       this.setState({
-        isWrapperActive: false
+        isWrapperActive: false,
       });
     }
   }
@@ -305,7 +320,7 @@ export default class DatePicker extends Component {
    */
   _onWrapperMouseOver() {
     this.setState({
-      isWrapperHovered: true
+      isWrapperHovered: true,
     });
   }
 
@@ -314,7 +329,7 @@ export default class DatePicker extends Component {
    */
   _onWrapperMouseOut() {
     this.setState({
-      isWrapperHovered: false
+      isWrapperHovered: false,
     });
   }
 
@@ -324,7 +339,7 @@ export default class DatePicker extends Component {
   _onWrapperTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
       this.setState({
-        isWrapperActive: true
+        isWrapperActive: true,
       });
     }
   }
@@ -335,7 +350,7 @@ export default class DatePicker extends Component {
   _onWrapperTouchEnd() {
     if (!this.props.disabled) {
       this.setState({
-        isWrapperActive: false
+        isWrapperActive: false,
       });
     }
   }
@@ -387,7 +402,7 @@ export default class DatePicker extends Component {
       this._triggerSelectDate(day);
       this.setState({
         activeDay: dayKey,
-        focusedDay: dayKey
+        focusedDay: dayKey,
       });
     }
 
@@ -403,7 +418,7 @@ export default class DatePicker extends Component {
   _onDayMouseUp(dayKey, event) {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
       this.setState({
-        activeDay: null
+        activeDay: null,
       });
     }
 
@@ -418,7 +433,7 @@ export default class DatePicker extends Component {
   _onDayMouseOver(dayKey) {
     if (!this.props.disabled && !this.props.readOnly) {
       this.setState({
-        hoveredDay: dayKey
+        hoveredDay: dayKey,
       });
     }
   }
@@ -429,7 +444,7 @@ export default class DatePicker extends Component {
   _onDayMouseOut(dayKey, event) {
     if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === dayKey) {
       this.setState({
-        hoveredDay: 0
+        hoveredDay: 0,
       });
     }
   }
@@ -442,7 +457,7 @@ export default class DatePicker extends Component {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
       this._triggerSelectDate(day);
       this.setState({
-        activeDay: dayKey
+        activeDay: dayKey,
       });
     }
 
@@ -458,7 +473,7 @@ export default class DatePicker extends Component {
   _onDayTouchEnd(dayKey, event) {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === dayKey) {
       this.setState({
-        activeDay: null
+        activeDay: null,
       });
     }
 
@@ -477,17 +492,18 @@ export default class DatePicker extends Component {
       if (date) {
         dateValue = new Date(this.state.year, this.state.month, date);
       }
+
       if (has(this.props, 'valueLink')) {
         this.props.valueLink.requestChange(dateValue);
       } else if (!has(this.props, 'value')) {
         this.setState({
-          dateValue: dateValue
+          dateValue: dateValue,
         });
       }
 
       if (this.props.onUpdate) {
         this.props.onUpdate({
-          value: dateValue
+          value: dateValue,
         });
       }
     }
@@ -504,6 +520,7 @@ export default class DatePicker extends Component {
       } else {
         dateValue = date.getDate();
       }
+
       this._triggerSelectDate(dateValue);
     }
   }
@@ -522,8 +539,9 @@ export default class DatePicker extends Component {
     } else if (currentFocusedDay.getMonth() > currentMonth) {
       this._increaseMonth();
     }
+
     this.setState({
-      focusedDay: currentFocusedDayKey
+      focusedDay: currentFocusedDayKey,
     });
   }
 
@@ -535,7 +553,7 @@ export default class DatePicker extends Component {
     if (event.button === 0 && !this.props.disabled) {
       this._decreaseMonth();
       this.setState({
-        isPrevMonthNavActive: true
+        isPrevMonthNavActive: true,
       });
     }
   }
@@ -547,7 +565,7 @@ export default class DatePicker extends Component {
   _onPrevMonthNavMouseUp(event) {
     if (event.button === 0 && !this.props.disabled) {
       this.setState({
-        isPrevMonthNavActive: false
+        isPrevMonthNavActive: false,
       });
     }
   }
@@ -560,7 +578,7 @@ export default class DatePicker extends Component {
     if (!this.props.disabled && event.touches.length === 1) {
       this._decreaseMonth();
       this.setState({
-        isPrevMonthNavActive: true
+        isPrevMonthNavActive: true,
       });
     }
   }
@@ -571,7 +589,7 @@ export default class DatePicker extends Component {
   _onPrevMonthNavTouchEnd() {
     if (!this.props.disabled) {
       this.setState({
-        isPrevMonthNavActive: false
+        isPrevMonthNavActive: false,
       });
     }
   }
@@ -584,7 +602,7 @@ export default class DatePicker extends Component {
     if (event.button === 0 && !this.props.disabled) {
       this._increaseMonth();
       this.setState({
-        isNextMonthNavActive: true
+        isNextMonthNavActive: true,
       });
     }
   }
@@ -595,7 +613,7 @@ export default class DatePicker extends Component {
   _onNextMonthNavMouseUp(event) {
     if (event.button === 0 && !this.props.disabled) {
       this.setState({
-        isNextMonthNavActive: false
+        isNextMonthNavActive: false,
       });
     }
   }
@@ -608,7 +626,7 @@ export default class DatePicker extends Component {
     if (!this.props.disabled && event.touches.length === 1) {
       this._increaseMonth();
       this.setState({
-        isNextMonthNavActive: true
+        isNextMonthNavActive: true,
       });
     }
   }
@@ -619,7 +637,7 @@ export default class DatePicker extends Component {
   _onNextMonthNavTouchEnd() {
     if (!this.props.disabled) {
       this.setState({
-        isNextMonthNavActive: false
+        isNextMonthNavActive: false,
       });
     }
   }
@@ -637,9 +655,10 @@ export default class DatePicker extends Component {
       newMonth = this.state.month - 1;
       newYear = this.state.year;
     }
+
     this.setState({
       month: newMonth,
-      year: newYear
+      year: newYear,
     });
     if (this.props.onMonthChange) {
       this.props.onMonthChange(newMonth + 1);
@@ -659,9 +678,10 @@ export default class DatePicker extends Component {
       newMonth = this.state.month + 1;
       newYear = this.state.year;
     }
+
     this.setState({
       month: newMonth,
-      year: newYear
+      year: newYear,
     });
     if (this.props.onMonthChange) {
       this.props.onMonthChange(newMonth + 1);
@@ -705,31 +725,31 @@ export default class DatePicker extends Component {
   _renderNavBar() {
     const navBarStyle = {
       ...defaultStyle.navBarStyle,
-      ...this.props.navBarStyle
+      ...this.props.navBarStyle,
     };
     const monthLabelStyle = {
       ...defaultStyle.monthLabelStyle,
-      ...this.props.monthLabelStyle
+      ...this.props.monthLabelStyle,
     };
     let prevMonthNavStyle = {
       ...defaultStyle.prevMonthNavStyle,
-      ...this.props.prevMonthNavStyle
+      ...this.props.prevMonthNavStyle,
     };
     let nextMonthNavStyle = {
       ...defaultStyle.nextMonthNavStyle,
-      ...this.props.nextMonthNavStyle
+      ...this.props.nextMonthNavStyle,
     };
     if (this.state.isPrevMonthNavActive) {
       prevMonthNavStyle = {
         ...prevMonthNavStyle,
         ...defaultStyle.activePrevMonthNavStyle,
-        ...this.props.activePrevMonthNavStyle
+        ...this.props.activePrevMonthNavStyle,
       };
     } else if (this.state.isNextMonthNavActive) {
       nextMonthNavStyle = {
         ...nextMonthNavStyle,
         ...defaultStyle.activeNextMonthNavStyle,
-        ...this.props.activeNextMonthNavStyle
+        ...this.props.activeNextMonthNavStyle,
       };
     }
 
@@ -759,19 +779,20 @@ export default class DatePicker extends Component {
   _renderWeekHeader() {
     let dayLabelStyle = {
       ...defaultStyle.dayLabelStyle,
-      ...this.props.dayLabelStyle
+      ...this.props.dayLabelStyle,
     };
     if (this.props.disabled) {
       dayLabelStyle = {
         ...dayLabelStyle,
         ...defaultStyle.disabledDayLabelStyle,
-        ...this.props.disabledDayLabelStyle
+        ...this.props.disabledDayLabelStyle,
       };
     }
+
     const weekendLabelStyle = {
       ...dayLabelStyle,
       ...defaultStyle.weekendLabelStyle,
-      ...this.props.weekendLabelStyle
+      ...this.props.weekendLabelStyle,
     };
     let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
     dayNames = this.state.localeData.isRTL ? reverse(dayNames) : dayNames;
@@ -822,14 +843,14 @@ export default class DatePicker extends Component {
 
     let dayStyle = {
       ...defaultStyle.dayStyle,
-      ...this.props.dayStyle
+      ...this.props.dayStyle,
     };
 
     if (this.props.readOnly) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.readOnlyDayStyle,
-        ...this.props.readOnlyDayStyle
+        ...this.props.readOnlyDayStyle,
       };
     }
 
@@ -837,13 +858,13 @@ export default class DatePicker extends Component {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.disabledDayStyle,
-        ...this.props.disabledDayStyle
+        ...this.props.disabledDayStyle,
       };
       if (isNotOtherMonth && this.state.hoveredDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.disabledHoverDayStyle,
-          ...this.props.disabledHoverDayStyle
+          ...this.props.disabledHoverDayStyle,
         };
       }
     }
@@ -852,7 +873,7 @@ export default class DatePicker extends Component {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.weekendStyle,
-        ...this.props.weekendStyle
+        ...this.props.weekendStyle,
       };
     }
 
@@ -861,49 +882,53 @@ export default class DatePicker extends Component {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.todayStyle,
-          ...this.props.todayStyle
+          ...this.props.todayStyle,
         };
         ariaCurrent = 'date';
       }
+
       if (this.state.dateValue && day === this.state.dateValue.getDate()
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.selectedDayStyle,
-          ...this.props.selectedDayStyle
+          ...this.props.selectedDayStyle,
         };
         ariaSelected = true;
       }
+
       if (!this.props.disabled && this.state.hoveredDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.hoverDayStyle,
-          ...this.props.hoverDayStyle
+          ...this.props.hoverDayStyle,
         };
       }
+
       if (!this.props.disabled && this.state.focusedDay === dayKey) {
         dayStyle = {
           ...dayStyle,
-          outline: 0
+          outline: 0,
         };
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.focusDayStyle,
-          ...this.props.focusDayStyle
+          ...this.props.focusDayStyle,
         };
       }
+
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.activeDayStyle,
-          ...this.props.activeDayStyle
+          ...this.props.activeDayStyle,
         };
       }
     } else {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.otherMonthDayStyle,
-        ...this.props.otherMonthDayStyle
+        ...this.props.otherMonthDayStyle,
       };
     }
 
@@ -958,26 +983,27 @@ export default class DatePicker extends Component {
   render() {
     let style = {
       ...defaultStyle.style,
-      ...this.props.style
+      ...this.props.style,
     };
     if (this.props.readOnly) {
       style = {
         ...style,
         ...defaultStyle.readOnlyStyle,
-        ...this.props.readOnlyStyle
+        ...this.props.readOnlyStyle,
       };
     }
+
     if (this.props.disabled) {
       style = {
         ...style,
         ...defaultStyle.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
       if (this.state.isWrapperHovered) {
         style = {
           ...style,
           ...defaultStyle.disabledHoverStyle,
-          ...this.props.disabledHoverStyle
+          ...this.props.disabledHoverStyle,
         };
       }
     } else {
@@ -985,20 +1011,21 @@ export default class DatePicker extends Component {
         style = {
           ...style,
           ...defaultStyle.hoverStyle,
-          ...this.props.hoverStyle
+          ...this.props.hoverStyle,
         };
       }
+
       if (this.state.isWrapperActive) {
         style = {
           ...style,
           ...defaultStyle.activeStyle,
-          ...this.props.activeStyle
+          ...this.props.activeStyle,
         };
       } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
         style = {
           ...style,
           ...defaultStyle.focusStyle,
-          ...this.props.focusStyle
+          ...this.props.focusStyle,
         };
       }
     }
