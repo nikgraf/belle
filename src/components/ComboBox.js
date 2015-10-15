@@ -14,42 +14,42 @@ import style from '../style/combo-box';
 function updatePseudoClassStyle(styleId, caretStyleId, properties) {
   const hoverStyle = {
     ...style.hoverStyle,
-    ...properties.hoverStyle
+    ...properties.hoverStyle,
   };
   const focusStyle = {
     ...style.focusStyle,
-    ...properties.focusStyle
+    ...properties.focusStyle,
   };
   const disabledHoverStyle = {
     ...style.disabledHoverStyle,
-    ...properties.disabledHoverStyle
+    ...properties.disabledHoverStyle,
   };
   const caretFocusStyle = {
-    ...style.caretFocusStyle
+    ...style.caretFocusStyle,
   };
 
   const styles = [
     {
       id: styleId,
       style: hoverStyle,
-      pseudoClass: 'hover'
+      pseudoClass: 'hover',
     },
     {
       id: styleId,
       style: disabledHoverStyle,
       pseudoClass: 'hover',
-      disabled: true
+      disabled: true,
     },
     {
       id: styleId,
       style: focusStyle,
-      pseudoClass: 'focus'
+      pseudoClass: 'focus',
     },
     {
       id: caretStyleId,
       style: caretFocusStyle,
-      pseudoClass: 'focus'
-    }
+      pseudoClass: 'focus',
+    },
   ];
   injectStyles(styles);
 }
@@ -61,7 +61,7 @@ function sanitizeWrapperProps(properties) {
   return omit(properties, [
     'style',
     'aria-label',
-    'aria-disabled'
+    'aria-disabled',
   ]);
 }
 
@@ -87,7 +87,7 @@ function sanitizeInputProps(properties) {
     'onKeyDown',
     'aria-disabled',
     'aria-autocomplete',
-    'children'
+    'children',
   ]);
 }
 
@@ -100,7 +100,7 @@ function sanitizeCaretProps(properties) {
     'style',
     'className',
     'onClick',
-    'tabIndex'
+    'tabIndex',
   ]);
 }
 
@@ -111,7 +111,7 @@ function sanitizeMenuProps(properties) {
   return omit(properties, [
     'style',
     'ref',
-    'role'
+    'role',
   ]);
 }
 
@@ -122,6 +122,7 @@ function filterFunc(inputValue, optionValue) {
   if (inputValue && optionValue) {
     return optionValue.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
   }
+
   return false;
 }
 
@@ -149,7 +150,7 @@ export default class ComboBox extends Component {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
-      menuProps: sanitizeMenuProps(properties.menuProps)
+      menuProps: sanitizeMenuProps(properties.menuProps),
     };
 
     this.filteredOptions = ComboBox.filterOptions(inputValue, properties);
@@ -163,7 +164,7 @@ export default class ComboBox extends Component {
     value: React.PropTypes.string,
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.string,
-      requestChange: React.PropTypes.func.isRequired
+      requestChange: React.PropTypes.func.isRequired,
     }),
     placeholder: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -193,7 +194,7 @@ export default class ComboBox extends Component {
     displayCaret: React.PropTypes.bool,
     enableHint: React.PropTypes.bool,
     filterFunc: React.PropTypes.func,
-    'aria-label': React.PropTypes.string
+    'aria-label': React.PropTypes.string,
   };
 
   static defaultProps = {
@@ -203,7 +204,7 @@ export default class ComboBox extends Component {
     'aria-label': 'ComboBox',
     filterFunc: filterFunc,
     tabIndex: 0,
-    children: []
+    children: [],
   };
 
   /**
@@ -229,6 +230,7 @@ export default class ComboBox extends Component {
         } else if (inputValue && inputValue.length > 0) {
           hint = filteredOptions[0].props.value;
         }
+
         if (hint) {
           if (inputValue && inputValue.length > 0) {
             const position = hint.toLowerCase().indexOf(inputValue.toLowerCase());
@@ -261,7 +263,7 @@ export default class ComboBox extends Component {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
-      menuProps: sanitizeMenuProps(properties.menuProps)
+      menuProps: sanitizeMenuProps(properties.menuProps),
     };
 
     if (has(properties, 'valueLink')) {
@@ -309,6 +311,7 @@ export default class ComboBox extends Component {
         const value = entry.getAttribute('data-belle-value');
         this._triggerChange(value);
       }
+
       this._touchStartedAt = undefined;
     }
   }
@@ -330,7 +333,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     }
 
@@ -345,7 +348,7 @@ export default class ComboBox extends Component {
   _onFocus(event) {
     if (!this.props.disabled) {
       this.setState({
-        isOpen: true
+        isOpen: true,
       });
     }
 
@@ -361,7 +364,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const isOpen = !this.state.isOpen;
       this.setState({
-        isOpen: isOpen
+        isOpen: isOpen,
       });
     }
   }
@@ -373,7 +376,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       this.setState({
-        focusedOptionIndex: index
+        focusedOptionIndex: index,
       });
     }
   }
@@ -384,7 +387,7 @@ export default class ComboBox extends Component {
   _onMouseLeaveAtOption() {
     if (!this.props.disabled) {
       this.setState({
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     }
   }
@@ -415,7 +418,7 @@ export default class ComboBox extends Component {
           event.key === 'ArrowUp') {
           event.preventDefault();
           this.setState({
-            isOpen: true
+            isOpen: true,
           });
         }
       } else {
@@ -444,7 +447,7 @@ export default class ComboBox extends Component {
           event.preventDefault();
           this.setState({
             isOpen: false,
-            focusedOptionIndex: undefined
+            focusedOptionIndex: undefined,
           });
         }
       }
@@ -464,8 +467,9 @@ export default class ComboBox extends Component {
     if (this.state.focusedOptionIndex !== undefined && (this.state.focusedOptionIndex + 1) < this.filteredOptions.length) {
       index = this.state.focusedOptionIndex + 1;
     }
+
     this.setState({
-      focusedOptionIndex: index
+      focusedOptionIndex: index,
     });
   }
 
@@ -479,8 +483,9 @@ export default class ComboBox extends Component {
       if (this.state.focusedOptionIndex) {
         index = this.state.focusedOptionIndex - 1;
       }
+
       this.setState({
-        focusedOptionIndex: index
+        focusedOptionIndex: index,
       });
     }
   }
@@ -514,18 +519,18 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: false,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     } else {
       this.setState({
         inputValue: value,
         isOpen: false,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
       this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
@@ -562,18 +567,18 @@ export default class ComboBox extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         isOpen: true,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         isOpen: true,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
     } else {
       this.setState({
         inputValue: value,
         isOpen: true,
-        focusedOptionIndex: undefined
+        focusedOptionIndex: undefined,
       });
       this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
@@ -604,29 +609,31 @@ export default class ComboBox extends Component {
       } else {
         filteredOptions = getArrayForReactChildren(properties.children, (entry) => { return entry; });
       }
+
       if (properties.maxOptions) {
         filteredOptions = filteredOptions.splice(0, properties.maxOptions);
       }
     }
+
     return filteredOptions;
   }
 
   render() {
     let inputStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
     const hintStyle = {
       ...style.hintStyle,
-      ...this.props.hintStyle
+      ...this.props.hintStyle,
     };
     const wrapperStyle = {
       ...style.wrapperStyle,
-      ...this.props.wrapperStyle
+      ...this.props.wrapperStyle,
     };
     const menuStyle = {
       ...style.menuStyle,
-      ...this.props.menuStyle
+      ...this.props.menuStyle,
     };
 
     const hint = this.props.enableHint ? this._getHint() : undefined;
@@ -638,7 +645,7 @@ export default class ComboBox extends Component {
       inputStyle = {
         ...inputStyle,
         ...style.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
     }
 
@@ -650,17 +657,17 @@ export default class ComboBox extends Component {
           ...style.caretToOpenStyle,
           ...this.props.caretToOpenStyle,
           ...style.disabledCaretToOpenStyle,
-          ...this.props.disabledCaretToOpenStyle
+          ...this.props.disabledCaretToOpenStyle,
         };
       } else if (this.state.isOpen) {
         caretStyle = {
           ...style.caretToCloseStyle,
-          ...this.props.caretToCloseStyle
+          ...this.props.caretToCloseStyle,
         };
       } else {
         caretStyle = {
           ...style.caretToOpenStyle,
-          ...this.props.caretToOpenStyle
+          ...this.props.caretToOpenStyle,
         };
       }
     }
@@ -708,7 +715,7 @@ export default class ComboBox extends Component {
             React.Children.map(this.filteredOptions, (entry, index) => {
               const isHovered = this.state.focusedOptionIndex === index;
               const option = React.cloneElement(entry, {
-                _isHovered: isHovered
+                _isHovered: isHovered,
               });
 
               return (
@@ -720,7 +727,7 @@ export default class ComboBox extends Component {
                     onClick={ this._onClickAtOption.bind(this) }
                     onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
                     onMouseLeave={ this._onMouseLeaveAtOption.bind(this) }
-                    onMouseDown={ (event)=> {event.preventDefault(); } }
+                    onMouseDown={ (event) => event.preventDefault() }
                     role="option">
                   { option }
                 </li>
