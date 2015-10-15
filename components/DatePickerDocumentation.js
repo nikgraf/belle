@@ -9,7 +9,7 @@ const TODAY = new Date();
 
 const basicCodeExample = `<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }/>`;
 
-const htmlStructure = `<div style={ wrapperStyle }>
+const htmlStructure = `<div style={ style }>
   <div>
     <div style={ navBarStyle }>
       <span style={ prevMonthStyle }></span>
@@ -467,8 +467,8 @@ export default React.createClass({
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }>wrapperStyle, disabledWrapperStyle, readOnlyWrapperStyle, hoverWrapperStyle, activeWrapperStyle,
-          focusWrapperStyle, disabledHoverWrapperStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
+        <span style={ {color: 'grey'} }>style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle,
+          focusStyle, disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
           nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLblStyle, dayLblStyle, disabledDayLblStyle, weekendLblStyle,
           dayStyle, disabledDayStyle, readOnlyDayStyle, hoverDayStyle, activeDayStyle, focusDayStyle, disabledHoverDayStyle, todayStyle,
           selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
