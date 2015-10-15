@@ -37,7 +37,7 @@ function sanitizeWrapperProps(properties) {
     'characterStyle',
     'activeCharacterStyle',
     'hoverCharacterStyle',
-    'characterProps'
+    'characterProps',
   ]);
 }
 
@@ -47,7 +47,7 @@ function sanitizeWrapperProps(properties) {
 function sanitizeCharacterProps(properties) {
   return omit(properties, [
     'data-belle-value',
-    'style'
+    'style',
   ]);
 }
 
@@ -61,15 +61,16 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusSt
   } else {
     ratingFocusStyle = {
       ...style.focusStyle,
-      ...properties.focusStyle
+      ...properties.focusStyle,
     };
   }
+
   const styles = [
     {
       id: ratingWrapperStyleId,
       style: ratingFocusStyle,
-      pseudoClass: 'focus'
-    }
+      pseudoClass: 'focus',
+    },
   ];
   injectStyles(styles);
 }
@@ -101,7 +102,7 @@ export default class Rating extends Component {
       generalProps: sanitizeWrapperProps(properties),
       characterProps: sanitizeCharacterProps(properties.characterProps),
       isFocus: false,
-      isActive: false
+      isActive: false,
     };
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
@@ -114,7 +115,7 @@ export default class Rating extends Component {
     value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
     valueLink: React.PropTypes.shape({
       value: React.PropTypes.oneOf([1, 2, 3, 4, 5]),
-      requestChange: React.PropTypes.func.isRequired
+      requestChange: React.PropTypes.func.isRequired,
     }),
     disabled: React.PropTypes.bool,
     tabIndex: React.PropTypes.number,
@@ -143,7 +144,7 @@ export default class Rating extends Component {
     onTouchCancel: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func
+    onKeyDown: React.PropTypes.func,
   };
 
   /**
@@ -153,7 +154,7 @@ export default class Rating extends Component {
     disabled: false,
     tabIndex: 0,
     character: '★',
-    'aria-label': 'rating'
+    'aria-label': 'rating',
   };
 
   /**
@@ -173,7 +174,7 @@ export default class Rating extends Component {
   componentWillReceiveProps(properties) {
     const newState = {
       wrapperProps: sanitizeWrapperProps(properties),
-      characterProps: sanitizeCharacterProps(properties.characterProps)
+      characterProps: sanitizeCharacterProps(properties.characterProps),
     };
 
     if (properties.valueLink) {
@@ -181,6 +182,7 @@ export default class Rating extends Component {
     } else if (properties.value) {
       newState.value = properties.value;
     }
+
     this.setState(newState);
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
@@ -216,13 +218,14 @@ export default class Rating extends Component {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value,
-        isHover: true
+        isHover: true,
       });
     } else {
       this.setState({
-        isHover: true
+        isHover: true,
       });
     }
+
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
@@ -237,10 +240,11 @@ export default class Rating extends Component {
       const value = Number(event.target.getAttribute('data-belle-value'));
       if (this.state.focusedValue !== value) {
         this.setState({
-          focusedValue: value
+          focusedValue: value,
         });
       }
     }
+
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
     }
@@ -253,11 +257,11 @@ export default class Rating extends Component {
     if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
-        isHover: false
+        isHover: false,
       });
     } else {
       this.setState({
-        isHover: false
+        isHover: false,
       });
     }
 
@@ -265,7 +269,6 @@ export default class Rating extends Component {
       this.props.onMouseLeave(event);
     }
   }
-
 
   /**
    * Sets isActive state to true.
@@ -313,9 +316,10 @@ export default class Rating extends Component {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this.setState({
         focusedValue: value,
-        isActive: true
+        isActive: true,
       });
     }
+
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
@@ -340,6 +344,7 @@ export default class Rating extends Component {
         // see http://stackoverflow.com/a/9678166/837709
         cancelAnimationFrame.call(window, this.previousTouchMoveFrame);
       }
+
       this.previousTouchMoveFrame = animationFrame;
     }
 
@@ -371,9 +376,10 @@ export default class Rating extends Component {
     if (!this.props.disabled) {
       this.setState({
         isActive: false,
-        focusedValue: undefined
+        focusedValue: undefined,
       });
     }
+
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
@@ -387,9 +393,10 @@ export default class Rating extends Component {
       this.setState({
         focusedValue: undefined,
         isFocus: false,
-        isActive: false
+        isActive: false,
       });
     }
+
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
@@ -433,6 +440,7 @@ export default class Rating extends Component {
         this._onEscapeKeyDown();
       }
     }
+
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
@@ -445,7 +453,7 @@ export default class Rating extends Component {
     let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
     newValue = newValue > 0 ? (newValue - 1) : 0;
     this.setState({
-      focusedValue: newValue
+      focusedValue: newValue,
     });
   }
 
@@ -461,8 +469,9 @@ export default class Rating extends Component {
     } else {
       newValue = 5;
     }
+
     this.setState({
-      focusedValue: newValue
+      focusedValue: newValue,
     });
   }
 
@@ -477,6 +486,7 @@ export default class Rating extends Component {
       } else {
         newValue = this.state.focusedValue;
       }
+
       this._triggerComponentUpdate(newValue);
     }
   }
@@ -487,7 +497,7 @@ export default class Rating extends Component {
    */
   _onEscapeKeyDown() {
     this.setState({
-      focusedValue: undefined
+      focusedValue: undefined,
     });
   }
 
@@ -501,6 +511,7 @@ export default class Rating extends Component {
     } else {
       value = (this.state.value) ? this.state.value : 0;
     }
+
     return value;
   }
 
@@ -512,11 +523,10 @@ export default class Rating extends Component {
     const value = Number(touchedElement.getAttribute('data-belle-value'));
     if (value && this.state.focusedValue !== value) {
       this.setState({
-        focusedValue: value
+        focusedValue: value,
       });
     }
   }
-
 
   /**
    * update component when component is clicked, touch ends, enter or space key are hit
@@ -527,18 +537,18 @@ export default class Rating extends Component {
       this.props.valueLink.requestChange(value);
       this.setState({
         focusedValue: undefined,
-        isActive: false
+        isActive: false,
       });
     } else if (has(this.props, 'value')) {
       this.setState({
         focusedValue: undefined,
-        isActive: false
+        isActive: false,
       });
     } else {
       this.setState({
         focusedValue: undefined,
         isActive: false,
-        value: value
+        value: value,
       });
     }
 
@@ -556,38 +566,38 @@ export default class Rating extends Component {
 
     let characterStyle = {
       ...style.characterStyle,
-      ...this.props.characterStyle
+      ...this.props.characterStyle,
     };
 
     if (this.state.isActive) {
       characterStyle = {
         ...characterStyle,
         ...style.activeCharacterStyle,
-        ...this.props.activeCharacterStyle
+        ...this.props.activeCharacterStyle,
       };
     } else if (this.state.isHover) {
       characterStyle = {
         ...characterStyle,
         ...style.hoverCharacterStyle,
-        ...this.props.hoverCharacterStyle
+        ...this.props.hoverCharacterStyle,
       };
     }
 
     let wrapperStyle = {
       ...style.style,
-      ...this.props.style
+      ...this.props.style,
     };
     if (this.props.disabled) {
       wrapperStyle = {
         ...wrapperStyle,
         ...style.disabledStyle,
-        ...this.props.disabledStyle
+        ...this.props.disabledStyle,
       };
       if (this.state.isHover) {
         wrapperStyle = {
           ...wrapperStyle,
           ...style.disabledHoverStyle,
-          ...this.props.disabledHoverStyle
+          ...this.props.disabledHoverStyle,
         };
       }
     } else {
@@ -595,14 +605,15 @@ export default class Rating extends Component {
         wrapperStyle = {
           ...wrapperStyle,
           ...style.focusStyle,
-          ...this.props.focusStyle
+          ...this.props.focusStyle,
         };
       }
+
       if (this.state.isHover) {
         wrapperStyle = {
           ...wrapperStyle,
           ...style.hoverStyle,
-          ...this.props.hoverStyle
+          ...this.props.hoverStyle,
         };
       }
     }
@@ -644,7 +655,6 @@ export default class Rating extends Component {
                );
              })
            }
-
       </div>
     );
   }
