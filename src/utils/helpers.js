@@ -24,6 +24,7 @@ export function omit(obj, fields) {
         result[key] = obj[key];
       }
     }
+
     return result;
   }
 }
@@ -99,7 +100,7 @@ export function mapObject(obj, predicate) {
   if (obj) {
     const result = [];
     const objKeys = keys(obj);
-    objKeys.forEach( (key, index) => {
+    objKeys.forEach((key, index) => {
       if (predicate) {
         result[index] = predicate(obj[key], key);
       }
@@ -125,6 +126,7 @@ export function find(iterable, predicate, context) {
         break;
       }
     }
+
     return result;
   }
 }
@@ -139,6 +141,7 @@ export function reverse(iterable) {
     for (let index = iterable.length - 1; index >= 0; index--) {
       result.push(iterable[index]);
     }
+
     return result;
   }
 }
@@ -156,8 +159,10 @@ export function shift(iterable, positions) {
       for (let index = 0; index < iterable.length; index++) {
         result.push(iterable[(index + positions) % arrayLength]);
       }
+
       return result;
     }
+
     return iterable;
   }
 }
@@ -190,6 +195,7 @@ export function findIndex(iterable, predicate, context) {
         break;
       }
     }
+
     return result;
   }
 }
@@ -225,6 +231,7 @@ export function size(iterable) {
   if (iterable) {
     return iterable.length;
   }
+
   return 0;
 }
 
@@ -244,6 +251,7 @@ export function some(iterable, predicate, context) {
         break;
       }
     }
+
     return result;
   }
 }
@@ -330,7 +338,6 @@ export function filterReactChildren(children, predicate) {
   }
 }
 
-
 /**
  * Looks through a collection of React children elements, filtering them according to the predicate passed.
  *
@@ -351,6 +358,7 @@ export function flattenReactChildren(children) {
     if (Array.isArray(children)) {
       return flatten(children);
     }
+
     return getArrayForReactChildren(children);
   }
 }

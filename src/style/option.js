@@ -1,5 +1,4 @@
 const optionStyle = {
-
   style: {
     boxSizing: 'border-box',
     color: '#666',
@@ -21,12 +20,12 @@ const optionStyle = {
     Prevent flickering while tapping on WebKit
     http://stackoverflow.com/a/3516243/837709
     */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   hoverStyle: {
     background: '#F5F5F5',
-    color: '#444'
+    color: '#444',
   },
 
   selectStyle: {
@@ -49,14 +48,13 @@ const optionStyle = {
     Prevent flickering while tapping on WebKit
     http://stackoverflow.com/a/3516243/837709
     */
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
   },
 
   disabledSelectStyle: {
     color: '#9F9F9F',
-    padding: 0
-  }
-
+    padding: 0,
+  },
 };
 
 export default optionStyle;

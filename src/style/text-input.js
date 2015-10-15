@@ -1,5 +1,4 @@
 const textInputStyle = {
-
   style: {
     /* normalize.css v3.0.1 */
     font: 'inherit',
@@ -23,29 +22,28 @@ const textInputStyle = {
 
     /* animations */
     transition: 'border-bottom 0.2s',
-    transitionTimingFunction: 'ease-out'
+    transitionTimingFunction: 'ease-out',
   },
 
   hoverStyle: {
-    borderBottom: '1px solid #92D6EF'
+    borderBottom: '1px solid #92D6EF',
   },
 
   focusStyle: {
     outline: 0, // to avoid default focus behaviour
-    borderBottom: '1px solid #6EB8D4'
+    borderBottom: '1px solid #6EB8D4',
   },
 
   disabledStyle: {
     borderBottom: '1px dotted #9F9F9F',
-    color: '#9F9F9F'
+    color: '#9F9F9F',
   },
 
   disabledHoverStyle: {
     borderBottom: '1px dotted #92D6EF',
     color: '#9F9F9F',
-    cursor: 'not-allowed'
-  }
-
+    cursor: 'not-allowed',
+  },
 };
 
 export default textInputStyle;

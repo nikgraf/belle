@@ -10,6 +10,7 @@ import {localeData} from '../config/i18n';
  */
 export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
   const monthDay = new Date(year, month, 1);
+
   // Todo: simplify this calculation of first date
   let firstDate = (1 + firstDayOfWeek) - monthDay.getDay();
   firstDate = firstDate <= 1 ? firstDate : firstDate - 7;
@@ -24,8 +25,10 @@ export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
       newWeek.push(weekDate);
       monthDay.setDate(monthDay.getDate() + 1);
     }
+
     weekArray.push(newWeek);
   }
+
   return weekArray;
 }
 
@@ -40,8 +43,13 @@ export function getLocaleData(locale) {
   if (locale) {
     lData = localeData[locale];
   }
-  localeResult.monthNames = (lData && lData.monthNames) ? lData.monthNames : ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December',
+  ];
+
+  localeResult.monthNames = (lData && lData.monthNames) ? lData.monthNames : monthNames;
   localeResult.dayNamesMin = (lData && lData.dayNamesMin) ? lData.dayNamesMin : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   localeResult.firstDay = (lData && lData.firstDay) ? lData.firstDay : 0;
   localeResult.weekEnd = (lData && lData.weekEnd) ? lData.weekEnd : 0;
