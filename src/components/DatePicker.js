@@ -153,8 +153,8 @@ export default class DatePicker extends Component {
     navBarClassName: PropTypes.string,
     prevMonthNavClassName: PropTypes.string,
     nextMonthNavClassName: PropTypes.string,
-    monthLblClassName: PropTypes.string,
-    dayLblClassName: PropTypes.string,
+    monthLabelClassName: PropTypes.string,
+    dayLabelClassName: PropTypes.string,
     dayClassName: PropTypes.string,
     // wrapper styles
     style: PropTypes.object,
@@ -175,11 +175,11 @@ export default class DatePicker extends Component {
     hoverNextMonthNavStyle: PropTypes.object,
     activeNextMonthNavStyle: PropTypes.object,
     // monthlbl styles
-    monthLblStyle: PropTypes.object,
+    monthLabelStyle: PropTypes.object,
     // daylbl styles
-    dayLblStyle: PropTypes.object,
-    disabledDayLblStyle: PropTypes.object,
-    weekendLblStyle: PropTypes.object,
+    dayLabelStyle: PropTypes.object,
+    disabledDayLabelStyle: PropTypes.object,
+    weekendLabelStyle: PropTypes.object,
     // day styles
     dayStyle: PropTypes.object,
     disabledDayStyle: PropTypes.object,
@@ -679,9 +679,9 @@ export default class DatePicker extends Component {
       ...defaultStyle.navBarStyle,
       ...this.props.navBarStyle
     };
-    const monthLblStyle = {
-      ...defaultStyle.monthLblStyle,
-      ...this.props.monthLblStyle
+    const monthLabelStyle = {
+      ...defaultStyle.monthLabelStyle,
+      ...this.props.monthLabelStyle
     };
     let prevMonthNavStyle = {
       ...defaultStyle.prevMonthNavStyle,
@@ -714,8 +714,8 @@ export default class DatePicker extends Component {
                 onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
                 style= { prevMonthNavStyle }
                 className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }></span> : void 0}
-          <span style={ monthLblStyle }
-                className={ this.props.monthLblClassName }
+          <span style={ monthLabelStyle }
+                className={ this.props.monthLabelClassName }
                 role="heading"
                 /*
                   This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
@@ -739,21 +739,21 @@ export default class DatePicker extends Component {
    * Day headers will be rendered using locale information.
    */
   _renderWeekHeader() {
-    let dayLblStyle = {
-      ...defaultStyle.dayLblStyle,
-      ...this.props.dayLblStyle
+    let dayLabelStyle = {
+      ...defaultStyle.dayLabelStyle,
+      ...this.props.dayLabelStyle
     };
     if (this.props.disabled) {
-      dayLblStyle = {
-        ...dayLblStyle,
-        ...defaultStyle.disabledDayLblStyle,
-        ...this.props.disabledDayLblStyle
+      dayLabelStyle = {
+        ...dayLabelStyle,
+        ...defaultStyle.disabledDayLabelStyle,
+        ...this.props.disabledDayLabelStyle
       };
     }
-    const weekendLblStyle = {
-      ...dayLblStyle,
-      ...defaultStyle.weekendLblStyle,
-      ...this.props.weekendLblStyle
+    const weekendLabelStyle = {
+      ...dayLabelStyle,
+      ...defaultStyle.weekendLabelStyle,
+      ...this.props.weekendLabelStyle
     };
     let dayNames = shift(this.state.localeData.dayNamesMin, this.state.localeData.firstDay);
     dayNames = this.state.localeData.isRTL ? reverse(dayNames) : dayNames;
@@ -766,8 +766,8 @@ export default class DatePicker extends Component {
           map(dayNames, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLblStyle : dayLblStyle }
-                    className={ this.props.dayLblClassName }
+                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
+                    className={ this.props.dayLabelClassName }
                     role="columnheader">
                   { dayAbbr }
                 </span>

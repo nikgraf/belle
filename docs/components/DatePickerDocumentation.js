@@ -13,7 +13,7 @@ const htmlStructure = `<div style={ style }>
   <div>
     <div style={ navBarStyle }>
       <span style={ prevMonthStyle }></span>
-      <span style={ monthLblStyle }></span>
+      <span style={ monthLabelStyle }></span>
       <span style={ nextMonthStyle }></span>
     </div>
     <!-- following is repeated for each week -->
@@ -462,14 +462,14 @@ export default React.createClass({
       <p>
         ... for adding classes to various parts of html structure of date picker:
         <span style={ {color: 'grey'} }>wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
-        monthLblClassName, dayLblClassName, dayClassName</span><br />
+        monthLabelClassName, dayLabelClassName, dayClassName</span><br />
       </p>
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
         <span style={ {color: 'grey'} }>style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle,
           focusStyle, disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
-          nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLblStyle, dayLblStyle, disabledDayLblStyle, weekendLblStyle,
+          nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle, disabledDayLabelStyle, weekendLabelStyle,
           dayStyle, disabledDayStyle, readOnlyDayStyle, hoverDayStyle, activeDayStyle, focusDayStyle, disabledHoverDayStyle, todayStyle,
           selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
       </p>

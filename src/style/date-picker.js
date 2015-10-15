@@ -140,7 +140,7 @@ const datePickerStyle = {
   },
 
   // styling for month label on top of calendar
-  monthLblStyle: {
+  monthLabelStyle: {
     fontSize: 15,
     width: 125,
 
@@ -164,7 +164,7 @@ const datePickerStyle = {
   },
 
   // styling for week's day label
-  dayLblStyle: {
+  dayLabelStyle: {
     width: 40,
     height: 30,
     padding: 0,
@@ -185,11 +185,11 @@ const datePickerStyle = {
     userSelect: 'initial'
   },
 
-  disabledDayLblStyle: {
+  disabledDayLabelStyle: {
     color: '#C1BABA'
   },
 
-  weekendLblStyle: {
+  weekendLabelStyle: {
     backgroundColor: '#F0F0F0'
   },
 
