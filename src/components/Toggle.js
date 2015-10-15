@@ -900,14 +900,14 @@ export default class Toggle extends Component {
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
            className={ unionClassNames(this.props.className, this.styleId) }
-           onKeyDown={ this._onKeyDown.bind(this) }
-           onMouseDown={ this._onMouseDownOnWrapper.bind(this) }
-           onMouseUp={ this._onMouseUpOnWrapper.bind(this) }
-           onTouchStart={ this._onTouchStartOnWrapper.bind(this) }
-           onFocus={ this._onFocus.bind(this) }
-           onBlur={ this._onBlur.bind(this) }
-           onMouseEnter = { this._onMouseEnterAtSliderWrapper.bind(this) }
-           onMouseLeave = { this._onMouseLeaveAtSliderWrapper.bind(this) }
+           onKeyDown={ ::this._onKeyDown }
+           onMouseDown={ ::this._onMouseDownOnWrapper }
+           onMouseUp={ ::this._onMouseUpOnWrapper }
+           onTouchStart={ ::this._onTouchStartOnWrapper }
+           onFocus={ ::this._onFocus }
+           onBlur={ ::this._onBlur }
+           onMouseEnter = { ::this._onMouseEnterAtSliderWrapper }
+           onMouseLeave = { ::this._onMouseLeaveAtSliderWrapper }
            role={ role }
            aria-checked={ this.state.value }
            {...this.state.childProps} >
@@ -915,11 +915,11 @@ export default class Toggle extends Component {
              ref="sliderWrapper"
              {...this.state.sliderWrapperProps}>
           <div style={ computedSliderStyle }
-               onClick={ this._onClickAtSlider.bind(this) }
-               onTouchStart={ this._onTouchStartAtSlider.bind(this) }
-               onTouchMove={ this._onTouchMoveAtSlider.bind(this) }
-               onTouchEnd={ this._onTouchEndAtSlider.bind(this) }
-               onTouchCancel={ this._onTouchCancelAtSlider.bind(this) }
+               onClick={ ::this._onClickAtSlider }
+               onTouchStart={ ::this._onTouchStartAtSlider }
+               onTouchMove={ ::this._onTouchMoveAtSlider }
+               onTouchEnd={ ::this._onTouchEndAtSlider }
+               onTouchCancel={ ::this._onTouchCancelAtSlider }
                {...this.state.sliderProps}>
             <div ref="firstChoice"
                  style={ computedTrueChoiceStyle }
@@ -935,14 +935,14 @@ export default class Toggle extends Component {
         </div>
         <div ref="handle"
              style={ handleStyle }
-             onMouseDown={ this._onMouseDownOnHandle.bind(this) }
-             onMouseMove={ this._onMouseMoveOnHandle.bind(this) }
-             onMouseUp={ this._onMouseUpOnHandle.bind(this) }
-             onMouseLeave={ this._onMouseLeaveOnHandle.bind(this) }
-             onTouchStart={ this._onTouchStartHandle.bind(this) }
-             onTouchMove={ this._onTouchMoveHandle.bind(this) }
-             onTouchEnd={ this._onTouchEndHandle.bind(this) }
-             onTouchCancel={ this._onTouchCancelHandle.bind(this) }
+             onMouseDown={ ::this._onMouseDownOnHandle }
+             onMouseMove={ ::this._onMouseMoveOnHandle }
+             onMouseUp={ ::this._onMouseUpOnHandle }
+             onMouseLeave={ ::this._onMouseLeaveOnHandle }
+             onTouchStart={ ::this._onTouchStartHandle }
+             onTouchMove={ ::this._onTouchMoveHandle }
+             onTouchEnd={ ::this._onTouchEndHandle }
+             onTouchCancel={ ::this._onTouchCancelHandle }
              {...this.state.handleProps} />
       </div>
     );

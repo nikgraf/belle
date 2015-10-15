@@ -306,7 +306,7 @@ export default class Select extends Component {
     updatePseudoClassStyle(this._styleId, this.props);
 
     if (canUseDOM) {
-      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+      this.mouseUpOnDocumentCallback = ::this._onMouseUpOnDocument;
       document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
     }
   }
@@ -884,19 +884,19 @@ export default class Select extends Component {
     return (
       <div style={ wrapperStyle }
            tabIndex={ tabIndex }
-           onKeyDown={ this._onKeyDown.bind(this) }
-           onBlur={ this._onBlur.bind(this) }
-           onFocus={ this._onFocus.bind(this) }
+           onKeyDown={ ::this._onKeyDown }
+           onBlur={ ::this._onBlur }
+           onFocus={ ::this._onFocus }
            ref="wrapper"
            {...this.state.wrapperProps} >
 
-        <div onClick={ this._onClickToggleMenu.bind(this) }
-             onTouchStart={ this._onTouchStartToggleMenu.bind(this) }
-             onTouchEnd={ this._onTouchEndToggleMenu.bind(this) }
-             onTouchCancel={ this._onTouchCancelToggleMenu.bind(this) }
-             onContextMenu={ this._onContextMenu.bind(this) }
-             onMouseDown = { this._onMouseDown.bind(this) }
-             onMouseUp = { this._onMouseUp.bind(this) }
+        <div onClick={ ::this._onClickToggleMenu }
+             onTouchStart={ ::this._onTouchStartToggleMenu }
+             onTouchEnd={ ::this._onTouchEndToggleMenu }
+             onTouchCancel={ ::this._onTouchCancelToggleMenu }
+             onContextMenu={ ::this._onContextMenu }
+             onMouseDown = { ::this._onMouseDown }
+             onMouseUp = { ::this._onMouseUp }
              style={ selectedOptionWrapperStyle }
              className={ unionClassNames(this.props.className, this._styleId) }
              ref="selectedOptionWrapper"
@@ -924,13 +924,13 @@ export default class Select extends Component {
                 });
 
                 return (
-                  <li onClick={ this._onClickAtOption.bind(this) }
-                      onTouchStart={ this._onTouchStartAtOption.bind(this) }
-                      onTouchMove={ this._onTouchMoveAtOption.bind(this) }
-                      onTouchEnd={ this._onTouchEndAtOption.bind(this) }
-                      onTouchCancel={ this._onTouchCancelAtOption.bind(this) }
+                  <li onClick={ ::this._onClickAtOption }
+                      onTouchStart={ ::this._onTouchStartAtOption }
+                      onTouchMove={ ::this._onTouchMoveAtOption }
+                      onTouchEnd={ ::this._onTouchEndAtOption }
+                      onTouchCancel={ ::this._onTouchCancelAtOption }
                       key={ index }
-                      onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
+                      onMouseEnter={ ::this._onMouseEnterAtOption }
                       role="option"
                       aria-selected={ isHovered }>
                     { option }

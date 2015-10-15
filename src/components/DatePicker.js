@@ -691,10 +691,10 @@ export default class DatePicker extends Component {
   _renderPrevMonthNav(prevMonthNavStyle) {
     if (this.props.disabled) return undefined;
     return (
-      <div onMouseDown={ this._onPrevMonthNavMouseDown.bind(this) }
-           onMouseUp={ this._onPrevMonthNavMouseUp.bind(this) }
-           onTouchStart={ this._onPrevMonthNavTouchStart.bind(this) }
-           onTouchEnd={ this._onPrevMonthNavTouchEnd.bind(this) }
+      <div onMouseDown={ ::this._onPrevMonthNavMouseDown }
+           onMouseUp={ ::this._onPrevMonthNavMouseUp }
+           onTouchStart={ ::this._onPrevMonthNavTouchStart }
+           onTouchEnd={ ::this._onPrevMonthNavTouchEnd }
            style={ prevMonthNavStyle }
            className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
         left
@@ -705,10 +705,10 @@ export default class DatePicker extends Component {
   _renderNextMonthNav(nextMonthNavStyle) {
     if (this.props.disabled) return undefined;
     return (
-      <div onMouseDown={ this._onNextMonthNavMouseDown.bind(this) }
-            onMouseUp={ this._onNextMonthNavMouseUp.bind(this) }
-            onTouchStart={ this._onNextMonthNavTouchStart.bind(this) }
-            onTouchEnd={ this._onNextMonthNavTouchEnd.bind(this) }
+      <div onMouseDown={ ::this._onNextMonthNavMouseDown }
+            onMouseUp={ ::this._onNextMonthNavMouseUp }
+            onTouchStart={ ::this._onNextMonthNavTouchStart }
+            onTouchEnd={ ::this._onNextMonthNavTouchEnd }
             style= { nextMonthNavStyle }
             className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
         right
@@ -1036,15 +1036,15 @@ export default class DatePicker extends Component {
     return (
       <div ref="datePicker"
            tabIndex={ tabIndex }
-           onFocus={ this._onWrapperFocus.bind(this) }
-           onBlur={ this._onWrapperBlur.bind(this) }
-           onKeyDown={ this._onWrapperKeyDown.bind(this) }
-           onMouseDown={ this._onWrapperMouseDown.bind(this) }
-           onMouseUp={ this._onWrapperMouseUp.bind(this) }
-           onMouseOver={ this._onWrapperMouseOver.bind(this) }
-           onMouseOut={ this._onWrapperMouseOut.bind(this) }
-           onTouchStart={ this._onWrapperTouchStart.bind(this) }
-           onTouchEnd={ this._onWrapperTouchEnd.bind(this) }
+           onFocus={ ::this._onWrapperFocus }
+           onBlur={ ::this._onWrapperBlur }
+           onKeyDown={ ::this._onWrapperKeyDown }
+           onMouseDown={ ::this._onWrapperMouseDown }
+           onMouseUp={ ::this._onWrapperMouseUp }
+           onMouseOver={ ::this._onWrapperMouseOver }
+           onMouseOut={ ::this._onWrapperMouseOut }
+           onTouchStart={ ::this._onWrapperTouchStart }
+           onTouchEnd={ ::this._onWrapperTouchEnd }
            disabled={ this.props.disabled }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
