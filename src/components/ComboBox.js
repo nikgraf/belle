@@ -693,16 +693,16 @@ export default class ComboBox extends Component {
                placeholder={ placeHolder }
                style={ inputStyle }
                className={ inputClassName }
-               onChange={ this._onChange.bind(this) }
+               onChange={ ::this._onChange }
                tabIndex={ tabIndex }
-               onBlur={ this._onBlur.bind(this) }
-               onFocus={ this._onFocus.bind(this) }
-               onKeyDown={ this._onKeyDown.bind(this) }
+               onBlur={ ::this._onBlur }
+               onFocus={ ::this._onFocus }
+               onKeyDown={ ::this._onKeyDown }
                aria-autocomplete="list"
           {...this.state.inputProps}></input>
           <span style={ caretStyle }
                 className = { this._caretStyleId }
-                onClick = { this._onCaretClick.bind(this) }
+                onClick = { ::this._onCaretClick }
                 tabIndex = { -1 }
             {...this.state.caretProps}>
           </span>
@@ -721,12 +721,12 @@ export default class ComboBox extends Component {
               return (
                 <li key={ index }
                     data-belle-index={ index }
-                    onTouchStart={ this._onTouchStartAtOption.bind(this) }
-                    onTouchEnd={ this._onTouchEndAtOption.bind(this) }
-                    onTouchCancel={ this._onTouchCancelAtOption.bind(this) }
-                    onClick={ this._onClickAtOption.bind(this) }
-                    onMouseEnter={ this._onMouseEnterAtOption.bind(this) }
-                    onMouseLeave={ this._onMouseLeaveAtOption.bind(this) }
+                    onTouchStart={ ::this._onTouchStartAtOption }
+                    onTouchEnd={ ::this._onTouchEndAtOption }
+                    onTouchCancel={ ::this._onTouchCancelAtOption }
+                    onClick={ ::this._onClickAtOption }
+                    onMouseEnter={ ::this._onMouseEnterAtOption }
+                    onMouseLeave={ ::this._onMouseLeaveAtOption }
                     onMouseDown={ (event) => event.preventDefault() }
                     role="option">
                   { option }

@@ -316,12 +316,12 @@ export default class Button extends Component {
     return (
       <button style={ buttonStyle }
               className={ unionClassNames(this.props.className, this.styleId) }
-              onTouchStart={ this._onTouchStart.bind(this) }
-              onTouchEnd={ this._onTouchEnd.bind(this) }
-              onTouchCancel={ this._onTouchCancel.bind(this) }
-              onFocus={ this._onFocus.bind(this) }
-              onBlur={ this._onBlur.bind(this) }
-              onMouseDown={ this._onMouseDown.bind(this) }
+              onTouchStart={ ::this._onTouchStart }
+              onTouchEnd={ ::this._onTouchEnd }
+              onTouchCancel={ ::this._onTouchCancel }
+              onFocus={ ::this._onFocus }
+              onBlur={ ::this._onBlur }
+              onMouseDown={ ::this._onMouseDown }
               {...this.state.childProps}>
         { this.props.children }
       </button>

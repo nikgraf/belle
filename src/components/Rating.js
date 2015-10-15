@@ -166,7 +166,7 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
 
     if (canUseDOM) {
-      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument.bind(this);
+      this.mouseUpOnDocumentCallback = ::this._onMouseUpOnDocument;
       document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
     }
   }
@@ -622,19 +622,19 @@ export default class Rating extends Component {
       <div ref="wrapper"
            style={ wrapperStyle }
            className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-           onKeyDown={ this._onKeyDown.bind(this) }
-           onMouseEnter={ this._onMouseEnter.bind(this) }
-           onMouseMove={ this._onMouseMove.bind(this) }
-           onMouseLeave={ this._onMouseLeave.bind(this) }
-           onMouseUp={ this._onMouseUp.bind(this) }
-           onMouseDown={ this._onMouseDown.bind(this) }
-           onTouchStart={ this._onTouchStart.bind(this) }
-           onTouchMove={ this._onTouchMove.bind(this) }
-           onTouchEnd={ this._onTouchEnd.bind(this) }
-           onTouchCancel={ this._onTouchCancel.bind(this) }
-           onContextMenu={ this._onContextMenu.bind(this) }
-           onBlur={ this._onBlur.bind(this) }
-           onFocus={ this._onFocus.bind(this) }
+           onKeyDown={ ::this._onKeyDown }
+           onMouseEnter={ ::this._onMouseEnter }
+           onMouseMove={ ::this._onMouseMove }
+           onMouseLeave={ ::this._onMouseLeave }
+           onMouseUp={ ::this._onMouseUp }
+           onMouseDown={ ::this._onMouseDown }
+           onTouchStart={ ::this._onTouchStart }
+           onTouchMove={ ::this._onTouchMove }
+           onTouchEnd={ ::this._onTouchEnd }
+           onTouchCancel={ ::this._onTouchCancel }
+           onContextMenu={ ::this._onContextMenu }
+           onBlur={ ::this._onBlur }
+           onFocus={ ::this._onFocus }
            tabIndex={ tabIndex }
            aria-label = { this.props['aria-label'] }
            aria-valuemax = { 5 }

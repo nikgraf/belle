@@ -260,8 +260,8 @@ export default class TextInput extends Component {
       <textarea style={ textareaStyle }
                 value = {this.state.inputValue}
                 className={ unionClassNames(this.props.className, this._styleId) }
-                onChange={ this._onChange.bind(this) }
-                onKeyDown={ this._onKeyDown.bind(this) }
+                onChange={ ::this._onChange }
+                onKeyDown={ ::this._onKeyDown }
                 { ...this.state.textareaProps } />
     );
   }
