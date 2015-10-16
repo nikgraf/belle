@@ -339,27 +339,27 @@ describe('DatePicker', () => {
     expect(datePicker.state.dateValue).toBeUndefined();
   });
 
-  it('should set isWrapperFocused to true when wrapper receives focus and to false on blur', () => {
+  it('should set isFocused to true when wrapper receives focus and to false on blur', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
-    expect(datePicker.state.isWrapperFocused).toBeTruthy();
+    expect(datePicker.state.isFocused).toBeTruthy();
     TestUtils.Simulate.blur(wrapper);
-    expect(datePicker.state.isWrapperFocused).toBeFalsy();
+    expect(datePicker.state.isFocused).toBeFalsy();
   });
 
-  it('should not set isWrapperFocused to true when wrapper receives focus btu component is disabled', () => {
+  it('should not set isFocused to true when wrapper receives focus btu component is disabled', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="wrapper_test" disabled/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
-    expect(datePicker.state.isWrapperFocused).toBeFalsy();
+    expect(datePicker.state.isFocused).toBeFalsy();
   });
 
-  it('should not set isWrapperFocused to true when wrapper receives focus but is active', () => {
+  it('should not set isFocused to true when wrapper receives focus but is active', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="wrapper_test"/>
     );
@@ -367,7 +367,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.mouseDown(wrapper, {button: 0});
     expect(datePicker.state.isWrapperActive).toBeTruthy();
     TestUtils.Simulate.focus(wrapper);
-    expect(datePicker.state.isWrapperFocused).toBeFalsy();
+    expect(datePicker.state.isFocused).toBeFalsy();
   });
 
   it('should not set isWrapperActive to true when touch starts and reset when touch ends', () => {
@@ -427,7 +427,7 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.focusedDay).toBeUndefined();
     const datePicker = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePicker);
-    expect(readOnlyDatePicker.state.isWrapperFocused).toBeTruthy();
+    expect(readOnlyDatePicker.state.isFocused).toBeTruthy();
   });
 
   it('should decrease month when prevMonthNav is clicked', () => {

@@ -90,6 +90,9 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
 
 /**
  * DatePicker React Component.
+ *
+ * This implementation follows the recommendations proposed here:
+ * http://www.w3.org/TR/wai-aria-practices/#datepicker
  */
 export default class DatePicker extends Component {
 
@@ -265,13 +268,13 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper is focused, it will conditionally set isWrapperFocused.
+   * Callback is called when wrapper is focused, it will conditionally set isFocused.
    * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onWrapperFocus() {
     if (!this.props.disabled && !this.state.isWrapperActive) {
       const newState = {
-        isWrapperFocused: true,
+        isFocused: true,
       };
       if (!this.state.focusedDay) {
         newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
@@ -282,12 +285,12 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when wrapper is blurred, it will reset isWrapperFocused, focusedDay.
+   * Callback is called when wrapper is blurred, it will reset isFocused, focusedDay.
    */
   _onWrapperBlur() {
     if (!this.props.disabled) {
       this.setState({
-        isWrapperFocused: false,
+        isFocused: false,
         focusedDay: undefined,
       });
     }
@@ -1021,7 +1024,7 @@ export default class DatePicker extends Component {
           ...defaultStyle.activeStyle,
           ...this.props.activeStyle,
         };
-      } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isWrapperFocused) {
+      } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isFocused) {
         style = {
           ...style,
           ...defaultStyle.focusStyle,
