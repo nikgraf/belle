@@ -14,6 +14,10 @@ function sanitizeWrapperProps(properties) {
     'tabIndex',
     'onFocus',
     'onBlur',
+    'onMouseDown',
+    'onMouseUp',
+    'onTouchStart',
+    'onTouchEnd',
     'disabled',
     'style',
     'className',
@@ -31,6 +35,12 @@ function sanitizeDayProps(properties) {
     'onBlur',
     'onFocus',
     'onKeyDown',
+    'onMouseDown',
+    'onMouseUp',
+    'onMouseOver',
+    'onMouseOut',
+    'onTouchStart',
+    'onTouchEnd',
     'style',
     'className',
   ]);
@@ -105,6 +115,7 @@ export default class DatePicker extends Component {
       dayProps: sanitizeDayProps(properties.dayProps),
       preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick,
       isFocused: false,
+      isActive: false,
     };
   }
 
@@ -261,7 +272,7 @@ export default class DatePicker extends Component {
    * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onFocus() {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.state.isActive) {
       const newState = {
         isFocused: true,
       };
@@ -281,6 +292,50 @@ export default class DatePicker extends Component {
       this.setState({
         isFocused: false,
         focusedDay: undefined,
+      });
+    }
+  }
+
+  /**
+    * Callback is called when wrapper receives mouseDown. Conditionally set isActive.
+    */
+  _onMouseDown(event) {
+    if (!this.props.disabled && event.button === 0) {
+      this.setState({
+        isActive: true,
+      });
+    }
+  }
+
+  /**
+   * Callback is called when wrapper receives mouseUp. Reset isActive.
+   */
+  _onMouseUp(event) {
+    if (!this.props.disabled && event.button === 0) {
+      this.setState({
+        isActive: false,
+      });
+    }
+  }
+
+  /**
+   * Callback is called when touch starts on wrapper. Conditionally sets isActive.
+   */
+  _onTouchStart(event) {
+    if (!this.props.disabled && event.touches.length === 1) {
+      this.setState({
+        isActive: true,
+      });
+    }
+  }
+
+  /**
+   * Callback is called when touch ends on wrapper. Reset isActive.
+   */
+  _onTouchEnd() {
+    if (!this.props.disabled) {
+      this.setState({
+        isActive: false,
       });
     }
   }
@@ -929,14 +984,22 @@ export default class DatePicker extends Component {
         ...defaultStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
-    } else {
-      if (this.state.preventFocusStyleForTouchAndClick && this.state.isFocused) {
-        style = {
+    }
+
+    if (this.state.preventFocusStyleForTouchAndClick && this.state.isFocused) {
+      style = {
+        ...style,
+        ...defaultStyle.focusStyle,
+      ...this.props.focusStyle,
+      };
+    }
+
+    if (this.state.isActive) {
+      style = {
           ...style,
-          ...defaultStyle.focusStyle,
-          ...this.props.focusStyle,
+          ...defaultStyle.activeStyle,
+          ...this.props.activeStyle,
         };
-      }
     }
 
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.state.localeData.firstDay);
@@ -949,6 +1012,10 @@ export default class DatePicker extends Component {
            onBlur={ ::this._onBlur }
            onKeyDown={ ::this._onKeyDown }
            disabled={ this.props.disabled }
+           onMouseDown={ ::this._onMouseDown }
+           onMouseUp={ ::this._onMouseUp }
+           onTouchStart={ ::this._onTouchStart }
+           onTouchEnd={ ::this._onTouchEnd }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
