@@ -5,8 +5,7 @@ const datePickerStyle = {
     borderRadius: 2,
     width: 280,
     textAlign: 'center',
-    boxSizing: 'content-box',
-    borderCollapse: 'collapse',
+    boxSizing: 'border-box',
     backgroundColor: 'white',
 
     /*
@@ -52,7 +51,6 @@ const datePickerStyle = {
 
   // nav-bar at top for month navigation
   navBarStyle: {
-    display: 'table-caption',
     height: 30,
     lineHeight: '30px',
     border: '1px solid #ccc',
@@ -124,6 +122,7 @@ const datePickerStyle = {
   monthLabelStyle: {
     fontSize: 15,
     width: 125,
+    boxSizing: 'border-box',
 
     /*
      User should be able to copy date.
@@ -136,23 +135,27 @@ const datePickerStyle = {
 
   // styling for entire grid of week-header and weeks
   weekGroupStyle: {
-    display: 'table-row-group',
+    boxSizing: 'border-box',
   },
 
   // styling for week's row
   weekStyle: {
-    display: 'table-row',
+    boxSizing: 'border-box',
+    width: 280,
+    overflow: 'auto',
   },
 
   // styling for week's day label
   dayLabelStyle: {
+    width: 40,
     height: 30,
     padding: 0,
     lineHeight: '30px',
     backgroundColor: 'white',
-    margin: 0.5,
     color: '#716D6D',
-    display: 'table-cell',
+    display: 'block',
+    float: 'left',
+    boxSizing: 'border-box',
 
     /*
      User should be able to copy date.
@@ -173,14 +176,18 @@ const datePickerStyle = {
 
   // styling for individual day
   dayStyle: {
-    width: 40,
+    width: 41,
     height: 30,
     lineHeight: '30px',
     cursor: 'pointer',
-    border: '1px solid #ccc',
+    border: '1px solid #EEE',
     color: '#716D6D',
-    display: 'table-cell',
+    display: 'block',
+    float: 'left',
     padding: 0,
+    marginLeft: -1,
+    marginTop: -1,
+    boxSizing: 'border-box',
 
     /*
      User should be able to copy date.
@@ -224,8 +231,8 @@ const datePickerStyle = {
   },
 
   focusDayStyle: {
-    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
-    outline: 0,
+    border: '1px solid rgba(140, 224, 255, 0.6)',
+    boxShadow: '0 0 0 1px rgba(140, 224, 255, 0.6) inset',
   },
 
   disabledHoverDayStyle: {
