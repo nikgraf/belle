@@ -365,20 +365,20 @@ describe('DatePicker', () => {
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseDown(wrapper, {button: 0});
-    expect(datePicker.state.isWrapperActive).toBeTruthy();
+    expect(datePicker.state.isActive).toBeTruthy();
     TestUtils.Simulate.focus(wrapper);
     expect(datePicker.state.isFocused).toBeFalsy();
   });
 
-  it('should not set isWrapperActive to true when touch starts and reset when touch ends', () => {
+  it('should not set isActive to true when touch starts and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.touchStart(wrapper, {touches: {length: 1}});
-    expect(datePicker.state.isWrapperActive).toBeTruthy();
+    expect(datePicker.state.isActive).toBeTruthy();
     TestUtils.Simulate.touchEnd(wrapper);
-    expect(datePicker.state.isWrapperActive).toBeFalsy();
+    expect(datePicker.state.isActive).toBeFalsy();
   });
 
   it('should set isWrapperHovered on mouse over for all components including disabled and readOnly', () => {
