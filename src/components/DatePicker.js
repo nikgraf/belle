@@ -14,12 +14,6 @@ function sanitizeWrapperProps(properties) {
     'tabIndex',
     'onFocus',
     'onBlur',
-    'onMouseDown',
-    'onMouseUp',
-    'onMouseOver',
-    'onMouseOut',
-    'onTouchStart',
-    'onTouchEnd',
     'disabled',
     'style',
     'className',
@@ -36,12 +30,6 @@ function sanitizeDayProps(properties) {
     'ref',
     'onBlur',
     'onFocus',
-    'onMouseDown',
-    'onMouseUp',
-    'onMouseOver',
-    'onMouseOut',
-    'onTouchStart',
-    'onTouchEnd',
     'onKeyDown',
     'style',
     'className',
@@ -117,7 +105,6 @@ export default class DatePicker extends Component {
       dayProps: sanitizeDayProps(properties.dayProps),
       preventFocusStyleForTouchAndClick: has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick,
       isFocused: false,
-      isActive: false,
     };
   }
 
@@ -274,7 +261,7 @@ export default class DatePicker extends Component {
    * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onFocus() {
-    if (!this.props.disabled && !this.state.isActive) {
+    if (!this.props.disabled) {
       const newState = {
         isFocused: true,
       };
@@ -294,68 +281,6 @@ export default class DatePicker extends Component {
       this.setState({
         isFocused: false,
         focusedDay: undefined,
-      });
-    }
-  }
-
-  /**
-   * Callback is called when wrapper receives mouseDown. Conditionally set isActive.
-   */
-  _onMouseDown(event) {
-    if (!this.props.disabled && event.button === 0) {
-      this.setState({
-        isActive: true,
-      });
-    }
-  }
-
-  /**
-   * Callback is called when wrapper receives mouseUp. Reset isActive.
-   */
-  _onMouseUp(event) {
-    if (!this.props.disabled && event.button === 0) {
-      this.setState({
-        isActive: false,
-      });
-    }
-  }
-
-  /**
-   * Callback is called when mouse enters wrapper. Conditionally set isWrapperHovered.
-   */
-  _onMouseOver() {
-    this.setState({
-      isWrapperHovered: true,
-    });
-  }
-
-  /**
-   * Callback is called when mouse leaves wrapper. Reset isWrapperHovered.
-   */
-  _onMouseOut() {
-    this.setState({
-      isWrapperHovered: false,
-    });
-  }
-
-  /**
-   * Callback is called when touch starts on wrapper. Conditionally sets isActive.
-   */
-  _onTouchStart(event) {
-    if (!this.props.disabled && event.touches.length === 1) {
-      this.setState({
-        isActive: true,
-      });
-    }
-  }
-
-  /**
-   * Callback is called when touch ends on wrapper. Reset isActive.
-   */
-  _onTouchEnd() {
-    if (!this.props.disabled) {
-      this.setState({
-        isActive: false,
       });
     }
   }
@@ -1004,29 +929,8 @@ export default class DatePicker extends Component {
         ...defaultStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
-      if (this.state.isWrapperHovered) {
-        style = {
-          ...style,
-          ...defaultStyle.disabledHoverStyle,
-          ...this.props.disabledHoverStyle,
-        };
-      }
     } else {
-      if (this.state.isWrapperHovered) {
-        style = {
-          ...style,
-          ...defaultStyle.hoverStyle,
-          ...this.props.hoverStyle,
-        };
-      }
-
-      if (this.state.isActive) {
-        style = {
-          ...style,
-          ...defaultStyle.activeStyle,
-          ...this.props.activeStyle,
-        };
-      } else if (this.state.preventFocusStyleForTouchAndClick && this.state.isFocused) {
+      if (this.state.preventFocusStyleForTouchAndClick && this.state.isFocused) {
         style = {
           ...style,
           ...defaultStyle.focusStyle,
@@ -1044,12 +948,6 @@ export default class DatePicker extends Component {
            onFocus={ ::this._onFocus }
            onBlur={ ::this._onBlur }
            onKeyDown={ ::this._onKeyDown }
-           onMouseDown={ ::this._onMouseDown }
-           onMouseUp={ ::this._onMouseUp }
-           onMouseOver={ ::this._onMouseOver }
-           onMouseOut={ ::this._onMouseOut }
-           onTouchStart={ ::this._onTouchStart }
-           onTouchEnd={ ::this._onTouchEnd }
            disabled={ this.props.disabled }
            aria-label={ this.props['aria-label'] }
            aria-disabled={ this.props.disabled }

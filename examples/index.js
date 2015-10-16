@@ -17,24 +17,30 @@ if (true) {
   config.button.preventFocusStyleForTouchAndClick = false;
   style.button.focusStyle = {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-    outline: 0
+    outline: 0,
   };
   style.button.primaryFocusStyle = {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-    outline: 0
+    outline: 0,
   };
 
   config.rating.preventFocusStyleForTouchAndClick = false;
   style.rating.focusStyle = {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
     outline: 0,
-    borderRadius: 3
+    borderRadius: 3,
   };
 
   config.toggle.preventFocusStyleForTouchAndClick = false;
   style.toggle.focusStyle = {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-    outline: 0
+    outline: 0,
+  };
+
+  config.datePicker.preventFocusStyleForTouchAndClick = false;
+  style.datePicker.focusStyle = {
+    boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
+    outline: 0,
   };
 
   config.select.shouldPositionOptions = false;
@@ -52,15 +58,15 @@ if (true) {
     borderBottomColor: '#D0D0D0',
     color: 'brown',
     verticalAlign: 'bottom',
-    lineHeight: '26px'
+    lineHeight: '26px',
   };
 
   style.card.style = extend(style.card.style, {
-    border: '1px solid black'
+    border: '1px solid black',
   });
 
   style.textInput.style = extend(style.textInput.style, {
-    color: 'blue'
+    color: 'blue',
   });
 }
 

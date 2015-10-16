@@ -2,7 +2,6 @@ const datePickerStyle = {
 
   // wrapper of entire component
   style: {
-    padding: 2,
     borderRadius: 2,
     width: 280,
     textAlign: 'center',
@@ -40,9 +39,6 @@ const datePickerStyle = {
   },
 
   hoverStyle: {
-  },
-
-  activeStyle: {
   },
 
   focusStyle: {
