@@ -54,7 +54,7 @@ module.exports = {
     textInput: textInputStyle,
     toggle: toggleStyle,
     comboBox: comboBoxStyle,
-    datePickerStyle: datePickerStyle,
+    datePicker: datePickerStyle,
   },
   config: {
     select: selectConfig,
