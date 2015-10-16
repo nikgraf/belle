@@ -19,6 +19,7 @@ const textInputStyle = {
     background: 'none',
     display: 'block',
     boxSizing: 'border-box',
+    minHeight: '0',
 
     /* animations */
     transition: 'border-bottom 0.2s',
