@@ -88,8 +88,6 @@ const styleStructure = `style = {
     monthLblStyle: { … },
     // styling for entire grid of week-header and weeks
     weekGroupStyle: { … },
-    // styling for week's row
-    weekStyle: { … },
     // styling for week's day label
     dayLblStyle: { … },
     disabledDayLblStyle: { … },
