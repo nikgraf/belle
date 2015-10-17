@@ -169,7 +169,7 @@ export default class DatePicker extends Component {
 
     // callbacks for change of values
     onUpdate: PropTypes.func,
-    onMonthChange: PropTypes.func,
+    onMonthYearChange: PropTypes.func,
 
     // props for wrapper and day
     wrapperProps: PropTypes.object,
@@ -554,18 +554,23 @@ export default class DatePicker extends Component {
    * days is the number of days by which focused should be moved ahead or behind.
    */
   _focusOtherDay(days) {
-    const currentFocusedDay = new Date(this.state.focusedDay);
-    const currentMonth = currentFocusedDay.getMonth();
-    currentFocusedDay.setDate(currentFocusedDay.getDate() + days);
-    const currentFocusedDayKey = (currentFocusedDay.getMonth() + 1) + '/' + currentFocusedDay.getDate() + '/' + currentFocusedDay.getFullYear();
-    if (currentFocusedDay.getMonth() < currentMonth) {
-      this._decreaseMonth();
-    } else if (currentFocusedDay.getMonth() > currentMonth) {
-      this._increaseMonth();
+    const focusedDay = new Date(this.state.focusedDay);
+    const currentMonth = focusedDay.getMonth();
+    focusedDay.setDate(focusedDay.getDate() + days);
+    const nextFocusedDayKey = (focusedDay.getMonth() + 1) + '/' + focusedDay.getDate() + '/' + focusedDay.getFullYear();
+    const nextMonth = focusedDay.getMonth();
+    if (nextMonth !== currentMonth) {
+      if ((nextMonth < currentMonth || (nextMonth === 11 && currentMonth === 0)) &&
+          !(nextMonth === 0 && currentMonth === 11)) {
+        this._decreaseMonthYear();
+      } else if ((nextMonth > currentMonth || (nextMonth === 0 && currentMonth === 11)) &&
+          !(nextMonth === 11 && currentMonth === 0)) {
+        this._increaseMonthYear();
+      }
     }
 
     this.setState({
-      focusedDay: currentFocusedDayKey,
+      focusedDay: nextFocusedDayKey,
     });
   }
 
@@ -575,7 +580,7 @@ export default class DatePicker extends Component {
    */
   _onPrevMonthNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
-      this._decreaseMonth();
+      this._decreaseMonthYear();
       this.setState({
         isPrevMonthNavActive: true,
       });
@@ -606,7 +611,7 @@ export default class DatePicker extends Component {
    */
   _onPrevMonthNavTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this._decreaseMonth();
+      this._decreaseMonthYear();
       this.setState({
         isPrevMonthNavActive: true,
       });
@@ -636,7 +641,7 @@ export default class DatePicker extends Component {
    */
   _onNextMonthNavMouseDown(event) {
     if (event.button === 0 && !this.props.disabled) {
-      this._increaseMonth();
+      this._increaseMonthYear();
       this.setState({
         isNextMonthNavActive: true,
       });
@@ -666,7 +671,7 @@ export default class DatePicker extends Component {
    */
   _onNextMonthNavTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this._increaseMonth();
+      this._increaseMonthYear();
       this.setState({
         isNextMonthNavActive: true,
       });
@@ -691,9 +696,9 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state. It will also call props.onMonthChange.
+   * The function will decrease current month in state. It will also call props.onMonthYearChange.
    */
-  _decreaseMonth() {
+  _decreaseMonthYear() {
     let newMonth;
     let newYear;
     if (this.state.month === 0) {
@@ -708,15 +713,15 @@ export default class DatePicker extends Component {
       month: newMonth,
       year: newYear,
     });
-    if (this.props.onMonthChange) {
-      this.props.onMonthChange(newMonth + 1);
+    if (this.props.onMonthYearChange) {
+      this.props.onMonthYearChange(newMonth + 1, newYear);
     }
   }
 
   /**
-   * The function will increase current month in state. It will also call props.onMonthChange.
+   * The function will increase current month in state. It will also call props.onMonthYearChange.
    */
-  _increaseMonth() {
+  _increaseMonthYear() {
     let newMonth;
     let newYear;
     if (this.state.month === 11) {
@@ -731,8 +736,8 @@ export default class DatePicker extends Component {
       month: newMonth,
       year: newYear,
     });
-    if (this.props.onMonthChange) {
-      this.props.onMonthChange(newMonth + 1);
+    if (this.props.onMonthYearChange) {
+      this.props.onMonthYearChange(newMonth + 1, newYear);
     }
   }
 
