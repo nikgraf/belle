@@ -32,9 +32,6 @@ function sanitizeDayProps(properties) {
     'tabIndex',
     'key',
     'ref',
-    'onBlur',
-    'onFocus',
-    'onKeyDown',
     'onMouseDown',
     'onMouseUp',
     'onMouseOver',
@@ -143,14 +140,34 @@ export default class DatePicker extends Component {
     readOnly: PropTypes.bool,
     preventFocusStyleForTouchAndClick: PropTypes.bool,
 
-    // event callbacks
-    onDayFocus: PropTypes.func,
-    onDayBlur: PropTypes.func,
-    onDayKeyDown: PropTypes.func,
+    // event callbacks for wrapper
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+
+    // event callbacks for previous month and next month navigation links
+    onPrevMonthNavMouseDown: PropTypes.func,
+    onPrevMonthNavMouseUp: PropTypes.func,
+    onPrevMonthNavTouchStart: PropTypes.func,
+    onPrevMonthNavTouchEnd: PropTypes.func,
+    onNextMonthNavMouseDown: PropTypes.func,
+    onNextMonthNavMouseUp: PropTypes.func,
+    onNextMonthNavTouchStart: PropTypes.func,
+    onNextMonthNavTouchEnd: PropTypes.func,
+
+    // event callbacks for days
+    onDayMouseOver: PropTypes.func,
+    onDayMouseOut: PropTypes.func,
     onDayMouseDown: PropTypes.func,
     onDayMouseUp: PropTypes.func,
     onDayTouchStart: PropTypes.func,
     onDayTouchEnd: PropTypes.func,
+
+    // callbacks for change of values
     onUpdate: PropTypes.func,
     onMonthChange: PropTypes.func,
 
@@ -272,15 +289,19 @@ export default class DatePicker extends Component {
    * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onFocus() {
-    if (!this.props.disabled && !this.state.isActive) {
-      const newState = {
-        isFocused: true,
-      };
-      if (!this.state.focusedDay) {
-        newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+    if (!this.props.disabled) {
+      if (!this.state.isActive) {
+        const newState = {
+          isFocused: true,
+        };
+        if (!this.state.focusedDay) {
+          newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+        }
+        this.setState(newState);
       }
-
-      this.setState(newState);
+      if (this.props.onFocus) {
+        this.props.onFocus(event);
+      }
     }
   }
 
@@ -293,6 +314,9 @@ export default class DatePicker extends Component {
         isFocused: false,
         focusedDay: undefined,
       });
+      if (this.props.onBlur) {
+        this.props.onBlur(event);
+      }
     }
   }
 
@@ -304,6 +328,9 @@ export default class DatePicker extends Component {
       this.setState({
         isActive: true,
       });
+      if (this.props.onMouseDown) {
+        this.props.onMouseDown(event);
+      }
     }
   }
 
@@ -315,6 +342,9 @@ export default class DatePicker extends Component {
       this.setState({
         isActive: false,
       });
+      if (this.props.onMouseUp) {
+        this.props.onMouseUp(event);
+      }
     }
   }
 
@@ -326,6 +356,9 @@ export default class DatePicker extends Component {
       this.setState({
         isActive: true,
       });
+      if (this.props.onTouchStart) {
+        this.props.onTouchStart(event);
+      }
     }
   }
 
@@ -337,19 +370,22 @@ export default class DatePicker extends Component {
       this.setState({
         isActive: false,
       });
+      if (this.props.onTouchEnd) {
+        this.props.onTouchEnd(event);
+      }
     }
   }
 
   /**
-   * On keyDown on wrapper if some day is focused:
+   * On keyDown on wrapper if date-picker is not disabled and some day is focused:
    * 1. arrow keys will navigate calendar
    * 2. enter key will set dateValue of component
    * 3. space key will set / unset dateValue
-   * 4. props.onDayKeyDown will be called
+   * 4. props.onKeyDown will be called
    */
   _onKeyDown(event) {
-    if (this.state.focusedDay) {
-      if (!this.props.disabled) {
+    if (!this.props.disabled) {
+      if (this.state.focusedDay) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
           this._focusOtherDay(7);
@@ -370,9 +406,8 @@ export default class DatePicker extends Component {
           this._triggerToggleDate(new Date(this.state.focusedDay));
         }
       }
-
-      if (this.props.onDayKeyDown) {
-        this.props.onDayKeyDown(event);
+      if (this.props.onKeyDown) {
+        this.props.onKeyDown(event);
       }
     }
   }
@@ -389,10 +424,9 @@ export default class DatePicker extends Component {
         activeDay: dayKey,
         focusedDay: dayKey,
       });
-    }
-
-    if (this.props.onDayMouseDown) {
-      this.props.onDayMouseDown(event);
+      if (this.props.onDayMouseDown) {
+        this.props.onDayMouseDown(event);
+      }
     }
   }
 
@@ -405,10 +439,9 @@ export default class DatePicker extends Component {
       this.setState({
         activeDay: null,
       });
-    }
-
-    if (this.props.onDayMouseUp) {
-      this.props.onDayMouseUp(event);
+      if (this.props.onDayMouseUp) {
+        this.props.onDayMouseUp(event);
+      }
     }
   }
 
@@ -420,6 +453,9 @@ export default class DatePicker extends Component {
       this.setState({
         hoveredDay: dayKey,
       });
+      if (this.props.onDayMouseOver) {
+        this.props.onDayMouseOver(event);
+      }
     }
   }
 
@@ -431,6 +467,9 @@ export default class DatePicker extends Component {
       this.setState({
         hoveredDay: 0,
       });
+      if (this.props.onDayMouseOut) {
+        this.props.onDayMouseOut(event);
+      }
     }
   }
 
@@ -444,10 +483,9 @@ export default class DatePicker extends Component {
       this.setState({
         activeDay: dayKey,
       });
-    }
-
-    if (this.props.onDayTouchStart) {
-      this.props.onDayTouchStart(event);
+      if (this.props.onDayTouchStart) {
+        this.props.onDayTouchStart(event);
+      }
     }
   }
 
@@ -456,14 +494,15 @@ export default class DatePicker extends Component {
    * It will reset this.state.activeDay and call props.onDayTouchEnd.
    */
   _onDayTouchEnd(dayKey, event) {
-    if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1 && this.state.activeDay === dayKey) {
-      this.setState({
-        activeDay: null,
-      });
-    }
-
-    if (this.props.onDayTouchEnd) {
-      this.props.onDayTouchEnd(event);
+    if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
+      if (this.state.activeDay === dayKey) {
+        this.setState({
+          activeDay: null,
+        });
+      }
+      if (this.props.onDayTouchEnd) {
+        this.props.onDayTouchEnd(event);
+      }
     }
   }
 
@@ -540,6 +579,9 @@ export default class DatePicker extends Component {
       this.setState({
         isPrevMonthNavActive: true,
       });
+      if (this.props.onPrevMonthNavMouseDown) {
+        this.props.onPrevMonthNavMouseDown(event);
+      }
     }
   }
 
@@ -552,6 +594,9 @@ export default class DatePicker extends Component {
       this.setState({
         isPrevMonthNavActive: false,
       });
+      if (this.props.onPrevMonthNavMouseUp) {
+        this.props.onPrevMonthNavMouseUp(event);
+      }
     }
   }
 
@@ -565,6 +610,9 @@ export default class DatePicker extends Component {
       this.setState({
         isPrevMonthNavActive: true,
       });
+      if (this.props.onPrevMonthNavTouchStart) {
+        this.props.onPrevMonthNavTouchStart(event);
+      }
     }
   }
 
@@ -576,6 +624,9 @@ export default class DatePicker extends Component {
       this.setState({
         isPrevMonthNavActive: false,
       });
+      if (this.props.onPrevMonthNavTouchEnd) {
+        this.props.onPrevMonthNavTouchEnd(event);
+      }
     }
   }
 
@@ -589,6 +640,9 @@ export default class DatePicker extends Component {
       this.setState({
         isNextMonthNavActive: true,
       });
+      if (this.props.onNextMonthNavMouseDown) {
+        this.props.onNextMonthNavMouseDown(event);
+      }
     }
   }
 
@@ -600,6 +654,9 @@ export default class DatePicker extends Component {
       this.setState({
         isNextMonthNavActive: false,
       });
+      if (this.props.onNextMonthNavMouseUp) {
+        this.props.onNextMonthNavMouseUp(event);
+      }
     }
   }
 
@@ -613,6 +670,9 @@ export default class DatePicker extends Component {
       this.setState({
         isNextMonthNavActive: true,
       });
+      if (this.props.onNextMonthNavTouchStart) {
+        this.props.onNextMonthNavTouchStart(event);
+      }
     }
   }
 
@@ -624,6 +684,9 @@ export default class DatePicker extends Component {
       this.setState({
         isNextMonthNavActive: false,
       });
+      if (this.props.onNextMonthNavTouchEnd) {
+        this.props.onNextMonthNavTouchEnd(event);
+      }
     }
   }
 
@@ -691,11 +754,11 @@ export default class DatePicker extends Component {
     if (this.props.disabled) return undefined;
     return (
       <div onMouseDown={ ::this._onNextMonthNavMouseDown }
-            onMouseUp={ ::this._onNextMonthNavMouseUp }
-            onTouchStart={ ::this._onNextMonthNavTouchStart }
-            onTouchEnd={ ::this._onNextMonthNavTouchEnd }
-            style= { nextMonthNavStyle }
-            className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
+           onMouseUp={ ::this._onNextMonthNavMouseUp }
+           onTouchStart={ ::this._onNextMonthNavTouchStart }
+           onTouchEnd={ ::this._onNextMonthNavTouchEnd }
+           style= { nextMonthNavStyle }
+           className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
         right
       </div>
     );
@@ -1008,10 +1071,10 @@ export default class DatePicker extends Component {
     return (
       <div ref="datePicker"
            tabIndex={ tabIndex }
+           disabled={ this.props.disabled }
            onFocus={ ::this._onFocus }
            onBlur={ ::this._onBlur }
            onKeyDown={ ::this._onKeyDown }
-           disabled={ this.props.disabled }
            onMouseDown={ ::this._onMouseDown }
            onMouseUp={ ::this._onMouseUp }
            onTouchStart={ ::this._onTouchStart }
