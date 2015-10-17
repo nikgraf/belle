@@ -3,13 +3,15 @@ import { canUseDOM } from 'exenv';
 let hiddenTextarea;
 const computedStyleCache = {};
 const hiddenTextareaStyle = `
-  height:0;
-  visibility:hidden;
-  overflow:hidden;
-  position:absolute;
-  z-index:-1000;
-  top:0;
-  right:0
+  min-height:none !important;
+  max-height:none !important;
+  height:0 !important;
+  visibility:hidden !important;
+  overflow:hidden !important;
+  position:absolute !important;
+  z-index:-1000 !important;
+  top:0 !important;
+  right:0 !important
 `;
 
 const stylesToCopy = [
@@ -63,7 +65,7 @@ function calculateStyling(node) {
     );
 
     const sizingStyle = stylesToCopy
-      .map(styleName => `${styleName}:${computedStyle.getPropertyValue(styleName)}`)
+      .map(styleName => `${styleName}:${computedStyle.getPropertyValue(styleName)}  !important`)
       .join(';');
 
     // store the style, vertical padding size, vertical border size and
