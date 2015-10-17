@@ -2,6 +2,8 @@ import { canUseDOM } from 'exenv';
 
 let hiddenTextarea;
 const computedStyleCache = {};
+
+// !important is used here to avoid side-effects from global set CSS.
 const hiddenTextareaStyle = `
   min-height:none !important;
   max-height:none !important;
