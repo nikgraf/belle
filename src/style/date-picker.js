@@ -218,18 +218,21 @@ const datePickerStyle = {
   },
 
   hoverDayStyle: {
-    backgroundColor: '#87CEFA',
-    color: 'white',
+    border: '1px solid #EEE',
+    background: '#EEE',
+    color: '#616161',
   },
 
   activeDayStyle: {
-    backgroundColor: '#DEF1F7',
-    color: '#716D6D',
+    boxShadow: 'none',
+    border: '1px solid #EEE',
+    borderTop: '1px solid #BDBDBD',
+    background: '#E0E0E0',
+    color: '#424242',
   },
 
   focusDayStyle: {
-    boxShadow: '0 0 0 1px rgba(140, 224, 255, 0.6) inset',
-    border: '1px solid rgba(140, 224, 255, 0.6)',
+    border: '1px solid rgba(140, 224, 255, 0.8)',
     zIndex: 200,
   },
 
@@ -238,8 +241,7 @@ const datePickerStyle = {
   },
 
   todayStyle: {
-    color: '#E24545',
-    boxShadow: '0 0 0 1px red',
+    color: '#000',
   },
 
   weekendStyle: {
@@ -247,13 +249,15 @@ const datePickerStyle = {
   },
 
   selectedDayStyle: {
-    backgroundColor: '#1E90FF',
-    color: 'white',
+    boxShadow: 'none',
+    border: '1px solid #EEE',
+    borderTop: '1px solid #BDBDBD',
+    background: '#E0E0E0',
+    color: '#424242',
   },
 
   otherMonthDayStyle: {
-    color: '#D3D0D0',
-    cursor: 'auto',
+    color: '#BDBDBD',
   },
 };
 
