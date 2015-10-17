@@ -297,8 +297,10 @@ export default class DatePicker extends Component {
         if (!this.state.focusedDay) {
           newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
         }
+
         this.setState(newState);
       }
+
       if (this.props.onFocus) {
         this.props.onFocus(event);
       }
@@ -406,6 +408,7 @@ export default class DatePicker extends Component {
           this._triggerToggleDate(new Date(this.state.focusedDay));
         }
       }
+
       if (this.props.onKeyDown) {
         this.props.onKeyDown(event);
       }
@@ -500,6 +503,7 @@ export default class DatePicker extends Component {
           activeDay: null,
         });
       }
+
       if (this.props.onDayTouchEnd) {
         this.props.onDayTouchEnd(event);
       }
