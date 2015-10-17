@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import {filterReactChildren, findIndex} from '../utils/helpers';
+import Option from '../components/Option';
+import Separator from '../components/Separator';
 
 /**
  * Returns the index of the entry with a certain value from the component's
@@ -9,7 +11,7 @@ import {filterReactChildren, findIndex} from '../utils/helpers';
  * The index search includes separator & option components.
  */
 const findIndexOfSelectedOption = (component) => {
-  const filterFunction = (child) => (isComponentOfType('Option', child) || isComponentOfType('Separator', child));
+  const filterFunction = (child) => (isComponentOfType(Option, child) || isComponentOfType(Separator, child));
   return findIndex(filterReactChildren(component.props.children, filterFunction), (element) => {
     return element.props.value === component.state.selectedValue;
   });
@@ -40,14 +42,14 @@ const selectConfig = {
       optionIndex = 0;
     }
 
-    option = menuNode.children[optionIndex];
+    option = menuNode.childNodes[optionIndex];
 
     const menuHeight = parseFloat(menuStyle.getPropertyValue('height'));
     const menuTopBorderWidth = parseFloat(menuStyle.getPropertyValue('border-top-width'));
 
     // In order to work with legacy browsers the second paramter for pseudoClass
     // has to be provided http://caniuse.com/#feat=getcomputedstyle
-    const optionStyle = window.getComputedStyle(option.children[0], null);
+    const optionStyle = window.getComputedStyle(option.childNodes[0], null);
     const optionPaddingTop = parseFloat(optionStyle.getPropertyValue('padding-top'));
     const optionPaddingLeft = parseFloat(optionStyle.getPropertyValue('padding-top'));
 
