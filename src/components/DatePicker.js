@@ -858,22 +858,16 @@ export default class DatePicker extends Component {
     let weekendIndex = ((7 - this.localeData.firstDay) % 7) + this.localeData.weekEnd;
     weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
-    return (
-      <div style={ defaultStyle.weekStyle }>
-        {
-          map(dayNames, (dayAbbr, index) => {
-            return (
-              <span key={ 'dayAbbr-' + index }
-                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
-                    className={ this.props.dayLabelClassName }
-                    role="columnheader">
-                  { dayAbbr }
-                </span>
-            );
-          })
-        }
-      </div>
-    );
+    return map(dayNames, (dayAbbr, index) => {
+      return (
+        <span key={ 'dayAbbr-' + index }
+              style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
+              className={ this.props.dayLabelClassName }
+              role="columnheader">
+            { dayAbbr }
+          </span>
+      );
+    });
   }
 
   // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
@@ -1100,18 +1094,11 @@ export default class DatePicker extends Component {
         <div role="grid" style={ defaultStyle.weekGroupStyle}>
           { this._renderWeekHeader() }
           {
-            map(weekArray, (week, weekIndex) => {
+            map(weekArray, (week) => {
               const weekDays = this.localeData.isRTL ? reverse(week) : week;
-              return (
-                <div key={ 'week-' + weekIndex }
-                     style={ defaultStyle.weekStyle }>
-                  {
-                    map(weekDays, (day, dayIndex) => {
-                      return this._renderDay(day, dayIndex);
-                    })
-                  }
-                </div>
-              );
+              return map(weekDays, (day, dayIndex) => {
+                return this._renderDay(day, dayIndex);
+              });
             })
           }
         </div>

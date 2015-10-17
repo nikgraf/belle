@@ -3,7 +3,7 @@ const datePickerStyle = {
   // wrapper of entire component
   style: {
     borderRadius: 2,
-    width: 280,
+    width: 267,
     textAlign: 'center',
     boxSizing: 'border-box',
     backgroundColor: 'white',
@@ -136,18 +136,13 @@ const datePickerStyle = {
   // styling for entire grid of week-header and weeks
   weekGroupStyle: {
     boxSizing: 'border-box',
-  },
-
-  // styling for week's row
-  weekStyle: {
-    boxSizing: 'border-box',
-    width: 280,
     overflow: 'auto',
+    paddingBottom: 1,
   },
 
   // styling for week's day label
   dayLabelStyle: {
-    width: 40,
+    width: 38,
     height: 30,
     padding: 0,
     lineHeight: '30px',
@@ -176,7 +171,7 @@ const datePickerStyle = {
 
   // styling for individual day
   dayStyle: {
-    width: 41,
+    width: 39,
     height: 30,
     lineHeight: '30px',
     cursor: 'pointer',
@@ -185,9 +180,11 @@ const datePickerStyle = {
     display: 'block',
     float: 'left',
     padding: 0,
-    marginLeft: -1,
-    marginTop: -1,
+    marginRight: -1,
+    marginBottom: -1,
     boxSizing: 'border-box',
+    position: 'relative',
+    zIndex: 100,
 
     /*
      User should be able to copy date.
@@ -231,8 +228,9 @@ const datePickerStyle = {
   },
 
   focusDayStyle: {
-    border: '1px solid rgba(140, 224, 255, 0.6)',
     boxShadow: '0 0 0 1px rgba(140, 224, 255, 0.6) inset',
+    border: '1px solid rgba(140, 224, 255, 0.6)',
+    zIndex: 200,
   },
 
   disabledHoverDayStyle: {
@@ -241,6 +239,7 @@ const datePickerStyle = {
 
   todayStyle: {
     color: '#E24545',
+    boxShadow: '0 0 0 1px red',
   },
 
   weekendStyle: {
