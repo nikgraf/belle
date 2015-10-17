@@ -241,7 +241,7 @@ const datePickerStyle = {
   },
 
   todayStyle: {
-    color: '#000',
+    color: '#2C87A9',
   },
 
   weekendStyle: {
