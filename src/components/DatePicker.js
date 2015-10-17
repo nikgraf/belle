@@ -990,16 +990,16 @@ export default class DatePicker extends Component {
       style = {
         ...style,
         ...defaultStyle.focusStyle,
-      ...this.props.focusStyle,
+        ...this.props.focusStyle,
       };
     }
 
     if (this.state.isActive) {
       style = {
-          ...style,
-          ...defaultStyle.activeStyle,
-          ...this.props.activeStyle,
-        };
+        ...style,
+        ...defaultStyle.activeStyle,
+        ...this.props.activeStyle,
+      };
     }
 
     const weekArray = getWeekArrayForMonth(this.state.month, this.state.year, this.state.localeData.firstDay);
