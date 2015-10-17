@@ -17,15 +17,13 @@ const htmlStructure = `<div style={ style }>
       <span style={ nextMonthStyle }></span>
     </div>
     <!-- following is repeated for each week -->
-    <div style={ weekStyle }>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-      <div style={ dayStyle }></div>
-    </div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
+    <div style={ dayStyle }></div>
   </div>
 </div>`;
 
