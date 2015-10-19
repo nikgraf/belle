@@ -53,7 +53,7 @@ const datePickerStyle = {
   navBarStyle: {
     height: 30,
     lineHeight: '30px',
-    border: '1px solid #ccc',
+    border: '1px solid #E0E0E0',
   },
 
   // left button in nav-bar to go to previous month
@@ -140,13 +140,19 @@ const datePickerStyle = {
     paddingBottom: 1,
   },
 
+  weekHeaderStyle: {
+    overflow: 'auto',
+    boxSizing: 'border-box',
+    boxShadow: '1px 0 0 0 #E0E0E0 inset, -1px 0 0 0 #E0E0E0 inset',
+  },
+
   // styling for week's day label
   dayLabelStyle: {
-    width: 38,
+    width: 39,
     height: 30,
     padding: 0,
+    marginRight: -1,
     lineHeight: '30px',
-    backgroundColor: 'white',
     color: '#716D6D',
     display: 'block',
     float: 'left',
@@ -175,7 +181,7 @@ const datePickerStyle = {
     height: 30,
     lineHeight: '30px',
     cursor: 'pointer',
-    border: '1px solid #EEE',
+    border: '1px solid #E0E0E0',
     color: '#716D6D',
     display: 'block',
     float: 'left',
@@ -218,14 +224,14 @@ const datePickerStyle = {
   },
 
   hoverDayStyle: {
-    border: '1px solid #EEE',
-    background: '#EEE',
+    border: '1px solid #E0E0E0',
+    background: '#E0E0E0',
     color: '#616161',
   },
 
   activeDayStyle: {
     boxShadow: 'none',
-    border: '1px solid #EEE',
+    border: '1px solid #E0E0E0',
     borderTop: '1px solid #BDBDBD',
     background: '#E0E0E0',
     color: '#424242',
@@ -250,7 +256,7 @@ const datePickerStyle = {
 
   selectedDayStyle: {
     boxShadow: 'none',
-    border: '1px solid #EEE',
+    border: '1px solid #E0E0E0',
     borderTop: '1px solid #BDBDBD',
     background: '#E0E0E0',
     color: '#424242',

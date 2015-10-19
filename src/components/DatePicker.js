@@ -207,6 +207,8 @@ export default class DatePicker extends Component {
     hoverNextMonthNavStyle: PropTypes.object,
     activeNextMonthNavStyle: PropTypes.object,
 
+    weekHeaderStyle: PropTypes.object,
+
     // monthlbl styles
     monthLabelStyle: PropTypes.object,
 
@@ -836,6 +838,11 @@ export default class DatePicker extends Component {
    * Day headers will be rendered using locale information.
    */
   _renderWeekHeader() {
+    const weekHeaderStyle = {
+      ...defaultStyle.weekHeaderStyle,
+      ...this.props.weekHeaderStyle,
+    };
+
     let dayLabelStyle = {
       ...defaultStyle.dayLabelStyle,
       ...this.props.dayLabelStyle,
@@ -858,16 +865,22 @@ export default class DatePicker extends Component {
     let weekendIndex = ((7 - this.localeData.firstDay) % 7) + this.localeData.weekEnd;
     weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
-    return map(dayNames, (dayAbbr, index) => {
-      return (
-        <span key={ 'dayAbbr-' + index }
-              style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
-              className={ this.props.dayLabelClassName }
-              role="columnheader">
-            { dayAbbr }
-          </span>
-      );
-    });
+    return (
+      <div style={ weekHeaderStyle }>
+        {
+          map(dayNames, (dayAbbr, index) => {
+            return (
+              <span key={ 'dayAbbr-' + index }
+                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
+                    className={ this.props.dayLabelClassName }
+                    role="columnheader">
+                  { dayAbbr }
+                </span>
+            );
+          })
+        }
+      </div>
+    );
   }
 
   // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
