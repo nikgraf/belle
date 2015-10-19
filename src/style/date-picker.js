@@ -52,7 +52,6 @@ const datePickerStyle = {
   // nav-bar at top for month navigation
   navBarStyle: {
     height: 30,
-    lineHeight: '30px',
     border: '1px solid #E0E0E0',
   },
 
