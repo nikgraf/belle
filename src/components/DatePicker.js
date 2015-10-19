@@ -299,7 +299,13 @@ export default class DatePicker extends Component {
           isFocused: true,
         };
         if (!this.state.focusedDay) {
-          newState.focusedDay = this.state.month + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+          if (this.state.dateValue && this.state.dateValue.getMonth() === this.state.month && this.state.dateValue.getFullYear() === this.state.year) {
+            newState.focusedDay = this.state.dateValue.getMonth() + 1 + '/' + this.state.dateValue.getDate() + '/' + this.state.dateValue.getFullYear();
+          } else if (this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+            newState.focusedDay = CURRENT_MONTH + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+          } else {
+            newState.focusedDay = this.state.month + 1 + '/' + 1 + '/' + this.state.year;
+          }
         }
 
         this.setState(newState);
