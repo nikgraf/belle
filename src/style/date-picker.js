@@ -4,6 +4,7 @@ const datePickerStyle = {
   style: {
     borderRadius: 2,
     width: 267,
+    fontSize: 14,
     textAlign: 'center',
     boxSizing: 'border-box',
     backgroundColor: 'white',
@@ -42,7 +43,6 @@ const datePickerStyle = {
 
   focusStyle: {
     boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
-    outline: 0,
   },
 
   disabledHoverStyle: {
@@ -51,9 +51,10 @@ const datePickerStyle = {
 
   // nav-bar at top for month navigation
   navBarStyle: {
-    height: 30,
-    lineHeight: '30px',
+    height: 40,
     border: '1px solid #E0E0E0',
+    paddingTop: 8,
+    boxSizing: 'border-box',
   },
 
   // left button in nav-bar to go to previous month
@@ -149,14 +150,13 @@ const datePickerStyle = {
   // styling for week's day label
   dayLabelStyle: {
     width: 39,
-    height: 30,
-    padding: 0,
+    height: 32,
     marginRight: -1,
-    lineHeight: '30px',
     color: '#716D6D',
     display: 'block',
     float: 'left',
     boxSizing: 'border-box',
+    paddingTop: 5,
 
     /*
      User should be able to copy date.
@@ -178,19 +178,17 @@ const datePickerStyle = {
   // styling for individual day
   dayStyle: {
     width: 39,
-    height: 30,
-    lineHeight: '30px',
+    height: 32,
     cursor: 'pointer',
     border: '1px solid #E0E0E0',
     color: '#716D6D',
-    display: 'block',
     float: 'left',
-    padding: 0,
     marginRight: -1,
     marginBottom: -1,
     boxSizing: 'border-box',
-    position: 'relative',
     zIndex: 100,
+    paddingTop: 5,
+    position: 'relative',
 
     /*
      User should be able to copy date.
@@ -225,7 +223,7 @@ const datePickerStyle = {
 
   hoverDayStyle: {
     border: '1px solid #E0E0E0',
-    background: '#E0E0E0',
+    background: '#EEE',
     color: '#616161',
   },
 
