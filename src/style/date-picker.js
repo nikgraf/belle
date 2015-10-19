@@ -223,7 +223,7 @@ const datePickerStyle = {
 
   hoverDayStyle: {
     border: '1px solid #E0E0E0',
-    background: '#E0E0E0',
+    background: '#EEE',
     color: '#616161',
   },
 
