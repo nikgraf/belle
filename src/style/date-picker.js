@@ -140,13 +140,19 @@ const datePickerStyle = {
     paddingBottom: 1,
   },
 
+  weekHeaderStyle: {
+    overflow: 'auto',
+    boxSizing: 'border-box',
+    boxShadow: '1px 0 0 0 #EEE inset, -1px 0 0 0 #EEE inset',
+  },
+
   // styling for week's day label
   dayLabelStyle: {
-    width: 38,
+    width: 39,
     height: 30,
     padding: 0,
+    marginRight: -1,
     lineHeight: '30px',
-    backgroundColor: 'white',
     color: '#716D6D',
     display: 'block',
     float: 'left',
