@@ -967,6 +967,14 @@ export default class DatePicker extends Component {
         ariaCurrent = 'date';
       }
 
+      if (!this.props.disabled && this.state.focusedDay === dayKey) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.focusDayStyle,
+          ...this.props.focusDayStyle,
+        };
+      }
+
       if (this.state.dateValue && day === this.state.dateValue.getDate()
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
         dayStyle = {
@@ -975,14 +983,6 @@ export default class DatePicker extends Component {
           ...this.props.selectedDayStyle,
         };
         ariaSelected = true;
-      }
-
-      if (!this.props.disabled && this.state.focusedDay === dayKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.focusDayStyle,
-          ...this.props.focusDayStyle,
-        };
       }
 
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
