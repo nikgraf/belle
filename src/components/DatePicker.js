@@ -290,7 +290,8 @@ export default class DatePicker extends Component {
 
   /**
    * Callback is called when wrapper is focused, it will conditionally set isFocused.
-   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
+   *
+   * In addition this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onFocus() {
     if (!this.props.disabled) {
@@ -459,12 +460,12 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOver. It will conditionally set this.state.hoveredDay.
+   * Callback is called when some day receives MouseOver. It will conditionally set this.state.focusedDay.
    */
   _onDayMouseOver(dayKey) {
     if (!this.props.disabled && !this.props.readOnly) {
       this.setState({
-        hoveredDay: dayKey,
+        focusedDay: dayKey,
       });
       if (this.props.onDayMouseOver) {
         this.props.onDayMouseOver(event);
@@ -473,12 +474,12 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOut. It will reset this.state.hoveredDay.
+   * Callback is called when some day receives MouseOut. It will reset this.state.focusedDay.
    */
   _onDayMouseOut(dayKey, event) {
-    if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === dayKey) {
+    if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.focusedDay === dayKey) {
       this.setState({
-        hoveredDay: 0,
+        focusedDay: 0,
       });
       if (this.props.onDayMouseOut) {
         this.props.onDayMouseOut(event);
@@ -932,7 +933,7 @@ export default class DatePicker extends Component {
         ...defaultStyle.disabledDayStyle,
         ...this.props.disabledDayStyle,
       };
-      if (isNotOtherMonth && this.state.hoveredDay === dayKey) {
+      if (isNotOtherMonth && this.state.focusedDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.disabledHoverDayStyle,
@@ -981,7 +982,7 @@ export default class DatePicker extends Component {
         };
       }
 
-      if (!this.props.disabled && this.state.hoveredDay === dayKey) {
+      if (!this.props.disabled && this.state.focusedDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.hoverDayStyle,

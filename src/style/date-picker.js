@@ -180,23 +180,26 @@ const datePickerStyle = {
     width: 39,
     height: 32,
     cursor: 'pointer',
-    border: '1px solid #E0E0E0',
+    borderLeft: '1px solid #E0E0E0',
+    borderRight: '1px solid #E0E0E0',
+    borderTop: '1px solid #E0E0E0',
+    borderBottom: '1px solid #E0E0E0',
     color: '#716D6D',
     float: 'left',
     marginRight: -1,
     marginBottom: -1,
     boxSizing: 'border-box',
-    zIndex: 100,
     paddingTop: 5,
     position: 'relative',
 
     /*
-     User should be able to copy date.
+     To avoid any kind of flickering the user won't get feedback
+     for selecting the button text
      */
-    WebkitUserSelect: 'initial',
-    MozUserSelect: 'initial',
-    MsUserSelect: 'initial',
-    userSelect: 'initial',
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    MsUserSelect: 'none',
+    userSelect: 'none',
 
     /* This button can only be pressed */
     MsTouchAction: 'manipulation',
@@ -222,22 +225,20 @@ const datePickerStyle = {
   },
 
   hoverDayStyle: {
-    border: '1px solid #E0E0E0',
     background: '#EEE',
     color: '#616161',
   },
 
   activeDayStyle: {
     boxShadow: 'none',
-    border: '1px solid #E0E0E0',
     borderTop: '1px solid #BDBDBD',
     background: '#E0E0E0',
     color: '#424242',
   },
 
   focusDayStyle: {
-    border: '1px solid rgba(140, 224, 255, 0.8)',
-    zIndex: 200,
+    background: '#EEE',
+    color: '#616161',
   },
 
   disabledHoverDayStyle: {
@@ -254,7 +255,6 @@ const datePickerStyle = {
 
   selectedDayStyle: {
     boxShadow: 'none',
-    border: '1px solid #E0E0E0',
     borderTop: '1px solid #BDBDBD',
     background: '#E0E0E0',
     color: '#424242',
