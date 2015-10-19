@@ -215,11 +215,6 @@ const datePickerStyle = {
     transitionTimingFunction: 'ease-out',
   },
 
-  disabledDayStyle: {
-    color: '#C1BABA',
-    cursor: 'auto',
-  },
-
   readOnlyDayStyle: {
     cursor: 'auto',
   },
@@ -241,8 +236,14 @@ const datePickerStyle = {
     color: '#616161',
   },
 
+  disabledDayStyle: {
+    color: '#C1BABA',
+    cursor: 'not-allowed',
+  },
+
   disabledHoverDayStyle: {
-    cursor: 'auto',
+    cursor: 'not-allowed',
+    backgroundColor: 'red',
   },
 
   todayStyle: {
@@ -250,7 +251,7 @@ const datePickerStyle = {
   },
 
   weekendStyle: {
-    backgroundColor: '#F0F0F0',
+    background: '#F0F0F0',
   },
 
   selectedDayStyle: {
