@@ -290,7 +290,8 @@ export default class DatePicker extends Component {
 
   /**
    * Callback is called when wrapper is focused, it will conditionally set isFocused.
-   * this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
+   *
+   * In addition this.state.focusedDay will be set to current date of whichever month is displayed on date-picker (if this.state.focusedDay is undefined).
    */
   _onFocus() {
     if (!this.props.disabled) {
@@ -425,16 +426,23 @@ export default class DatePicker extends Component {
     }
   }
 
-  // mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
   /**
    * Callback is called when some day receives mouseDown.
    * It will conditionally set this.state.activeDay, this.state.focusedDay and call props.onDayMouseDown.
+   *
+   * Note: mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
    */
   _onDayMouseDown(dayKey, day, event) {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly) {
       this._triggerSelectDate(day);
       this.setState({
         activeDay: dayKey,
+
+        // Note: updating focusedDay normally would be good enough, but is
+        // necessary for the following edge case:
+        // A user moves the cursor over a day. Moves on with the keyboard and
+        // then without moving again just pressing the mouse. In this case
+        // mouseOver did not get called again.
         focusedDay: dayKey,
       });
       if (this.props.onDayMouseDown) {
@@ -459,12 +467,12 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOver. It will conditionally set this.state.hoveredDay.
+   * Callback is called when some day receives MouseOver. It will conditionally set this.state.focusedDay.
    */
   _onDayMouseOver(dayKey) {
-    if (!this.props.disabled && !this.props.readOnly) {
+    if (!this.props.readOnly) {
       this.setState({
-        hoveredDay: dayKey,
+        focusedDay: dayKey,
       });
       if (this.props.onDayMouseOver) {
         this.props.onDayMouseOver(event);
@@ -473,12 +481,12 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOut. It will reset this.state.hoveredDay.
+   * Callback is called when some day receives MouseOut. It will reset this.state.focusedDay.
    */
   _onDayMouseOut(dayKey, event) {
-    if (!this.props.disabled && !this.props.readOnly && event.button === 0 && this.state.hoveredDay === dayKey) {
+    if (!this.props.readOnly && event.button === 0 && this.state.focusedDay === dayKey) {
       this.setState({
-        hoveredDay: 0,
+        focusedDay: 0,
       });
       if (this.props.onDayMouseOut) {
         this.props.onDayMouseOut(event);
@@ -932,7 +940,7 @@ export default class DatePicker extends Component {
         ...defaultStyle.disabledDayStyle,
         ...this.props.disabledDayStyle,
       };
-      if (isNotOtherMonth && this.state.hoveredDay === dayKey) {
+      if (isNotOtherMonth && this.state.focusedDay === dayKey) {
         dayStyle = {
           ...dayStyle,
           ...defaultStyle.disabledHoverDayStyle,
@@ -959,6 +967,14 @@ export default class DatePicker extends Component {
         ariaCurrent = 'date';
       }
 
+      if (!this.props.disabled && this.state.focusedDay === dayKey) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.focusDayStyle,
+          ...this.props.focusDayStyle,
+        };
+      }
+
       if (this.state.dateValue && day === this.state.dateValue.getDate()
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
         dayStyle = {
@@ -967,26 +983,6 @@ export default class DatePicker extends Component {
           ...this.props.selectedDayStyle,
         };
         ariaSelected = true;
-      }
-
-      if (!this.props.disabled && this.state.focusedDay === dayKey) {
-        dayStyle = {
-          ...dayStyle,
-          outline: 0,
-        };
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.focusDayStyle,
-          ...this.props.focusDayStyle,
-        };
-      }
-
-      if (!this.props.disabled && this.state.hoveredDay === dayKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.hoverDayStyle,
-          ...this.props.hoverDayStyle,
-        };
       }
 
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
