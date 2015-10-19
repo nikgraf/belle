@@ -950,14 +950,6 @@ export default class DatePicker extends Component {
         ariaSelected = true;
       }
 
-      if (!this.props.disabled && this.state.hoveredDay === dayKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.hoverDayStyle,
-          ...this.props.hoverDayStyle,
-        };
-      }
-
       if (!this.props.disabled && this.state.focusedDay === dayKey) {
         dayStyle = {
           ...dayStyle,
@@ -967,6 +959,14 @@ export default class DatePicker extends Component {
           ...dayStyle,
           ...defaultStyle.focusDayStyle,
           ...this.props.focusDayStyle,
+        };
+      }
+
+      if (!this.props.disabled && this.state.hoveredDay === dayKey) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.hoverDayStyle,
+          ...this.props.hoverDayStyle,
         };
       }
 
