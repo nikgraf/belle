@@ -3,7 +3,6 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {DatePicker, Select, Option} from 'belle';
 import Code from './Code';
 import {propertyNameStyle, propertyDescriptionStyle} from './style';
-import { extend } from 'underscore';
 
 const TODAY = new Date();
 
@@ -35,7 +34,23 @@ const advanceCodeExample1 = `
 const advanceCodeExample2 = `
 <DatePicker readOnly={ true }
             renderDay={ this.renderDay }
-            month={ 12 }/>`;
+            month={ 12 }/>
+
+renderDay(day) {
+  if (day.getDate() === 25 && day.getMonth() === 11) {
+    return (
+      <div>
+        <span style={ {color: '#FFDA46'} }>✵</span>
+        <span style={ {color: 'red'} }>
+          { day.getDate() }
+        </span>
+      </div>
+    );
+  }
+  return (
+    day.getDate()
+  );
+}`;
 
 const advanceCodeExample3 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
@@ -50,41 +65,34 @@ const advanceCodeExample5 = `
             disabled/>`;
 
 const advanceCodeExample6 = `
-<DatePicker ref="datePicker"
-            onMonthChange={ this.onMonthChange }
+<DatePicker onMonthYearChange={ this.onMonthYearChange }
             month={ this.state.selectedMonth }
+            year={ this.state.selectedYear }
             valueLink={ this.linkState('selectedDate') }/>
-<div>
-  <span>
-    Date: { this.state.selectedDate ?
-            this.state.selectedDate.getMonth() + '/' +
-            this.state.selectedDate.getDate() + '/' +
-            this.state.selectedDate.getFullYear() : '-'}
-  </span>
-  <span>
-    Month: {this.state.selectedMonth}
-  </span>
-  <span>
-    <a onClick={ this.resetDate }>Reset Date</a>
-  </span>
-</div>`;
 
-const renderDayFunction = `renderDay(day) {
-    if (day.getDate() === 25 && day.getMonth() === 11) {
-      return (
-        <div>
-          <span style={ {color: '#FFDA46'} }>✵</span>
-          <span style={ {color: 'red'} }>
-            { day.getDate() }
-          </span>
-        </div>
-      );
-    }
-    return (
-      day.getDate()
-    );
-  }
-`;
+<div>
+  <div>Date: { this.state.selectedDate ?
+               this.state.selectedDate.getMonth() + '/' +
+               this.state.selectedDate.getDate() + '/' +
+               this.state.selectedDate.getFullYear() : '-'}
+  </div>
+  <div>Month: {this.state.selectedMonth}</div>
+  <div>Year: {this.state.selectedYear}</div>
+  <div><a onClick={ this.resetDate }>Reset Date</a></div>
+</div>
+
+onMonthYearChange(month, year) {
+  this.setState({
+    selectedMonth: month,
+    selectedYear: year
+  });
+}
+
+resetDate() {
+  this.setState({
+    selectedDate: undefined
+  });
+}`;
 
 export default React.createClass({
 
@@ -93,6 +101,7 @@ export default React.createClass({
   getInitialState() {
     return {
       selectedMonth: TODAY.getMonth() + 1,
+      selectedYear: TODAY.getFullYear(),
       selectedLocale: 'ar',
       selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), 15)
     };
@@ -217,7 +226,8 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Date picker will be made according this locale (By default it will be english calendar).
+              Date picker will be rendered according this locale
+              (By default it will be english calendar, check <a href="#/configuration">Configuration</a>).
             </p>
           </td>
         </tr>
@@ -298,7 +308,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onMonthChange
+            onMonthYearChange
           </td>
         </tr>
         <tr>
@@ -309,7 +319,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              The function will be called when user navigated to different month.
+              The function will be called when user navigated to different month or year.
             </p>
           </td>
         </tr>
@@ -385,7 +395,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              The property can be used to add to/change the styling of current date.
+              The property can be used to add to / change the styling of current date.
             </p>
           </td>
         </tr>
@@ -403,7 +413,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              The property can be used to add to/change the styling of the selected date.
+              The property can be used to add to / change the styling of the selected date.
             </p>
           </td>
         </tr>
@@ -421,7 +431,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              The property can be used to add to/change the styling of other month day in date picker.
+              The property can be used to add to / change the styling of other month day in date picker.
             </p>
           </td>
         </tr>
@@ -447,47 +457,33 @@ export default React.createClass({
       </tbody></table>
 
       <p>
-        Properties for handling various events(focus, mouse events, touch events):
-        <span style={ {color: 'grey'} }>tabIndex, onDayFocus, onDayBlur, onDayKeyDown, onDayMouseDown, onDayMouseUp,
-        onDayTouchStart, onDayTouchEnd</span><br />
+        Properties for handling various events(focus, mouse events, touch events, change in dateValue, month or year):
+        <span style={ {color: 'grey'} }> tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp, onTouchStart,
+        onTouchEnd, onPrevMonthNavMouseDown, onPrevMonthNavMouseUp, onPrevMonthNavTouchStart, onPrevMonthNavTouchEnd,
+        onNextMonthNavMouseDown, onNextMonthNavMouseUp, onNextMonthNavTouchStart, onNextMonthNavTouchEnd, onDayMouseOver,
+        onDayMouseOut, onDayMouseDown, onDayMouseUp, onDayTouchStart, onDayTouchEnd, onUpdate, onMonthYearChange.
+        </span><br />
       </p>
 
       <p>
-        Properties for adding attributes to date picker wrapper and days:
-      <span style={ {color: 'grey'} }>wrapperProps, dayProps</span><br />
+        ... for adding attributes to date picker wrapper and days:
+        <span style={ {color: 'grey'} }> wrapperProps, dayProps</span><br />
       </p>
 
       <p>
         ... for adding classes to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }>wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
+        <span style={ {color: 'grey'} }> wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
         monthLabelClassName, dayLabelClassName, dayClassName</span><br />
       </p>
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }>style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle,
-          focusStyle, disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
-          nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle, disabledDayLabelStyle, weekendLabelStyle,
-          dayStyle, disabledDayStyle, readOnlyDayStyle, hoverDayStyle, activeDayStyle, focusDayStyle, disabledHoverDayStyle, todayStyle,
-          selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
-      </p>
-
-      <h3>Methods</h3>
-
-      <table><tbody>
-        <tr>
-          <td style={ propertyNameStyle }>
-            resetValue
-          </td>
-        </tr>
-        <tr>
-          <td style={ extend(propertyDescriptionStyle, {paddingBottom: 0}) }>
-            <p>
-              This method can be called to reset the date picker's value to undefined.<br/>
-            </p>
-          </td>
-        </tr>
-      </tbody></table>
+        <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle,
+        disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
+        nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle,
+        disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, hoverDayStyle, activeDayStyle,
+        focusDayStyle, disabledHoverDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
+     </p>
 
       <h3>Internal HTML Structure</h3>
 
@@ -514,8 +510,6 @@ export default React.createClass({
 
       <Code value={ advanceCodeExample2 } style={ {marginTop: 40} } />
 
-      <Code value={ renderDayFunction } style={ {marginTop: 40} } />
-
       <h3>Localization support in DatePicker:</h3>
 
       <p>Belle has inbuilt support for following locales: Arabic, French, Hebrew, Dutch, Chinese.
@@ -539,22 +533,23 @@ export default React.createClass({
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
 
-      <h3>Controlled DatePicker component with onMonthChange callBack and resetValue method used:</h3>
+      <h3>Controlled DatePicker component with onMonthYearChange callBack and reset option implemented:</h3>
 
-      <DatePicker ref="datePicker"
-                  onMonthChange={ this.onMonthChange }
+      <DatePicker onMonthYearChange={ this.onMonthYearChange }
                   month={ this.state.selectedMonth }
+                  year={ this.state.selectedYear }
                   valueLink={ this.linkState('selectedDate') }/>
       <div style={ {display: 'inline-block',
                     width: 200,
-                    marginLeft: 20} }>
-      <span style={ {display: 'block'} }>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</span>
-      <span style={ {display: 'block'} }>Month: {this.state.selectedMonth}</span>
-      <span style={ {display: 'block'} }><a onClick={ this.resetDate }
-         style={{
-           textDecoration: 'underline',
-           cursor: 'pointer'
-         }}>Reset Date</a></span>
+                    marginLeft: 20,
+                    marginTop: 10} }>
+      <div>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</div>
+      <div>Month: {this.state.selectedMonth}</div>
+      <div>Year: {this.state.selectedYear}</div>
+      <div><a onClick={ this.resetDate }
+         style={{textDecoration: 'underline',
+                 cursor: 'pointer'
+         }}>Reset Date</a></div>
       </div>
 
       <Code value={ advanceCodeExample6 } style={ {marginTop: 40} } />
@@ -592,12 +587,12 @@ export default React.createClass({
     );
   },
 
-  onMonthChange(month) {
-    this.setState({ selectedMonth: month });
+  onMonthYearChange(month, year) {
+    this.setState({ selectedMonth: month, selectedYear: year });
   },
 
   resetDate() {
-    this.refs.datePicker.resetValue();
+    this.setState({ selectedDate: undefined });
   }
 
 });
