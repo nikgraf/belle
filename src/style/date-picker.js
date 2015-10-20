@@ -174,7 +174,7 @@ const datePickerStyle = {
   },
 
   weekendLabelStyle: {
-    backgroundColor: '#F0F0F0',
+    color: '#8E8071',
   },
 
   // styling for individual day
@@ -249,7 +249,7 @@ const datePickerStyle = {
   },
 
   weekendStyle: {
-    background: '#F0F0F0',
+    color: '#8E8071',
   },
 
   selectedDayStyle: {
