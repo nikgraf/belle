@@ -219,11 +219,6 @@ const datePickerStyle = {
     cursor: 'auto',
   },
 
-  hoverDayStyle: {
-    background: '#EEE',
-    color: '#616161',
-  },
-
   activeDayStyle: {
     boxShadow: 'none',
     borderTop: '1px solid #BDBDBD',

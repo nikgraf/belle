@@ -96,7 +96,6 @@ const styleStructure = `style = {
     dayStyle: { … },
     disabledDayStyle: { … },
     readOnlyDayStyle: { … },
-    hoverDayStyle: { … },
     activeDayStyle: { … },
     focusDayStyle: { … },
     disabledHoverDayStyle: { … },

@@ -221,7 +221,6 @@ export default class DatePicker extends Component {
     dayStyle: PropTypes.object,
     disabledDayStyle: PropTypes.object,
     readOnlyDayStyle: PropTypes.object,
-    hoverDayStyle: PropTypes.object,
     activeDayStyle: PropTypes.object,
     focusDayStyle: PropTypes.object,
     disabledHoverDayStyle: PropTypes.object,
