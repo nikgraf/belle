@@ -584,7 +584,7 @@ export default class DatePicker extends Component {
       });
     } else {
       this.setState({
-        focusedDay: `${this.state.month + 1}/1/${this.state.year}`,
+        focusedDay: `${this.state.year}-${this.state.month + 1}-1`,
       });
     }
   }
@@ -599,7 +599,7 @@ export default class DatePicker extends Component {
 
     const nextFocusedDay = new Date(this.state.focusedDay);
     nextFocusedDay.setDate(nextFocusedDay.getDate() + days);
-    const nextFocusedDayKey = (nextFocusedDay.getMonth() + 1) + '/' + nextFocusedDay.getDate() + '/' + nextFocusedDay.getFullYear();
+    const nextFocusedDayKey = `${nextFocusedDay.getFullYear()}-${nextFocusedDay.getMonth() + 1}-${nextFocusedDay.getDate()}`;
     const nextMonth = nextFocusedDay.getMonth();
 
     if (nextMonth !== currentMonth) {
@@ -863,7 +863,7 @@ export default class DatePicker extends Component {
               /*
                 This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
               */
-              id={ `${this.state.month}-${this.state.year}` }>
+              id={ `${this.state.year}-${this.state.month}` }>
           { `${this.localeData.monthNames[this.state.month]} ${this.state.year}` }
         </span>
         { this._renderNextMonthNav(nextMonthNavStyle) }
@@ -941,7 +941,7 @@ export default class DatePicker extends Component {
   _renderDay(currentDate, index) {
     const day = currentDate.getDate();
     const isNotOtherMonth = currentDate.getMonth() === this.state.month;
-    const dayKey = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear();
+    const dayKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`;
 
     let ariaCurrent = '';
     let ariaSelected = false;
