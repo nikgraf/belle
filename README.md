@@ -166,7 +166,7 @@ In addition you can ask the community by [posting your question to StackOverflow
 
 Thanks to [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github.com/eugene1g) for their inspiring work on [React TextArea Autosize](https://github.com/andreypopp/react-textarea-autosize) which kind of ignited the idea of Belle.
 
-Thanks to Christian Steiner from [http://www.cropd.at/](cropd.at) for creating the logo and helping out with the design.
+Thanks to Christian Steiner from [http://www.cropd.at/](http://cropd.at) for creating the logo and helping out with the design.
 
 Special thanks to [https://github.com/jpuri](Jyoti Puri) for the tremendous amount of work she put into this endeavor.
 
