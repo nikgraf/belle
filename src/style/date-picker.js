@@ -210,9 +210,6 @@ const datePickerStyle = {
      http://stackoverflow.com/a/3516243/837709
      */
     WebkitTapHighlightColor: 'transparent',
-
-    transition: 'color 0.1s',
-    transitionTimingFunction: 'ease-out',
   },
 
   readOnlyDayStyle: {

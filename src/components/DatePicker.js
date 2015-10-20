@@ -967,14 +967,6 @@ export default class DatePicker extends Component {
         ariaCurrent = 'date';
       }
 
-      if (!this.props.disabled && this.state.focusedDay === dayKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.focusDayStyle,
-          ...this.props.focusDayStyle,
-        };
-      }
-
       if (this.state.dateValue && day === this.state.dateValue.getDate()
         && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getYear() === this.state.dateValue.getYear()) {
         dayStyle = {
@@ -983,6 +975,14 @@ export default class DatePicker extends Component {
           ...this.props.selectedDayStyle,
         };
         ariaSelected = true;
+      }
+
+      if (!this.props.disabled && this.state.focusedDay === dayKey) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.focusDayStyle,
+          ...this.props.focusDayStyle,
+        };
       }
 
       if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
@@ -1000,6 +1000,8 @@ export default class DatePicker extends Component {
       };
     }
 
+    const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
+
     if (isNotOtherMonth) {
       return (
         <span key={ 'day-' + index }
@@ -1016,12 +1018,11 @@ export default class DatePicker extends Component {
               className={ this.props.dayClassName }
               role="gridcell"
           {...this.dayProps} >
-          { this.props.renderDay ? this.props.renderDay(currentDate) : day }
+          { renderedDay }
         </span>
       );
     }
 
-    const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
     return (
       <span key={ 'day-' + index }
             style={ dayStyle }
