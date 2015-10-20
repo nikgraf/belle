@@ -42,7 +42,9 @@ const datePickerStyle = {
   },
 
   focusStyle: {
-    boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
+    // boxShadow: '0 0 0 2px rgba(140, 224, 255, 0.6) inset',
+    WebkitAnimation: 'belle-button-focus 2s',
+    outline: 0, // avoid default focus behaviour
   },
 
   disabledHoverStyle: {
@@ -210,9 +212,6 @@ const datePickerStyle = {
      http://stackoverflow.com/a/3516243/837709
      */
     WebkitTapHighlightColor: 'transparent',
-
-    transition: 'color 0.1s',
-    transitionTimingFunction: 'ease-out',
   },
 
   readOnlyDayStyle: {
