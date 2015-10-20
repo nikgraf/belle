@@ -421,7 +421,7 @@ export default class DatePicker extends Component {
       } else {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp' ||
             event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-          this._focusLastHoveredDay();
+          this._focusOnFallbackDay();
         }
       }
 
@@ -577,10 +577,16 @@ export default class DatePicker extends Component {
     }
   }
 
-  _focusLastHoveredDay() {
-    this.setState({
-      focusedDay: this.state.lastHoveredDay,
-    });
+  _focusOnFallbackDay() {
+    if (this.state.lastHoveredDay) {
+      this.setState({
+        focusedDay: this.state.lastHoveredDay,
+      });
+    } else {
+      this.setState({
+        focusedDay: `${this.state.month + 1}/1/${this.state.year}`,
+      });
+    }
   }
 
   /**
@@ -749,6 +755,8 @@ export default class DatePicker extends Component {
     this.setState({
       month: newMonth,
       year: newYear,
+      focusedDay: undefined,
+      lastHoveredDay: undefined,
     });
     if (this.props.onMonthYearChange) {
       this.props.onMonthYearChange(newMonth + 1, newYear);
@@ -772,6 +780,8 @@ export default class DatePicker extends Component {
     this.setState({
       month: newMonth,
       year: newYear,
+      focusedDay: undefined,
+      lastHoveredDay: undefined,
     });
     if (this.props.onMonthYearChange) {
       this.props.onMonthYearChange(newMonth + 1, newYear);
