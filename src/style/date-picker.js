@@ -193,6 +193,7 @@ const datePickerStyle = {
     boxSizing: 'border-box',
     paddingTop: 5,
     position: 'relative',
+    zIndex: 100,
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -227,12 +228,10 @@ const datePickerStyle = {
     boxShadow: 'none',
     borderTop: '1px solid #BDBDBD',
     background: '#E0E0E0',
-    color: '#424242',
   },
 
   focusDayStyle: {
     background: '#EEE',
-    color: '#616161',
   },
 
   disabledDayStyle: {
@@ -255,9 +254,12 @@ const datePickerStyle = {
 
   selectedDayStyle: {
     boxShadow: 'none',
-    borderTop: '1px solid #BDBDBD',
+    borderTop: '1px solid #B1B1B1',
+    borderLeft: '1px solid #D0D0D0',
+    borderRight: '1px solid #D0D0D0',
+    borderBottom: '1px solid #D4D4D4',
     background: '#E0E0E0',
-    color: '#424242',
+    zIndex: 200,
   },
 
   otherMonthDayStyle: {
