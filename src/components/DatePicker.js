@@ -418,6 +418,11 @@ export default class DatePicker extends Component {
           event.preventDefault();
           this._triggerToggleDate(new Date(this.state.focusedDay));
         }
+      } else {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' ||
+            event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          this._focusLastHoveredDay();
+        }
       }
 
       if (this.props.onKeyDown) {
@@ -458,7 +463,7 @@ export default class DatePicker extends Component {
   _onDayMouseUp(dayKey, event) {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dayKey) {
       this.setState({
-        activeDay: null,
+        activeDay: undefined,
       });
       if (this.props.onDayMouseUp) {
         this.props.onDayMouseUp(event);
@@ -486,7 +491,8 @@ export default class DatePicker extends Component {
   _onDayMouseOut(dayKey, event) {
     if (!this.props.readOnly && event.button === 0 && this.state.focusedDay === dayKey) {
       this.setState({
-        focusedDay: 0,
+        focusedDay: undefined,
+        lastHoveredDay: this.state.focusedDay,
       });
       if (this.props.onDayMouseOut) {
         this.props.onDayMouseOut(event);
@@ -518,7 +524,7 @@ export default class DatePicker extends Component {
     if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
       if (this.state.activeDay === dayKey) {
         this.setState({
-          activeDay: null,
+          activeDay: undefined,
         });
       }
 
@@ -571,6 +577,12 @@ export default class DatePicker extends Component {
     }
   }
 
+  _focusLastHoveredDay() {
+    this.setState({
+      focusedDay: this.state.lastHoveredDay,
+    });
+  }
+
   /**
    * The function is mainly used when some day is focused and Arrow keys are pressed to navigate to some other day.
    * days is the number of days by which focused should be moved ahead or behind.
@@ -578,9 +590,12 @@ export default class DatePicker extends Component {
   _focusOtherDay(days) {
     const focusedDay = new Date(this.state.focusedDay);
     const currentMonth = focusedDay.getMonth();
-    focusedDay.setDate(focusedDay.getDate() + days);
-    const nextFocusedDayKey = (focusedDay.getMonth() + 1) + '/' + focusedDay.getDate() + '/' + focusedDay.getFullYear();
-    const nextMonth = focusedDay.getMonth();
+
+    const nextFocusedDay = new Date(this.state.focusedDay);
+    nextFocusedDay.setDate(nextFocusedDay.getDate() + days);
+    const nextFocusedDayKey = (nextFocusedDay.getMonth() + 1) + '/' + nextFocusedDay.getDate() + '/' + nextFocusedDay.getFullYear();
+    const nextMonth = nextFocusedDay.getMonth();
+
     if (nextMonth !== currentMonth) {
       if ((nextMonth < currentMonth || (nextMonth === 11 && currentMonth === 0)) &&
           !(nextMonth === 0 && currentMonth === 11)) {
