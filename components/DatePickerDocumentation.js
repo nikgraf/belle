@@ -10,10 +10,21 @@ const basicCodeExample = `<DatePicker defaultValue={ new Date(` + TODAY.getFullY
 
 const htmlStructure = `<div style={ style }>
   <div>
+    <!-- this is navigation bar at the top -->
     <div style={ navBarStyle }>
       <span style={ prevMonthStyle }></span>
       <span style={ monthLabelStyle }></span>
       <span style={ nextMonthStyle }></span>
+    </div>
+    <!-- this is week header -->
+    <div style={ weekHeaderStyle }>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
+      <span style={ dayLabelStyle }></span>
     </div>
     <!-- following is repeated for each week -->
     <div style={ dayStyle }></div>
@@ -481,7 +492,7 @@ export default React.createClass({
         <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle,
         disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
         nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle,
-        disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, hoverDayStyle, activeDayStyle,
+        disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, activeDayStyle,
         focusDayStyle, disabledHoverDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
      </p>
 
