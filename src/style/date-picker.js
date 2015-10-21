@@ -53,35 +53,17 @@ const datePickerStyle = {
 
   // nav-bar at top for month navigation
   navBarStyle: {
-    height: 40,
+    height: 38,
     border: '1px solid #E0E0E0',
-    paddingTop: 8,
     boxSizing: 'border-box',
   },
 
   // left button in nav-bar to go to previous month
   prevMonthNavStyle: {
-    cursor: 'pointer',
     float: 'left',
-
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-     Prevent flickering while tapping on WebKit
-     http://stackoverflow.com/a/3516243/837709
-     */
-    WebkitTapHighlightColor: 'transparent',
+    marginLeft: -1,
+    paddingLeft: '15px',
+    paddingRight: '19px',
   },
 
   hoverPrevMonthNavStyle: {
@@ -92,27 +74,10 @@ const datePickerStyle = {
 
   // right button in nav-bar to go to previous month
   nextMonthNavStyle: {
-    cursor: 'pointer',
     float: 'right',
-
-    /*
-     To avoid any kind of flickering the user won't get feedback
-     for selecting the button text
-     */
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    MsUserSelect: 'none',
-    userSelect: 'none',
-
-    /* This button can only be pressed */
-    MsTouchAction: 'manipulation',
-    touchAction: 'manipulation',
-
-    /*
-     Prevent flickering while tapping on WebKit
-     http://stackoverflow.com/a/3516243/837709
-     */
-    WebkitTapHighlightColor: 'transparent',
+    marginRight: -1,
+    paddingLeft: '19px',
+    paddingRight: '15px',
   },
 
   hoverNextMonthNavStyle: {
@@ -124,8 +89,9 @@ const datePickerStyle = {
   // styling for month label on top of calendar
   monthLabelStyle: {
     fontSize: 15,
-    width: 125,
     boxSizing: 'border-box',
+    paddingTop: 8,
+    display: 'inline-block',
 
     /*
      User should be able to copy date.
@@ -154,7 +120,7 @@ const datePickerStyle = {
     width: 39,
     height: 32,
     marginRight: -1,
-    color: '#716D6D',
+    color: '#666',
     display: 'block',
     float: 'left',
     boxSizing: 'border-box',
@@ -174,7 +140,7 @@ const datePickerStyle = {
   },
 
   weekendLabelStyle: {
-    backgroundColor: '#F0F0F0',
+    color: '#8E8071',
   },
 
   // styling for individual day
@@ -193,6 +159,7 @@ const datePickerStyle = {
     boxSizing: 'border-box',
     paddingTop: 5,
     position: 'relative',
+    zIndex: 100,
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -218,21 +185,17 @@ const datePickerStyle = {
     cursor: 'auto',
   },
 
-  hoverDayStyle: {
-    background: '#EEE',
-    color: '#616161',
-  },
-
   activeDayStyle: {
-    boxShadow: 'none',
-    borderTop: '1px solid #BDBDBD',
+    borderTop: '1px solid #B1B1B1',
+    borderLeft: '1px solid #D0D0D0',
+    borderRight: '1px solid #D0D0D0',
+    borderBottom: '1px solid #D4D4D4',
     background: '#E0E0E0',
-    color: '#424242',
+    zIndex: 200,
   },
 
   focusDayStyle: {
     background: '#EEE',
-    color: '#616161',
   },
 
   disabledDayStyle: {
@@ -250,14 +213,16 @@ const datePickerStyle = {
   },
 
   weekendStyle: {
-    background: '#F0F0F0',
+    color: '#8E8071',
   },
 
   selectedDayStyle: {
-    boxShadow: 'none',
-    borderTop: '1px solid #BDBDBD',
+    borderTop: '1px solid #B1B1B1',
+    borderLeft: '1px solid #D0D0D0',
+    borderRight: '1px solid #D0D0D0',
+    borderBottom: '1px solid #D4D4D4',
     background: '#E0E0E0',
-    color: '#424242',
+    zIndex: 200,
   },
 
   otherMonthDayStyle: {

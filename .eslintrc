@@ -13,6 +13,7 @@
         "statics",
         "defaultProps",
         "getDefaultProps",
+        "state",
         "getInitialState",
         "getChildContext",
         "componentWillMount",
