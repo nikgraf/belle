@@ -23,7 +23,6 @@ export default class Card extends Component {
       PropTypes.node,
     ]),
     style: PropTypes.object,
-    test: PropTypes.object,
   };
 
   /**
