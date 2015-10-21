@@ -5,6 +5,7 @@ import {has, map, shift, reverse, omit} from '../utils/helpers';
 import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
+import ActionArea from './ActionArea';
 
 /**
  * Returns an object with properties that are relevant for the wrapping div of the date picker.
@@ -626,134 +627,6 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when prevMonthNav receives mouse down.
-   * If component is not disabled it will decrease the month and set active state for prevMonthNav.
-   */
-  _onPrevMonthNavMouseDown(event) {
-    if (event.button === 0 && !this.props.disabled) {
-      this._decreaseMonthYear();
-      this.setState({
-        isPrevMonthNavActive: true,
-      });
-    }
-
-    if (this.props.onPrevMonthNavMouseDown) {
-      this.props.onPrevMonthNavMouseDown(event);
-    }
-  }
-
-  /**
-   * Callback is called when prevMonthNav receives mouse up.
-   * It will reset active state for prevMonthNav.
-   */
-  _onPrevMonthNavMouseUp(event) {
-    if (event.button === 0 && !this.props.disabled) {
-      this.setState({
-        isPrevMonthNavActive: false,
-      });
-    }
-
-    if (this.props.onPrevMonthNavMouseUp) {
-      this.props.onPrevMonthNavMouseUp(event);
-    }
-  }
-
-  /**
-   * Callback is called when prevMonthNav receives touch start.
-   * If component is not disabled it will decrease the month and set active state for prevMonthNav.
-   */
-  _onPrevMonthNavTouchStart(event) {
-    if (!this.props.disabled && event.touches.length === 1) {
-      this._decreaseMonthYear();
-      this.setState({
-        isPrevMonthNavActive: true,
-      });
-    }
-
-    if (this.props.onPrevMonthNavTouchStart) {
-      this.props.onPrevMonthNavTouchStart(event);
-    }
-  }
-
-  /**
-   * Callback is called when prevMonthNav receives touch end. It will reset active state for prevMonthNav.
-   */
-  _onPrevMonthNavTouchEnd() {
-    if (!this.props.disabled) {
-      this.setState({
-        isPrevMonthNavActive: false,
-      });
-    }
-
-    if (this.props.onPrevMonthNavTouchEnd) {
-      this.props.onPrevMonthNavTouchEnd(event);
-    }
-  }
-
-  /**
-   * Callback is called when nextMonthNav receives mouseDown.
-   * If component is not disabled it will increase the month and set active state for nextMonthNav.
-   */
-  _onNextMonthNavMouseDown(event) {
-    if (event.button === 0 && !this.props.disabled) {
-      this._increaseMonthYear();
-      this.setState({
-        isNextMonthNavActive: true,
-      });
-    }
-
-    if (this.props.onNextMonthNavMouseDown) {
-      this.props.onNextMonthNavMouseDown(event);
-    }
-  }
-
-  /**
-   * Callback is called when nextMonthNav receives mouse up. It will reset active state for nextMonthNav.
-   */
-  _onNextMonthNavMouseUp(event) {
-    if (event.button === 0 && !this.props.disabled) {
-      this.setState({
-        isNextMonthNavActive: false,
-      });
-    }
-
-    if (this.props.onNextMonthNavMouseUp) {
-      this.props.onNextMonthNavMouseUp(event);
-    }
-  }
-
-  /**
-   * Callback is called when nextMonthNav receives touch start.
-   * If component is not disabled it will increase the month and set active state for nextMonthNav.
-   */
-  _onNextMonthNavTouchStart(event) {
-    if (!this.props.disabled && event.touches.length === 1) {
-      this._increaseMonthYear();
-      this.setState({
-        isNextMonthNavActive: true,
-      });
-    }
-
-    if (this.props.onNextMonthNavTouchStart) {
-      this.props.onNextMonthNavTouchStart(event);
-    }
-  }
-
-  /**
-   * Callback is called when nextMonthNav receives touch end. It will reset active state for nextMonthNav.
-   */
-  _onNextMonthNavTouchEnd() {
-    if (!this.props.disabled) {
-      this.setState({
-        isNextMonthNavActive: false,
-      });
-      if (this.props.onNextMonthNavTouchEnd) {
-        this.props.onNextMonthNavTouchEnd(event);
-      }
-    }
-  }
-
-  /**
    * The function will decrease current month in state. It will also call props.onMonthYearChange.
    */
   _decreaseMonthYear() {
@@ -803,31 +676,47 @@ export default class DatePicker extends Component {
     }
   }
 
-  _renderPrevMonthNav(prevMonthNavStyle) {
-    if (this.props.disabled) return undefined;
+  _renderPrevMonthNav() {
+    const prevMonthNavStyle = {
+      ...defaultStyle.prevMonthNavStyle,
+      ...this.props.prevMonthNavStyle,
+    };
+
     return (
-      <div onMouseDown={ ::this._onPrevMonthNavMouseDown }
-           onMouseUp={ ::this._onPrevMonthNavMouseUp }
-           onTouchStart={ ::this._onPrevMonthNavTouchStart }
-           onTouchEnd={ ::this._onPrevMonthNavTouchEnd }
-           style={ prevMonthNavStyle }
-           className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
-        left
-      </div>
+      <ActionArea onClick={ ::this._increaseMonthYear }
+                  style={ prevMonthNavStyle }
+                  className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
+        <div style={{
+          width: 0,
+          height: 0,
+          borderTop: '7px solid transparent',
+          borderBottom: '7px solid transparent',
+          borderRight: '12px solid #666',
+          borderRadius: 2,
+        }} />
+      </ActionArea>
     );
   }
 
-  _renderNextMonthNav(nextMonthNavStyle) {
-    if (this.props.disabled) return undefined;
+  _renderNextMonthNav() {
+    const nextMonthNavStyle = {
+      ...defaultStyle.nextMonthNavStyle,
+      ...this.props.nextMonthNavStyle,
+    };
+
     return (
-      <div onMouseDown={ ::this._onNextMonthNavMouseDown }
-           onMouseUp={ ::this._onNextMonthNavMouseUp }
-           onTouchStart={ ::this._onNextMonthNavTouchStart }
-           onTouchEnd={ ::this._onNextMonthNavTouchEnd }
-           style= { nextMonthNavStyle }
-           className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
-        right
-      </div>
+      <ActionArea onClick={ ::this._decreaseMonthYear }
+                  style= { nextMonthNavStyle }
+                  className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
+        <div style={{
+          width: 0,
+          height: 0,
+          borderTop: '7px solid transparent',
+          borderBottom: '7px solid transparent',
+          borderLeft: '12px solid #666',
+          borderRadius: 2,
+        }} />
+      </ActionArea>
     );
   }
 
@@ -846,32 +735,11 @@ export default class DatePicker extends Component {
       ...defaultStyle.monthLabelStyle,
       ...this.props.monthLabelStyle,
     };
-    let prevMonthNavStyle = {
-      ...defaultStyle.prevMonthNavStyle,
-      ...this.props.prevMonthNavStyle,
-    };
-    let nextMonthNavStyle = {
-      ...defaultStyle.nextMonthNavStyle,
-      ...this.props.nextMonthNavStyle,
-    };
-    if (this.state.isPrevMonthNavActive) {
-      prevMonthNavStyle = {
-        ...prevMonthNavStyle,
-        ...defaultStyle.activePrevMonthNavStyle,
-        ...this.props.activePrevMonthNavStyle,
-      };
-    } else if (this.state.isNextMonthNavActive) {
-      nextMonthNavStyle = {
-        ...nextMonthNavStyle,
-        ...defaultStyle.activeNextMonthNavStyle,
-        ...this.props.activeNextMonthNavStyle,
-      };
-    }
 
     return (
       <div style={ navBarStyle }
            className={ this.props.navBarClassName }>
-        { this._renderPrevMonthNav(prevMonthNavStyle) }
+        { this._renderPrevMonthNav() }
         <span style={ monthLabelStyle }
               className={ this.props.monthLabelClassName }
               role="heading"
@@ -881,7 +749,7 @@ export default class DatePicker extends Component {
               id={ `${this.state.year}-${this.state.month}` }>
           { `${this.localeData.monthNames[this.state.month]} ${this.state.year}` }
         </span>
-        { this._renderNextMonthNav(nextMonthNavStyle) }
+        { this._renderNextMonthNav() }
       </div>
     );
   }
@@ -1042,7 +910,8 @@ export default class DatePicker extends Component {
 
     const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
 
-    if (isNotOtherMonth) {
+    // TODO
+    if (isNotOtherMonth || !isNotOtherMonth) {
       return (
         <span key={ 'day-' + index }
               ref={ dayKey }
