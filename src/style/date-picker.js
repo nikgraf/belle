@@ -90,7 +90,7 @@ const datePickerStyle = {
   monthLabelStyle: {
     fontSize: 15,
     boxSizing: 'border-box',
-    paddingTop: 8,
+    paddingTop: 7,
     display: 'inline-block',
 
     /*
