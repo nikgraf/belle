@@ -439,6 +439,7 @@ export default class DatePicker extends Component {
       } else {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp' ||
             event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
           this._focusOnFallbackDay();
         }
       }
