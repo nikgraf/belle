@@ -33,7 +33,7 @@ describe('DatePicker', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker />
     );
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
   it('should change date when a day is focused and enter key is pressed', () => {
@@ -41,11 +41,11 @@ describe('DatePicker', () => {
       <DatePicker wrapperClassName="date_picker_wrapper"/>
     );
 
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: 'Enter'});
-    expect(datePicker.state.dateValue).toBeGreaterThan(0);
+    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
   });
 
   it('should select / deselect date when space key is pressed', () => {
@@ -54,15 +54,15 @@ describe('DatePicker', () => {
       <DatePicker dayClassName="day_test" wrapperClassName="date_picker_wrapper" onUpdate={ (obj) => dateSelected = obj.value }/>
     );
 
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     // const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
-    expect(datePicker.state.dateValue).toBeGreaterThan(0);
+    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
     // expect(dateSelected.getDay()).toBeGreaterThan(0);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     expect(dateSelected).toBeUndefined();
   });
 
@@ -70,20 +70,20 @@ describe('DatePicker', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test" disabled/>
     );
-    expect(disabledDatePicker.state.dateValue).toBeUndefined();
+    expect(disabledDatePicker.state.selectedDate).toBeUndefined();
     let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.keyDown(day, {key: 'Enter'});
-    expect(disabledDatePicker.state.dateValue).toBeUndefined();
+    expect(disabledDatePicker.state.selectedDate).toBeUndefined();
 
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test" readOnly/>
     );
-    expect(readOnlyDatePicker.state.dateValue).toBeUndefined();
+    expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
     day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.keyDown(day, {key: 'Enter'});
-    expect(readOnlyDatePicker.state.dateValue).toBeUndefined();
+    expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
   });
 
   it('should change focusedDateKey on mouse down', () => {
@@ -229,43 +229,43 @@ describe('DatePicker', () => {
     expect(6 - parseInt(firstDate, 10)).toBe(5);
   });
 
-  it('should change dateValue when a day receives mouseDown with button 0', () => {
+  it('should change selectedDate when a day receives mouseDown with button 0', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test" onUpdate={ (obj) => dateSelected = obj.value }/>
     );
 
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     let day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.mouseDown(day, {button: 0});
-    const newDate = datePicker.state.dateValue;
-    expect(datePicker.state.dateValue).toBeGreaterThan(0);
+    const newDate = datePicker.state.selectedDate;
+    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
     expect(dateSelected.getDay()).toBeGreaterThan(0);
     day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[10];
     TestUtils.Simulate.mouseDown(day, {button: 1});
-    expect(datePicker.state.dateValue).toBe(newDate);
+    expect(datePicker.state.selectedDate).toBe(newDate);
   });
 
-  it('should not change dateValue in state if component uses value property', () => {
+  it('should not change selectedDate in state if component uses value property', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test" value={ undefined }/>
     );
 
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.mouseDown(day, {button: 0});
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
 
-  it('should not change dateValue in state if component uses valueLink property', () => {
-    const compDateValue = new Date();
+  it('should not change selectedDate in state if component uses valueLink property', () => {
+    const compSelectedDate = new Date();
     const valueLink = {
-      value: compDateValue,
+      value: compSelectedDate,
       requestChange: () => {
-        // compDateValue = newValue;
+        // compSelectedDate = newValue;
       }
     };
 
@@ -273,11 +273,11 @@ describe('DatePicker', () => {
       <DatePicker dayClassName="day_test" valueLink={ valueLink }/>
     );
 
-    expect(datePicker.state.dateValue).toBe(compDateValue);
+    expect(datePicker.state.selectedDate).toBe(compSelectedDate);
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.mouseDown(day, {button: 0});
-    expect(datePicker.state.dateValue).toBe(compDateValue);
+    expect(datePicker.state.selectedDate).toBe(compSelectedDate);
   });
 
   it('should inject styles for hover, active & foucs', () => {
@@ -302,41 +302,41 @@ describe('DatePicker', () => {
     expect(injectStyle.removeAllStyles.mock.calls.length).toBe(1);
   });
 
-  it('should update state.dateValue when value is received in props', () => {
+  it('should update state.selectedDate when value is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker/>
     );
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({value: currentDate});
-    expect(datePicker.state.dateValue).toBe(currentDate);
+    expect(datePicker.state.selectedDate).toBe(currentDate);
   });
 
-  it('should update state.dateValue when valueLink is received in props', () => {
+  it('should update state.selectedDate when valueLink is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker/>
     );
-    let compDateValue = currentDate;
+    let compSelectedDate = currentDate;
     const valueLink = {
-      value: compDateValue,
+      value: compSelectedDate,
       requestChange: (newValue) => {
-        compDateValue = newValue;
+        compSelectedDate = newValue;
       }
     };
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({valueLink: valueLink});
-    expect(datePicker.state.dateValue).toBe(currentDate);
+    expect(datePicker.state.selectedDate).toBe(currentDate);
   });
 
-  it('should not update state.dateValue when defaultValue is received in props', () => {
+  it('should not update state.selectedDate when defaultValue is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker defaultValue={ undefined }/>
     );
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({defaultValue: currentDate});
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
   it('should set isFocused to true when wrapper receives focus and to false on blur', () => {
@@ -478,10 +478,10 @@ describe('DatePicker', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker activeDayStyle={ {color: 'blue'} } selectedDayStyle={ {color: 'red'} } dayClassName="day_test"/>
     );
-    expect(datePicker.state.dateValue).toBeUndefined();
+    expect(datePicker.state.selectedDate).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.touchStart(day, {touches: {length: 1}});
-    expect(datePicker.state.dateValue.getDay()).toBeGreaterThan(0);
+    expect(datePicker.state.selectedDate.getDay()).toBeGreaterThan(0);
     expect(day.getAttribute('style')).toContain('color: blue');
     TestUtils.Simulate.touchEnd(day, {touches: {length: 1}});
     expect(day.getAttribute('style')).toContain('color: red');
@@ -505,7 +505,7 @@ describe('DatePicker', () => {
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.mouseDown(day, {button: 0});
-    expect(datePicker.state.dateValue.getDay()).toBeGreaterThan(0);
+    expect(datePicker.state.selectedDate.getDay()).toBeGreaterThan(0);
     expect(day.getAttribute('style')).toContain('background-color: blue');
     expect(day.getAttribute('style')).toContain('font-size: 5px');
     TestUtils.Simulate.mouseUp(day, {button: 0});

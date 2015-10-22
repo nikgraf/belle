@@ -84,8 +84,12 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   injectStyles(styles);
 }
 
+const getDateKey = (year, month, day) => {
+  return `${year}-${month}-${day}`;
+};
+
 const convertDateToDateKey = (date) => {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
 };
 
 /**
@@ -98,20 +102,20 @@ export default class DatePicker extends Component {
 
   constructor(properties) {
     super(properties);
-    let dateValue;
+    let selectedDate;
 
     if (has(properties, 'valueLink')) {
-      dateValue = properties.valueLink.value;
+      selectedDate = properties.valueLink.value;
     } else if (has(properties, 'value')) {
-      dateValue = properties.value;
+      selectedDate = properties.value;
     } else if (has(properties, 'defaultValue')) {
-      dateValue = properties.defaultValue;
+      selectedDate = properties.defaultValue;
     }
 
     this.state = {
       isFocused: false,
       isActive: false,
-      dateValue: dateValue,
+      selectedDate: selectedDate,
       month: properties.month - 1,
       year: properties.year,
     };
@@ -271,9 +275,9 @@ export default class DatePicker extends Component {
     };
 
     if (has(properties, 'valueLink')) {
-      newState.dateValue = properties.valueLink.value;
+      newState.selectedDate = properties.valueLink.value;
     } else if (has(properties, 'value')) {
-      newState.dateValue = properties.value;
+      newState.selectedDate = properties.value;
     }
 
     this.setState(newState);
@@ -306,12 +310,12 @@ export default class DatePicker extends Component {
           isFocused: true,
         };
         if (!this.state.focusedDateKey) {
-          if (this.state.dateValue && this.state.dateValue.getMonth() === this.state.month && this.state.dateValue.getFullYear() === this.state.year) {
-            newState.focusedDateKey = this.state.dateValue.getMonth() + 1 + '/' + this.state.dateValue.getDate() + '/' + this.state.dateValue.getFullYear();
+          if (this.state.selectedDate && this.state.selectedDate.getMonth() === this.state.month && this.state.selectedDate.getFullYear() === this.state.year) {
+            newState.focusedDateKey = convertDateToDateKey(this.state.selectedDate);
           } else if (this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-            newState.focusedDateKey = CURRENT_MONTH + 1 + '/' + CURRENT_DATE + '/' + CURRENT_YEAR;
+            newState.focusedDateKey = getDateKey(CURRENT_YEAR, CURRENT_MONTH + 1, CURRENT_DATE);
           } else {
-            newState.focusedDateKey = this.state.month + 1 + '/' + 1 + '/' + this.state.year;
+            newState.focusedDateKey = getDateKey(this.state.year, this.state.month + 1, 1);
           }
         }
 
@@ -413,8 +417,8 @@ export default class DatePicker extends Component {
   /**
    * On keyDown on wrapper if date-picker is not disabled and some day is focused:
    * 1. arrow keys will navigate calendar
-   * 2. enter key will set dateValue of component
-   * 3. space key will set / unset dateValue
+   * 2. enter key will set selectedDate of component
+   * 3. space key will set / unset selectedDate
    * 4. props.onKeyDown will be called
    */
   _onKeyDown(event) {
@@ -631,18 +635,18 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Depending on whether component is controlled or uncontrolled the function will update this.state.dateValue.
+   * Depending on whether component is controlled or uncontrolled the function will update this.state.selectedDate.
    * It will also call props.onUpdate.
    */
   _triggerSelectDate(day, month, year) {
     if (!this.props.disabled && !this.props.readOnly) {
-      const dateValue = day ? new Date(year, month, day) : undefined;
+      const selectedDate = day ? new Date(year, month, day) : undefined;
 
       if (has(this.props, 'valueLink')) {
-        this.props.valueLink.requestChange(dateValue);
+        this.props.valueLink.requestChange(selectedDate);
       } else if (!has(this.props, 'value')) {
         this.setState({
-          dateValue: dateValue,
+          selectedDate: selectedDate,
           month: month,
           year: year,
         });
@@ -650,7 +654,7 @@ export default class DatePicker extends Component {
 
       if (this.props.onUpdate) {
         this.props.onUpdate({
-          value: dateValue,
+          value: selectedDate,
         });
       }
     }
@@ -664,7 +668,7 @@ export default class DatePicker extends Component {
       let day;
       let month;
       let year;
-      if (this.state.dateValue && date && this.state.dateValue.getDate() === date.getDate() && this.state.dateValue.getMonth() === date.getMonth() && this.state.dateValue.getFullYear() === date.getFullYear()) {
+      if (this.state.selectedDate && date && this.state.selectedDate.getDate() === date.getDate() && this.state.selectedDate.getMonth() === date.getMonth() && this.state.selectedDate.getFullYear() === date.getFullYear()) {
         day = undefined;
         month = this.state.month;
         year = this.state.year;
@@ -980,8 +984,8 @@ export default class DatePicker extends Component {
       ariaCurrent = 'date';
     }
 
-    if (this.state.dateValue && day === this.state.dateValue.getDate()
-      && currentDate.getMonth() === this.state.dateValue.getMonth() && currentDate.getFullYear() === this.state.dateValue.getFullYear()) {
+    if (this.state.selectedDate && day === this.state.selectedDate.getDate()
+      && currentDate.getMonth() === this.state.selectedDate.getMonth() && currentDate.getFullYear() === this.state.selectedDate.getFullYear()) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.selectedDayStyle,
