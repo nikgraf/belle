@@ -711,7 +711,7 @@ export default class DatePicker extends Component {
     };
 
     return (
-      <ActionArea onClick={ ::this._increaseMonthYear }
+      <ActionArea onClick={ ::this._decreaseMonthYear }
                   style={ prevMonthNavStyle }
                   className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
         <div style={{
@@ -733,7 +733,7 @@ export default class DatePicker extends Component {
     };
 
     return (
-      <ActionArea onClick={ ::this._decreaseMonthYear }
+      <ActionArea onClick={ ::this._increaseMonthYear }
                   style= { nextMonthNavStyle }
                   className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
         <div style={{
