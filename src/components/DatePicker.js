@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, map, shift, reverse, omit} from '../utils/helpers';
-import {getWeekArrayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
+import {getWeekArrayForMonth, getLastDayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
 import ActionArea from './ActionArea';
@@ -83,6 +83,10 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   });
   injectStyles(styles);
 }
+
+const convertDateToDayKey = (date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
 
 /**
  * DatePicker React Component.
@@ -415,6 +419,19 @@ export default class DatePicker extends Component {
    */
   _onKeyDown(event) {
     if (!this.props.disabled) {
+      if (event.key === 'Home') {
+        // Moves to the first day of the current month.
+        event.preventDefault();
+        this._focusOnTheFistDayOfTheMonth();
+      } else if (event.key === 'End') {
+        // Moves to the last day of the current month.
+        event.preventDefault();
+        const date = getLastDayForMonth(this.state.year, this.state.month);
+        this.setState({
+          focusedDay: convertDateToDayKey(date),
+        });
+      }
+
       if (this.state.focusedDay) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
@@ -428,6 +445,52 @@ export default class DatePicker extends Component {
         } else if (event.key === 'ArrowRight') {
           event.preventDefault();
           this._focusOtherDay(this.localeData.isRTL ? -1 : 1);
+        } else if (event.key === 'PageUp') {
+          // Moves to the same date in the previous month.
+          event.preventDefault();
+
+          // TODO extract this to a helper function and test various edge cases
+          let date;
+          const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month - 1);
+          const focusedDate = new Date(this.state.focusedDay);
+
+          // jump from March 30 to Feb 29
+          if (focusedDate.getDate() > lastDayInMonth.getDate()) {
+            date = lastDayInMonth;
+          } else {
+            date = new Date(this.state.focusedDay);
+            date.setMonth(date.getMonth() - 1);
+          }
+
+          this.setState({
+            focusedDay: convertDateToDayKey(date),
+            month: date.getMonth(),
+            year: date.getFullYear(),
+            lastHoveredDay: undefined,
+          });
+        } else if (event.key === 'PageDown') {
+          // Moves to the same date in the next month.
+          event.preventDefault();
+
+          // TODO extract this to a helper function and test various edge cases
+          let date;
+          const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month + 1);
+          const focusedDate = new Date(this.state.focusedDay);
+
+          // Use case: Jump from Jan 31 to Feb 29
+          if (focusedDate.getDate() > lastDayInMonth.getDate()) {
+            date = lastDayInMonth;
+          } else {
+            date = new Date(this.state.focusedDay);
+            date.setMonth(date.getMonth() + 1);
+          }
+
+          this.setState({
+            focusedDay: convertDateToDayKey(date),
+            month: date.getMonth(),
+            year: date.getFullYear(),
+            lastHoveredDay: undefined,
+          });
         } else if (event.key === 'Enter') {
           event.preventDefault();
           const date = new Date(this.state.focusedDay);
@@ -615,15 +678,19 @@ export default class DatePicker extends Component {
     }
   }
 
+  _focusOnTheFistDayOfTheMonth() {
+    this.setState({
+      focusedDay: `${this.state.year}-${this.state.month + 1}-1`,
+    });
+  }
+
   _focusOnFallbackDay() {
     if (this.state.lastHoveredDay) {
       this.setState({
         focusedDay: this.state.lastHoveredDay,
       });
     } else {
-      this.setState({
-        focusedDay: `${this.state.year}-${this.state.month + 1}-1`,
-      });
+      this._focusOnTheFistDayOfTheMonth();
     }
   }
 

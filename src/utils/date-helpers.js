@@ -32,6 +32,10 @@ export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
   return weekArray;
 }
 
+export function getLastDayForMonth(year, month) {
+  return new Date(year, month + 1, 0);
+}
+
 /**
  * Function will return locale data for locale. If data is not available in config files it will return default data.
  * @param locale - locale for which data is needed.
