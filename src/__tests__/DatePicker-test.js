@@ -86,117 +86,117 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.dateValue).toBeUndefined();
   });
 
-  it('should change focusedDay on mouse down', () => {
+  it('should change focusedDateKey on mouse down', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayClassName="day_test"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.mouseDown(day, {button: 0});
-    expect(datePicker.state.focusedDay).toBeDefined();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
   });
 
-  it('should reduce focusedDay by 1 when arrowLeft is pressed', () => {
+  it('should reduce focusedDateKey by 1 when arrowLeft is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowLeft'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() - 1);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() - 1);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it('should increase focusedDay by 1 when arrowLeft is pressed for arabic calendar', () => {
+  it('should increase focusedDateKey by 1 when arrowLeft is pressed for arabic calendar', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker" locale="ar"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowLeft'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() + 1);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() + 1);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it('should reduce focusedDay by 7 when arrowUp is pressed', () => {
+  it('should reduce focusedDateKey by 7 when arrowUp is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowUp'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() - 7);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() - 7);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it('should increase focusedDay by 1 when arrowRight is pressed', () => {
+  it('should increase focusedDateKey by 1 when arrowRight is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowRight'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() + 1);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() + 1);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it('should reduce focusedDay by 1 when arrowRight is pressed for arabic calendar', () => {
+  it('should reduce focusedDateKey by 1 when arrowRight is pressed for arabic calendar', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker" locale="ar"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowRight'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() - 1);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() - 1);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it('should increase focusedDay by 1 when arrowRight is pressed', () => {
+  it('should increase focusedDateKey by 1 when arrowRight is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker"/>
     );
 
-    expect(datePicker.state.focusedDay).toBeUndefined();
+    expect(datePicker.state.focusedDateKey).toBeUndefined();
     const datePickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePickerWrapper);
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const prevFocusedDay = new Date(datePicker.state.focusedDay);
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
     TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowDown'});
-    expect(datePicker.state.focusedDay).toBeDefined();
-    const nextFocusedDay = new Date(datePicker.state.focusedDay);
-    prevFocusedDay.setDate(prevFocusedDay.getDate() + 7);
-    expect(prevFocusedDay.getDate() === nextFocusedDay.getDate()).toBeTruthy();
+    expect(datePicker.state.focusedDateKey).toBeDefined();
+    const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
+    prevFocusedDate.setDate(prevFocusedDate.getDate() + 7);
+    expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
   it.only('should show days in decreasing order if RTL for locale is true', () => {
@@ -414,17 +414,17 @@ describe('DatePicker', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
       <DatePicker disabled dayClassName="day_test"/>
     );
-    expect(disabledDatePicker.state.focusedDay).toBeUndefined();
+    expect(disabledDatePicker.state.focusedDateKey).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    expect(disabledDatePicker.state.focusedDay).toBeUndefined();
+    expect(disabledDatePicker.state.focusedDateKey).toBeUndefined();
   });
 
   it('should focus readOnly component', () => {
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
       <DatePicker wrapperClassName="date_picker" readOnly dayClassName="day_test"/>
     );
-    expect(readOnlyDatePicker.state.focusedDay).toBeUndefined();
+    expect(readOnlyDatePicker.state.focusedDateKey).toBeUndefined();
     const datePicker = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'date_picker')[0];
     TestUtils.Simulate.focus(datePicker);
     expect(readOnlyDatePicker.state.isFocused).toBeTruthy();
