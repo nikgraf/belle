@@ -468,7 +468,7 @@ export default React.createClass({
       </tbody></table>
 
       <p>
-        Properties for handling various events(focus, mouse events, touch events, change in dateValue, month or year):
+        Properties for handling various events(focus, mouse events, touch events, change in selectedDate, month or year):
         <span style={ {color: 'grey'} }> tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp, onTouchStart,
         onTouchEnd, onPrevMonthNavMouseDown, onPrevMonthNavMouseUp, onPrevMonthNavTouchStart, onPrevMonthNavTouchEnd,
         onNextMonthNavMouseDown, onNextMonthNavMouseUp, onNextMonthNavTouchStart, onNextMonthNavTouchEnd, onDayMouseOver,
