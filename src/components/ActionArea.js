@@ -107,7 +107,6 @@ export default class ActionArea extends Component {
    */
   _onTouchStart(event) {
     if (event.touches.length === 1) {
-      this._increaseMonthYear();
       this.setState({
         isActive: true,
       });
@@ -139,8 +138,8 @@ export default class ActionArea extends Component {
       isActive: false,
     });
 
-    if (this.props.onTouchEnd) {
-      this.props.onTouchEnd(event);
+    if (this.props.onTouchCancel) {
+      this.props.onTouchCancel(event);
     }
   }
 
