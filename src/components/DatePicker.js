@@ -12,10 +12,13 @@ import ActionArea from './ActionArea';
  */
 function sanitizeWrapperProps(properties) {
   return omit(properties, [
+    'ref',
     'tabIndex',
     'onFocus',
     'onBlur',
+    'onKeyDown',
     'onMouseDown',
+    'onTouchCancel',
     'onMouseUp',
     'onTouchStart',
     'onTouchEnd',
@@ -39,6 +42,7 @@ function sanitizeDayProps(properties) {
     'onMouseOut',
     'onTouchStart',
     'onTouchEnd',
+    'onTouchCancel',
     'style',
     'className',
   ]);
