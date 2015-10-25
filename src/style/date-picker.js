@@ -66,6 +66,15 @@ const datePickerStyle = {
     paddingRight: '19px',
   },
 
+  prevMonthNavIconStyle: {
+    width: 0,
+    height: 0,
+    borderTop: '7px solid transparent',
+    borderBottom: '7px solid transparent',
+    borderRight: '12px solid #666',
+    borderRadius: 2,
+  },
+
   hoverPrevMonthNavStyle: {
   },
 
@@ -78,6 +87,15 @@ const datePickerStyle = {
     marginRight: -1,
     paddingLeft: '19px',
     paddingRight: '15px',
+  },
+
+  nextMonthNavIconStyle: {
+    width: 0,
+    height: 0,
+    borderTop: '7px solid transparent',
+    borderBottom: '7px solid transparent',
+    borderLeft: '12px solid #666',
+    borderRadius: 2,
   },
 
   hoverNextMonthNavStyle: {

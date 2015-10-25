@@ -12,10 +12,13 @@ import ActionArea from './ActionArea';
  */
 function sanitizeWrapperProps(properties) {
   return omit(properties, [
+    'ref',
     'tabIndex',
     'onFocus',
     'onBlur',
+    'onKeyDown',
     'onMouseDown',
+    'onTouchCancel',
     'onMouseUp',
     'onTouchStart',
     'onTouchEnd',
@@ -39,6 +42,7 @@ function sanitizeDayProps(properties) {
     'onMouseOut',
     'onTouchStart',
     'onTouchEnd',
+    'onTouchCancel',
     'style',
     'className',
   ]);
@@ -191,7 +195,9 @@ export default class DatePicker extends Component {
     wrapperClassName: PropTypes.string,
     navBarClassName: PropTypes.string,
     prevMonthNavClassName: PropTypes.string,
+    prevMonthNavIconClassName: PropTypes.string,
     nextMonthNavClassName: PropTypes.string,
+    nextMonthNavIconClassName: PropTypes.string,
     monthLabelClassName: PropTypes.string,
     dayLabelClassName: PropTypes.string,
     dayClassName: PropTypes.string,
@@ -210,11 +216,13 @@ export default class DatePicker extends Component {
 
     // prevMonthNav styles
     prevMonthNavStyle: PropTypes.object,
+    prevMonthNavIconStyle: PropTypes.object,
     hoverPrevMonthNavStyle: PropTypes.object,
     activePrevMonthNavStyle: PropTypes.object,
 
     // nextMonthNav styles
     nextMonthNavStyle: PropTypes.object,
+    nextMonthNavIconStyle: PropTypes.object,
     hoverNextMonthNavStyle: PropTypes.object,
     activeNextMonthNavStyle: PropTypes.object,
 
@@ -782,18 +790,17 @@ export default class DatePicker extends Component {
       ...this.props.prevMonthNavStyle,
     };
 
+    const prevMonthNavIconStyle = {
+      ...defaultStyle.prevMonthNavIconStyle,
+      ...this.props.prevMonthNavIconStyle,
+    };
+
     return (
       <ActionArea onClick={ ::this._decreaseMonthYear }
                   style={ prevMonthNavStyle }
                   className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
-        <div style={{
-          width: 0,
-          height: 0,
-          borderTop: '7px solid transparent',
-          borderBottom: '7px solid transparent',
-          borderRight: '12px solid #666',
-          borderRadius: 2,
-        }} />
+        <div style={ prevMonthNavIconStyle }
+             className={this.props.prevMonthNavIconClassName}/>
       </ActionArea>
     );
   }
@@ -804,18 +811,17 @@ export default class DatePicker extends Component {
       ...this.props.nextMonthNavStyle,
     };
 
+    const nextMonthNavIconStyle = {
+      ...defaultStyle.nextMonthNavIconStyle,
+      ...this.props.nextMonthNavIconStyle,
+    };
+
     return (
       <ActionArea onClick={ ::this._increaseMonthYear }
                   style= { nextMonthNavStyle }
                   className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
-        <div style={{
-          width: 0,
-          height: 0,
-          borderTop: '7px solid transparent',
-          borderBottom: '7px solid transparent',
-          borderLeft: '12px solid #666',
-          borderRadius: 2,
-        }} />
+        <div style={ nextMonthNavIconStyle }
+             className={this.props.nextMonthNavIconClassName}/>
       </ActionArea>
     );
   }
