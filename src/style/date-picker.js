@@ -165,7 +165,6 @@ const datePickerStyle = {
   dayStyle: {
     width: 39,
     height: 32,
-    cursor: 'pointer',
     borderLeft: '1px solid #E0E0E0',
     borderRight: '1px solid #E0E0E0',
     borderTop: '1px solid #E0E0E0',
@@ -214,6 +213,7 @@ const datePickerStyle = {
 
   focusDayStyle: {
     background: '#EEE',
+    cursor: 'pointer',
   },
 
   disabledDayStyle: {

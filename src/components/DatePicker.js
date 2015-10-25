@@ -1018,23 +1018,33 @@ export default class DatePicker extends Component {
 
     const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
 
+    if (!isOtherMonth || this.props.showOtherMonthDate) {
+      return (
+        <span key={ 'day-' + index }
+              ref={ dateKey }
+              onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
+              onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
+              onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
+              onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
+              onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
+              onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
+              onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
+              aria-current={ ariaCurrent }
+              aria-selected={ ariaSelected }
+              style={ dayStyle }
+              className={ this.props.dayClassName }
+              role="gridcell"
+              {...this.dayProps}>
+          { renderedDay }
+        </span>
+      );
+    }
     return (
       <span key={ 'day-' + index }
             ref={ dateKey }
-            onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
-            onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
-            onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
-            onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
-            onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
-            onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
-            onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
-            aria-current={ ariaCurrent }
-            aria-selected={ ariaSelected }
             style={ dayStyle }
             className={ this.props.dayClassName }
-            role="gridcell"
             {...this.dayProps}>
-        { isOtherMonth && !this.props.showOtherMonthDate ? '' : renderedDay }
       </span>
     );
   }
