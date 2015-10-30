@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {has, omit} from '../utils/helpers';
 import style from '../style/button';
 import unionClassNames from '../utils/union-class-names';
@@ -127,27 +127,27 @@ export default class Button extends Component {
   static displayName = 'Button';
 
   static propTypes = {
-    activeStyle: React.PropTypes.object,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node,
+    activeStyle: PropTypes.object,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
     ]),
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    type: React.PropTypes.oneOf(buttonTypes),
-    style: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    disabledStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
-    onTouchStart: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
-    preventFocusStyleForTouchAndClick: React.PropTypes.bool,
-    primary: React.PropTypes.bool,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    type: PropTypes.oneOf(buttonTypes),
+    style: PropTypes.object,
+    focusStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
+    onTouchStart: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    preventFocusStyleForTouchAndClick: PropTypes.bool,
+    primary: PropTypes.bool,
   };
 
   static defaultProps = {

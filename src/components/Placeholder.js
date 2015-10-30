@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {omit} from '../utils/helpers';
 import style from '../style/placeholder';
 
@@ -26,13 +26,13 @@ export default class Placeholder extends Component {
   static displayName = 'Placeholder';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
     ]),
-    style: React.PropTypes.object,
-    disabledStyle: React.PropTypes.object,
-    _isDisabled: React.PropTypes.bool,
+    style: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    _isDisabled: PropTypes.bool,
   };
 
   static defaultProps = {

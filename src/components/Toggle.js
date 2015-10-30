@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import {omit, has, last, first} from '../utils/helpers';
@@ -86,7 +86,7 @@ function choicePropType(props, propName, componentName) {
  * different value.
  */
 function validateChoices(props, propName, componentName) {
-  const error = React.PropTypes.arrayOf(choicePropType)(props, propName, componentName);
+  const error = PropTypes.arrayOf(choicePropType)(props, propName, componentName);
   if (error) return error;
 
   if (props.children && props.children.length !== 2) {
@@ -180,65 +180,65 @@ export default class Toggle extends Component {
   static displayName = 'Toggle';
 
   static propTypes = {
-    activeHandleStyle: React.PropTypes.object,
+    activeHandleStyle: PropTypes.object,
     children: validateChoices,
-    className: React.PropTypes.string,
-    defaultValue: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    disabledHandleStyle: React.PropTypes.object,
-    disabledStyle: React.PropTypes.object,
-    firstChoiceProps: React.PropTypes.object,
-    firstChoiceStyle: React.PropTypes.shape({
-      width: React.PropTypes.number,
+    className: PropTypes.string,
+    defaultValue: PropTypes.bool,
+    disabled: PropTypes.bool,
+    disabledHandleStyle: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    firstChoiceProps: PropTypes.object,
+    firstChoiceStyle: PropTypes.shape({
+      width: PropTypes.number,
     }),
-    focusStyle: React.PropTypes.object,
-    handleProps: React.PropTypes.shape({
-      onMouseDown: React.PropTypes.func,
-      onMouseMove: React.PropTypes.func,
-      onMouseUp: React.PropTypes.func,
-      onMouseLeave: React.PropTypes.func,
-      onTouchStart: React.PropTypes.func,
-      onTouchMove: React.PropTypes.func,
-      onTouchEnd: React.PropTypes.func,
-      onTouchCancel: React.PropTypes.func,
+    focusStyle: PropTypes.object,
+    handleProps: PropTypes.shape({
+      onMouseDown: PropTypes.func,
+      onMouseMove: PropTypes.func,
+      onMouseUp: PropTypes.func,
+      onMouseLeave: PropTypes.func,
+      onTouchStart: PropTypes.func,
+      onTouchMove: PropTypes.func,
+      onTouchEnd: PropTypes.func,
+      onTouchCancel: PropTypes.func,
     }),
-    handleStyle: React.PropTypes.shape({
-      height: React.PropTypes.number,
-      width: React.PropTypes.number,
+    handleStyle: PropTypes.shape({
+      height: PropTypes.number,
+      width: PropTypes.number,
     }),
-    hoverHandleStyle: React.PropTypes.object,
-    onBlur: React.PropTypes.func,
-    onUpdate: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onMouseEnter: React.PropTypes.func,
-    onMouseLeave: React.PropTypes.func,
-    onMouseUp: React.PropTypes.func,
-    onTouchStart: React.PropTypes.func,
-    secondChoiceProps: React.PropTypes.object,
-    secondChoiceStyle: React.PropTypes.shape({
-      width: React.PropTypes.number,
+    hoverHandleStyle: PropTypes.object,
+    onBlur: PropTypes.func,
+    onUpdate: PropTypes.func,
+    onFocus: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    secondChoiceProps: PropTypes.object,
+    secondChoiceStyle: PropTypes.shape({
+      width: PropTypes.number,
     }),
-    sliderProps: React.PropTypes.shape({
-      onClick: React.PropTypes.func,
-      onTouchStart: React.PropTypes.func,
-      onTouchMove: React.PropTypes.func,
-      onTouchEnd: React.PropTypes.func,
-      onTouchCancel: React.PropTypes.func,
+    sliderProps: PropTypes.shape({
+      onClick: PropTypes.func,
+      onTouchStart: PropTypes.func,
+      onTouchMove: PropTypes.func,
+      onTouchEnd: PropTypes.func,
+      onTouchCancel: PropTypes.func,
     }),
-    sliderStyle: React.PropTypes.object,
-    sliderWrapperProps: React.PropTypes.object,
-    sliderWrapperStyle: React.PropTypes.object,
-    style: React.PropTypes.shape({
-      width: React.PropTypes.number,
+    sliderStyle: PropTypes.object,
+    sliderWrapperProps: PropTypes.object,
+    sliderWrapperStyle: PropTypes.object,
+    style: PropTypes.shape({
+      width: PropTypes.number,
     }),
-    value: React.PropTypes.bool,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.bool.isRequired,
-      requestChange: React.PropTypes.func.isRequired,
+    value: PropTypes.bool,
+    valueLink: PropTypes.shape({
+      value: PropTypes.bool.isRequired,
+      requestChange: PropTypes.func.isRequired,
     }),
-    wrapperProps: React.PropTypes.object,
+    wrapperProps: PropTypes.object,
   };
 
   static defaultProps = {
