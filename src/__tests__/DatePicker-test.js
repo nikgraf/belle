@@ -51,15 +51,17 @@ describe('DatePicker', () => {
   it('should select / deselect date when space key is pressed', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" wrapperClassName="date_picker_wrapper" onUpdate={ (obj) => dateSelected = obj.value }/>
+      <DatePicker onUpdate={ (obj) => dateSelected = obj.value }/>
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
+
     // const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
     expect(datePicker.state.selectedDate).toBeGreaterThan(0);
+
     // expect(dateSelected.getDay()).toBeGreaterThan(0);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -68,7 +70,7 @@ describe('DatePicker', () => {
 
   it('should not change date when a day is focused and enter key is pressed if component is disabled or readOnly', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" disabled/>
+      <DatePicker dayProps={{ className: 'day_test' }} disabled/>
     );
     expect(disabledDatePicker.state.selectedDate).toBeUndefined();
     let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
@@ -77,7 +79,7 @@ describe('DatePicker', () => {
     expect(disabledDatePicker.state.selectedDate).toBeUndefined();
 
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" readOnly/>
+      <DatePicker dayProps={{ className: 'day_test' }} readOnly/>
     );
     expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
     day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
@@ -88,7 +90,7 @@ describe('DatePicker', () => {
 
   it('should change focusedDateKey on mouse down', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test"/>
+      <DatePicker dayProps={{ className: 'day_test' }}/>
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -201,7 +203,7 @@ describe('DatePicker', () => {
 
   it.only('should show days in decreasing order if RTL for locale is true', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="date_picker_day" locale="ar"/>
+      <DatePicker dayProps={{ className: 'date_picker_day' }} locale="ar"/>
     );
 
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_day');
@@ -212,7 +214,7 @@ describe('DatePicker', () => {
 
   it('should show friday as first day of week according to locale data in decreasing order', () => {
     const datePickerAr = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="date_picker_day" locale="ar"/>
+      <DatePicker dayProps={{ className: 'date_picker_day' }} locale="ar"/>
     );
 
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePickerAr, 'date_picker_day');
@@ -222,7 +224,7 @@ describe('DatePicker', () => {
 
   it('should show friday as first day of week according to locale data', () => {
     const datePickerHe = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="date_picker_day" locale="he"/>
+      <DatePicker dayProps={{ className: 'date_picker_day' }} locale="he"/>
     );
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePickerHe, 'date_picker_day');
     const firstDate = new Date(datePickerDays[0]._reactInternalInstance._currentElement.ref);
@@ -232,7 +234,7 @@ describe('DatePicker', () => {
   it('should change selectedDate when a day receives mouseDown with button 0', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" onUpdate={ (obj) => dateSelected = obj.value }/>
+      <DatePicker dayProps={{ className: 'day_test' }} onUpdate={ (obj) => dateSelected = obj.value }/>
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -249,7 +251,7 @@ describe('DatePicker', () => {
 
   it('should not change selectedDate in state if component uses value property', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" value={ undefined }/>
+      <DatePicker dayProps={{ className: 'day_test' }} value={ undefined }/>
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -259,18 +261,17 @@ describe('DatePicker', () => {
     expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
-
   it('should not change selectedDate in state if component uses valueLink property', () => {
     const compSelectedDate = new Date();
     const valueLink = {
       value: compSelectedDate,
       requestChange: () => {
         // compSelectedDate = newValue;
-      }
+      },
     };
 
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test" valueLink={ valueLink }/>
+      <DatePicker dayProps={{ className: 'day_test' }} valueLink={ valueLink }/>
     );
 
     expect(datePicker.state.selectedDate).toBe(compSelectedDate);
@@ -322,7 +323,7 @@ describe('DatePicker', () => {
       value: compSelectedDate,
       requestChange: (newValue) => {
         compSelectedDate = newValue;
-      }
+      },
     };
     expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({valueLink: valueLink});
@@ -341,7 +342,7 @@ describe('DatePicker', () => {
 
   it('should set isFocused to true when wrapper receives focus and to false on blur', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test"/>
+      <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
@@ -352,7 +353,7 @@ describe('DatePicker', () => {
 
   it('should not set isFocused to true when wrapper receives focus btu component is disabled', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test" disabled/>
+      <DatePicker className="wrapper_test" disabled/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
@@ -361,7 +362,7 @@ describe('DatePicker', () => {
 
   it('should not set isFocused to true when wrapper receives focus but is active', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test"/>
+      <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseDown(wrapper, {button: 0});
@@ -372,7 +373,7 @@ describe('DatePicker', () => {
 
   it('should not set isActive to true when touch starts and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test"/>
+      <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.touchStart(wrapper, {touches: {length: 1}});
@@ -383,7 +384,7 @@ describe('DatePicker', () => {
 
   it('should set isWrapperHovered on mouse over for all components including disabled and readOnly', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test"/>
+      <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseOver(wrapper);
@@ -392,7 +393,7 @@ describe('DatePicker', () => {
     expect(datePicker.state.isWrapperHovered).toBeFalsy();
 
     const disabledDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker disabled dayClassName="day_test" wrapperClassName="wrapper_test"/>
+      <DatePicker disabled dayProps={{ className: 'day_test' }} className="wrapper_test"/>
     );
     const disabledWrapper = TestUtils.findRenderedDOMComponentWithClass(disabledDatePicker, 'wrapper_test');
     TestUtils.Simulate.mouseOver(disabledWrapper);
@@ -401,7 +402,7 @@ describe('DatePicker', () => {
     expect(disabledDatePicker.state.isWrapperHovered).toBeFalsy();
 
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker readOnly dayClassName="day_test" wrapperClassName="wrapper_test"/>
+      <DatePicker readOnly dayProps={{ className: 'day_test' }} className="wrapper_test"/>
     );
     const readOnlyWrapper = TestUtils.findRenderedDOMComponentWithClass(readOnlyDatePicker, 'wrapper_test');
     TestUtils.Simulate.mouseOver(readOnlyWrapper);
@@ -412,7 +413,7 @@ describe('DatePicker', () => {
 
   it('should not focus day on disabled component', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker disabled dayClassName="day_test"/>
+      <DatePicker disabled dayProps={{ className: 'day_test' }}/>
     );
     expect(disabledDatePicker.state.focusedDateKey).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
@@ -422,7 +423,7 @@ describe('DatePicker', () => {
 
   it('should focus readOnly component', () => {
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="date_picker" readOnly dayClassName="day_test"/>
+      <DatePicker wrapperClassName="date_picker" readOnly dayProps={{ className: 'day_test' }}/>
     );
     expect(readOnlyDatePicker.state.focusedDateKey).toBeUndefined();
     const datePicker = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'date_picker')[0];
@@ -452,7 +453,7 @@ describe('DatePicker', () => {
 
   it('should set activeDay when touch starts on a day and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayClassName="day_test"/>
+      <DatePicker dayProps={{ className: 'day_test' }}/>
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     expect(datePicker.state.activeDay).toBeFalsy();
@@ -464,7 +465,7 @@ describe('DatePicker', () => {
 
   it('should apply hover styles to wrapper when mouse is over', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker wrapperClassName="wrapper_test" hoverStyle={ {backgroundColor: 'red'} }/>
+      <DatePicker className="wrapper_test" hoverStyle={ {backgroundColor: 'red'} }/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseOver(wrapper);
@@ -476,7 +477,7 @@ describe('DatePicker', () => {
 
   it('should apply activeDayStyle to day when touchStart but immediately after touchEnd should apply selectedDayStyle', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker activeDayStyle={ {color: 'blue'} } selectedDayStyle={ {color: 'red'} } dayClassName="day_test"/>
+      <DatePicker activeDayStyle={ {color: 'blue'} } selectedDayStyle={ {color: 'red'} } dayProps={{ className: 'day_test' }}/>
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
@@ -501,7 +502,7 @@ describe('DatePicker', () => {
 
   it('should apply focusDayStyles for mouseDown by on day', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker focusDayStyle={ {fontSize: '5px'} } activeDayStyle={ {backgroundColor: 'blue'} } dayClassName="day_test"/>
+      <DatePicker focusDayStyle={ {fontSize: '5px'} } activeDayStyle={ {backgroundColor: 'blue'} } dayProps={{ className: 'day_test' }}/>
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.mouseDown(day, {button: 0});

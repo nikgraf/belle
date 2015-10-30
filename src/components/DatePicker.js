@@ -39,9 +39,32 @@ function sanitizeWrapperProps(properties) {
 /**
  * Returns an object with properties that are relevant for day span.
  */
+function sanitizeEmptyDayProps(properties) {
+  return omit(properties, [
+    'key',
+    'ref',
+    'style',
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for day span.
+ */
+function sanitizeDisabledDayProps(properties) {
+  return omit(properties, [
+    'key',
+    'ref',
+    'onMouseOver',
+    'onMouseOut',
+    'style',
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for day span.
+ */
 function sanitizeDayProps(properties) {
   return omit(properties, [
-    'tabIndex',
     'key',
     'ref',
     'onMouseDown',
@@ -51,8 +74,10 @@ function sanitizeDayProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
+    'aria-current',
+    'aria-selected',
     'style',
-    'className',
+    'role',
   ]);
 }
 
@@ -145,6 +170,8 @@ export default class DatePicker extends Component {
     this.localeData = getLocaleData(properties.locale);
     this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
+    this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
+    this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
@@ -292,6 +319,8 @@ export default class DatePicker extends Component {
     this.localeData = getLocaleData(properties.locale);
     this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
+    this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
+    this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
@@ -1034,8 +1063,7 @@ export default class DatePicker extends Component {
         <span key={ 'day-' + index }
               ref={ dateKey }
               style={ dayStyle }
-              className={ this.props.dayClassName }
-              {...this.dayProps}>
+              {...this.emptyDayProps}>
         </span>
       );
     }
@@ -1045,10 +1073,9 @@ export default class DatePicker extends Component {
         <span key={ 'day-' + index }
               ref={ dateKey }
               style={ dayStyle }
-              className={ this.props.dayClassName }
               onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
               onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
-              {...this.dayProps}>
+              {...this.disabledDayProps}>
           { renderedDay }
         </span>
       );
@@ -1067,7 +1094,6 @@ export default class DatePicker extends Component {
             aria-current={ ariaCurrent }
             aria-selected={ ariaSelected }
             style={ dayStyle }
-            className={ this.props.dayClassName }
             role="gridcell"
             {...this.dayProps}>
         { renderedDay }
