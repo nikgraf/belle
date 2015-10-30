@@ -39,8 +39,7 @@ const htmlStructure = `<div style={ style }>
 
 const advanceCodeExample1 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
-            showOtherMonthDate={ false }
-            styleWeekend />`;
+            showOtherMonthDate={ false } />`;
 
 const advanceCodeExample2 = `
 <DatePicker readOnly
@@ -300,25 +299,6 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            styleWeekend
-          </td>
-        </tr>
-        <tr>
-          <td style={ propertyDescriptionStyle }>
-            <p>
-              <i>Boolean</i>
-              <br />
-              optional (default: false)
-            </p>
-            <p>
-              If this property is set to true weekend be styles distinctly.
-              Weekend for date picker will be provided in locale data and will be by default Sunday.
-            </p>
-          </td>
-        </tr>
-
-        <tr>
-          <td style={ propertyNameStyle }>
             renderDay
           </td>
         </tr>
@@ -546,8 +526,7 @@ export default React.createClass({
       <h3>DatePicker with other month days hidden but weekends styled differently:</h3>
 
       <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }
-                  showOtherMonthDate={ false }
-                  styleWeekend/>
+                  showOtherMonthDate={ false } />
 
       <Code value={ advanceCodeExample1 } style={ {marginTop: 40} } />
 
