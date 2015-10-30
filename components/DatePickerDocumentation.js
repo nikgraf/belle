@@ -76,7 +76,7 @@ const advanceCodeExample5 = `
             disabled/>`;
 
 const advanceCodeExample6 = `
-<DatePicker onMonthYearChange={ this.onMonthYearChange }
+<DatePicker onMonthUpdate={ this.onMonthUpdate }
             month={ this.state.selectedMonth }
             year={ this.state.selectedYear }
             valueLink={ this.linkState('selectedDate') }/>
@@ -92,7 +92,7 @@ const advanceCodeExample6 = `
   <div><a onClick={ this.resetDate }>Reset Date</a></div>
 </div>
 
-onMonthYearChange(month, year) {
+onMonthUpdate(month, year) {
   this.setState({
     selectedMonth: month,
     selectedYear: year
@@ -355,7 +355,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onMonthYearChange
+            onMonthUpdate
           </td>
         </tr>
         <tr>
@@ -508,7 +508,7 @@ export default React.createClass({
         <span style={ {color: 'grey'} }> tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp, onTouchStart,
         onTouchEnd, onPrevMonthNavMouseDown, onPrevMonthNavMouseUp, onPrevMonthNavTouchStart, onPrevMonthNavTouchEnd,
         onNextMonthNavMouseDown, onNextMonthNavMouseUp, onNextMonthNavTouchStart, onNextMonthNavTouchEnd, onDayMouseOver,
-        onDayMouseOut, onDayMouseDown, onDayMouseUp, onDayTouchStart, onDayTouchEnd, onUpdate, onMonthYearChange.
+        onDayMouseOut, onDayMouseDown, onDayMouseUp, onDayTouchStart, onDayTouchEnd, onUpdate, onMonthUpdate.
         </span><br />
       </p>
 
@@ -584,9 +584,9 @@ export default React.createClass({
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
 
-      <h3>Controlled DatePicker component with onMonthYearChange callBack and reset option implemented:</h3>
+      <h3>Controlled DatePicker component with onMonthUpdate callBack and reset option implemented:</h3>
 
-      <DatePicker onMonthYearChange={ this.onMonthYearChange }
+      <DatePicker onMonthUpdate={ this.onMonthUpdate }
                   month={ this.state.selectedMonth }
                   year={ this.state.selectedYear }
                   valueLink={ this.linkState('selectedDate') }/>
@@ -642,7 +642,7 @@ export default React.createClass({
     );
   },
 
-  onMonthYearChange(month, year) {
+  onMonthUpdate(month, year) {
     this.setState({ selectedMonth: month, selectedYear: year });
   },
 
