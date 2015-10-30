@@ -25,10 +25,11 @@ function sanitizeWrapperProps(properties) {
     'onBlur',
     'onKeyDown',
     'onMouseDown',
-    'onTouchCancel',
     'onMouseUp',
     'onTouchStart',
     'onTouchEnd',
+    'onTouchCancel',
+    'aria-label',
     'disabled',
     'style',
     'className',
@@ -142,7 +143,7 @@ export default class DatePicker extends Component {
     };
 
     this.localeData = getLocaleData(properties.locale);
-    this.wrapperProps = sanitizeWrapperProps(properties.wrapperProps);
+    this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
@@ -189,11 +190,10 @@ export default class DatePicker extends Component {
     onMonthUpdate: PropTypes.func,
 
     // props for wrapper and day
-    wrapperProps: PropTypes.object,
     dayProps: PropTypes.object,
 
     // ClassNames
-    wrapperClassName: PropTypes.string,
+    className: PropTypes.string,
     navBarClassName: PropTypes.string,
     prevMonthNavClassName: PropTypes.string,
     prevMonthNavIconClassName: PropTypes.string,
@@ -290,7 +290,7 @@ export default class DatePicker extends Component {
     this.setState(newState);
 
     this.localeData = getLocaleData(properties.locale);
-    this.wrapperProps = sanitizeWrapperProps(properties.wrapperProps);
+    this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
@@ -1134,7 +1134,6 @@ export default class DatePicker extends Component {
     return (
       <div ref="datePicker"
            tabIndex={ tabIndex }
-           disabled={ this.props.disabled }
            onFocus={ ::this._onFocus }
            onBlur={ ::this._onBlur }
            onKeyDown={ ::this._onKeyDown }
@@ -1147,7 +1146,9 @@ export default class DatePicker extends Component {
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
            style={ style }
-           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.styleId) }
+           className={
+             unionClassNames(this.props.className, this.pseudoStyleIds.styleId)
+           }
            {...this.wrapperProps} >
         { this._renderNavBar() }
         <div role="grid" style={ defaultStyle.weekGroupStyle}>
