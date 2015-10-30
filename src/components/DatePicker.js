@@ -131,6 +131,19 @@ function sanitizeDayLabelProps(properties) {
   ]);
 }
 
+function sanitizeWeekHeaderProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeWeekGridProps(properties) {
+  return omit(properties, [
+    'role',
+    'style',
+  ]);
+}
+
 /**
  * Injects pseudo classes for styles into the DOM.
  */
@@ -229,6 +242,8 @@ export default class DatePicker extends Component {
     this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
     this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
     this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+    this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
+    this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
@@ -282,6 +297,8 @@ export default class DatePicker extends Component {
     nextMonthNavIconProps: PropTypes.object,
     monthLabelProps: PropTypes.object,
     dayLabelProps: PropTypes.object,
+    weekHeaderProps: PropTypes.object,
+    weekGridProps: PropTypes.object,
 
     // ClassNames
     className: PropTypes.string,
@@ -383,6 +400,8 @@ export default class DatePicker extends Component {
     this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
     this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
     this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+    this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
+    this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
 
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
@@ -1022,7 +1041,8 @@ export default class DatePicker extends Component {
     weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
     return (
-      <div style={ weekHeaderStyle }>
+      <div style={ weekHeaderStyle }
+           { ...this.weekHeaderProps }>
         {
           map(dayNames, (dayAbbr, index) => {
             return (
@@ -1030,8 +1050,8 @@ export default class DatePicker extends Component {
                     style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
                     role="columnheader"
                     { ...this.dayLabelProps }>
-                  { dayAbbr }
-                </span>
+                { dayAbbr }
+              </span>
             );
           })
         }
@@ -1266,7 +1286,9 @@ export default class DatePicker extends Component {
            }
            {...this.wrapperProps} >
         { this._renderNavBar() }
-        <div role="grid" style={ defaultStyle.weekGroupStyle}>
+        <div role="grid"
+             style={ defaultStyle.weekGridStyle }
+             { ...this.weekGridProps }>
           { this._renderWeekHeader() }
           {
             map(weekArray, (week) => {

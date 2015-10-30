@@ -120,7 +120,7 @@ const datePickerStyle = {
   },
 
   // styling for entire grid of week-header and weeks
-  weekGroupStyle: {
+  weekGridStyle: {
     boxSizing: 'border-box',
     overflow: 'auto',
     paddingBottom: 1,
