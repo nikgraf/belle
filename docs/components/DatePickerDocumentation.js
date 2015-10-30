@@ -40,10 +40,10 @@ const htmlStructure = `<div style={ style }>
 const advanceCodeExample1 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
             showOtherMonthDate={ false }
-            styleWeekend={ true }/>`;
+            styleWeekend />`;
 
 const advanceCodeExample2 = `
-<DatePicker readOnly={ true }
+<DatePicker readOnly
             renderDay={ this.renderDay }
             month={ 12 }/>
 
@@ -220,6 +220,42 @@ export default React.createClass({
             </p>
             <p>
               The date picker will be displayed for this year (though year can be changed by user).
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            min
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Date</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Sets the minimum date a user can select.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            max
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Date</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Sets the maximum date a user can select.
             </p>
           </td>
         </tr>
