@@ -195,7 +195,7 @@ export default class DatePicker extends Component {
 
     // callbacks for change of values
     onUpdate: PropTypes.func,
-    onMonthYearChange: PropTypes.func,
+    onMonthUpdate: PropTypes.func,
 
     // props for wrapper and day
     wrapperProps: PropTypes.object,
@@ -749,7 +749,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state. It will also call props.onMonthYearChange.
+   * The function will decrease current month in state. It will also call props.onMonthUpdate.
    */
   _decreaseMonthYear() {
     let newMonth;
@@ -768,13 +768,13 @@ export default class DatePicker extends Component {
       focusedDateKey: undefined,
       lastHoveredDay: undefined,
     });
-    if (this.props.onMonthYearChange) {
-      this.props.onMonthYearChange(newMonth + 1, newYear);
+    if (this.props.onMonthUpdate) {
+      this.props.onMonthUpdate(newMonth + 1, newYear);
     }
   }
 
   /**
-   * The function will increase current month in state. It will also call props.onMonthYearChange.
+   * The function will increase current month in state. It will also call props.onMonthUpdate.
    */
   _increaseMonthYear() {
     let newMonth;
@@ -793,8 +793,8 @@ export default class DatePicker extends Component {
       focusedDateKey: undefined,
       lastHoveredDay: undefined,
     });
-    if (this.props.onMonthYearChange) {
-      this.props.onMonthYearChange(newMonth + 1, newYear);
+    if (this.props.onMonthUpdate) {
+      this.props.onMonthUpdate(newMonth + 1, newYear);
     }
   }
 
