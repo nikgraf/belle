@@ -520,7 +520,7 @@ export default React.createClass({
       <p>
         ... for adding classes to various parts of html structure of date picker:
         <span style={ {color: 'grey'} }> wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
-        monthLabelClassName, dayLabelClassName, dayClassName</span><br />
+        monthLabelClassName, dayLabelClassName</span><br />
       </p>
 
       <p>
