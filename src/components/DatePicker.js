@@ -184,16 +184,6 @@ export default class DatePicker extends Component {
     onTouchEnd: PropTypes.func,
     onTouchCancel: PropTypes.func,
 
-    // event callbacks for previous month and next month navigation links
-    onPrevMonthNavMouseDown: PropTypes.func,
-    onPrevMonthNavMouseUp: PropTypes.func,
-    onPrevMonthNavTouchStart: PropTypes.func,
-    onPrevMonthNavTouchEnd: PropTypes.func,
-    onNextMonthNavMouseDown: PropTypes.func,
-    onNextMonthNavMouseUp: PropTypes.func,
-    onNextMonthNavTouchStart: PropTypes.func,
-    onNextMonthNavTouchEnd: PropTypes.func,
-
     // event callbacks for days
     onDayMouseOver: PropTypes.func,
     onDayMouseOut: PropTypes.func,
