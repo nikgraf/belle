@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {omit} from '../utils/helpers';
 import style from '../style/separator';
 
@@ -26,11 +26,11 @@ export default class Separator extends Component {
   static displayName = 'Separator';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
     ]),
-    style: React.PropTypes.object,
+    style: PropTypes.object,
   };
 
   /**

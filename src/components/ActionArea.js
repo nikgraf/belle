@@ -15,22 +15,22 @@ export default class ActionArea extends Component {
   static displayName = 'ActionArea';
 
   static propTypes = {
-    activeStyle: React.PropTypes.object,
+    activeStyle: PropTypes.object,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]),
-    hoverStyle: React.PropTypes.object,
-    onTouchStart: React.PropTypes.func,
-    onTouchEnd: React.PropTypes.func,
-    onTouchCancel: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onMouseEnter: React.PropTypes.func,
-    onMouseLeave: React.PropTypes.func,
+    hoverStyle: PropTypes.object,
+    onTouchStart: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
 
     // TODO investigate how we solve mouseUp in other compents (like the right click edgecase)
-    onMouseUp: React.PropTypes.func,
-    style: React.PropTypes.object,
+    onMouseUp: PropTypes.func,
+    style: PropTypes.object,
   };
 
   state = {

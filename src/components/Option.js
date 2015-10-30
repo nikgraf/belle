@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {omit} from '../utils/helpers';
 import style from '../style/option';
 
@@ -33,28 +33,28 @@ export default class Option extends Component {
   static displayName = 'Option';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
     ]),
-    style: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    selectStyle: React.PropTypes.object,
-    disabledSelectStyle: React.PropTypes.object,
-    _isDisplayedAsSelected: React.PropTypes.bool,
-    value: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
+    style: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    selectStyle: PropTypes.object,
+    disabledSelectStyle: PropTypes.object,
+    _isDisplayedAsSelected: PropTypes.bool,
+    value: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
     ]).isRequired,
   };
 
   static contextTypes = {
-    isDisabled: React.PropTypes.bool.isRequired,
-    isHoveredValue: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
+    isDisabled: PropTypes.bool.isRequired,
+    isHoveredValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
     ]),
   };
 

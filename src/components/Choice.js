@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 /**
  * Choice component
@@ -12,11 +12,11 @@ export default class Choice extends Component {
   static displayName = 'Choice';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
     ]),
-    value: React.PropTypes.bool.isRequired,
+    value: PropTypes.bool.isRequired,
   };
 
   render() {

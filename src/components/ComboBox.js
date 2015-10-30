@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
@@ -159,50 +159,50 @@ export default class ComboBox extends Component {
   static displayName = 'ComboBox';
 
   static propTypes = {
-    children: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]),
-    defaultValue: React.PropTypes.string,
-    value: React.PropTypes.string,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.string,
-      requestChange: React.PropTypes.func.isRequired,
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    defaultValue: PropTypes.string,
+    value: PropTypes.string,
+    valueLink: PropTypes.shape({
+      value: PropTypes.string,
+      requestChange: PropTypes.func.isRequired,
     }),
-    placeholder: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    wrapperProps: React.PropTypes.object,
-    menuProps: React.PropTypes.object,
-    caretProps: React.PropTypes.object,
-    onUpdate: React.PropTypes.func,
-    onInputMatch: React.PropTypes.func,
-    tabIndex: React.PropTypes.number,
-    onKeyDown: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
-    className: React.PropTypes.string,
-    caretClassName: React.PropTypes.string,
-    style: React.PropTypes.object,
-    wrapperStyle: React.PropTypes.object,
-    hintStyle: React.PropTypes.object,
-    menuStyle: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    disabledStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    caretToOpenStyle: React.PropTypes.object,
-    caretToCloseStyle: React.PropTypes.object,
-    disabledCaretToOpenStyle: React.PropTypes.object,
-    maxOptions: React.PropTypes.number,
-    displayCaret: React.PropTypes.bool,
-    enableHint: React.PropTypes.bool,
-    filterFunc: React.PropTypes.func,
-    'aria-label': React.PropTypes.string,
+    placeholder: PropTypes.string,
+    disabled: PropTypes.bool,
+    wrapperProps: PropTypes.object,
+    menuProps: PropTypes.object,
+    caretProps: PropTypes.object,
+    onUpdate: PropTypes.func,
+    onInputMatch: PropTypes.func,
+    tabIndex: PropTypes.number,
+    onKeyDown: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    className: PropTypes.string,
+    caretClassName: PropTypes.string,
+    style: PropTypes.object,
+    wrapperStyle: PropTypes.object,
+    hintStyle: PropTypes.object,
+    menuStyle: PropTypes.object,
+    focusStyle: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    caretToOpenStyle: PropTypes.object,
+    caretToCloseStyle: PropTypes.object,
+    disabledCaretToOpenStyle: PropTypes.object,
+    maxOptions: PropTypes.number,
+    displayCaret: PropTypes.bool,
+    enableHint: PropTypes.bool,
+    filterFunc: PropTypes.func,
+    'aria-label': PropTypes.string,
   };
 
   static childContextTypes = {
-    isDisabled: React.PropTypes.bool.isRequired,
-    isHoveredValue: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
+    isDisabled: PropTypes.bool.isRequired,
+    isHoveredValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
     ]),
   };
 

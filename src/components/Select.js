@@ -292,11 +292,11 @@ export default class Select extends Component {
   };
 
   static childContextTypes = {
-    isDisabled: React.PropTypes.bool.isRequired,
-    isHoveredValue: React.PropTypes.oneOfType([
-      React.PropTypes.bool,
-      React.PropTypes.string,
-      React.PropTypes.number,
+    isDisabled: PropTypes.bool.isRequired,
+    isHoveredValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
     ]),
   };
 

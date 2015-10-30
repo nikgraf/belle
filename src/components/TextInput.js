@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -117,23 +117,23 @@ export default class TextInput extends Component {
   static displayName = 'TextInput';
 
   static propTypes = {
-    className: React.PropTypes.string,
-    minHeight: React.PropTypes.number,
-    maxHeight: React.PropTypes.number,
-    minRows: React.PropTypes.number,
-    maxRows: React.PropTypes.number,
-    style: React.PropTypes.object,
-    hoverStyle: React.PropTypes.object,
-    focusStyle: React.PropTypes.object,
-    allowNewLine: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    disabledStyle: React.PropTypes.object,
-    disabledHoverStyle: React.PropTypes.object,
-    onUpdate: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
-      requestChange: React.PropTypes.func.isRequired,
+    className: PropTypes.string,
+    minHeight: PropTypes.number,
+    maxHeight: PropTypes.number,
+    minRows: PropTypes.number,
+    maxRows: PropTypes.number,
+    style: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    focusStyle: PropTypes.object,
+    allowNewLine: PropTypes.bool,
+    disabled: PropTypes.bool,
+    disabledStyle: PropTypes.object,
+    disabledHoverStyle: PropTypes.object,
+    onUpdate: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    valueLink: PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      requestChange: PropTypes.func.isRequired,
     }),
   };
 

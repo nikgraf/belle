@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import highlightJs from 'highlight.js';
 import {isEqual, omit, extend} from 'underscore';
@@ -47,6 +47,6 @@ export default class Code extends Component {
 }
 
 Code.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  style: React.PropTypes.object
+  value: PropTypes.string.isRequired,
+  style: PropTypes.object,
 };
