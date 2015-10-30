@@ -291,9 +291,25 @@ export default class Select extends Component {
     onTouchStart: PropTypes.func,
   };
 
+  static childContextTypes = {
+    isDisabled: React.PropTypes.bool.isRequired,
+    isHoveredValue: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
+  };
+
   static defaultProps = {
     disabled: false,
   };
+
+  getChildContext() {
+    return {
+      isDisabled: this.props.disabled,
+      isHoveredValue: this.state.focusedOptionValue,
+    };
+  }
 
   /**
    * Generates the style-id & inject the focus & hover style.
@@ -850,9 +866,6 @@ export default class Select extends Component {
 
     let selectedOptionWrapperStyle;
     if (this.props.disabled) {
-      selectedOptionOrPlaceholder = React.cloneElement(selectedOptionOrPlaceholder, {
-        _isDisabled: true,
-      });
       if (this.state.isTouchedToToggle) {
         selectedOptionWrapperStyle = disabledHoverStyle;
       } else {
@@ -919,9 +932,6 @@ export default class Select extends Component {
             React.Children.map(this.children, (entry, index) => {
               if (isOption(entry)) { // filter out all non-Option Components
                 const isHovered = entry.props.value === this.state.focusedOptionValue;
-                const option = React.cloneElement(entry, {
-                  _isHovered: isHovered,
-                });
 
                 return (
                   <li onClick={ ::this._onClickAtOption }
@@ -933,7 +943,7 @@ export default class Select extends Component {
                       onMouseEnter={ ::this._onMouseEnterAtOption }
                       role="option"
                       aria-selected={ isHovered }>
-                    { option }
+                    { entry }
                   </li>
                 );
               } else if (isSeparator(entry)) {

@@ -12,9 +12,7 @@ function sanitizeChildProps(properties) {
     'selectStyle',
     'disabledSelectStyle',
     'value',
-    '_isHovered',
     '_isDisplayedAsSelected',
-    '_isDisabled',
   ]);
 }
 
@@ -43,8 +41,6 @@ export default class Option extends Component {
     hoverStyle: React.PropTypes.object,
     selectStyle: React.PropTypes.object,
     disabledSelectStyle: React.PropTypes.object,
-    _isDisabled: React.PropTypes.bool,
-    _isHovered: React.PropTypes.bool,
     _isDisplayedAsSelected: React.PropTypes.bool,
     value: React.PropTypes.oneOfType([
       React.PropTypes.bool,
@@ -53,10 +49,17 @@ export default class Option extends Component {
     ]).isRequired,
   };
 
+  static contextTypes = {
+    isDisabled: React.PropTypes.bool.isRequired,
+    isHoveredValue: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
+  };
+
   static defaultProps = {
-    _isHovered: false,
     _isDisplayedAsSelected: false,
-    _isDisabled: false,
   };
 
   /**
@@ -75,7 +78,7 @@ export default class Option extends Component {
         ...style.selectStyle,
         ...this.props.selectStyle,
       };
-      if (this.props._isDisabled) {
+      if (this.context.isDisabled) {
         optionStyle = {
           ...optionStyle,
           ...style.disabledSelectStyle,
@@ -87,7 +90,7 @@ export default class Option extends Component {
         ...style.style,
         ...this.props.style,
       };
-      if (this.props._isHovered) {
+      if (this.context.isHoveredValue === this.props.value) {
         optionStyle = {
           ...optionStyle,
           ...style.hoverStyle,

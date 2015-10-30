@@ -10,41 +10,52 @@ import TestUtils from 'react-addons-test-utils';
 const Option = require('../components/Option');
 
 describe('Option', () => {
-  it('should initialise _isHovered & _isDisplayedAsSelected during construction', () => {
-    const option = TestUtils.renderIntoDocument(
-      <Option value="rome">Rome</Option>
-    );
+  let shallowRenderer;
 
-    expect(option._isHovered).toBeFalsy();
+  beforeEach(() => {
+    shallowRenderer = TestUtils.createRenderer();
+  });
+
+  it('should initialise _isDisplayedAsSelected during construction', () => {
+    shallowRenderer.render(
+      <Option value="rome">Rome</Option>,
+      { isDisabled: false, }
+    );
+    const option = shallowRenderer.getRenderOutput();
+
     expect(option._isDisplayedAsSelected).toBeFalsy();
   });
 
   it('should show the select style in case _isDisplayedAsSelected is true', () => {
-    const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isDisplayedAsSelected>Rome</Option>
+    shallowRenderer.render(
+      <Option value="rome" _isDisplayedAsSelected>Rome</Option>,
+      { isDisabled: false, }
     );
+    const option = shallowRenderer.getRenderOutput();
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.hasAttribute('style')).toBeTruthy();
-    expect(div.getAttribute('style').indexOf('padding:0') > -1).toBeTruthy();
+    expect(option.props.style.padding).toBe(0);
   });
 
   it('should show the hover style in case _isHovered is true', () => {
-    const option = TestUtils.renderIntoDocument(
-      <Option value="rome" _isHovered>Rome</Option>
+    shallowRenderer.render(
+      <Option value="rome">Rome</Option>,
+      {
+        isDisabled: false,
+        isHoveredValue: 'rome',
+      }
     );
+    const option = shallowRenderer.getRenderOutput();
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.hasAttribute('style')).toBeTruthy();
-    expect(div.getAttribute('style').indexOf('background:#F5F5F5') > -1).toBeTruthy();
+    expect(option.props.style.background).toBe('#F5F5F5');
   });
 
   it('should be able to provide custom properties', () => {
-    const option = TestUtils.renderIntoDocument(
-      <Option value="rome" data-custom="example">Rome</Option>
+    shallowRenderer.render(
+      <Option value="rome" data-custom="example">Rome</Option>,
+      { isDisabled: false, }
     );
+    const option = shallowRenderer.getRenderOutput();
 
-    const div = TestUtils.findRenderedDOMComponentWithTag(option, 'div');
-    expect(div.getAttribute('data-custom')).toBe('example');
+    expect(option.props['data-custom']).toBe('example');
   });
 });
