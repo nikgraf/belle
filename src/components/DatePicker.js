@@ -184,15 +184,6 @@ export default class DatePicker extends Component {
     onTouchEnd: PropTypes.func,
     onTouchCancel: PropTypes.func,
 
-    // event callbacks for days
-    onDayMouseOver: PropTypes.func,
-    onDayMouseOut: PropTypes.func,
-    onDayMouseDown: PropTypes.func,
-    onDayMouseUp: PropTypes.func,
-    onDayTouchStart: PropTypes.func,
-    onDayTouchEnd: PropTypes.func,
-    onDayTouchCancel: PropTypes.func,
-
     // callbacks for change of values
     onUpdate: PropTypes.func,
     onMonthUpdate: PropTypes.func,
@@ -551,8 +542,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseDown) {
-      this.props.onDayMouseDown(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseDown) {
+      this.props.dayProps.onMouseDown(event);
     }
   }
 
@@ -574,8 +565,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseUp) {
-      this.props.onDayMouseUp(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseUp) {
+      this.props.dayProps.onMouseUp(event);
     }
   }
 
@@ -589,8 +580,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseOver) {
-      this.props.onDayMouseOver(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseOver) {
+      this.props.dayProps.onMouseOver(event);
     }
   }
 
@@ -605,8 +596,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseOut) {
-      this.props.onDayMouseOut(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseOut) {
+      this.props.dayProps.onMouseOut(event);
     }
   }
 
@@ -621,8 +612,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayTouchStart) {
-      this.props.onDayTouchStart(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchStart) {
+      this.props.dayProps.onTouchStart(event);
     }
   }
 
@@ -640,8 +631,8 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (this.props.onDayTouchEnd) {
-      this.props.onDayTouchEnd(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchEnd) {
+      this.props.dayProps.onTouchEnd(event);
     }
   }
 
@@ -650,8 +641,8 @@ export default class DatePicker extends Component {
       activeDay: undefined,
     });
 
-    if (this.props.onDayTouchCancel) {
-      this.props.onDayTouchCancel(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchCancel) {
+      this.props.dayProps.onTouchCancel(event);
     }
   }
 
