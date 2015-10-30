@@ -194,7 +194,6 @@ export default class DatePicker extends Component {
     month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
     year: PropTypes.number,
     showOtherMonthDate: PropTypes.bool,
-    styleWeekend: PropTypes.bool,
     renderDay: PropTypes.func,
     tabIndex: PropTypes.number,
     'aria-label': PropTypes.string,
@@ -228,7 +227,6 @@ export default class DatePicker extends Component {
     nextMonthNavIconClassName: PropTypes.string,
     monthLabelClassName: PropTypes.string,
     dayLabelClassName: PropTypes.string,
-    dayClassName: PropTypes.string,
 
     // wrapper styles
     style: PropTypes.object,
@@ -283,7 +281,6 @@ export default class DatePicker extends Component {
     disabled: false,
     readOnly: false,
     showOtherMonthDate: true,
-    styleWeekend: false,
   };
 
   /**
@@ -938,7 +935,7 @@ export default class DatePicker extends Component {
           map(dayNames, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
+                    style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
                     className={ this.props.dayLabelClassName }
                     role="columnheader">
                   { dayAbbr }
@@ -1006,7 +1003,7 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (this.props.styleWeekend && currentDate.getDay() === this.localeData.weekEnd) {
+    if (currentDate.getDay() === this.localeData.weekEnd) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.weekendStyle,

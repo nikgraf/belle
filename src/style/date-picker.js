@@ -156,7 +156,7 @@ const datePickerStyle = {
   },
 
   weekendLabelStyle: {
-    color: '#8E8071',
+    // color: '#8E8071',
   },
 
   // styling for individual day

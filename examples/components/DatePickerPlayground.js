@@ -53,10 +53,9 @@ export default React.createClass({
             <div style={{ marginBottom: '20px' }}>
             <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate }/>
           </div>
-          <h3>Read-Only + styleWeekend active Calendar Example</h3>
+          <h3>Read-Only active Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker styleWeekend
-                        defaultValue={ selectedDate }
+            <DatePicker defaultValue={ selectedDate }
                         readOnly/>
           </div>
           <h3>Special renderDay</h3>
@@ -74,8 +73,7 @@ export default React.createClass({
           </div>
           <h3>Calendar in dutch hebrew !!!</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker styleWeekend
-                        defaultValue={ selectedDate }
+            <DatePicker defaultValue={ selectedDate }
                         locale="he"/>
           </div>
         </Card>

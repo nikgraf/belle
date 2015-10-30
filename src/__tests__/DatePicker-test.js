@@ -26,7 +26,6 @@ describe('DatePicker', () => {
     expect(datePicker.props.disabled).toBe(false);
     expect(datePicker.props.readOnly).toBe(false);
     expect(datePicker.props.showOtherMonthDate).toBe(true);
-    expect(datePicker.props.styleWeekend).toBe(false);
   });
 
   it('should have undefined date value if value is not passed in props', () => {
