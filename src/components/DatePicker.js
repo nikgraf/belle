@@ -108,6 +108,8 @@ export default class DatePicker extends Component {
   constructor(properties) {
     super(properties);
     let selectedDate;
+    let month;
+    let year;
 
     if (has(properties, 'valueLink')) {
       selectedDate = properties.valueLink.value;
@@ -117,12 +119,28 @@ export default class DatePicker extends Component {
       selectedDate = properties.defaultValue;
     }
 
+    if (properties.month) {
+      month = properties.month - 1;
+    } else if (selectedDate) {
+      month = selectedDate.getMonth();
+    } else {
+      month = CURRENT_MONTH;
+    }
+
+    if (properties.year) {
+      year = properties.month;
+    } else if (selectedDate) {
+      year = selectedDate.getFullYear();
+    } else {
+      year = CURRENT_YEAR;
+    }
+
     this.state = {
       isFocused: false,
       isActive: false,
       selectedDate: selectedDate,
-      month: properties.month - 1,
-      year: properties.year,
+      month: month,
+      year: year,
     };
 
     this.localeData = getLocaleData(properties.locale);
@@ -254,8 +272,6 @@ export default class DatePicker extends Component {
   };
 
   static defaultProps = {
-    month: CURRENT_MONTH + 1,
-    year: CURRENT_YEAR,
     tabIndex: 0,
     'aria-label': 'datepicker',
     disabled: false,

@@ -34,7 +34,7 @@ export default React.createClass({
         <Card>
           <h3>Default Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker ref="calendar1" defaultValue={ selectedDate }/>
+            <DatePicker ref="calendar1"/>
           </div>
           <Button onClick={ this._resetValue }>Reset Date</Button>
 
