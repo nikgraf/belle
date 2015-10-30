@@ -493,7 +493,7 @@ export default React.createClass({
         disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
         nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle,
         disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, activeDayStyle,
-        focusDayStyle, disabledHoverDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
+        focusDayStyle, disabledFocusDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
      </p>
 
       <h3>Internal HTML Structure</h3>

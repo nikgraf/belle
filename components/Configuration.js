@@ -98,7 +98,7 @@ const styleStructure = `style = {
     readOnlyDayStyle: { … },
     activeDayStyle: { … },
     focusDayStyle: { … },
-    disabledHoverDayStyle: { … },
+    disabledFocusDayStyle: { … },
     todayStyle: { … },
     weekendStyle: { … },
     selectedDayStyle: { … },
