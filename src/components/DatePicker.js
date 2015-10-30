@@ -2,7 +2,16 @@ import React, {Component, PropTypes} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, map, shift, reverse, omit} from '../utils/helpers';
-import {getWeekArrayForMonth, getLastDayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
+import {
+  convertDateToDateKey,
+  getDateKey,
+  getWeekArrayForMonth,
+  getLastDayForMonth,
+  getLocaleData,
+  CURRENT_DATE,
+  CURRENT_MONTH,
+  CURRENT_YEAR
+} from '../utils/date-helpers';
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
 import ActionArea from './ActionArea';
@@ -87,14 +96,6 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   });
   injectStyles(styles);
 }
-
-const getDateKey = (year, month, day) => {
-  return `${year}-${month}-${day}`;
-};
-
-const convertDateToDateKey = (date) => {
-  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
-};
 
 /**
  * DatePicker React Component.

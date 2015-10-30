@@ -61,6 +61,14 @@ export function getLocaleData(locale) {
   return localeResult;
 }
 
+export const getDateKey = (year, month, day) => {
+  return `${year}-${month}-${day}`;
+};
+
+export const convertDateToDateKey = (date) => {
+  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
+};
+
 export const TODAY = new Date();
 
 export const CURRENT_DATE = TODAY.getDate();
