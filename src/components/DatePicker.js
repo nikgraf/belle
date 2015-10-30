@@ -932,7 +932,7 @@ export default class DatePicker extends Component {
     const day = currentDate.getDate();
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
-    const isOtherMonth = currentDate.getMonth() !== this.state.month;
+    const isOtherMonth = month !== this.state.month;
     const dateKey = convertDateToDateKey(currentDate);
 
     let ariaCurrent = '';
@@ -982,7 +982,7 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+    if (day === CURRENT_DATE && month === CURRENT_MONTH && year === CURRENT_YEAR) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.todayStyle,
