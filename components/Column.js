@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {omit} from 'underscore';
 
 export default React.createClass({
 
   propTypes: {
-    smallScreenStyle: React.PropTypes.object.isRequired,
-    mediumScreenStyle: React.PropTypes.object.isRequired,
-    children: React.PropTypes.any
+    smallScreenStyle: PropTypes.object.isRequired,
+    mediumScreenStyle: PropTypes.object.isRequired,
+    children: PropTypes.any
   },
 
   contextTypes: {
-    viewport: React.PropTypes.any
+    viewport: PropTypes.any
   },
 
   getInitialState() {
