@@ -197,6 +197,15 @@ export default class ComboBox extends Component {
     'aria-label': PropTypes.string,
   };
 
+  static childContextTypes = {
+    isDisabled: PropTypes.bool.isRequired,
+    isHoveredValue: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  };
+
   static defaultProps = {
     disabled: false,
     displayCaret: false,
@@ -206,6 +215,18 @@ export default class ComboBox extends Component {
     tabIndex: 0,
     children: [],
   };
+
+  getChildContext() {
+    let value;
+    if (typeof this.state.focusedOptionIndex !== 'undefined') {
+      value = this.filteredOptions[this.state.focusedOptionIndex].props.value;
+    }
+
+    return {
+      isDisabled: this.props.disabled,
+      isHoveredValue: value,
+    };
+  }
 
   /**
    * This method will calculate the hint that should be present in comboBox at some point in time. Rules:
@@ -713,11 +734,6 @@ export default class ComboBox extends Component {
             {...this.state.menuProps} >
           {
             React.Children.map(this.filteredOptions, (entry, index) => {
-              const isHovered = this.state.focusedOptionIndex === index;
-              const option = React.cloneElement(entry, {
-                _isHovered: isHovered,
-              });
-
               return (
                 <li key={ index }
                     data-belle-index={ index }
@@ -729,7 +745,7 @@ export default class ComboBox extends Component {
                     onMouseLeave={ ::this._onMouseLeaveAtOption }
                     onMouseDown={ (event) => event.preventDefault() }
                     role="option">
-                  { option }
+                  { entry }
                 </li>
               );
             })
