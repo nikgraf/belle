@@ -142,6 +142,9 @@ export default class DatePicker extends Component {
       requestChange: PropTypes.func.isRequired,
     }),
 
+    min: PropTypes.instanceOf(Date),
+    max: PropTypes.instanceOf(Date),
+
     // component config related props
     locale: PropTypes.string,
     month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
@@ -243,7 +246,7 @@ export default class DatePicker extends Component {
     readOnlyDayStyle: PropTypes.object,
     activeDayStyle: PropTypes.object,
     focusDayStyle: PropTypes.object,
-    disabledHoverDayStyle: PropTypes.object,
+    disabledFocusDayStyle: PropTypes.object,
     todayStyle: PropTypes.object,
     selectedDayStyle: PropTypes.object,
     otherMonthDayStyle: PropTypes.object,
@@ -507,10 +510,15 @@ export default class DatePicker extends Component {
         } else if (event.key === 'Enter') {
           event.preventDefault();
           const date = new Date(this.state.focusedDateKey);
-          this._triggerSelectDate(date.getDate(), date.getMonth(), date.getFullYear());
+          if (this._isWithinMinAndMax(date)) {
+            this._triggerSelectDate(date.getDate(), date.getMonth(), date.getFullYear());
+          }
         } else if (event.key === ' ') {
           event.preventDefault();
-          this._triggerToggleDate(new Date(this.state.focusedDateKey));
+          const date = new Date(this.state.focusedDateKey);
+          if (this._isWithinMinAndMax(date)) {
+            this._triggerToggleDate(date);
+          }
         }
       } else {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp' ||
@@ -677,7 +685,8 @@ export default class DatePicker extends Component {
       let day;
       let month;
       let year;
-      if (this.state.selectedDate && date && this.state.selectedDate.getDate() === date.getDate() && this.state.selectedDate.getMonth() === date.getMonth() && this.state.selectedDate.getFullYear() === date.getFullYear()) {
+      if (this.state.selectedDate && date &&
+          this.state.selectedDate.getDate() === date.getDate() && this.state.selectedDate.getMonth() === date.getMonth() && this.state.selectedDate.getFullYear() === date.getFullYear()) {
         day = undefined;
         month = this.state.month;
         year = this.state.year;
@@ -783,6 +792,11 @@ export default class DatePicker extends Component {
     if (this.props.onMonthYearChange) {
       this.props.onMonthYearChange(newMonth + 1, newYear);
     }
+  }
+
+  _isWithinMinAndMax(date) {
+    return !(this.props.min && date < this.props.min ||
+             this.props.max && date > this.props.max);
   }
 
   _renderPrevMonthNav() {
@@ -934,6 +948,7 @@ export default class DatePicker extends Component {
     const year = currentDate.getFullYear();
     const isOtherMonth = month !== this.state.month;
     const dateKey = convertDateToDateKey(currentDate);
+    const isDisabledDay = !this._isWithinMinAndMax(currentDate);
 
     let ariaCurrent = '';
     let ariaSelected = false;
@@ -951,19 +966,20 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (this.props.disabled) {
+    if (isOtherMonth) {
+      dayStyle = {
+        ...dayStyle,
+        ...defaultStyle.otherMonthDayStyle,
+        ...this.props.otherMonthDayStyle,
+      };
+    }
+
+    if (this.props.disabled || isDisabledDay) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.disabledDayStyle,
         ...this.props.disabledDayStyle,
       };
-      if (!isOtherMonth && this.state.focusedDateKey === dateKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.disabledHoverDayStyle,
-          ...this.props.disabledHoverDayStyle,
-        };
-      }
     }
 
     if (this.props.styleWeekend && currentDate.getDay() === this.localeData.weekEnd) {
@@ -971,14 +987,6 @@ export default class DatePicker extends Component {
         ...dayStyle,
         ...defaultStyle.weekendStyle,
         ...this.props.weekendStyle,
-      };
-    }
-
-    if (isOtherMonth) {
-      dayStyle = {
-        ...dayStyle,
-        ...defaultStyle.otherMonthDayStyle,
-        ...this.props.otherMonthDayStyle,
       };
     }
 
@@ -1001,12 +1009,19 @@ export default class DatePicker extends Component {
       ariaSelected = true;
     }
 
-    if (!this.props.disabled && this.state.focusedDateKey === dateKey) {
+    if (this.state.focusedDateKey === dateKey) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.focusDayStyle,
         ...this.props.focusDayStyle,
       };
+      if (this.props.disabled || isDisabledDay) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.disabledFocusDayStyle,
+          ...this.props.disabledFocusDayStyle,
+        };
+      }
     }
 
     if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dateKey) {
@@ -1019,22 +1034,25 @@ export default class DatePicker extends Component {
 
     const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
 
-    if (!isOtherMonth || this.props.showOtherMonthDate) {
+    if (!this.props.showOtherMonthDate && isOtherMonth) {
       return (
         <span key={ 'day-' + index }
               ref={ dateKey }
-              onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
-              onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
-              onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
-              onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
-              onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
-              onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
-              onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
-              aria-current={ ariaCurrent }
-              aria-selected={ ariaSelected }
               style={ dayStyle }
               className={ this.props.dayClassName }
-              role="gridcell"
+              {...this.dayProps}>
+        </span>
+      );
+    }
+
+    if (isDisabledDay) {
+      return (
+        <span key={ 'day-' + index }
+              ref={ dateKey }
+              style={ dayStyle }
+              className={ this.props.dayClassName }
+              onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
+              onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
               {...this.dayProps}>
           { renderedDay }
         </span>
@@ -1044,9 +1062,20 @@ export default class DatePicker extends Component {
     return (
       <span key={ 'day-' + index }
             ref={ dateKey }
+            onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
+            onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
+            onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
+            onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
+            onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
+            onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
+            onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
+            aria-current={ ariaCurrent }
+            aria-selected={ ariaSelected }
             style={ dayStyle }
             className={ this.props.dayClassName }
+            role="gridcell"
             {...this.dayProps}>
+        { renderedDay }
       </span>
     );
   }

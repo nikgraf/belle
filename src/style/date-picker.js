@@ -177,6 +177,7 @@ const datePickerStyle = {
     paddingTop: 5,
     position: 'relative',
     zIndex: 100,
+    cursor: 'default',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -199,7 +200,6 @@ const datePickerStyle = {
   },
 
   readOnlyDayStyle: {
-    cursor: 'auto',
   },
 
   activeDayStyle: {
@@ -221,9 +221,8 @@ const datePickerStyle = {
     cursor: 'not-allowed',
   },
 
-  disabledHoverDayStyle: {
+  disabledFocusDayStyle: {
     cursor: 'not-allowed',
-    backgroundColor: 'red',
   },
 
   todayStyle: {
