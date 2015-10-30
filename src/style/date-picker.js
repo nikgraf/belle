@@ -32,7 +32,6 @@ const datePickerStyle = {
   },
 
   disabledStyle: {
-    backgroundColor: '#D8D8D8',
   },
 
   readOnlyStyle: {
@@ -154,7 +153,6 @@ const datePickerStyle = {
   },
 
   disabledDayLabelStyle: {
-    color: '#C1BABA',
   },
 
   weekendLabelStyle: {
