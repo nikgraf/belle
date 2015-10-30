@@ -47,13 +47,21 @@ export default React.createClass({
 
           <h3>Disabled Calendar Example</h3>
             <div style={{ marginBottom: '20px' }}>
-            <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate } disabled/>
+            <DatePicker defaultValue={ selectedDate } disabled/>
           </div>
-          <h3>Read-Only Calendar Example</h3>
+          <h3>Calendar without showing other months dates Example</h3>
+            <div style={{ marginBottom: '20px' }}>
+            <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate }/>
+          </div>
+          <h3>Read-Only + styleWeekend active Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
             <DatePicker styleWeekend
                         defaultValue={ selectedDate }
-                        readOnly
+                        readOnly/>
+          </div>
+          <h3>Special renderDay</h3>
+          <div style={{ marginBottom: '20px' }}>
+            <DatePicker defaultValue={ selectedDate }
                         renderDay={ this._renderDay }/>
           </div>
           <h3>Calendar in dutch french !!!</h3>
