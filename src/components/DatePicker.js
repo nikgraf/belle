@@ -717,7 +717,7 @@ export default class DatePicker extends Component {
 
     const nextFocusedDate = new Date(this.state.focusedDateKey);
     nextFocusedDate.setDate(nextFocusedDate.getDate() + days);
-    const nextFocusedDateKey = `${nextFocusedDate.getFullYear()}-${nextFocusedDate.getMonth() + 1}-${nextFocusedDate.getDate()}`;
+    const nextFocusedDateKey = convertDateToDateKey(nextFocusedDate);
     const nextMonth = nextFocusedDate.getMonth();
 
     if (nextMonth !== currentMonth) {
@@ -933,7 +933,7 @@ export default class DatePicker extends Component {
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
     const isOtherMonth = currentDate.getMonth() !== this.state.month;
-    const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`;
+    const dateKey = convertDateToDateKey(currentDate);
 
     let ariaCurrent = '';
     let ariaSelected = false;
