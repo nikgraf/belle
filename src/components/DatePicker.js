@@ -1039,6 +1039,7 @@ export default class DatePicker extends Component {
         </span>
       );
     }
+
     return (
       <span key={ 'day-' + index }
             ref={ dateKey }
