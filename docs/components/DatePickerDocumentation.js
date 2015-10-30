@@ -114,7 +114,7 @@ export default React.createClass({
       selectedMonth: TODAY.getMonth() + 1,
       selectedYear: TODAY.getFullYear(),
       selectedLocale: 'ar',
-      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), 15)
+      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), 15),
     };
   },
 
@@ -527,11 +527,15 @@ export default React.createClass({
         Adding support for a new locale is very easy, check <a href="#/configuration">Configuration</a>.</p>
 
       <Select valueLink={ this.linkState('selectedLocale') }
-            menuStyle={ { height: 160,
-            width: '25%',
-            overflow: 'scroll' } }
-            style={ { width: '25%',
-            marginBottom: 20}}>
+            menuStyle={{
+              height: 160,
+              width: '25%',
+              overflow: 'scroll',
+            }}
+            style={{
+              width: '25%',
+              marginBottom: 20,
+            }}>
         <Option value="ar">Arabic</Option>
         <Option value="fr">French</Option>
         <Option value="he">Hebrew</Option>
@@ -550,16 +554,19 @@ export default React.createClass({
                   month={ this.state.selectedMonth }
                   year={ this.state.selectedYear }
                   valueLink={ this.linkState('selectedDate') }/>
-      <div style={ {display: 'inline-block',
-                    width: 200,
-                    marginLeft: 20,
-                    marginTop: 10} }>
+      <div style={{
+        display: 'inline-block',
+        width: 200,
+        marginLeft: 20,
+        marginTop: 10,
+      }}>
       <div>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</div>
       <div>Month: {this.state.selectedMonth}</div>
       <div>Year: {this.state.selectedYear}</div>
       <div><a onClick={ this.resetDate }
-         style={{textDecoration: 'underline',
-                 cursor: 'pointer'
+         style={{
+           textDecoration: 'underline',
+           cursor: 'pointer',
          }}>Reset Date</a></div>
       </div>
 
@@ -593,6 +600,7 @@ export default React.createClass({
         </div>
       );
     }
+
     return (
       day.getDate()
     );
@@ -604,6 +612,6 @@ export default React.createClass({
 
   resetDate() {
     this.setState({ selectedDate: undefined });
-  }
+  },
 
 });
