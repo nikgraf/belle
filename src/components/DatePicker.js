@@ -81,6 +81,56 @@ function sanitizeDayProps(properties) {
   ]);
 }
 
+function sanitizeNavBarProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizePrevMonthNavProps(properties) {
+  return omit(properties, [
+    'className',
+    'onClick',
+    'style',
+  ]);
+}
+
+function sanitizePrevMonthNavIconProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeNextMonthNavProps(properties) {
+  return omit(properties, [
+    'className',
+    'onClick',
+    'style',
+  ]);
+}
+
+function sanitizeNextMonthNavIconProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeMonthLabelProps(properties) {
+  return omit(properties, [
+    'id',
+    'role',
+    'style',
+  ]);
+}
+
+function sanitizeDayLabelProps(properties) {
+  return omit(properties, [
+    'key',
+    'role',
+    'style',
+  ]);
+}
+
 /**
  * Injects pseudo classes for styles into the DOM.
  */
@@ -172,6 +222,14 @@ export default class DatePicker extends Component {
     this.dayProps = sanitizeDayProps(properties.dayProps);
     this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
     this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
+    this.navBarProps = sanitizeNavBarProps(properties.navBarProps);
+    this.prevMonthNavProps = sanitizePrevMonthNavProps(properties.prevMonthNavProps);
+    this.prevMonthNavIconProps = sanitizePrevMonthNavIconProps(properties.prevMonthNavIconProps);
+    this.nextMonthNavProps = sanitizeNextMonthNavProps(properties.nextMonthNavProps);
+    this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
+    this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
+    this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
@@ -215,18 +273,18 @@ export default class DatePicker extends Component {
     onUpdate: PropTypes.func,
     onMonthUpdate: PropTypes.func,
 
-    // props for wrapper and day
+    // props
     dayProps: PropTypes.object,
+    navBarProps: PropTypes.object,
+    prevMonthNavProps: PropTypes.object,
+    prevMonthNavIconProps: PropTypes.object,
+    nextMonthNavProps: PropTypes.object,
+    nextMonthNavIconProps: PropTypes.object,
+    monthLabelProps: PropTypes.object,
+    dayLabelProps: PropTypes.object,
 
     // ClassNames
     className: PropTypes.string,
-    navBarClassName: PropTypes.string,
-    prevMonthNavClassName: PropTypes.string,
-    prevMonthNavIconClassName: PropTypes.string,
-    nextMonthNavClassName: PropTypes.string,
-    nextMonthNavIconClassName: PropTypes.string,
-    monthLabelClassName: PropTypes.string,
-    dayLabelClassName: PropTypes.string,
 
     // wrapper styles
     style: PropTypes.object,
@@ -318,6 +376,14 @@ export default class DatePicker extends Component {
     this.dayProps = sanitizeDayProps(properties.dayProps);
     this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
     this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
+    this.navBarProps = sanitizeNavBarProps(properties.navBarProps);
+    this.prevMonthNavProps = sanitizePrevMonthNavProps(properties.prevMonthNavProps);
+    this.prevMonthNavIconProps = sanitizePrevMonthNavIconProps(properties.prevMonthNavIconProps);
+    this.nextMonthNavProps = sanitizeNextMonthNavProps(properties.nextMonthNavProps);
+    this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
+    this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
+    this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
@@ -820,6 +886,20 @@ export default class DatePicker extends Component {
              this.props.max && date > this.props.max);
   }
 
+  _onClickPrevMonth() {
+    this._decreaseMonthYear();
+    if (this.props.prevMonthNavProps && this.props.prevMonthNavProps.onClick) {
+      this.props.prevMonthNavProps.onClick(event);
+    }
+  }
+
+  _onClickNextMonth() {
+    this._increaseMonthYear();
+    if (this.props.nextMonthNavProps && this.props.nextMonthNavProps.onClick) {
+      this.props.nextMonthNavProps.onClick(event);
+    }
+  }
+
   _renderPrevMonthNav() {
     const prevMonthNavStyle = {
       ...defaultStyle.prevMonthNavStyle,
@@ -831,12 +911,18 @@ export default class DatePicker extends Component {
       ...this.props.prevMonthNavIconStyle,
     };
 
+    let className = this.pseudoStyleIds.prevMonthNavStyleId;
+    if (this.props.prevMonthNavProps) {
+      className = unionClassNames(this.props.prevMonthNavProps.className, className);
+    }
+
     return (
-      <ActionArea onClick={ ::this._decreaseMonthYear }
+      <ActionArea onClick={ ::this._onClickPrevMonth }
                   style={ prevMonthNavStyle }
-                  className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
+                  className={ className }
+                  { ...this.prevMonthNavProps }>
         <div style={ prevMonthNavIconStyle }
-             className={this.props.prevMonthNavIconClassName}/>
+             { ...this.prevMonthNavIconProps }/>
       </ActionArea>
     );
   }
@@ -852,12 +938,18 @@ export default class DatePicker extends Component {
       ...this.props.nextMonthNavIconStyle,
     };
 
+    let className = this.pseudoStyleIds.nextMonthNavStyleId;
+    if (this.props.prevMonthNavProps) {
+      className = unionClassNames(this.props.prevMonthNavProps.className, className);
+    }
+
     return (
-      <ActionArea onClick={ ::this._increaseMonthYear }
+      <ActionArea onClick={ ::this._onClickNextMonth }
                   style= { nextMonthNavStyle }
-                  className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
+                  className={ className }
+                  { ...this.nextMonthNavProps }>
         <div style={ nextMonthNavIconStyle }
-             className={this.props.nextMonthNavIconClassName}/>
+             { ...this.nextMonthNavIconProps } />
       </ActionArea>
     );
   }
@@ -880,15 +972,15 @@ export default class DatePicker extends Component {
 
     return (
       <div style={ navBarStyle }
-           className={ this.props.navBarClassName }>
+           { ...this.navBarProps }>
         { this._renderPrevMonthNav() }
         <span style={ monthLabelStyle }
-              className={ this.props.monthLabelClassName }
               role="heading"
               /*
                 This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
               */
-              id={ `${this.state.year}-${this.state.month}` }>
+              id={ `${this.state.year}-${this.state.month}` }
+              { ...this.monthLabelProps }>
           { `${this.localeData.monthNames[this.state.month]} ${this.state.year}` }
         </span>
         { this._renderNextMonthNav() }
@@ -936,8 +1028,8 @@ export default class DatePicker extends Component {
             return (
               <span key={ 'dayAbbr-' + index }
                     style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
-                    className={ this.props.dayLabelClassName }
-                    role="columnheader">
+                    role="columnheader"
+                    { ...this.dayLabelProps }>
                   { dayAbbr }
                 </span>
             );
