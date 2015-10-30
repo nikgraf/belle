@@ -69,10 +69,4 @@ export const convertDateToDateKey = (date) => {
   return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
 };
 
-export const TODAY = new Date();
-
-export const CURRENT_DATE = TODAY.getDate();
-
-export const CURRENT_MONTH = TODAY.getMonth();
-
-export const CURRENT_YEAR = TODAY.getFullYear();
+export const today = () => new Date();

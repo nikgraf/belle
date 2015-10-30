@@ -8,9 +8,7 @@ import {
   getWeekArrayForMonth,
   getLastDayForMonth,
   getLocaleData,
-  CURRENT_DATE,
-  CURRENT_MONTH,
-  CURRENT_YEAR
+  today,
 } from '../utils/date-helpers';
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
@@ -124,7 +122,7 @@ export default class DatePicker extends Component {
     } else if (selectedDate) {
       month = selectedDate.getMonth();
     } else {
-      month = CURRENT_MONTH;
+      month = today().getMonth();
     }
 
     if (properties.year) {
@@ -132,7 +130,7 @@ export default class DatePicker extends Component {
     } else if (selectedDate) {
       year = selectedDate.getFullYear();
     } else {
-      year = CURRENT_YEAR;
+      year = today().getFullYear();
     }
 
     this.state = {
@@ -340,8 +338,8 @@ export default class DatePicker extends Component {
         if (!this.state.focusedDateKey) {
           if (this.state.selectedDate && this.state.selectedDate.getMonth() === this.state.month && this.state.selectedDate.getFullYear() === this.state.year) {
             newState.focusedDateKey = convertDateToDateKey(this.state.selectedDate);
-          } else if (this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-            newState.focusedDateKey = getDateKey(CURRENT_YEAR, CURRENT_MONTH + 1, CURRENT_DATE);
+          } else if (this.state.month === today().getMonth() && this.state.year === today().getFullYear()) {
+            newState.focusedDateKey = getDateKey(today().getFullYear(), today().getMonth() + 1, today().getDate());
           } else {
             newState.focusedDateKey = getDateKey(this.state.year, this.state.month + 1, 1);
           }
@@ -1006,7 +1004,7 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (day === CURRENT_DATE && month === CURRENT_MONTH && year === CURRENT_YEAR) {
+    if (day === today().getDate() && month === today().getMonth() && year === today().getFullYear()) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.todayStyle,
