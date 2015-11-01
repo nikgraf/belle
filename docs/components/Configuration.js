@@ -87,7 +87,7 @@ const styleStructure = `style = {
     // styling for month label on top of calendar
     monthLblStyle: { … },
     // styling for entire grid of week-header and weeks
-    weekGroupStyle: { … },
+    weekGridStyle: { … },
     // styling for week's day label
     dayLblStyle: { … },
     disabledDayLblStyle: { … },
@@ -98,7 +98,7 @@ const styleStructure = `style = {
     readOnlyDayStyle: { … },
     activeDayStyle: { … },
     focusDayStyle: { … },
-    disabledHoverDayStyle: { … },
+    disabledFocusDayStyle: { … },
     todayStyle: { … },
     weekendStyle: { … },
     selectedDayStyle: { … },

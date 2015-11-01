@@ -8,7 +8,7 @@ import {localeData} from '../config/i18n';
  * @param {number} firstDayOfWeek: first day of the week in the locale
  * @returns {Array}: Array of weeks in a month, each week is in turn array of days in that week
  */
-export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
+export const getWeekArrayForMonth = (month, year, firstDayOfWeek) => {
   const monthDay = new Date(year, month, 1);
 
   // Todo: simplify this calculation of first date
@@ -30,18 +30,18 @@ export function getWeekArrayForMonth(month, year, firstDayOfWeek) {
   }
 
   return weekArray;
-}
+};
 
-export function getLastDayForMonth(year, month) {
+export const getLastDayForMonth = (year, month) => {
   return new Date(year, month + 1, 0);
-}
+};
 
 /**
  * Function will return locale data for locale. If data is not available in config files it will return default data.
  * @param locale - locale for which data is needed.
  * @returns {Object}: Object containing locale data.
  */
-export function getLocaleData(locale) {
+export const getLocaleData = (locale) => {
   const localeResult = {};
   let lData;
   if (locale) {
@@ -59,12 +59,14 @@ export function getLocaleData(locale) {
   localeResult.weekEnd = (lData && lData.weekEnd) ? lData.weekEnd : 0;
   localeResult.isRTL = (lData && lData.isRTL) ? lData.isRTL : false;
   return localeResult;
-}
+};
 
-export const TODAY = new Date();
+export const getDateKey = (year, month, day) => {
+  return `${year}-${month}-${day}`;
+};
 
-export const CURRENT_DATE = TODAY.getDate();
+export const convertDateToDateKey = (date) => {
+  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
+};
 
-export const CURRENT_MONTH = TODAY.getMonth();
-
-export const CURRENT_YEAR = TODAY.getFullYear();
+export const today = () => new Date();

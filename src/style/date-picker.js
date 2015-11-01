@@ -32,7 +32,6 @@ const datePickerStyle = {
   },
 
   disabledStyle: {
-    backgroundColor: '#D8D8D8',
   },
 
   readOnlyStyle: {
@@ -121,7 +120,7 @@ const datePickerStyle = {
   },
 
   // styling for entire grid of week-header and weeks
-  weekGroupStyle: {
+  weekGridStyle: {
     boxSizing: 'border-box',
     overflow: 'auto',
     paddingBottom: 1,
@@ -154,11 +153,10 @@ const datePickerStyle = {
   },
 
   disabledDayLabelStyle: {
-    color: '#C1BABA',
   },
 
   weekendLabelStyle: {
-    color: '#8E8071',
+    // color: '#8E8071',
   },
 
   // styling for individual day
@@ -177,6 +175,7 @@ const datePickerStyle = {
     paddingTop: 5,
     position: 'relative',
     zIndex: 100,
+    cursor: 'default',
 
     /*
      To avoid any kind of flickering the user won't get feedback
@@ -199,7 +198,6 @@ const datePickerStyle = {
   },
 
   readOnlyDayStyle: {
-    cursor: 'auto',
   },
 
   activeDayStyle: {
@@ -221,9 +219,8 @@ const datePickerStyle = {
     cursor: 'not-allowed',
   },
 
-  disabledHoverDayStyle: {
+  disabledFocusDayStyle: {
     cursor: 'not-allowed',
-    backgroundColor: 'red',
   },
 
   todayStyle: {

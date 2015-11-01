@@ -39,11 +39,10 @@ const htmlStructure = `<div style={ style }>
 
 const advanceCodeExample1 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
-            showOtherMonthDate={ false }
-            styleWeekend={ true }/>`;
+            showOtherMonthDate={ false } />`;
 
 const advanceCodeExample2 = `
-<DatePicker readOnly={ true }
+<DatePicker readOnly
             renderDay={ this.renderDay }
             month={ 12 }/>
 
@@ -76,7 +75,7 @@ const advanceCodeExample5 = `
             disabled/>`;
 
 const advanceCodeExample6 = `
-<DatePicker onMonthYearChange={ this.onMonthYearChange }
+<DatePicker onMonthUpdate={ this.onMonthUpdate }
             month={ this.state.selectedMonth }
             year={ this.state.selectedYear }
             valueLink={ this.linkState('selectedDate') }/>
@@ -92,7 +91,7 @@ const advanceCodeExample6 = `
   <div><a onClick={ this.resetDate }>Reset Date</a></div>
 </div>
 
-onMonthYearChange(month, year) {
+onMonthUpdate(month, year) {
   this.setState({
     selectedMonth: month,
     selectedYear: year
@@ -114,7 +113,7 @@ export default React.createClass({
       selectedMonth: TODAY.getMonth() + 1,
       selectedYear: TODAY.getFullYear(),
       selectedLocale: 'ar',
-      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), 15)
+      selectedDate: new Date(TODAY.getFullYear(), TODAY.getMonth(), 15),
     };
   },
 
@@ -226,6 +225,42 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
+            min
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Date</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Sets the minimum date a user can select.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
+            max
+          </td>
+        </tr>
+        <tr>
+          <td style={ propertyDescriptionStyle }>
+            <p>
+              <i>Date</i>
+              <br />
+              optional
+            </p>
+            <p>
+              Sets the maximum date a user can select.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style={ propertyNameStyle }>
             locale
           </td>
         </tr>
@@ -237,7 +272,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Date picker will be rendered according this locale
+              Date picker will be rendered according to this locale
               (By default it will be english calendar, check <a href="#/configuration">Configuration</a>).
             </p>
           </td>
@@ -256,27 +291,8 @@ export default React.createClass({
               optional (default: true)
             </p>
             <p>
-              This property can be used to show/ hide this display of other month dates in date picker.
+              This property can be used to show/ hide the display of other month dates in date picker.
               Even if other month dates are displayed in date picker they will be disabled.
-            </p>
-          </td>
-        </tr>
-
-        <tr>
-          <td style={ propertyNameStyle }>
-            styleWeekend
-          </td>
-        </tr>
-        <tr>
-          <td style={ propertyDescriptionStyle }>
-            <p>
-              <i>Boolean</i>
-              <br />
-              optional (default: false)
-            </p>
-            <p>
-              If this property is set to true weekend be styles distinctly.
-              Weekend for date picker will be provided in locale data and will be by default Sunday.
             </p>
           </td>
         </tr>
@@ -319,7 +335,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            onMonthYearChange
+            onMonthUpdate
           </td>
         </tr>
         <tr>
@@ -469,31 +485,29 @@ export default React.createClass({
 
       <p>
         Properties for handling various events(focus, mouse events, touch events, change in selectedDate, month or year):
-        <span style={ {color: 'grey'} }> tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp, onTouchStart,
-        onTouchEnd, onPrevMonthNavMouseDown, onPrevMonthNavMouseUp, onPrevMonthNavTouchStart, onPrevMonthNavTouchEnd,
-        onNextMonthNavMouseDown, onNextMonthNavMouseUp, onNextMonthNavTouchStart, onNextMonthNavTouchEnd, onDayMouseOver,
-        onDayMouseOut, onDayMouseDown, onDayMouseUp, onDayTouchStart, onDayTouchEnd, onUpdate, onMonthYearChange.
-        </span><br />
+        <span style={ {color: 'grey'} }>tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp,
+        onTouchStart, onTouchEnd, onTouchCancel, onUpdate, onMonthUpdate.</span><br />
       </p>
 
       <p>
-        ... for adding attributes to date picker wrapper and days:
-        <span style={ {color: 'grey'} }> wrapperProps, dayProps</span><br />
+        ... for adding attributes to specific coponents inside date picker:
+        <span style={ {color: 'grey'} }>dayProps, navBarProps, prevMonthNavProps, prevMonthNavIconProps, nextMonthNavProps,
+        nextMonthNavIconProps, monthLabelProps, dayLabelProps, weekHeaderProps, weekGridProps.</span><br />
       </p>
 
       <p>
-        ... for adding classes to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }> wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
-        monthLabelClassName, dayLabelClassName, dayClassName</span><br />
+        ... for adding class to date picker wrapper:
+        <span style={ {color: 'grey'} }>className.</span><br />
       </p>
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle,
-        disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
-        nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle,
-        disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, activeDayStyle,
-        focusDayStyle, disabledHoverDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
+        <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle, disabledHoverStyle, navBarStyle,
+        prevMonthNavStyle, prevMonthNavIconStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle, nextMonthNavStyle,
+        nextMonthNavIconStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, weekHeaderStyle, monthLabelStyle,
+        dayLabelStyle, disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle,
+        activeDayStyle, focusDayStyle, disabledFocusDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle,
+        weekendStyle.</span><br />
      </p>
 
       <h3>Internal HTML Structure</h3>
@@ -510,8 +524,7 @@ export default React.createClass({
       <h3>DatePicker with other month days hidden but weekends styled differently:</h3>
 
       <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }
-                  showOtherMonthDate={ false }
-                  styleWeekend/>
+                  showOtherMonthDate={ false } />
 
       <Code value={ advanceCodeExample1 } style={ {marginTop: 40} } />
 
@@ -527,11 +540,15 @@ export default React.createClass({
         Adding support for a new locale is very easy, check <a href="#/configuration">Configuration</a>.</p>
 
       <Select valueLink={ this.linkState('selectedLocale') }
-            menuStyle={ { height: 160,
-            width: '25%',
-            overflow: 'scroll' } }
-            style={ { width: '25%',
-            marginBottom: 20}}>
+            menuStyle={{
+              height: 160,
+              width: '25%',
+              overflow: 'scroll',
+            }}
+            style={{
+              width: '25%',
+              marginBottom: 20,
+            }}>
         <Option value="ar">Arabic</Option>
         <Option value="fr">French</Option>
         <Option value="he">Hebrew</Option>
@@ -544,22 +561,25 @@ export default React.createClass({
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
 
-      <h3>Controlled DatePicker component with onMonthYearChange callBack and reset option implemented:</h3>
+      <h3>Controlled DatePicker component with onMonthUpdate callBack and reset option implemented:</h3>
 
-      <DatePicker onMonthYearChange={ this.onMonthYearChange }
+      <DatePicker onMonthUpdate={ this.onMonthUpdate }
                   month={ this.state.selectedMonth }
                   year={ this.state.selectedYear }
                   valueLink={ this.linkState('selectedDate') }/>
-      <div style={ {display: 'inline-block',
-                    width: 200,
-                    marginLeft: 20,
-                    marginTop: 10} }>
+      <div style={{
+        display: 'inline-block',
+        width: 200,
+        marginLeft: 20,
+        marginTop: 10,
+      }}>
       <div>Date: { this.state.selectedDate ? this.state.selectedDate.getMonth() + '/' + this.state.selectedDate.getDate() + '/' + this.state.selectedDate.getFullYear() : '-'}</div>
       <div>Month: {this.state.selectedMonth}</div>
       <div>Year: {this.state.selectedYear}</div>
       <div><a onClick={ this.resetDate }
-         style={{textDecoration: 'underline',
-                 cursor: 'pointer'
+         style={{
+           textDecoration: 'underline',
+           cursor: 'pointer',
          }}>Reset Date</a></div>
       </div>
 
@@ -593,17 +613,18 @@ export default React.createClass({
         </div>
       );
     }
+
     return (
       day.getDate()
     );
   },
 
-  onMonthYearChange(month, year) {
+  onMonthUpdate(month, year) {
     this.setState({ selectedMonth: month, selectedYear: year });
   },
 
   resetDate() {
     this.setState({ selectedDate: undefined });
-  }
+  },
 
 });

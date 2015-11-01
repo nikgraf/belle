@@ -2,7 +2,14 @@ import React, {Component, PropTypes} from 'react';
 import {injectStyles, removeAllStyles} from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import {has, map, shift, reverse, omit} from '../utils/helpers';
-import {getWeekArrayForMonth, getLastDayForMonth, getLocaleData, CURRENT_DATE, CURRENT_MONTH, CURRENT_YEAR} from '../utils/date-helpers';
+import {
+  convertDateToDateKey,
+  getDateKey,
+  getWeekArrayForMonth,
+  getLastDayForMonth,
+  getLocaleData,
+  today,
+} from '../utils/date-helpers';
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
 import ActionArea from './ActionArea';
@@ -18,10 +25,11 @@ function sanitizeWrapperProps(properties) {
     'onBlur',
     'onKeyDown',
     'onMouseDown',
-    'onTouchCancel',
     'onMouseUp',
     'onTouchStart',
     'onTouchEnd',
+    'onTouchCancel',
+    'aria-label',
     'disabled',
     'style',
     'className',
@@ -31,9 +39,32 @@ function sanitizeWrapperProps(properties) {
 /**
  * Returns an object with properties that are relevant for day span.
  */
+function sanitizeEmptyDayProps(properties) {
+  return omit(properties, [
+    'key',
+    'ref',
+    'style',
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for day span.
+ */
+function sanitizeDisabledDayProps(properties) {
+  return omit(properties, [
+    'key',
+    'ref',
+    'onMouseOver',
+    'onMouseOut',
+    'style',
+  ]);
+}
+
+/**
+ * Returns an object with properties that are relevant for day span.
+ */
 function sanitizeDayProps(properties) {
   return omit(properties, [
-    'tabIndex',
     'key',
     'ref',
     'onMouseDown',
@@ -43,8 +74,73 @@ function sanitizeDayProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
+    'aria-current',
+    'aria-selected',
     'style',
+    'role',
+  ]);
+}
+
+function sanitizeNavBarProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizePrevMonthNavProps(properties) {
+  return omit(properties, [
     'className',
+    'onClick',
+    'style',
+  ]);
+}
+
+function sanitizePrevMonthNavIconProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeNextMonthNavProps(properties) {
+  return omit(properties, [
+    'className',
+    'onClick',
+    'style',
+  ]);
+}
+
+function sanitizeNextMonthNavIconProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeMonthLabelProps(properties) {
+  return omit(properties, [
+    'id',
+    'role',
+    'style',
+  ]);
+}
+
+function sanitizeDayLabelProps(properties) {
+  return omit(properties, [
+    'key',
+    'role',
+    'style',
+  ]);
+}
+
+function sanitizeWeekHeaderProps(properties) {
+  return omit(properties, [
+    'style',
+  ]);
+}
+
+function sanitizeWeekGridProps(properties) {
+  return omit(properties, [
+    'role',
+    'style',
   ]);
 }
 
@@ -88,14 +184,6 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
   injectStyles(styles);
 }
 
-const getDateKey = (year, month, day) => {
-  return `${year}-${month}-${day}`;
-};
-
-const convertDateToDateKey = (date) => {
-  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
-};
-
 /**
  * DatePicker React Component.
  *
@@ -107,6 +195,8 @@ export default class DatePicker extends Component {
   constructor(properties) {
     super(properties);
     let selectedDate;
+    let month;
+    let year;
 
     if (has(properties, 'valueLink')) {
       selectedDate = properties.valueLink.value;
@@ -116,17 +206,45 @@ export default class DatePicker extends Component {
       selectedDate = properties.defaultValue;
     }
 
+    if (properties.month) {
+      month = properties.month - 1;
+    } else if (selectedDate) {
+      month = selectedDate.getMonth();
+    } else {
+      month = today().getMonth();
+    }
+
+    if (properties.year) {
+      year = properties.month;
+    } else if (selectedDate) {
+      year = selectedDate.getFullYear();
+    } else {
+      year = today().getFullYear();
+    }
+
     this.state = {
       isFocused: false,
       isActive: false,
       selectedDate: selectedDate,
-      month: properties.month - 1,
-      year: properties.year,
+      month: month,
+      year: year,
     };
 
     this.localeData = getLocaleData(properties.locale);
-    this.wrapperProps = sanitizeWrapperProps(properties.wrapperProps);
+    this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
+    this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
+    this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
+    this.navBarProps = sanitizeNavBarProps(properties.navBarProps);
+    this.prevMonthNavProps = sanitizePrevMonthNavProps(properties.prevMonthNavProps);
+    this.prevMonthNavIconProps = sanitizePrevMonthNavIconProps(properties.prevMonthNavIconProps);
+    this.nextMonthNavProps = sanitizeNextMonthNavProps(properties.nextMonthNavProps);
+    this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
+    this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
+    this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+    this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
+    this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
+
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
   }
 
@@ -141,12 +259,14 @@ export default class DatePicker extends Component {
       requestChange: PropTypes.func.isRequired,
     }),
 
+    min: PropTypes.instanceOf(Date),
+    max: PropTypes.instanceOf(Date),
+
     // component config related props
     locale: PropTypes.string,
     month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
     year: PropTypes.number,
     showOtherMonthDate: PropTypes.bool,
-    styleWeekend: PropTypes.bool,
     renderDay: PropTypes.func,
     tabIndex: PropTypes.number,
     'aria-label': PropTypes.string,
@@ -164,43 +284,24 @@ export default class DatePicker extends Component {
     onTouchEnd: PropTypes.func,
     onTouchCancel: PropTypes.func,
 
-    // event callbacks for previous month and next month navigation links
-    onPrevMonthNavMouseDown: PropTypes.func,
-    onPrevMonthNavMouseUp: PropTypes.func,
-    onPrevMonthNavTouchStart: PropTypes.func,
-    onPrevMonthNavTouchEnd: PropTypes.func,
-    onNextMonthNavMouseDown: PropTypes.func,
-    onNextMonthNavMouseUp: PropTypes.func,
-    onNextMonthNavTouchStart: PropTypes.func,
-    onNextMonthNavTouchEnd: PropTypes.func,
-
-    // event callbacks for days
-    onDayMouseOver: PropTypes.func,
-    onDayMouseOut: PropTypes.func,
-    onDayMouseDown: PropTypes.func,
-    onDayMouseUp: PropTypes.func,
-    onDayTouchStart: PropTypes.func,
-    onDayTouchEnd: PropTypes.func,
-    onDayTouchCancel: PropTypes.func,
-
     // callbacks for change of values
     onUpdate: PropTypes.func,
-    onMonthYearChange: PropTypes.func,
+    onMonthUpdate: PropTypes.func,
 
-    // props for wrapper and day
-    wrapperProps: PropTypes.object,
+    // props
     dayProps: PropTypes.object,
+    navBarProps: PropTypes.object,
+    prevMonthNavProps: PropTypes.object,
+    prevMonthNavIconProps: PropTypes.object,
+    nextMonthNavProps: PropTypes.object,
+    nextMonthNavIconProps: PropTypes.object,
+    monthLabelProps: PropTypes.object,
+    dayLabelProps: PropTypes.object,
+    weekHeaderProps: PropTypes.object,
+    weekGridProps: PropTypes.object,
 
     // ClassNames
-    wrapperClassName: PropTypes.string,
-    navBarClassName: PropTypes.string,
-    prevMonthNavClassName: PropTypes.string,
-    prevMonthNavIconClassName: PropTypes.string,
-    nextMonthNavClassName: PropTypes.string,
-    nextMonthNavIconClassName: PropTypes.string,
-    monthLabelClassName: PropTypes.string,
-    dayLabelClassName: PropTypes.string,
-    dayClassName: PropTypes.string,
+    className: PropTypes.string,
 
     // wrapper styles
     style: PropTypes.object,
@@ -242,7 +343,7 @@ export default class DatePicker extends Component {
     readOnlyDayStyle: PropTypes.object,
     activeDayStyle: PropTypes.object,
     focusDayStyle: PropTypes.object,
-    disabledHoverDayStyle: PropTypes.object,
+    disabledFocusDayStyle: PropTypes.object,
     todayStyle: PropTypes.object,
     selectedDayStyle: PropTypes.object,
     otherMonthDayStyle: PropTypes.object,
@@ -250,14 +351,11 @@ export default class DatePicker extends Component {
   };
 
   static defaultProps = {
-    month: CURRENT_MONTH + 1,
-    year: CURRENT_YEAR,
     tabIndex: 0,
     'aria-label': 'datepicker',
     disabled: false,
     readOnly: false,
     showOtherMonthDate: true,
-    styleWeekend: false,
   };
 
   /**
@@ -278,8 +376,10 @@ export default class DatePicker extends Component {
    */
   componentWillReceiveProps(properties) {
     const newState = {
-      month: properties.month - 1,
-      year: properties.year,
+      // commenting these out to fix issue in docs for date components breaking after locale change
+      // we need a better algo about how to update month and year when date picker recieve props
+      // month: properties.month - 1,
+      // year: properties.year,
     };
 
     if (has(properties, 'valueLink')) {
@@ -291,8 +391,20 @@ export default class DatePicker extends Component {
     this.setState(newState);
 
     this.localeData = getLocaleData(properties.locale);
-    this.wrapperProps = sanitizeWrapperProps(properties.wrapperProps);
+    this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
+    this.disabledDayProps = sanitizeDisabledDayProps(properties.dayProps);
+    this.emptyDayProps = sanitizeEmptyDayProps(properties.dayProps);
+    this.navBarProps = sanitizeNavBarProps(properties.navBarProps);
+    this.prevMonthNavProps = sanitizePrevMonthNavProps(properties.prevMonthNavProps);
+    this.prevMonthNavIconProps = sanitizePrevMonthNavIconProps(properties.prevMonthNavIconProps);
+    this.nextMonthNavProps = sanitizeNextMonthNavProps(properties.nextMonthNavProps);
+    this.nextMonthNavIconProps = sanitizeNextMonthNavIconProps(properties.nextMonthNavIconProps);
+    this.monthLabelProps = sanitizeMonthLabelProps(properties.monthLabelProps);
+    this.dayLabelProps = sanitizeDayLabelProps(properties.dayLabelProps);
+    this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
+    this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
+
     this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
@@ -320,8 +432,8 @@ export default class DatePicker extends Component {
         if (!this.state.focusedDateKey) {
           if (this.state.selectedDate && this.state.selectedDate.getMonth() === this.state.month && this.state.selectedDate.getFullYear() === this.state.year) {
             newState.focusedDateKey = convertDateToDateKey(this.state.selectedDate);
-          } else if (this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
-            newState.focusedDateKey = getDateKey(CURRENT_YEAR, CURRENT_MONTH + 1, CURRENT_DATE);
+          } else if (this.state.month === today().getMonth() && this.state.year === today().getFullYear()) {
+            newState.focusedDateKey = getDateKey(today().getFullYear(), today().getMonth() + 1, today().getDate());
           } else {
             newState.focusedDateKey = getDateKey(this.state.year, this.state.month + 1, 1);
           }
@@ -506,10 +618,15 @@ export default class DatePicker extends Component {
         } else if (event.key === 'Enter') {
           event.preventDefault();
           const date = new Date(this.state.focusedDateKey);
-          this._triggerSelectDate(date.getDate(), date.getMonth(), date.getFullYear());
+          if (this._isWithinMinAndMax(date)) {
+            this._triggerSelectDate(date.getDate(), date.getMonth(), date.getFullYear());
+          }
         } else if (event.key === ' ') {
           event.preventDefault();
-          this._triggerToggleDate(new Date(this.state.focusedDateKey));
+          const date = new Date(this.state.focusedDateKey);
+          if (this._isWithinMinAndMax(date)) {
+            this._triggerToggleDate(date);
+          }
         }
       } else {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp' ||
@@ -538,8 +655,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseDown) {
-      this.props.onDayMouseDown(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseDown) {
+      this.props.dayProps.onMouseDown(event);
     }
   }
 
@@ -561,8 +678,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseUp) {
-      this.props.onDayMouseUp(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseUp) {
+      this.props.dayProps.onMouseUp(event);
     }
   }
 
@@ -576,8 +693,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseOver) {
-      this.props.onDayMouseOver(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseOver) {
+      this.props.dayProps.onMouseOver(event);
     }
   }
 
@@ -592,8 +709,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayMouseOut) {
-      this.props.onDayMouseOut(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseOut) {
+      this.props.dayProps.onMouseOut(event);
     }
   }
 
@@ -608,8 +725,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.onDayTouchStart) {
-      this.props.onDayTouchStart(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchStart) {
+      this.props.dayProps.onTouchStart(event);
     }
   }
 
@@ -627,8 +744,8 @@ export default class DatePicker extends Component {
       }
     }
 
-    if (this.props.onDayTouchEnd) {
-      this.props.onDayTouchEnd(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchEnd) {
+      this.props.dayProps.onTouchEnd(event);
     }
   }
 
@@ -637,8 +754,8 @@ export default class DatePicker extends Component {
       activeDay: undefined,
     });
 
-    if (this.props.onDayTouchCancel) {
-      this.props.onDayTouchCancel(event);
+    if (this.props.dayProps && this.props.dayProps.onTouchCancel) {
+      this.props.dayProps.onTouchCancel(event);
     }
   }
 
@@ -676,7 +793,8 @@ export default class DatePicker extends Component {
       let day;
       let month;
       let year;
-      if (this.state.selectedDate && date && this.state.selectedDate.getDate() === date.getDate() && this.state.selectedDate.getMonth() === date.getMonth() && this.state.selectedDate.getFullYear() === date.getFullYear()) {
+      if (this.state.selectedDate && date &&
+          this.state.selectedDate.getDate() === date.getDate() && this.state.selectedDate.getMonth() === date.getMonth() && this.state.selectedDate.getFullYear() === date.getFullYear()) {
         day = undefined;
         month = this.state.month;
         year = this.state.year;
@@ -716,7 +834,7 @@ export default class DatePicker extends Component {
 
     const nextFocusedDate = new Date(this.state.focusedDateKey);
     nextFocusedDate.setDate(nextFocusedDate.getDate() + days);
-    const nextFocusedDateKey = `${nextFocusedDate.getFullYear()}-${nextFocusedDate.getMonth() + 1}-${nextFocusedDate.getDate()}`;
+    const nextFocusedDateKey = convertDateToDateKey(nextFocusedDate);
     const nextMonth = nextFocusedDate.getMonth();
 
     if (nextMonth !== currentMonth) {
@@ -735,7 +853,7 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * The function will decrease current month in state. It will also call props.onMonthYearChange.
+   * The function will decrease current month in state. It will also call props.onMonthUpdate.
    */
   _decreaseMonthYear() {
     let newMonth;
@@ -754,13 +872,13 @@ export default class DatePicker extends Component {
       focusedDateKey: undefined,
       lastHoveredDay: undefined,
     });
-    if (this.props.onMonthYearChange) {
-      this.props.onMonthYearChange(newMonth + 1, newYear);
+    if (this.props.onMonthUpdate) {
+      this.props.onMonthUpdate(newMonth + 1, newYear);
     }
   }
 
   /**
-   * The function will increase current month in state. It will also call props.onMonthYearChange.
+   * The function will increase current month in state. It will also call props.onMonthUpdate.
    */
   _increaseMonthYear() {
     let newMonth;
@@ -779,8 +897,27 @@ export default class DatePicker extends Component {
       focusedDateKey: undefined,
       lastHoveredDay: undefined,
     });
-    if (this.props.onMonthYearChange) {
-      this.props.onMonthYearChange(newMonth + 1, newYear);
+    if (this.props.onMonthUpdate) {
+      this.props.onMonthUpdate(newMonth + 1, newYear);
+    }
+  }
+
+  _isWithinMinAndMax(date) {
+    return !(this.props.min && date < this.props.min ||
+             this.props.max && date > this.props.max);
+  }
+
+  _onClickPrevMonth() {
+    this._decreaseMonthYear();
+    if (this.props.prevMonthNavProps && this.props.prevMonthNavProps.onClick) {
+      this.props.prevMonthNavProps.onClick(event);
+    }
+  }
+
+  _onClickNextMonth() {
+    this._increaseMonthYear();
+    if (this.props.nextMonthNavProps && this.props.nextMonthNavProps.onClick) {
+      this.props.nextMonthNavProps.onClick(event);
     }
   }
 
@@ -795,12 +932,18 @@ export default class DatePicker extends Component {
       ...this.props.prevMonthNavIconStyle,
     };
 
+    let className = this.pseudoStyleIds.prevMonthNavStyleId;
+    if (this.props.prevMonthNavProps) {
+      className = unionClassNames(this.props.prevMonthNavProps.className, className);
+    }
+
     return (
-      <ActionArea onClick={ ::this._decreaseMonthYear }
+      <ActionArea onClick={ ::this._onClickPrevMonth }
                   style={ prevMonthNavStyle }
-                  className={ unionClassNames(this.props.prevMonthNavClassName, this.pseudoStyleIds.prevMonthNavStyleId) }>
+                  className={ className }
+                  { ...this.prevMonthNavProps }>
         <div style={ prevMonthNavIconStyle }
-             className={this.props.prevMonthNavIconClassName}/>
+             { ...this.prevMonthNavIconProps }/>
       </ActionArea>
     );
   }
@@ -816,12 +959,18 @@ export default class DatePicker extends Component {
       ...this.props.nextMonthNavIconStyle,
     };
 
+    let className = this.pseudoStyleIds.nextMonthNavStyleId;
+    if (this.props.prevMonthNavProps) {
+      className = unionClassNames(this.props.prevMonthNavProps.className, className);
+    }
+
     return (
-      <ActionArea onClick={ ::this._increaseMonthYear }
+      <ActionArea onClick={ ::this._onClickNextMonth }
                   style= { nextMonthNavStyle }
-                  className={ unionClassNames(this.props.nextMonthNavClassName, this.pseudoStyleIds.nextMonthNavStyleId) }>
+                  className={ className }
+                  { ...this.nextMonthNavProps }>
         <div style={ nextMonthNavIconStyle }
-             className={this.props.nextMonthNavIconClassName}/>
+             { ...this.nextMonthNavIconProps } />
       </ActionArea>
     );
   }
@@ -844,15 +993,15 @@ export default class DatePicker extends Component {
 
     return (
       <div style={ navBarStyle }
-           className={ this.props.navBarClassName }>
+           { ...this.navBarProps }>
         { this._renderPrevMonthNav() }
         <span style={ monthLabelStyle }
-              className={ this.props.monthLabelClassName }
               role="heading"
               /*
                 This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
               */
-              id={ `${this.state.year}-${this.state.month}` }>
+              id={ `${this.state.year}-${this.state.month}` }
+              { ...this.monthLabelProps }>
           { `${this.localeData.monthNames[this.state.month]} ${this.state.year}` }
         </span>
         { this._renderNextMonthNav() }
@@ -894,16 +1043,17 @@ export default class DatePicker extends Component {
     weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
     return (
-      <div style={ weekHeaderStyle }>
+      <div style={ weekHeaderStyle }
+           { ...this.weekHeaderProps }>
         {
           map(dayNames, (dayAbbr, index) => {
             return (
               <span key={ 'dayAbbr-' + index }
-                    style={ (this.props.styleWeekend && index === weekendIndex) ? weekendLabelStyle : dayLabelStyle }
-                    className={ this.props.dayLabelClassName }
-                    role="columnheader">
-                  { dayAbbr }
-                </span>
+                    style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
+                    role="columnheader"
+                    { ...this.dayLabelProps }>
+                { dayAbbr }
+              </span>
             );
           })
         }
@@ -931,8 +1081,9 @@ export default class DatePicker extends Component {
     const day = currentDate.getDate();
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
-    const isOtherMonth = currentDate.getMonth() !== this.state.month;
-    const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`;
+    const isOtherMonth = month !== this.state.month;
+    const dateKey = convertDateToDateKey(currentDate);
+    const isDisabledDay = !this._isWithinMinAndMax(currentDate);
 
     let ariaCurrent = '';
     let ariaSelected = false;
@@ -950,29 +1101,6 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (this.props.disabled) {
-      dayStyle = {
-        ...dayStyle,
-        ...defaultStyle.disabledDayStyle,
-        ...this.props.disabledDayStyle,
-      };
-      if (!isOtherMonth && this.state.focusedDateKey === dateKey) {
-        dayStyle = {
-          ...dayStyle,
-          ...defaultStyle.disabledHoverDayStyle,
-          ...this.props.disabledHoverDayStyle,
-        };
-      }
-    }
-
-    if (this.props.styleWeekend && currentDate.getDay() === this.localeData.weekEnd) {
-      dayStyle = {
-        ...dayStyle,
-        ...defaultStyle.weekendStyle,
-        ...this.props.weekendStyle,
-      };
-    }
-
     if (isOtherMonth) {
       dayStyle = {
         ...dayStyle,
@@ -981,7 +1109,23 @@ export default class DatePicker extends Component {
       };
     }
 
-    if (day === CURRENT_DATE && this.state.month === CURRENT_MONTH && this.state.year === CURRENT_YEAR) {
+    if (this.props.disabled || isDisabledDay) {
+      dayStyle = {
+        ...dayStyle,
+        ...defaultStyle.disabledDayStyle,
+        ...this.props.disabledDayStyle,
+      };
+    }
+
+    if (currentDate.getDay() === this.localeData.weekEnd) {
+      dayStyle = {
+        ...dayStyle,
+        ...defaultStyle.weekendStyle,
+        ...this.props.weekendStyle,
+      };
+    }
+
+    if (day === today().getDate() && month === today().getMonth() && year === today().getFullYear()) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.todayStyle,
@@ -1000,12 +1144,19 @@ export default class DatePicker extends Component {
       ariaSelected = true;
     }
 
-    if (!this.props.disabled && this.state.focusedDateKey === dateKey) {
+    if (this.state.focusedDateKey === dateKey) {
       dayStyle = {
         ...dayStyle,
         ...defaultStyle.focusDayStyle,
         ...this.props.focusDayStyle,
       };
+      if (this.props.disabled || isDisabledDay) {
+        dayStyle = {
+          ...dayStyle,
+          ...defaultStyle.disabledFocusDayStyle,
+          ...this.props.disabledFocusDayStyle,
+        };
+      }
     }
 
     if (!this.props.disabled && !this.props.readOnly && this.state.activeDay === dateKey) {
@@ -1018,33 +1169,45 @@ export default class DatePicker extends Component {
 
     const renderedDay = this.props.renderDay ? this.props.renderDay(currentDate) : day;
 
-    if (!isOtherMonth || this.props.showOtherMonthDate) {
+    if (!this.props.showOtherMonthDate && isOtherMonth) {
       return (
         <span key={ 'day-' + index }
               ref={ dateKey }
-              onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
-              onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
+              style={ dayStyle }
+              {...this.emptyDayProps}>
+        </span>
+      );
+    }
+
+    if (isDisabledDay) {
+      return (
+        <span key={ 'day-' + index }
+              ref={ dateKey }
+              style={ dayStyle }
               onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
               onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
-              onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
-              onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
-              onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
-              aria-current={ ariaCurrent }
-              aria-selected={ ariaSelected }
-              style={ dayStyle }
-              className={ this.props.dayClassName }
-              role="gridcell"
-              {...this.dayProps}>
+              {...this.disabledDayProps}>
           { renderedDay }
         </span>
       );
     }
+
     return (
       <span key={ 'day-' + index }
             ref={ dateKey }
+            onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
+            onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
+            onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
+            onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
+            onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
+            onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
+            onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
+            aria-current={ ariaCurrent }
+            aria-selected={ ariaSelected }
             style={ dayStyle }
-            className={ this.props.dayClassName }
+            role="gridcell"
             {...this.dayProps}>
+        { renderedDay }
       </span>
     );
   }
@@ -1108,7 +1271,6 @@ export default class DatePicker extends Component {
     return (
       <div ref="datePicker"
            tabIndex={ tabIndex }
-           disabled={ this.props.disabled }
            onFocus={ ::this._onFocus }
            onBlur={ ::this._onBlur }
            onKeyDown={ ::this._onKeyDown }
@@ -1121,10 +1283,14 @@ export default class DatePicker extends Component {
            aria-disabled={ this.props.disabled }
            aria-readonly={ this.props.readOnly }
            style={ style }
-           className={ unionClassNames(this.props.wrapperClassName, this.pseudoStyleIds.styleId) }
+           className={
+             unionClassNames(this.props.className, this.pseudoStyleIds.styleId)
+           }
            {...this.wrapperProps} >
         { this._renderNavBar() }
-        <div role="grid" style={ defaultStyle.weekGroupStyle}>
+        <div role="grid"
+             style={ defaultStyle.weekGridStyle }
+             { ...this.weekGridProps }>
           { this._renderWeekHeader() }
           {
             map(weekArray, (week) => {
