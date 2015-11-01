@@ -272,7 +272,7 @@ export default React.createClass({
               optional
             </p>
             <p>
-              Date picker will be rendered according this locale
+              Date picker will be rendered according to this locale
               (By default it will be english calendar, check <a href="#/configuration">Configuration</a>).
             </p>
           </td>
@@ -291,7 +291,7 @@ export default React.createClass({
               optional (default: true)
             </p>
             <p>
-              This property can be used to show/ hide this display of other month dates in date picker.
+              This property can be used to show/ hide the display of other month dates in date picker.
               Even if other month dates are displayed in date picker they will be disabled.
             </p>
           </td>
@@ -485,31 +485,29 @@ export default React.createClass({
 
       <p>
         Properties for handling various events(focus, mouse events, touch events, change in selectedDate, month or year):
-        <span style={ {color: 'grey'} }> tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp, onTouchStart,
-        onTouchEnd, onPrevMonthNavMouseDown, onPrevMonthNavMouseUp, onPrevMonthNavTouchStart, onPrevMonthNavTouchEnd,
-        onNextMonthNavMouseDown, onNextMonthNavMouseUp, onNextMonthNavTouchStart, onNextMonthNavTouchEnd, onDayMouseOver,
-        onDayMouseOut, onDayMouseDown, onDayMouseUp, onDayTouchStart, onDayTouchEnd, onUpdate, onMonthUpdate.
-        </span><br />
+        <span style={ {color: 'grey'} }>tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp,
+        onTouchStart, onTouchEnd, onTouchCancel, onUpdate, onMonthUpdate.</span><br />
       </p>
 
       <p>
-        ... for adding attributes to date picker wrapper and days:
-        <span style={ {color: 'grey'} }> wrapperProps, dayProps</span><br />
+        ... for adding attributes to specific coponents inside date picker:
+        <span style={ {color: 'grey'} }>dayProps, navBarProps, prevMonthNavProps, prevMonthNavIconProps, nextMonthNavProps,
+        nextMonthNavIconProps, monthLabelProps, dayLabelProps, weekHeaderProps, weekGridProps.</span><br />
       </p>
 
       <p>
-        ... for adding classes to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }> wrapperClassName, navBarClassName, prevMonthNavClassName, nextMonthNavClassName,
-        monthLabelClassName, dayLabelClassName</span><br />
+        ... for adding class to date picker wrapper:
+        <span style={ {color: 'grey'} }>className.</span><br />
       </p>
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
-        <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle,
-        disabledHoverStyle, navBarStyle, prevMonthNavStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle,
-        nextMonthNavStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, monthLabelStyle, dayLabelStyle,
-        disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle, activeDayStyle,
-        focusDayStyle, disabledFocusDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle, weekendStyle</span><br />
+        <span style={ {color: 'grey'} }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle, disabledHoverStyle, navBarStyle,
+        prevMonthNavStyle, prevMonthNavIconStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle, nextMonthNavStyle,
+        nextMonthNavIconStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, weekHeaderStyle, monthLabelStyle,
+        dayLabelStyle, disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle,
+        activeDayStyle, focusDayStyle, disabledFocusDayStyle, todayStyle, selectedDayStyle, otherMonthDayStyle,
+        weekendStyle.</span><br />
      </p>
 
       <h3>Internal HTML Structure</h3>
