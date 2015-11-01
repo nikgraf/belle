@@ -10,10 +10,14 @@ export default React.createClass({
   _renderDay(day) {
     const date = day.getDate();
     return (
-      <div>
+      <div onMouseDown={::this._onMouseDown}>
         🎁{ date }
       </div>
     );
+  },
+
+  _onMouseDown(event) {
+    event.stopPropagation();
   },
 
   render() {
