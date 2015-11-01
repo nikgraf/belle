@@ -376,8 +376,10 @@ export default class DatePicker extends Component {
    */
   componentWillReceiveProps(properties) {
     const newState = {
-      month: properties.month - 1,
-      year: properties.year,
+      // commenting these out to fix issue in docs for date components breaking after locale change
+      // we need a better algo about how to update month and year when date picker recieve props
+      // month: properties.month - 1,
+      // year: properties.year,
     };
 
     if (has(properties, 'valueLink')) {
@@ -980,6 +982,7 @@ export default class DatePicker extends Component {
    * 2. If active apply activeStyles
    */
   _renderNavBar() {
+    console.log('*****', this.localeData.monthNames[this.state.month]);
     const navBarStyle = {
       ...defaultStyle.navBarStyle,
       ...this.props.navBarStyle,
