@@ -982,7 +982,6 @@ export default class DatePicker extends Component {
    * 2. If active apply activeStyles
    */
   _renderNavBar() {
-    console.log('*****', this.localeData.monthNames[this.state.month]);
     const navBarStyle = {
       ...defaultStyle.navBarStyle,
       ...this.props.navBarStyle,
