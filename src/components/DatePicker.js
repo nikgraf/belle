@@ -230,6 +230,8 @@ export default class DatePicker extends Component {
       year: year,
     };
 
+    this.oldPropsMonth = properties.month;
+    this.oldPropsYear = properties.year;
     this.localeData = getLocaleData(properties.locale);
     this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
@@ -375,12 +377,15 @@ export default class DatePicker extends Component {
    * Function will update component state and styles as new props are received.
    */
   componentWillReceiveProps(properties) {
-    const newState = {
-      // commenting these out to fix issue in docs for date components breaking after locale change
-      // we need a better algo about how to update month and year when date picker recieve props
-      // month: properties.month - 1,
-      // year: properties.year,
-    };
+    const newState = {};
+    if (properties.year !== this.oldPropsYear) {
+      newState.year = properties.year;
+      this.oldPropsYear = properties.year;
+    }
+    if (properties.month !== this.oldPropsMonth) {
+      newState.year = properties.month;
+      this.oldPropsMonth = properties.month;
+    }
 
     if (has(properties, 'valueLink')) {
       newState.selectedDate = properties.valueLink.value;
@@ -555,7 +560,6 @@ export default class DatePicker extends Component {
           focusedDateKey: convertDateToDateKey(date),
         });
       }
-
       if (this.state.focusedDateKey) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
@@ -570,51 +574,9 @@ export default class DatePicker extends Component {
           event.preventDefault();
           this._focusOtherDay(this.localeData.isRTL ? -1 : 1);
         } else if (event.key === 'PageUp') {
-          // Moves to the same date in the previous month.
-          event.preventDefault();
-
-          // TODO extract this to a helper function and test various edge cases
-          let date;
-          const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month - 1);
-          const focusedDate = new Date(this.state.focusedDateKey);
-
-          // jump from March 30 to Feb 29
-          if (focusedDate.getDate() > lastDayInMonth.getDate()) {
-            date = lastDayInMonth;
-          } else {
-            date = new Date(this.state.focusedDateKey);
-            date.setMonth(date.getMonth() - 1);
-          }
-
-          this.setState({
-            focusedDateKey: convertDateToDateKey(date),
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            lastHoveredDay: undefined,
-          });
+          this._onPageUpKeyDown(event);
         } else if (event.key === 'PageDown') {
-          // Moves to the same date in the next month.
-          event.preventDefault();
-
-          // TODO extract this to a helper function and test various edge cases
-          let date;
-          const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month + 1);
-          const focusedDate = new Date(this.state.focusedDateKey);
-
-          // Use case: Jump from Jan 31 to Feb 29
-          if (focusedDate.getDate() > lastDayInMonth.getDate()) {
-            date = lastDayInMonth;
-          } else {
-            date = new Date(this.state.focusedDateKey);
-            date.setMonth(date.getMonth() + 1);
-          }
-
-          this.setState({
-            focusedDateKey: convertDateToDateKey(date),
-            month: date.getMonth(),
-            year: date.getFullYear(),
-            lastHoveredDay: undefined,
-          });
+          this._onPageDownKeyDown(event);
         } else if (event.key === 'Enter') {
           event.preventDefault();
           const date = new Date(this.state.focusedDateKey);
@@ -636,10 +598,65 @@ export default class DatePicker extends Component {
         }
       }
     }
-
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
+  }
+
+  /**
+  * Function will handle pageUp key down event.
+  */
+  _onPageUpKeyDown(event) {
+    // Moves to the same date in the previous month.
+    event.preventDefault();
+
+    // TODO extract this to a helper function and test various edge cases
+    let date;
+    const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month - 1);
+    const focusedDate = new Date(this.state.focusedDateKey);
+
+    // jump from March 30 to Feb 29
+    if (focusedDate.getDate() > lastDayInMonth.getDate()) {
+      date = lastDayInMonth;
+    } else {
+      date = new Date(this.state.focusedDateKey);
+      date.setMonth(date.getMonth() - 1);
+    }
+
+    this.setState({
+      focusedDateKey: convertDateToDateKey(date),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+      lastHoveredDay: undefined,
+    });
+  }
+
+  /**
+  * Function will handle pageDown key down event.
+  */
+  _onPageDownKeyDown(event) {
+    // Moves to the same date in the next month.
+    event.preventDefault();
+
+    // TODO extract this to a helper function and test various edge cases
+    let date;
+    const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month + 1);
+    const focusedDate = new Date(this.state.focusedDateKey);
+
+    // Use case: Jump from Jan 31 to Feb 29
+    if (focusedDate.getDate() > lastDayInMonth.getDate()) {
+      date = lastDayInMonth;
+    } else {
+      date = new Date(this.state.focusedDateKey);
+      date.setMonth(date.getMonth() + 1);
+    }
+
+    this.setState({
+      focusedDateKey: convertDateToDateKey(date),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+      lastHoveredDay: undefined,
+    });
   }
 
   /**

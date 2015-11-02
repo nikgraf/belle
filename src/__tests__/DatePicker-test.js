@@ -60,6 +60,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
     expect(datePicker.state.selectedDate).toBeGreaterThan(0);
+    expect(dateSelected).toBeGreaterThan(0);
 
     // expect(dateSelected.getDay()).toBeGreaterThan(0);
     TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
