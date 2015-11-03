@@ -109,7 +109,7 @@ describe('helpers keys method', () => {
 });
 
 describe('helpers filter method', () => {
-  const arr = [123, 'abc', () => {}, undefined];
+  const arr = [123, 'abc', () => undefined, undefined];
   const predicate = (object) => {
     return object !== 123;
   };
@@ -147,7 +147,6 @@ describe('helpers filter method', () => {
     expect(filteredArr.length).toBe(0);
   });
 });
-
 
 describe('helpers map method for arrays', () => {
   const arr = [5, 10, 50, 100];
@@ -194,6 +193,7 @@ describe('helpers mapObject method', () => {
   const predicate = (value) => {
     return value / 5;
   };
+
   const objIdTest = {50: 5, 100: 10, 500: 50, 1000: 100};
   const predicateIdTest = (value, id) => {
     return id / value;
@@ -217,7 +217,7 @@ describe('helpers mapObject method', () => {
 });
 
 describe('helpers find method', () => {
-  const arr = [123, 'abc', () => {}, undefined];
+  const arr = [123, 'abc', () => undefined, undefined];
   const predicate = (object) => {
     return typeof object === 'number';
   };
@@ -268,7 +268,7 @@ describe('helpers isEmpty method', () => {
 });
 
 describe('helpers findIndex method', () => {
-  const arr = [123, 'abc', () => {}, undefined];
+  const arr = [123, 'abc', () => undefined, undefined];
   const predicate = (object) => {
     return typeof object === 'number';
   };
@@ -309,6 +309,7 @@ describe('helpers findIndex method', () => {
     const customPredicate = (resultObj) => {
       return resultObj === 567;
     };
+
     const index = helpers.findIndex(arr, customPredicate);
     expect(index).toBeUndefined();
   });
@@ -359,7 +360,7 @@ describe('helpers size method', () => {
 });
 
 describe('helpers some method', () => {
-  const arr = [123, 'abc', () => {}, undefined];
+  const arr = [123, 'abc', () => undefined, undefined];
   const predicate = (obj) => {
     return typeof obj === 'number';
   };

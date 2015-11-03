@@ -94,7 +94,7 @@ describe('Select', () => {
   it('should work with a placehoder and an array of options provided', () => {
     const options = [
       { value: 'rome', content: 'Rome' },
-      { value: 'vienna', content: 'Vienna' }
+      { value: 'vienna', content: 'Vienna' },
     ];
 
     const select = TestUtils.renderIntoDocument(
@@ -119,7 +119,7 @@ describe('Select', () => {
   it('should work with a placehoder and a combination of single options and an array of options provided', () => {
     const options = [
       { value: 'rome', content: 'Rome' },
-      { value: 'vienna', content: 'Vienna' }
+      { value: 'vienna', content: 'Vienna' },
     ];
 
     const select = TestUtils.renderIntoDocument(
@@ -149,8 +149,8 @@ describe('Select', () => {
     let wasCalled = false;
 
     const valueLink = {
-      requestChange: () => { wasCalled = true; },
-      value: 'rome'
+      requestChange: () => wasCalled = true,
+      value: 'rome',
     };
 
     const select = TestUtils.renderIntoDocument(
@@ -240,7 +240,7 @@ describe('Select', () => {
     it('should update it\'s state in case value is provided', () => {
       const properties = {
         ...select.props,
-        value: 'vienna'
+        value: 'vienna',
       };
       select.componentWillReceiveProps(properties);
 
@@ -249,13 +249,13 @@ describe('Select', () => {
 
     it('should update it\'s state in case value is provided', () => {
       const valueLink = {
-        requestChange: () => {},
-        value: 'vienna'
+        requestChange: () => undefined,
+        value: 'vienna',
       };
 
       const properties = {
         ...select.props,
-        valueLink: valueLink
+        valueLink: valueLink,
       };
       select.componentWillReceiveProps(properties);
 
@@ -265,7 +265,7 @@ describe('Select', () => {
     it('should not update it\'s state in case defaultValue is updated', () => {
       const properties = {
         ...select.props,
-        defaultValue: 'vienna'
+        defaultValue: 'vienna',
       };
       select.componentWillReceiveProps(properties);
 
@@ -337,7 +337,6 @@ describe('Select', () => {
       });
     });
   }
-
 
   describe('manage key events for simple list', () => {
     // in order to ensure no references are lost a container object is used

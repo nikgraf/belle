@@ -3,6 +3,9 @@
   "validateQuoteMarks": null,
   "excludeFiles": [
     "coverage/**",
-    "node_modules/**"
+    "node_modules/**",
+    "docs/**",
+    "examples/**",
+    "lib/**"
   ]
 }

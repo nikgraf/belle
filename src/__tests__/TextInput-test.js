@@ -32,7 +32,6 @@ describe('TextInput', () => {
     expect(textareaNode.getAttribute('style').indexOf('color:red') > -1).toBeTruthy();
   });
 
-
   it('should calculate its height after initializing', () => {
     const textInput = TestUtils.renderIntoDocument(
       <TextInput />
@@ -43,7 +42,6 @@ describe('TextInput', () => {
 
     expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
-
 
   it('should re-calculate its height after changing (default)', () => {
     const textInput = TestUtils.renderIntoDocument(
@@ -59,7 +57,6 @@ describe('TextInput', () => {
     expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
-
   it('should re-calculate its height after changing (with value & new lines not allowed)', () => {
     const textInput = TestUtils.renderIntoDocument(
       <TextInput value="some text"/>
@@ -73,7 +70,6 @@ describe('TextInput', () => {
 
     expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
-
 
   it('should re-calculate its height after changing (new lines allowed)', () => {
     const textInput = TestUtils.renderIntoDocument(
@@ -89,7 +85,6 @@ describe('TextInput', () => {
     expect(textInput._triggerResize.mock.calls.length).toBe(1);
   });
 
-
   it('should be able to bind onKeyDown', () => {
     let wasPressed = false;
 
@@ -103,7 +98,6 @@ describe('TextInput', () => {
 
     expect(wasPressed).toEqual(true);
   });
-
 
   it('should be able to bind onUpdate', () => {
     let wasChanged = false;
@@ -119,13 +113,12 @@ describe('TextInput', () => {
     expect(wasChanged).toEqual(true);
   });
 
-
   it('should be able to provide a valueLink', () => {
     let wasCalled = false;
 
     const valueLink = {
-      requestChange: () => { wasCalled = true; },
-      value: 'some text'
+      requestChange: () => wasCalled = true,
+      value: 'some text',
     };
 
     const textInput = TestUtils.renderIntoDocument(
@@ -139,7 +132,6 @@ describe('TextInput', () => {
     expect(wasCalled).toEqual(true);
   });
 
-
   it('should be able to provide a className', () => {
     const textInput = TestUtils.renderIntoDocument(
       <TextInput className="test-me" />
@@ -148,7 +140,6 @@ describe('TextInput', () => {
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
     expect(textareaNode.className.indexOf('test-me')).toBeGreaterThan(-1);
   });
-
 
   it('should remove the custom styles from the dom when the textInput unmounts', () => {
     injectStyle.removeStyle = jest.genMockFunction();

@@ -9,7 +9,6 @@ import TestUtils from 'react-addons-test-utils';
 
 const injectStyle = require('../utils/inject-style');
 
-
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const Button = require('../components/Button');
@@ -27,16 +26,13 @@ describe('Button', () => {
       buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
     });
 
-
     it('should come with default styles', () => {
       expect(buttonNode.hasAttribute('style')).toBeTruthy();
     });
 
-
     it('should set the type to button by default', () => {
       expect(buttonNode.type).toBe('button');
     });
-
 
     it('should inject styles for hover, active & foucs', () => {
       expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
@@ -64,7 +60,6 @@ describe('Button', () => {
     expect(wasClicked).toBeTruthy();
   });
 
-
   it('should be able to provide a className', () => {
     const button = TestUtils.renderIntoDocument(
       <Button className="test-me">Follow</Button>
@@ -74,7 +69,6 @@ describe('Button', () => {
     expect(buttonNode.className).toContain('test-me');
   });
 
-
   it('should be able to adopt the style of the button', () => {
     const button = TestUtils.renderIntoDocument(
       <Button style={{ color: '#F00' }}>Follow</Button>
@@ -83,7 +77,6 @@ describe('Button', () => {
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
     expect(buttonNode.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
   });
-
 
   it('should be able to use a primary button', () => {
     const defaultButton = TestUtils.renderIntoDocument(

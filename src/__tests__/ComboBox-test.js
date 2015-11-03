@@ -59,7 +59,12 @@ describe('ComboBox', () => {
     let isSelect;
 
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox onUpdate={ (obj) => { value = obj.value; identifier = obj.identifier; isMatch = obj.isMatchingOption; isSelect = obj.isOptionSelection; } }>
+      <ComboBox onUpdate={ (obj) => {
+        value = obj.value;
+        identifier = obj.identifier;
+        isMatch = obj.isMatchingOption;
+        isSelect = obj.isOptionSelection;
+      }}>
         <Option value="rome" identifier={1}>Rome</Option>
         <Option value="vienna" identifier={2} className="vienna-option">Vienna</Option>
       </ComboBox>
@@ -78,10 +83,8 @@ describe('ComboBox', () => {
     // let wasCalled = false;
 
     const valueLink = {
-      requestChange: () => {
-        // wasCalled = true;
-      },
-      value: 'vie'
+      requestChange: () => undefined,
+      value: 'vie',
     };
 
     const combobox = TestUtils.renderIntoDocument(
@@ -99,7 +102,6 @@ describe('ComboBox', () => {
     // strangely line below is failing
     // expect(wasCalled).toBeTruthy();
   });
-
 
   it('should change the inputValue on selection', () => {
     const combobox = TestUtils.renderIntoDocument(
@@ -143,7 +145,7 @@ describe('ComboBox', () => {
     it('should update it\'s state in case value is provided', () => {
       const properties = {
         ...combobox.props,
-        value: 'vienna'
+        value: 'vienna',
       };
       combobox.componentWillReceiveProps(properties);
 
@@ -152,14 +154,13 @@ describe('ComboBox', () => {
 
     it('should update it\'s state in case value is provided', () => {
       const valueLink = {
-        requestChange: () => {
-        },
-        value: 'vienna'
+        requestChange: () => undefined,
+        value: 'vienna',
       };
 
       const properties = {
         ...combobox.props,
-        valueLink: valueLink
+        valueLink: valueLink,
       };
       combobox.componentWillReceiveProps(properties);
 
@@ -175,7 +176,6 @@ describe('ComboBox', () => {
      });
      */
   });
-
 
   function testKeyEvents(container) {
     it('should open the menu by pressing ArrowDown', () => {
@@ -242,7 +242,6 @@ describe('ComboBox', () => {
       });
     });
   }
-
 
   describe('manage key events for simple list', () => {
     // in order to ensure no references are lost a container object is used
