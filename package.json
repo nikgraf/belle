@@ -32,6 +32,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "build": "NODE_ENV=production webpack -p --config webpack.config.production.js",
     "postinstall": "cp node_modules/highlight.js/styles/googlecode.css css/googlecode.css"
   }
 }
