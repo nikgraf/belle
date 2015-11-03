@@ -382,6 +382,7 @@ export default class DatePicker extends Component {
       newState.year = properties.year;
       this.oldPropsYear = properties.year;
     }
+
     if (properties.month !== this.oldPropsMonth) {
       newState.year = properties.month;
       this.oldPropsMonth = properties.month;
@@ -560,6 +561,7 @@ export default class DatePicker extends Component {
           focusedDateKey: convertDateToDateKey(date),
         });
       }
+
       if (this.state.focusedDateKey) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
@@ -598,6 +600,7 @@ export default class DatePicker extends Component {
         }
       }
     }
+
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
