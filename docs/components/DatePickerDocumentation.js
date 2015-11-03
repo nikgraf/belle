@@ -197,7 +197,7 @@ export default React.createClass({
             <p>
               <i>Integer (1-12)</i>
               <br />
-              optional (default: selected month if provided, otherwise the current month)
+              optional (default: month of selected date if one is provided, otherwise the current month)
             </p>
             <p>
               When initially rendered the date picker will be display with the provided month..
@@ -215,7 +215,7 @@ export default React.createClass({
             <p>
               <i>Integer</i>
               <br />
-              optional (default: selected year if provided, otherwise the current year)
+              optional (default: year of selected date if one is provided, otherwise the current year)
             </p>
             <p>
               When initially rendered the date picker will be display with the provided year.
