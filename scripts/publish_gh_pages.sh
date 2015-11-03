@@ -7,7 +7,7 @@ npm prune
 npm install
 npm run build
 
-git add js/bundle.js
+git add static/bundle.js
 git add css/googlecode.css
 git commit -am 'add files'
 cd ..
