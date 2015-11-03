@@ -44,7 +44,7 @@ const advanceCodeExample1 = `
 const advanceCodeExample2 = `
 <DatePicker readOnly
             renderDay={ this.renderDay }
-            month={ 12 }/>
+            defaultMonth={ 12 }/>
 
 renderDay(day) {
   if (day.getDate() === 25 && day.getMonth() === 11) {
@@ -76,8 +76,8 @@ const advanceCodeExample5 = `
 
 const advanceCodeExample6 = `
 <DatePicker onMonthUpdate={ this.onMonthUpdate }
-            month={ this.state.selectedMonth }
-            year={ this.state.selectedYear }
+            defaultMonth={ this.state.selectedMonth }
+            defaultYear={ this.state.selectedYear }
             valueLink={ this.linkState('selectedDate') }/>
 
 <div>
@@ -189,7 +189,7 @@ export default React.createClass({
 
         <tr>
           <td style={ propertyNameStyle }>
-            month
+            defaultMonth
           </td>
         </tr>
         <tr>
@@ -197,17 +197,17 @@ export default React.createClass({
             <p>
               <i>Integer (1-12)</i>
               <br />
-              optional (default: current month)
+              optional (default: selected month if provided, otherwise the current month)
             </p>
             <p>
-              The date picker will be displayed for this month (though month can be changed by user).
+              When initially rendered the date picker will be display with the provided month..
             </p>
           </td>
         </tr>
 
         <tr>
           <td style={ propertyNameStyle }>
-            year
+            defaultYear
           </td>
         </tr>
         <tr>
@@ -215,10 +215,10 @@ export default React.createClass({
             <p>
               <i>Integer</i>
               <br />
-              optional (default: current year)
+              optional (default: selected year if provided, otherwise the current year)
             </p>
             <p>
-              The date picker will be displayed for this year (though year can be changed by user).
+              When initially rendered the date picker will be display with the provided year.
             </p>
           </td>
         </tr>
@@ -291,7 +291,7 @@ export default React.createClass({
               optional (default: true)
             </p>
             <p>
-              This property can be used to show/ hide the display of other month dates in date picker.
+              This property can be used to show/hide the display of other month dates in date picker.
               Even if other month dates are displayed in date picker they will be disabled.
             </p>
           </td>
@@ -530,7 +530,7 @@ export default React.createClass({
 
       <h3>DatePicker highlighting special day:</h3>
 
-      <DatePicker renderDay={ this.renderDay } month={ 12 }/>
+      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
 
       <Code value={ advanceCodeExample2 } style={ {marginTop: 40} } />
 
@@ -564,8 +564,8 @@ export default React.createClass({
       <h3>Controlled DatePicker component with onMonthUpdate callBack and reset option implemented:</h3>
 
       <DatePicker onMonthUpdate={ this.onMonthUpdate }
-                  month={ this.state.selectedMonth }
-                  year={ this.state.selectedYear }
+                  defaultMonth={ this.state.selectedMonth }
+                  defaultYear={ this.state.selectedYear }
                   valueLink={ this.linkState('selectedDate') }/>
       <div style={{
         display: 'inline-block',
