@@ -207,7 +207,7 @@ export default class DatePicker extends Component {
     }
 
     if (properties.month) {
-      month = properties.month - 1;
+      month = properties.defaultMonth - 1;
     } else if (selectedDate) {
       month = selectedDate.getMonth();
     } else {
@@ -215,7 +215,7 @@ export default class DatePicker extends Component {
     }
 
     if (properties.year) {
-      year = properties.month;
+      year = properties.defaultYear;
     } else if (selectedDate) {
       year = selectedDate.getFullYear();
     } else {
@@ -230,8 +230,6 @@ export default class DatePicker extends Component {
       year: year,
     };
 
-    this.oldPropsMonth = properties.month;
-    this.oldPropsYear = properties.year;
     this.localeData = getLocaleData(properties.locale);
     this.wrapperProps = sanitizeWrapperProps(properties);
     this.dayProps = sanitizeDayProps(properties.dayProps);
@@ -378,14 +376,6 @@ export default class DatePicker extends Component {
    */
   componentWillReceiveProps(properties) {
     const newState = {};
-    if (properties.year !== this.oldPropsYear) {
-      newState.year = properties.year;
-      this.oldPropsYear = properties.year;
-    }
-    if (properties.month !== this.oldPropsMonth) {
-      newState.year = properties.month;
-      this.oldPropsMonth = properties.month;
-    }
 
     if (has(properties, 'valueLink')) {
       newState.selectedDate = properties.valueLink.value;
@@ -560,6 +550,7 @@ export default class DatePicker extends Component {
           focusedDateKey: convertDateToDateKey(date),
         });
       }
+
       if (this.state.focusedDateKey) {
         if (event.key === 'ArrowDown') {
           event.preventDefault();
@@ -598,6 +589,7 @@ export default class DatePicker extends Component {
         }
       }
     }
+
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
