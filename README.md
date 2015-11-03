@@ -21,7 +21,7 @@ npm install belle
 For a version compatible with React 0.14+ please use our beta for Belle 2.0.0 and run:
 
 ```
-npm install belle@2.0.0-beta1
+npm install belle@2.0.0-rc1
 ```
 
 ### Import & use Belle Components
