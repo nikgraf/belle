@@ -6,6 +6,7 @@ import {extend} from 'underscore';
 import ButtonPlayground from './components/ButtonPlayground';
 import CardPlayground from './components/CardPlayground';
 import SelectPlayground from './components/SelectPlayground';
+import SpinnerPlayground from './components/SpinnerPlayground';
 import TextInputPlayground from './components/TextInputPlayground';
 import RatingPlayground from './components/RatingPlayground';
 import ComboBoxPlayground from './components/ComboBoxPlayground';
@@ -73,29 +74,30 @@ if (true) {
 // export for http://fb.me/react-devtools
 window.React = React;
 
-class App extends Component {
+const App = () => {
+  return (
+    <div style={ {margin: '0 auto', width: 300} }>
+      <h1>Belle Playground</h1>
 
-  render() {
-    return (<div style={ {margin: '0 auto', width: 300} }>
-        <h1>Belle Playground</h1>
+      <SpinnerPlayground />
 
-        <DatePickerPlayground />
+      <DatePickerPlayground />
 
-        <TogglePlayground />
+      <TogglePlayground />
 
-        <SelectPlayground />
+      <SelectPlayground />
 
-        <ButtonPlayground />
+      <ButtonPlayground />
 
-        <TextInputPlayground />
+      <TextInputPlayground />
 
-        <CardPlayground />
+      <CardPlayground />
 
-        <RatingPlayground />
+      <RatingPlayground />
 
-        <ComboBoxPlayground />
-      </div>);
-  }
-}
+      <ComboBoxPlayground />
+    </div>
+  );
+};
 
 ReactDOM.render(<App/>, document.getElementById('react'));
