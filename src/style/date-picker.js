@@ -172,10 +172,12 @@ const datePickerStyle = {
     marginRight: -1,
     marginBottom: -1,
     boxSizing: 'border-box',
-    paddingTop: 5,
     position: 'relative',
     zIndex: 100,
     cursor: 'default',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 
     /*
      To avoid any kind of flickering the user won't get feedback
