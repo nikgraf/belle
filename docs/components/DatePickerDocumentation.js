@@ -42,6 +42,10 @@ const advanceCodeExample1 = `
             showOtherMonthDate={ false } />`;
 
 const advanceCodeExample2 = `
+<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
+            locale={ this.state.selectedLocale }/>`;
+
+const advanceCodeExample3 = `
 <DatePicker readOnly
             renderDay={ this.renderDay }
             defaultMonth={ 12 }/>
@@ -61,10 +65,6 @@ renderDay(day) {
     day.getDate()
   );
 }`;
-
-const advanceCodeExample3 = `
-<DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
-            locale={ this.state.selectedLocale }/>`;
 
 const advanceCodeExample4 = `
 <DatePicker defaultValue={ new Date(` + TODAY.getFullYear() + `, ` + TODAY.getMonth() + `, ` + 15 + `) }
@@ -528,12 +528,6 @@ export default React.createClass({
 
       <Code value={ advanceCodeExample1 } style={ {marginTop: 40} } />
 
-      <h3>DatePicker highlighting special day:</h3>
-
-      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
-
-      <Code value={ advanceCodeExample2 } style={ {marginTop: 40} } />
-
       <h3>Localization support in DatePicker:</h3>
 
       <p>Belle has inbuilt support for following locales: Arabic, French, Hebrew, Dutch, Chinese.
@@ -558,6 +552,18 @@ export default React.createClass({
 
       <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }
       locale={ this.state.selectedLocale }/>
+
+      <Code value={ advanceCodeExample2 } style={ {marginTop: 40} } />
+
+      <h3>DatePicker highlighting special day:</h3>
+
+      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
+
+      <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
+
+      <h3>Using renderDay to disable special days:</h3>
+
+      <DatePicker renderDay={ this.disableDays }/>
 
       <Code value={ advanceCodeExample3 } style={ {marginTop: 40} } />
 
@@ -610,6 +616,30 @@ export default React.createClass({
         <div>
           <span style={ {color: '#FFDA46'} }>✵</span>
           <span style={ {color: 'red'} }>{ day.getDate() }</span>
+        </div>
+      );
+    }
+
+    return (
+      day.getDate()
+    );
+  },
+
+  disableDays(day) {
+    console.log('day.getDate()', day.getDate());
+    console.log(([10, 11, 12, 20, 21, 22, 23].indexOf(day.getDate()) > 0));
+    if ([10, 11, 12, 20, 21, 22, 23].indexOf(day.getDate()) > 0) {
+      return (
+        <div onMouseDown={(event) => event.stopPropagation()}
+             style={{color: '#C1BABA',
+                     cursor: 'not-allowed',
+                     width: 39,
+                     height: 32,
+                     boxSizing: 'border-box',
+                     display: 'flex',
+                     justifyContent: 'center',
+                     alignItems: 'center'}}>
+          {day.getDate()}
         </div>
       );
     }
