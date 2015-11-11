@@ -46,7 +46,8 @@ export default class CardDocumentation extends Component {
 
         <Card style={{ borderTop: '1px solid #f2f2f2',
                        width: 265,
-                       padding: '20px 0' }}>
+                       padding: '20px 0',
+                    }}>
           <img src="images/ngorongoro_caldera_small.jpg"
                width="100%" />
         </Card>
