@@ -493,43 +493,45 @@ export default class ToggleDocumentation extends Component {
           Toggle can also be re-sized by proportionately changing the size of all the components in structure of Toggle.
         </p>
 
-        <Toggle style={{
-                  borderRadius: 10,
+        <Toggle style={{ borderRadius: 10,
                   height: 20,
-                  width: 40
+                  width: 40,
                 }}
                 sliderStyle={{
                   // Calculated with 2 * the width of choice area
-                  width: 80
+                  width: 80,
                 }}
                 sliderWrapperStyle={{
-                  borderRadius: 10
+                  borderRadius: 10,
                 }}
                 handleStyle={{
                   borderRadius: 10,
+
                   // 1 px smaller than the width due the border effect
                   height: 19,
-                  width: 20
+                  width: 20,
                 }}
                 firstChoiceStyle={{
                   height: 20,
+
                   // Calculated with the width of the whole toggle - half of the width from the handle
                   width: 30,
                   lineHeight: 20 + 'px',
                   textIndent: -5,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
                 secondChoiceStyle={{
                   height: 20,
+
                   // Calculated with the width of the whole toggle - half of the width from the handle
                   // style.width - (handleStyle.width / 2 )
                   width: 30,
                   lineHeight: 20 + 'px',
                   textIndent: 5,
-                  fontSize: 10
+                  fontSize: 10,
                 }}
                 activeHandleStyle={{
-                  height: 20
+                  height: 20,
                 }} />
 
           <Code value={ toggleWithSizeStyling2 } style={ {marginTop: 40} } />

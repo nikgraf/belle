@@ -7,7 +7,7 @@ const defaultStyle = {
   fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
   background: '#F5F5F5',
   whiteSpace: 'pre-wrap',
-  padding: 10
+  padding: 10,
 };
 
 export default class Code extends Component {

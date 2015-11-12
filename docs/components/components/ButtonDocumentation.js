@@ -16,26 +16,26 @@ const customStyleCodeExample = `<Button primary
           border: '1px solid #222',
           borderBottom: '1px solid #222',
           borderRadius: 2,
-          background: '#fff'
+          background: '#fff',
         }}
         hoverStyle={{
           border: '1px solid red',
           borderBottom: '1px solid red',
           color: '#red',
-          background: '#fff'
+          background: '#fff',
         }}
         focusStyle={{
           border: '1px solid red',
           borderBottom: '1px solid red',
           color: '#red',
           background: '#fff',
-          boxShadow: 'red 0px 0px 5px'
+          boxShadow: 'red 0px 0px 5px',
         }}
         activeStyle={{
           border: '1px solid red',
           borderTop: '1px solid red',
           color: '#000',
-          background: '#fff'
+          background: '#fff',
         }}>
   Follow
 </Button>`;
@@ -278,28 +278,28 @@ export default class ButtonDocumentation extends Component {
                 borderBottom: '1px solid #222',
                 borderRadius: 2,
                 background: '#fff',
-                boxShadow: 'none'
+                boxShadow: 'none',
               }}
               hoverStyle={{
                 border: '1px solid red',
                 borderBottom: '1px solid red',
                 color: 'red',
                 background: '#fff',
-                boxShadow: 'none'
+                boxShadow: 'none',
               }}
               focusStyle={{
                 border: '1px solid red',
                 borderBottom: '1px solid red',
                 color: 'red',
                 background: '#fff',
-                boxShadow: 'red 0px 0px 5px'
+                boxShadow: 'red 0px 0px 5px',
               }}
               activeStyle={{
                 border: '1px solid red',
                 borderTop: '1px solid red',
                 color: 'red',
                 background: '#fff',
-                boxShadow: 'none'
+                boxShadow: 'none',
               }}>
         Follow
       </Button>

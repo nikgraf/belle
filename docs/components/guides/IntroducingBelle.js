@@ -22,7 +22,7 @@ export default class Why extends Component {
 
   render() {
     return (<div>
-      <p style={{ color: '#999', marginTop: 19, fontSize: 15, 'float': 'right' }}>Nik Graf, 15th July 2015 </p>
+      <p style={{ color: '#999', marginTop: 19, fontSize: 15, float: 'right' }}>Nik Graf, 15th July 2015 </p>
 
       <h1 style={ {marginTop: 0, marginBottom: 20} }>Introducing Belle</h1>
 
@@ -57,7 +57,8 @@ export default class Why extends Component {
       <div style={{ marginTop: 20, marginBottom: 40 }}>
         <p style={{ borderRadius: 2,
                     clear: 'both',
-                    padding: 5 }}>
+                    padding: 5,
+                  }}>
           <span style={{ fontSize: 32, color: '#ccc'}}>“ </span>
           This is so good. I like the effort you put into tweaking the UX.
           <span style={{ fontSize: 32,
@@ -65,17 +66,17 @@ export default class Why extends Component {
                          position: 'relative',
                          top: 26,
                          color: '#ccc',
-                         left: 4 }}> ”</span>
+                         left: 4, }}> ”</span>
         </p>
         <div style={{ marginLeft: 30 }}>
           <img src="images/vjeux.jpeg"
                style={{ height: 50,
-                        'float': 'left',
-                        borderRadius: 50 }} />
+                        float: 'left',
+                        borderRadius: 50, }} />
           <div style={{ fontSize: 18,
-                        marginLeft: 60 }}>Christopher Chedeau (Vjeux)</div>
+                        marginLeft: 60, }}>Christopher Chedeau (Vjeux)</div>
           <div style={{ color: '#888',
-                        marginLeft: 60 }}>React Core Team</div>
+                        marginLeft: 60, }}>React Core Team</div>
         </div>
         <div stlye={{ clear: 'both' }}></div>
       </div>

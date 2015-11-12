@@ -8,11 +8,11 @@ export default React.createClass({
   propTypes: {
     route: PropTypes.any.isRequired,
     children: PropTypes.any.isRequired,
-    location: PropTypes.object
+    location: PropTypes.object,
   },
 
   childContextTypes: {
-    viewport: PropTypes.any
+    viewport: PropTypes.any,
   },
 
   getInitialState() {
@@ -38,33 +38,28 @@ export default React.createClass({
   _getRetrieveViewport() {
     return {
       width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
+      height: document.documentElement.clientHeight,
     };
   },
 
   _triggerResizeMixinCallback() {
     this.setState({
-      viewport: this._getRetrieveViewport()
+      viewport: this._getRetrieveViewport(),
     });
   },
 
-  render() {
-    const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
-
-    let header;
-
-    if (this.props.location.pathname === '/') {
-      header = (<header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
+  _renderHomeHeader() {
+    return (
+      <header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
-
           <Link to="/">
             <h1 style={{ fontSize: 80,
                          margin: 0,
                          paddingTop: 80,
                          color: '#FFF',
                          fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
-                         position: 'relative'
+                         position: 'relative',
                        }}>
               <div style={{ borderRadius: 100,
                             width: 100,
@@ -72,35 +67,35 @@ export default React.createClass({
                             border: '4px solid #fff',
                             paddingLeft: 18,
                             display: 'block',
-                            'float': 'left',
-                            marginRight: 12 }}>
+                            float: 'left',
+                            marginRight: 12, }}>
                 <img src="images/belle_logo.png"
                      style={{ width: 62, height: 88 }} />
               </div>
               <span style={{ marginTop: -6,
                              display: 'block',
-                             'float': 'left' }}>
+                             float: 'left', }}>
                 Belle
               </span>
             </h1>
           </Link>
-
           <p style={{ fontSize: 22, marginTop: 0, paddingTop: 20, color: '#FEFEFE', clear: 'both'}}>
             Configurable React Components with great UX
           </p>
-
-          <iframe
-            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
-            frameBorder="0"
-            scrolling="0"
-            width="180px"
-            height="30px"
-            style={ { marginBottom: 20 } }>
-          </iframe>
+          <iframe src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
+                  frameBorder="0"
+                  scrolling="0"
+                  width="180px"
+                  height="30px"
+                  style={{ marginBottom: 20, }} />
         </Column>
-      </header>);
-    } else {
-      header = (<header style={ {background: 'linear-gradient(150deg, #0A202D, rgb(1, 95, 130))', width: '100%', marginBottom: 40} }>
+      </header>
+    );
+  },
+
+  _renderDefaultHeader() {
+    return (
+      <header style={{background: 'linear-gradient(150deg, #0A202D, rgb(1, 95, 130))', width: '100%', marginBottom: 40 }}>
         <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
                 mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
           <iframe
@@ -109,7 +104,7 @@ export default React.createClass({
             scrolling="0"
             width="100px"
             height="30px"
-            style={{ 'float': 'right', marginTop: 20 }}>
+            style={{ float: 'right', marginTop: 20 }}>
           </iframe>
 
           <Link style={{ display: 'inline' }} to="/">
@@ -120,9 +115,9 @@ export default React.createClass({
                             border: '2px solid #fff',
                             paddingLeft: 5,
                             display: 'block',
-                            'float': 'left',
+                            float: 'left',
                             marginRight: 6,
-                            marginTop: 6 }}>
+                            marginTop: 6, }}>
                 <img src="images/belle_logo.png"
                      style={{ height: 19, top: -7, position: 'relative' }} />
               </div>
@@ -130,18 +125,22 @@ export default React.createClass({
             </h1>
           </Link>
         </Column>
-      </header>);
-    }
+      </header>
+    );
+  },
+
+  render() {
+    const cardContentStyle = (this.state.viewport.width <= 480) ? { padding: 20 } : {};
 
     return (<div style={{ background: '#F7F7F7' }}>
 
-      { header }
+      { this.props.location.pathname === '/' ? this._renderHomeHeader() : this._renderDefaultHeader() }
 
       <Column smallScreenStyle={{ width: '100%' }}
               mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
 
         <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
-                mediumScreenStyle={{ 'float': 'left', width: 160 }}
+                mediumScreenStyle={{ float: 'left', width: 160 }}
                 className="navigation">
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
@@ -221,7 +220,7 @@ export default React.createClass({
         </Column>
 
         <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
-                mediumScreenStyle={{ 'float': 'left', width: 640 }}>
+                mediumScreenStyle={{ float: 'left', width: 640 }}>
           <Card style={ cardContentStyle }>
             { this.props.children }
           </Card>
@@ -239,5 +238,5 @@ export default React.createClass({
         </Column>
       </footer>
     </div>);
-  }
+  },
 });
