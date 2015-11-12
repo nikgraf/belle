@@ -633,7 +633,7 @@ export default class Select extends Component {
    * - Switch focus to the next option in case one option already has focus.
    */
   _onArrowDownKeyDown() {
-    if (this.state.focusedOptionValue) {
+    if (this.state.focusedOptionValue !== void 0) {
       const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
       if (hasNext(this.options, indexOfFocusedOption)) {
@@ -658,7 +658,7 @@ export default class Select extends Component {
    * - Switch focus to the previous option in case one option already has focus.
    */
   _onArrowUpKeyDown() {
-    if (this.state.focusedOptionValue) {
+    if (this.state.focusedOptionValue !== void 0) {
       const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
       if (hasPrevious(this.options, indexOfFocusedOption)) {

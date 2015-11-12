@@ -10,7 +10,7 @@ export default React.createClass({
   render() {
     const valueLink = {
       value: this.state.comboValue,
-      requestChange: this._handleChange
+      requestChange: this._handleChange,
     };
 
     return (
@@ -20,7 +20,7 @@ export default React.createClass({
 
         <Card>
           <h3>Default Value Example</h3>
-          <div style={ { 'marginBottom': '20px' } }>
+          <div style={{ marginBottom: 20 }}>
             <ComboBox defaultValue={ 'test' }>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
@@ -32,7 +32,7 @@ export default React.createClass({
           </div>
 
           <h3>Value Example</h3>
-          <div style={ { 'marginBottom': '20px' } }>
+          <div style={{ marginBottom: 20 }}>
             <ComboBox value={ this.state.comboValue }
                       onUpdate={ (event) => {console.log(event.value + ' - ' + event.identifier + ' - ' + event.isOptionSelection + ' - ' + event.isMatchingOption); } }>
               <Option value="te" identifier="123">Te</Option>
@@ -45,7 +45,7 @@ export default React.createClass({
           </div>
 
           <h3>Value Link Example</h3>
-          <div style={ { 'marginBottom': '20px' } }>
+          <div style={{ marginBottom: 20 }}>
             <ComboBox valueLink={ valueLink } onUpdate={ (event) => { console.log(event.value); } }>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
@@ -56,7 +56,7 @@ export default React.createClass({
             </ComboBox>
           </div>
 
-          <div style={ { 'marginBottom': '20px' } }>
+          <div style={{ marginBottom: 20 }}>
             <ComboBox disabled>
               <Option value="te">Te</Option>
             </ComboBox>
@@ -84,6 +84,13 @@ export default React.createClass({
             </ComboBox>
           </div>
 
+          <div>
+            <ComboBox>
+              <Option value={ 0 }>Zero</Option>
+              <Option value={ 1 }>One</Option>
+            </ComboBox>
+          </div>
+
         </Card>
 
       </div>
@@ -92,5 +99,5 @@ export default React.createClass({
 
   _handleChange(newValue) {
     this.setState({ comboValue: newValue });
-  }
+  },
 });
