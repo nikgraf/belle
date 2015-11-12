@@ -844,7 +844,7 @@ export default class Select extends Component {
     };
 
     let selectedOptionOrPlaceholder;
-    if (this.state.selectedValue) {
+    if (this.state.selectedValue !== void 0) {
       const selectedEntry = find(this.children, (entry) => {
         return entry.props.value === this.state.selectedValue;
       });
