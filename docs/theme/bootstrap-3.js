@@ -460,6 +460,11 @@ const bootstrap3Theme = {
 
       disabledFocusDayStyle: {
         cursor: 'not-allowed',
+        background: '#fff',
+        borderLeft: '1px solid #ccc',
+        borderRight: '1px solid #ccc',
+        borderTop: '1px solid #ccc',
+        borderBottom: '1px solid #ccc',
       },
 
       todayStyle: {
