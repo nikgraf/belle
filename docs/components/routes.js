@@ -17,6 +17,7 @@ import PlaceholderDocumentation from './PlaceholderDocumentation';
 import RatingDocumentation from './RatingDocumentation';
 import SelectDocumentation from './SelectDocumentation';
 import SeparatorDocumentation from './SeparatorDocumentation';
+import SpinnerDocumentation from './SpinnerDocumentation';
 import TextInputDocumentation from './TextInputDocumentation';
 import ToggleDocumentation from './ToggleDocumentation';
 import FormComponents from './FormComponents';
@@ -35,6 +36,7 @@ const routes = (
     <Route path="component/placeholder" component={PlaceholderDocumentation}/>
     <Route path="component/rating" component={RatingDocumentation}/>
     <Route path="component/separator" component={SeparatorDocumentation}/>
+    <Route path="component/spinner" component={SpinnerDocumentation}/>
     <Route path="component/text-input" component={TextInputDocumentation}/>
     <Route path="component/toggle" component={ToggleDocumentation}/>
     <Route path="guide/form-components" component={FormComponents}/>

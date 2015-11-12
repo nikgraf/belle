@@ -178,6 +178,9 @@ export default React.createClass({
               <Link style={{ display: 'block', padding: '4px 0' }} to="/component/rating">Rating</Link>
             </li>
             <li>
+              <Link style={{ display: 'block', padding: '4px 0' }} to="/component/spinner">Spinner</Link>
+            </li>
+            <li>
               <Link style={{ display: 'block', padding: '4px 0' }} to="/component/text-input">TextInput</Link>
             </li>
             <li>

@@ -8,6 +8,7 @@ import Separator from './components/Separator';
 import TextInput from './components/TextInput';
 import Rating from './components/Rating';
 import ComboBox from './components/ComboBox';
+import Spinner from './components/Spinner';
 import Toggle from './components/Toggle';
 import DatePicker from './components/DatePicker';
 
@@ -18,6 +19,7 @@ import optionStyle from './style/option';
 import selectStyle from './style/select';
 import separatorStyle from './style/separator';
 import textInputStyle from './style/text-input';
+import spinnerStyle from './style/spinner';
 import toggleStyle from './style/toggle';
 import ratingStyle from './style/rating';
 import comboBoxStyle from './style/combo-box';
@@ -41,6 +43,7 @@ module.exports = {
   TextInput: TextInput,
   Rating: Rating,
   ComboBox: ComboBox,
+  Spinner: Spinner,
   Toggle: Toggle,
   DatePicker: DatePicker,
   style: {
@@ -52,6 +55,7 @@ module.exports = {
     select: selectStyle,
     separator: separatorStyle,
     textInput: textInputStyle,
+    spinner: spinnerStyle,
     toggle: toggleStyle,
     comboBox: comboBoxStyle,
     datePicker: datePickerStyle,

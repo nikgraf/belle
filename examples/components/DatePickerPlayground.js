@@ -33,7 +33,7 @@ export default React.createClass({
     return (
       <div>
 
-        <h2>ComboBox</h2>
+        <h2>DatePicker</h2>
 
         <Card>
           <h3>Default Calendar Example</h3>
