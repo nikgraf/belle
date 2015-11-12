@@ -5,7 +5,7 @@ const bootstrap3Theme = {
       preventFocusStyleForTouchAndClick: false,
     },
     datePicker: {
-      preventFocusStyleForTouchAndClick: true,
+      preventFocusStyleForTouchAndClick: false,
     },
     rating: {
       preventFocusStyleForTouchAndClick: false,
