@@ -656,6 +656,21 @@ const bootstrap3Theme = {
         whiteSpace: 'nowrap',
       },
     },
+    spinner: {
+      style: {
+        display: 'inline-block',
+        fontSize: 15,
+        textAlign: 'center',
+      },
+
+      characterStyle: {
+        color: '#666',
+        display: 'inline-block',
+        WebkitAnimation: 'belle-spinner-pulse 2s infinite ease-in-out',
+        OAnimation: 'belle-spinner-pulse 2s infinite ease-in-out',
+        animation: 'belle-spinner-pulse 2s infinite ease-in-out',
+      },
+    },
     textInput: {
       style: {
         boxSizing: 'border-box',
