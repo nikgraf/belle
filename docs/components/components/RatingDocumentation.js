@@ -1,7 +1,7 @@
 import React from 'react';
 import {Rating} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
