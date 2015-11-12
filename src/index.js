@@ -12,6 +12,7 @@ import Spinner from './components/Spinner';
 import Toggle from './components/Toggle';
 import DatePicker from './components/DatePicker';
 
+import actionAreaStyle from './style/actionArea';
 import buttonStyle from './style/button';
 import cardStyle from './style/card';
 import placeholderStyle from './style/placeholder';
@@ -47,18 +48,19 @@ module.exports = {
   Toggle: Toggle,
   DatePicker: DatePicker,
   style: {
+    actionArea: actionAreaStyle,
     button: buttonStyle,
     card: cardStyle,
+    comboBox: comboBoxStyle,
+    datePicker: datePickerStyle,
     option: optionStyle,
     placeholder: placeholderStyle,
     rating: ratingStyle,
     select: selectStyle,
     separator: separatorStyle,
-    textInput: textInputStyle,
     spinner: spinnerStyle,
+    textInput: textInputStyle,
     toggle: toggleStyle,
-    comboBox: comboBoxStyle,
-    datePicker: datePickerStyle,
   },
   config: {
     select: selectConfig,
