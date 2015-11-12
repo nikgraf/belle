@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Choice, Toggle} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
 <Toggle defaultValue>

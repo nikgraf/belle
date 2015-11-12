@@ -2,41 +2,41 @@ const belleWithClassicFocus = {
 
   config: {
     button: {
-      preventFocusStyleForTouchAndClick: false
+      preventFocusStyleForTouchAndClick: false,
     },
     rating: {
-      preventFocusStyleForTouchAndClick: false
+      preventFocusStyleForTouchAndClick: false,
     },
     toggle: {
-      preventFocusStyleForTouchAndClick: false
-    }
+      preventFocusStyleForTouchAndClick: false,
+    },
   },
 
   style: {
     button: {
       focusStyle: {
         boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-        outline: 0
+        outline: 0,
       },
       primaryFocusStyle: {
         boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-        outline: 0
-      }
+        outline: 0,
+      },
     },
     rating: {
       focusStyle: {
         boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
         outline: 0,
-        borderRadius: 3
-      }
+        borderRadius: 3,
+      },
     },
     toggle: {
       focusStyle: {
         boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
-        outline: 0
-      }
-    }
-  }
+        outline: 0,
+      },
+    },
+  },
 
 };
 

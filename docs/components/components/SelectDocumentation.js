@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 function positionOptions(selectComponent) {
   const menuNode = ReactDOM.findDOMNode(selectComponent.refs.menu);
@@ -14,7 +15,7 @@ const fruits = [
   { value: 'banana', content: (<span>🍌 Banana</span>) },
   { value: 'peach', content: (<span>🍑 Peach</span>) },
   { value: 'pear', content: (<span>🍐 Pear</span>) },
-  { value: 'cherries', content: (<span>🍒 Cherries</span>) }
+  { value: 'cherries', content: (<span>🍒 Cherries</span>) },
 ];
 
 const basicCodeExample = `<!-- basic select example -->
@@ -580,16 +581,14 @@ export default class SelectDocumentation extends Component {
 
       <Select defaultValue={ fruits[3].value }
               onUpdate={ (event) => { console.log(event.value); } }>
-        {
-          fruits.map(function(fruit, index) {
-            return (
-              <Option value={ fruit.value }
-                      key={ index }>
-                { fruit.content }
-              </Option>
-            );
-          })
-        }
+        { fruits.map((fruit, index) => {
+          return (
+            <Option value={ fruit.value }
+                    key={ index }>
+              { fruit.content }
+            </Option>
+          );
+        })}
       </Select>
 
       <Code value={ dataCodeExamplePartOne } style={ {marginTop: 40} } />
@@ -599,15 +598,18 @@ export default class SelectDocumentation extends Component {
       <h4>Select as part of a form with a scrollable menu</h4>
 
       <div style={ { display: 'table' } }>
-        <TextInput style={ { width: 138,
-                             'float': 'left'} }
+        <TextInput style={{ width: 138,
+                            float: 'left',
+                         }}
                    placeholder="Fill in your address …" />
-                 <div style={ { width: 110,
-                                'float': 'left',
-                                marginLeft: 16 } }>
+                 <div style={{ width: 110,
+                               float: 'left',
+                               marginLeft: 16,
+                            }}>
           <Select defaultValue="tokyo"
-                  menuStyle={ { height: 160,
-                                       overflow: 'scroll' } }>
+                  menuStyle={{ height: 160,
+                               overflow: 'scroll',
+                            }}>
             <Option value="berlin">Berlin</Option>
             <Option value="hong-kong">Hong Kong</Option>
             <Option value="istanbul">Istanbul</Option>
@@ -643,13 +645,13 @@ export default class SelectDocumentation extends Component {
                   padding: '15px 0 10px 60px',
                   background: 'url(images/santorini_100.jpg) no-repeat',
                   backgroundSize: '50px 50px',
-                  backgroundColor: '#FFEE82'
+                  backgroundColor: '#FFEE82',
                 }}
                 hoverStyle={{
                   padding: '15px 0 10px 60px',
                   background: 'url(images/santorini_100.jpg) no-repeat',
                   backgroundSize: '50px 50px',
-                  backgroundColor: '#FFE95D'
+                  backgroundColor: '#FFE95D',
                 }} >
           Santorini (Special Deal)
         </Option>
@@ -658,13 +660,13 @@ export default class SelectDocumentation extends Component {
                 style={{
                   padding: '15px 0 10px 60px',
                   background: 'url(images/yosemite_100.jpg) no-repeat',
-                  backgroundSize: '50px 50px'
+                  backgroundSize: '50px 50px',
                 }}
                 hoverStyle={{
                   padding: '15px 0 10px 60px',
                   backgroundColor: '#F5F5F5',
                   background: 'url(images/yosemite_100.jpg) no-repeat',
-                  backgroundSize: '50px 50px'
+                  backgroundSize: '50px 50px',
                 }} >
           Yosemite
         </Option>
@@ -673,13 +675,13 @@ export default class SelectDocumentation extends Component {
                 style={{
                   padding: '15px 0 10px 60px',
                   background: 'url(images/croatia_100.jpg) no-repeat',
-                  backgroundSize: '50px 50px'
+                  backgroundSize: '50px 50px',
                 }}
                 hoverStyle={{
                   padding: '15px 0 10px 60px',
                   backgroundColor: '#F5F5F5',
                   background: 'url(images/croatia_100.jpg) no-repeat',
-                  backgroundSize: '50px 50px'
+                  backgroundSize: '50px 50px',
                 }} >
           Croatia
         </Option>

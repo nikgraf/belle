@@ -1,7 +1,7 @@
 import React from 'react';
 import {Rating} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
@@ -33,8 +33,14 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      customRatingValue: 3
+      customRatingValue: 3,
     };
+  },
+
+  _resetRating() {
+    this.setState({
+      customRatingValue: undefined,
+    });
   },
 
   render() {
@@ -386,20 +392,14 @@ export default React.createClass({
       <p>Reset rating functionality can be implemented using controlled rating component like this:</p>
       <Rating valueLink={ this.linkState('customRatingValue') }/>
       <a onClick={ this._resetRating }
-         style={ {
+         style={{
            marginLeft: 20,
            position: 'relative',
            top: -5,
            textDecoration: 'underline',
-           cursor: 'pointer'
-          } }>Reset</a>
+           cursor: 'pointer',
+         }}>Reset</a>
       <Code value= { advanceCodeExample3 } style={ {marginTop: 20} } />
     </div>);
   },
-
-  _resetRating() {
-    this.setState({
-      customRatingValue: undefined
-    });
-  }
 });

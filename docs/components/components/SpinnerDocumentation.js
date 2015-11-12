@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Button, Card, Spinner} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const basicCodeExample = `<!-- basic spinner example -->
 <Spinner />`;

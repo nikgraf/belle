@@ -6,18 +6,18 @@ export default React.createClass({
   propTypes: {
     smallScreenStyle: PropTypes.object.isRequired,
     mediumScreenStyle: PropTypes.object.isRequired,
-    children: PropTypes.any
+    children: PropTypes.any,
   },
 
   contextTypes: {
-    viewport: PropTypes.any
+    viewport: PropTypes.any,
   },
 
   getInitialState() {
     this.childProperties = omit(this.props, [
       'style',
       'smallScreenStyle',
-      'mediumScreenStyle'
+      'mediumScreenStyle',
     ]);
     return {};
   },
@@ -26,7 +26,7 @@ export default React.createClass({
     this.childProperties = omit(properties, [
       'style',
       'smallScreenStyle',
-      'mediumScreenStyle'
+      'mediumScreenStyle',
     ]);
   },
 
@@ -38,5 +38,5 @@ export default React.createClass({
         { this.props.children }
       </div>
     );
-  }
+  },
 });

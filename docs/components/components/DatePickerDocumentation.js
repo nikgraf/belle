@@ -1,8 +1,8 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {DatePicker, Select, Option} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const TODAY = new Date();
 

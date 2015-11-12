@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card} from 'belle';
-import Code from './Code';
+import Code from '../Code';
 
 const basicCodeExample = `<!-- basic card example -->
 <Card style={{ borderTop: '1px solid #f2f2f2' }}>

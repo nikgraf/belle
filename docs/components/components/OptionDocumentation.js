@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Option, Select} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const basicCodeExample = `<!-- basic select example with multiple options -->
 <Select>

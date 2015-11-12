@@ -1,8 +1,8 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {TextInput} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const exampleCode = `<!-- TextInput with a defaultValue -->
 <TextInput defaultValue="Jane Doe" placeholder="Name"/>
@@ -39,7 +39,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      customTextInputValue: 'What is going on? Ohh, we provided minRows and custom styles. Please be so kind and add a little bit more text here.'
+      customTextInputValue: 'What is going on? Ohh, we provided minRows and custom styles. Please be so kind and add a little bit more text here.',
     };
   },
 
@@ -342,14 +342,14 @@ export default React.createClass({
                    padding: 10,
                    width: 280,
                    borderRadius: 3,
-                   boxShadow: 'inset 0 1px 2px #CCC'
+                   boxShadow: 'inset 0 1px 2px #CCC',
                  }}
                  hoverStyle={{
-                   border: '1px solid #6C6C6C'
+                   border: '1px solid #6C6C6C',
                  }}
                  focusStyle={{
                    borderColor: '#53C7F2',
-                   boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
+                   boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2',
                  }}/>
 
       <p>Two-way data binding: { this.state.customTextInputValue }</p>
@@ -362,5 +362,5 @@ export default React.createClass({
       <Code value={ disabledExampleCode } style={ {marginTop: 40} } />
 
     </div>);
-  }
+  },
 });

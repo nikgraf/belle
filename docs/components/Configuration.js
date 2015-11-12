@@ -216,7 +216,7 @@ export default class Configuration extends Component {
                     color: '#FFF',
                     background: '#5FB1CF',
                     boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-                    boxSizing: 'border-box'}}>
+                    boxSizing: 'border-box', }}>
         This is how your all your cards might look like.
       </Card>
 
@@ -232,11 +232,11 @@ export default class Configuration extends Component {
       <Button style={{color: '#FFF',
                       background: '#444',
                       border: '1px solid #444',
-                      borderBottomColor: '#000'}}
+                      borderBottomColor: '#000', }}
               hoverStyle={{color: '#FFF',
                            background: '#666',
                            border: '1px solid #666',
-                           borderBottomColor: '#555'}}>
+                           borderBottomColor: '#555', }}>
         Follow
       </Button>
 
