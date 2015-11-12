@@ -1,8 +1,8 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {TextInput} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const exampleCode = `<!-- TextInput with a defaultValue -->
 <TextInput defaultValue="Jane Doe" placeholder="Name"/>

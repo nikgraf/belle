@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {Option, Placeholder, Select, Separator, TextInput} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 function positionOptions(selectComponent) {
   const menuNode = ReactDOM.findDOMNode(selectComponent.refs.menu);

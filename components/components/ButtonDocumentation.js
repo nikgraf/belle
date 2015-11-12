@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from 'belle';
-import Code from './Code';
-import {propertyNameStyle, propertyDescriptionStyle} from './style';
+import Code from '../Code';
+import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
 
 const basicCodeExample = `<!-- primary button -->
 <Button primary>Follow</Button>
