@@ -2,17 +2,17 @@ const bootstrap3Theme = {
 
   config: {
     button: {
-      preventFocusStyleForTouchAndClick: false
+      preventFocusStyleForTouchAndClick: false,
     },
     rating: {
-      preventFocusStyleForTouchAndClick: false
+      preventFocusStyleForTouchAndClick: false,
     },
     select: {
-      shouldPositionOptions: false
+      shouldPositionOptions: false,
     },
     toggle: {
-      preventFocusStyleForTouchAndClick: false
-    }
+      preventFocusStyleForTouchAndClick: false,
+    },
   },
 
   style: {
@@ -47,7 +47,7 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       hoverStyle: {
@@ -55,7 +55,7 @@ const bootstrap3Theme = {
         textDecoration: 'none',
 
         backgroundColor: '#e6e6e6',
-        borderColor: '#adadad'
+        borderColor: '#adadad',
       },
 
       focusStyle: {
@@ -64,7 +64,7 @@ const bootstrap3Theme = {
 
         color: '#333',
         backgroundColor: '#e6e6e6',
-        borderColor: '#8c8c8c'
+        borderColor: '#8c8c8c',
       },
 
       activeStyle: {
@@ -75,7 +75,7 @@ const bootstrap3Theme = {
         backgroundImage: 'none',
         outline: 0,
         WebkitBoxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
-        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)'
+        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
       },
 
       disabledStyle: {
@@ -86,12 +86,12 @@ const bootstrap3Theme = {
         opacity: '0.65',
 
         backgroundColor: '#fff',
-        borderColor: '#ccc'
+        borderColor: '#ccc',
       },
 
       disabledHoverStyle: {
         backgroundColor: '#fff',
-        borderColor: '#ccc'
+        borderColor: '#ccc',
       },
 
       primaryStyle: {
@@ -124,7 +124,7 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       primaryHoverStyle: {
@@ -132,7 +132,7 @@ const bootstrap3Theme = {
 
         color: '#fff',
         backgroundColor: '#286090',
-        borderColor: '#204d74'
+        borderColor: '#204d74',
       },
 
       primaryFocusStyle: {
@@ -141,7 +141,7 @@ const bootstrap3Theme = {
 
         color: '#fff',
         backgroundColor: '#286090',
-        borderColor: '#122b40'
+        borderColor: '#122b40',
       },
 
       primaryActiveStyle: {
@@ -152,7 +152,7 @@ const bootstrap3Theme = {
         backgroundImage: 'none',
         outline: 0,
         WebkitBoxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
-        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)'
+        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
       },
 
       primaryDisabledStyle: {
@@ -163,13 +163,13 @@ const bootstrap3Theme = {
         opacity: '0.65',
 
         backgroundColor: '#337ab7',
-        borderColor: '#2e6da4'
+        borderColor: '#2e6da4',
       },
 
       primaryDisabledHoverStyle: {
         backgroundColor: '#337ab7',
-        borderColor: '#2e6da4'
-      }
+        borderColor: '#2e6da4',
+      },
     },
     card: {
       style: {
@@ -183,8 +183,8 @@ const bootstrap3Theme = {
         WebkitBoxShadow: '0 1px 1px rgba(0,0,0,.05)',
         boxShadow: '0 1px 1px rgba(0,0,0,.05)',
 
-        padding: 15
-      }
+        padding: 15,
+      },
     },
     comboBox: {
       style: {
@@ -201,7 +201,6 @@ const bootstrap3Theme = {
         fontSize: 14,
         lineHeight: 1.42857143,
         color: '#555',
-        // backgroundColor: '#fff',
         backgroundImage: 'none',
         border: '1px solid #ccc',
         borderRadius: 4,
@@ -219,34 +218,34 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       focusStyle: {
         borderColor: '#66afe9',
         outline: 0,
         WebkitBoxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)',
-        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)'
+        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)',
       },
 
       hoverStyle: {
-        border: '1px solid #ccc'
+        border: '1px solid #ccc',
       },
 
       disabledStyle: {
         backgroundColor: '#eee',
-        opacity: 1
+        opacity: 1,
       },
 
       disabledHoverStyle: {
         backgroundColor: '#eee',
-        opacity: 1
+        opacity: 1,
       },
 
       wrapperStyle: {
         outline: 0, // to avoid default focus behaviour
         boxSizing: 'border-box',
-        position: 'relative'
+        position: 'relative',
       },
 
       menuStyle: {
@@ -259,7 +258,7 @@ const bootstrap3Theme = {
         left: 0,
         zIndex: 1000,
         display: 'block',
-        'float': 'left',
+        float: 'left',
         minWidth: 160,
         padding: '5px 0',
         margin: '2px 0 0',
@@ -274,7 +273,7 @@ const bootstrap3Theme = {
         WebkitBoxShadow: '0 6px 12px rgba(0,0,0,.175)',
         boxShadow: '0 6px 12px rgba(0,0,0,.175)',
         /* Improve scrolling for mobile Safari */
-        WebkitOverflowScrolling: 'touch'
+        WebkitOverflowScrolling: 'touch',
       },
 
       caretToOpenStyle: {
@@ -291,7 +290,7 @@ const bootstrap3Theme = {
         verticalAlign: 'middle',
         borderTop: '4px dashed',
         borderRight: '4px solid transparent',
-        borderLeft: '4px solid transparent'
+        borderLeft: '4px solid transparent',
       },
 
       caretToCloseStyle: {
@@ -308,15 +307,15 @@ const bootstrap3Theme = {
         verticalAlign: 'middle',
         borderTop: '4px dashed',
         borderRight: '4px solid transparent',
-        borderLeft: '4px solid transparent'
+        borderLeft: '4px solid transparent',
       },
 
       caretFocusStyle: {
-        outline: 0
+        outline: 0,
       },
 
       disabledCaretToOpenStyle: {
-        borderTop: '6px solid #9F9F9F'
+        borderTop: '6px solid #9F9F9F',
       },
 
       hintStyle: {
@@ -348,8 +347,8 @@ const bootstrap3Theme = {
          Prevent flickering while tapping on WebKit
          http://stackoverflow.com/a/3516243/837709
          */
-        WebkitTapHighlightColor: 'transparent'
-      }
+        WebkitTapHighlightColor: 'transparent',
+      },
     },
     option: {
       style: {
@@ -378,12 +377,12 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       hoverStyle: {
         color: '#262626',
-        backgroundColor: '#f5f5f5'
+        backgroundColor: '#f5f5f5',
       },
 
       selectStyle: {
@@ -407,12 +406,12 @@ const bootstrap3Theme = {
         */
         WebkitTapHighlightColor: 'transparent',
 
-        display: 'inline-block'
+        display: 'inline-block',
       },
 
       disabledSelectStyle: {
-        padding: 0
-      }
+        padding: 0,
+      },
     },
     placeholder: {
       style: {
@@ -437,12 +436,12 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       disabledStyle: {
-        cursor: 'not-allowed'
-      }
+        cursor: 'not-allowed',
+      },
     },
     rating: {
       style: {
@@ -470,39 +469,39 @@ const bootstrap3Theme = {
          Prevent flickering while tapping on WebKit
          http://stackoverflow.com/a/3516243/837709
          */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       disabledStyle: {
         opacity: 0.6,
-        cursor: 'not-allowed'
+        cursor: 'not-allowed',
       },
 
       focusStyle: {
         outline: '5px auto -webkit-focus-ring-color',
         outlineOffset: -2,
-        borderRadius: 3
+        borderRadius: 3,
       },
 
       hoverStyle: {
-        opacity: 1
+        opacity: 1,
       },
 
       disabledHoverStyle: {
-        opacity: 0.6
+        opacity: 0.6,
       },
 
       characterStyle: {
-        color: '#FFCC00'
+        color: '#FFCC00',
       },
 
       hoverCharacterStyle: {
-        color: '#FFDA46'
+        color: '#FFDA46',
       },
 
       activeCharacterStyle: {
-        color: '#F3C200'
-      }
+        color: '#F3C200',
+      },
     },
     select: {
       style: {
@@ -535,7 +534,7 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       focusStyle: {
@@ -544,7 +543,7 @@ const bootstrap3Theme = {
 
         color: '#333',
         backgroundColor: '#e6e6e6',
-        borderColor: '#8c8c8c'
+        borderColor: '#8c8c8c',
       },
 
       activeStyle: {
@@ -555,7 +554,7 @@ const bootstrap3Theme = {
         backgroundImage: 'none',
         outline: 0,
         WebkitBoxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
-        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)'
+        boxShadow: 'inset 0 3px 5px rgba(0, 0, 0, .125)',
       },
 
       hoverStyle: {
@@ -563,13 +562,13 @@ const bootstrap3Theme = {
         textDecoration: 'none',
 
         backgroundColor: '#e6e6e6',
-        borderColor: '#adadad'
+        borderColor: '#adadad',
       },
 
       wrapperStyle: {
         outline: 0, // to avoid default focus behaviour
         boxSizing: 'border-box',
-        position: 'relative'
+        position: 'relative',
       },
 
       disabledStyle: {
@@ -577,12 +576,12 @@ const bootstrap3Theme = {
         filter: 'alpha(opacity=65)',
         WebkitBoxShadow: 'none',
         boxShadow: 'none',
-        opacity: 0.65
+        opacity: 0.65,
       },
 
       disabledHoverStyle: {
         backgroundColor: '#fff',
-        borderColor: '#ccc'
+        borderColor: '#ccc',
       },
 
       menuStyle: {
@@ -595,7 +594,7 @@ const bootstrap3Theme = {
         left: 0,
         zIndex: 1000,
         display: 'block',
-        'float': 'left',
+        float: 'left',
         minWidth: 160,
         padding: '5px 0',
         margin: '2px 0 0',
@@ -611,7 +610,7 @@ const bootstrap3Theme = {
         boxShadow: '0 6px 12px rgba(0,0,0,.175)',
 
         /* Improve scrolling for mobile Safari */
-        WebkitOverflowScrolling: 'touch'
+        WebkitOverflowScrolling: 'touch',
       },
 
       caretToOpenStyle: {
@@ -624,7 +623,7 @@ const bootstrap3Theme = {
         verticalAlign: 'middle',
         borderTop: '4px dashed',
         borderRight: '4px solid transparent',
-        borderLeft: '4px solid transparent'
+        borderLeft: '4px solid transparent',
       },
 
       caretToCloseStyle: {
@@ -637,12 +636,12 @@ const bootstrap3Theme = {
         verticalAlign: 'middle',
         borderTop: '4px dashed',
         borderRight: '4px solid transparent',
-        borderLeft: '4px solid transparent'
+        borderLeft: '4px solid transparent',
       },
 
       disabledCaretToOpenStyle: {
-        borderTop: '6px solid #9F9F9F'
-      }
+        borderTop: '6px solid #9F9F9F',
+      },
     },
     separator: {
       style: {
@@ -654,8 +653,8 @@ const bootstrap3Theme = {
         fontWeight: 'bold',
         lineHeight: 1.42857143,
         color: '#333',
-        whiteSpace: 'nowrap'
-      }
+        whiteSpace: 'nowrap',
+      },
     },
     textInput: {
       style: {
@@ -677,29 +676,29 @@ const bootstrap3Theme = {
         boxShadow: 'inset 0 1px 1px rgba(0, 0, 0, .075)',
         WebkitTransition: 'border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s',
         OTransition: 'border-color ease-in-out .15s, box-shadow ease-in-out .15s',
-        transition: 'border-color ease-in-out .15s, box-shadow ease-in-out .15s'
+        transition: 'border-color ease-in-out .15s, box-shadow ease-in-out .15s',
       },
 
       hoverStyle: {
-        border: '1px solid #ccc'
+        border: '1px solid #ccc',
       },
 
       focusStyle: {
         borderColor: '#66afe9',
         outline: 0,
         WebkitBoxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)',
-        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)'
+        boxShadow: 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6)',
       },
 
       disabledStyle: {
         backgroundColor: '#eee',
-        opacity: 1
+        opacity: 1,
       },
 
       disabledHoverStyle: {
         backgroundColor: '#eee',
-        opacity: 1
-      }
+        opacity: 1,
+      },
     },
     toggle: {
       style: {
@@ -713,31 +712,32 @@ const bootstrap3Theme = {
         display: 'inline-block',
 
         border: '1px solid transparent',
-        borderColor: '#ccc'
+        borderColor: '#ccc',
       },
 
       focusStyle: {
         outline: '5px auto -webkit-focus-ring-color',
-        outlineOffset: -2
+        outlineOffset: -2,
       },
 
       disabledStyle: {
         opacity: 0.6,
-        cursor: 'not-allowed'
+        cursor: 'not-allowed',
       },
 
       sliderStyle: {
         boxSizing: 'border-box',
         position: 'relative',
+
         // Calculated with 2 * the width of choice area
         width: 112,
-        transition: 'left 0.1s ease-in-out'
+        transition: 'left 0.1s ease-in-out',
       },
 
       sliderWrapperStyle: {
         boxSizing: 'border-box',
         overflow: 'hidden',
-        borderRadius: 3
+        borderRadius: 3,
       },
 
       handleStyle: {
@@ -752,7 +752,6 @@ const bootstrap3Theme = {
         cursor: 'pointer',
         transition: 'left 0.1s ease-in-out',
         boxShadow: '1px 0 0 0 #ccc, -1px 0 0 0 #ccc, 0 1px 0 0 #ccc, 0 -1px 0 0 #ccc',
-
 
         /*
         To avoid any kind of flickering the user won't get feedback
@@ -771,13 +770,14 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       firstChoiceStyle: {
         display: 'inline-block',
         boxSizing: 'border-box',
         height: 30,
+
         // Calculated with the width of the whole toggle - half of the width from the handle
         //
         // This allows to have a round handle that is position exactly in on top of the
@@ -806,13 +806,14 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       secondChoiceStyle: {
         display: 'inline-block',
         boxSizing: 'border-box',
         height: 30,
+
         // Calculated with the width of the whole toggle - half of the width from the handle
         //
         // This allows to have a round handle that is position exactly in on top of the
@@ -841,26 +842,25 @@ const bootstrap3Theme = {
         Prevent flickering while tapping on WebKit
         http://stackoverflow.com/a/3516243/837709
         */
-        WebkitTapHighlightColor: 'transparent'
+        WebkitTapHighlightColor: 'transparent',
       },
 
       hoverHandleStyle: {
         backgroundColor: '#e6e6e6',
-        boxShadow: '1px 0 0 0 #adadad, -1px 0 0 0 #adadad, 0 1px 0 0 #adadad, 0 -1px 0 0 #adadad'
+        boxShadow: '1px 0 0 0 #adadad, -1px 0 0 0 #adadad, 0 1px 0 0 #adadad, 0 -1px 0 0 #adadad',
       },
 
       activeHandleStyle: {
         backgroundColor: '#d4d4d4',
         boxShadow: '1px 0 0 0 #8c8c8c, -1px 0 0 0 #8c8c8c, 0 1px 0 0 #8c8c8c, 0 -1px 0 0 #8c8c8c',
-        cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move'
+        cursor: 'url(http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur), move',
       },
 
       disabledHandleStyle: {
-        cursor: 'not-allowed'
-      }
-    }
-  }
-
+        cursor: 'not-allowed',
+      },
+    },
+  },
 };
 
 export default bootstrap3Theme;

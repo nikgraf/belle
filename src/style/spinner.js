@@ -1,5 +1,4 @@
 const spinnerStyle = {
-
   style: {
     display: 'inline-block',
     fontSize: 15,
