@@ -10,6 +10,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - [Rating] Fix styling the wrapper [82087cb](https://github.com/nikgraf/belle/commit/82087cb220253486e31269c8a989e9cf26fec18e)
+- [Select] Fix rendering the selected option with a falsy value e.g. 0 [f0e5611](https://github.com/nikgraf/belle/commit/f0e5611cfce2da3833ed50bd7ac542501ae2999a)
+
+```
+<Select>
+  <Option value={ 0 }>Zero</Option>
+  <Option value={ 1 }>One</Option>
+</Select>
+```
 
 ### Added
 - [DatePicker] Added DatePicker component
