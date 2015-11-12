@@ -12,10 +12,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - [Rating] Fix styling the wrapper [82087cb](https://github.com/nikgraf/belle/commit/82087cb220253486e31269c8a989e9cf26fec18e)
 
 ### Added
-- [DatePicker] Added DatePicker component
+- [DatePicker] Add DatePicker component
 
 ```
 <DatePicker />
+```
+
+- [Spinner] Add Spinner component
+
+```
+<Spinner />
 ```
 
 ### Removed
