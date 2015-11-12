@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import {ComboBox, Option} from 'belle';
 import Code from '../Code';
@@ -9,7 +10,7 @@ const animals = [
   {name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg'},
   {name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg'},
   {name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg'},
-  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'}
+  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'},
 ];
 
 const currencies = [
@@ -24,7 +25,7 @@ const currencies = [
   {code: 'NZD', name: 'New Zealand Dollar'},
   {code: 'SEK', name: 'Sweden Krona'},
   {code: 'GBP', name: 'United Kingdom Pound'},
-  {code: 'USD', name: 'United States Dollar'}
+  {code: 'USD', name: 'United States Dollar'},
 ];
 
 const destinations = [
@@ -52,7 +53,7 @@ const destinations = [
   {code: '22', name: 'Queenstown, New Zealand'},
   {code: '23', name: 'Hong Kong, China'},
   {code: '24', name: 'Dubai, United Arab Emirates'},
-  {code: '25', name: 'Sydney, Australia'}
+  {code: '25', name: 'Sydney, Australia'},
 ];
 
 const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];
@@ -61,6 +62,7 @@ function customFilterFunc(inputValue, optionValue) {
   if (inputValue && optionValue) {
     return optionValue.toLowerCase().indexOf(inputValue.toLowerCase()) === 0;
   }
+
   return false;
 }
 
@@ -85,7 +87,7 @@ const animals = [
   {name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg'},
   {name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg'},
   {name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg'},
-  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'}
+  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'},
 ]`;
 
 const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' }
@@ -100,7 +102,7 @@ const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' 
                   marginBottom: '5px',
                   height: 50,
                   background:  'url(' + animal.image + ') no-repeat',
-                  backgroundSize: '50px 50px'
+                  backgroundSize: '50px 50px',
                 }}
                 hoverStyle={{
                   padding: '5px 0 5px 60px',
@@ -108,7 +110,7 @@ const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' 
                   height: 50,
                   background:  'url(' + animal.image + ') no-repeat',
                   backgroundSize: '50px 50px',
-                  backgroundColor: '#FFE95D'
+                  backgroundColor: '#FFE95D',
                 }}
                 key={ index }>
           <span>
@@ -699,7 +701,7 @@ export default React.createClass({
                         marginBottom: '5px',
                         height: 50,
                         background: 'url(' + animal.image + ') no-repeat',
-                        backgroundSize: '50px 50px'
+                        backgroundSize: '50px 50px',
                       }}
                       hoverStyle={{
                         padding: '5px 0 5px 60px',
@@ -707,7 +709,7 @@ export default React.createClass({
                         height: 50,
                         background: 'url(' + animal.image + ') no-repeat',
                         backgroundSize: '50px 50px',
-                        backgroundColor: '#FFE95D'
+                        backgroundColor: '#FFE95D',
                       }}
                       key={ index }>
                 <span>
@@ -737,17 +739,15 @@ export default React.createClass({
                     console.log(event.identifier);
                   }
                 }}>
-        {
-          destinations.map((destination, index) => {
-            return (
-              <Option value={ destination.name }
-                      identifier={ destination.code }
-                      key={ index }>
-                  { destination.name }
-              </Option>
-            );
-          })
-        }
+        { destinations.map((destination, index) => {
+          return (
+            <Option value={ destination.name }
+                    identifier={ destination.code }
+                    key={ index }>
+                { destination.name }
+            </Option>
+          );
+        })}
       </ComboBox>
 
       <Code value={ dataCodeExampleTwoPartOne } style={ {marginTop: 40} } />
@@ -757,12 +757,14 @@ export default React.createClass({
       <h4>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h4>
 
       <ComboBox placeholder = { 'Choose a Currency' }
-                    onUpdate={ (event) => {
-                      console.log(event.value);
-                      console.log(event.identifier);
-                      console.log(event.isMatchingOption);
-                      console.log(event.isOptionSelection);
-                    }}
+                    onUpdate={
+                      (event) => {
+                        console.log(event.value);
+                        console.log(event.identifier);
+                        console.log(event.isMatchingOption);
+                        console.log(event.isOptionSelection);
+                      }
+                    }
                     maxOptions = { 5 }>
         {
           currencies.map((currency, index) => {
@@ -803,5 +805,5 @@ export default React.createClass({
       <Code value={ dataCodeExampleFourPartTwo } style={ {marginTop: 40} } />
 
     </div>);
-  }
+  },
 });

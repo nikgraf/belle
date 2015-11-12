@@ -4,7 +4,7 @@ import {Button} from 'belle';
 export default React.createClass({
 
   contextTypes: {
-    location: PropTypes.object
+    location: PropTypes.object,
   },
 
   _onSwitchTheme(name) {
@@ -43,5 +43,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });

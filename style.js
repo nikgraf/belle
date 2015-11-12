@@ -1,5 +1,4 @@
 const style = {
-
   propertyNameStyle: {
     padding: '0 20px 0 0',
     textAlign: 'left',
@@ -12,8 +11,7 @@ const style = {
     textAlign: 'left',
     verticalAlign: 'top',
     paddingBottom: 30,
-  }
-
+  },
 };
 
 export default style;
