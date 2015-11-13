@@ -8,7 +8,7 @@ const fruits = [
   { value: 'banana', content: (<span>🍌</span>) },
   { value: 'peach', content: (<span>🍑</span>) },
   { value: 'pear', content: (<span>🍐</span>) },
-  { value: 'cherries', content: (<span>🍒</span>) }
+  { value: 'cherries', content: (<span>🍒</span>) },
 ];
 
 export default React.createClass({
@@ -17,7 +17,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      valueA: 'rome'
+      valueA: 'rome',
     };
   },
 
@@ -116,8 +116,8 @@ export default React.createClass({
           Select after TextInput
         </h3>
         <div style={ { content: '', display: 'table', clear: 'both' } }>
-          <TextInput style={ {width: 150, 'float': 'left' } } defaultValue="Lorem ipsum …" />
-          <div style={ { width: 150, 'float': 'left', marginLeft: 16 } }>
+          <TextInput style={ {width: 150, float: 'left' } } defaultValue="Lorem ipsum …" />
+          <div style={ { width: 150, float: 'left', marginLeft: 16 } }>
             <Select>
               <Option value="vienna">Vienna</Option>
               <Option value="rome">Rome</Option>
@@ -208,9 +208,15 @@ export default React.createClass({
           <Option value="vienna">Vienna</Option>
         </Select>
 
+        <h3>Select with a falsy value</h3>
+        <Select>
+          <Option value={ 0 }>Zero</Option>
+          <Option value={ 1 }>One</Option>
+        </Select>
+
         <br />
         <br />
       </div>
     );
-  }
+  },
 });

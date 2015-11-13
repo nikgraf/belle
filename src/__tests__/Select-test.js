@@ -66,6 +66,18 @@ describe('Select', () => {
     expect(selectedOptionArea.childNodes[0].textContent).toBe('Vienna');
   });
 
+  it('should render the content of selected option with a falsy value', () => {
+    const select = TestUtils.renderIntoDocument(
+      <Select value={ 0 }>
+        <Option value={ 0 }>Zero</Option>
+        <Option value={ 1 }>One</Option>
+      </Select>
+    );
+
+    const selectedOptionArea = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
+    expect(selectedOptionArea.childNodes[0].textContent).toBe('Zero');
+  });
+
   it('should render the placeholder content', () => {
     const select = TestUtils.renderIntoDocument(
       <Select>
