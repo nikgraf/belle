@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {has, omit} from '../utils/helpers';
-import style from '../style/button';
+import {has} from '../utils/helpers';
+import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
 import config from '../config/button';
@@ -14,22 +14,26 @@ const buttonTypes = ['button', 'submit', 'reset'];
  * set to `button`.
  */
 function sanitizeChildProps(properties) {
-  return omit(properties, [
-    'className',
-    'style',
-    'hoverStyle',
-    'focusStyle',
-    'activeStyle',
-    'disabledStyle',
-    'disabledHoverStyle',
-    'primary',
-    'onTouchStart',
-    'onTouchEnd',
-    'onTouchCancel',
-    'onMouseDown',
-    'onFocus',
-    'onBlur',
-  ]);
+  const {
+    className,
+    style,
+    hoverStyle,
+    focusStyle,
+    activeStyle,
+    disabledStyle,
+    disabledHoverStyle,
+    primary,
+    onTouchStart,
+    onTouchEnd,
+    onTouchCancel,
+    onMouseDown,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
+    ...childProps,
+  } = properties;
+  return childProps;
 }
 
 /**
@@ -39,27 +43,18 @@ function sanitizeChildProps(properties) {
  * @param properties {object} - the components properties optionally containing custom styles
  */
 function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAndClick) {
-  const baseHoverStyle = properties.primary ? style.primaryHoverStyle : style.hoverStyle;
-  const baseActiveStyle = properties.primary ? style.primaryActiveStyle : style.activeStyle;
-  const baseDisabledHoverStyle = properties.primary ? style.primaryDisabledHoverStyle : style.disabledHoverStyle;
-  const hoverStyle = {
-    ...baseHoverStyle,
-    ...properties.hoverStyle,
-  };
+  const baseActiveStyle = properties.primary ? buttonStyle.primaryActiveStyle : buttonStyle.activeStyle;
+
   const activeStyle = {
     ...baseActiveStyle,
     ...properties.activeStyle,
-  };
-  const disabledHoverStyle = {
-    ...baseDisabledHoverStyle,
-    ...properties.disabledHoverStyle,
   };
 
   let focusStyle;
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
   } else {
-    const baseFocusStyle = properties.primary ? style.primaryFocusStyle : style.focusStyle;
+    const baseFocusStyle = properties.primary ? buttonStyle.primaryFocusStyle : buttonStyle.focusStyle;
     focusStyle = {
       ...baseFocusStyle,
       ...properties.focusStyle,
@@ -69,19 +64,8 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   const styles = [
     {
       id: styleId,
-      style: hoverStyle,
-      pseudoClass: 'hover',
-    },
-    {
-      id: styleId,
       style: activeStyle,
       pseudoClass: 'active',
-    },
-    {
-      id: styleId,
-      style: disabledHoverStyle,
-      pseudoClass: 'hover',
-      disabled: true,
     },
     {
       id: styleId,
@@ -112,7 +96,8 @@ export default class Button extends Component {
 
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false,
+      isActive: false,
+      isHovered: false,
     };
 
     // The focused attribute is used to apply the one-time focus animation.
@@ -144,6 +129,8 @@ export default class Button extends Component {
     onTouchEnd: PropTypes.func,
     onTouchCancel: PropTypes.func,
     onMouseDown: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     preventFocusStyleForTouchAndClick: PropTypes.bool,
@@ -157,7 +144,7 @@ export default class Button extends Component {
   };
 
   /**
-   * Generates the style-id & inject the focus, hover & active style.
+   * Generates the style-id & inject the focus & active style.
    *
    * The style-id is based on React's unique DOM node id.
    */
@@ -216,7 +203,7 @@ export default class Button extends Component {
    */
   _onBlur(event) {
     this.focused = false;
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
@@ -238,7 +225,7 @@ export default class Button extends Component {
    */
   _onTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this.setState({ active: true });
+      this.setState({ isActive: true });
     }
 
     if (this.props.onTouchStart) {
@@ -250,7 +237,7 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchEnd(event) {
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -261,60 +248,93 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchCancel(event) {
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
   }
 
+  /**
+   * As soon as the mouse enters the component the isHovered state is activated.
+   */
+  _onMouseEnter(event) {
+    this.setState({
+      isHovered: true,
+    });
+
+    if (this.props.onMouseEnter) {
+      this.props.onMouseEnter(event);
+    }
+  }
+
+  /**
+   * Deactivate the isHovered state.
+   */
+  _onMouseLeave(event) {
+    this.setState({
+      isHovered: false,
+    });
+
+    if (this.props.onMouseLeave) {
+      this.props.onMouseLeave(event);
+    }
+  }
+
   render() {
-    const baseStyle = this.props.primary ? style.primaryStyle : style.style;
-    const baseButtonStyle = {
+    const baseStyle = this.props.primary ? buttonStyle.primaryStyle : buttonStyle.style;
+    let combinedStyle = {
       ...baseStyle,
       ...this.props.style,
     };
 
-    let buttonStyle;
+    if (this.state.isHovered) {
+      const baseHoverStyle = this.props.primary ? buttonStyle.primaryHoverStyle : buttonStyle.hoverStyle;
+      combinedStyle = {
+        ...combinedStyle,
+        ...baseHoverStyle,
+        ...this.props.hoverStyle,
+      };
+    }
+
     if (this.props.disabled) {
-      if (this.props.primary) {
-        buttonStyle = {
-          ...baseButtonStyle,
-          ...style.primaryDisabledStyle,
-          ...this.props.disabledStyle,
-        };
-      } else {
-        buttonStyle = {
-          ...baseButtonStyle,
-          ...style.disabledStyle,
-          ...this.props.disabledStyle,
+      const baseDisabledStyle = this.props.primary ? buttonStyle.primaryDisabledStyle : buttonStyle.disabledStyle;
+      combinedStyle = {
+        ...combinedStyle,
+        ...baseDisabledStyle,
+        ...this.props.disabledStyle,
+      };
+      if (this.state.isHovered) {
+        const baseDisabledHoverStyle = this.props.primary ? buttonStyle.primaryDisabledHoverStyle : buttonStyle.disabledHoverStyle;
+        combinedStyle = {
+          ...combinedStyle,
+          ...baseDisabledHoverStyle,
+          ...this.props.disabledHoverStyle,
         };
       }
     } else {
-      if (this.state.active) {
-        const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
-        buttonStyle = {
-          ...baseButtonStyle,
+      if (this.state.isActive) {
+        const baseActiveStyle = this.props.primary ? buttonStyle.primaryActiveStyle : buttonStyle.activeStyle;
+        combinedStyle = {
+          ...combinedStyle,
           ...baseActiveStyle,
           ...this.props.activeStyle,
         };
       } else if (this.focused &&
-                 !this.state.active &&
+                 !this.state.isActive &&
                  !this.mouseDownOnButton &&
                  this.preventFocusStyleForTouchAndClick) {
-        const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
-        buttonStyle = {
-          ...baseButtonStyle,
+        const baseFocusStyle = this.props.primary ? buttonStyle.primaryFocusStyle : buttonStyle.focusStyle;
+        combinedStyle = {
+          ...combinedStyle,
           ...baseFocusStyle,
           ...this.props.focusStyle,
         };
-      } else {
-        buttonStyle = baseButtonStyle;
       }
     }
 
     return (
-      <button style={ buttonStyle }
+      <button style={ combinedStyle }
               className={ unionClassNames(this.props.className, this.styleId) }
               onTouchStart={ ::this._onTouchStart }
               onTouchEnd={ ::this._onTouchEnd }
@@ -322,6 +342,8 @@ export default class Button extends Component {
               onFocus={ ::this._onFocus }
               onBlur={ ::this._onBlur }
               onMouseDown={ ::this._onMouseDown }
+              onMouseEnter={ ::this._onMouseEnter }
+              onMouseLeave={ ::this._onMouseLeave }
               {...this.state.childProps}>
         { this.props.children }
       </button>

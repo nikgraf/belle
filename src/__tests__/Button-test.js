@@ -34,15 +34,12 @@ describe('Button', () => {
       expect(buttonNode.type).toBe('button');
     });
 
-    it('should inject styles for hover, active & foucs', () => {
+    it('should inject styles for active & foucs', () => {
       expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
 
       const styles = injectStyle.injectStyles.mock.calls[0][0];
-      expect(styles[0].pseudoClass).toBe('hover');
-      expect(styles[1].pseudoClass).toBe('active');
-      expect(styles[2].pseudoClass).toBe('hover');
-      expect(styles[2].disabled).toBeTruthy();
-      expect(styles[3].pseudoClass).toBe('focus');
+      expect(styles[0].pseudoClass).toBe('active');
+      expect(styles[1].pseudoClass).toBe('focus');
     });
   });
 
@@ -125,12 +122,10 @@ describe('Button', () => {
 
     const styles = injectStyle.injectStyles.mock.calls[0][0];
 
-    expect(styles[0].pseudoClass).toBe('hover');
-    expect(styles[0].style.color).toBe('red');
-    expect(styles[1].pseudoClass).toBe('active');
-    expect(styles[1].style.color).toBe('green');
-    expect(styles[3].pseudoClass).toBe('focus');
-    expect(styles[3].style.color).toBe('brown');
+    expect(styles[0].pseudoClass).toBe('active');
+    expect(styles[0].style.color).toBe('green');
+    expect(styles[1].pseudoClass).toBe('focus');
+    expect(styles[1].style.color).toBe('brown');
   });
 
   it('should remove the custom styles from the dom when the button unmounts', () => {
@@ -144,5 +139,17 @@ describe('Button', () => {
     button.componentWillUnmount();
 
     expect(injectStyle.removeStyle.mock.calls.length).toBe(1);
+  });
+
+  it.only('should set isHovered state to true on mouseEnter and false on mouseLeave', () => {
+    const button = TestUtils.renderIntoDocument(
+      <Button>Follow</Button>
+    );
+
+    expect(button.state.isHovered).toBeFalsy();
+    TestUtils.Simulate.mouseEnter(TestUtils.findRenderedDOMComponentWithTag(button, 'button'));
+    expect(button.state.isHovered).toBeTruthy();
+    TestUtils.Simulate.mouseLeave(TestUtils.findRenderedDOMComponentWithTag(button, 'button'));
+    expect(button.state.isHovered).toBeFalsy();
   });
 });
