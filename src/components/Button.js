@@ -94,7 +94,7 @@ export default class Button extends Component {
 
       // used for touch devices like iOS Chrome/Safari where the active
       // pseudoClass is not supported on touch
-      active: false,
+      isActive: false,
       isHovered: false,
     };
 
@@ -142,7 +142,7 @@ export default class Button extends Component {
   };
 
   /**
-   * Generates the style-id & inject the focus, hover & active style.
+   * Generates the style-id & inject the focus & active style.
    *
    * The style-id is based on React's unique DOM node id.
    */
@@ -201,7 +201,7 @@ export default class Button extends Component {
    */
   _onBlur(event) {
     this.focused = false;
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
@@ -223,7 +223,7 @@ export default class Button extends Component {
    */
   _onTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this.setState({ active: true });
+      this.setState({ isActive: true });
     }
 
     if (this.props.onTouchStart) {
@@ -235,7 +235,7 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchEnd(event) {
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -246,7 +246,7 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchCancel(event) {
-    this.setState({ active: false });
+    this.setState({ isActive: false });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -311,7 +311,7 @@ export default class Button extends Component {
         };
       }
     } else {
-      if (this.state.active) {
+      if (this.state.isActive) {
         const baseActiveStyle = this.props.primary ? style.primaryActiveStyle : style.activeStyle;
         buttonStyle = {
           ...buttonStyle,
@@ -319,7 +319,7 @@ export default class Button extends Component {
           ...this.props.activeStyle,
         };
       } else if (this.focused &&
-                 !this.state.active &&
+                 !this.state.isActive &&
                  !this.mouseDownOnButton &&
                  this.preventFocusStyleForTouchAndClick) {
         const baseFocusStyle = this.props.primary ? style.primaryFocusStyle : style.focusStyle;
