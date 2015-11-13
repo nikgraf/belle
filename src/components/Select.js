@@ -422,10 +422,9 @@ export default class Select extends Component {
    * If a setState would be triggered during a touch with the intention to
    * scroll the setState would trigger a re-render & prevent the scrolling.
    */
-  _onTouchStartAtOption(event) {
+  _onTouchStartAtOption(event, index) {
     if (event.touches.length === 1) {
-      const entry = event.currentTarget.querySelector('[data-belle-value]');
-      this._touchStartedAt = entry.getAttribute('data-belle-value');
+      this._touchStartedAt = this._getValueForIndex(index);
 
       // save the scroll position
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
@@ -456,10 +455,9 @@ export default class Select extends Component {
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchEndAtOption() {
+  _onTouchEndAtOption(event, index) {
     if (this._touchStartedAt && !this._scrollActive) {
-      const entry = event.currentTarget.querySelector('[data-belle-value]');
-      const value = entry.getAttribute('data-belle-value');
+      const value = this._getValueForIndex(index);
       if (this._touchStartedAt === value) {
         event.preventDefault();
         this._triggerChange(value);
@@ -479,9 +477,8 @@ export default class Select extends Component {
   /**
    * Triggers a change event after the user clicked on an Option.
    */
-  _onClickAtOption(event) {
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
-    this._triggerChange(entry.getAttribute('data-belle-value'));
+  _onClickAtOption(index) {
+    this._triggerChange(this._getValueForIndex(index));
   }
 
   /**
@@ -520,10 +517,9 @@ export default class Select extends Component {
    * track of when an option is in focus by the user and depending on that
    * provide a visual indicator.
    */
-  _onMouseEnterAtOption(event) {
-    const entry = event.currentTarget.querySelector('[data-belle-value]');
+  _onMouseEnterAtOption(index) {
     this.setState({
-      focusedOptionValue: entry.getAttribute('data-belle-value'),
+      focusedOptionValue: this._getValueForIndex(index),
     });
   }
 
@@ -762,6 +758,13 @@ export default class Select extends Component {
   }
 
   /**
+   * Returns the value of the child with a certain index.
+   */
+  _getValueForIndex(index) {
+    return this.props.children[index].props.value;
+  }
+
+  /**
    * After an option has been selected the menu gets closed and the
    * selection processed.
    *
@@ -934,13 +937,13 @@ export default class Select extends Component {
                 const isHovered = entry.props.value === this.state.focusedOptionValue;
 
                 return (
-                  <li onClick={ ::this._onClickAtOption }
-                      onTouchStart={ ::this._onTouchStartAtOption }
+                  <li onClick={ () => this._onClickAtOption(index) }
+                      onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
                       onTouchMove={ ::this._onTouchMoveAtOption }
-                      onTouchEnd={ ::this._onTouchEndAtOption }
+                      onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
                       onTouchCancel={ ::this._onTouchCancelAtOption }
                       key={ index }
-                      onMouseEnter={ ::this._onMouseEnterAtOption }
+                      onMouseEnter={ () => this._onMouseEnterAtOption(index) }
                       role="option"
                       aria-selected={ isHovered }>
                     { entry }
