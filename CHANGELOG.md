@@ -7,17 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Require React 0.14.0 [#189](https://github.com/nikgraf/belle/issues/189)
 - [Button, Card, Choice, ComboBox, Option, Placeholder, Rating, Select, Separator, TextInput, Toggle] Removed the 'Belle ' prefix from displayName
-
-### Fixed
-- [Rating] Fix styling the wrapper [82087cb](https://github.com/nikgraf/belle/commit/82087cb220253486e31269c8a989e9cf26fec18e)
-- [Select] Fix rendering the selected option with a falsy value e.g. 0 [f0e5611](https://github.com/nikgraf/belle/commit/f0e5611cfce2da3833ed50bd7ac542501ae2999a)
-
-```
-<Select>
-  <Option value={ 0 }>Zero</Option>
-  <Option value={ 1 }>One</Option>
-</Select>
-```
+- [Button] Prevent sticky hover for touch devices by leveraging mouseEnter & mouseLeave instead of the :hover pseudo class [8f590e2](https://github.com/nikgraf/belle/commit/8f590e27bf0da53828ff7d8fdac32d759e480aa5)
 
 ### Added
 - [DatePicker] Add DatePicker component
@@ -31,6 +21,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ```
 <Spinner />
 ```
+
+### Fixed
+- [Rating] Fix styling the wrapper [82087cb](https://github.com/nikgraf/belle/commit/82087cb220253486e31269c8a989e9cf26fec18e)
+- [Select] Fix rendering the selected option with a falsy value e.g. 0 [f0e5611](https://github.com/nikgraf/belle/commit/f0e5611cfce2da3833ed50bd7ac542501ae2999a)
+- [Select] Fix hovering and selecting Options with values of type Number [09c52e3](https://github.com/nikgraf/belle/commit/09c52e3ad9f515218fb6fcc922ffcb55c52809a8)
+
+```
+<Select>
+  <Option value={ 0 }>Zero</Option>
+  <Option value={ 1 }>One</Option>
+</Select>
+```
+
+- [ComboBox] Fix hovering and selecting Options with values of type Number [64a2797](https://github.com/nikgraf/belle/commit/64a27974ecfa6f327063810484e1150d94276699)
 
 ### Removed
 - [Rating] Removed the `resetValue` function. Reseting should accomplished by making the Rating a controlled component and passing in the value as `undefined`. See an example below:
