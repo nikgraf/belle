@@ -31,7 +31,7 @@ function sanitizeChildProps(properties) {
     onMouseLeave,
     onFocus,
     onBlur,
-    ...childProps
+    ...childProps,
   } = properties;
   return childProps;
 }
