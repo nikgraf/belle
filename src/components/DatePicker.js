@@ -54,8 +54,8 @@ function sanitizeDisabledDayProps(properties) {
   return omit(properties, [
     'key',
     'ref',
-    'onMouseOver',
-    'onMouseOut',
+    'onMouseEnter',
+    'onMouseLeave',
     'style',
   ]);
 }
@@ -69,8 +69,8 @@ function sanitizeDayProps(properties) {
     'ref',
     'onMouseDown',
     'onMouseUp',
-    'onMouseOver',
-    'onMouseOut',
+    'onMouseEnter',
+    'onMouseLeave',
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
@@ -677,11 +677,11 @@ export default class DatePicker extends Component {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dateKey) {
       this._triggerSelectDate(day, month, year);
       this.setState({
-        // Note: updating focusedDateKey in mouseOver normally would be good enough,
+        // Note: updating focusedDateKey in mouseEnter normally would be good enough,
         // but it is necessary to set on mouseUp for the following edge case:
         // A user moves the cursor over a day. Moves on with the keyboard and
         // then without moving again just pressing the mouse. In this case
-        // mouseOver did not get called again.
+        // mouseEnter did not get called again.
         focusedDateKey: dateKey,
         activeDay: undefined,
       });
@@ -693,24 +693,24 @@ export default class DatePicker extends Component {
   }
 
   /**
-   * Callback is called when some day receives MouseOver. It will conditionally set this.state.focusedDateKey.
+   * Callback is called when some day receives MouseEnter. It will conditionally set this.state.focusedDateKey.
    */
-  _onDayMouseOver(dateKey) {
+  _onDayMouseEnter(dateKey) {
     if (!this.props.readOnly) {
       this.setState({
         focusedDateKey: dateKey,
       });
     }
 
-    if (this.props.dayProps && this.props.dayProps.onMouseOver) {
-      this.props.dayProps.onMouseOver(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseEnter) {
+      this.props.dayProps.onMouseEnter(event);
     }
   }
 
   /**
-   * Callback is called when some day receives MouseOut. It will reset this.state.focusedDateKey.
+   * Callback is called when some day receives MouseLeave. It will reset this.state.focusedDateKey.
    */
-  _onDayMouseOut(dateKey, event) {
+  _onDayMouseLeave(dateKey, event) {
     if (!this.props.readOnly && event.button === 0 && this.state.focusedDateKey === dateKey) {
       this.setState({
         focusedDateKey: undefined,
@@ -718,8 +718,8 @@ export default class DatePicker extends Component {
       });
     }
 
-    if (this.props.dayProps && this.props.dayProps.onMouseOut) {
-      this.props.dayProps.onMouseOut(event);
+    if (this.props.dayProps && this.props.dayProps.onMouseLeave) {
+      this.props.dayProps.onMouseLeave(event);
     }
   }
 
@@ -1193,8 +1193,8 @@ export default class DatePicker extends Component {
         <span key={ 'day-' + index }
               ref={ dateKey }
               style={ dayStyle }
-              onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
-              onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
+              onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
+              onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
               {...this.disabledDayProps}>
           { renderedDay }
         </span>
@@ -1206,8 +1206,8 @@ export default class DatePicker extends Component {
             ref={ dateKey }
             onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
             onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
-            onMouseOver={ this._onDayMouseOver.bind(this, dateKey) }
-            onMouseOut={ this._onDayMouseOut.bind(this, dateKey) }
+            onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
+            onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
             onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
             onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
             onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
