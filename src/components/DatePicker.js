@@ -206,7 +206,7 @@ export default class DatePicker extends Component {
       selectedDate = properties.defaultValue;
     }
 
-    if (properties.month) {
+    if (properties.defaultMonth) {
       month = properties.defaultMonth - 1;
     } else if (selectedDate) {
       month = selectedDate.getMonth();
@@ -214,7 +214,7 @@ export default class DatePicker extends Component {
       month = today().getMonth();
     }
 
-    if (properties.year) {
+    if (properties.defaultYear) {
       year = properties.defaultYear;
     } else if (selectedDate) {
       year = selectedDate.getFullYear();
