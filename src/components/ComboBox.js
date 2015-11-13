@@ -313,24 +313,21 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex when an option is touched.
    */
-  _onTouchStartAtOption(event) {
+  _onTouchStartAtOption(event, index) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this._touchStartedAt = Number(event.currentTarget.getAttribute('data-belle-index'));
-      this.setState({focusedOptionIndex: this._touchStartedAt});
+      this._touchStartedAt = index;
+      this.setState({focusedOptionIndex: index});
     }
   }
 
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchEndAtOption(event) {
+  _onTouchEndAtOption(event, index) {
     if (!this.props.disabled && this._touchStartedAt) {
-      const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       if (this._touchStartedAt === index) {
         event.preventDefault();
-        const entry = event.currentTarget.querySelector('[data-belle-value]');
-        const value = entry.getAttribute('data-belle-value');
-        this._triggerChange(value);
+        this._triggerChange(this._getValueForIndex(index));
       }
 
       this._touchStartedAt = undefined;
@@ -393,9 +390,8 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex for component when mouse enters an option.
    */
-  _onMouseEnterAtOption(event) {
+  _onMouseEnterAtOption(index) {
     if (!this.props.disabled) {
-      const index = Number(event.currentTarget.getAttribute('data-belle-index'));
       this.setState({
         focusedOptionIndex: index,
       });
@@ -416,10 +412,9 @@ export default class ComboBox extends Component {
   /**
    * Update component value when an option is clicked.
    */
-  _onClickAtOption(event) {
+  _onClickAtOption(index) {
     if (!this.props.disabled) {
-      const entry = event.currentTarget.querySelector('[data-belle-value]');
-      this._triggerChange(entry.getAttribute('data-belle-value'));
+      this._triggerChange(this._getValueForIndex(index));
     }
   }
 
@@ -571,6 +566,13 @@ export default class ComboBox extends Component {
   _onChange(event) {
     const value = event.target.value;
     this._userUpdateValue(value);
+  }
+
+  /**
+   * Returns the value of the child with a certain index.
+   */
+  _getValueForIndex(index) {
+    return this.props.children[index].props.value;
   }
 
   /**
@@ -736,12 +738,11 @@ export default class ComboBox extends Component {
             React.Children.map(this.filteredOptions, (entry, index) => {
               return (
                 <li key={ index }
-                    data-belle-index={ index }
-                    onTouchStart={ ::this._onTouchStartAtOption }
-                    onTouchEnd={ ::this._onTouchEndAtOption }
+                    onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
+                    onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
                     onTouchCancel={ ::this._onTouchCancelAtOption }
-                    onClick={ ::this._onClickAtOption }
-                    onMouseEnter={ ::this._onMouseEnterAtOption }
+                    onClick={ () => this._onClickAtOption(index) }
+                    onMouseEnter={ () => this._onMouseEnterAtOption(index) }
                     onMouseLeave={ ::this._onMouseLeaveAtOption }
                     onMouseDown={ (event) => event.preventDefault() }
                     role="option">
