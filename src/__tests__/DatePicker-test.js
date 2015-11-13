@@ -387,27 +387,27 @@ describe('DatePicker', () => {
       <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
-    TestUtils.Simulate.mouseOver(wrapper);
+    TestUtils.Simulate.mouseEnter(wrapper);
     expect(datePicker.state.isWrapperHovered).toBeTruthy();
-    TestUtils.Simulate.mouseOut(wrapper);
+    TestUtils.Simulate.mouseLeave(wrapper);
     expect(datePicker.state.isWrapperHovered).toBeFalsy();
 
     const disabledDatePicker = TestUtils.renderIntoDocument(
       <DatePicker disabled dayProps={{ className: 'day_test' }} className="wrapper_test"/>
     );
     const disabledWrapper = TestUtils.findRenderedDOMComponentWithClass(disabledDatePicker, 'wrapper_test');
-    TestUtils.Simulate.mouseOver(disabledWrapper);
+    TestUtils.Simulate.mouseEnter(disabledWrapper);
     expect(disabledDatePicker.state.isWrapperHovered).toBeTruthy();
-    TestUtils.Simulate.mouseOut(disabledWrapper);
+    TestUtils.Simulate.mouseLeave(disabledWrapper);
     expect(disabledDatePicker.state.isWrapperHovered).toBeFalsy();
 
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
       <DatePicker readOnly dayProps={{ className: 'day_test' }} className="wrapper_test"/>
     );
     const readOnlyWrapper = TestUtils.findRenderedDOMComponentWithClass(readOnlyDatePicker, 'wrapper_test');
-    TestUtils.Simulate.mouseOver(readOnlyWrapper);
+    TestUtils.Simulate.mouseEnter(readOnlyWrapper);
     expect(readOnlyDatePicker.state.isWrapperHovered).toBeTruthy();
-    TestUtils.Simulate.mouseOut(readOnlyWrapper);
+    TestUtils.Simulate.mouseLeave(readOnlyWrapper);
     expect(readOnlyDatePicker.state.isWrapperHovered).toBeFalsy();
   });
 
@@ -468,10 +468,10 @@ describe('DatePicker', () => {
       <DatePicker className="wrapper_test" hoverStyle={ {backgroundColor: 'red'} }/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
-    TestUtils.Simulate.mouseOver(wrapper);
+    TestUtils.Simulate.mouseEnter(wrapper);
     expect(datePicker.state.isWrapperHovered).toBeTruthy();
     expect(wrapper.getAttribute('style')).toContain('background-color: red');
-    TestUtils.Simulate.mouseOut(wrapper);
+    TestUtils.Simulate.mouseLeave(wrapper);
     expect(datePicker.state.isWrapperHovered).toBeFalsy();
   });
 
