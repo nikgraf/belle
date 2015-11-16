@@ -1,6 +1,21 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import style from '../style/info-tip';
+import {injectStyles} from '../utils/inject-style';
+
+/**
+ * Injects pseudo classes for styles into the DOM.
+ */
+function updatePseudoClassStyle() {
+  const styles = [
+    {
+      id: 'testing',
+      style: style.leftPointStyle,
+      pseudoClass: 'after',
+    },
+  ];
+  injectStyles(styles);
+}
 
 /**
  * InfoTip component
@@ -23,7 +38,8 @@ export default class InfoTip extends Component {
   static propTypes = {
     children: PropTypes.any.isRequired,
     targetId: PropTypes.string.isRequired,
-    position: PropTypes.string
+    position: PropTypes.string,
+    style: PropTypes.object
   };
 
   /**
@@ -35,6 +51,7 @@ export default class InfoTip extends Component {
 
   componentDidMount() {
     this._findTargetDetails();
+    updatePseudoClassStyle();
   }
 
   componentWillReceiveProps(properties) {
@@ -108,11 +125,13 @@ export default class InfoTip extends Component {
   render() {
     const infoTipStyle = {
       ...style.style,
+      ...this.props.style,
       ...this.infoTipPositions,
       ...{ visibility: this.state.showToolTip ? 'visible' : 'hidden'}
     };
     return (
-      <div style={ infoTipStyle }>
+      <div style={ infoTipStyle }
+           className="testing">
         { this.props.children }
       </div>
     );
@@ -120,5 +139,5 @@ export default class InfoTip extends Component {
 }
 
 /** TODO:
-- implementing separate styling for success, warning, error, info, etc
+- implementing separate styling for success, warning, error, info, etc, is that needed
 **/
