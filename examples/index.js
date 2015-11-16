@@ -12,6 +12,7 @@ import RatingPlayground from './components/RatingPlayground';
 import ComboBoxPlayground from './components/ComboBoxPlayground';
 import TogglePlayground from './components/TogglePlayground';
 import DatePickerPlayground from './components/DatePickerPlayground';
+import InfoTipPlayground from './components/InfoTipPlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
 if (true) {
@@ -78,6 +79,8 @@ const App = () => {
   return (
     <div style={ {margin: '0 auto', width: 300} }>
       <h1>Belle Playground</h1>
+
+      <InfoTipPlayground />
 
       <SpinnerPlayground />
 
