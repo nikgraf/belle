@@ -33,9 +33,11 @@
     "test:watch": "npm run test -- --watch",
     "lint": "npm run lint:eslint && npm run lint:jscs",
     "lint:eslint": "eslint ./",
-    "lint:jscs": "jscs ./"
+    "lint:jscs": "jscs ./",
+    "alex": "alex README.md"
   },
   "devDependencies": {
+    "alex": "^1.5.0",
     "babel": "^5.8.23",
     "babel-core": "^5.8.25",
     "babel-eslint": "^4.1.3",
