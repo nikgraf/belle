@@ -34,6 +34,13 @@ export default class ActionArea extends Component {
   };
 
   state = {
+    // Note: On touch devices mouseEnter is fired while mouseLeave is not.
+    // This would result in a hover effect that keeps active until another
+    // element is focused on. This would result in the same behaviour as using
+    // the :hover pseudo class. To prevent it from happening activating the
+    // hover state is prevented when a touch event has been triggered before.
+    // source: http://stackoverflow.com/a/22444532/837709
+    isIgnoringHover: false,
     isActive: false,
     isHovered: false,
   }
@@ -50,9 +57,12 @@ export default class ActionArea extends Component {
    * TODO
    */
   _onMouseEnter(event) {
-    this.setState({
-      isHovered: true,
-    });
+    if (!this.state.isIgnoringHover) {
+      this.setState({
+        isHovered: true,
+        isIgnoringHover: false,
+      });
+    }
 
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
@@ -109,6 +119,7 @@ export default class ActionArea extends Component {
     if (event.touches.length === 1) {
       this.setState({
         isActive: true,
+        isIgnoringHover: true,
       });
     }
 
@@ -123,6 +134,7 @@ export default class ActionArea extends Component {
   _onTouchEnd() {
     this.setState({
       isActive: false,
+      isIgnoringHover: true,
     });
 
     if (this.props.onTouchEnd) {
@@ -136,6 +148,7 @@ export default class ActionArea extends Component {
   _onTouchCancel() {
     this.setState({
       isActive: false,
+      isIgnoringHover: true,
     });
 
     if (this.props.onTouchCancel) {
