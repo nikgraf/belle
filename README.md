@@ -120,7 +120,7 @@ the system.
 
 ### High Performance
 
-The user should see affects of his actions instantly. Any delay can cause confusion
+The user should see affects of their actions instantly. Any delay can cause confusion
 and frustration. While instant certainly is not always possible Belle strives to
 provide an experience close to instant.
 
