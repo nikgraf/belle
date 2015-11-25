@@ -98,6 +98,14 @@ export default class Button extends Component {
       // pseudoClass is not supported on touch
       isActive: false,
       isHovered: false,
+
+      // Note: On touch devices mouseEnter is fired while mouseLeave is not.
+      // This would result in a hover effect that keeps active until another
+      // element is focused on. This would result in the same behaviour as using
+      // the :hover pseudo class. To prevent it from happening activating the
+      // hover state is prevented when a touch event has been triggered before.
+      // source: http://stackoverflow.com/a/22444532/837709
+      isIgnoringHover: false,
     };
 
     // The focused attribute is used to apply the one-time focus animation.
@@ -225,7 +233,10 @@ export default class Button extends Component {
    */
   _onTouchStart(event) {
     if (!this.props.disabled && event.touches.length === 1) {
-      this.setState({ isActive: true });
+      this.setState({
+        isActive: true,
+        isIgnoringHover: true,
+      });
     }
 
     if (this.props.onTouchStart) {
@@ -237,7 +248,10 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchEnd(event) {
-    this.setState({ isActive: false });
+    this.setState({
+      isActive: false,
+      isIgnoringHover: true,
+    });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -248,7 +262,10 @@ export default class Button extends Component {
    * Updates the button to be release.
    */
   _onTouchCancel(event) {
-    this.setState({ isActive: false });
+    this.setState({
+      isActive: false,
+      isIgnoringHover: true,
+    });
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
@@ -259,9 +276,12 @@ export default class Button extends Component {
    * As soon as the mouse enters the component the isHovered state is activated.
    */
   _onMouseEnter(event) {
-    this.setState({
-      isHovered: true,
-    });
+    if (!this.state.isIgnoringHover) {
+      this.setState({
+        isHovered: true,
+        isIgnoringHover: false,
+      });
+    }
 
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
