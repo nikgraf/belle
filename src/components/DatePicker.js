@@ -596,8 +596,8 @@ export default class DatePicker extends Component {
   }
 
   /**
-  * Function will handle pageUp key down event.
-  */
+   * Function will handle pageUp key down event.
+   */
   _onPageUpKeyDown(event) {
     // Moves to the same date in the previous month.
     event.preventDefault();
@@ -624,8 +624,8 @@ export default class DatePicker extends Component {
   }
 
   /**
-  * Function will handle pageDown key down event.
-  */
+   * Function will handle pageDown key down event.
+   */
   _onPageDownKeyDown(event) {
     // Moves to the same date in the next month.
     event.preventDefault();
@@ -744,7 +744,7 @@ export default class DatePicker extends Component {
    * It will reset this.state.activeDay and call props.onDayTouchEnd.
    */
   _onDayTouchEnd(dateKey, day, month, year, event) {
-    if (!this.props.disabled && !this.props.readOnly && event.touches.length === 1) {
+    if (!this.props.disabled && !this.props.readOnly) {
       this._triggerSelectDate(day, month, year);
       if (this.state.activeDay === dateKey) {
         this.setState({
