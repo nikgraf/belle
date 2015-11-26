@@ -43,13 +43,6 @@ function sanitizeChildProps(properties) {
  * @param properties {object} - the components properties optionally containing custom styles
  */
 function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAndClick) {
-  const baseActiveStyle = properties.primary ? buttonStyle.primaryActiveStyle : buttonStyle.activeStyle;
-
-  const activeStyle = {
-    ...baseActiveStyle,
-    ...properties.activeStyle,
-  };
-
   let focusStyle;
   if (preventFocusStyleForTouchAndClick) {
     focusStyle = { outline: 0 };
@@ -62,11 +55,6 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
   }
 
   const styles = [
-    {
-      id: styleId,
-      style: activeStyle,
-      pseudoClass: 'active',
-    },
     {
       id: styleId,
       style: focusStyle,
