@@ -28,6 +28,12 @@ const toggleStyle = {
     width: 104,
     transition: 'left 0.1s',
     transitionTimingFunction: 'ease-in-out',
+
+    /*
+    Prevent flickering while tapping on WebKit
+    http://stackoverflow.com/a/3516243/837709
+    */
+    WebkitTapHighlightColor: 'transparent',
   },
 
   sliderWrapperStyle: {
