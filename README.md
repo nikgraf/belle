@@ -164,7 +164,7 @@ Thanks to [Andrey Popp](https://github.com/andreypopp) & [Eugene](https://github
 
 Thanks to Christian Steiner from [http://www.cropd.at/](http://cropd.at) for creating the logo and helping out with the design.
 
-Special thanks to [https://github.com/jpuri](Jyoti Puri) for the tremendous amount of work she put into this endeavor.
+Special thanks to [Jyoti Puri](https://github.com/jpuri) for the tremendous amount of work she put into this endeavor.
 
 ## License
 
