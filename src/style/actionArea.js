@@ -3,7 +3,6 @@ const actionAreaStyle = {
   style: {
     boxSizing: 'border-box',
     color: '#716D6D',
-    cursor: 'pointer',
     fontSize: 17,
     paddingTop: '11px',
     paddingBottom: '11px',
@@ -44,6 +43,7 @@ const actionAreaStyle = {
 
   hoverStyle: {
     background: '#EEE',
+    cursor: 'pointer',
   },
 
   activeStyle: {
