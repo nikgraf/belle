@@ -12,14 +12,14 @@ export default React.createClass({
   getInitialState() {
     return {
       showTextInput: true,
-      inputValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      inputValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     };
   },
 
   render() {
     const valueLink = {
       value: this.state.inputValue,
-      requestChange: this._handleChange
+      requestChange: this._handleChange,
     };
 
     return (
@@ -48,22 +48,24 @@ export default React.createClass({
         <div style={ {width: 250} }>
           <TextInput allowNewLine={false}
                      value={ this.state.inputValue }
-                     onUpdate={ (event) => {console.log(event.value); this._handleChange(event.value); } }/>
+                     onUpdate={ (event) => {
+                       console.log(event.value);
+                       this._handleChange(event.value);
+                     }}/>
         </div>
         <br />
 
         {/* Full width TextInput */}
-        <div style={ {position: 'relative'} }>
+        <div style={{position: 'relative'}}>
           <TextInput defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this"/>
         </div>
         <br />
 
         {/* TextInput with placeholder & a minHeight & custom hoverStyle */}
-        <div style={ {width: 250} }>
+        <div style={{width: 250}}>
           <TextInput minHeight={120}
-                 placeholder="What is going on? Ohh, we provided a minHeight & a custom hoverStyle & focusStyle here."
-                 hoverStyle={ { borderBottom: '1px red solid' } }
-                 focusStyle={ { borderBottom: '1px brown solid' } } />
+                     placeholder="What is going on? Ohh, we provided a minHeight & a custom hoverStyle & focusStyle here."
+                     focusStyle={{borderBottom: '1px brown solid'}} />
         </div>
 
         <h3>Test with 3 min rows & 5 max rows</h3>
@@ -100,8 +102,8 @@ export default React.createClass({
 
   _removeTextInput() {
     this.setState({
-      showTextInput: false
+      showTextInput: false,
     });
-  }
+  },
 
 });
