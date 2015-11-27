@@ -110,8 +110,8 @@ export default class TextInput extends Component {
     this.state = {
       height: 'auto',
       inputValue: inputValue,
-      textareaProps: sanitizeChildProps(properties),
     };
+    this.textareaProps = sanitizeChildProps(properties);
   }
 
   static displayName = 'TextInput';
@@ -165,8 +165,9 @@ export default class TextInput extends Component {
    * properties the height might have changed.
    */
   componentWillReceiveProps(properties) {
+    // Makes sure we have inputValue available when triggering a resize.
     const newState = {
-      textareaProps: sanitizeChildProps(properties),
+      inputValue: this.state.inputValue,
     };
     if (has(properties, 'valueLink')) {
       newState.inputValue = properties.valueLink.value;
@@ -174,10 +175,10 @@ export default class TextInput extends Component {
       newState.inputValue = properties.value;
     }
 
-    this.setState(newState);
+    this.textareaProps = sanitizeChildProps(properties);
     removeStyle(this._styleId);
     updatePseudoClassStyle(this._styleId, properties);
-    this._triggerResize(newState.inputValue);
+    this.setState(newState, () => this._triggerResize(newState.inputValue));
   }
 
   /**
@@ -262,7 +263,7 @@ export default class TextInput extends Component {
                 className={ unionClassNames(this.props.className, this._styleId) }
                 onChange={ ::this._onChange }
                 onKeyDown={ ::this._onKeyDown }
-                { ...this.state.textareaProps } />
+                { ...this.textareaProps } />
     );
   }
 }
