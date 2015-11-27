@@ -63,7 +63,10 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * As soon as the mouse enters the component the isHovered state is activated.
+   *
+   * The state isHovered is not set to true in case onMouseEnter was triggered
+   * by a touch event.
    */
   _onMouseEnter(event) {
     if (!this.state.isIgnoringHover) {
@@ -79,7 +82,7 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Deactivate the isHovered state.
    */
   _onMouseLeave(event) {
     this.setState({
@@ -92,7 +95,7 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Activates the active state in case the main mouse button was pressed.
    */
   _onMouseDown(event) {
     if (event.button === 0) {
@@ -107,7 +110,9 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Triggers onUpdate in case the mouse button was pressed on this element.
+   *
+   * In addition the active state is deactivated.
    */
   _onMouseUp(event) {
     const isActive = this.state.isActive;
@@ -127,7 +132,8 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Updates the button to be active and makes sure the next onMouseEnter is
+   * ignored.
    */
   _onTouchStart(event) {
     if (event.touches.length === 1) {
@@ -143,7 +149,8 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Triggers onUpdate in case the touch event started on this element and makes
+   * sure the next onMouseEnter is ignored.
    */
   _onTouchEnd() {
     const isActive = this.state.isActive;
@@ -163,7 +170,8 @@ export default class ActionArea extends Component {
   }
 
   /**
-   * TODO
+   * Updates the button to be release and makes sure the next onMouseEnter is
+   * ignored.
    */
   _onTouchCancel() {
     this.setState({
