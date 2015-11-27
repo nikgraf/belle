@@ -3,6 +3,14 @@ import actionAreaStyle from '../style/actionArea';
 
 /**
  * ActionArea
+ *
+ * The purpose of this component is to provide a button like behaviour for a
+ * click like interaction within other components. Button can't be used in such
+ * cases as it always will have it's own focus which is not desired in
+ * components like DatePicker e.g. next month button.
+ *
+ * Note: Use the ActionArea's onUpdate instead of onClick as otherwise on iOS9
+ * the ActionArea will trigger onFocus for it's parent with a set tabindex.
  */
 export default class ActionArea extends Component {
 
@@ -30,6 +38,7 @@ export default class ActionArea extends Component {
 
     // TODO investigate how we solve mouseUp in other compents (like the right click edgecase)
     onMouseUp: PropTypes.func,
+    onUpdate: PropTypes.func,
     style: PropTypes.object,
   };
 
@@ -101,6 +110,7 @@ export default class ActionArea extends Component {
    * TODO
    */
   _onMouseUp(event) {
+    const isActive = this.state.isActive;
     if (event.button === 0) {
       this.setState({
         isActive: false,
@@ -109,6 +119,10 @@ export default class ActionArea extends Component {
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
+    }
+
+    if (event.button === 0 && isActive && this.props.onUpdate) {
+      this.props.onUpdate({});
     }
   }
 
@@ -132,6 +146,8 @@ export default class ActionArea extends Component {
    * TODO
    */
   _onTouchEnd() {
+    const isActive = this.state.isActive;
+
     this.setState({
       isActive: false,
       isIgnoringHover: true,
@@ -139,6 +155,10 @@ export default class ActionArea extends Component {
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
+    }
+
+    if (isActive && this.props.onUpdate) {
+      this.props.onUpdate({});
     }
   }
 

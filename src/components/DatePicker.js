@@ -947,7 +947,7 @@ export default class DatePicker extends Component {
     }
 
     return (
-      <ActionArea onClick={ ::this._onClickPrevMonth }
+      <ActionArea onUpdate={ ::this._onClickPrevMonth }
                   style={ prevMonthNavStyle }
                   className={ className }
                   { ...this.prevMonthNavProps }>
@@ -974,7 +974,7 @@ export default class DatePicker extends Component {
     }
 
     return (
-      <ActionArea onClick={ ::this._onClickNextMonth }
+      <ActionArea onUpdate={ ::this._onClickNextMonth }
                   style= { nextMonthNavStyle }
                   className={ className }
                   { ...this.nextMonthNavProps }>
