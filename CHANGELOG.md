@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Require React 0.14.0 [#189](https://github.com/nikgraf/belle/issues/189)
 - [Button, Card, Choice, ComboBox, Option, Placeholder, Rating, Select, Separator, TextInput, Toggle] Removed the 'Belle ' prefix from displayName
 - [Button] Prevent sticky hover for touch devices by leveraging mouseEnter & mouseLeave instead of the :hover pseudo class [8f590e2](https://github.com/nikgraf/belle/commit/8f590e27bf0da53828ff7d8fdac32d759e480aa5)
+- [Toggle] Hide Webkit tap highlight on touch [5faf2c5](https://github.com/nikgraf/belle/commit/5faf2c56a05f461b20795fc4c097d5259aca3e54)
 
 ### Added
 - [DatePicker] Add DatePicker component
@@ -35,6 +36,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ```
 
 - [ComboBox] Fix hovering and selecting Options with values of type Number [64a2797](https://github.com/nikgraf/belle/commit/64a27974ecfa6f327063810484e1150d94276699)
+- [TextInput] fix calculating the height in case a defaultValue was provided and props were updated [f1a9bc2](https://github.com/nikgraf/belle/commit/f1a9bc2ee0c3fdb74daf805b854fa0c20a249439)
 
 ### Removed
 - [Rating] Removed the `resetValue` function. Reseting should accomplished by making the Rating a controlled component and passing in the value as `undefined`. See an example below:
