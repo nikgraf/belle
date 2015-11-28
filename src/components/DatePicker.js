@@ -89,6 +89,7 @@ function sanitizeNavBarProps(properties) {
 
 function sanitizePrevMonthNavProps(properties) {
   return omit(properties, [
+    'aria-label',
     'className',
     'onClick',
     'style',
@@ -103,6 +104,7 @@ function sanitizePrevMonthNavIconProps(properties) {
 
 function sanitizeNextMonthNavProps(properties) {
   return omit(properties, [
+    'aria-label',
     'className',
     'onClick',
     'style',
@@ -950,6 +952,7 @@ export default class DatePicker extends Component {
       <ActionArea onUpdate={ ::this._onClickPrevMonth }
                   style={ prevMonthNavStyle }
                   className={ className }
+                  aria-label="Go to previous month"
                   { ...this.prevMonthNavProps }>
         <div style={ prevMonthNavIconStyle }
              { ...this.prevMonthNavIconProps }/>
@@ -977,6 +980,7 @@ export default class DatePicker extends Component {
       <ActionArea onUpdate={ ::this._onClickNextMonth }
                   style= { nextMonthNavStyle }
                   className={ className }
+                  aria-label="Go to next month"
                   { ...this.nextMonthNavProps }>
         <div style={ nextMonthNavIconStyle }
              { ...this.nextMonthNavIconProps } />

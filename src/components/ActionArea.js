@@ -203,7 +203,8 @@ export default class ActionArea extends Component {
     }
 
     return (
-      <div {...this.childProps}
+      <div role="button"
+           {...this.childProps}
            onMouseDown={ ::this._onMouseDown }
            onMouseUp={ ::this._onMouseUp }
            onMouseEnter={ ::this._onMouseEnter }
