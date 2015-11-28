@@ -74,7 +74,6 @@ function sanitizeDayProps(properties) {
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
-    'aria-current',
     'aria-selected',
     'style',
     'role',
@@ -1074,7 +1073,6 @@ export default class DatePicker extends Component {
     );
   }
 
-  // According to http://www.w3.org/TR/wai-aria-1.1/#aria-current an empty value for aria-current indicated false.
   /**
    * Function will return jsx for rendering the a day.
    * It will apply various styles in sequence as below (styles will be additive):
@@ -1098,7 +1096,6 @@ export default class DatePicker extends Component {
     const dateKey = convertDateToDateKey(currentDate);
     const isDisabledDay = !this._isWithinMinAndMax(currentDate);
 
-    let ariaCurrent = '';
     let ariaSelected = false;
 
     let dayStyle = {
@@ -1144,7 +1141,6 @@ export default class DatePicker extends Component {
         ...defaultStyle.todayStyle,
         ...this.props.todayStyle,
       };
-      ariaCurrent = 'date';
     }
 
     if (this.state.selectedDate && day === this.state.selectedDate.getDate()
@@ -1215,7 +1211,6 @@ export default class DatePicker extends Component {
             onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
             onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
             onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
-            aria-current={ ariaCurrent }
             aria-selected={ ariaSelected }
             style={ dayStyle }
             role="gridcell"
