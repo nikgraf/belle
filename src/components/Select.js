@@ -761,7 +761,7 @@ export default class Select extends Component {
    * Returns the value of the child with a certain index.
    */
   _getValueForIndex(index) {
-    return this.props.children[index].props.value;
+    return this.options[index].props.value;
   }
 
   /**
@@ -792,6 +792,42 @@ export default class Select extends Component {
     if (this.props.onUpdate) {
       this.props.onUpdate({ value: value });
     }
+  }
+
+  _renderChildren() {
+    let optionsIndex = 0;
+
+    return (
+      React.Children.map(this.children, (entry, index) => {
+        if (isOption(entry)) { // filter out all non-Option Components
+          const localOptionIndex = optionsIndex;
+          const isHovered = entry.props.value === this.state.focusedOptionValue;
+          const element = (
+            <li onClick={ () => this._onClickAtOption(localOptionIndex) }
+                onTouchStart={ (event) => this._onTouchStartAtOption(event, localOptionIndex) }
+                onTouchMove={ ::this._onTouchMoveAtOption }
+                onTouchEnd={ (event) => this._onTouchEndAtOption(event, localOptionIndex) }
+                onTouchCancel={ ::this._onTouchCancelAtOption }
+                key={ index }
+                onMouseEnter={ () => this._onMouseEnterAtOption(localOptionIndex) }
+                role="option"
+                aria-selected={ isHovered }>
+              { entry }
+            </li>
+          );
+          optionsIndex++;
+
+          return element;
+        } else if (isSeparator(entry)) {
+          return (
+            <li key={ index }
+                role="presentation">
+              { entry }
+            </li>
+          );
+        }
+      })
+    );
   }
 
   render() {
@@ -931,34 +967,7 @@ export default class Select extends Component {
             aria-labelledby={ this.state.selectedOptionWrapperId }
             ref="menu"
             {...this.state.menuProps} >
-          {
-            React.Children.map(this.children, (entry, index) => {
-              if (isOption(entry)) { // filter out all non-Option Components
-                const isHovered = entry.props.value === this.state.focusedOptionValue;
-
-                return (
-                  <li onClick={ () => this._onClickAtOption(index) }
-                      onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
-                      onTouchMove={ ::this._onTouchMoveAtOption }
-                      onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
-                      onTouchCancel={ ::this._onTouchCancelAtOption }
-                      key={ index }
-                      onMouseEnter={ () => this._onMouseEnterAtOption(index) }
-                      role="option"
-                      aria-selected={ isHovered }>
-                    { entry }
-                  </li>
-                );
-              } else if (isSeparator(entry)) {
-                return (
-                  <li key={ index }
-                      role="presentation">
-                    { entry }
-                  </li>
-                );
-              }
-            })
-          }
+          { this._renderChildren() }
         </ul>
 
       </div>
