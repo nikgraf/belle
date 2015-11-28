@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.0 - 2015-11-28
+
 ### Changed
 - Require React 0.14.0 [#189](https://github.com/nikgraf/belle/issues/189)
 - [Button, Card, Choice, ComboBox, Option, Placeholder, Rating, Select, Separator, TextInput, Toggle] Removed the 'Belle ' prefix from displayName
