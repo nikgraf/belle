@@ -148,7 +148,7 @@ export default class TextInput extends Component {
    * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
   }
