@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.1 - 2015-12-06
+
+### Fixed
+
+- [Button, ComboBox, DatePicker, Rating, Select, TextInput, Toggle] Fix styling issues when the component has a complex React id generated through API's like `createFragment` [c73d06d](https://github.com/nikgraf/belle/commit/c73d06d9ec6f47661657b42e86a6c3a75cc0dc70)
+
 ## 2.0.0 - 2015-11-28
 
 ### Changed
