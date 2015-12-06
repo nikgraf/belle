@@ -161,7 +161,7 @@ export default class Rating extends Component {
    * Apply pseudo class styling to the wrapper div.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
 

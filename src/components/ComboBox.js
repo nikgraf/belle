@@ -273,7 +273,7 @@ export default class ComboBox extends Component {
    * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/\./g, '-');
+    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
     this._styleId = `style-id${id}`;
     this._caretStyleId = `caretStyle-id${id}`;
     updatePseudoClassStyle(this._styleId, this._caretStyleId, this.props);
