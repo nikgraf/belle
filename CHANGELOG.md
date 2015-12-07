@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.3 - 2015-12-07
+
+### Fixed
+
+- [Select] Ensure the exact same markup is generated every time the element is rendered [#155](https://github.com/nikgraf/belle/issues/155#issuecomment-162403607)
+
 ## 2.0.2 - 2015-12-06
 
 ### Fixed
