@@ -277,18 +277,6 @@ export function union(...arrs) {
   }
 }
 
-let idCounter = 0;
-
-/**
- * Generate a globally-unique id.
- *
- * @param {string} [prefix] - if prefix is passed, the id will be appended to it.
- */
-export function uniqueId(prefix) {
-  const id = ++idCounter + '';
-  return prefix ? prefix + id : id;
-}
-
 /**
  * Recursive function for flattening an iterable.
  *
