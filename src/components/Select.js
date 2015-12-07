@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import {omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, uniqueId, has, some} from '../utils/helpers';
+import {omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some} from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import {injectStyles, removeStyle} from '../utils/inject-style';
@@ -240,7 +240,6 @@ export default class Select extends Component {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       menuProps: sanitizeMenuProps(properties.menuProps),
       caretProps: sanitizeCaretProps(properties.caretProps),
-      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
       isTouchedToToggle: false,
     };
   }
@@ -283,6 +282,7 @@ export default class Select extends Component {
     disabledStyle: PropTypes.object,
     disabledHoverStyle: PropTypes.object,
     disabledCaretToOpenStyle: PropTypes.object,
+    id: PropTypes.string,
     onClick: PropTypes.func,
     onTouchCancel: PropTypes.func,
     onMouseDown: PropTypes.func,
@@ -317,7 +317,11 @@ export default class Select extends Component {
    * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = this._getId();
+
+    // Note: To ensure server side rendering creates the same results React's internal
+    // id for this element is leveraged.
+    this.selectedOptionWrapperId = this.props.id ? this.props.id : `belle-select-id-${id}`;
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
 
@@ -338,7 +342,6 @@ export default class Select extends Component {
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       menuProps: sanitizeMenuProps(properties.menuProps),
       caretProps: sanitizeCaretProps(properties.caretProps),
-      selectedOptionWrapperId: properties.id ? properties.id : `belle-select-id-${uniqueId()}`,
     };
 
     if (has(properties, 'valueLink')) {
@@ -765,6 +768,13 @@ export default class Select extends Component {
   }
 
   /**
+   * Returns a in the DOM unique ID based on React's internal id.
+   */
+  _getId() {
+    return this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+  }
+
+  /**
    * After an option has been selected the menu gets closed and the
    * selection processed.
    *
@@ -954,7 +964,7 @@ export default class Select extends Component {
              ref="selectedOptionWrapper"
              role="button"
              aria-expanded={ this.state.isOpen }
-             id={ this.state.selectedOptionWrapperId }
+             id={ this.selectedOptionWrapperId }
              {...this.state.selectedOptionWrapperProps} >
           { selectedOptionOrPlaceholder }
           <span style={ caretStyle }
@@ -964,7 +974,7 @@ export default class Select extends Component {
 
         <ul style={ computedMenuStyle }
             role="listbox"
-            aria-labelledby={ this.state.selectedOptionWrapperId }
+            aria-labelledby={ this.selectedOptionWrapperId }
             ref="menu"
             {...this.state.menuProps} >
           { this._renderChildren() }
