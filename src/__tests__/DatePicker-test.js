@@ -201,7 +201,7 @@ describe('DatePicker', () => {
     expect(prevFocusedDate.getDate() === nextFocusedDate.getDate()).toBeTruthy();
   });
 
-  it.only('should show days in decreasing order if RTL for locale is true', () => {
+  it('should show days in decreasing order if RTL for locale is true', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker dayProps={{ className: 'date_picker_day' }} locale="ar"/>
     );

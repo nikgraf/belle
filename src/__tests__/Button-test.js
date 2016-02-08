@@ -141,7 +141,7 @@ describe('Button', () => {
     expect(injectStyle.removeStyle.mock.calls.length).toBe(1);
   });
 
-  it.only('should set isHovered state to true on mouseEnter and false on mouseLeave', () => {
+  it('should set isHovered state to true on mouseEnter and false on mouseLeave', () => {
     const button = TestUtils.renderIntoDocument(
       <Button>Follow</Button>
     );
