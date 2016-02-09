@@ -971,8 +971,8 @@ export default class DatePicker extends Component {
     };
 
     let className = this.pseudoStyleIds.nextMonthNavStyleId;
-    if (this.props.prevMonthNavProps) {
-      className = unionClassNames(this.props.prevMonthNavProps.className, className);
+    if (this.props.nextMonthNavProps) {
+      className = unionClassNames(this.props.nextMonthNavProps.className, className);
     }
 
     return (

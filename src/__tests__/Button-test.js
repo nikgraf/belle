@@ -39,7 +39,7 @@ describe('Button', () => {
 
       const styles = injectStyle.injectStyles.mock.calls[0][0];
       expect(styles[0].pseudoClass).toBe('active');
-      expect(styles[1].pseudoClass).toBe('focus');
+      expect(styles[2].pseudoClass).toBe('focus');
     });
   });
 
@@ -124,8 +124,8 @@ describe('Button', () => {
 
     expect(styles[0].pseudoClass).toBe('active');
     expect(styles[0].style.color).toBe('green');
-    expect(styles[1].pseudoClass).toBe('focus');
-    expect(styles[1].style.color).toBe('brown');
+    expect(styles[2].pseudoClass).toBe('focus');
+    expect(styles[2].style.color).toBe('brown');
   });
 
   it('should remove the custom styles from the dom when the button unmounts', () => {
@@ -141,7 +141,7 @@ describe('Button', () => {
     expect(injectStyle.removeStyle.mock.calls.length).toBe(1);
   });
 
-  it.only('should set isHovered state to true on mouseEnter and false on mouseLeave', () => {
+  it('should set isHovered state to true on mouseEnter and false on mouseLeave', () => {
     const button = TestUtils.renderIntoDocument(
       <Button>Follow</Button>
     );
