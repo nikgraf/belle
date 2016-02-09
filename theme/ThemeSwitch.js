@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {Button} from 'belle';
+import { Button } from 'belle';
 
 export default React.createClass({
 
@@ -23,21 +23,27 @@ export default React.createClass({
         </p>
 
         <div>
-          <Button onClick={ () => this._onSwitchTheme('belle') }
-                  primary
-                  disabled={ currentTheme === 'belle' || currentTheme === undefined }>
+          <Button
+            onClick={ () => this._onSwitchTheme('belle') }
+            primary
+            disabled={ currentTheme === 'belle' || currentTheme === undefined }
+          >
             Belle
           </Button>
-          <Button onClick={ () => this._onSwitchTheme('bootstrap') }
-                  style={{ marginLeft: 10 }}
-                  primary
-                  disabled={ currentTheme === 'bootstrap' }>
+          <Button
+            onClick={ () => this._onSwitchTheme('bootstrap') }
+            style={{ marginLeft: 10 }}
+            primary
+            disabled={ currentTheme === 'bootstrap' }
+          >
             Bootstrap
           </Button>
-          <Button onClick={ () => this._onSwitchTheme('belle-with-default-focus') }
-                  style={{ marginLeft: 10 }}
-                  primary
-                  disabled={ currentTheme === 'belle-with-default-focus' }>
+          <Button
+            onClick={ () => this._onSwitchTheme('belle-with-default-focus') }
+            style={{ marginLeft: 10 }}
+            primary
+            disabled={ currentTheme === 'belle-with-default-focus' }
+          >
             Belle with default focus behaviour
           </Button>
         </div>

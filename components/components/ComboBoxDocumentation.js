@@ -1,59 +1,59 @@
 /* eslint-disable no-console */
 import React from 'react';
-import {ComboBox, Option} from 'belle';
+import { ComboBox, Option } from 'belle';
 import Code from '../Code';
-import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
+import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 
 const animals = [
-  {name: 'Abyssinian', description: 'The oldest breed of cat in the world!', image: 'images/abyssinian.jpg'},
-  {name: 'Albatross', description: 'The largest wingspan of any bird!', image: 'images/albatross.jpg'},
-  {name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg'},
-  {name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg'},
-  {name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg'},
-  {name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg'},
+  { name: 'Abyssinian', description: 'The oldest breed of cat in the world!', image: 'images/abyssinian.jpg' },
+  { name: 'Albatross', description: 'The largest wingspan of any bird!', image: 'images/albatross.jpg' },
+  { name: 'Angelfish', description: 'There are 100 different species!', image: 'images/angelfish.jpg' },
+  { name: 'Ant', description: 'First evolved 100 million years ago!', image: 'images/ant.jpg' },
+  { name: 'Antelope', description: 'Renew their horns every year!', image: 'images/antelope.jpg' },
+  { name: 'Asian Elephant', description: 'Domesticated for hundreds of years!', image: 'images/asian_elephant.jpg' },
 ];
 
 const currencies = [
-  {code: 'AUD', name: 'Australia Dollar'},
-  {code: 'BRL', name: 'Brazil Real'},
-  {code: 'CAD', name: 'Canada Dollar'},
-  {code: 'CNY', name: 'China Yuan Renminbi'},
-  {code: 'CRC', name: 'Costa Rica Colon'},
-  {code: 'CUP', name: 'Cuba Peso'},
-  {code: 'EGP', name: 'Egypt Pound'},
-  {code: 'HKD', name: 'Hong Kong Dollar'},
-  {code: 'NZD', name: 'New Zealand Dollar'},
-  {code: 'SEK', name: 'Sweden Krona'},
-  {code: 'GBP', name: 'United Kingdom Pound'},
-  {code: 'USD', name: 'United States Dollar'},
+  { code: 'AUD', name: 'Australia Dollar' },
+  { code: 'BRL', name: 'Brazil Real' },
+  { code: 'CAD', name: 'Canada Dollar' },
+  { code: 'CNY', name: 'China Yuan Renminbi' },
+  { code: 'CRC', name: 'Costa Rica Colon' },
+  { code: 'CUP', name: 'Cuba Peso' },
+  { code: 'EGP', name: 'Egypt Pound' },
+  { code: 'HKD', name: 'Hong Kong Dollar' },
+  { code: 'NZD', name: 'New Zealand Dollar' },
+  { code: 'SEK', name: 'Sweden Krona' },
+  { code: 'GBP', name: 'United Kingdom Pound' },
+  { code: 'USD', name: 'United States Dollar' },
 ];
 
 const destinations = [
-  {code: '1', name: 'Marrakech, Morocco'},
-  {code: '2', name: 'Siem Reap, Cambodia'},
-  {code: '3', name: 'Istanbul, Turkey'},
-  {code: '4', name: 'Hanoi, Vietnam'},
-  {code: '6', name: 'London, United Kingdom'},
-  {code: '7', name: 'Rome, Italy'},
-  {code: '5', name: 'Prague, Czech Republic'},
-  {code: '8', name: 'Buenos Aires, Argentina'},
-  {code: '9', name: 'Paris, France'},
-  {code: '10', name: 'Cape Town Central, South Africa'},
-  {code: '11', name: 'New York City, New York'},
-  {code: '12', name: 'Zermatt, Switzerland'},
-  {code: '13', name: 'Barcelona, Spain'},
-  {code: '14', name: 'Goreme, Turkey'},
-  {code: '15', name: 'Ubud, Indonesia'},
-  {code: '16', name: 'Cusco, Peru'},
-  {code: '17', name: 'St. Petersburg, Russia'},
-  {code: '18', name: 'Bangkok, Thailand'},
-  {code: '19', name: 'Kathmandu, Nepal'},
-  {code: '20', name: 'Athens, Greece'},
-  {code: '21', name: 'Budapest, Hungary'},
-  {code: '22', name: 'Queenstown, New Zealand'},
-  {code: '23', name: 'Hong Kong, China'},
-  {code: '24', name: 'Dubai, United Arab Emirates'},
-  {code: '25', name: 'Sydney, Australia'},
+  { code: '1', name: 'Marrakech, Morocco' },
+  { code: '2', name: 'Siem Reap, Cambodia' },
+  { code: '3', name: 'Istanbul, Turkey' },
+  { code: '4', name: 'Hanoi, Vietnam' },
+  { code: '6', name: 'London, United Kingdom' },
+  { code: '7', name: 'Rome, Italy' },
+  { code: '5', name: 'Prague, Czech Republic' },
+  { code: '8', name: 'Buenos Aires, Argentina' },
+  { code: '9', name: 'Paris, France' },
+  { code: '10', name: 'Cape Town Central, South Africa' },
+  { code: '11', name: 'New York City, New York' },
+  { code: '12', name: 'Zermatt, Switzerland' },
+  { code: '13', name: 'Barcelona, Spain' },
+  { code: '14', name: 'Goreme, Turkey' },
+  { code: '15', name: 'Ubud, Indonesia' },
+  { code: '16', name: 'Cusco, Peru' },
+  { code: '17', name: 'St. Petersburg, Russia' },
+  { code: '18', name: 'Bangkok, Thailand' },
+  { code: '19', name: 'Kathmandu, Nepal' },
+  { code: '20', name: 'Athens, Greece' },
+  { code: '21', name: 'Budapest, Hungary' },
+  { code: '22', name: 'Queenstown, New Zealand' },
+  { code: '23', name: 'Hong Kong, China' },
+  { code: '24', name: 'Dubai, United Arab Emirates' },
+  { code: '25', name: 'Sydney, Australia' },
 ];
 
 const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];
@@ -223,7 +223,7 @@ export default React.createClass({
   render() {
     return (<div>
 
-      <h2 style={ {marginTop: 0, marginBottom: 40} }>ComboBox</h2>
+      <h2 style={ { marginTop: 0, marginBottom: 40 } }>ComboBox</h2>
 
       <ComboBox placeholder="Choose a State">
         <Option value="Alabama">Alabama</Option>
@@ -232,7 +232,7 @@ export default React.createClass({
         <Option value="Arkansas">Arkansas</Option>
       </ComboBox>
 
-      <Code value={ basicCodeExample } style={ {marginTop: 40} } />
+      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
 
 
       <h3>Properties</h3>
@@ -318,7 +318,7 @@ export default React.createClass({
               3. isOptionSelection, true when combo-box is updated by user selecting an option (point:1 above).<br/>
               4. isMatchingOption, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
             </p>
-            <Code value={ onUpdateCode } style={ {marginTop: 40} } />
+            <Code value={ onUpdateCode } style={ { marginTop: 40 } } />
           </td>
         </tr>
 
@@ -673,7 +673,7 @@ export default React.createClass({
 
       <p>
         Any other property valid for an input element like
-        <span style={ {color: 'grey'} }> placeholder, onFocus, onBlur…</span><br />
+        <span style={ { color: 'grey' } }> placeholder, onFocus, onBlur…</span><br />
       </p>
 
       <h3>Internal HTML Structure</h3>
@@ -683,126 +683,144 @@ export default React.createClass({
         in order to use the API
       </p>
 
-      <Code value={ htmlStructure } style={ {marginTop: 40} } />
+      <Code value={ htmlStructure } style={ { marginTop: 40 } } />
 
       <h3>More Examples</h3>
 
       <h4>ComboBox with a caret and each option having an image & description</h4>
 
-      <ComboBox placeholder = { 'Choose an Animal' }
-                defaultValue = "Ant"
-                displayCaret>
+      <ComboBox
+        placeholder = { 'Choose an Animal' }
+        defaultValue = "Ant"
+        displayCaret
+      >
         {
-          animals.map((animal, index) => {
-            return (
-              <Option value={ animal.name }
-                      style={{
-                        padding: '5px 0 5px 60px',
-                        marginBottom: '5px',
-                        height: 50,
-                        background: 'url(' + animal.image + ') no-repeat',
-                        backgroundSize: '50px 50px',
-                      }}
-                      hoverStyle={{
-                        padding: '5px 0 5px 60px',
-                        marginBottom: '5px',
-                        height: 50,
-                        background: 'url(' + animal.image + ') no-repeat',
-                        backgroundSize: '50px 50px',
-                        backgroundColor: '#FFE95D',
-                      }}
-                      key={ index }>
+          animals.map((animal, index) => (
+            (
+              <Option
+                value={ animal.name }
+                style={{
+                  padding: '5px 0 5px 60px',
+                  marginBottom: '5px',
+                  height: 50,
+                  background: `url(${animal.image}) no-repeat`,
+                  backgroundSize: '50px 50px',
+                }}
+                hoverStyle={{
+                  padding: '5px 0 5px 60px',
+                  marginBottom: '5px',
+                  height: 50,
+                  background: `url(${animal.image}) no-repeat`,
+                  backgroundSize: '50px 50px',
+                  backgroundColor: '#FFE95D',
+                }}
+                key={ index }
+              >
                 <span>
-                  <div style={ {fontWeight: 'bold', fontSize: '14px'} }>
+                  <div style={ { fontWeight: 'bold', fontSize: '14px' } }>
                     { animal.name }
                   </div>
-                  <div style={ {fontSize: '12px'} }>
+                  <div style={ { fontSize: '12px' } }>
                     { animal.description }
                   </div>
                 </span>
               </Option>
-            );
-          })
+            )
+          ))
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleOnePartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleOnePartOne } style={ { marginTop: 40 } } />
 
-      <Code value={ dataCodeExampleOnePartTwo } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleOnePartTwo } style={ { marginTop: 40 } } />
 
       <h4>ComboBox only logging in case of an exact match of the passed Options</h4>
 
-      <ComboBox placeholder = { 'Choose a Destination' }
-                menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
-                onUpdate={ (event) => {
-                  if (event.isMatchingOption) {
-                    console.log(event.identifier);
-                  }
-                }}>
-        { destinations.map((destination, index) => {
-          return (
-            <Option value={ destination.name }
-                    identifier={ destination.code }
-                    key={ index }>
-                { destination.name }
-            </Option>
-          );
-        })}
+      <ComboBox
+        placeholder = { 'Choose a Destination' }
+        menuStyle = { { maxHeight: 250, overflow: 'scroll' } }
+        onUpdate={ (event) => {
+          if (event.isMatchingOption) {
+            console.log(event.identifier);
+          }
+        }}
+      >
+        {
+          destinations.map((destination, index) => (
+            (
+              <Option
+                value={ destination.name }
+                identifier={ destination.code }
+                key={ index }
+              >
+                  { destination.name }
+              </Option>
+            )
+          ))
+        }
       </ComboBox>
 
-      <Code value={ dataCodeExampleTwoPartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleTwoPartOne } style={ { marginTop: 40 } } />
 
-      <Code value={ dataCodeExampleTwoPartTwo } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleTwoPartTwo } style={ { marginTop: 40 } } />
 
       <h4>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h4>
 
-      <ComboBox placeholder = { 'Choose a Currency' }
-                    onUpdate={
-                      (event) => {
-                        console.log(event.value);
-                        console.log(event.identifier);
-                        console.log(event.isMatchingOption);
-                        console.log(event.isOptionSelection);
-                      }
-                    }
-                    maxOptions = { 5 }>
+      <ComboBox
+        placeholder = { 'Choose a Currency' }
+        onUpdate={
+          (event) => {
+            console.log(event.value);
+            console.log(event.identifier);
+            console.log(event.isMatchingOption);
+            console.log(event.isOptionSelection);
+          }
+        }
+        maxOptions = { 5 }
+      >
         {
-          currencies.map((currency, index) => {
-            return (
-              <Option value={ currency.name }
-                      identifier={ currency.code }
-                      key={ index }>
+          currencies.map((currency, index) => (
+            (
+              <Option
+                value={ currency.name }
+                identifier={ currency.code }
+                key={ index }
+              >
                 { currency.name }
               </Option>
-            );
-          })
+            )
+          ))
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleThreePartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleThreePartOne } style={ { marginTop: 40 } } />
 
-      <Code value={ dataCodeExampleThreePartTwo } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleThreePartTwo } style={ { marginTop: 40 } } />
 
       <h4>ComboBox with custom filtering, and hints enabled</h4>
 
-      <ComboBox enableHint
-                filterFunc = { customFilterFunc }
-                placeholder = { 'Select Baby Name' }>
+      <ComboBox
+        enableHint
+        filterFunc = { customFilterFunc }
+        placeholder = { 'Select Baby Name' }
+      >
         {
-          babyNames.map((name, index) => {
-            return (
-              <Option value={ name }
-                      key={ index }>
+          babyNames.map((name, index) => (
+            (
+              <Option
+                value={ name }
+                key={ index }
+              >
                 { name }
               </Option>
-            );
-          })
+            )
+          ))
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleFourPartOne } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleFourPartOne } style={ { marginTop: 40 } } />
 
-      <Code value={ dataCodeExampleFourPartTwo } style={ {marginTop: 40} } />
+      <Code value={ dataCodeExampleFourPartTwo } style={ { marginTop: 40 } } />
 
     </div>);
   },
