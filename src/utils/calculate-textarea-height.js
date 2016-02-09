@@ -92,7 +92,9 @@ function calculateStyling(node) {
  * and used for further caluculations. In addition the styling of each textarea
  * is cached to improve performance.
  */
-export default function calculateTextareaHeight(textareaElement, textareaValue, minRows = null, maxRows = null, minHeight = null, maxHeight = null) {
+export default function calculateTextareaHeight(textareaElement, textareaValue = '-', minRows = null, maxRows = null, minHeight = null, maxHeight = null) {
+  // Regarding textareaValue: IE will return a height of 0 in case the textare is empty.
+  // To prevent reducing the size to 0 we simply use a dummy text.
   if (!canUseDOM) { return 0; }
 
   if (!hiddenTextarea) {
@@ -101,13 +103,10 @@ export default function calculateTextareaHeight(textareaElement, textareaValue, 
     hiddenTextarea.setAttribute('class', 'belle-input-helper');
   }
 
-  const {style, verticalPaddingSize, verticalBorderSize, boxSizing} = calculateStyling(textareaElement);
+  const { style, verticalPaddingSize, verticalBorderSize, boxSizing } = calculateStyling(textareaElement);
 
   hiddenTextarea.setAttribute('style', `${style};${hiddenTextareaStyle}`);
-
-  // IE will return a height of 0 in case the textare is empty. To prevent
-  // reducing the size to 0 we simply use a dummy text.
-  hiddenTextarea.value = textareaValue ? textareaValue : '-';
+  hiddenTextarea.value = textareaValue;
 
   let calculatedMinHeight;
   let calculatedMaxHeight;

@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import actionAreaStyle from '../style/actionArea';
 
 /**
@@ -52,7 +52,7 @@ export default class ActionArea extends Component {
     isIgnoringHover: false,
     isActive: false,
     isHovered: false,
-  }
+  };
 
   /**
    * Update the childProps based on the updated properties passed to the card.
@@ -203,16 +203,18 @@ export default class ActionArea extends Component {
     }
 
     return (
-      <div role="button"
-           {...this.childProps}
-           onMouseDown={ ::this._onMouseDown }
-           onMouseUp={ ::this._onMouseUp }
-           onMouseEnter={ ::this._onMouseEnter }
-           onMouseLeave={ ::this._onMouseLeave }
-           onTouchStart={ ::this._onTouchStart }
-           onTouchEnd={ ::this._onTouchEnd }
-           onTouchCancel={ ::this._onTouchCancel }
-           style={ style }>
+      <div
+        role="button"
+        {...this.childProps}
+        onMouseDown={ ::this._onMouseDown }
+        onMouseUp={ ::this._onMouseUp }
+        onMouseEnter={ ::this._onMouseEnter }
+        onMouseLeave={ ::this._onMouseLeave }
+        onTouchStart={ ::this._onTouchStart }
+        onTouchEnd={ ::this._onTouchEnd }
+        onTouchCancel={ ::this._onTouchCancel }
+        style={ style }
+      >
         { this.props.children }
       </div>
     );

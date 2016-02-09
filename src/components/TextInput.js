@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import calculateTextareaHeight from '../utils/calculate-textarea-height';
-import {injectStyles, removeStyle} from '../utils/inject-style';
+import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, has} from '../utils/helpers';
+import { omit, has } from '../utils/helpers';
 import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;
@@ -109,7 +109,7 @@ export default class TextInput extends Component {
 
     this.state = {
       height: 'auto',
-      inputValue: inputValue,
+      inputValue,
     };
     this.textareaProps = sanitizeChildProps(properties);
   }
@@ -228,7 +228,7 @@ export default class TextInput extends Component {
     }
 
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate({ value });
     }
 
     this._triggerResize(value);
@@ -239,7 +239,7 @@ export default class TextInput extends Component {
    */
   _triggerResize(textareaValue) {
     const height = calculateTextareaHeight(ReactDOM.findDOMNode(this), textareaValue, this.props.minRows, this.props.maxRows, this.props.minHeight, this.props.maxHeight);
-    this.setState({ height: height });
+    this.setState({ height });
   }
 
   render() {
@@ -258,12 +258,14 @@ export default class TextInput extends Component {
 
     textareaStyle.height = this.state.height;
     return (
-      <textarea style={ textareaStyle }
-                value = {this.state.inputValue}
-                className={ unionClassNames(this.props.className, this._styleId) }
-                onChange={ ::this._onChange }
-                onKeyDown={ ::this._onKeyDown }
-                { ...this.textareaProps } />
+      <textarea
+        style={ textareaStyle }
+        value = {this.state.inputValue}
+        className={ unionClassNames(this.props.className, this._styleId) }
+        onChange={ ::this._onChange }
+        onKeyDown={ ::this._onKeyDown }
+        { ...this.textareaProps }
+      />
     );
   }
 }

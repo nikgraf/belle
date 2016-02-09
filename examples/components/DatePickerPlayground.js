@@ -3,10 +3,6 @@ import {Card, DatePicker, Button} from 'belle';
 
 export default React.createClass({
 
-  _resetValue() {
-    this.refs.calendar1.resetValue();
-  },
-
   _renderDay(day) {
     const date = day.getDate();
     return (
@@ -40,7 +36,6 @@ export default React.createClass({
           <div style={{ marginBottom: '20px' }}>
             <DatePicker ref="calendar1"/>
           </div>
-          <Button onClick={ this._resetValue }>Reset Date</Button>
 
           <h3>DatePicker with min & max</h3>
             <div style={{ marginBottom: '20px' }}>

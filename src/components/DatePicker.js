@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import {injectStyles, removeAllStyles} from '../utils/inject-style';
+import React, { Component, PropTypes } from 'react';
+import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {has, map, shift, reverse, omit} from '../utils/helpers';
+import { has, map, shift, reverse, omit } from '../utils/helpers';
 import {
   convertDateToDateKey,
   getDateKey,
@@ -226,9 +226,9 @@ export default class DatePicker extends Component {
     this.state = {
       isFocused: false,
       isActive: false,
-      selectedDate: selectedDate,
-      month: month,
-      year: year,
+      selectedDate,
+      month,
+      year,
     };
 
     this.localeData = getLocaleData(properties.locale);
@@ -781,9 +781,9 @@ export default class DatePicker extends Component {
         this.props.valueLink.requestChange(selectedDate);
       } else if (!has(this.props, 'value')) {
         this.setState({
-          selectedDate: selectedDate,
-          month: month,
-          year: year,
+          selectedDate,
+          month,
+          year,
         });
       }
 
@@ -948,13 +948,17 @@ export default class DatePicker extends Component {
     }
 
     return (
-      <ActionArea onUpdate={ ::this._onClickPrevMonth }
-                  style={ prevMonthNavStyle }
-                  className={ className }
-                  aria-label="Go to previous month"
-                  { ...this.prevMonthNavProps }>
-        <div style={ prevMonthNavIconStyle }
-             { ...this.prevMonthNavIconProps }/>
+      <ActionArea
+        onUpdate={ ::this._onClickPrevMonth }
+        style={ prevMonthNavStyle }
+        className={ className }
+        aria-label="Go to previous month"
+        { ...this.prevMonthNavProps }
+      >
+        <div
+          style={ prevMonthNavIconStyle }
+          { ...this.prevMonthNavIconProps }
+        />
       </ActionArea>
     );
   }
@@ -976,13 +980,17 @@ export default class DatePicker extends Component {
     }
 
     return (
-      <ActionArea onUpdate={ ::this._onClickNextMonth }
-                  style= { nextMonthNavStyle }
-                  className={ className }
-                  aria-label="Go to next month"
-                  { ...this.nextMonthNavProps }>
-        <div style={ nextMonthNavIconStyle }
-             { ...this.nextMonthNavIconProps } />
+      <ActionArea
+        onUpdate={ ::this._onClickNextMonth }
+        style= { nextMonthNavStyle }
+        className={ className }
+        aria-label="Go to next month"
+        { ...this.nextMonthNavProps }
+      >
+        <div
+          style={ nextMonthNavIconStyle }
+          { ...this.nextMonthNavIconProps }
+        />
       </ActionArea>
     );
   }
@@ -1004,16 +1012,20 @@ export default class DatePicker extends Component {
     };
 
     return (
-      <div style={ navBarStyle }
-           { ...this.navBarProps }>
+      <div
+        style={ navBarStyle }
+        { ...this.navBarProps }
+      >
         { this._renderPrevMonthNav() }
-        <span style={ monthLabelStyle }
-              role="heading"
-              /*
-                This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
-              */
-              id={ `${this.state.year}-${this.state.month}` }
-              { ...this.monthLabelProps }>
+        <span
+          style={ monthLabelStyle }
+          role="heading"
+          /*
+            This label has an id as suggested in http://www.w3.org/TR/wai-aria-practices/#datepicker
+          */
+          id={ `${this.state.year}-${this.state.month}` }
+          { ...this.monthLabelProps }
+        >
           { `${this.localeData.monthNames[this.state.month]} ${this.state.year}` }
         </span>
         { this._renderNextMonthNav() }
@@ -1055,19 +1067,21 @@ export default class DatePicker extends Component {
     weekendIndex = this.localeData.isRTL ? 6 - weekendIndex : weekendIndex;
 
     return (
-      <div style={ weekHeaderStyle }
-           { ...this.weekHeaderProps }>
+      <div
+        style={ weekHeaderStyle }
+        { ...this.weekHeaderProps }
+      >
         {
-          map(dayNames, (dayAbbr, index) => {
-            return (
-              <span key={ 'dayAbbr-' + index }
-                    style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
-                    role="columnheader"
-                    { ...this.dayLabelProps }>
-                { dayAbbr }
-              </span>
-            );
-          })
+          map(dayNames, (dayAbbr, index) => ((
+            <span
+              key={ `dayAbbr-${index}` }
+              style={ index === weekendIndex ? weekendLabelStyle : dayLabelStyle }
+              role="columnheader"
+              { ...this.dayLabelProps }
+            >
+              { dayAbbr }
+            </span>
+          )))
         }
       </div>
     );
@@ -1180,41 +1194,46 @@ export default class DatePicker extends Component {
 
     if (!this.props.showOtherMonthDate && isOtherMonth) {
       return (
-        <span key={ 'day-' + index }
-              ref={ dateKey }
-              style={ dayStyle }
-              {...this.emptyDayProps}>
-        </span>
+        <span
+          key={ `day-${index}` }
+          ref={ dateKey }
+          style={ dayStyle }
+          {...this.emptyDayProps}
+        />
       );
     }
 
     if (isDisabledDay) {
       return (
-        <span key={ 'day-' + index }
-              ref={ dateKey }
-              style={ dayStyle }
-              onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
-              onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
-              {...this.disabledDayProps}>
+        <span
+          key={ `day-${index}` }
+          ref={ dateKey }
+          style={ dayStyle }
+          onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
+          onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
+          {...this.disabledDayProps}
+        >
           { renderedDay }
         </span>
       );
     }
 
     return (
-      <span key={ 'day-' + index }
-            ref={ dateKey }
-            onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
-            onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
-            onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
-            onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
-            onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
-            onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
-            onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
-            aria-selected={ ariaSelected }
-            style={ dayStyle }
-            role="gridcell"
-            {...this.dayProps}>
+      <span
+        key={ `day-${index}` }
+        ref={ dateKey }
+        onMouseDown={ this._onDayMouseDown.bind(this, dateKey) }
+        onMouseUp={ this._onDayMouseUp.bind(this, dateKey, day, month, year) }
+        onMouseEnter={ this._onDayMouseEnter.bind(this, dateKey) }
+        onMouseLeave={ this._onDayMouseLeave.bind(this, dateKey) }
+        onTouchStart={ this._onDayTouchStart.bind(this, dateKey) }
+        onTouchEnd={ this._onDayTouchEnd.bind(this, dateKey, day, month, year) }
+        onTouchCancel={ this._onDayTouchCancel.bind(this, dateKey) }
+        aria-selected={ ariaSelected }
+        style={ dayStyle }
+        role="gridcell"
+        {...this.dayProps}
+      >
         { renderedDay }
       </span>
     );
@@ -1277,35 +1296,37 @@ export default class DatePicker extends Component {
     const tabIndex = !this.props.disabled ? this.props.tabIndex : false;
 
     return (
-      <div ref="datePicker"
-           tabIndex={ tabIndex }
-           onFocus={ ::this._onFocus }
-           onBlur={ ::this._onBlur }
-           onKeyDown={ ::this._onKeyDown }
-           onMouseDown={ ::this._onMouseDown }
-           onMouseUp={ ::this._onMouseUp }
-           onTouchStart={ ::this._onTouchStart }
-           onTouchEnd={ ::this._onTouchEnd }
-           onTouchCancel={ ::this._onTouchCancel }
-           aria-label={ this.props['aria-label'] }
-           aria-disabled={ this.props.disabled }
-           aria-readonly={ this.props.readOnly }
-           style={ style }
-           className={
-             unionClassNames(this.props.className, this.pseudoStyleIds.styleId)
-           }
-           {...this.wrapperProps} >
+      <div
+        ref="datePicker"
+        tabIndex={ tabIndex }
+        onFocus={ ::this._onFocus }
+        onBlur={ ::this._onBlur }
+        onKeyDown={ ::this._onKeyDown }
+        onMouseDown={ ::this._onMouseDown }
+        onMouseUp={ ::this._onMouseUp }
+        onTouchStart={ ::this._onTouchStart }
+        onTouchEnd={ ::this._onTouchEnd }
+        onTouchCancel={ ::this._onTouchCancel }
+        aria-label={ this.props['aria-label'] }
+        aria-disabled={ this.props.disabled }
+        aria-readonly={ this.props.readOnly }
+        style={ style }
+        className={
+         unionClassNames(this.props.className, this.pseudoStyleIds.styleId)
+        }
+        {...this.wrapperProps}
+      >
         { this._renderNavBar() }
-        <div role="grid"
-             style={ defaultStyle.weekGridStyle }
-             { ...this.weekGridProps }>
+        <div
+          role="grid"
+          style={ defaultStyle.weekGridStyle }
+          { ...this.weekGridProps }
+        >
           { this._renderWeekHeader() }
           {
             map(weekArray, (week) => {
               const weekDays = this.localeData.isRTL ? reverse(week) : week;
-              return map(weekDays, (day, dayIndex) => {
-                return this._renderDay(day, dayIndex);
-              });
+              return map(weekDays, (day, dayIndex) => this._renderDay(day, dayIndex));
             })
           }
         </div>

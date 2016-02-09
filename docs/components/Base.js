@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {Card} from 'belle';
+import { Card } from 'belle';
 import { Link } from 'react-router';
 import Column from './Column';
 
@@ -50,9 +50,11 @@ export default React.createClass({
 
   _renderHomeHeader() {
     return (
-      <header style={ {background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40} }>
-        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}>
+      <header style={ { background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40 } }>
+        <Column
+          smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+          mediumScreenStyle={{ margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}
+        >
           <Link to="/">
             <h1 style={{ fontSize: 80,
                          margin: 0,
@@ -60,7 +62,8 @@ export default React.createClass({
                          color: '#FFF',
                          fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
                          position: 'relative',
-                       }}>
+                       }}
+            >
               <div style={{ borderRadius: 100,
                             width: 100,
                             height: 100,
@@ -68,26 +71,32 @@ export default React.createClass({
                             paddingLeft: 18,
                             display: 'block',
                             float: 'left',
-                            marginRight: 12, }}>
-                <img src="images/belle_logo.png"
-                     style={{ width: 62, height: 88 }} />
+                            marginRight: 12, }}
+              >
+                <img
+                  src="images/belle_logo.png"
+                  style={{ width: 62, height: 88 }}
+                />
               </div>
               <span style={{ marginTop: -6,
                              display: 'block',
-                             float: 'left', }}>
+                             float: 'left', }}
+              >
                 Belle
               </span>
             </h1>
           </Link>
-          <p style={{ fontSize: 22, marginTop: 0, paddingTop: 20, color: '#FEFEFE', clear: 'both'}}>
+          <p style={{ fontSize: 22, marginTop: 0, paddingTop: 20, color: '#FEFEFE', clear: 'both' }}>
             Configurable React Components with great UX
           </p>
-          <iframe src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
-                  frameBorder="0"
-                  scrolling="0"
-                  width="180px"
-                  height="30px"
-                  style={{ marginBottom: 20, }} />
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=large"
+            frameBorder="0"
+            scrolling="0"
+            width="180px"
+            height="30px"
+            style={{ marginBottom: 20, }}
+          />
         </Column>
       </header>
     );
@@ -95,17 +104,19 @@ export default React.createClass({
 
   _renderDefaultHeader() {
     return (
-      <header style={{background: 'linear-gradient(150deg, #0A202D, rgb(1, 95, 130))', width: '100%', marginBottom: 40 }}>
-        <Column smallScreenStyle={{ width: '100%', padding: '0 20px' }}
-                mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
+      <header style={{ background: 'linear-gradient(150deg, #0A202D, rgb(1, 95, 130))', width: '100%', marginBottom: 40 }}>
+        <Column
+          smallScreenStyle={{ width: '100%', padding: '0 20px' }}
+          mediumScreenStyle={{ margin: '0 auto', width: 910, paddingRight: 110 }}
+        >
           <iframe
             src="https://ghbtns.com/github-btn.html?user=nikgraf&repo=belle&type=star&count=true&size=medium"
             frameBorder="0"
             scrolling="0"
             width="100px"
             height="30px"
-            style={{ float: 'right', marginTop: 20 }}>
-          </iframe>
+            style={{ float: 'right', marginTop: 20 }}
+          />
 
           <Link style={{ display: 'inline' }} to="/">
             <h1 style={{ fontSize: 24, margin: 0, padding: '10px 0', color: '#FFF', fontFamily: '"Trebuchet MS", Helvetica, sans-serif' }}>
@@ -117,9 +128,12 @@ export default React.createClass({
                             display: 'block',
                             float: 'left',
                             marginRight: 6,
-                            marginTop: 6, }}>
-                <img src="images/belle_logo.png"
-                     style={{ height: 19, top: -7, position: 'relative' }} />
+                            marginTop: 6, }}
+              >
+                <img
+                  src="images/belle_logo.png"
+                  style={{ height: 19, top: -7, position: 'relative' }}
+                />
               </div>
               Belle
             </h1>
@@ -136,12 +150,16 @@ export default React.createClass({
 
       { this.props.location.pathname === '/' ? this._renderHomeHeader() : this._renderDefaultHeader() }
 
-      <Column smallScreenStyle={{ width: '100%' }}
-              mediumScreenStyle={{margin: '0 auto', width: 910, paddingRight: 110 }}>
+      <Column
+        smallScreenStyle={{ width: '100%' }}
+        mediumScreenStyle={{ margin: '0 auto', width: 910, paddingRight: 110 }}
+      >
 
-        <Column smallScreenStyle={{ width: '100%', padding: '0 40px' }}
-                mediumScreenStyle={{ float: 'left', width: 160 }}
-                className="navigation">
+        <Column
+          smallScreenStyle={{ width: '100%', padding: '0 40px' }}
+          mediumScreenStyle={{ float: 'left', width: 160 }}
+          className="navigation"
+        >
           <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/getting-started">Getting Started</Link>
@@ -219,8 +237,10 @@ export default React.createClass({
           </ul>
         </Column>
 
-        <Column smallScreenStyle={{ width: '96%', margin: '0 auto' }}
-                mediumScreenStyle={{ float: 'left', width: 640 }}>
+        <Column
+          smallScreenStyle={{ width: '96%', margin: '0 auto' }}
+          mediumScreenStyle={{ float: 'left', width: 640 }}
+        >
           <Card style={ cardContentStyle }>
             { this.props.children }
           </Card>
@@ -228,8 +248,10 @@ export default React.createClass({
         <div style={{ clear: 'left' }}></div>
       </Column>
       <footer style={{ clear: 'both', textAlign: 'center', paddingTop: 40, paddingBottom: 60 }}>
-        <Column smallScreenStyle={{}}
-                mediumScreenStyle={{ paddingLeft: 160 }}>
+        <Column
+          smallScreenStyle={{}}
+          mediumScreenStyle={{ paddingLeft: 160 }}
+        >
           Built with
           <span style={{ color: 'rgb(200, 0, 0)', fontSize: 22, position: 'relative', top: 3 }}>
             &nbsp;&#x2764;&nbsp;

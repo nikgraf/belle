@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import highlightJs from 'highlight.js';
-import {isEqual, omit, extend} from 'underscore';
+import { isEqual, omit, extend } from 'underscore';
 
 const defaultStyle = {
   fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',

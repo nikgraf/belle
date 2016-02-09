@@ -108,10 +108,12 @@ describe('Button', () => {
     injectStyle.injectStyles = jest.genMockFunction();
 
     const bodyWithButton = TestUtils.renderIntoDocument(
-      <Button hoverStyle={{ color: 'red' }}
-              focusStyle={{ color: 'brown' }}
-              activeStyle={{ color: 'green' }}
-              preventFocusStyleForTouchAndClick={ false }>
+      <Button
+        hoverStyle={{ color: 'red' }}
+        focusStyle={{ color: 'brown' }}
+        activeStyle={{ color: 'green' }}
+        preventFocusStyleForTouchAndClick={ false }
+      >
         Follow
       </Button>
     );

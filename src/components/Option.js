@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {omit} from '../utils/helpers';
+import React, { Component, PropTypes } from 'react';
+import { omit } from '../utils/helpers';
 import style from '../style/option';
 
 /**
@@ -100,8 +100,10 @@ export default class Option extends Component {
     }
 
     return (
-      <div style={ optionStyle }
-           {...this.state.childProps}>
+      <div
+        style={ optionStyle }
+        {...this.state.childProps}
+      >
         { this.props.children }
       </div>
     );

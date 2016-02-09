@@ -3,7 +3,10 @@
   "plugins": [ "mocha" ],
   "extends": "airbnb",
   "rules": {
+    "max-len": 0,
     "comma-dangle": 0,
+    "react/jsx-no-bind": 0, // TODO remove this
+    "react/prefer-es6-class": 0, // TODO remove this
     "react/sort-comp": [2, {         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
       "order": [
         "constructor",

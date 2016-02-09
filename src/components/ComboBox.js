@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import {injectStyles, removeAllStyles} from '../utils/inject-style';
+import React, { Component, PropTypes } from 'react';
+import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import {omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren} from '../utils/helpers';
+import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../utils/helpers';
 import style from '../style/combo-box';
 
 /**
@@ -146,7 +146,7 @@ export default class ComboBox extends Component {
     this.state = {
       isOpen: false,
       focusedOptionIndex: undefined,
-      inputValue: inputValue,
+      inputValue,
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -211,7 +211,7 @@ export default class ComboBox extends Component {
     displayCaret: false,
     enableHint: false,
     'aria-label': 'ComboBox',
-    filterFunc: filterFunc,
+    filterFunc, // TODO rename to filterFunction in 3.0.0
     tabIndex: 0,
     children: [],
   };
@@ -316,7 +316,7 @@ export default class ComboBox extends Component {
   _onTouchStartAtOption(event, index) {
     if (!this.props.disabled && event.touches.length === 1) {
       this._touchStartedAt = index;
-      this.setState({focusedOptionIndex: index});
+      this.setState({ focusedOptionIndex: index });
     }
   }
 
@@ -340,7 +340,7 @@ export default class ComboBox extends Component {
   _onTouchCancelAtOption() {
     if (!this.props.disabled) {
       this._touchStartedAt = undefined;
-      this.setState({focusedOptionIndex: undefined});
+      this.setState({ focusedOptionIndex: undefined });
     }
   }
 
@@ -382,7 +382,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       const isOpen = !this.state.isOpen;
       this.setState({
-        isOpen: isOpen,
+        isOpen,
       });
     }
   }
@@ -519,9 +519,7 @@ export default class ComboBox extends Component {
    * The function will return options (if any) who's value is same as value of the combo-box input.
    */
   _findMatch(value) {
-    return find(this.filteredOptions, (entry) => {
-      return entry.props.value === value;
-    });
+    return find(this.filteredOptions, (entry) => entry.props.value === value);
   }
 
   /**
@@ -551,7 +549,7 @@ export default class ComboBox extends Component {
       this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
 
-    const obj = {value: value, isOptionSelection: true, isMatchingOption: true};
+    const obj = { value, isOptionSelection: true, isMatchingOption: true };
     const matchedOption = this._findMatch(value);
     obj.identifier = matchedOption ? matchedOption.props.identifier : undefined;
 
@@ -606,7 +604,7 @@ export default class ComboBox extends Component {
       this.filteredOptions = ComboBox.filterOptions(value, this.props);
     }
 
-    const obj = {value: value, isOptionSelection: false, isMatchingOption: false};
+    const obj = { value, isOptionSelection: false, isMatchingOption: false };
 
     const matchedOption = this._findMatch(value);
     if (matchedOption) {
@@ -626,11 +624,11 @@ export default class ComboBox extends Component {
     let filteredOptions = [];
     if (!isEmpty(properties.children)) {
       if (inputValue) {
-        filteredOptions = filterReactChildren(properties.children, (entry) => {
-          return properties.filterFunc(inputValue, entry.props.value);
-        });
+        filteredOptions = filterReactChildren(properties.children, (entry) => (
+          properties.filterFunc(inputValue, entry.props.value)
+        ));
       } else {
-        filteredOptions = getArrayForReactChildren(properties.children, (entry) => { return entry; });
+        filteredOptions = getArrayForReactChildren(properties.children, (entry) => entry);
       }
 
       if (properties.maxOptions) {
@@ -700,56 +698,64 @@ export default class ComboBox extends Component {
     // using value for input makes it a controlled component and it will be changed in controlled manner if (1) user enters value, (2) user selects some option
     // value will be updated depending on whether user has passed value / valueLink / defaultValue as property
     return (
-      <div style={ wrapperStyle }
-           aria-label = { this.props['aria-label'] }
-           aria-disabled = { this.props.disabled }
-           {...this.state.wrapperProps}>
+      <div
+        style={ wrapperStyle }
+        aria-label = { this.props['aria-label'] }
+        aria-disabled = { this.props.disabled }
+        {...this.state.wrapperProps}
+      >
+        <input
+          style={ hintStyle }
+          value={ hint }
+          tabIndex = { -1 }
+          readOnly
+        />
 
-        <input style={ hintStyle }
-               value={ hint }
-               tabIndex = { -1 }
-               readOnly></input>
+        <input
+          disabled = { this.props.disabled }
+          aria-disabled = { this.props.disabled }
+          value={ this.state.inputValue }
+          placeholder={ placeHolder }
+          style={ inputStyle }
+          className={ inputClassName }
+          onChange={ ::this._onChange }
+          tabIndex={ tabIndex }
+          onBlur={ ::this._onBlur }
+          onFocus={ ::this._onFocus }
+          onKeyDown={ ::this._onKeyDown }
+          aria-autocomplete="list"
+          {...this.state.inputProps}
+        />
+        <span
+          style={ caretStyle }
+          className = { this._caretStyleId }
+          onClick = { ::this._onCaretClick }
+          tabIndex = { -1 }
+          {...this.state.caretProps}
+        />
 
-        <input disabled = { this.props.disabled }
-               aria-disabled = { this.props.disabled }
-               value={ this.state.inputValue }
-               placeholder={ placeHolder }
-               style={ inputStyle }
-               className={ inputClassName }
-               onChange={ ::this._onChange }
-               tabIndex={ tabIndex }
-               onBlur={ ::this._onBlur }
-               onFocus={ ::this._onFocus }
-               onKeyDown={ ::this._onKeyDown }
-               aria-autocomplete="list"
-          {...this.state.inputProps}></input>
-          <span style={ caretStyle }
-                className = { this._caretStyleId }
-                onClick = { ::this._onCaretClick }
-                tabIndex = { -1 }
-            {...this.state.caretProps}>
-          </span>
-
-        <ul style={ computedMenuStyle }
-            role="listbox"
-            aria-expanded={ this.state.isOpen }
-            {...this.state.menuProps} >
+        <ul
+          style={ computedMenuStyle }
+          role="listbox"
+          aria-expanded={ this.state.isOpen }
+          {...this.state.menuProps}
+        >
           {
-            React.Children.map(this.filteredOptions, (entry, index) => {
-              return (
-                <li key={ index }
-                    onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
-                    onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
-                    onTouchCancel={ ::this._onTouchCancelAtOption }
-                    onClick={ () => this._onClickAtOption(index) }
-                    onMouseEnter={ () => this._onMouseEnterAtOption(index) }
-                    onMouseLeave={ ::this._onMouseLeaveAtOption }
-                    onMouseDown={ (event) => event.preventDefault() }
-                    role="option">
-                  { entry }
-                </li>
-              );
-            })
+            React.Children.map(this.filteredOptions, (entry, index) => ((
+              <li
+                key={ index }
+                onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
+                onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
+                onTouchCancel={ ::this._onTouchCancelAtOption }
+                onClick={ () => this._onClickAtOption(index) }
+                onMouseEnter={ () => this._onMouseEnterAtOption(index) }
+                onMouseLeave={ ::this._onMouseLeaveAtOption }
+                onMouseDown={ (event) => event.preventDefault() }
+                role="option"
+              >
+                { entry }
+              </li>
+            )))
           }
         </ul>
 

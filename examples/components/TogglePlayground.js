@@ -8,7 +8,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      active: true
+      active: true,
     };
   },
 
@@ -48,5 +48,5 @@ export default React.createClass({
 
       </Card>
     );
-  }
+  },
 });

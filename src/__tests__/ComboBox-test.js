@@ -59,12 +59,14 @@ describe('ComboBox', () => {
     let isSelect;
 
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox onUpdate={ (obj) => {
-        value = obj.value;
-        identifier = obj.identifier;
-        isMatch = obj.isMatchingOption;
-        isSelect = obj.isOptionSelection;
-      }}>
+      <ComboBox
+        onUpdate={ (obj) => {
+          value = obj.value;
+          identifier = obj.identifier;
+          isMatch = obj.isMatchingOption;
+          isSelect = obj.isOptionSelection;
+        }}
+      >
         <Option value="rome" identifier={1}>Rome</Option>
         <Option value="vienna" identifier={2} className="vienna-option">Vienna</Option>
       </ComboBox>
@@ -160,7 +162,7 @@ describe('ComboBox', () => {
 
       const properties = {
         ...combobox.props,
-        valueLink: valueLink,
+        valueLink,
       };
       combobox.componentWillReceiveProps(properties);
 
@@ -179,65 +181,65 @@ describe('ComboBox', () => {
 
   function testKeyEvents(container) {
     it('should open the menu by pressing ArrowDown', () => {
-      TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowDown'});
+      TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowDown' });
       expect(container.combobox.state.isOpen).toBeTruthy();
     });
 
     it('should open the menu by pressing ArrowUp', () => {
-      TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowUp'});
+      TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowUp' });
       expect(container.combobox.state.isOpen).toBeTruthy();
     });
 
     it('should open the menu by pressing Space', () => {
-      TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowUp'});
+      TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowUp' });
       expect(container.combobox.state.isOpen).toBeTruthy();
     });
 
     describe('when the menu is open', () => {
       beforeEach(() => {
-        container.combobox.setState({isOpen: true});
+        container.combobox.setState({ isOpen: true });
       });
 
       it('should close menu when pressing Escape', () => {
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'Escape'});
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'Escape' });
         expect(container.combobox.state.isOpen).toBeFalsy();
       });
 
       it('should focus on the next option when pressing ArrowDown', () => {
-        container.combobox.setState({focusedOptionIndex: 0});
+        container.combobox.setState({ focusedOptionIndex: 0 });
         expect(container.combobox.state.focusedOptionIndex).toBe(0);
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowDown'});
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowDown' });
         expect(container.combobox.state.focusedOptionIndex).toBe(1);
       });
 
       it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
-        container.combobox.setState({focusedOptionIndex: undefined});
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowDown'});
+        container.combobox.setState({ focusedOptionIndex: undefined });
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowDown' });
         expect(container.combobox.state.focusedOptionIndex).toBe(0);
       });
 
       it('should focus on the previous option when pressing ArrowUp', () => {
-        container.combobox.setState({focusedOptionIndex: 2});
+        container.combobox.setState({ focusedOptionIndex: 2 });
         expect(container.combobox.state.focusedOptionIndex).toBe(2);
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowUp'});
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowUp' });
         expect(container.combobox.state.focusedOptionIndex).toBe(1);
       });
 
       it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
-        container.combobox.setState({focusedOptionIndex: undefined});
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'ArrowUp'});
+        container.combobox.setState({ focusedOptionIndex: undefined });
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'ArrowUp' });
         expect(container.combobox.state.focusedOptionIndex).toBe(2);
       });
 
       it('should select the focused option when pressing Enter', () => {
-        container.combobox.setState({focusedOptionIndex: 2});
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'Enter'});
+        container.combobox.setState({ focusedOptionIndex: 2 });
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'Enter' });
         expect(container.combobox.state.inputValue).toBe('berlin');
       });
 
       it('should select the focused option when pressing Tab', () => {
-        container.combobox.setState({focusedOptionIndex: 2});
-        TestUtils.Simulate.keyDown(container.comboNode, {key: 'Tab'});
+        container.combobox.setState({ focusedOptionIndex: 2 });
+        TestUtils.Simulate.keyDown(container.comboNode, { key: 'Tab' });
         expect(container.combobox.state.inputValue).toBe('berlin');
       });
     });

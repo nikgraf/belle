@@ -113,9 +113,14 @@ describe('Select', () => {
       <Select>
         <Placeholder>Select a City</Placeholder>
         {
-          options.map((option, index) => {
-            return (<Option key={ index } value={ option.value } >{ option.content }</Option>);
-          })
+          options.map((option, index) => (
+            <Option
+              key={ index }
+              value={ option.value }
+            >
+              { option.content }
+            </Option>
+          ))
         }
       </Select>
     );
@@ -139,9 +144,14 @@ describe('Select', () => {
         <Placeholder>Select a City</Placeholder>
         <Option value="boston">Boston</Option>
         {
-          options.map((option, index) => {
-            return (<Option key={ index } value={ option.value } >{ option.content }</Option>);
-          })
+          options.map((option, index) => ((
+            <Option
+              key={ index }
+              value={ option.value }
+            >
+              { option.content }
+            </Option>
+          )))
         }
         <Option value="newyork">New York</Option>
       </Select>
@@ -267,7 +277,7 @@ describe('Select', () => {
 
       const properties = {
         ...select.props,
-        valueLink: valueLink,
+        valueLink,
       };
       select.componentWillReceiveProps(properties);
 
@@ -287,17 +297,17 @@ describe('Select', () => {
 
   function testKeyEvents(container) {
     it('should open the menu by pressing ArrowDown', () => {
-      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+      TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowDown' });
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
     it('should open the menu by pressing ArrowUp', () => {
-      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+      TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowUp' });
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
     it('should open the menu by pressing Space', () => {
-      TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+      TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowUp' });
       expect(container.select.state.isOpen).toBeTruthy();
     });
 
@@ -307,44 +317,44 @@ describe('Select', () => {
       });
 
       it('should close menu when pressing Escape', () => {
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'Escape'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'Escape' });
         expect(container.select.state.isOpen).toBeFalsy();
       });
 
       it('should focus on the next option when pressing ArrowDown', () => {
         expect(container.select.state.focusedOptionValue).toBe('rome');
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowDown' });
         expect(container.select.state.focusedOptionValue).toBe('vienna');
       });
 
       it('should focus on the first option when pressing ArrowDown and none was focused on', () => {
         container.select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowDown'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowDown' });
         expect(container.select.state.focusedOptionValue).toBe('rome');
       });
 
       it('should focus on the previous option when pressing ArrowUp', () => {
         container.select.setState({ focusedOptionValue: 'vienna' });
         expect(container.select.state.focusedOptionValue).toBe('vienna');
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowUp' });
         expect(container.select.state.focusedOptionValue).toBe('rome');
       });
 
       it('should focus on the last option when pressing ArrowUp and none was focused on', () => {
         container.select.setState({ focusedOptionValue: undefined });
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'ArrowUp'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'ArrowUp' });
         expect(container.select.state.focusedOptionValue).toBe('berlin');
       });
 
       it('should select the focused option when pressing Enter', () => {
         container.select.setState({ focusedOptionValue: 'berlin' });
-        TestUtils.Simulate.keyDown(container.selectNode, {key: 'Enter'});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: 'Enter' });
         expect(container.select.state.selectedValue).toBe('berlin');
       });
 
       it('should select the focused option when pressing Space', () => {
         container.select.setState({ focusedOptionValue: 'berlin' });
-        TestUtils.Simulate.keyDown(container.selectNode, {key: ' '});
+        TestUtils.Simulate.keyDown(container.selectNode, { key: ' ' });
         expect(container.select.state.selectedValue).toBe('berlin');
       });
     });

@@ -1,8 +1,8 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {TextInput} from 'belle';
+import { TextInput } from 'belle';
 import Code from '../Code';
-import {propertyNameStyle, propertyDescriptionStyle} from '../../style';
+import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 
 const exampleCode = `<!-- TextInput with a defaultValue -->
 <TextInput defaultValue="Jane Doe" placeholder="Name"/>
@@ -46,14 +46,16 @@ export default React.createClass({
   render() {
     return (<div>
 
-      <h2 style={ {marginTop: 0, marginBottom: 40} }>TextInput</h2>
+      <h2 style={ { marginTop: 0, marginBottom: 40 } }>TextInput</h2>
 
-      <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20} }/>
+      <TextInput defaultValue="Jane Doe" placeholder="Name" style={ { marginBottom: 20 } }/>
 
-      <TextInput defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
-                 allowNewLine />
+      <TextInput
+        defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
+        allowNewLine
+      />
 
-      <Code value={ exampleCode } style={ {marginTop: 40} } />
+      <Code value={ exampleCode } style={ { marginTop: 40 } } />
 
       <p style={{ marginTop: 40 }}>
         <i>Note</i>: The TextInput automatically grows in height once the text becomes too long to fit in. Still every TextInput is just rendered as a simple HTML textarea.
@@ -328,38 +330,40 @@ export default React.createClass({
 
       <p>
         Any other property valid for a HTML textarea like
-        <span style={ {color: 'grey'} }> style, placeholder, onClick, …</span>
+        <span style={ { color: 'grey' } }> style, placeholder, onClick, …</span>
       </p>
 
       <h3>More Examples</h3>
 
       <h4>TextInput with custom styling & two-way data binding</h4>
-      <TextInput minRows={ 3 }
-                 valueLink={ this.linkState('customTextInputValue') }
-                 placeholder="Just fill in whatever you like :)"
-                 style={{
-                   border: '1px solid #C8C8C8',
-                   padding: 10,
-                   width: 280,
-                   borderRadius: 3,
-                   boxShadow: 'inset 0 1px 2px #CCC',
-                 }}
-                 hoverStyle={{
-                   border: '1px solid #6C6C6C',
-                 }}
-                 focusStyle={{
-                   borderColor: '#53C7F2',
-                   boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2',
-                 }}/>
+      <TextInput
+        minRows={ 3 }
+        valueLink={ this.linkState('customTextInputValue') }
+        placeholder="Just fill in whatever you like :)"
+        style={{
+          border: '1px solid #C8C8C8',
+          padding: 10,
+          width: 280,
+          borderRadius: 3,
+          boxShadow: 'inset 0 1px 2px #CCC',
+        }}
+        hoverStyle={{
+          border: '1px solid #6C6C6C',
+        }}
+        focusStyle={{
+          borderColor: '#53C7F2',
+          boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2',
+        }}
+      />
 
       <p>Two-way data binding: { this.state.customTextInputValue }</p>
 
-      <Code value={ advancedExampleCode } style={ {marginTop: 40} } />
+      <Code value={ advancedExampleCode } style={ { marginTop: 40 } } />
 
       <h4>Disabled Text Input</h4>
       <TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis."/>
 
-      <Code value={ disabledExampleCode } style={ {marginTop: 40} } />
+      <Code value={ disabledExampleCode } style={ { marginTop: 40 } } />
 
     </div>);
   },

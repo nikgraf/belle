@@ -34,5 +34,5 @@ export default React.createClass({
         <Button primary hoverStyle={{ color: 'green' }}>Primary Button</Button>
       </Card>
     );
-  }
+  },
 });

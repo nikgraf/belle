@@ -1111,7 +1111,7 @@ const bootstrap3Theme = {
         // This allows to have a round handle that is position exactly in on top of the
         // border between the two choice areas.
         width: 56,
-        lineHeight: 30 + 'px',
+        lineHeight: '30px',
         textAlign: 'center',
         color: '#FFF',
         backgroundColor: '#337ab7',
@@ -1147,7 +1147,7 @@ const bootstrap3Theme = {
         // This allows to have a round handle that is position exactly in on top of the
         // border between the two choice areas.
         width: 56,
-        lineHeight: 30 + 'px',
+        lineHeight: '30px',
         textAlign: 'center',
         color: '#333',
         backgroundColor: '#eeeeee',

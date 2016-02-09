@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {omit} from '../utils/helpers';
+import React, { Component, PropTypes } from 'react';
+import { omit } from '../utils/helpers';
 import style from '../style/placeholder';
 
 /**

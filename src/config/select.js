@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import isComponentOfType from '../utils/is-component-of-type.js';
-import {filterReactChildren, findIndex} from '../utils/helpers';
+import { filterReactChildren, findIndex } from '../utils/helpers';
 import Option from '../components/Option';
 import Separator from '../components/Separator';
 
@@ -12,9 +12,10 @@ import Separator from '../components/Separator';
  */
 const findIndexOfSelectedOption = (component) => {
   const filterFunction = (child) => (isComponentOfType(Option, child) || isComponentOfType(Separator, child));
-  return findIndex(filterReactChildren(component.props.children, filterFunction), (element) => {
-    return element.props.value === component.state.selectedValue;
-  });
+  return findIndex(filterReactChildren(
+    component.props.children, filterFunction),
+    (element) => (element.props.value === component.state.selectedValue)
+  );
 };
 
 const selectConfig = {
