@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+### Fixed
+
+- [DatePicker] use nextMonthNavProps.className for next month (was prevMonthNavProps before) [b9937bb](https://github.com/nikgraf/belle/commit/b9937bbb96925899cb48bf55558119ad72cf2021)
+
 ## 2.0.3 - 2015-12-07
 
 ### Fixed
