@@ -5,7 +5,7 @@ jest.dontMock('../utils/helpers');
 const helpers = require('../utils/helpers');
 
 describe('helpers has method', () => {
-  const obj = {test: true};
+  const obj = { test: true };
 
   it('should return true if object has the field', () => {
     expect(helpers.has(obj, 'test')).toBeTruthy();
@@ -28,7 +28,7 @@ describe('helpers has method', () => {
 });
 
 describe('helpers omit method', () => {
-  const obj = {test1: 123, test2: 'abc', test3: () => {}, test4: undefined};
+  const obj = { test1: 123, test2: 'abc', test3: () => ({}), test4: undefined };
 
   it('should return new object with keys omitted', () => {
     const keys = ['test1', 'test2'];
@@ -84,7 +84,7 @@ describe('helpers omit method', () => {
 
 describe('helpers isArrayLike method', () => {
   it('should return true for array', () => {
-    expect(helpers.isArrayLike([123, 'abc', () => {}, undefined])).toBeTruthy();
+    expect(helpers.isArrayLike([123, 'abc', () => ({}), undefined])).toBeTruthy();
   });
 
   it('should return false for non-arrays', () => {
@@ -95,7 +95,7 @@ describe('helpers isArrayLike method', () => {
 
 describe('helpers keys method', () => {
   it('should return all keys in an object', () => {
-    const keys = helpers.keys({a: 1, b: 2, c: 3});
+    const keys = helpers.keys({ a: 1, b: 2, c: 3 });
     expect(keys.length).toBe(3);
     expect(keys.indexOf('a')).toBeGreaterThan(-1);
     expect(keys.indexOf('toString')).toBeLessThan(0);
@@ -110,9 +110,7 @@ describe('helpers keys method', () => {
 
 describe('helpers filter method', () => {
   const arr = [123, 'abc', () => undefined, undefined];
-  const predicate = (object) => {
-    return object !== 123;
-  };
+  const predicate = (object) => object !== 123;
 
   it('should filter out objects from iterable as per predicate', () => {
     const filteredArr = helpers.filter(arr, predicate);
@@ -150,9 +148,7 @@ describe('helpers filter method', () => {
 
 describe('helpers map method for arrays', () => {
   const arr = [5, 10, 50, 100];
-  const predicate = (obj) => {
-    return obj / 5;
-  };
+  const predicate = (obj) => obj / 5;
 
   it('should map to an output array as per predicate', () => {
     const mapArr = helpers.map(arr, predicate);
@@ -189,15 +185,11 @@ describe('helpers map method for arrays', () => {
 });
 
 describe('helpers mapObject method', () => {
-  const obj = {five: 5, ten: 10, fifty: 50, hundred: 100};
-  const predicate = (value) => {
-    return value / 5;
-  };
+  const obj = { five: 5, ten: 10, fifty: 50, hundred: 100 };
+  const predicate = (value) => value / 5;
 
-  const objIdTest = {50: 5, 100: 10, 500: 50, 1000: 100};
-  const predicateIdTest = (value, id) => {
-    return id / value;
-  };
+  const objIdTest = { 50: 5, 100: 10, 500: 50, 1000: 100 };
+  const predicateIdTest = (value, id) => id / value;
 
   it('should map to an output array as per predicate', () => {
     const resultObj = helpers.mapObject(obj, predicate);
@@ -218,9 +210,7 @@ describe('helpers mapObject method', () => {
 
 describe('helpers find method', () => {
   const arr = [123, 'abc', () => undefined, undefined];
-  const predicate = (object) => {
-    return typeof object === 'number';
-  };
+  const predicate = (object) => typeof object === 'number';
 
   it('should find first numeric value in array', () => {
     const resultObj = helpers.find(arr, predicate);
@@ -269,9 +259,7 @@ describe('helpers isEmpty method', () => {
 
 describe('helpers findIndex method', () => {
   const arr = [123, 'abc', () => undefined, undefined];
-  const predicate = (object) => {
-    return typeof object === 'number';
-  };
+  const predicate = (object) => typeof object === 'number';
 
   it('should find index of first numeric value in array', () => {
     const index = helpers.findIndex(arr, predicate);
@@ -306,9 +294,7 @@ describe('helpers findIndex method', () => {
   });
 
   it('should return undefined in case the entry could not be found', () => {
-    const customPredicate = (resultObj) => {
-      return resultObj === 567;
-    };
+    const customPredicate = (resultObj) => resultObj === 567;
 
     const index = helpers.findIndex(arr, customPredicate);
     expect(index).toBeUndefined();
@@ -361,9 +347,7 @@ describe('helpers size method', () => {
 
 describe('helpers some method', () => {
   const arr = [123, 'abc', () => undefined, undefined];
-  const predicate = (obj) => {
-    return typeof obj === 'number';
-  };
+  const predicate = (obj) => typeof obj === 'number';
 
   it('should return true is predicate is true for some element', () => {
     const result = helpers.some(arr, predicate);

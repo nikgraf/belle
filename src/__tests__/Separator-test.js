@@ -22,7 +22,7 @@ describe('Separator', () => {
 
   it('should be able to overwrite the default styles', () => {
     const separator = TestUtils.renderIntoDocument(
-      <Separator style={ { color: '#F00'} }>Please select a city</Separator>
+      <Separator style={ { color: '#F00' } }>Please select a city</Separator>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');

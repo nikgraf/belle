@@ -1,4 +1,4 @@
-import {localeData} from '../config/i18n';
+import i18n from '../config/i18n';
 
 /**
  * The function will take a month and year value and will return an array of weeks for that month.
@@ -32,9 +32,7 @@ export const getWeekArrayForMonth = (month, year, firstDayOfWeek) => {
   return weekArray;
 };
 
-export const getLastDayForMonth = (year, month) => {
-  return new Date(year, month + 1, 0);
-};
+export const getLastDayForMonth = (year, month) => new Date(year, month + 1, 0);
 
 /**
  * Function will return locale data for locale. If data is not available in config files it will return default data.
@@ -45,7 +43,7 @@ export const getLocaleData = (locale) => {
   const localeResult = {};
   let lData;
   if (locale) {
-    lData = localeData[locale];
+    lData = i18n.localeData[locale];
   }
 
   const monthNames = [
@@ -61,12 +59,10 @@ export const getLocaleData = (locale) => {
   return localeResult;
 };
 
-export const getDateKey = (year, month, day) => {
-  return `${year}-${month}-${day}`;
-};
+export const getDateKey = (year, month, day) => `${year}-${month}-${day}`;
 
-export const convertDateToDateKey = (date) => {
-  return getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate());
-};
+export const convertDateToDateKey = (date) => (
+  getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate())
+);
 
 export const today = () => new Date();

@@ -1,4 +1,4 @@
-import {flatten, mapObject} from '../utils/helpers';
+import { flatten, mapObject } from '../utils/helpers';
 import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
 import { canUseDOM } from 'exenv';
 import animations from '../style/animations';
@@ -112,7 +112,7 @@ export function removeAllStyles(styleIds) {
 /**
  * Injects a style tag and adds the passed style for the provided pseudoClass.
  */
-export default function(styleId, style, pseudoClass, disabled) {
+export default function (styleId, style, pseudoClass, disabled) {
   injectStyleTag();
   updateStore(styleId, style, pseudoClass, disabled);
   updateStyling();

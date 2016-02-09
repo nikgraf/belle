@@ -7,7 +7,7 @@ import belleWithClassicFocusTheme from './belle-with-classic-focus';
  */
 export function getParameterByName(name) {
   const parsedName = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  const regex = new RegExp('[\\?&]' + parsedName + '=([^&#]*)');
+  const regex = new RegExp(`[\\?&]${parsedName}=([^&#]*)`);
   const results = regex.exec(location.hash);
   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
@@ -20,7 +20,7 @@ function updateStructure(targetObject, object) {
     if (object.hasOwnProperty(componentName)) {
       for (const styleName in object[componentName]) {
         if (object[componentName].hasOwnProperty(styleName)) {
-          targetObject[componentName][styleName] = object[componentName][styleName];
+          targetObject[componentName][styleName] = object[componentName][styleName]; // eslint-disable-line no-param-reassign
         }
       }
     }

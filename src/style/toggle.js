@@ -91,7 +91,7 @@ const toggleStyle = {
     // This allows to have a round handle that is position exactly in on top of the
     // border between the two choice areas.
     width: 52,
-    lineHeight: 32 + 'px',
+    lineHeight: '32px',
     textAlign: 'center',
     color: '#FFF',
     backgroundColor: 'rgba(43, 206, 56, 0.8)',
@@ -128,7 +128,7 @@ const toggleStyle = {
     // This allows to have a round handle that is position exactly in on top of the
     // border between the two choice areas.
     width: 52,
-    lineHeight: 32 + 'px',
+    lineHeight: '32px',
     textAlign: 'center',
     color: '#FFF',
     backgroundColor: 'rgba(205, 205, 205, 0.8)',

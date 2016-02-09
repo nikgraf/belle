@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import {injectStyles, removeStyle} from '../utils/inject-style';
-import {omit, has, last, first} from '../utils/helpers';
+import { injectStyles, removeStyle } from '../utils/inject-style';
+import { omit, has, last, first } from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
-import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
+import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
 import Choice from '../components/Choice';
 
@@ -156,7 +156,7 @@ export default class Toggle extends Component {
       isDraggingWithTouch: false,
       sliderProps: sanitizeSliderProps(properties.sliderProps),
       sliderWrapperProps: sanitizeSliderWrapperProps(properties.sliderWrapperProps),
-      value: value,
+      value,
       wasFocusedWithClickOrTouch: false,
     };
 
@@ -703,7 +703,7 @@ export default class Toggle extends Component {
       });
     } else {
       this.setState({
-        value: value,
+        value,
         isDraggingWithMouse: false,
         isDraggingWithTouch: false,
         isActive: false,
@@ -711,7 +711,7 @@ export default class Toggle extends Component {
     }
 
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate({ value });
     }
   }
 
@@ -897,53 +897,65 @@ export default class Toggle extends Component {
     const role = has(this.state.childProps, 'role') ? this.state.childProps.role : 'checkbox';
 
     return (
-      <div style={ wrapperStyle }
-           tabIndex={ tabIndex }
-           className={ unionClassNames(this.props.className, this.styleId) }
-           onKeyDown={ ::this._onKeyDown }
-           onMouseDown={ ::this._onMouseDownOnWrapper }
-           onMouseUp={ ::this._onMouseUpOnWrapper }
-           onTouchStart={ ::this._onTouchStartOnWrapper }
-           onFocus={ ::this._onFocus }
-           onBlur={ ::this._onBlur }
-           onMouseEnter = { ::this._onMouseEnterAtSliderWrapper }
-           onMouseLeave = { ::this._onMouseLeaveAtSliderWrapper }
-           role={ role }
-           aria-checked={ this.state.value }
-           {...this.state.childProps} >
-        <div style={ sliderWrapperStyle }
-             ref="sliderWrapper"
-             {...this.state.sliderWrapperProps}>
-          <div style={ computedSliderStyle }
-               onClick={ ::this._onClickAtSlider }
-               onTouchStart={ ::this._onTouchStartAtSlider }
-               onTouchMove={ ::this._onTouchMoveAtSlider }
-               onTouchEnd={ ::this._onTouchEndAtSlider }
-               onTouchCancel={ ::this._onTouchCancelAtSlider }
-               {...this.state.sliderProps}>
-            <div ref="firstChoice"
-                 style={ computedTrueChoiceStyle }
-                 {...this.state.firstChoiceProps}>
+      <div
+        style={ wrapperStyle }
+        tabIndex={ tabIndex }
+        className={ unionClassNames(this.props.className, this.styleId) }
+        onKeyDown={ ::this._onKeyDown }
+        onMouseDown={ ::this._onMouseDownOnWrapper }
+        onMouseUp={ ::this._onMouseUpOnWrapper }
+        onTouchStart={ ::this._onTouchStartOnWrapper }
+        onFocus={ ::this._onFocus }
+        onBlur={ ::this._onBlur }
+        onMouseEnter = { ::this._onMouseEnterAtSliderWrapper }
+        onMouseLeave = { ::this._onMouseLeaveAtSliderWrapper }
+        role={ role }
+        aria-checked={ this.state.value }
+        {...this.state.childProps}
+      >
+        <div
+          style={ sliderWrapperStyle }
+          ref="sliderWrapper"
+          {...this.state.sliderWrapperProps}
+        >
+          <div
+            style={ computedSliderStyle }
+            onClick={ ::this._onClickAtSlider }
+            onTouchStart={ ::this._onTouchStartAtSlider }
+            onTouchMove={ ::this._onTouchMoveAtSlider }
+            onTouchEnd={ ::this._onTouchEndAtSlider }
+            onTouchCancel={ ::this._onTouchCancelAtSlider }
+            {...this.state.sliderProps}
+          >
+            <div
+              ref="firstChoice"
+              style={ computedTrueChoiceStyle }
+              {...this.state.firstChoiceProps}
+            >
               { computedTrueChoice }
             </div>
-            <div ref="secondChoice"
-                 style={ computedFalseChoiceStyle }
-                 {...this.state.secondChoiceProps}>
+            <div
+              ref="secondChoice"
+              style={ computedFalseChoiceStyle }
+              {...this.state.secondChoiceProps}
+            >
               { computedFalseChoice }
             </div>
           </div>
         </div>
-        <div ref="handle"
-             style={ handleStyle }
-             onMouseDown={ ::this._onMouseDownOnHandle }
-             onMouseMove={ ::this._onMouseMoveOnHandle }
-             onMouseUp={ ::this._onMouseUpOnHandle }
-             onMouseLeave={ ::this._onMouseLeaveOnHandle }
-             onTouchStart={ ::this._onTouchStartHandle }
-             onTouchMove={ ::this._onTouchMoveHandle }
-             onTouchEnd={ ::this._onTouchEndHandle }
-             onTouchCancel={ ::this._onTouchCancelHandle }
-             {...this.state.handleProps} />
+        <div
+          ref="handle"
+          style={ handleStyle }
+          onMouseDown={ ::this._onMouseDownOnHandle }
+          onMouseMove={ ::this._onMouseMoveOnHandle }
+          onMouseUp={ ::this._onMouseUpOnHandle }
+          onMouseLeave={ ::this._onMouseLeaveOnHandle }
+          onTouchStart={ ::this._onTouchStartHandle }
+          onTouchMove={ ::this._onTouchMoveHandle }
+          onTouchEnd={ ::this._onTouchEndHandle }
+          onTouchCancel={ ::this._onTouchCancelHandle }
+          {...this.state.handleProps}
+        />
       </div>
     );
   }

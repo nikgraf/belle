@@ -13,9 +13,9 @@ if (canUseDOM) {
 
   const vendors = ['ms', 'moz', 'webkit', 'o'];
   for (let index = 0; index < vendors.length && !requestAnimationFrame; ++index) {
-    requestAnimationFrame = window[vendors[index] + 'RequestAnimationFrame'];
-    cancelAnimationFrame = window[vendors[index] + 'CancelAnimationFrame'] ||
-      window[vendors[index] + 'CancelRequestAnimationFrame'];
+    requestAnimationFrame = window[`${vendors[index]}RequestAnimationFrame`];
+    cancelAnimationFrame = window[`${vendors[index]}CancelAnimationFrame`] ||
+      window[`${vendors[index]}CancelRequestAnimationFrame`];
   }
 }
 

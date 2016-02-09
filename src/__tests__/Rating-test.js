@@ -64,7 +64,7 @@ describe('Rating', () => {
         value: 1,
       };
 
-      rating.componentWillReceiveProps({ valueLink: valueLink });
+      rating.componentWillReceiveProps({ valueLink });
       expect(rating.state.value).toBe(1);
     });
 

@@ -24,7 +24,7 @@ describe('TextInput', () => {
 
   it('should be able to adopt the style of the textInput', () => {
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput style={{ color: 'red'}} />
+      <TextInput style={{ color: 'red' }} />
     );
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
@@ -94,7 +94,7 @@ describe('TextInput', () => {
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
-    TestUtils.Simulate.keyDown(textareaNode, {key: '1'});
+    TestUtils.Simulate.keyDown(textareaNode, { key: '1' });
 
     expect(wasPressed).toEqual(true);
   });

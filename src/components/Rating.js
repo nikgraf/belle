@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { canUseDOM } from 'exenv';
-import {omit, has} from '../utils/helpers';
+import { omit, has } from '../utils/helpers';
 import style from '../style/rating.js';
-import {injectStyles, removeStyle} from '../utils/inject-style';
+import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
-import {requestAnimationFrame, cancelAnimationFrame} from '../utils/animation-frame-management';
+import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
 
 /**
  * sanitize properties for the wrapping div.
@@ -97,7 +97,7 @@ export default class Rating extends Component {
     }
 
     this.state = {
-      value: value,
+      value,
       focusedValue: undefined,
       generalProps: sanitizeWrapperProps(properties),
       characterProps: sanitizeCharacterProps(properties.characterProps),
@@ -359,7 +359,7 @@ export default class Rating extends Component {
   _onTouchEnd(event) {
     if (!this.props.disabled) {
       event.preventDefault();
-      this.setState({isActive: false});
+      this.setState({ isActive: false });
       const value = this.state.focusedValue;
       this._triggerComponentUpdate(value);
     }
@@ -407,7 +407,7 @@ export default class Rating extends Component {
    */
   _onFocus() {
     if (!this.state.isActive && !this.props.disabled) {
-      this.setState({isFocus: true});
+      this.setState({ isFocus: true });
     }
 
     if (this.props.onFocus) {
@@ -548,12 +548,12 @@ export default class Rating extends Component {
       this.setState({
         focusedValue: undefined,
         isActive: false,
-        value: value,
+        value,
       });
     }
 
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate({ value });
     }
   }
 
@@ -619,42 +619,45 @@ export default class Rating extends Component {
     }
 
     return (
-      <div ref="wrapper"
-           style={ wrapperStyle }
-           className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-           onKeyDown={ ::this._onKeyDown }
-           onMouseEnter={ ::this._onMouseEnter }
-           onMouseMove={ ::this._onMouseMove }
-           onMouseLeave={ ::this._onMouseLeave }
-           onMouseUp={ ::this._onMouseUp }
-           onMouseDown={ ::this._onMouseDown }
-           onTouchStart={ ::this._onTouchStart }
-           onTouchMove={ ::this._onTouchMove }
-           onTouchEnd={ ::this._onTouchEnd }
-           onTouchCancel={ ::this._onTouchCancel }
-           onContextMenu={ ::this._onContextMenu }
-           onBlur={ ::this._onBlur }
-           onFocus={ ::this._onFocus }
-           tabIndex={ tabIndex }
-           aria-label = { this.props['aria-label'] }
-           aria-valuemax = { 5 }
-           aria-valuemin = { 1 }
-           aria-valuenow = { this.state.value }
-           aria-disabled = { this.props.disabled }
-           {...this.state.wrapperProps}>
-
-           {
-             React.Children.map([1, 2, 3, 4, 5], (value) => {
-               const ratingStyle = (currentValue >= value) ? characterStyle : {};
-               return (
-                 <span data-belle-value= { value }
-                       style={ ratingStyle }
-                       {...this.state.characterProps}>
-                   { this.props.character }
-                 </span>
-               );
-             })
-           }
+      <div
+        ref="wrapper"
+        style={ wrapperStyle }
+        className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
+        onKeyDown={ ::this._onKeyDown }
+        onMouseEnter={ ::this._onMouseEnter }
+        onMouseMove={ ::this._onMouseMove }
+        onMouseLeave={ ::this._onMouseLeave }
+        onMouseUp={ ::this._onMouseUp }
+        onMouseDown={ ::this._onMouseDown }
+        onTouchStart={ ::this._onTouchStart }
+        onTouchMove={ ::this._onTouchMove }
+        onTouchEnd={ ::this._onTouchEnd }
+        onTouchCancel={ ::this._onTouchCancel }
+        onContextMenu={ ::this._onContextMenu }
+        onBlur={ ::this._onBlur }
+        onFocus={ ::this._onFocus }
+        tabIndex={ tabIndex }
+        aria-label = { this.props['aria-label'] }
+        aria-valuemax = { 5 }
+        aria-valuemin = { 1 }
+        aria-valuenow = { this.state.value }
+        aria-disabled = { this.props.disabled }
+        {...this.state.wrapperProps}
+      >
+        {
+         React.Children.map([1, 2, 3, 4, 5], (value) => {
+           const ratingStyle = (currentValue >= value) ? characterStyle : {};
+           return (
+             <span
+               data-belle-value= { value }
+               style={ ratingStyle }
+               {...this.state.characterProps}
+             >
+               { this.props.character }
+             </span>
+           );
+         })
+        }
       </div>
     );
   }

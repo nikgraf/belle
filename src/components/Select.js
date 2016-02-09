@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import {omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some} from '../utils/helpers';
+import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some } from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
-import {injectStyles, removeStyle} from '../utils/inject-style';
+import { injectStyles, removeStyle } from '../utils/inject-style';
 import style from '../style/select';
 import config from '../config/select';
 import isComponentOfType from '../utils/is-component-of-type';
@@ -37,16 +37,14 @@ function isSeparator(reactElement) {
  * one Placeholder.
  */
 function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, componentName) {
-  const validChildren = filterReactChildren(props[propName], (node) => {
-    return (isOption(node) || isSeparator(node) || isPlaceholder(node));
-  });
+  const validChildren = filterReactChildren(props[propName], (node) => (
+    (isOption(node) || isSeparator(node) || isPlaceholder(node))
+  ));
   if (React.Children.count(props[propName]) !== React.Children.count(validChildren)) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected an Option, Separator or Placeholder component from Belle.`);
   }
 
-  const placeholders = filterReactChildren(props[propName], (node) => {
-    return isPlaceholder(node);
-  });
+  const placeholders = filterReactChildren(props[propName], (node) => isPlaceholder(node));
   if (React.Children.count(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
@@ -87,16 +85,12 @@ function updatePseudoClassStyle(styleId, properties) {
 /**
  * Returns true in case there one more element in the list.
  */
-const hasNext = (list, currentIndex) => {
-  return (currentIndex + 2 <= list.length);
-};
+const hasNext = (list, currentIndex) => currentIndex + 2 <= list.length;
 
 /**
  * Returns true in case there is one previous element in the list.
  */
-const hasPrevious = (list, currentIndex) => {
-  return (currentIndex - 1 >= 0);
-};
+const hasPrevious = (list, currentIndex) => currentIndex - 1 >= 0;
 
 /**
  * Returns an object with properties that are relevant for the wrapping div of
@@ -234,8 +228,8 @@ export default class Select extends Component {
     this.state = {
       isOpen: false,
       isFocused: false,
-      selectedValue: selectedValue,
-      focusedOptionValue: focusedOptionValue,
+      selectedValue,
+      focusedOptionValue,
       selectedOptionWrapperProps: sanitizeSelectedOptionWrapperProps(properties),
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       menuProps: sanitizeMenuProps(properties.menuProps),
@@ -590,7 +584,7 @@ export default class Select extends Component {
    * Set isActive to true on mouse-down.
    */
   _onMouseDown(event) {
-    this.setState({isActive: true});
+    this.setState({ isActive: true });
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
@@ -601,7 +595,7 @@ export default class Select extends Component {
    * Set isActive to false on mouse-up.
    */
   _onMouseUp(event) {
-    this.setState({isActive: false});
+    this.setState({ isActive: false });
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
@@ -755,9 +749,9 @@ export default class Select extends Component {
    * The index search includes only option components.
    */
   _getIndexOfFocusedOption() {
-    return findIndex(this.options, (element) => {
-      return element.props.value === this.state.focusedOptionValue;
-    });
+    return findIndex(this.options, (element) => (
+      element.props.value === this.state.focusedOptionValue
+    ));
   }
 
   /**
@@ -800,7 +794,7 @@ export default class Select extends Component {
     }
 
     if (this.props.onUpdate) {
-      this.props.onUpdate({ value: value });
+      this.props.onUpdate({ value });
     }
   }
 
@@ -813,15 +807,17 @@ export default class Select extends Component {
           const localOptionIndex = optionsIndex;
           const isHovered = entry.props.value === this.state.focusedOptionValue;
           const element = (
-            <li onClick={ () => this._onClickAtOption(localOptionIndex) }
-                onTouchStart={ (event) => this._onTouchStartAtOption(event, localOptionIndex) }
-                onTouchMove={ ::this._onTouchMoveAtOption }
-                onTouchEnd={ (event) => this._onTouchEndAtOption(event, localOptionIndex) }
-                onTouchCancel={ ::this._onTouchCancelAtOption }
-                key={ index }
-                onMouseEnter={ () => this._onMouseEnterAtOption(localOptionIndex) }
-                role="option"
-                aria-selected={ isHovered }>
+            <li
+              onClick={ () => this._onClickAtOption(localOptionIndex) }
+              onTouchStart={ (event) => this._onTouchStartAtOption(event, localOptionIndex) }
+              onTouchMove={ ::this._onTouchMoveAtOption }
+              onTouchEnd={ (event) => this._onTouchEndAtOption(event, localOptionIndex) }
+              onTouchCancel={ ::this._onTouchCancelAtOption }
+              key={ index }
+              onMouseEnter={ () => this._onMouseEnterAtOption(localOptionIndex) }
+              role="option"
+              aria-selected={ isHovered }
+            >
               { entry }
             </li>
           );
@@ -830,8 +826,10 @@ export default class Select extends Component {
           return element;
         } else if (isSeparator(entry)) {
           return (
-            <li key={ index }
-                role="presentation">
+            <li
+              key={ index }
+              role="presentation"
+            >
               { entry }
             </li>
           );
@@ -894,9 +892,9 @@ export default class Select extends Component {
 
     let selectedOptionOrPlaceholder;
     if (this.state.selectedValue !== void 0) {
-      const selectedEntry = find(this.children, (entry) => {
-        return entry.props.value === this.state.selectedValue;
-      });
+      const selectedEntry = find(this.children, (entry) => (
+        entry.props.value === this.state.selectedValue
+      ));
 
       if (selectedEntry) {
         selectedOptionOrPlaceholder = React.cloneElement(selectedEntry, {
@@ -944,39 +942,45 @@ export default class Select extends Component {
     }
 
     return (
-      <div style={ wrapperStyle }
-           tabIndex={ tabIndex }
-           onKeyDown={ ::this._onKeyDown }
-           onBlur={ ::this._onBlur }
-           onFocus={ ::this._onFocus }
-           ref="wrapper"
-           {...this.state.wrapperProps} >
-
-        <div onClick={ ::this._onClickToggleMenu }
-             onTouchStart={ ::this._onTouchStartToggleMenu }
-             onTouchEnd={ ::this._onTouchEndToggleMenu }
-             onTouchCancel={ ::this._onTouchCancelToggleMenu }
-             onContextMenu={ ::this._onContextMenu }
-             onMouseDown = { ::this._onMouseDown }
-             onMouseUp = { ::this._onMouseUp }
-             style={ selectedOptionWrapperStyle }
-             className={ unionClassNames(this.props.className, this._styleId) }
-             ref="selectedOptionWrapper"
-             role="button"
-             aria-expanded={ this.state.isOpen }
-             id={ this.selectedOptionWrapperId }
-             {...this.state.selectedOptionWrapperProps} >
+      <div
+        style={ wrapperStyle }
+        tabIndex={ tabIndex }
+        onKeyDown={ ::this._onKeyDown }
+        onBlur={ ::this._onBlur }
+        onFocus={ ::this._onFocus }
+        ref="wrapper"
+        {...this.state.wrapperProps}
+      >
+        <div
+          onClick={ ::this._onClickToggleMenu }
+          onTouchStart={ ::this._onTouchStartToggleMenu }
+          onTouchEnd={ ::this._onTouchEndToggleMenu }
+          onTouchCancel={ ::this._onTouchCancelToggleMenu }
+          onContextMenu={ ::this._onContextMenu }
+          onMouseDown = { ::this._onMouseDown }
+          onMouseUp = { ::this._onMouseUp }
+          style={ selectedOptionWrapperStyle }
+          className={ unionClassNames(this.props.className, this._styleId) }
+          ref="selectedOptionWrapper"
+          role="button"
+          aria-expanded={ this.state.isOpen }
+          id={ this.selectedOptionWrapperId }
+          {...this.state.selectedOptionWrapperProps}
+        >
           { selectedOptionOrPlaceholder }
-          <span style={ caretStyle }
-            {...this.state.caretProps}>
-          </span>
+          <span
+            style={ caretStyle }
+            {...this.state.caretProps}
+          />
         </div>
 
-        <ul style={ computedMenuStyle }
-            role="listbox"
-            aria-labelledby={ this.selectedOptionWrapperId }
-            ref="menu"
-            {...this.state.menuProps} >
+        <ul
+          style={ computedMenuStyle }
+          role="listbox"
+          aria-labelledby={ this.selectedOptionWrapperId }
+          ref="menu"
+          {...this.state.menuProps}
+        >
           { this._renderChildren() }
         </ul>
 

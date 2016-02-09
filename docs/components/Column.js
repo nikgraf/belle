@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {omit} from 'underscore';
+import React, { PropTypes } from 'react';
+import { omit } from 'underscore';
 
 export default React.createClass({
 

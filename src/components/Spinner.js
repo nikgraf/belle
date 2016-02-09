@@ -1,14 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import spinnerStyle from '../style/spinner';
 
-const animationDelay = (delay) => {
-  return {
-    MozAnimationDelay: delay,
-    WebkitAnimationDelay: delay,
-    OAnimationDelay: delay,
-    animationDelay: delay,
-  };
-};
+const animationDelay = (delay) => ({
+  MozAnimationDelay: delay,
+  WebkitAnimationDelay: delay,
+  OAnimationDelay: delay,
+  animationDelay: delay,
+});
 
 /**
  * Spinner component to be used as loading indicator.

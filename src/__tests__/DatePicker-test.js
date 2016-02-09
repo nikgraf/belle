@@ -42,7 +42,7 @@ describe('DatePicker', () => {
     expect(datePicker.state.selectedDate).toBeUndefined();
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
-    TestUtils.Simulate.keyDown(dayPickerWrapper, {key: 'Enter'});
+    TestUtils.Simulate.keyDown(dayPickerWrapper, { key: 'Enter' });
     expect(datePicker.state.selectedDate).toBeGreaterThan(0);
   });
 
@@ -78,12 +78,12 @@ describe('DatePicker', () => {
     // const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
-    TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
+    TestUtils.Simulate.keyDown(dayPickerWrapper, { key: ' ' });
     expect(datePicker.state.selectedDate).toBeGreaterThan(0);
     expect(dateSelected).toBeGreaterThan(0);
 
     // expect(dateSelected.getDay()).toBeGreaterThan(0);
-    TestUtils.Simulate.keyDown(dayPickerWrapper, {key: ' '});
+    TestUtils.Simulate.keyDown(dayPickerWrapper, { key: ' ' });
     expect(datePicker.state.selectedDate).toBeUndefined();
     expect(dateSelected).toBeUndefined();
   });
@@ -95,7 +95,7 @@ describe('DatePicker', () => {
     expect(disabledDatePicker.state.selectedDate).toBeUndefined();
     let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.keyDown(day, {key: 'Enter'});
+    TestUtils.Simulate.keyDown(day, { key: 'Enter' });
     expect(disabledDatePicker.state.selectedDate).toBeUndefined();
 
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
@@ -104,7 +104,7 @@ describe('DatePicker', () => {
     expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
     day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.keyDown(day, {key: 'Enter'});
+    TestUtils.Simulate.keyDown(day, { key: 'Enter' });
     expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
   });
 
@@ -115,8 +115,8 @@ describe('DatePicker', () => {
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
-    TestUtils.Simulate.mouseDown(day, {button: 0});
-    TestUtils.Simulate.mouseUp(day, {button: 0});
+    TestUtils.Simulate.mouseDown(day, { button: 0 });
+    TestUtils.Simulate.mouseUp(day, { button: 0 });
     expect(datePicker.state.focusedDateKey).toBeDefined();
   });
 
@@ -130,7 +130,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowLeft'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowLeft' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() - 1);
@@ -147,7 +147,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowLeft'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowLeft' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() + 1);
@@ -164,7 +164,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowUp'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowUp' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() - 7);
@@ -181,7 +181,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowRight'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowRight' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() + 1);
@@ -198,7 +198,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowRight'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowRight' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() - 1);
@@ -215,7 +215,7 @@ describe('DatePicker', () => {
     TestUtils.Simulate.focus(datePickerWrapper);
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const prevFocusedDate = new Date(datePicker.state.focusedDateKey);
-    TestUtils.Simulate.keyDown(datePickerWrapper, {key: 'ArrowDown'});
+    TestUtils.Simulate.keyDown(datePickerWrapper, { key: 'ArrowDown' });
     expect(datePicker.state.focusedDateKey).toBeDefined();
     const nextFocusedDate = new Date(datePicker.state.focusedDateKey);
     prevFocusedDate.setDate(prevFocusedDate.getDate() + 7);
@@ -242,14 +242,14 @@ describe('DatePicker', () => {
     expect(datePicker.state.selectedDate).toBeUndefined();
     let day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.mouseDown(day, {button: 0});
-    TestUtils.Simulate.mouseUp(day, {button: 0});
+    TestUtils.Simulate.mouseDown(day, { button: 0 });
+    TestUtils.Simulate.mouseUp(day, { button: 0 });
     const newDate = datePicker.state.selectedDate;
     expect(datePicker.state.selectedDate).toBeGreaterThan(0);
     expect(dateSelected.getDay()).toBeGreaterThan(0);
     day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[10];
-    TestUtils.Simulate.mouseDown(day, {button: 1});
-    TestUtils.Simulate.mouseUp(day, {button: 1});
+    TestUtils.Simulate.mouseDown(day, { button: 1 });
+    TestUtils.Simulate.mouseUp(day, { button: 1 });
     expect(datePicker.state.selectedDate).toBe(newDate);
   });
 
@@ -261,7 +261,7 @@ describe('DatePicker', () => {
     expect(datePicker.state.selectedDate).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.mouseDown(day, {button: 0});
+    TestUtils.Simulate.mouseDown(day, { button: 0 });
     expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
@@ -281,7 +281,7 @@ describe('DatePicker', () => {
     expect(datePicker.state.selectedDate).toBe(compSelectedDate);
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.mouseDown(day, {button: 0});
+    TestUtils.Simulate.mouseDown(day, { button: 0 });
     expect(datePicker.state.selectedDate).toBe(compSelectedDate);
   });
 
@@ -301,7 +301,7 @@ describe('DatePicker', () => {
       <DatePicker/>
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
-    datePicker.componentWillReceiveProps({value: currentDate});
+    datePicker.componentWillReceiveProps({ value: currentDate });
     expect(datePicker.state.selectedDate).toBe(currentDate);
   });
 
@@ -318,7 +318,7 @@ describe('DatePicker', () => {
       },
     };
     expect(datePicker.state.selectedDate).toBeUndefined();
-    datePicker.componentWillReceiveProps({valueLink: valueLink});
+    datePicker.componentWillReceiveProps({ valueLink });
     expect(datePicker.state.selectedDate).toBe(currentDate);
   });
 
@@ -328,7 +328,7 @@ describe('DatePicker', () => {
       <DatePicker defaultValue={ undefined }/>
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
-    datePicker.componentWillReceiveProps({defaultValue: currentDate});
+    datePicker.componentWillReceiveProps({ defaultValue: currentDate });
     expect(datePicker.state.selectedDate).toBeUndefined();
   });
 
@@ -357,7 +357,7 @@ describe('DatePicker', () => {
       <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
-    TestUtils.Simulate.mouseDown(wrapper, {button: 0});
+    TestUtils.Simulate.mouseDown(wrapper, { button: 0 });
     expect(datePicker.state.isActive).toBeTruthy();
     TestUtils.Simulate.focus(wrapper);
     expect(datePicker.state.isFocused).toBeFalsy();
@@ -368,7 +368,7 @@ describe('DatePicker', () => {
       <DatePicker className="wrapper_test"/>
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
-    TestUtils.Simulate.touchStart(wrapper, {touches: {length: 1}});
+    TestUtils.Simulate.touchStart(wrapper, { touches: { length: 1 } });
     expect(datePicker.state.isActive).toBeTruthy();
     TestUtils.Simulate.touchEnd(wrapper);
     expect(datePicker.state.isActive).toBeFalsy();
@@ -396,23 +396,23 @@ describe('DatePicker', () => {
 
   it('should decrease month when prevMonthNav is clicked', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker prevMonthNavProps={{className: 'prev_month'}}/>
+      <DatePicker prevMonthNavProps={{ className: 'prev_month' }}/>
     );
     datePicker.state.month = 5;
     const prevMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'prev_month')[0];
-    TestUtils.Simulate.mouseDown(prevMonth, {button: 0});
-    TestUtils.Simulate.mouseUp(prevMonth, {button: 0});
+    TestUtils.Simulate.mouseDown(prevMonth, { button: 0 });
+    TestUtils.Simulate.mouseUp(prevMonth, { button: 0 });
     expect(datePicker.state.month).toBe(4);
   });
 
   it('should increase month when nextMonthNav is clicked', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker nextMonthNavProps={{className: 'next_month'}}/>
+      <DatePicker nextMonthNavProps={{ className: 'next_month' }}/>
     );
     datePicker.state.month = 5;
     const nextMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'next_month')[0];
-    TestUtils.Simulate.mouseDown(nextMonth, {button: 0});
-    TestUtils.Simulate.mouseUp(nextMonth, {button: 0});
+    TestUtils.Simulate.mouseDown(nextMonth, { button: 0 });
+    TestUtils.Simulate.mouseUp(nextMonth, { button: 0 });
     expect(datePicker.state.month).toBe(6);
   });
 
@@ -422,27 +422,27 @@ describe('DatePicker', () => {
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     expect(datePicker.state.activeDay).toBeFalsy();
-    TestUtils.Simulate.touchStart(day, {touches: {length: 1}});
+    TestUtils.Simulate.touchStart(day, { touches: { length: 1 } });
     expect(datePicker.state.activeDay).toBeTruthy();
-    TestUtils.Simulate.touchEnd(day, {touches: {length: 1}});
+    TestUtils.Simulate.touchEnd(day, { touches: { length: 1 } });
     expect(datePicker.state.activeDay).toBeFalsy();
   });
 
   it('should apply activeDayStyle to day when touchStart but immediately after touchEnd should apply selectedDayStyle', () => {
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-        activeDayStyle={{ color: 'blue'}}
+        activeDayStyle={{ color: 'blue' }}
         selectedDayStyle={{ color: 'red' }}
         dayProps={{ className: 'day_test' }}
       />
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
-    TestUtils.Simulate.touchStart(day, {touches: {length: 1}});
+    TestUtils.Simulate.touchStart(day, { touches: { length: 1 } });
     expect(datePicker.state.activeDay).toBeDefined();
     expect(datePicker.state.selectedDate).toBeUndefined();
     expect(day.getAttribute('style')).toContain('color: blue');
-    TestUtils.Simulate.touchEnd(day, {touches: {length: 1}});
+    TestUtils.Simulate.touchEnd(day, { touches: { length: 1 } });
     expect(datePicker.state.activeDay).toBeUndefined();
     expect(datePicker.state.selectedDate).toBeDefined();
     expect(day.getAttribute('style')).toContain('color: red');
@@ -458,10 +458,10 @@ describe('DatePicker', () => {
       />
     );
     const picker = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker')[0];
-    TestUtils.Simulate.mouseDown(picker, {button: 0});
+    TestUtils.Simulate.mouseDown(picker, { button: 0 });
     expect(picker.getAttribute('style')).toContain('background-color: blue');
     expect(picker.getAttribute('style')).toContain('font-size: 10px');
-    TestUtils.Simulate.mouseUp(picker, {button: 0});
+    TestUtils.Simulate.mouseUp(picker, { button: 0 });
     expect(picker.getAttribute('style')).not.toContain('background-color: blue');
   });
 
@@ -474,11 +474,11 @@ describe('DatePicker', () => {
       />
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
-    TestUtils.Simulate.mouseDown(day, {button: 0});
+    TestUtils.Simulate.mouseDown(day, { button: 0 });
     expect(datePicker.state.activeDay).toBeDefined();
     expect(datePicker.state.selectedDate).toBeUndefined();
     expect(day.getAttribute('style')).toContain('background-color: blue');
-    TestUtils.Simulate.mouseUp(day, {button: 0});
+    TestUtils.Simulate.mouseUp(day, { button: 0 });
     expect(datePicker.state.activeDay).toBeUndefined();
     expect(datePicker.state.selectedDate).toBeDefined();
     expect(day.getAttribute('style')).toContain('font-size: 5px');

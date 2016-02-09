@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
-import {has} from '../utils/helpers';
+import React, { Component, PropTypes } from 'react';
+import { has } from '../utils/helpers';
 import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';
-import {injectStyles, removeStyle} from '../utils/inject-style';
+import { injectStyles, removeStyle } from '../utils/inject-style';
 import config from '../config/button';
 
 const buttonTypes = ['button', 'submit', 'reset'];
@@ -367,17 +367,19 @@ export default class Button extends Component {
     }
 
     return (
-      <button style={ combinedStyle }
-              className={ unionClassNames(this.props.className, this.styleId) }
-              onTouchStart={ ::this._onTouchStart }
-              onTouchEnd={ ::this._onTouchEnd }
-              onTouchCancel={ ::this._onTouchCancel }
-              onFocus={ ::this._onFocus }
-              onBlur={ ::this._onBlur }
-              onMouseDown={ ::this._onMouseDown }
-              onMouseEnter={ ::this._onMouseEnter }
-              onMouseLeave={ ::this._onMouseLeave }
-              {...this.state.childProps}>
+      <button
+        style={ combinedStyle }
+        className={ unionClassNames(this.props.className, this.styleId) }
+        onTouchStart={ ::this._onTouchStart }
+        onTouchEnd={ ::this._onTouchEnd }
+        onTouchCancel={ ::this._onTouchCancel }
+        onFocus={ ::this._onFocus }
+        onBlur={ ::this._onBlur }
+        onMouseDown={ ::this._onMouseDown }
+        onMouseEnter={ ::this._onMouseEnter }
+        onMouseLeave={ ::this._onMouseLeave }
+        {...this.state.childProps}
+      >
         { this.props.children }
       </button>
     );
