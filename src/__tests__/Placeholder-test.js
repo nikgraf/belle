@@ -16,6 +16,7 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
+    console.log('******************************************', div.attr('style'));
     expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
   });
