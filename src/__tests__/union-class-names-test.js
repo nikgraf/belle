@@ -1,6 +1,6 @@
 /* global jest, describe, it, expect*/
 
-const unionClassNames = require('../utils/union-class-names');
+import unionClassNames from '../utils/union-class-names';
 
 describe('unionClassNames', () => {
   it('should add a class to existing ones', () => {
