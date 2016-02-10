@@ -7,7 +7,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Spinner = require('../components/Spinner');
+const Spinner = require('../components/Spinner').default;
 
 describe('Spinner', () => {
   it('should come with default styles', () => {

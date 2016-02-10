@@ -7,7 +7,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Option = require('../components/Option');
+const Option = require('../components/Option').default;
 
 describe('Option', () => {
   let shallowRenderer;

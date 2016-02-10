@@ -7,7 +7,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Separator = require('../components/Separator');
+const Separator = require('../components/Separator').default;
 
 describe('Separator', () => {
   it('should come with a set of default styles', () => {

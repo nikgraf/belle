@@ -9,7 +9,7 @@ import TestUtils from 'react-addons-test-utils';
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const injectStyle = require('../utils/inject-style');
-const TextInput = require('../components/TextInput');
+const TextInput = require('../components/TextInput').default;
 
 describe('TextInput', () => {
   it('should come with default styles', () => {

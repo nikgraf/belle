@@ -8,8 +8,8 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const ComboBox = require('../components/ComboBox');
-const Option = require('../components/Option');
+const ComboBox = require('../components/ComboBox').default;
+const Option = require('../components/Option').default;
 
 describe('ComboBox', () => {
   it('should initialise inputValue & filteredOptions during construction', () => {
