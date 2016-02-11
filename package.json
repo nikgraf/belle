@@ -73,7 +73,6 @@
       "<rootDir>/node_modules/fbjs",
       "<rootDir>/node_modules/react-dom",
       "<rootDir>/node_modules/react-addons-test-utils",
-      "underscore",
       "../utils/helpers",
       "../utils/union-class-names",
       "../utils/is-component-of-type"
