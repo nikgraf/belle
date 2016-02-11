@@ -11,7 +11,7 @@ import TestUtils from 'react-addons-test-utils';
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const Button = require('../components/Button').default;
-const injectStyle = require('../utils/inject-style').default;
+const injectStyle = require('../utils/inject-style');
 
 describe('Button', () => {
   describe('without any properties', () => {

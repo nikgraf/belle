@@ -14,8 +14,7 @@ import TestUtils from 'react-addons-test-utils';
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
 const DatePicker = require('../components/DatePicker').default;
-const injectStyle = require('../utils/inject-style').default;
-console.log(injectStyle);
+const injectStyle = require('../utils/inject-style');
 
 describe('DatePicker', () => {
   it('should initialise props as expected', () => {
