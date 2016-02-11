@@ -5,6 +5,7 @@ jest.dontMock('../components/DatePicker');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/date-helpers');
 jest.dontMock('../config/i18n');
+jest.dontMock('../style/date-picker');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,6 +15,7 @@ import TestUtils from 'react-addons-test-utils';
 // is used instead of import.
 const DatePicker = require('../components/DatePicker').default;
 const injectStyle = require('../utils/inject-style').default;
+console.log(injectStyle);
 
 describe('DatePicker', () => {
   it('should initialise props as expected', () => {

@@ -1,6 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Card');
+jest.dontMock('../style/card');
 jest.dontMock('../utils/inject-style');
 
 import React from 'react';

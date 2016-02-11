@@ -1,6 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Spinner');
+jest.dontMock('../style/spinner');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

@@ -2,6 +2,8 @@
 
 jest.dontMock('../components/TextInput');
 jest.dontMock('../utils/inject-style');
+jest.dontMock('../utils/calculate-textarea-height');
+jest.dontMock('../style/text-input');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
@@ -19,7 +21,7 @@ describe('TextInput', () => {
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
     expect(textareaNode.hasAttribute('style')).toBeTruthy();
-    expect(textareaNode.getAttribute('style').indexOf('overflow:hidden') > -1).toBeTruthy();
+    expect(textareaNode.getAttribute('style').indexOf('overflow: hidden') > -1).toBeTruthy();
   });
 
   it('should be able to adopt the style of the textInput', () => {
@@ -29,7 +31,7 @@ describe('TextInput', () => {
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
 
     expect(textareaNode.hasAttribute('style')).toBeTruthy();
-    expect(textareaNode.getAttribute('style').indexOf('color:red') > -1).toBeTruthy();
+    expect(textareaNode.getAttribute('style').indexOf('color: red') > -1).toBeTruthy();
   });
 
   it('should calculate its height after initializing', () => {

@@ -1,6 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Placeholder');
+jest.dontMock('../style/placeholder');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
@@ -16,7 +17,6 @@ describe('Placeholder', () => {
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
-    console.log('******************************************', div.attr('style'));
     expect(div.hasAttribute('style')).toBeTruthy();
     expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
   });
