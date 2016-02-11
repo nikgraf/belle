@@ -209,29 +209,29 @@ export default class Button extends Component {
    * Activate the focused attribute used to determine when to show the
    * one-time focus animation and trigger a render.
    */
-  _onFocus(event) {
+  _onFocus = (event) => {
     this.focused = true;
     this.forceUpdate();
 
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
-  }
+  };
 
   /**
    * Deactivate the focused attribute used to determine when to show the
    * one-time focus animation and trigger a render.
    */
-  _onBlur(event) {
+  _onBlur = (event) => {
     this.focused = false;
     this.setState({ isActive: false });
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
-  }
+  };
 
-  _onMouseDown(event) {
+  _onMouseDown = (event) => {
     if (event.button === 0 && !this.props.disabled) {
       this.mouseDownOnButton = true;
     }
@@ -239,12 +239,12 @@ export default class Button extends Component {
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
-  }
+  };
 
   /**
    * Updates the button to be pressed.
    */
-  _onTouchStart(event) {
+  _onTouchStart = (event) => {
     if (!this.props.disabled && event.touches.length === 1) {
       this.setState({
         isActive: true,
@@ -255,12 +255,12 @@ export default class Button extends Component {
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
-  }
+  };
 
   /**
    * Updates the button to be release.
    */
-  _onTouchEnd(event) {
+  _onTouchEnd = (event) => {
     this.setState({
       isActive: false,
       isIgnoringHover: true,
@@ -269,12 +269,12 @@ export default class Button extends Component {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
-  }
+  };
 
   /**
    * Updates the button to be release.
    */
-  _onTouchCancel(event) {
+  _onTouchCancel = (event) => {
     this.setState({
       isActive: false,
       isIgnoringHover: true,
@@ -283,12 +283,12 @@ export default class Button extends Component {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
-  }
+  };
 
   /**
    * As soon as the mouse enters the component the isHovered state is activated.
    */
-  _onMouseEnter(event) {
+  _onMouseEnter = (event) => {
     if (!this.state.isIgnoringHover) {
       this.setState({
         isHovered: true,
@@ -299,12 +299,12 @@ export default class Button extends Component {
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
-  }
+  };
 
   /**
    * Deactivate the isHovered state.
    */
-  _onMouseLeave(event) {
+  _onMouseLeave = (event) => {
     this.setState({
       isHovered: false,
     });
@@ -312,7 +312,7 @@ export default class Button extends Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
-  }
+  };
 
   render() {
     const baseStyle = this.props.primary ? buttonStyle.primaryStyle : buttonStyle.style;
@@ -370,14 +370,14 @@ export default class Button extends Component {
       <button
         style={ combinedStyle }
         className={ unionClassNames(this.props.className, this.styleId) }
-        onTouchStart={ ::this._onTouchStart }
-        onTouchEnd={ ::this._onTouchEnd }
-        onTouchCancel={ ::this._onTouchCancel }
-        onFocus={ ::this._onFocus }
-        onBlur={ ::this._onBlur }
-        onMouseDown={ ::this._onMouseDown }
-        onMouseEnter={ ::this._onMouseEnter }
-        onMouseLeave={ ::this._onMouseLeave }
+        onTouchStart={ this._onTouchStart }
+        onTouchEnd={ this._onTouchEnd }
+        onTouchCancel={ this._onTouchCancel }
+        onFocus={ this._onFocus }
+        onBlur={ this._onBlur }
+        onMouseDown={ this._onMouseDown }
+        onMouseEnter={ this._onMouseEnter }
+        onMouseLeave={ this._onMouseLeave }
         {...this.state.childProps}
       >
         { this.props.children }
