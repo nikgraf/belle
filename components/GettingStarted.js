@@ -51,7 +51,7 @@ export default class GettingStarted extends Component {
       <h3>Import & use Belle Components</h3>
 
       <p>
-        We recommend you get started with <a href="https://facebook.github.io/react/">React</a> first. Once you have a simple application setup you can import any Belle component and use it right away. <b>No stylesheets, font or any other prerequisite needed.</b>
+        We recommend you to get started with <a href="https://facebook.github.io/react/">React</a> first. Once you have a simple application setup you can import any Belle component and use it right away. <b>No stylesheets, font or any other prerequisite needed.</b>
       </p>
 
       <Code value={ usageExampleHtml } style={ { marginTop: 40 } } />
