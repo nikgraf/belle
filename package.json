@@ -68,6 +68,7 @@
     "webpack-hot-middleware": "^2.6.4"
   },
   "jest": {
+    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/fbjs",
