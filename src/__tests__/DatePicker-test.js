@@ -5,6 +5,7 @@ jest.dontMock('../components/DatePicker');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/date-helpers');
 jest.dontMock('../config/i18n');
+jest.dontMock('../style/date-picker');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,7 +13,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const DatePicker = require('../components/DatePicker');
+const DatePicker = require('../components/DatePicker').default;
 const injectStyle = require('../utils/inject-style');
 
 describe('DatePicker', () => {

@@ -1,6 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Card');
+jest.dontMock('../style/card');
 jest.dontMock('../utils/inject-style');
 
 import React from 'react';
@@ -8,7 +9,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Card = require('../components/Card');
+const Card = require('../components/Card').default;
 
 describe('Card', () => {
   it('should come with default styles', () => {

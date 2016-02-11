@@ -9,7 +9,7 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Rating = require('../components/Rating');
+const Rating = require('../components/Rating').default;
 
 describe('Rating', () => {
   it('should be able to provide a valueLink', () => {

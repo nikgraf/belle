@@ -11,10 +11,10 @@ import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Select = require('../components/Select');
-const Option = require('../components/Option');
-const Placeholder = require('../components/Placeholder');
-const Separator = require('../components/Separator');
+const Select = require('../components/Select').default;
+const Option = require('../components/Option').default;
+const Placeholder = require('../components/Placeholder').default;
+const Separator = require('../components/Separator').default;
 
 describe('Select', () => {
   it('should initialise selectedValue & focusedOptionValue during construction', () => {

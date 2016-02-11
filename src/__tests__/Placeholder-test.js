@@ -1,13 +1,14 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Placeholder');
+jest.dontMock('../style/placeholder');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
-const Placeholder = require('../components/Placeholder');
+const Placeholder = require('../components/Placeholder').default;
 
 describe('Placeholder', () => {
   it('should come with a set of default styles', () => {
