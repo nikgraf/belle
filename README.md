@@ -20,7 +20,7 @@ npm install belle
 
 ### Import & use Belle Components
 
-We recommend you get started with [React](https://facebook.github.io/react/) first. Once you have a simple application setup you can import any Belle component and use it right away. No stylesheets, font or any other prerequisite needed.
+We recommend you to get started with [React](https://facebook.github.io/react/) first. Once you have a simple application setup you can import any Belle component and use it right away. No stylesheets, font or any other prerequisite needed.
 
 ```html
 <!doctype html>
