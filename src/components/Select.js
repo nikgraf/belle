@@ -437,7 +437,7 @@ export default class Select extends Component {
       // reset interaction
       this._scrollActive = false;
     }
-  }
+  };
 
   /**
    * Identifies if the menu is scrollable.

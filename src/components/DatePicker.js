@@ -668,7 +668,7 @@ export default class DatePicker extends Component {
     if (this.props.dayProps && this.props.dayProps.onMouseDown) {
       this.props.dayProps.onMouseDown(event);
     }
-  }
+  };
 
   /**
    * Callback is called when some day receives mouseUp.
@@ -691,7 +691,7 @@ export default class DatePicker extends Component {
     if (this.props.dayProps && this.props.dayProps.onMouseUp) {
       this.props.dayProps.onMouseUp(event);
     }
-  }
+  };
 
   /**
    * Callback is called when some day receives MouseEnter. It will conditionally set this.state.focusedDateKey.

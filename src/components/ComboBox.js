@@ -318,7 +318,7 @@ export default class ComboBox extends Component {
       this._touchStartedAt = index;
       this.setState({ focusedOptionIndex: index });
     }
-  }
+  };
 
   /**
    * Triggers a change event after the user touched on an Option.
@@ -332,7 +332,7 @@ export default class ComboBox extends Component {
 
       this._touchStartedAt = undefined;
     }
-  }
+  };
 
   /**
    * Update focusedOptionIndex to undefined on touch cancel.
@@ -396,7 +396,7 @@ export default class ComboBox extends Component {
         focusedOptionIndex: index,
       });
     }
-  }
+  };
 
   /**
    * Set focusedOptionIndex to undefined.
@@ -416,7 +416,7 @@ export default class ComboBox extends Component {
     if (!this.props.disabled) {
       this._triggerChange(this._getValueForIndex(index));
     }
-  }
+  };
 
   /**
    * Handle keyDown in input (when input is focused):
@@ -487,7 +487,7 @@ export default class ComboBox extends Component {
     this.setState({
       focusedOptionIndex: index,
     });
-  }
+  };
 
   /**
    * Highlight previous option when arrowUp key is pressed.
