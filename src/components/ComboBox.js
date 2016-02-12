@@ -337,17 +337,17 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex to undefined on touch cancel.
    */
-  _onTouchCancelAtOption() {
+  _onTouchCancelAtOption = () => {
     if (!this.props.disabled) {
       this._touchStartedAt = undefined;
       this.setState({ focusedOptionIndex: undefined });
     }
-  }
+  };
 
   /**
    * Closed opened combo-box options and removed focusStyles on blur.
    */
-  _onBlur(event) {
+  _onBlur = (event) => {
     if (!this.props.disabled) {
       this.setState({
         isOpen: false,
@@ -358,12 +358,12 @@ export default class ComboBox extends Component {
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
-  }
+  };
 
   /**
    * Set focused state when element is focused.
    */
-  _onFocus(event) {
+  _onFocus = (event) => {
     if (!this.props.disabled) {
       this.setState({
         isOpen: true,
@@ -373,19 +373,19 @@ export default class ComboBox extends Component {
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
-  }
+  };
 
   /**
    * Open/ Close menu when create is clicked.
    */
-  _onCaretClick() {
+  _onCaretClick = () => {
     if (!this.props.disabled) {
       const isOpen = !this.state.isOpen;
       this.setState({
         isOpen,
       });
     }
-  }
+  };
 
   /**
    * Update focusedOptionIndex for component when mouse enters an option.
@@ -401,13 +401,13 @@ export default class ComboBox extends Component {
   /**
    * Set focusedOptionIndex to undefined.
    */
-  _onMouseLeaveAtOption() {
+  _onMouseLeaveAtOption = () => {
     if (!this.props.disabled) {
       this.setState({
         focusedOptionIndex: undefined,
       });
     }
-  }
+  };
 
   /**
    * Update component value when an option is clicked.
@@ -427,7 +427,7 @@ export default class ComboBox extends Component {
    * 5. ComboBox is opened and Enter/ Tab is pressed -> update input value to value of option
    * 6. ComboBox is opened and Esc is pressed -> close ComboBox
    */
-  _onKeyDown(event) {
+  _onKeyDown = (event) => {
     if (!this.props.disabled) {
       if (!this.state.isOpen) {
         if (event.key === 'ArrowDown' ||
@@ -472,7 +472,7 @@ export default class ComboBox extends Component {
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
-  }
+  };
 
   /**
    * Highlight next option when arrowDown key is pressed.
@@ -561,10 +561,10 @@ export default class ComboBox extends Component {
   /**
    * The function is called when user type/ paste value in the input box.
    */
-  _onChange(event) {
+  _onChange = (event) => {
     const value = event.target.value;
     this._userUpdateValue(value);
-  }
+  };
 
   /**
    * Returns the value of the child with a certain index.
@@ -718,18 +718,18 @@ export default class ComboBox extends Component {
           placeholder={ placeHolder }
           style={ inputStyle }
           className={ inputClassName }
-          onChange={ ::this._onChange }
+          onChange={ this._onChange }
           tabIndex={ tabIndex }
-          onBlur={ ::this._onBlur }
-          onFocus={ ::this._onFocus }
-          onKeyDown={ ::this._onKeyDown }
+          onBlur={ this._onBlur }
+          onFocus={ this._onFocus }
+          onKeyDown={ this._onKeyDown }
           aria-autocomplete="list"
           {...this.state.inputProps}
         />
         <span
           style={ caretStyle }
           className = { this._caretStyleId }
-          onClick = { ::this._onCaretClick }
+          onClick = { this._onCaretClick }
           tabIndex = { -1 }
           {...this.state.caretProps}
         />
@@ -746,10 +746,10 @@ export default class ComboBox extends Component {
                 key={ index }
                 onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
                 onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
-                onTouchCancel={ ::this._onTouchCancelAtOption }
+                onTouchCancel={ this._onTouchCancelAtOption }
                 onClick={ () => this._onClickAtOption(index) }
                 onMouseEnter={ () => this._onMouseEnterAtOption(index) }
-                onMouseLeave={ ::this._onMouseLeaveAtOption }
+                onMouseLeave={ this._onMouseLeaveAtOption }
                 onMouseDown={ (event) => event.preventDefault() }
                 role="option"
               >
