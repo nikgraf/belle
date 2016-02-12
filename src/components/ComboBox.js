@@ -313,7 +313,7 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex when an option is touched.
    */
-  _onTouchStartAtOption(event, index) {
+  _onTouchStartAtOption = (event, index) => {
     if (!this.props.disabled && event.touches.length === 1) {
       this._touchStartedAt = index;
       this.setState({ focusedOptionIndex: index });
@@ -323,7 +323,7 @@ export default class ComboBox extends Component {
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchEndAtOption(event, index) {
+  _onTouchEndAtOption = (event, index) => {
     if (!this.props.disabled && this._touchStartedAt) {
       if (this._touchStartedAt === index) {
         event.preventDefault();
@@ -390,7 +390,7 @@ export default class ComboBox extends Component {
   /**
    * Update focusedOptionIndex for component when mouse enters an option.
    */
-  _onMouseEnterAtOption(index) {
+  _onMouseEnterAtOption = (index) => {
     if (!this.props.disabled) {
       this.setState({
         focusedOptionIndex: index,
@@ -412,7 +412,7 @@ export default class ComboBox extends Component {
   /**
    * Update component value when an option is clicked.
    */
-  _onClickAtOption(index) {
+  _onClickAtOption = (index) => {
     if (!this.props.disabled) {
       this._triggerChange(this._getValueForIndex(index));
     }
@@ -478,7 +478,7 @@ export default class ComboBox extends Component {
    * Highlight next option when arrowDown key is pressed.
    * Highlight first option if currently last option is focused.
    */
-  _onArrowDownKeyDown() {
+  _onArrowDownKeyDown = () => {
     let index = 0;
     if (this.state.focusedOptionIndex !== undefined && (this.state.focusedOptionIndex + 1) < this.filteredOptions.length) {
       index = this.state.focusedOptionIndex + 1;

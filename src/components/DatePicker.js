@@ -658,7 +658,7 @@ export default class DatePicker extends Component {
    *
    * Note: mouseEvent.button is supported by all browsers are are targeting: https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
    */
-  _onDayMouseDown(dateKey, event) {
+  _onDayMouseDown = (dateKey, event) => {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly) {
       this.setState({
         activeDay: dateKey,
@@ -674,7 +674,7 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives mouseUp.
    * It will reset this.state.activeDay and call props.onDayMouseUp.
    */
-  _onDayMouseUp(dateKey, day, month, year, event) {
+  _onDayMouseUp = (dateKey, day, month, year, event) => {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dateKey) {
       this._triggerSelectDate(day, month, year);
       this.setState({

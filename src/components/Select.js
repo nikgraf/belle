@@ -419,7 +419,7 @@ export default class Select extends Component {
    * If a setState would be triggered during a touch with the intention to
    * scroll the setState would trigger a re-render & prevent the scrolling.
    */
-  _onTouchStartAtOption(event, index) {
+  _onTouchStartAtOption = (event, index) => {
     if (event.touches.length === 1) {
       this._touchStartedAt = this._getValueForIndex(index);
 
