@@ -793,7 +793,7 @@ export default class DatePicker extends Component {
         });
       }
     }
-  };
+  }
 
   /**
    * Function will select / deselect date passed to it, it is used in case of 'Space' keyDown on a day.
