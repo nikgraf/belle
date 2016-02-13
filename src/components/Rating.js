@@ -166,7 +166,7 @@ export default class Rating extends Component {
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
 
     if (canUseDOM) {
-      this.mouseUpOnDocumentCallback = ::this._onMouseUpOnDocument;
+      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument;
       document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
     }
   }
@@ -205,7 +205,7 @@ export default class Rating extends Component {
    * As soon as the mouse enters the component the focusedValue is updated based
    * on the value of the targeted span.
    */
-  _onMouseEnter(event) {
+  _onMouseEnter = (event) => {
     // In case the user pressed the mouse and then hovers over the rating and
     // releases the mousUp should no be trigger. Only when the mouseDown starts
     // inside.
@@ -229,13 +229,13 @@ export default class Rating extends Component {
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
-  }
+  };
 
   /**
    * As the mouse moved over the component and enters a new star the focusedValue
    * is updated based on the value of the targeted span.
    */
-  _onMouseMove(event) {
+  _onMouseMove = (event) => {
     if (!this.props.disabled) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       if (this.state.focusedValue !== value) {
@@ -248,12 +248,12 @@ export default class Rating extends Component {
     if (this.props.onMouseMove) {
       this.props.onMouseMove(event);
     }
-  }
+  };
 
   /**
    * Resets the component as the mouse leaves the hover area.
    */
-  _onMouseLeave(event) {
+  _onMouseLeave = (event) => {
     if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
@@ -268,12 +268,12 @@ export default class Rating extends Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
-  }
+  };
 
   /**
    * Sets isActive state to true.
    */
-  _onMouseDown(event) {
+  _onMouseDown = (event) => {
     if (!this.props.disabled && event.buttons === 1) {
       this.setState({ isActive: true });
       this.preventNextMouseUpTriggerUpdate = false;
@@ -282,12 +282,12 @@ export default class Rating extends Component {
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
-  }
+  };
 
   /**
    * Sets isActive state to false.
    */
-  _onMouseUp(event) {
+  _onMouseUp = (event) => {
     if (!this.props.disabled && !this.preventNextMouseUpTriggerUpdate) {
       const value = Number(event.target.getAttribute('data-belle-value'));
       this._triggerComponentUpdate(value);
@@ -296,20 +296,20 @@ export default class Rating extends Component {
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
-  }
+  };
 
-  _onMouseUpOnDocument() {
+  _onMouseUpOnDocument = () => {
     this.setState({ isActive: false });
-  }
+  };
 
-  _onContextMenu() {
+  _onContextMenu = () => {
     this.setState({ isActive: false });
-  }
+  };
 
   /**
    * Change focusValue and sets isActive state to true.
    */
-  _onTouchStart(event) {
+  _onTouchStart = (event) => {
     event.preventDefault();
 
     if (!this.props.disabled && event.touches.length === 1) {
@@ -323,12 +323,12 @@ export default class Rating extends Component {
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
-  }
+  };
 
   /**
    * set the focusedValue depending on mouse position
    */
-  _onTouchMove(event) {
+  _onTouchMove = (event) => {
     if (!this.props.disabled && event.touches.length === 1) {
       const touches = event.touches[0];
 
@@ -351,12 +351,12 @@ export default class Rating extends Component {
     if (this.props.onTouchMove) {
       this.props.onTouchMove(event);
     }
-  }
+  };
 
   /**
    * update the component when touch ends
    */
-  _onTouchEnd(event) {
+  _onTouchEnd = (event) => {
     if (!this.props.disabled) {
       event.preventDefault();
       this.setState({ isActive: false });
@@ -367,12 +367,12 @@ export default class Rating extends Component {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
-  }
+  };
 
   /**
    * reset the component in case of touch cancel
    */
-  _onTouchCancel(event) {
+  _onTouchCancel = (event) => {
     if (!this.props.disabled) {
       this.setState({
         isActive: false,
@@ -383,12 +383,12 @@ export default class Rating extends Component {
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
-  }
+  };
 
   /**
    * reset the component on blur
    */
-  _onBlur(event) {
+  _onBlur = (event) => {
     if (!this.props.disabled) {
       this.setState({
         focusedValue: undefined,
@@ -400,12 +400,12 @@ export default class Rating extends Component {
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
-  }
+  };
 
   /**
    * enable focus styling of component when tab is used to focus component
    */
-  _onFocus() {
+  _onFocus = () => {
     if (!this.state.isActive && !this.props.disabled) {
       this.setState({ isFocus: true });
     }
@@ -413,7 +413,7 @@ export default class Rating extends Component {
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
-  }
+  };
 
   /**
    * Manages the keyboard events.
@@ -424,7 +424,7 @@ export default class Rating extends Component {
    * Pressing Escape will reset the value to last value.
    *
    */
-  _onKeyDown(event) {
+  _onKeyDown = (event) => {
     if (!this.props.disabled) {
       if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
         event.preventDefault();
@@ -444,23 +444,23 @@ export default class Rating extends Component {
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
-  }
+  };
 
   /**
    * decrease the value by 1 when arrow down key is pressed
    */
-  _onArrowDownKeyDown() {
+  _onArrowDownKeyDown = () => {
     let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
     newValue = newValue > 0 ? (newValue - 1) : 0;
     this.setState({
       focusedValue: newValue,
     });
-  }
+  };
 
   /**
    * increase value by 1 when arrow up key is pressed
    */
-  _onArrowUpKeyDown() {
+  _onArrowUpKeyDown = () => {
     let newValue = this.state.focusedValue !== undefined ? this.state.focusedValue : this.state.value;
     if (!newValue) {
       newValue = 1;
@@ -473,12 +473,12 @@ export default class Rating extends Component {
     this.setState({
       focusedValue: newValue,
     });
-  }
+  };
 
   /**
    * set component value to current focus value
    */
-  _onEnterSpaceKeyDown() {
+  _onEnterSpaceKeyDown = () => {
     let newValue;
     if (this.state.focusedValue !== undefined) {
       if (this.state.focusedValue === 0) {
@@ -489,17 +489,17 @@ export default class Rating extends Component {
 
       this._triggerComponentUpdate(newValue);
     }
-  }
+  };
 
   /**
    * reset component when escape key is pressed
    * esc key should just reset the component displayed rating without removing hover or focus styles
    */
-  _onEscapeKeyDown() {
+  _onEscapeKeyDown = () => {
     this.setState({
       focusedValue: undefined,
     });
-  }
+  };
 
   /**
    * Returns current value of rating to be displayed on the component
@@ -623,19 +623,19 @@ export default class Rating extends Component {
         ref="wrapper"
         style={ wrapperStyle }
         className={ unionClassNames(this.props.className, this.ratingWrapperStyleId) }
-        onKeyDown={ ::this._onKeyDown }
-        onMouseEnter={ ::this._onMouseEnter }
-        onMouseMove={ ::this._onMouseMove }
-        onMouseLeave={ ::this._onMouseLeave }
-        onMouseUp={ ::this._onMouseUp }
-        onMouseDown={ ::this._onMouseDown }
-        onTouchStart={ ::this._onTouchStart }
-        onTouchMove={ ::this._onTouchMove }
-        onTouchEnd={ ::this._onTouchEnd }
-        onTouchCancel={ ::this._onTouchCancel }
-        onContextMenu={ ::this._onContextMenu }
-        onBlur={ ::this._onBlur }
-        onFocus={ ::this._onFocus }
+        onKeyDown={ this._onKeyDown }
+        onMouseEnter={ this._onMouseEnter }
+        onMouseMove={ this._onMouseMove }
+        onMouseLeave={ this._onMouseLeave }
+        onMouseUp={ this._onMouseUp }
+        onMouseDown={ this._onMouseDown }
+        onTouchStart={ this._onTouchStart }
+        onTouchMove={ this._onTouchMove }
+        onTouchEnd={ this._onTouchEnd }
+        onTouchCancel={ this._onTouchCancel }
+        onContextMenu={ this._onContextMenu }
+        onBlur={ this._onBlur }
+        onFocus={ this._onFocus }
         tabIndex={ tabIndex }
         aria-label = { this.props['aria-label'] }
         aria-valuemax = { 5 }

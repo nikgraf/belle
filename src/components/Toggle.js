@@ -300,7 +300,7 @@ export default class Toggle extends Component {
    * Activate the focused attribute used to determine when to show the
    * one-time focus animation and trigger a render.
    */
-  _onFocus(event) {
+  _onFocus = (event) => {
     if (!this.props.disabled) {
       this.isFocused = true;
       this.forceUpdate();
@@ -309,22 +309,22 @@ export default class Toggle extends Component {
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
-  }
+  };
 
   /**
    * Deactivate the focused attribute used to determine when to show the
    * one-time focus animation and trigger a render.
    */
-  _onBlur(event) {
+  _onBlur = (event) => {
     this.isFocused = false;
     this.setState({ wasFocusedWithClickOrTouch: false });
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
-  }
+  };
 
-  _onMouseDownOnWrapper(event) {
+  _onMouseDownOnWrapper = (event) => {
     if (!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true, isActive: true });
     }
@@ -332,9 +332,9 @@ export default class Toggle extends Component {
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
-  }
+  };
 
-  _onMouseUpOnWrapper(event) {
+  _onMouseUpOnWrapper = (event) => {
     if (!this.props.disabled) {
       this.setState({ isActive: false });
     }
@@ -342,9 +342,9 @@ export default class Toggle extends Component {
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
-  }
+  };
 
-  _onTouchStartOnWrapper(event) {
+  _onTouchStartOnWrapper = (event) => {
     if (!this.props.disabled) {
       this.setState({ wasFocusedWithClickOrTouch: true });
     }
@@ -352,9 +352,9 @@ export default class Toggle extends Component {
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
-  }
+  };
 
-  _onClickAtSlider(event) {
+  _onClickAtSlider = (event) => {
     if (!this.props.disabled) {
       this._triggerChange(!this.state.value);
     }
@@ -362,9 +362,9 @@ export default class Toggle extends Component {
     if (this.props.sliderProps && this.props.sliderProps.onClick) {
       this.props.sliderProps.onClick(event);
     }
-  }
+  };
 
-  _onMouseDownOnHandle(event) {
+  _onMouseDownOnHandle = (event) => {
     // check for left mouse button pressed
     if (event.button === 0 && !this.props.disabled) {
       const defaultSliderOffset = this._getSliderOffset();
@@ -380,9 +380,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onMouseDown) {
       this.props.handleProps.onMouseDown(event);
     }
-  }
+  };
 
-  _onMouseMoveOnHandle(event) {
+  _onMouseMoveOnHandle = (event) => {
     if (this.state.isDraggingWithMouse && !this.props.disabled) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
@@ -403,9 +403,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onMouseMove) {
       this.props.handleProps.onMouseMove(event);
     }
-  }
+  };
 
-  _onMouseUpOnHandle(event) {
+  _onMouseUpOnHandle = (event) => {
     if (!this.props.disabled) {
       if (this._mouseDragEnd) {
         if (!this._preventMouseSwitch) {
@@ -426,9 +426,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onMouseUp) {
       this.props.handleProps.onMouseUp(event);
     }
-  }
+  };
 
-  _onMouseLeaveOnHandle(event) {
+  _onMouseLeaveOnHandle = (event) => {
     if (!this.props.disabled) {
       if (this._mouseDragStart && !this._preventMouseSwitch) {
         this._triggerChange(!this.state.value);
@@ -447,9 +447,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onMouseLeave) {
       this.props.handleProps.onMouseLeave(event);
     }
-  }
+  };
 
-  _onTouchStartAtSlider(event) {
+  _onTouchStartAtSlider = (event) => {
     if (event.touches.length === 1 && !this.props.disabled) {
       this._touchStartedAtSlider = true;
       this.setState({
@@ -460,9 +460,9 @@ export default class Toggle extends Component {
     if (this.props.sliderProps && this.props.sliderProps.onTouchStart) {
       this.props.sliderProps.onTouchStart(event);
     }
-  }
+  };
 
-  _onTouchMoveAtSlider(event) {
+  _onTouchMoveAtSlider = (event) => {
     if (event.touches.length === 1 && this._touchStartedAtSlider && !this.props.disabled) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
@@ -483,9 +483,9 @@ export default class Toggle extends Component {
     if (this.props.sliderProps && this.props.sliderProps.onTouchMove) {
       this.props.sliderProps.onTouchMove(event);
     }
-  }
+  };
 
-  _onTouchEndAtSlider(event) {
+  _onTouchEndAtSlider = (event) => {
     // prevent the onClick to happen
     event.preventDefault();
 
@@ -504,9 +504,9 @@ export default class Toggle extends Component {
     if (this.props.sliderProps && this.props.sliderProps.onTouchEnd) {
       this.props.sliderProps.onTouchEnd(event);
     }
-  }
+  };
 
-  _onTouchCancelAtSlider(event) {
+  _onTouchCancelAtSlider = (event) => {
     this.setState({ isActive: false });
     this._touchStartedAtSlider = false;
     this._touchEndedNotInSlider = false;
@@ -514,9 +514,9 @@ export default class Toggle extends Component {
     if (this.props.sliderProps && this.props.sliderProps.onTouchCancel) {
       this.props.sliderProps.onTouchCancel(event);
     }
-  }
+  };
 
-  _onTouchStartHandle(event) {
+  _onTouchStartHandle = (event) => {
     event.preventDefault();
 
     // check for one touch as multiple could be browser gestures and only one
@@ -536,9 +536,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onTouchStart) {
       this.props.handleProps.onTouchStart(event);
     }
-  }
+  };
 
-  _onTouchMoveHandle(event) {
+  _onTouchMoveHandle = (event) => {
     if (event.touches.length === 1 && this.state.isDraggingWithTouch && !this.props.disabled) {
       // the requestAnimationFrame function must be executed in the context of window
       // see http://stackoverflow.com/a/9678166/837709
@@ -559,9 +559,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onTouchMove) {
       this.props.handleProps.onTouchMove(event);
     }
-  }
+  };
 
-  _onTouchEndHandle(event) {
+  _onTouchEndHandle = (event) => {
     // prevent the onClick to happen
     event.preventDefault();
 
@@ -591,9 +591,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onTouchEnd) {
       this.props.handleProps.onTouchEnd(event);
     }
-  }
+  };
 
-  _onTouchCancelHandle(event) {
+  _onTouchCancelHandle = (event) => {
     this.setState({
       isDraggingWithTouch: false,
     });
@@ -604,9 +604,9 @@ export default class Toggle extends Component {
     if (this.props.handleProps && this.props.handleProps.onTouchCancel) {
       this.props.handleProps.onTouchCancel(event);
     }
-  }
+  };
 
-  _onKeyDown(event) {
+  _onKeyDown = (event) => {
     if (!this.props.disabled) {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
@@ -623,7 +623,7 @@ export default class Toggle extends Component {
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
-  }
+  };
 
   /**
    * Flip value in case it is false.
@@ -650,16 +650,16 @@ export default class Toggle extends Component {
     this._triggerChange(!this.state.value);
   }
 
-  _onMouseEnterAtSliderWrapper() {
+  _onMouseEnterAtSliderWrapper = () => {
     this.setState({
       isHovered: true,
     });
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
-  }
+  };
 
-  _onMouseLeaveAtSliderWrapper() {
+  _onMouseLeaveAtSliderWrapper = () => {
     this.setState({
       isHovered: false,
       isActive: false,
@@ -667,7 +667,7 @@ export default class Toggle extends Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
-  }
+  };
 
   _getHandleHeight() {
     return has(this.props.handleStyle, 'height') ? this.props.handleStyle.height : style.handleStyle.height;
@@ -901,14 +901,14 @@ export default class Toggle extends Component {
         style={ wrapperStyle }
         tabIndex={ tabIndex }
         className={ unionClassNames(this.props.className, this.styleId) }
-        onKeyDown={ ::this._onKeyDown }
-        onMouseDown={ ::this._onMouseDownOnWrapper }
-        onMouseUp={ ::this._onMouseUpOnWrapper }
-        onTouchStart={ ::this._onTouchStartOnWrapper }
-        onFocus={ ::this._onFocus }
-        onBlur={ ::this._onBlur }
-        onMouseEnter = { ::this._onMouseEnterAtSliderWrapper }
-        onMouseLeave = { ::this._onMouseLeaveAtSliderWrapper }
+        onKeyDown={ this._onKeyDown }
+        onMouseDown={ this._onMouseDownOnWrapper }
+        onMouseUp={ this._onMouseUpOnWrapper }
+        onTouchStart={ this._onTouchStartOnWrapper }
+        onFocus={ this._onFocus }
+        onBlur={ this._onBlur }
+        onMouseEnter = { this._onMouseEnterAtSliderWrapper }
+        onMouseLeave = { this._onMouseLeaveAtSliderWrapper }
         role={ role }
         aria-checked={ this.state.value }
         {...this.state.childProps}
@@ -920,11 +920,11 @@ export default class Toggle extends Component {
         >
           <div
             style={ computedSliderStyle }
-            onClick={ ::this._onClickAtSlider }
-            onTouchStart={ ::this._onTouchStartAtSlider }
-            onTouchMove={ ::this._onTouchMoveAtSlider }
-            onTouchEnd={ ::this._onTouchEndAtSlider }
-            onTouchCancel={ ::this._onTouchCancelAtSlider }
+            onClick={ this._onClickAtSlider }
+            onTouchStart={ this._onTouchStartAtSlider }
+            onTouchMove={ this._onTouchMoveAtSlider }
+            onTouchEnd={ this._onTouchEndAtSlider }
+            onTouchCancel={ this._onTouchCancelAtSlider }
             {...this.state.sliderProps}
           >
             <div
@@ -946,14 +946,14 @@ export default class Toggle extends Component {
         <div
           ref="handle"
           style={ handleStyle }
-          onMouseDown={ ::this._onMouseDownOnHandle }
-          onMouseMove={ ::this._onMouseMoveOnHandle }
-          onMouseUp={ ::this._onMouseUpOnHandle }
-          onMouseLeave={ ::this._onMouseLeaveOnHandle }
-          onTouchStart={ ::this._onTouchStartHandle }
-          onTouchMove={ ::this._onTouchMoveHandle }
-          onTouchEnd={ ::this._onTouchEndHandle }
-          onTouchCancel={ ::this._onTouchCancelHandle }
+          onMouseDown={ this._onMouseDownOnHandle }
+          onMouseMove={ this._onMouseMoveOnHandle }
+          onMouseUp={ this._onMouseUpOnHandle }
+          onMouseLeave={ this._onMouseLeaveOnHandle }
+          onTouchStart={ this._onTouchStartHandle }
+          onTouchMove={ this._onTouchMoveHandle }
+          onTouchEnd={ this._onTouchEndHandle }
+          onTouchCancel={ this._onTouchCancelHandle }
           {...this.state.handleProps}
         />
       </div>

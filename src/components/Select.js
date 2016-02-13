@@ -320,7 +320,7 @@ export default class Select extends Component {
     updatePseudoClassStyle(this._styleId, this.props);
 
     if (canUseDOM) {
-      this.mouseUpOnDocumentCallback = ::this._onMouseUpOnDocument;
+      this.mouseUpOnDocumentCallback = this._onMouseUpOnDocument;
       document.addEventListener('mouseup', this.mouseUpOnDocumentCallback);
     }
   }
@@ -419,7 +419,7 @@ export default class Select extends Component {
    * If a setState would be triggered during a touch with the intention to
    * scroll the setState would trigger a re-render & prevent the scrolling.
    */
-  _onTouchStartAtOption(event, index) {
+  _onTouchStartAtOption = (event, index) => {
     if (event.touches.length === 1) {
       this._touchStartedAt = this._getValueForIndex(index);
 
@@ -437,22 +437,22 @@ export default class Select extends Component {
       // reset interaction
       this._scrollActive = false;
     }
-  }
+  };
 
   /**
    * Identifies if the menu is scrollable.
    */
-  _onTouchMoveAtOption() {
+  _onTouchMoveAtOption = () => {
     const menuNode = ReactDOM.findDOMNode(this.refs.menu);
     if (menuNode.scrollTop !== this._scrollTopPosition) {
       this._scrollActive = true;
     }
-  }
+  };
 
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchEndAtOption(event, index) {
+  _onTouchEndAtOption = (event, index) => {
     if (this._touchStartedAt && !this._scrollActive) {
       const value = this._getValueForIndex(index);
       if (this._touchStartedAt === value) {
@@ -462,28 +462,28 @@ export default class Select extends Component {
     }
 
     this._touchStartedAt = undefined;
-  }
+  };
 
   /**
    * Triggers a change event after the user touched on an Option.
    */
-  _onTouchCancelAtOption() {
+  _onTouchCancelAtOption = () => {
     this._touchStartedAt = undefined;
-  }
+  };
 
   /**
    * Triggers a change event after the user clicked on an Option.
    */
-  _onClickAtOption(index) {
+  _onClickAtOption = (index) => {
     this._triggerChange(this._getValueForIndex(index));
-  }
+  };
 
   /**
    * In order to inform the user which element in the document is active the
    * component keeps track of when it's de-selected and depending on that
    * close the menu.
    */
-  _onBlur(event) {
+  _onBlur = (event) => {
     this.setState({
       isOpen: false,
       isFocused: false,
@@ -492,14 +492,14 @@ export default class Select extends Component {
     if (this.props.wrapperProps && this.props.wrapperProps.onBlur) {
       this.props.wrapperProps.onBlur(event);
     }
-  }
+  };
 
   /**
    * In order to inform the user which element in the document is active the
    * component keeps track of when it's de-selected and depending on that
    * close the menu.
    */
-  _onFocus(event) {
+  _onFocus = (event) => {
     this.setState({
       isFocused: true,
     });
@@ -507,23 +507,23 @@ export default class Select extends Component {
     if (this.props.wrapperProps && this.props.wrapperProps.onFocus) {
       this.props.wrapperProps.onFocus(event);
     }
-  }
+  };
 
   /**
    * In order to inform the user which Option is active the component keeps
    * track of when an option is in focus by the user and depending on that
    * provide a visual indicator.
    */
-  _onMouseEnterAtOption(index) {
+  _onMouseEnterAtOption = (index) => {
     this.setState({
       focusedOptionValue: this._getValueForIndex(index),
     });
-  }
+  };
 
   /**
    * Initiate the toggle for the menu.
    */
-  _onTouchStartToggleMenu(event) {
+  _onTouchStartToggleMenu = (event) => {
     if (event.touches.length === 1) {
       this.setState({ isTouchedToToggle: true, isActive: true });
     } else {
@@ -533,13 +533,13 @@ export default class Select extends Component {
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
-  }
+  };
 
   /**
    * Toggle the menu after a user touched it & resets the pressed state
    * for to toggle.
    */
-  _onTouchEndToggleMenu(event) {
+  _onTouchEndToggleMenu = (event) => {
     // In case touch events are used preventDefault is applied to avoid
     // triggering the click event which would cause trouble for toggling.
     // In any case calling setState triggers a render. This leads to the fact
@@ -567,54 +567,54 @@ export default class Select extends Component {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
     }
-  }
+  };
 
   /**
    * Reset the precondition to initialize a toggle of the menu.
    */
-  _onTouchCancelToggleMenu(event) {
+  _onTouchCancelToggleMenu = (event) => {
     this.setState({ isTouchedToToggle: false, isActive: false });
 
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
-  }
+  };
 
   /**
    * Set isActive to true on mouse-down.
    */
-  _onMouseDown(event) {
+  _onMouseDown = (event) => {
     this.setState({ isActive: true });
 
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
-  }
+  };
 
   /**
    * Set isActive to false on mouse-up.
    */
-  _onMouseUp(event) {
+  _onMouseUp = (event) => {
     this.setState({ isActive: false });
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
     }
-  }
+  };
 
   /**
    * Set isActive to false on mouse-up.
    */
-  _onMouseUpOnDocument() {
+  _onMouseUpOnDocument = () => {
     this.setState({ isActive: false });
-  }
+  };
 
   /**
    * Set isActive to false on is context menu opens on select's div.
    */
-  _onContextMenu() {
+  _onContextMenu = () => {
     this.setState({ isActive: false });
-  }
+  };
 
   /**
    * Update focus for the options for an already open menu.
@@ -625,7 +625,7 @@ export default class Select extends Component {
    * - Focus on the first entry in case no options is focused on.
    * - Switch focus to the next option in case one option already has focus.
    */
-  _onArrowDownKeyDown() {
+  _onArrowDownKeyDown = () => {
     if (this.state.focusedOptionValue !== void 0) {
       const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
@@ -639,7 +639,7 @@ export default class Select extends Component {
         focusedOptionValue: first(this.options).props.value,
       });
     }
-  }
+  };
 
   /**
    * Update focus for the options for an already open menu.
@@ -650,7 +650,7 @@ export default class Select extends Component {
    * - Focus on the last entry in case no options is focused on.
    * - Switch focus to the previous option in case one option already has focus.
    */
-  _onArrowUpKeyDown() {
+  _onArrowUpKeyDown = () => {
     if (this.state.focusedOptionValue !== void 0) {
       const indexOfFocusedOption = this._getIndexOfFocusedOption();
 
@@ -664,7 +664,7 @@ export default class Select extends Component {
         focusedOptionValue: last(this.options).props.value,
       });
     }
-  }
+  };
 
   /**
    * After the user pressed the `Enter` or `Space` key for an already open
@@ -672,9 +672,9 @@ export default class Select extends Component {
    *
    * Same as _onClickAtOption this update the state & dispatches a change event.
    */
-  _onEnterOrSpaceKeyDown() {
+  _onEnterOrSpaceKeyDown = () => {
     this._triggerChange(this.state.focusedOptionValue);
-  }
+  };
 
   /**
    * Manages the keyboard events.
@@ -687,7 +687,7 @@ export default class Select extends Component {
    *
    * Pressing Escape will close the menu.
    */
-  _onKeyDown(event) {
+  _onKeyDown = (event) => {
     if (!this.props.disabled) {
       if (!isEmpty(this.options)) {
         if (!this.state.isOpen) {
@@ -723,12 +723,12 @@ export default class Select extends Component {
     if (this.props.wrapperProps && this.props.wrapperProps.onKeyDown) {
       this.props.wrapperProps.onKeyDown(event);
     }
-  }
+  };
 
   /**
    * Toggle the menu after a user clicked on it.
    */
-  _onClickToggleMenu(event) {
+  _onClickToggleMenu = (event) => {
     if (!this.props.disabled) {
       if (this.state.isOpen) {
         this.setState({ isOpen: false });
@@ -740,7 +740,7 @@ export default class Select extends Component {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
-  }
+  };
 
   /**
    * Returns the index of the entry with a certain value from the component's
@@ -810,9 +810,9 @@ export default class Select extends Component {
             <li
               onClick={ () => this._onClickAtOption(localOptionIndex) }
               onTouchStart={ (event) => this._onTouchStartAtOption(event, localOptionIndex) }
-              onTouchMove={ ::this._onTouchMoveAtOption }
+              onTouchMove={ this._onTouchMoveAtOption }
               onTouchEnd={ (event) => this._onTouchEndAtOption(event, localOptionIndex) }
-              onTouchCancel={ ::this._onTouchCancelAtOption }
+              onTouchCancel={ this._onTouchCancelAtOption }
               key={ index }
               onMouseEnter={ () => this._onMouseEnterAtOption(localOptionIndex) }
               role="option"
@@ -945,20 +945,20 @@ export default class Select extends Component {
       <div
         style={ wrapperStyle }
         tabIndex={ tabIndex }
-        onKeyDown={ ::this._onKeyDown }
-        onBlur={ ::this._onBlur }
-        onFocus={ ::this._onFocus }
+        onKeyDown={ this._onKeyDown }
+        onBlur={ this._onBlur }
+        onFocus={ this._onFocus }
         ref="wrapper"
         {...this.state.wrapperProps}
       >
         <div
-          onClick={ ::this._onClickToggleMenu }
-          onTouchStart={ ::this._onTouchStartToggleMenu }
-          onTouchEnd={ ::this._onTouchEndToggleMenu }
-          onTouchCancel={ ::this._onTouchCancelToggleMenu }
-          onContextMenu={ ::this._onContextMenu }
-          onMouseDown = { ::this._onMouseDown }
-          onMouseUp = { ::this._onMouseUp }
+          onClick={ this._onClickToggleMenu }
+          onTouchStart={ this._onTouchStartToggleMenu }
+          onTouchEnd={ this._onTouchEndToggleMenu }
+          onTouchCancel={ this._onTouchCancelToggleMenu }
+          onContextMenu={ this._onContextMenu }
+          onMouseDown = { this._onMouseDown }
+          onMouseUp = { this._onMouseUp }
           style={ selectedOptionWrapperStyle }
           className={ unionClassNames(this.props.className, this._styleId) }
           ref="selectedOptionWrapper"

@@ -68,7 +68,7 @@ export default class ActionArea extends Component {
    * The state isHovered is not set to true in case onMouseEnter was triggered
    * by a touch event.
    */
-  _onMouseEnter(event) {
+  _onMouseEnter = (event) => {
     if (!this.state.isIgnoringHover) {
       this.setState({
         isHovered: true,
@@ -79,12 +79,12 @@ export default class ActionArea extends Component {
     if (this.props.onMouseEnter) {
       this.props.onMouseEnter(event);
     }
-  }
+  };
 
   /**
    * Deactivate the isHovered state.
    */
-  _onMouseLeave(event) {
+  _onMouseLeave = (event) => {
     this.setState({
       isHovered: false,
     });
@@ -92,12 +92,12 @@ export default class ActionArea extends Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event);
     }
-  }
+  };
 
   /**
    * Activates the active state in case the main mouse button was pressed.
    */
-  _onMouseDown(event) {
+  _onMouseDown = (event) => {
     if (event.button === 0) {
       this.setState({
         isActive: true,
@@ -107,14 +107,14 @@ export default class ActionArea extends Component {
     if (this.props.onMouseDown) {
       this.props.onMouseDown(event);
     }
-  }
+  };
 
   /**
    * Triggers onUpdate in case the mouse button was pressed on this element.
    *
    * In addition the active state is deactivated.
    */
-  _onMouseUp(event) {
+  _onMouseUp = (event) => {
     const isActive = this.state.isActive;
     if (event.button === 0) {
       this.setState({
@@ -129,13 +129,13 @@ export default class ActionArea extends Component {
     if (event.button === 0 && isActive && this.props.onUpdate) {
       this.props.onUpdate({});
     }
-  }
+  };
 
   /**
    * Updates the button to be active and makes sure the next onMouseEnter is
    * ignored.
    */
-  _onTouchStart(event) {
+  _onTouchStart = (event) => {
     if (event.touches.length === 1) {
       this.setState({
         isActive: true,
@@ -146,13 +146,13 @@ export default class ActionArea extends Component {
     if (this.props.onTouchStart) {
       this.props.onTouchStart(event);
     }
-  }
+  };
 
   /**
    * Triggers onUpdate in case the touch event started on this element and makes
    * sure the next onMouseEnter is ignored.
    */
-  _onTouchEnd() {
+  _onTouchEnd = () => {
     const isActive = this.state.isActive;
 
     this.setState({
@@ -167,13 +167,13 @@ export default class ActionArea extends Component {
     if (isActive && this.props.onUpdate) {
       this.props.onUpdate({});
     }
-  }
+  };
 
   /**
    * Updates the button to be release and makes sure the next onMouseEnter is
    * ignored.
    */
-  _onTouchCancel() {
+  _onTouchCancel = () => {
     this.setState({
       isActive: false,
       isIgnoringHover: true,
@@ -182,7 +182,7 @@ export default class ActionArea extends Component {
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
     }
-  }
+  };
 
   render() {
     let style = { ...actionAreaStyle.style, ...this.props.style };
@@ -206,13 +206,13 @@ export default class ActionArea extends Component {
       <div
         role="button"
         {...this.childProps}
-        onMouseDown={ ::this._onMouseDown }
-        onMouseUp={ ::this._onMouseUp }
-        onMouseEnter={ ::this._onMouseEnter }
-        onMouseLeave={ ::this._onMouseLeave }
-        onTouchStart={ ::this._onTouchStart }
-        onTouchEnd={ ::this._onTouchEnd }
-        onTouchCancel={ ::this._onTouchCancel }
+        onMouseDown={ this._onMouseDown }
+        onMouseUp={ this._onMouseUp }
+        onMouseEnter={ this._onMouseEnter }
+        onMouseLeave={ this._onMouseLeave }
+        onTouchStart={ this._onTouchStart }
+        onTouchEnd={ this._onTouchEnd }
+        onTouchCancel={ this._onTouchCancel }
         style={ style }
       >
         { this.props.children }

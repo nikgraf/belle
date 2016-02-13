@@ -195,7 +195,7 @@ export default class TextInput extends Component {
    * This is an optimization to avoid adding a newline char & removing it right
    * away in the onUpdate callback.
    */
-  _onKeyDown(event) {
+  _onKeyDown = (event) => {
     if (!this.props.allowNewLine && event.key === 'Enter') {
       event.preventDefault();
     }
@@ -203,7 +203,7 @@ export default class TextInput extends Component {
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event);
     }
-  }
+  };
 
   /**
    * Update the height and calls the provided change callback for onUpdate
@@ -212,7 +212,7 @@ export default class TextInput extends Component {
    * In addition newline characters are replaced by spaces in the textarea value
    * in case allowNewLine is set to false and newLine characters could be found.
    */
-  _onChange(event) {
+  _onChange = (event) => {
     let value = event.target.value;
 
     if (!this.props.allowNewLine && value.match(newLineRegex) !== null) {
@@ -232,7 +232,7 @@ export default class TextInput extends Component {
     }
 
     this._triggerResize(value);
-  }
+  };
 
   /**
    * Calculate the height and store the new height in the state to trigger a render.
@@ -262,8 +262,8 @@ export default class TextInput extends Component {
         style={ textareaStyle }
         value = {this.state.inputValue}
         className={ unionClassNames(this.props.className, this._styleId) }
-        onChange={ ::this._onChange }
-        onKeyDown={ ::this._onKeyDown }
+        onChange={ this._onChange }
+        onKeyDown={ this._onKeyDown }
         { ...this.textareaProps }
       />
     );
