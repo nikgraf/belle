@@ -283,7 +283,7 @@ describe('DatePicker', () => {
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     TestUtils.Simulate.focus(day);
     TestUtils.Simulate.mouseDown(day, { button: 0 });
-    expect(datePicker.state.selectedDate).toBe(compSelectedDate);
+    expect(datePicker.state.selectedDate.getTime()).toBe(compSelectedDate.getTime());
   });
 
   it('should call function removeAllStyles when component will unmount', () => {
@@ -303,7 +303,7 @@ describe('DatePicker', () => {
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({ value: currentDate });
-    expect(datePicker.state.selectedDate).toBe(currentDate);
+    expect(datePicker.state.selectedDate.getTime()).toBe(currentDate.getTime());
   });
 
   it('should update state.selectedDate when valueLink is received in props', () => {
@@ -320,7 +320,7 @@ describe('DatePicker', () => {
     };
     expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({ valueLink });
-    expect(datePicker.state.selectedDate).toBe(currentDate);
+    expect(datePicker.state.selectedDate.getTime()).toBe(currentDate.getTime());
   });
 
   it('should not update state.selectedDate when defaultValue is received in props', () => {

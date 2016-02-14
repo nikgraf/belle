@@ -5,6 +5,7 @@ import { has, map, shift, reverse, omit } from '../utils/helpers';
 import {
   convertDateToDateKey,
   getDateKey,
+  getDateForDateKey,
   getWeekArrayForMonth,
   getLastDayForMonth,
   getLocaleData,
@@ -571,13 +572,13 @@ export default class DatePicker extends Component {
           this._onPageDownKeyDown(event);
         } else if (event.key === 'Enter') {
           event.preventDefault();
-          const date = new Date(this.state.focusedDateKey);
+          const date = getDateForDateKey(this.state.focusedDateKey);
           if (this._isWithinMinAndMax(date)) {
             this._triggerSelectDate(date.getDate(), date.getMonth(), date.getFullYear());
           }
         } else if (event.key === ' ') {
           event.preventDefault();
-          const date = new Date(this.state.focusedDateKey);
+          const date = getDateForDateKey(this.state.focusedDateKey);
           if (this._isWithinMinAndMax(date)) {
             this._triggerToggleDate(date);
           }
@@ -606,13 +607,13 @@ export default class DatePicker extends Component {
     // TODO extract this to a helper function and test various edge cases
     let date;
     const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month - 1);
-    const focusedDate = new Date(this.state.focusedDateKey);
+    const focusedDate = getDateForDateKey(this.state.focusedDateKey);
 
     // jump from March 30 to Feb 29
     if (focusedDate.getDate() > lastDayInMonth.getDate()) {
       date = lastDayInMonth;
     } else {
-      date = new Date(this.state.focusedDateKey);
+      date = getDateForDateKey(this.state.focusedDateKey);
       date.setMonth(date.getMonth() - 1);
     }
 
@@ -634,13 +635,13 @@ export default class DatePicker extends Component {
     // TODO extract this to a helper function and test various edge cases
     let date;
     const lastDayInMonth = getLastDayForMonth(this.state.year, this.state.month + 1);
-    const focusedDate = new Date(this.state.focusedDateKey);
+    const focusedDate = getDateForDateKey(this.state.focusedDateKey);
 
     // Use case: Jump from Jan 31 to Feb 29
     if (focusedDate.getDate() > lastDayInMonth.getDate()) {
       date = lastDayInMonth;
     } else {
-      date = new Date(this.state.focusedDateKey);
+      date = getDateForDateKey(this.state.focusedDateKey);
       date.setMonth(date.getMonth() + 1);
     }
 
@@ -839,10 +840,10 @@ export default class DatePicker extends Component {
    * days is the number of days by which focused should be moved ahead or behind.
    */
   _focusOtherDay(days) {
-    const focusedDateKey = new Date(this.state.focusedDateKey);
-    const currentMonth = focusedDateKey.getMonth();
+    const focusedDate = getDateForDateKey(this.state.focusedDateKey);
+    const currentMonth = focusedDate.getMonth();
 
-    const nextFocusedDate = new Date(this.state.focusedDateKey);
+    const nextFocusedDate = getDateForDateKey(this.state.focusedDateKey);
     nextFocusedDate.setDate(nextFocusedDate.getDate() + days);
     const nextFocusedDateKey = convertDateToDateKey(nextFocusedDate);
     const nextMonth = nextFocusedDate.getMonth();
