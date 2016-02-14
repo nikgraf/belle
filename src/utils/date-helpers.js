@@ -59,15 +59,42 @@ export const getLocaleData = (locale) => {
   return localeResult;
 };
 
+/**
+ * Returns the string representation for a provided year, month & day.
+ *
+ * @param year {number} - any year
+ * @param month {number} - can be between 1 and 12
+ * @param day {number} - can be between 1 and 31 depending on the month
+ * @returns {string}: a string representing the date based on the ISO standard
+ */
 export const getDateKey = (year, month, day) => `${year}-${month}-${day}`;
 
+/**
+ * Returns the date for a date string representation.
+ *
+ * @param year {number} - any year
+ * @param month {number} - can be between 1 and 12
+ * @param day {number} - can be between 1 and 31 depending on the month
+ * @returns {date} - the parse date
+ */
 export const getDateForDateKey = (dateKey) => {
   const [year, month, day] = dateKey.split('-');
   return new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
 };
 
+/**
+ * Returns the string representation for a provided date.
+ *
+ * @param date {date} - a valid date
+ * @returns {string}: a string representing the date based on the ISO standard
+ */
 export const convertDateToDateKey = (date) => (
   getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate())
 );
 
+/**
+ * Returns the date of today
+ *
+ * @returns {date}: today's date
+ */
 export const today = () => new Date();
