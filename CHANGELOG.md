@@ -4,9 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+### Changed
+- [Button, ComboBox, DatePicker, Rating, Select, TextInput, Toggle] Improved rendering performance by binding the functions to the class instantiation instead of every render due binding in JSX. Find more info [here](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md#lists-of-items) [#263](https://github.com/nikgraf/belle/pull/263) &  [#265](https://github.com/nikgraf/belle/pull/265)
+
 ### Fixed
 
 - [DatePicker] use nextMonthNavProps.className for next month (was prevMonthNavProps before) [b9937bb](https://github.com/nikgraf/belle/commit/b9937bbb96925899cb48bf55558119ad72cf2021)
+- [DatePicker] fix broken Keyboard navigation in Firefox 39.0 and properly parse Date when jumping from January 2016 to December 2015 via keyboard in Chrome 48 [#264](https://github.com/nikgraf/belle/pull/264)
 
 ## 2.0.3 - 2015-12-07
 
