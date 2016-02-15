@@ -20,7 +20,6 @@ import ActionArea from './ActionArea';
  */
 function sanitizeWrapperProps(properties) {
   return omit(properties, [
-    'ref',
     'tabIndex',
     'onFocus',
     'onBlur',
@@ -43,7 +42,6 @@ function sanitizeWrapperProps(properties) {
 function sanitizeEmptyDayProps(properties) {
   return omit(properties, [
     'key',
-    'ref',
     'style',
   ]);
 }
@@ -54,7 +52,6 @@ function sanitizeEmptyDayProps(properties) {
 function sanitizeDisabledDayProps(properties) {
   return omit(properties, [
     'key',
-    'ref',
     'onMouseEnter',
     'onMouseLeave',
     'style',
@@ -67,7 +64,6 @@ function sanitizeDisabledDayProps(properties) {
 function sanitizeDayProps(properties) {
   return omit(properties, [
     'key',
-    'ref',
     'onMouseDown',
     'onMouseUp',
     'onMouseEnter',
@@ -1197,7 +1193,6 @@ export default class DatePicker extends Component {
       return (
         <span
           key={ `day-${index}` }
-          ref={ dateKey }
           style={ dayStyle }
           {...this.emptyDayProps}
         />
@@ -1208,7 +1203,6 @@ export default class DatePicker extends Component {
       return (
         <span
           key={ `day-${index}` }
-          ref={ dateKey }
           style={ dayStyle }
           onMouseEnter={ (event) => this._onDayMouseEnter(dateKey, event) }
           onMouseLeave={ (event) => this._onDayMouseLeave(dateKey, event) }
@@ -1222,7 +1216,6 @@ export default class DatePicker extends Component {
     return (
       <span
         key={ `day-${index}` }
-        ref={ dateKey }
         onMouseDown={ (event) => this._onDayMouseDown(dateKey, event) }
         onMouseUp={ (event) => this._onDayMouseUp(dateKey, day, month, year, event) }
         onMouseEnter={ (event) => this._onDayMouseEnter(dateKey, event) }
@@ -1298,7 +1291,6 @@ export default class DatePicker extends Component {
 
     return (
       <div
-        ref="datePicker"
         tabIndex={ tabIndex }
         onFocus={ this._onFocus }
         onBlur={ this._onBlur }
