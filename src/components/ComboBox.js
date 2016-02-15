@@ -746,11 +746,11 @@ export default class ComboBox extends Component {
               <ComboBoxItem
                 key={ index }
                 index={ index }
-                onItemTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
-                onItemTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
+                onItemTouchStart={ this._onTouchStartAtOption }
+                onItemTouchEnd={ this._onTouchEndAtOption }
                 onItemTouchCancel={ this._onTouchCancelAtOption }
-                onItemClick={ () => this._onClickAtOption(index) }
-                onItemMouseEnter={ () => this._onMouseEnterAtOption(index) }
+                onItemClick={ this._onClickAtOption(index) }
+                onItemMouseEnter={ this._onMouseEnterAtOption }
                 onItemMouseLeave={ this._onMouseLeaveAtOption }
               >
                 { entry }

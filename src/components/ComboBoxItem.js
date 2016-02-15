@@ -52,7 +52,7 @@ export default class ComboBoxItem extends Component {
     return (
       <li
         onClick={ this._onClick }
-        onMouseEnter={ () => this._onMouseEnter }
+        onMouseEnter={ this._onMouseEnter }
         onMouseLeave={ this._onMouseLeave }
         onMouseDown={ this._onMouseDown }
         onTouchStart={ this._onTouchStart }
