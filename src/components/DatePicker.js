@@ -14,6 +14,8 @@ import {
 import defaultStyle from '../style/date-picker';
 import config from '../config/datePicker';
 import ActionArea from './ActionArea';
+import DisabledDay from './DisabledDay';
+import Day from './Day';
 
 /**
  * Returns an object with properties that are relevant for the wrapping div of the date picker.
@@ -671,8 +673,12 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives mouseUp.
    * It will reset this.state.activeDay and call props.onDayMouseUp.
    */
-  _onDayMouseUp = (dateKey, day, month, year, event) => {
+  _onDayMouseUp = (dateKey, event) => {
     if (event.button === 0 && !this.props.disabled && !this.props.readOnly && this.state.activeDay === dateKey) {
+      const date = getDateForDateKey(dateKey);
+      const day = date.getDate();
+      const month = date.getMonth();
+      const year = date.getFullYear();
       this._triggerSelectDate(day, month, year);
       this.setState({
         // Note: updating focusedDateKey in mouseEnter normally would be good enough,
@@ -741,8 +747,12 @@ export default class DatePicker extends Component {
    * Callback is called when some day receives touchEnd.
    * It will reset this.state.activeDay and call props.onDayTouchEnd.
    */
-  _onDayTouchEnd = (dateKey, day, month, year, event) => {
+  _onDayTouchEnd = (dateKey, event) => {
     if (!this.props.disabled && !this.props.readOnly) {
+      const date = getDateForDateKey(dateKey);
+      const day = date.getDate();
+      const month = date.getMonth();
+      const year = date.getFullYear();
       this._triggerSelectDate(day, month, year);
       if (this.state.activeDay === dateKey) {
         this.setState({
@@ -1201,35 +1211,36 @@ export default class DatePicker extends Component {
 
     if (isDisabledDay) {
       return (
-        <span
+        <DisabledDay
           key={ `day-${index}` }
           style={ dayStyle }
-          onMouseEnter={ (event) => this._onDayMouseEnter(dateKey, event) }
-          onMouseLeave={ (event) => this._onDayMouseLeave(dateKey, event) }
-          {...this.disabledDayProps}
+          dateKey={ dateKey }
+          onDayMouseEnter={ this._onDayMouseEnter }
+          onDayMouseLeave={ this._onDayMouseLeave }
+          disabledDayProps={ this.disabledDayProps }
         >
           { renderedDay }
-        </span>
+        </DisabledDay>
       );
     }
 
     return (
-      <span
+      <Day
         key={ `day-${index}` }
-        onMouseDown={ (event) => this._onDayMouseDown(dateKey, event) }
-        onMouseUp={ (event) => this._onDayMouseUp(dateKey, day, month, year, event) }
-        onMouseEnter={ (event) => this._onDayMouseEnter(dateKey, event) }
-        onMouseLeave={ (event) => this._onDayMouseLeave(dateKey, event) }
-        onTouchStart={ (event) => this._onDayTouchStart(dateKey, event) }
-        onTouchEnd={ (event) => this._onDayTouchEnd(dateKey, day, month, year, event) }
-        onTouchCancel={ (event) => this._onDayTouchCancel(dateKey, event) }
-        aria-selected={ ariaSelected }
+        dateKey={ dateKey }
+        onDayMouseDown={ this._onDayMouseDown }
+        onDayMouseUp={ this._onDayMouseUp }
+        onDayMouseEnter={ this._onDayMouseEnter }
+        onDayMouseLeave={ this._onDayMouseLeave }
+        onDayTouchStart={ this._onDayTouchStart }
+        onDayTouchEnd={ this._onDayTouchEnd }
+        onDayTouchCancel={ this._onDayTouchCancel }
+        selected={ ariaSelected }
         style={ dayStyle }
-        role="gridcell"
-        {...this.dayProps}
+        dayProps={this.dayProps}
       >
         { renderedDay }
-      </span>
+      </Day>
     );
   }
 
