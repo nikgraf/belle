@@ -65,7 +65,7 @@ export const getLocaleData = (locale) => {
  * @param year {number} - any year
  * @param month {number} - can be between 1 and 12
  * @param day {number} - can be between 1 and 31 depending on the month
- * @returns {string}: a string representing the date based on the ISO standard
+ * @returns {string}: a string representing the date in the format yyyy-mm-dd
  */
 export const getDateKey = (year, month, day) => `${year}-${month}-${day}`;
 
@@ -86,7 +86,7 @@ export const getDateForDateKey = (dateKey) => {
  * Returns the string representation for a provided date.
  *
  * @param date {date} - a valid date
- * @returns {string}: a string representing the date based on the ISO standard
+ * @returns {string}: a string representing the date in the format yyyy-mm-dd
  */
 export const convertDateToDateKey = (date) => (
   getDateKey(date.getFullYear(), date.getMonth() + 1, date.getDate())
