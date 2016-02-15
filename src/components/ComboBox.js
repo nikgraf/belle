@@ -3,6 +3,7 @@ import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../utils/helpers';
 import style from '../style/combo-box';
+import ComboBoxItem from '../components/ComboBoxItem';
 
 /**
  * Update hover style for the specified styleId.
@@ -742,19 +743,18 @@ export default class ComboBox extends Component {
         >
           {
             React.Children.map(this.filteredOptions, (entry, index) => ((
-              <li
+              <ComboBoxItem
                 key={ index }
-                onTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
-                onTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
-                onTouchCancel={ this._onTouchCancelAtOption }
-                onClick={ () => this._onClickAtOption(index) }
-                onMouseEnter={ () => this._onMouseEnterAtOption(index) }
-                onMouseLeave={ this._onMouseLeaveAtOption }
-                onMouseDown={ (event) => event.preventDefault() }
-                role="option"
+                index={ index }
+                onItemTouchStart={ (event) => this._onTouchStartAtOption(event, index) }
+                onItemTouchEnd={ (event) => this._onTouchEndAtOption(event, index) }
+                onItemTouchCancel={ this._onTouchCancelAtOption }
+                onItemClick={ () => this._onClickAtOption(index) }
+                onItemMouseEnter={ () => this._onMouseEnterAtOption(index) }
+                onItemMouseLeave={ this._onMouseLeaveAtOption }
               >
                 { entry }
-              </li>
+              </ComboBoxItem>
             )))
           }
         </ul>
