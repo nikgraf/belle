@@ -10,6 +10,7 @@ import isComponentOfType from '../utils/is-component-of-type';
 import Option from '../components/Option';
 import Placeholder from '../components/Placeholder';
 import Separator from '../components/Separator';
+import SelectItem from '../components/SelectItem';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
@@ -807,19 +808,19 @@ export default class Select extends Component {
           const localOptionIndex = optionsIndex;
           const isHovered = entry.props.value === this.state.focusedOptionValue;
           const element = (
-            <li
-              onClick={ () => this._onClickAtOption(localOptionIndex) }
-              onTouchStart={ (event) => this._onTouchStartAtOption(event, localOptionIndex) }
-              onTouchMove={ this._onTouchMoveAtOption }
-              onTouchEnd={ (event) => this._onTouchEndAtOption(event, localOptionIndex) }
-              onTouchCancel={ this._onTouchCancelAtOption }
+            <SelectItem
+              onItemClick={ this._onClickAtOption }
+              onItemTouchStart={ this._onTouchStartAtOption }
+              onItemTouchMove={ this._onTouchMoveAtOption }
+              onItemTouchEnd={ this._onTouchEndAtOption }
+              onItemTouchCancel={ this._onTouchCancelAtOption }
+              onItemMouseEnter={ this._onMouseEnterAtOption }
+              isHovered={ isHovered }
+              index={localOptionIndex}
               key={ index }
-              onMouseEnter={ () => this._onMouseEnterAtOption(localOptionIndex) }
-              role="option"
-              aria-selected={ isHovered }
             >
               { entry }
-            </li>
+            </SelectItem>
           );
           optionsIndex++;
 

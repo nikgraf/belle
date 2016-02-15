@@ -1,6 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/ComboBox');
+jest.dontMock('../components/ComboBoxItem');
 jest.dontMock('../components/Option');
 
 import React from 'react';

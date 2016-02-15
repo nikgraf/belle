@@ -2,6 +2,8 @@
 
 jest.dontMock('../components/ActionArea');
 jest.dontMock('../components/DatePicker');
+jest.dontMock('../components/DisabledDay');
+jest.dontMock('../components/Day');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/date-helpers');
 jest.dontMock('../config/i18n');
@@ -89,25 +91,26 @@ describe('DatePicker', () => {
     expect(dateSelected).toBeUndefined();
   });
 
-  it('should not change date when a day is focused and enter key is pressed if component is disabled or readOnly', () => {
-    const disabledDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} disabled/>
-    );
-    expect(disabledDatePicker.state.selectedDate).toBeUndefined();
-    let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
-    TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.keyDown(day, { key: 'Enter' });
-    expect(disabledDatePicker.state.selectedDate).toBeUndefined();
+  it('should not change date when a day is focused and enter key is pressed if component is disabled or readOnly',
+    () => {
+      const disabledDatePicker = TestUtils.renderIntoDocument(
+        <DatePicker dayProps={{ className: 'day_test' }} disabled/>
+      );
+      expect(disabledDatePicker.state.selectedDate).toBeUndefined();
+      let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
+      TestUtils.Simulate.focus(day);
+      TestUtils.Simulate.keyDown(day, { key: 'Enter' });
+      expect(disabledDatePicker.state.selectedDate).toBeUndefined();
 
-    const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} readOnly/>
-    );
-    expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
-    day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
-    TestUtils.Simulate.focus(day);
-    TestUtils.Simulate.keyDown(day, { key: 'Enter' });
-    expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
-  });
+      const readOnlyDatePicker = TestUtils.renderIntoDocument(
+        <DatePicker dayProps={{ className: 'day_test' }} readOnly/>
+      );
+      expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
+      day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
+      TestUtils.Simulate.focus(day);
+      TestUtils.Simulate.keyDown(day, { key: 'Enter' });
+      expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
+    });
 
   it('should change focusedDateKey on mouse down + up', () => {
     const datePicker = TestUtils.renderIntoDocument(
