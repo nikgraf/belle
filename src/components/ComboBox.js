@@ -749,7 +749,7 @@ export default class ComboBox extends Component {
                 onItemTouchStart={ this._onTouchStartAtOption }
                 onItemTouchEnd={ this._onTouchEndAtOption }
                 onItemTouchCancel={ this._onTouchCancelAtOption }
-                onItemClick={ this._onClickAtOption(index) }
+                onItemClick={ this._onClickAtOption }
                 onItemMouseEnter={ this._onMouseEnterAtOption }
                 onItemMouseLeave={ this._onMouseLeaveAtOption }
               >
