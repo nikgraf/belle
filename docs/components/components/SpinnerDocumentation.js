@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React from 'react';
 import { Button, Card, Spinner } from 'belle';
 import Code from '../Code';
@@ -26,11 +28,11 @@ const cardCodeExample = `<!-- loading example -->
 
 const SpinnerDocumentation = () => (
   <div>
-    <h2 style={ { marginTop: 0, marginBottom: 40 } }>Spinner</h2>
+    <h2 style={{ marginTop: 0, marginBottom: 40 }}>Spinner</h2>
 
     <Spinner />
 
-    <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+    <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
     <h3>Properties</h3>
 
@@ -57,7 +59,7 @@ const SpinnerDocumentation = () => (
 
     <p>
       Any property valid for a HTML div like
-      <span style={ { color: 'grey' } }> style, id, className, …</span>
+      <span style={{ color: 'grey' }}> style, id, className, …</span>
     </p>
 
     <h3>More Examples</h3>
@@ -72,7 +74,7 @@ const SpinnerDocumentation = () => (
       Saving <Spinner characterStyle={{ fontSize: 18, color: '#C5C4C4' }}/>
     </Button>
 
-    <Code value={ buttonCodeExample } style={ { marginTop: 40 } } />
+    <Code value={ buttonCodeExample } style={{ marginTop: 40 }} />
 
     <h4>Card with a loading indicator</h4>
 
@@ -85,7 +87,7 @@ const SpinnerDocumentation = () => (
       Loading <Spinner characterStyle={{ fontSize: 20 }} />
     </Card>
 
-    <Code value={ cardCodeExample } style={ { marginTop: 40 } } />
+    <Code value={ cardCodeExample } style={{ marginTop: 40 }} />
   </div>
 );
 

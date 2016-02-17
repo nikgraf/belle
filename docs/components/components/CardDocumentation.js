@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import { Card } from 'belle';
 import Code from '../Code';
@@ -20,13 +22,13 @@ export default class CardDocumentation extends Component {
   render() {
     return (
       <div>
-        <h2 style={ { marginTop: 0, marginBottom: 40 } }>Card</h2>
+        <h2 style={{ marginTop: 0, marginBottom: 40 }}>Card</h2>
 
         <Card style={{ borderTop: '1px solid #f2f2f2' }}>
           Add any content here like paragraphs, images or other components …
         </Card>
 
-        <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+        <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
         <p style={{ marginTop: 40 }}>
           <i>Note</i>: The card is designed to work on non-white areas. To provide a
@@ -37,7 +39,7 @@ export default class CardDocumentation extends Component {
 
         <p>
           Any property valid for a HTML div like
-          <span style={ { color: 'grey' } }> style, id, className, …</span>
+          <span style={{ color: 'grey' }}> style, id, className, …</span>
         </p>
 
         <h3>More Examples</h3>
@@ -55,7 +57,7 @@ export default class CardDocumentation extends Component {
           />
         </Card>
 
-        <Code value={ imageCodeExample } style={ { marginTop: 40 } } />
+        <Code value={ imageCodeExample } style={{ marginTop: 40 }} />
       </div>
     );
   }

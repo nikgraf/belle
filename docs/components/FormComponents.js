@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import Code from './Code';
 
@@ -37,7 +39,7 @@ export default class FormComponents extends Component {
 
   render() {
     return (<div>
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Form Components</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Form Components</h2>
 
       <p>
         Belle has many Form Components: ComboBox, Select, Rating, TextInput and Toggle.
@@ -58,7 +60,7 @@ export default class FormComponents extends Component {
         the value of the rendered element will always reflect the value prop. For example:
       </p>
 
-      <Code value={ controlledComponentCodeOne } style={ { marginTop: 20 } } />
+      <Code value={ controlledComponentCodeOne } style={{ marginTop: 20 }} />
 
       <p>
         This will render a TextInput that always has a value of Hello!. Any user input will have no effect on the rendered element
@@ -66,7 +68,7 @@ export default class FormComponents extends Component {
         could use the onUpdate event:
       </p>
 
-      <Code value={ controlledComponentCodeTwo } style={ { marginTop: 20 } } />
+      <Code value={ controlledComponentCodeTwo } style={{ marginTop: 20 }} />
 
       <p>This pattern makes it easy to implement interfaces that respond to or validate user interactions.</p>
 
@@ -76,7 +78,7 @@ export default class FormComponents extends Component {
         In an uncontrolled component, the value of the rendered element will reflect the user's input. For example:
       </p>
 
-      <Code value={ uncontrolledComponentCode } style={ { marginTop: 20 } } />
+      <Code value={ uncontrolledComponentCode } style={{ marginTop: 20 }} />
 
       <p>
         This will render an input that starts off with an empty value. Any user input will be immediately reflected by the rendered element.
@@ -91,7 +93,7 @@ export default class FormComponents extends Component {
         data flow loop pattern, or "linking" some data source to React state.
       </p>
 
-      <Code value={ reactLinkCode } style={ { marginTop: 20 } } />
+      <Code value={ reactLinkCode } style={{ marginTop: 20 }} />
 
       <p>Note:<br/>
         ReactLink is just a thin wrapper and convention around the onUpdate/setState() pattern. It doesn't fundamentally change how data

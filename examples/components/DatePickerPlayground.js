@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, DatePicker, Button} from 'belle';
+import { Card, DatePicker } from 'belle';
 
 export default React.createClass({
 
@@ -39,9 +39,11 @@ export default React.createClass({
 
           <h3>DatePicker with min & max</h3>
             <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate }
-                        min={ minDate }
-                        max={ maxDate } />
+            <DatePicker
+              defaultValue={ selectedDate }
+              min={ minDate }
+              max={ maxDate }
+            />
           </div>
 
           <h3>Disabled Calendar Example</h3>
@@ -54,13 +56,17 @@ export default React.createClass({
           </div>
           <h3>Read-Only active Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate }
-                        readOnly/>
+            <DatePicker
+              defaultValue={ selectedDate }
+              readOnly
+            />
           </div>
           <h3>Special renderDay</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate }
-                        renderDay={ this._renderDay }/>
+            <DatePicker
+              defaultValue={ selectedDate }
+              renderDay={ this._renderDay }
+            />
           </div>
           <h3>Calendar in dutch french !!!</h3>
           <div style={{ marginBottom: '20px' }}>
@@ -72,8 +78,10 @@ export default React.createClass({
           </div>
           <h3>Calendar in dutch hebrew !!!</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate }
-                        locale="he"/>
+            <DatePicker
+              defaultValue={ selectedDate }
+              locale="he"
+            />
           </div>
         </Card>
 

@@ -1,10 +1,16 @@
+/* eslint-disable no-console */
+
 import React from 'react';
-import {Card, ComboBox, Option} from 'belle';
+import { Card, ComboBox, Option } from 'belle';
 
 export default React.createClass({
 
   getInitialState() {
     return { comboValue: 'te' };
+  },
+
+  _handleChange(newValue) {
+    this.setState({ comboValue: newValue });
   },
 
   render() {
@@ -33,8 +39,12 @@ export default React.createClass({
 
           <h3>Value Example</h3>
           <div style={{ marginBottom: 20 }}>
-            <ComboBox value={ this.state.comboValue }
-                      onUpdate={ (event) => {console.log(event.value + ' - ' + event.identifier + ' - ' + event.isOptionSelection + ' - ' + event.isMatchingOption); } }>
+            <ComboBox
+              value={ this.state.comboValue }
+              onUpdate={ (event) => {
+                console.log(`${event.value} - ${event.identifier} - ${event.isOptionSelection} -  ${event.isMatchingOption}`);
+              }}
+            >
               <Option value="te" identifier="123">Te</Option>
               <Option value="tes" identifier="123">Tes</Option>
               <Option value="test" identifier="123">Test</Option>
@@ -46,7 +56,7 @@ export default React.createClass({
 
           <h3>Value Link Example</h3>
           <div style={{ marginBottom: 20 }}>
-            <ComboBox valueLink={ valueLink } onUpdate={ (event) => { console.log(event.value); } }>
+            <ComboBox valueLink={ valueLink } onUpdate={ (event) => { console.log(event.value); }}>
               <Option value="te">Te</Option>
               <Option value="tes">Tes</Option>
               <Option value="test">Test</Option>
@@ -95,9 +105,5 @@ export default React.createClass({
 
       </div>
     );
-  },
-
-  _handleChange(newValue) {
-    this.setState({ comboValue: newValue });
   },
 });

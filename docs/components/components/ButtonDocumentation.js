@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import { Button } from 'belle';
 import Code from '../Code';
@@ -40,11 +42,11 @@ const customStyleCodeExample = `<Button primary
   Follow
 </Button>`;
 
-const disabledButtonCodeExample = `<Button primary style={ {marginRight: 10} }>Follow</Button>
+const disabledButtonCodeExample = `<Button primary style={{marginRight: 10}}>Follow</Button>
 
-<Button primary disabled style={ {marginRight: 10} }>Follow</Button>
+<Button primary disabled style={{marginRight: 10}}>Follow</Button>
 
-<Button style={ {marginRight: 10} }>Follow</Button>
+<Button style={{marginRight: 10}}>Follow</Button>
 
 <Button disabled>Follow</Button>
 `;
@@ -54,13 +56,13 @@ export default class ButtonDocumentation extends Component {
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Button</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Button</h2>
 
-      <Button primary style={ { marginRight: 15 } }>Follow</Button>
+      <Button primary style={{ marginRight: 15 }}>Follow</Button>
 
       <Button>Follow</Button>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
       <p style={{ marginTop: 40 }}>
         <i>Note:</i> Belle's Button is rendered as normal HTML button and behaves exactly like it except for these behaviours:
@@ -251,22 +253,22 @@ export default class ButtonDocumentation extends Component {
 
       <p>
         Any other property valid for a HTML button like
-        <span style={ { color: 'grey' } }> style, onClick, …</span>
+        <span style={{ color: 'grey' }}> style, onClick, …</span>
       </p>
 
       <h3>More Examples</h3>
 
       <h4>Disabled buttons</h4>
 
-      <Button primary style={ { marginRight: 15 } }>Follow</Button>
+      <Button primary style={{ marginRight: 15 }}>Follow</Button>
 
-      <Button primary disabled style={ { marginRight: 15 } }>Follow</Button>
+      <Button primary disabled style={{ marginRight: 15 }}>Follow</Button>
 
-      <Button style={ { marginRight: 15 } }>Follow</Button>
+      <Button style={{ marginRight: 15 }}>Follow</Button>
 
       <Button disabled>Follow</Button>
 
-      <Code value={ disabledButtonCodeExample } style={ { marginTop: 20 } } />
+      <Code value={ disabledButtonCodeExample } style={{ marginTop: 20 }} />
 
       <h4>Primary button with custom styles</h4>
 
@@ -306,7 +308,7 @@ export default class ButtonDocumentation extends Component {
         Follow
       </Button>
 
-      <Code value={ customStyleCodeExample } style={ { marginTop: 20 } } />
+      <Code value={ customStyleCodeExample } style={{ marginTop: 20 }} />
 
 
     </div>);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Spinner} from 'belle';
+import { Button, Card, Spinner } from 'belle';
 
 export default React.createClass({
 

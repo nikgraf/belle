@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card} from 'belle';
+import { Button, Card } from 'belle';
 
 export default React.createClass({
 

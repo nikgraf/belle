@@ -41,7 +41,7 @@ describe('ComboBox', () => {
     let wasCalled = false;
 
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox onUpdate={ () => { wasCalled = true; } }>
+      <ComboBox onUpdate={ () => { wasCalled = true; }}>
         <Option value="rome">Rome</Option>
         <Option value="vienna" className="vienna-option">Vienna</Option>
       </ComboBox>
@@ -122,7 +122,7 @@ describe('ComboBox', () => {
 
   it('should be able to adopt the styles of a combobox', () => {
     const combobox = TestUtils.renderIntoDocument(
-      <ComboBox style={ { cursor: 'cross' } }>
+      <ComboBox style={{ cursor: 'cross' }}>
         <Option value="rome">Rome</Option>
         <Option value="vienna">Vienna</Option>
       </ComboBox>

@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import { Choice, Toggle } from 'belle';
 import Code from '../Code';
@@ -6,7 +8,7 @@ import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle />
 
-<Toggle defaultValue style={ { marginLeft: 20 } }/>`;
+<Toggle defaultValue style={{ marginLeft: 20 }}/>`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
 <Toggle defaultValue
@@ -80,13 +82,13 @@ export default class ToggleDocumentation extends Component {
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Toggle</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Toggle</h2>
 
       <Toggle />
 
-      <Toggle defaultValue style={ { marginLeft: 20 } }/>
+      <Toggle defaultValue style={{ marginLeft: 20 }}/>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
         <h3>Properties</h3>
 
@@ -451,7 +453,7 @@ export default class ToggleDocumentation extends Component {
 
         <p>
           Any property valid for a HTML div like
-          <span style={ { color: 'grey' } }> style, id, className, onMouseDown, onTouchStart …</span>
+          <span style={{ color: 'grey' }}> style, id, className, onMouseDown, onTouchStart …</span>
         </p>
 
         <h3>Internal HTML Structure</h3>
@@ -461,7 +463,7 @@ export default class ToggleDocumentation extends Component {
           in order to use the API
         </p>
 
-        <Code value={ htmlStructure } style={ { marginTop: 40 } } />
+        <Code value={ htmlStructure } style={{ marginTop: 40 }} />
 
         <h3>More Examples</h3>
 
@@ -475,7 +477,7 @@ export default class ToggleDocumentation extends Component {
           <Choice value={ false }>Off</Choice>
         </Toggle>
 
-        <Code value={ choiceCodeExample } style={ { marginTop: 40 } } />
+        <Code value={ choiceCodeExample } style={{ marginTop: 40 }} />
 
         <h4 style={{ marginTop: 40 }}>Toggle with adopted size styling - using CSS 'transform' property</h4>
 
@@ -487,7 +489,7 @@ export default class ToggleDocumentation extends Component {
 
         <Toggle style={{ transform: 'scale(0.6)' }} />
 
-        <Code value={ toggleWithSizeStyling1 } style={ { marginTop: 40 } } />
+        <Code value={ toggleWithSizeStyling1 } style={{ marginTop: 40 }} />
 
         <h4 style={{ marginTop: 40 }}>Toggle with adopted size styling - using style properties</h4>
 
@@ -539,7 +541,7 @@ export default class ToggleDocumentation extends Component {
           }}
         />
 
-        <Code value={ toggleWithSizeStyling2 } style={ { marginTop: 40 } } />
+        <Code value={ toggleWithSizeStyling2 } style={{ marginTop: 40 }} />
 
     </div>);
   }

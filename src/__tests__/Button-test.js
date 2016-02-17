@@ -48,7 +48,7 @@ describe('Button', () => {
 
     // Render a button with an onClick handler
     const button = TestUtils.renderIntoDocument(
-      <Button onClick={ () => { wasClicked = true; } }>Follow</Button>
+      <Button onClick={ () => { wasClicked = true; }}>Follow</Button>
     );
 
     // Simulate a click

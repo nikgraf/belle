@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Option, Placeholder, Select, Separator, TextInput } from 'belle';
@@ -37,7 +39,7 @@ var fruits = [
 
 const dataCodeExamplePartTwo = `<!-- filling a select with Option  -->
 <Select defaultValue={ fruits[3].value }
-        onUpdate={ function(event) { console.log(event.value); } }>
+        onUpdate={ function(event) { console.log(event.value); }}>
   {
     fruits.map(function(fruit, index) {
       return (
@@ -51,16 +53,16 @@ const dataCodeExamplePartTwo = `<!-- filling a select with Option  -->
 </Select>`;
 
 const formCodeExample = `<!-- form consiting of an input & a select  -->
-<div style={ { display: 'table' } }>
-  <TextInput style={ { width: 138,
-                       float: 'left'} }
+<div style={{ display: 'table' }}>
+  <TextInput style={{ width: 138,
+                       float: 'left'}}
              placeholder="Fill in your address …" />
-           <div style={ { width: 110,
+           <div style={{ width: 110,
                           float: 'left',
-                          marginLeft: 16 } }>
+                          marginLeft: 16 }}>
     <Select defaultValue="tokyo"
-            menuStyle={ { height: 160,
-                                 overflow: 'scroll' } }>
+            menuStyle={{ height: 160,
+                                 overflow: 'scroll' }}>
       <Option value="berlin">Berlin</Option>
       <Option value="hong-kong">Hong Kong</Option>
       <Option value="istanbul">Istanbul</Option>
@@ -174,7 +176,7 @@ export default class SelectDocumentation extends Component {
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Select</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Select</h2>
 
       <Select>
         <Placeholder>Choose a City</Placeholder>
@@ -183,7 +185,7 @@ export default class SelectDocumentation extends Component {
         <Option value="vienna">Vienna</Option>
       </Select>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
       <p style={{ marginTop: 40 }}>
         <i>Note</i>: The select is designed to behave exactly like the native
@@ -561,7 +563,7 @@ export default class SelectDocumentation extends Component {
 
       <p>
         Any other property valid for a Div element like
-        <span style={ { color: 'grey' } }> style, onClick, …</span><br />
+        <span style={{ color: 'grey' }}> style, onClick, …</span><br />
         The properties will directly applied to the wrapper for the selected
         option.
       </p>
@@ -573,7 +575,7 @@ export default class SelectDocumentation extends Component {
         in order to use the API
       </p>
 
-      <Code value={ htmlStructure } style={ { marginTop: 40 } } />
+      <Code value={ htmlStructure } style={{ marginTop: 40 }} />
 
       <h3>More Examples</h3>
 
@@ -597,13 +599,13 @@ export default class SelectDocumentation extends Component {
         ))}
       </Select>
 
-      <Code value={ dataCodeExamplePartOne } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExamplePartOne } style={{ marginTop: 40 }} />
 
-      <Code value={ dataCodeExamplePartTwo } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExamplePartTwo } style={{ marginTop: 40 }} />
 
       <h4>Select as part of a form with a scrollable menu</h4>
 
-      <div style={ { display: 'table' } }>
+      <div style={{ display: 'table' }}>
         <TextInput
           style={{
             width: 138,
@@ -636,7 +638,7 @@ export default class SelectDocumentation extends Component {
         </div>
       </div>
 
-      <Code value={ formCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ formCodeExample } style={{ marginTop: 40 }} />
 
       <h4>Select with Separators</h4>
 
@@ -649,7 +651,7 @@ export default class SelectDocumentation extends Component {
         <Option value="istanbul">Istanbul</Option>
       </Select>
 
-      <Code value={ separatorCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ separatorCodeExample } style={{ marginTop: 40 }} />
 
       <h4>Select with various Option styles</h4>
 
@@ -708,7 +710,7 @@ export default class SelectDocumentation extends Component {
         </Option>
       </Select>
 
-      <Code value={ advancedStylingCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ advancedStylingCodeExample } style={{ marginTop: 40 }} />
 
       <h4>Select with a custom positionOptions function</h4>
 
@@ -719,9 +721,9 @@ export default class SelectDocumentation extends Component {
         <Option value="vienna">Vienna</Option>
       </Select>
 
-      <Code value={ positionOptionsCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ positionOptionsCodeExample } style={{ marginTop: 40 }} />
 
-      <Code value={ positionOptionsSelectCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ positionOptionsSelectCodeExample } style={{ marginTop: 40 }} />
 
     </div>);
   }

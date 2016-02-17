@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
+
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {Button, TextInput, Select, Separator, Option, Placeholder} from 'belle';
-import {map} from 'underscore';
+import { Button, TextInput, Select, Separator, Option, Placeholder } from 'belle';
+import { map } from 'underscore';
 
 const fruits = [
   { value: 'pineapple', content: (<span>🍍</span>) },
@@ -34,9 +36,12 @@ export default React.createClass({
         </select>
 
         <h3>Native Select with complexObject as values</h3>
-        <select defaultValue={ {a: 1, b: 2} } onChange={ (event) => console.log(event.target.value) }>
-          <option value={ {a: 1, b: 2} }>Option A</option>
-          <option value={ {a: 3, c: 4} }>Option B</option>
+        <select
+          defaultValue={{ a: 1, b: 2 }}
+          onChange={ (event) => console.log(event.target.value) }
+        >
+          <option value={{ a: 1, b: 2 }}>Option A</option>
+          <option value={{ a: 3, c: 4 }}>Option B</option>
         </select>
 
         <h3>Native Select with empty option</h3>
@@ -62,13 +67,11 @@ export default React.createClass({
         <Select>
           <Placeholder>Lala</Placeholder>
           {
-            fruits.map((fruit, index) => {
-              return (
+            fruits.map((fruit, index) => ((
                 <Option key={ index } value={ fruit.value }>
                   { fruit.content }
                 </Option>
-              );
-            })
+            )))
           }
           <Option value={ "newyork" }>New York</Option>
         </Select>
@@ -115,9 +118,12 @@ export default React.createClass({
         <h3>
           Select after TextInput
         </h3>
-        <div style={ { content: '', display: 'table', clear: 'both' } }>
-          <TextInput style={ {width: 150, float: 'left' } } defaultValue="Lorem ipsum …" />
-          <div style={ { width: 150, float: 'left', marginLeft: 16 } }>
+        <div style={{ content: '', display: 'table', clear: 'both' }}>
+          <TextInput
+            style={{ width: 150, float: 'left' }}
+            defaultValue="Lorem ipsum …"
+          />
+          <div style={{ width: 150, float: 'left', marginLeft: 16 }}>
             <Select>
               <Option value="vienna">Vienna</Option>
               <Option value="rome">Rome</Option>
@@ -126,15 +132,17 @@ export default React.createClass({
         </div>
 
         <h3>Select with custom styles</h3>
-        <Select style={ { background: '#FFF', borderBottom: 0, padding: 8 } }
-                focusStyle={ { borderBottom: 0, padding: 8, background: '#FFF', border: '1px solid red' } }
-                hoverStyle={ { borderBottom: 0, padding: 8, background: '#DDD' } }>
+        <Select
+          style={{ background: '#FFF', borderBottom: 0, padding: 8 }}
+          focusStyle={{ borderBottom: 0, padding: 8, background: '#FFF', border: '1px solid red' }}
+          hoverStyle={{ borderBottom: 0, padding: 8, background: '#DDD' }}
+        >
           <Option value="vienna">Vienna</Option>
           <Option value="rome">Rome</Option>
         </Select>
 
         <h3>Select with scrollable options field</h3>
-        <Select menuStyle={ { height: 160, overflow: 'scroll' } } defaultValue="tokyo">
+        <Select menuStyle={{ height: 160, overflow: 'scroll' }} defaultValue="tokyo">
           <Option value="berlin">Berlin</Option>
           <Option value="hong-kong">Hong Kong</Option>
           <Option value="istanbul">Istanbul</Option>
@@ -168,30 +176,31 @@ export default React.createClass({
 
         <h3>Select from Data</h3>
         <Select>
-          {
-            map(fruits, (fruit, index) => {
-              return (
-                <Option value={ fruit.value }
-                        key={ index }>
-                  { fruit.content }
-                </Option>
-              );
-            })
-          }
+          { map(fruits, (fruit, index) => ((
+            <Option
+              value={ fruit.value }
+              key={ index }
+            >
+              { fruit.content }
+            </Option>
+            )
+          ))}
         </Select>
 
         <h3>Select from Data with defaultValue & onUpdate</h3>
-        <Select defaultValue={ fruits[2].value }
-                onUpdate={ (event) => console.log(event) }>
+        <Select
+          defaultValue={ fruits[2].value }
+          onUpdate={ (event) => console.log(event) }
+        >
           {
-            map(fruits, (fruit, index) => {
-              return (
-                <Option value={ fruit.value }
-                        key={ index }>
-                  { fruit.content }
-                </Option>
-              );
-            })
+            map(fruits, (fruit, index) => ((
+              <Option
+                value={ fruit.value }
+                key={ index }
+              >
+                { fruit.content }
+              </Option>
+            )))
           }
         </Select>
 

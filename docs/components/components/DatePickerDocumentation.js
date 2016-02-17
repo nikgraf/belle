@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { DatePicker, Select, Option } from 'belle';
@@ -51,8 +53,8 @@ renderDay(day) {
   if (day.getDate() === 25 && day.getMonth() === 11) {
     return (
       <div>
-        <span style={ {color: '#FFDA46'} }>✵</span>
-        <span style={ {color: 'red'} }>
+        <span style={{color: '#FFDA46'}}>✵</span>
+        <span style={{color: 'red'}}>
           { day.getDate() }
         </span>
       </div>
@@ -121,11 +123,11 @@ export default React.createClass({
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>DatePicker</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>DatePicker</h2>
 
       <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }/>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
       <h3>Properties</h3>
 
@@ -486,24 +488,24 @@ export default React.createClass({
 
       <p>
         Properties for handling various events(focus, mouse events, touch events, change in selectedDate, month or year):
-        <span style={ { color: 'grey' } }>tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp,
+        <span style={{ color: 'grey' }}>tabIndex, onFocus, onBlur, onKeyDown, onMouseDown, onMouseUp,
         onTouchStart, onTouchEnd, onTouchCancel, onUpdate, onMonthUpdate.</span><br />
       </p>
 
       <p>
         ... for adding attributes to specific coponents inside date picker:
-        <span style={ { color: 'grey' } }>dayProps, navBarProps, prevMonthNavProps, prevMonthNavIconProps, nextMonthNavProps,
+        <span style={{ color: 'grey' }}>dayProps, navBarProps, prevMonthNavProps, prevMonthNavIconProps, nextMonthNavProps,
         nextMonthNavIconProps, monthLabelProps, dayLabelProps, weekHeaderProps, weekGridProps.</span><br />
       </p>
 
       <p>
         ... for adding class to date picker wrapper:
-        <span style={ { color: 'grey' } }>className.</span><br />
+        <span style={{ color: 'grey' }}>className.</span><br />
       </p>
 
       <p>
         ... for adding styling to various parts of html structure of date picker:
-        <span style={ { color: 'grey' } }> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle, disabledHoverStyle, navBarStyle,
+        <span style={{ color: 'grey' }}> style, disabledStyle, readOnlyStyle, hoverStyle, activeStyle, focusStyle, disabledHoverStyle, navBarStyle,
         prevMonthNavStyle, prevMonthNavIconStyle, hoverPrevMonthNavStyle, activePrevMonthNavStyle, nextMonthNavStyle,
         nextMonthNavIconStyle, hoverNextMonthNavStyle, activeNextMonthNavStyle, weekHeaderStyle, monthLabelStyle,
         dayLabelStyle, disabledDayLabelStyle, weekendLabelStyle, dayStyle, disabledDayStyle, readOnlyDayStyle,
@@ -518,7 +520,7 @@ export default React.createClass({
         in order to use the API
       </p>
 
-      <Code value={ htmlStructure } style={ { marginTop: 40 } } />
+      <Code value={ htmlStructure } style={{ marginTop: 40 }} />
 
       <h3>More Examples</h3>
 
@@ -529,13 +531,13 @@ export default React.createClass({
         showOtherMonthDate={ false }
       />
 
-      <Code value={ advanceCodeExample1 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample1 } style={{ marginTop: 40 }} />
 
       <h3>DatePicker highlighting special day:</h3>
 
       <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
 
-      <Code value={ advanceCodeExample2 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample2 } style={{ marginTop: 40 }} />
 
       <h3>Localization support in DatePicker:</h3>
 
@@ -566,7 +568,7 @@ export default React.createClass({
         locale={ this.state.selectedLocale }
       />
 
-      <Code value={ advanceCodeExample3 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample3 } style={{ marginTop: 40 }} />
 
       <h3>Controlled DatePicker component with onMonthUpdate callBack and reset option implemented:</h3>
 
@@ -600,7 +602,7 @@ export default React.createClass({
       </div>
       </div>
 
-      <Code value={ advanceCodeExample6 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample6 } style={{ marginTop: 40 }} />
 
       <h3>Read only DatePicker:</h3>
 
@@ -609,7 +611,7 @@ export default React.createClass({
         readOnly
       />
 
-      <Code value={ advanceCodeExample4 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample4 } style={{ marginTop: 40 }} />
 
       <h3>Disabled DatePicker:</h3>
 
@@ -618,7 +620,7 @@ export default React.createClass({
         disabled
       />
 
-      <Code value={ advanceCodeExample5 } style={ { marginTop: 40 } } />
+      <Code value={ advanceCodeExample5 } style={{ marginTop: 40 }} />
 
       </div>
 
@@ -629,8 +631,8 @@ export default React.createClass({
     if (day.getDate() === 25 && day.getMonth() === 11) {
       return (
         <div>
-          <span style={ { color: '#FFDA46' } }>✵</span>
-          <span style={ { color: 'red' } }>{ day.getDate() }</span>
+          <span style={{ color: '#FFDA46' }}>✵</span>
+          <span style={{ color: 'red' }}>{ day.getDate() }</span>
         </div>
       );
     }

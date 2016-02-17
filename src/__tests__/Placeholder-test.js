@@ -23,7 +23,7 @@ describe('Placeholder', () => {
 
   it('should be able to overwrite the default styles', () => {
     const placeholder = TestUtils.renderIntoDocument(
-      <Placeholder style={ { color: '#F00' } }>Please select a city</Placeholder>
+      <Placeholder style={{ color: '#F00' }}>Please select a city</Placeholder>
     );
 
     const div = TestUtils.findRenderedDOMComponentWithTag(placeholder, 'div');
