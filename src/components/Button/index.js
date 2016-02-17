@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { has } from '../utils/helpers';
-import buttonStyle from '../style/button';
-import unionClassNames from '../utils/union-class-names';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import config from '../config/button';
+import { has } from '../../utils/helpers';
+import buttonStyle from './styles';
+import unionClassNames from '../../utils/union-class-names';
+import { injectStyles, removeStyle } from '../../utils/inject-style';
+import config from './config';
 
 const buttonTypes = ['button', 'submit', 'reset'];
 

@@ -2,12 +2,12 @@
 
 jest.dontMock('../components/ActionArea');
 jest.dontMock('../components/DatePicker');
-jest.dontMock('../components/DisabledDay');
-jest.dontMock('../components/Day');
+jest.dontMock('../components/DatePicker/DisabledDay');
+jest.dontMock('../components/DatePicker/Day');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/date-helpers');
 jest.dontMock('../config/i18n');
-jest.dontMock('../style/date-picker');
+jest.dontMock('../components/DatePicker/styles');
 
 import React from 'react';
 import ReactDOM from 'react-dom';

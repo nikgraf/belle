@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { omit } from '../utils/helpers';
-import style from '../style/option';
+import { omit } from '../../utils/helpers';
+import style from './styles';
 
 /**
  * Returns an object with properties that are relevant for the wrapping div.

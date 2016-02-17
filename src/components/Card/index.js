@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import cardStyle from '../style/card';
+import cardStyle from './styles';
 
 /**
  * Card component with a light shadow.

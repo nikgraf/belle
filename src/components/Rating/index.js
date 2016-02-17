@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { canUseDOM } from 'exenv';
-import { omit, has } from '../utils/helpers';
-import style from '../style/rating.js';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import unionClassNames from '../utils/union-class-names';
-import config from '../config/rating';
-import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
+import { omit, has } from '../../utils/helpers';
+import style from './styles';
+import { injectStyles, removeStyle } from '../../utils/inject-style';
+import unionClassNames from '../../utils/union-class-names';
+import config from './config';
+import { requestAnimationFrame, cancelAnimationFrame } from '../../utils/animation-frame-management';
 
 /**
  * sanitize properties for the wrapping div.

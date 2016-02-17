@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-import { omit } from '../utils/helpers';
-import style from '../style/separator';
+import { omit } from '../../utils/helpers';
+import style from './styles';
 
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProps(properties) {
-  return omit(properties, ['style']);
+  return omit(properties, ['style', 'disabledStyle', '_isDisabled']);
 }
 
 /**
- * Separator component.
+ * Placeholder component.
  *
  * This component should be used together with Belle's Select.
  */
-export default class Separator extends Component {
+export default class Placeholder extends Component {
 
   constructor(properties) {
     super(properties);
@@ -23,7 +23,7 @@ export default class Separator extends Component {
     };
   }
 
-  static displayName = 'Separator';
+  static displayName = 'Placeholder';
 
   static propTypes = {
     children: PropTypes.oneOfType([
@@ -31,21 +31,34 @@ export default class Separator extends Component {
       PropTypes.node,
     ]),
     style: PropTypes.object,
+    disabledStyle: PropTypes.object,
+    _isDisabled: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    _isDisabled: false,
   };
 
   /**
-   * Update the childProperties based on the updated properties passed to the
-   * Separator.
+   * Update the childProps based on the updated properties passed to the
+   * Placeholder.
    */
   componentWillReceiveProps(properties) {
     this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
-    const computedStyle = {
+    let computedStyle = {
       ...style.style,
       ...this.props.style,
     };
+    if (this.props._isDisabled) {
+      computedStyle = {
+        ...computedStyle,
+        ...style.disabledStyle,
+        ...this.props.disabledStyle,
+      };
+    }
 
     return (
       <div style={ computedStyle } {...this.state.childProps}>

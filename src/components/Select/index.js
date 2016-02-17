@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some } from '../utils/helpers';
+import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some } from '../../utils/helpers';
 import { canUseDOM } from 'exenv';
-import unionClassNames from '../utils/union-class-names';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import style from '../style/select';
-import config from '../config/select';
-import isComponentOfType from '../utils/is-component-of-type';
-import Option from '../components/Option';
-import Placeholder from '../components/Placeholder';
-import Separator from '../components/Separator';
-import SelectItem from '../components/SelectItem';
+import unionClassNames from '../../utils/union-class-names';
+import { injectStyles, removeStyle } from '../../utils/inject-style';
+import style from './styles';
+import config from './config';
+import isComponentOfType from '../../utils/is-component-of-type';
+import Option from '../Option';
+import Placeholder from '../Placeholder';
+import Separator from '../Separator';
+import SelectItem from './SelectItem';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.

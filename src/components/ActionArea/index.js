@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import actionAreaStyle from '../style/actionArea';
+import actionAreaStyle from './styles';
 
 /**
  * ActionArea

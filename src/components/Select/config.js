@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { filterReactChildren, findIndex } from '../utils/helpers';
-import Option from '../components/Option';
-import Separator from '../components/Separator';
+import isComponentOfType from '../../utils/is-component-of-type.js';
+import { filterReactChildren, findIndex } from '../../utils/helpers';
+import Option from '../Option';
+import Separator from '../Separator';
 
 /**
  * Returns the index of the entry with a certain value from the component's
