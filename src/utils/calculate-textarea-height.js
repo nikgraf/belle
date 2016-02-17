@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import { canUseDOM } from 'exenv';
 
 let hiddenTextarea;
