@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'belle';
+import Card from '../../belle-classic/Card';
 
 export default React.createClass({
 
@@ -10,7 +10,12 @@ export default React.createClass({
 
         <Card><p>Looks nice!</p></Card>
 
-        <Card style={{ color: '#2994BB' }} data-custom-attribute={'custom'}>What about another font color?</Card>
+        <Card
+          className='test'
+          data-custom-attribute={'custom'}
+        >
+          What about another font color?
+        </Card>
 
         <Card>
           <div>Looks nice!</div>

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import cardStyle from './styles';
+import unionClassNames from '../../utils/union-class-names';
 
 /**
  * Card component with a light shadow.
@@ -9,35 +9,19 @@ import cardStyle from './styles';
  */
 export default class Card extends Component {
 
-  constructor(properties) {
-    super(properties);
-    const { style, ...childProps } = properties;
-    this.childProps = childProps;
-  }
-
   static displayName = 'Card';
 
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    style: PropTypes.object,
+    children: PropTypes.node,
+    theme: PropTypes.objectOf(PropTypes.string),
   };
 
-  /**
-   * Update the childProps based on the updated properties passed to the card.
-   */
-  componentWillReceiveProps(properties) {
-    const { style, ...childProps } = properties;
-    this.childProps = childProps;
-  }
-
   render() {
-    const divStyle = { ...cardStyle.style, ...this.props.style };
-
     return (
-      <div {...this.childProps} style={ divStyle }>
+      <div
+        {...this.childProps}
+        className={ unionClassNames(this.props.theme.base, this.props.className) }
+      >
         { this.props.children }
       </div>
     );
