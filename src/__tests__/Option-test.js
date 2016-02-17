@@ -1,7 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Option');
-jest.dontMock('../style/option');
+jest.dontMock('../components/Option/styles');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

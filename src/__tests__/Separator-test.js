@@ -1,7 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Separator');
-jest.dontMock('../style/separator');
+jest.dontMock('../components/Separator/styles');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

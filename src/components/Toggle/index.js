@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import { omit, has, last, first } from '../utils/helpers';
-import style from '../style/toggle';
-import config from '../config/toggle';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
-import unionClassNames from '../utils/union-class-names';
-import Choice from '../components/Choice';
+import { injectStyles, removeStyle } from '../../utils/inject-style';
+import { omit, has, last, first } from '../../utils/helpers';
+import style from './styles';
+import config from './config';
+import isComponentOfType from '../../utils/is-component-of-type.js';
+import { requestAnimationFrame, cancelAnimationFrame } from '../../utils/animation-frame-management';
+import unionClassNames from '../../utils/union-class-names';
+import Choice from '../Choice';
 
 function sanitizeChildProps(properties) {
   return omit(properties, [

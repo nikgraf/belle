@@ -3,7 +3,7 @@
 jest.dontMock('../components/Button');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/union-class-names');
-jest.dontMock('../style/button');
+jest.dontMock('../components/Button/styles');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

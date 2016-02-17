@@ -1,7 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Select');
-jest.dontMock('../components/SelectItem');
+jest.dontMock('../components/Select/SelectItem');
 jest.dontMock('../components/Option');
 jest.dontMock('../components/Placeholder');
 jest.dontMock('../components/Separator');

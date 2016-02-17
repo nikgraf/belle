@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import spinnerStyle from '../style/spinner';
+import spinnerStyle from './styles';
 
 const animationDelay = (delay) => ({
   MozAnimationDelay: delay,

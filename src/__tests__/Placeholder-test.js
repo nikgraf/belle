@@ -1,7 +1,7 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Placeholder');
-jest.dontMock('../style/placeholder');
+jest.dontMock('../components/Placeholder/styles');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

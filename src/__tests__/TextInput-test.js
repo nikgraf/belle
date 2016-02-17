@@ -3,7 +3,7 @@
 jest.dontMock('../components/TextInput');
 jest.dontMock('../utils/inject-style');
 jest.dontMock('../utils/calculate-textarea-height');
-jest.dontMock('../style/text-input');
+jest.dontMock('../components/TextInput/styles');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { injectStyles, removeAllStyles } from '../utils/inject-style';
-import unionClassNames from '../utils/union-class-names';
-import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../utils/helpers';
-import style from '../style/combo-box';
-import ComboBoxItem from '../components/ComboBoxItem';
+import { injectStyles, removeAllStyles } from '../../utils/inject-style';
+import unionClassNames from '../../utils/union-class-names';
+import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../../utils/helpers';
+import style from './styles';
+import ComboBoxItem from './ComboBoxItem';
 
 /**
  * Update hover style for the specified styleId.
