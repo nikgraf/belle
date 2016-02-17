@@ -7,8 +7,8 @@ const basicToggleExample = `<!-- all the JSX code you need -->
 
 const selectExample = `<!-- all the JSX code you need for the example above -->
 <Select defaultValue="tokyo"
-        menuStyle={ { height: 160,
-                             overflow: 'scroll' } }>
+        menuStyle={{ height: 160,
+                             overflow: 'scroll' }}>
   <Option value="berlin">Berlin</Option>
   <Option value="hong-kong">Hong Kong</Option>
   <Option value="istanbul">Istanbul</Option>
@@ -24,7 +24,7 @@ export default class Why extends Component {
     return (<div>
       <p style={{ color: '#999', marginTop: 19, fontSize: 15, float: 'right' }}>Nik Graf, 15th July 2015 </p>
 
-      <h1 style={ { marginTop: 0, marginBottom: 20 } }>Introducing Belle</h1>
+      <h1 style={{ marginTop: 0, marginBottom: 20 }}>Introducing Belle</h1>
 
       <Card style={{ borderTop: '1px solid #f2f2f2' }}>
         <img
@@ -37,7 +37,7 @@ export default class Why extends Component {
         Belle is a set of React components including Toggle, ComboBox, Rating, TextInput, Button, Card & Select. Many more like DatePicker, NumberInput, DropZone & Menu will come soon. As of today we hit version 1.0.0 :)
       </p>
 
-      <h3 style={ { marginTop: 40, marginBottom: 20 } }>Wait, but why yet another component library?</h3>
+      <h3 style={{ marginTop: 40, marginBottom: 20 }}>Wait, but why yet another component library?</h3>
 
       <p>
         The web platform is a fantastic environment. Still it has certain limitations that are holding you back as a developer. React opened up new opportunities and I finally had tools in my hand to make the kind of UI components I always wanted to.
@@ -121,7 +121,7 @@ export default class Why extends Component {
       <br /><br />
       <Toggle defaultValue style={{ marginLeft: 12 }}/>
 
-      <Code value={ basicToggleExample } style={ { marginTop: 20, marginBottom: 20 } } />
+      <Code value={ basicToggleExample } style={{ marginTop: 20, marginBottom: 20 }} />
 
       <p>
         Let’s look at another component.
@@ -145,7 +145,7 @@ export default class Why extends Component {
         <iframe width="100%" height="315" src="https://www.youtube.com/embed/rBbc3hRyyGw" frameBorder="0" allowFullScreen></iframe>
       </div>
 
-      <Code value={ selectExample } style={ { marginTop: 20, marginBottom: 20 } } />
+      <Code value={ selectExample } style={{ marginTop: 20, marginBottom: 20 }} />
 
       <p style={{ paddingTop: 40 }}>
         I hope Belle caught your interest. In case you want to give it a try please checkout our example projects like <a href="https://github.com/nikgraf/react-starter-with-belle">react-starter-with-belle</a> or <a href="https://github.com/nikgraf/react-server-example">react-server-example</a>. We look forward to your feedback. Feel free to reach out to us via Twitter <a href="https://twitter.com/nikgraf"> @nikgraf</a> &

@@ -14,7 +14,7 @@ export default class FuturePlans extends Component {
         In addition you can ask the community by <a href="http://stackoverflow.com/questions/ask?tags=belle"> posting your question to StackOverflow with the <b>belle</b> tag</a>.
       </p>
 
-      <h2 style={ { marginTop: 40, marginBottom: 40 } }>Special Thanks</h2>
+      <h2 style={{ marginTop: 40, marginBottom: 40 }}>Special Thanks</h2>
 
       <p>
         Thanks to <a href="https://github.com/andreypopp">Andrey Popp</a> & <a href="https://github.com/eugene1g">Eugene</a> for their inspiring work on
@@ -30,7 +30,7 @@ export default class FuturePlans extends Component {
         Special thanks to <a href="https://github.com/jpuri">Jyoti Puri</a> for the tremendous amount of work she put into this endeavor.
       </p>
 
-      <h2 style={ { marginTop: 40, marginBottom: 40 } }>Future Plans</h2>
+      <h2 style={{ marginTop: 40, marginBottom: 40 }}>Future Plans</h2>
 
       <p>Components to add: Dateformatter, Datepicker, Tooltip, Popover, Modal, Navigation Menu, NumberInput, EmailInput, Anchor, DropZone
       </p>

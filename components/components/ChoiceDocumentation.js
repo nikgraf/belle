@@ -14,7 +14,7 @@ export default class ChoiceDocumentation extends Component {
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Choice</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Choice</h2>
 
       <Toggle defaultValue>
         <Choice value>On</Choice>
@@ -48,7 +48,7 @@ export default class ChoiceDocumentation extends Component {
 
       <p>
         Any property valid for a HTML div like
-        <span style={ { color: 'grey' } }> style, id, className, …</span>
+        <span style={{ color: 'grey' }}> style, id, className, …</span>
       </p>
 
     </div>);

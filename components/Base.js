@@ -50,7 +50,7 @@ export default React.createClass({
 
   _renderHomeHeader() {
     return (
-      <header style={ { background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40 } }>
+      <header style={{ background: 'linear-gradient(145deg, #0A202D, #258AB2)', width: '100%', marginBottom: 40 }}>
         <Column
           smallScreenStyle={{ width: '100%', padding: '0 20px' }}
           mediumScreenStyle={{ margin: '0 auto', width: 910, paddingLeft: 160, paddingRight: 110 }}
@@ -160,13 +160,13 @@ export default React.createClass({
           mediumScreenStyle={{ float: 'left', width: 160 }}
           className="navigation"
         >
-          <ul style={ { listStyleType: 'none', paddingLeft: 0, marginTop: 0 } }>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0, marginTop: 0 }}>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/getting-started">Getting Started</Link>
             </li>
           </ul>
-          <span style={ { color: '#738088' } } >Components</span>
-          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+          <span style={{ color: '#738088' }} >Components</span>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/component/button">Button</Link>
             </li>
@@ -207,8 +207,8 @@ export default React.createClass({
               <Link style={{ display: 'block', padding: '1px 0' }} to="/component/choice">Choice</Link>
             </li>
           </ul>
-          <span style={ { color: '#738088' } } >Guides</span>
-          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+          <span style={{ color: '#738088' }} >Guides</span>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/guide/introducing-belle">Introducing Belle</Link>
             </li>
@@ -216,8 +216,8 @@ export default React.createClass({
               <Link style={{ display: 'block', padding: '3px 0' }} to="/guide/form-components">Form Components</Link>
             </li>
           </ul>
-          <span style={ { color: '#738088' } } >General</span>
-          <ul style={ { listStyleType: 'none', paddingLeft: 0 } }>
+          <span style={{ color: '#738088' }} >General</span>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
             <li>
               <Link style={{ display: 'block', padding: '3px 0' }} to="/configuration">Configuration / Styling</Link>
             </li>

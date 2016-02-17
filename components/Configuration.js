@@ -195,7 +195,7 @@ export default class Configuration extends Component {
 
   render() {
     return (<div>
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Configuration</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Configuration</h2>
 
       <p>
         Belle provides you with the ability to modify the default appearance of
@@ -208,7 +208,7 @@ export default class Configuration extends Component {
         With this example you overwrite the hover style of default Belle button.
       </p>
 
-      <Code value={ overwriteCardStyleExample } style={ { marginTop: 40 } } />
+      <Code value={ overwriteCardStyleExample } style={{ marginTop: 40 }} />
 
       <Card style={{ marginBottom: 20,
                     padding: 20,
@@ -221,14 +221,14 @@ export default class Configuration extends Component {
         This is how your all your cards might look like.
       </Card>
 
-      <p style={ { marginTop: 40 } }>
+      <p style={{ marginTop: 40 }}>
         In case you only want to change a couple parameters you easily can do it
         by leveraging e.g. ES6 Object.assign() or Underscores' extend.
         This is possible because all styles are simply plain JavaScript objects.
         Of course you also can overwrite the hoverStyle as well.
       </p>
 
-      <Code value={ extendButtonStyleExample } style={ { marginTop: 40 } } />
+      <Code value={ extendButtonStyleExample } style={{ marginTop: 40 }} />
 
       <Button
         style={{ color: '#FFF',
@@ -256,7 +256,7 @@ export default class Configuration extends Component {
         The following example shows the structure of belle.style.
       </p>
 
-      <Code value={ styleStructure } style={ { marginTop: 40 } } />
+      <Code value={ styleStructure } style={{ marginTop: 40 }} />
 
       <h3>Behaviour</h3>
 
@@ -308,11 +308,11 @@ export default class Configuration extends Component {
       <p>
         Localization support exist for date picker component. For date picker following parameters are required to be provided for a locale:
         <ul>
-          <li><span style={ { fontWeight: 'bold' } }>monthNames</span>: Array for month names from January to December</li>
-          <li><span style={ { fontWeight: 'bold' } }>dayNamesMin</span>: Array for day short names</li>
-          <li><span style={ { fontWeight: 'bold' } }>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={ { fontWeight: 'bold' } }>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={ { fontWeight: 'bold' } }>isRTL</span>: The text in that locale is written from right to left</li>
+          <li><span style={{ fontWeight: 'bold' }}>monthNames</span>: Array for month names from January to December</li>
+          <li><span style={{ fontWeight: 'bold' }}>dayNamesMin</span>: Array for day short names</li>
+          <li><span style={{ fontWeight: 'bold' }}>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={{ fontWeight: 'bold' }}>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={{ fontWeight: 'bold' }}>isRTL</span>: The text in that locale is written from right to left</li>
         </ul>
         In case any of these fields is not provided the defaults for English calendar will be used.
       </p>
@@ -323,7 +323,7 @@ export default class Configuration extends Component {
         The following example shows the structure of belle.config.
       </p>
 
-      <Code value={ configStructure } style={ { marginTop: 40 } } />
+      <Code value={ configStructure } style={{ marginTop: 40 }} />
 
     </div>);
   }
