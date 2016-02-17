@@ -13,13 +13,13 @@ const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating
 const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') }/>
 
 <a onClick={ this._resetRating }
-   style={ {
+   style={{
      marginLeft: 20,
      position: 'relative',
      top: -5,
      textDecoration: 'underline',
      cursor: 'pointer'
-    } }>Reset</a>
+    }}>Reset</a>
 
 _resetRating() {
   this.setState({
@@ -46,11 +46,11 @@ export default React.createClass({
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>Rating</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>Rating</h2>
 
       <Rating defaultValue={3}/>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
       <h3>Properties</h3>
 
@@ -373,7 +373,7 @@ export default React.createClass({
 
       <p>
       Other supported properties include:
-      <span style={ { color: 'grey' } }> tabIndex, style, className, focusStyle, onMouseDown,
+      <span style={{ color: 'grey' }}> tabIndex, style, className, focusStyle, onMouseDown,
         onMouseUp, onMouseEnter, onMouseMove, onMouseLeave, onTouchStart, onTouchMove, onTouchEnd, onTouchCancel, onFocus, onBlur, onClick,
         onKeyDown</span>
       </p>
@@ -382,11 +382,11 @@ export default React.createClass({
 
       <h4>Disabled Rating</h4>
       <Rating defaultValue={4} disabled/>
-      <Code value= { advanceCodeExample1 } style={ { marginTop: 20, marginBottom: 40 } } />
+      <Code value= { advanceCodeExample1 } style={{ marginTop: 20, marginBottom: 40 }} />
 
       <h4>Rating with a custom Character</h4>
       <Rating defaultValue={4} character={'✪'}/>
-      <Code value= { advanceCodeExample2 } style={ { marginTop: 20, marginBottom: 40 } } />
+      <Code value= { advanceCodeExample2 } style={{ marginTop: 20, marginBottom: 40 }} />
 
       <h4>Controlled Rating Component with a Reset Link</h4>
       <p>Reset rating functionality can be implemented using controlled rating component like this:</p>
@@ -401,7 +401,7 @@ export default React.createClass({
           cursor: 'pointer',
         }}
       >Reset</a>
-      <Code value= { advanceCodeExample3 } style={ { marginTop: 20 } } />
+      <Code value= { advanceCodeExample3 } style={{ marginTop: 20 }} />
     </div>);
   },
 });

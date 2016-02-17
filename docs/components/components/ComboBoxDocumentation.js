@@ -114,10 +114,10 @@ const dataCodeExampleOnePartTwo = `<ComboBox placeholder = { 'Choose an Animal' 
                 }}
                 key={ index }>
           <span>
-            <div style={ {fontWeight: 'bold', fontSize: '14px'} }>
+            <div style={{fontWeight: 'bold', fontSize: '14px'}}>
               { animal.name }
             </div>
-            <div style={ {fontSize: '12px'} }>
+            <div style={{fontSize: '12px'}}>
               { animal.description }
             </div>
           </span>
@@ -137,7 +137,7 @@ const dataCodeExampleTwoPartOne = `const destinations = [
 ];`;
 
 const dataCodeExampleTwoPartTwo = `<ComboBox placeholder = { 'Choose a Destination' }
-          menuStyle = { {maxHeight: 250, overflow: 'scroll'} }
+          menuStyle = {{maxHeight: 250, overflow: 'scroll'}}
           onUpdate={ (event) => {
             if (event.isMatchingOption) {
               console.log(event.identifier);
@@ -223,7 +223,7 @@ export default React.createClass({
   render() {
     return (<div>
 
-      <h2 style={ { marginTop: 0, marginBottom: 40 } }>ComboBox</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 40 }}>ComboBox</h2>
 
       <ComboBox placeholder="Choose a State">
         <Option value="Alabama">Alabama</Option>
@@ -232,7 +232,7 @@ export default React.createClass({
         <Option value="Arkansas">Arkansas</Option>
       </ComboBox>
 
-      <Code value={ basicCodeExample } style={ { marginTop: 40 } } />
+      <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
 
       <h3>Properties</h3>
@@ -318,7 +318,7 @@ export default React.createClass({
               3. isOptionSelection, true when combo-box is updated by user selecting an option (point:1 above).<br/>
               4. isMatchingOption, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
             </p>
-            <Code value={ onUpdateCode } style={ { marginTop: 40 } } />
+            <Code value={ onUpdateCode } style={{ marginTop: 40 }} />
           </td>
         </tr>
 
@@ -673,7 +673,7 @@ export default React.createClass({
 
       <p>
         Any other property valid for an input element like
-        <span style={ { color: 'grey' } }> placeholder, onFocus, onBlur…</span><br />
+        <span style={{ color: 'grey' }}> placeholder, onFocus, onBlur…</span><br />
       </p>
 
       <h3>Internal HTML Structure</h3>
@@ -683,7 +683,7 @@ export default React.createClass({
         in order to use the API
       </p>
 
-      <Code value={ htmlStructure } style={ { marginTop: 40 } } />
+      <Code value={ htmlStructure } style={{ marginTop: 40 }} />
 
       <h3>More Examples</h3>
 
@@ -717,10 +717,10 @@ export default React.createClass({
                 key={ index }
               >
                 <span>
-                  <div style={ { fontWeight: 'bold', fontSize: '14px' } }>
+                  <div style={{ fontWeight: 'bold', fontSize: '14px' }}>
                     { animal.name }
                   </div>
-                  <div style={ { fontSize: '12px' } }>
+                  <div style={{ fontSize: '12px' }}>
                     { animal.description }
                   </div>
                 </span>
@@ -730,15 +730,15 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleOnePartOne } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleOnePartOne } style={{ marginTop: 40 }} />
 
-      <Code value={ dataCodeExampleOnePartTwo } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleOnePartTwo } style={{ marginTop: 40 }} />
 
       <h4>ComboBox only logging in case of an exact match of the passed Options</h4>
 
       <ComboBox
         placeholder = { 'Choose a Destination' }
-        menuStyle = { { maxHeight: 250, overflow: 'scroll' } }
+        menuStyle = {{ maxHeight: 250, overflow: 'scroll' }}
         onUpdate={ (event) => {
           if (event.isMatchingOption) {
             console.log(event.identifier);
@@ -760,9 +760,9 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleTwoPartOne } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleTwoPartOne } style={{ marginTop: 40 }} />
 
-      <Code value={ dataCodeExampleTwoPartTwo } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleTwoPartTwo } style={{ marginTop: 40 }} />
 
       <h4>ComboBox with options with identifier, onUpdate callback & maxOptions set to 5</h4>
 
@@ -793,9 +793,9 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleThreePartOne } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleThreePartOne } style={{ marginTop: 40 }} />
 
-      <Code value={ dataCodeExampleThreePartTwo } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleThreePartTwo } style={{ marginTop: 40 }} />
 
       <h4>ComboBox with custom filtering, and hints enabled</h4>
 
@@ -818,9 +818,9 @@ export default React.createClass({
         }
       </ComboBox>
 
-      <Code value={ dataCodeExampleFourPartOne } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleFourPartOne } style={{ marginTop: 40 }} />
 
-      <Code value={ dataCodeExampleFourPartTwo } style={ { marginTop: 40 } } />
+      <Code value={ dataCodeExampleFourPartTwo } style={{ marginTop: 40 }} />
 
     </div>);
   },

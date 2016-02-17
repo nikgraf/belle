@@ -5,8 +5,7 @@
   "excludeFiles": [
     "coverage/**",
     "node_modules/**",
-    "docs/**",
-    "examples/**",
+    "**/node_modules/**",
     "lib/**"
   ]
 }

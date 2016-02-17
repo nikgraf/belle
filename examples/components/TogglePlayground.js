@@ -1,6 +1,6 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {Toggle, Choice, Card} from 'belle';
+import { Toggle, Choice, Card } from 'belle';
 
 export default React.createClass({
 
@@ -21,13 +21,13 @@ export default React.createClass({
         <Toggle />
 
         <h3>Default value=true Toggle</h3>
-        <Toggle value={true} />
+        <Toggle value />
 
         <h3>Default value=false Toggle</h3>
         <Toggle value={false} />
 
         <h3>defaultValue=true Toggle (defaultValue)</h3>
-        <Toggle defaultValue={true} />
+        <Toggle defaultValue />
 
         <h3>DefaultValue=false Toggle (defaultValue)</h3>
         <Toggle defaultValue={false} />

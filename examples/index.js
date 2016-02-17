@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {style} from 'belle';
-import {config} from 'belle';
-import {extend} from 'underscore';
+import { style } from 'belle';
+import { config } from 'belle';
+import { extend } from 'underscore';
 import ButtonPlayground from './components/ButtonPlayground';
 import CardPlayground from './components/CardPlayground';
 import SelectPlayground from './components/SelectPlayground';
@@ -14,7 +14,7 @@ import TogglePlayground from './components/TogglePlayground';
 import DatePickerPlayground from './components/DatePickerPlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
-if (true) {
+if (true) { // eslint-disable-line no-constant-condition
   config.button.preventFocusStyleForTouchAndClick = false;
   style.button.focusStyle = {
     boxShadow: '0 0 0 3px rgba(140, 224, 255, 0.6)',
@@ -74,30 +74,28 @@ if (true) {
 // export for http://fb.me/react-devtools
 window.React = React;
 
-const App = () => {
-  return (
-    <div style={ {margin: '0 auto', width: 300} }>
-      <h1>Belle Playground</h1>
+const App = () => (
+  <div style={{ margin: '0 auto', width: 300 }}>
+    <h1>Belle Playground</h1>
 
-      <SpinnerPlayground />
+    <SpinnerPlayground />
 
-      <DatePickerPlayground />
+    <DatePickerPlayground />
 
-      <TogglePlayground />
+    <TogglePlayground />
 
-      <SelectPlayground />
+    <SelectPlayground />
 
-      <ButtonPlayground />
+    <ButtonPlayground />
 
-      <TextInputPlayground />
+    <TextInputPlayground />
 
-      <CardPlayground />
+    <CardPlayground />
 
-      <RatingPlayground />
+    <RatingPlayground />
 
-      <ComboBoxPlayground />
-    </div>
-  );
-};
+    <ComboBoxPlayground />
+  </div>
+);
 
 ReactDOM.render(<App/>, document.getElementById('react'));

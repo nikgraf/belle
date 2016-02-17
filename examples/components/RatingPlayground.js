@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {Card, Rating, Button} from 'belle';
+import { Card, Rating, Button } from 'belle';
 
 export default React.createClass({
 
@@ -8,6 +10,14 @@ export default React.createClass({
 
   getInitialState() {
     return { ratingValue: 2 };
+  },
+
+  _handleChange(newValue) {
+    this.setState({ ratingValue: newValue });
+  },
+
+  _updateRatingToThree() {
+    this.setState({ ratingValue: 3 });
   },
 
   render() {
@@ -21,8 +31,10 @@ export default React.createClass({
 
           //onUpdate should not be called for valueLink
           <h3>ValueLink</h3>
-          <Rating valueLink={ this.linkState('ratingValue') }
-                  onUpdate={ (event) => { console.log(event.value); } } />
+          <Rating
+            valueLink={ this.linkState('ratingValue') }
+            onUpdate={ (event) => console.log(event.value) }
+          />
 
           <h3>Value with update function onUpdate</h3>
           <Rating
@@ -30,12 +42,15 @@ export default React.createClass({
             onUpdate={ (event) => {
               console.log(event.value);
               this._handleChange(event.value);
-            }}
+            }
+            }
           />
 
           <h3>Value</h3>
-          <Rating value={ this.state.ratingValue }
-                  onUpdate={ (event) => { console.log(event.value); } } />
+          <Rating
+            value={ this.state.ratingValue }
+            onUpdate={ (event) => console.log(event.value) }
+          />
 
           <h3>DefaultValue</h3>
           <Rating
@@ -53,17 +68,5 @@ export default React.createClass({
 
       </div>
     );
-  },
-
-  _handleChange(newValue) {
-    this.setState({ ratingValue: newValue });
-  },
-
-  _updateRatingToThree() {
-    this.setState({ ratingValue: 3 });
-  },
-
-  _resetValue() {
-    this.refs.rating3.resetValue();
   },
 });
