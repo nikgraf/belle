@@ -1,3 +1,5 @@
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import { Card } from 'belle';
 import Code from '../Code';

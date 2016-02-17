@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
+
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Option, Placeholder, Select, Separator, TextInput } from 'belle';
