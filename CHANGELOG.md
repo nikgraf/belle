@@ -4,8 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.4 - 2016-02-16
+
 ### Changed
-- [Button, ComboBox, DatePicker, Rating, Select, TextInput, Toggle] Improved rendering performance by binding the functions to the class instantiation instead of every render due binding in JSX. Find more info [here](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md#lists-of-items) [#263](https://github.com/nikgraf/belle/pull/263) &  [#265](https://github.com/nikgraf/belle/pull/265)
+- [Button, ComboBox, DatePicker, Rating, Select, TextInput, Toggle] Improved rendering performance by binding the functions to the class instantiation instead of every render due binding in JSX. Find more info [here](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md#lists-of-items) [#263](https://github.com/nikgraf/belle/pull/263) & [#265](https://github.com/nikgraf/belle/pull/265)
 
 ### Fixed
 
