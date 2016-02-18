@@ -1,7 +1,9 @@
-import React from 'react';
+/* @flow */
+
+import React, { Component } from 'react';
 import Card from '../../belle-classic/Card';
 
-export default React.createClass({
+export default class CardPlayground extends Component {
 
   render() {
     return (
@@ -24,5 +26,5 @@ export default React.createClass({
 
       </div>
     );
-  },
-});
+  }
+}

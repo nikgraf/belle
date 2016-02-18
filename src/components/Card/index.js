@@ -1,4 +1,7 @@
+/* @flow */
+
 import React, { Component, PropTypes } from 'react';
+import type ReactElement from 'react';
 import unionClassNames from '../../utils/union-class-names';
 
 /**
@@ -17,7 +20,7 @@ export default class Card extends Component {
     className: PropTypes.string,
   };
 
-  render() {
+  render(): ReactElement {
     return (
       <div
         {...this.childProps}

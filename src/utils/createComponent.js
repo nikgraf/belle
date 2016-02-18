@@ -1,4 +1,8 @@
+/* @flow */
+
 import React from 'react';
+import type ReactComponent from 'react';
+import type ReactElement from 'react';
 
 /**
  * Returns a the provided component as themed component.
@@ -6,6 +10,8 @@ import React from 'react';
  * Note: defaultProps could be useful for default special behavioural in
  * different ui libraries.
  */
-export default (Component, theme, defaultProps) => (props) => {
-  return <Component {...defaultProps} theme={theme} {...props} />;
-};
+export default function (Component: ReactComponent, theme: Object, defaultProps?: Object): Function {
+  return (props: any): ReactElement => (
+    <Component {...defaultProps} theme={theme} {...props} />
+  );
+}
