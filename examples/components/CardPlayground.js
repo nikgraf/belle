@@ -11,7 +11,7 @@ export default React.createClass({
         <Card><p>Looks nice!</p></Card>
 
         <Card
-          className='test'
+          className="test"
           data-custom-attribute={'custom'}
         >
           What about another font color?

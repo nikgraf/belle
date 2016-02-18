@@ -44,8 +44,7 @@ module.exports = {
         include: path.join(__dirname, '..', 'belle-classic'),
       }, {
         test: /\.css/,
-        loader: ExtractTextPlugin.extract('style',
-        'css?modules&importLoaders=2'),
+        loader: ExtractTextPlugin.extract('style', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'),
         include: path.join(__dirname, '../belle-classic'),
       },
     ],

@@ -14,6 +14,7 @@ export default class Card extends Component {
   static propTypes = {
     children: PropTypes.node,
     theme: PropTypes.objectOf(PropTypes.string),
+    className: PropTypes.string,
   };
 
   render() {
