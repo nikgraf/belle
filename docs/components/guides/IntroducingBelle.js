@@ -1,7 +1,8 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React, { Component } from 'react';
-import { Card, Toggle } from 'belle';
+import { Toggle } from 'belle';
+import Card from 'belle-classic/Card';
 import Code from '../Code';
 
 const basicToggleExample = `<!-- all the JSX code you need -->
@@ -121,7 +122,7 @@ export default class Why extends Component {
 
       Try it yourself here:
       <br /><br />
-      <Toggle defaultValue style={{ marginLeft: 12 }}/>
+      <Toggle defaultValue style={{ marginLeft: 12 }} />
 
       <Code value={ basicToggleExample } style={{ marginTop: 20, marginBottom: 20 }} />
 

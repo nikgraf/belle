@@ -29,6 +29,8 @@ export default class Code extends Component {
     if (nextProps.value === this.props.value && isEqual(nextProps.style, this.props.style)) {
       return false;
     }
+
+    return true;
   }
 
   componentDidUpdate() {

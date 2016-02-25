@@ -26,8 +26,8 @@
     "react-dom": ">=0.14.0"
   },
   "scripts": {
-    "lala": "BABEL_ENV=production babel --version",
-    "build": "BABEL_ENV=production babel --out-dir='lib' --ignore='__tests__/*' src",
+    "lala": "BABEL_ENV=production ./node_modules/.bin/babel --version",
+    "build": "BABEL_ENV=production ./node_modules/.bin/babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
     "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "alex": "^2.0.1",
-    "babel": "^6.5.2",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
     "babel-eslint": "^5.0.0",
@@ -55,10 +54,10 @@
     "babel-preset-react-hmre": "^1.1.0",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
-    "eslint": "^2.1.0",
-    "eslint-config-airbnb": "5.0.1",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "6.0.2",
     "eslint-plugin-mocha": "^2.0.0",
-    "eslint-plugin-react": "^3.16.1",
+    "eslint-plugin-react": "^4.1.0",
     "jest-cli": "^0.8.2",
     "jscs": "^2.10.1",
     "react": "^0.14.7",
@@ -68,7 +67,7 @@
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.13",
+    "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.7.1"
   },

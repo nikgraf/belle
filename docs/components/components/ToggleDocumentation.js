@@ -36,7 +36,7 @@ const htmlStructure = `<div style={ wrapperStyle }
        style={ handleStyle } />
 </div>`;
 
-const toggleWithSizeStyling1 = `<Toggle style={{ transform: 'scale(0.6)' }} />`;
+const toggleWithSizeStyling1 = '<Toggle style={{ transform: \'scale(0.6)\' }} />';
 
 const toggleWithSizeStyling2 = `<Toggle style={{
           borderRadius: 10,
@@ -86,7 +86,7 @@ export default class ToggleDocumentation extends Component {
 
       <Toggle />
 
-      <Toggle defaultValue style={{ marginLeft: 20 }}/>
+      <Toggle defaultValue style={{ marginLeft: 20 }} />
 
       <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 

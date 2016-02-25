@@ -39,7 +39,7 @@ describe('DatePicker', () => {
 
   it('should change date when a day is focused and enter key is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker_wrapper"/>
+      <DatePicker className="date_picker_wrapper" />
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -71,7 +71,11 @@ describe('DatePicker', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-        onUpdate={ (obj) => dateSelected = obj.value }
+        onUpdate={
+          (obj) => {
+            dateSelected = obj.value;
+          }
+        }
         className="date_picker_wrapper"
       />
     );
@@ -94,7 +98,7 @@ describe('DatePicker', () => {
   it('should not change date when a day is focused and enter key is pressed if component is disabled or readOnly',
     () => {
       const disabledDatePicker = TestUtils.renderIntoDocument(
-        <DatePicker dayProps={{ className: 'day_test' }} disabled/>
+        <DatePicker dayProps={{ className: 'day_test' }} disabled />
       );
       expect(disabledDatePicker.state.selectedDate).toBeUndefined();
       let day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
@@ -103,7 +107,7 @@ describe('DatePicker', () => {
       expect(disabledDatePicker.state.selectedDate).toBeUndefined();
 
       const readOnlyDatePicker = TestUtils.renderIntoDocument(
-        <DatePicker dayProps={{ className: 'day_test' }} readOnly/>
+        <DatePicker dayProps={{ className: 'day_test' }} readOnly />
       );
       expect(readOnlyDatePicker.state.selectedDate).toBeUndefined();
       day = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'day_test')[8];
@@ -114,7 +118,7 @@ describe('DatePicker', () => {
 
   it('should change focusedDateKey on mouse down + up', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }}/>
+      <DatePicker dayProps={{ className: 'day_test' }} />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -126,7 +130,7 @@ describe('DatePicker', () => {
 
   it('should reduce focusedDateKey by 1 when arrowLeft is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker"/>
+      <DatePicker className="date_picker" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -143,7 +147,7 @@ describe('DatePicker', () => {
 
   it('should increase focusedDateKey by 1 when arrowLeft is pressed for arabic calendar', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker" locale="ar"/>
+      <DatePicker className="date_picker" locale="ar" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -160,7 +164,7 @@ describe('DatePicker', () => {
 
   it('should reduce focusedDateKey by 7 when arrowUp is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker"/>
+      <DatePicker className="date_picker" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -177,7 +181,7 @@ describe('DatePicker', () => {
 
   it('should increase focusedDateKey by 1 when arrowRight is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker"/>
+      <DatePicker className="date_picker" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -194,7 +198,7 @@ describe('DatePicker', () => {
 
   it('should reduce focusedDateKey by 1 when arrowRight is pressed for arabic calendar', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker" locale="ar"/>
+      <DatePicker className="date_picker" locale="ar" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -211,7 +215,7 @@ describe('DatePicker', () => {
 
   it('should increase focusedDateKey by 1 when arrowRight is pressed', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker"/>
+      <DatePicker className="date_picker" />
     );
 
     expect(datePicker.state.focusedDateKey).toBeUndefined();
@@ -228,7 +232,7 @@ describe('DatePicker', () => {
 
   it('should show days in decreasing order if RTL for locale is true', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'date_picker_day' }} locale="ar"/>
+      <DatePicker dayProps={{ className: 'date_picker_day' }} locale="ar" />
     );
 
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_day');
@@ -240,7 +244,14 @@ describe('DatePicker', () => {
   it('should change selectedDate when a day receives mouseDown with button 0', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} onUpdate={ (obj) => dateSelected = obj.value }/>
+      <DatePicker
+        dayProps={{ className: 'day_test' }}
+        onUpdate={
+          (obj) => {
+            dateSelected = obj.value;
+          }
+        }
+      />
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -259,7 +270,7 @@ describe('DatePicker', () => {
 
   it('should not change selectedDate in state if component uses value property', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} value={ undefined }/>
+      <DatePicker dayProps={{ className: 'day_test' }} value={ undefined } />
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();
@@ -279,7 +290,7 @@ describe('DatePicker', () => {
     };
 
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} valueLink={ valueLink }/>
+      <DatePicker dayProps={{ className: 'day_test' }} valueLink={ valueLink } />
     );
 
     expect(datePicker.state.selectedDate).toBe(compSelectedDate);
@@ -302,7 +313,7 @@ describe('DatePicker', () => {
   it('should update state.selectedDate when value is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker/>
+      <DatePicker />
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({ value: currentDate });
@@ -312,7 +323,7 @@ describe('DatePicker', () => {
   it('should update state.selectedDate when valueLink is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker/>
+      <DatePicker />
     );
     let compSelectedDate = currentDate;
     const valueLink = {
@@ -329,7 +340,7 @@ describe('DatePicker', () => {
   it('should not update state.selectedDate when defaultValue is received in props', () => {
     const currentDate = new Date();
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker defaultValue={ undefined }/>
+      <DatePicker defaultValue={ undefined } />
     );
     expect(datePicker.state.selectedDate).toBeUndefined();
     datePicker.componentWillReceiveProps({ defaultValue: currentDate });
@@ -338,7 +349,7 @@ describe('DatePicker', () => {
 
   it('should set isFocused to true when wrapper receives focus and to false on blur', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="wrapper_test"/>
+      <DatePicker className="wrapper_test" />
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
@@ -349,7 +360,7 @@ describe('DatePicker', () => {
 
   it('should not set isFocused to true when wrapper receives focus btu component is disabled', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="wrapper_test" disabled/>
+      <DatePicker className="wrapper_test" disabled />
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.focus(wrapper);
@@ -358,7 +369,7 @@ describe('DatePicker', () => {
 
   it('should not set isFocused to true when wrapper receives focus but is active', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="wrapper_test"/>
+      <DatePicker className="wrapper_test" />
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.mouseDown(wrapper, { button: 0 });
@@ -369,7 +380,7 @@ describe('DatePicker', () => {
 
   it('should not set isActive to true when touch starts and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="wrapper_test"/>
+      <DatePicker className="wrapper_test" />
     );
     const wrapper = TestUtils.findRenderedDOMComponentWithClass(datePicker, 'wrapper_test');
     TestUtils.Simulate.touchStart(wrapper, { touches: { length: 1 } });
@@ -380,7 +391,7 @@ describe('DatePicker', () => {
 
   it('should not focus day on disabled component', () => {
     const disabledDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker disabled dayProps={{ className: 'day_test' }}/>
+      <DatePicker disabled dayProps={{ className: 'day_test' }} />
     );
     expect(disabledDatePicker.state.focusedDateKey).toBeUndefined();
     const day = TestUtils.scryRenderedDOMComponentsWithClass(disabledDatePicker, 'day_test')[8];
@@ -390,7 +401,7 @@ describe('DatePicker', () => {
 
   it('should focus readOnly component', () => {
     const readOnlyDatePicker = TestUtils.renderIntoDocument(
-      <DatePicker className="date_picker" readOnly dayProps={{ className: 'day_test' }}/>
+      <DatePicker className="date_picker" readOnly dayProps={{ className: 'day_test' }} />
     );
     expect(readOnlyDatePicker.state.focusedDateKey).toBeUndefined();
     const datePicker = TestUtils.scryRenderedDOMComponentsWithClass(readOnlyDatePicker, 'date_picker')[0];
@@ -400,7 +411,7 @@ describe('DatePicker', () => {
 
   it('should decrease month when prevMonthNav is clicked', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker prevMonthNavProps={{ className: 'prev_month' }}/>
+      <DatePicker prevMonthNavProps={{ className: 'prev_month' }} />
     );
     datePicker.state.month = 5;
     const prevMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'prev_month')[0];
@@ -411,7 +422,7 @@ describe('DatePicker', () => {
 
   it('should increase month when nextMonthNav is clicked', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker nextMonthNavProps={{ className: 'next_month' }}/>
+      <DatePicker nextMonthNavProps={{ className: 'next_month' }} />
     );
     datePicker.state.month = 5;
     const nextMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'next_month')[0];
@@ -422,7 +433,7 @@ describe('DatePicker', () => {
 
   it('should set activeDay when touch starts on a day and reset when touch ends', () => {
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }}/>
+      <DatePicker dayProps={{ className: 'day_test' }} />
     );
     const day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[8];
     expect(datePicker.state.activeDay).toBeFalsy();

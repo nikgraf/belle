@@ -34,7 +34,6 @@ const selectConfig = {
     const menuWidth = parseFloat(menuStyle.getPropertyValue('width'));
 
     // In case of a placeholder no option is focused on initially
-    let option;
     let optionIndex;
 
     if (selectComponent.state.selectedValue) {
@@ -43,7 +42,7 @@ const selectConfig = {
       optionIndex = 0;
     }
 
-    option = menuNode.childNodes[optionIndex];
+    const option = menuNode.childNodes[optionIndex];
 
     const menuHeight = parseFloat(menuStyle.getPropertyValue('height'));
     const menuTopBorderWidth = parseFloat(menuStyle.getPropertyValue('border-top-width'));

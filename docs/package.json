@@ -13,23 +13,23 @@
     "url": "http://github.com/nikgraf/belle.git"
   },
   "dependencies": {
-    "highlight.js": "=9.1.0",
-    "history": "^1.17.0",
+    "highlight.js": "=9.2.0",
+    "history": "^2.0.0",
     "react": "=0.14.7",
     "react-addons-linked-state-mixin": "^=0.14.7",
     "react-dom": "^=0.14.7",
-    "react-router": "=v1.0.3",
-    "uglify-js": "=2.6.1",
+    "react-router": "=2.0.0",
+    "uglify-js": "=2.6.2",
     "underscore": "=1.8.3"
   },
   "devDependencies": {
-    "babel-core": "^6.5.1",
-    "babel-loader": "^6.2.2",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^5.0.0",
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
     "express": "^4.13.4",
     "node-libs-browser": "^1.0.0",
-    "webpack": "^1.12.13"
+    "webpack": "^1.12.14"
   },
   "scripts": {
     "start": "node server.js",

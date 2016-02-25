@@ -7,6 +7,8 @@ function conditionalTextInput(showTextInput) {
   if (showTextInput) {
     return <TextInput style={{ width: 250 }} defaultValue="This TextInput can be removed." />;
   }
+
+  return <div></div>;
 }
 
 export default React.createClass({
@@ -57,7 +59,7 @@ export default React.createClass({
         <button type="button" onClick={this._removeTextInput}>Remove TextInput</button>
 
         {/* Empty TextInput */}
-        <TextInput style={{ width: 250 }}/>
+        <TextInput style={{ width: 250 }} />
         <br />
 
         <h3>Not editable value</h3>
@@ -76,7 +78,7 @@ export default React.createClass({
 
         {/* Full width TextInput */}
         <div style={{ position: 'relative' }}>
-          <TextInput defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this"/>
+          <TextInput defaultValue="This is a very long text. Hint: if you resize the browser and there is not enough space it will automatically expand the box for the height needed. TODO: fix this" />
         </div>
         <br />
 
@@ -91,27 +93,27 @@ export default React.createClass({
 
         <h3>Test with 3 min rows & 5 max rows</h3>
         <div style={{ width: 250 }}>
-          <TextInput placeholder="Hello" minRows={ 3 } maxRows={ 5 }/>
+          <TextInput placeholder="Hello" minRows={ 3 } maxRows={ 5 } />
         </div>
 
         <h3>Test 4 min rows & minHeight 80</h3>
         <div style={{ width: 250 }}>
-          <TextInput placeholder="Hello" minRows={ 4 } minHeight={ 80 }/>
+          <TextInput placeholder="Hello" minRows={ 4 } minHeight={ 80 } />
         </div>
 
         <h3>Test 2 max rows & maxHeight 300</h3>
         <div style={{ width: 250 }}>
-          <TextInput placeholder="Hello" maxRows={ 2 } maxHeight={ 300 }/>
+          <TextInput placeholder="Hello" maxRows={ 2 } maxHeight={ 300 } />
         </div>
 
         <h3>style minHeight 80</h3>
         <div style={{ width: 250 }}>
-          <TextInput style={{ minHeight: 80 }}/>
+          <TextInput style={{ minHeight: 80 }} />
         </div>
 
         {/* Value test */}
         <div style={{ width: 250 }}>
-          <textarea value="abc" onChange={ (event) => console.log(event.target.value) }/>
+          <textarea value="abc" onChange={ (event) => console.log(event.target.value) } />
         </div>
       </Card>
     );

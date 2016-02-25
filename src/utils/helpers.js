@@ -27,6 +27,8 @@ export function omit(obj, fields) {
 
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -47,6 +49,8 @@ export function filter(iterable, predicate, context) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -88,6 +92,8 @@ export function map(iterable, predicate) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -107,6 +113,8 @@ export function mapObject(obj, predicate) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -129,6 +137,8 @@ export function find(iterable, predicate, context) {
 
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -144,6 +154,8 @@ export function reverse(iterable) {
 
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -165,6 +177,8 @@ export function shift(iterable, positions) {
 
     return iterable;
   }
+
+  return undefined;
 }
 
 /**
@@ -198,6 +212,8 @@ export function findIndex(iterable, predicate, context) {
 
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -209,6 +225,8 @@ export function first(iterable) {
   if (iterable && iterable.length > 0) {
     return iterable[0];
   }
+
+  return undefined;
 }
 
 /**
@@ -220,6 +238,8 @@ export function last(iterable) {
   if (iterable && iterable.length > 0) {
     return iterable[iterable.length - 1];
   }
+
+  return undefined;
 }
 
 /**
@@ -254,6 +274,8 @@ export function some(iterable, predicate, context) {
 
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -275,6 +297,8 @@ export function union(...arrs) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -306,6 +330,8 @@ export function flatten(...arrays) {
     flattenInternal(result, arrays);
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -324,6 +350,8 @@ export function filterReactChildren(children, predicate) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 /**
@@ -339,6 +367,8 @@ export function getArrayForReactChildren(children) {
     });
     return result;
   }
+
+  return undefined;
 }
 
 export function flattenReactChildren(children) {
@@ -349,4 +379,6 @@ export function flattenReactChildren(children) {
 
     return getArrayForReactChildren(children);
   }
+
+  return undefined;
 }

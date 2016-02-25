@@ -16,7 +16,7 @@ export default class ActionArea extends Component {
 
   constructor(properties) {
     super(properties);
-    const { style, ...childProps } = properties;
+    const { style, ...childProps } = properties; // eslint-disable-line no-use-before-define
     this.childProps = childProps;
   }
 
@@ -58,7 +58,7 @@ export default class ActionArea extends Component {
    * Update the childProps based on the updated properties passed to the card.
    */
   componentWillReceiveProps(properties) {
-    const { style, ...childProps } = properties;
+    const { style, ...childProps } = properties; // eslint-disable-line no-use-before-define
     this.childProps = childProps;
   }
 

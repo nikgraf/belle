@@ -267,6 +267,8 @@ export default class ComboBox extends Component {
         }
       }
     }
+
+    return undefined;
   }
 
   /**

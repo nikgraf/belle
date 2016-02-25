@@ -1,7 +1,8 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React, { Component } from 'react';
-import { Button, Card } from 'belle';
+import { Button } from 'belle';
+import Card from 'belle-classic/Card';
 import Code from './Code';
 import ThemeSwitch from '../theme/ThemeSwitch';
 

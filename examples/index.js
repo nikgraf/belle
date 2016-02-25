@@ -41,4 +41,4 @@ const App = () => (
   </div>
 );
 
-ReactDOM.render(<App/>, document.getElementById('react'));
+ReactDOM.render(<App />, document.getElementById('react'));

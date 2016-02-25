@@ -33,7 +33,7 @@ const advancedExampleCode = `<TextInput minRows={ 3 }
 
 <p>Two-way data binding: { this.state.customTextInputValue }</p>`;
 
-const disabledExampleCode = `<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />`;
+const disabledExampleCode = '<TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />';
 
 export default React.createClass({
 
@@ -50,7 +50,7 @@ export default React.createClass({
 
       <h2 style={{ marginTop: 0, marginBottom: 40 }}>TextInput</h2>
 
-      <TextInput defaultValue="Jane Doe" placeholder="Name" style={{ marginBottom: 20 }}/>
+      <TextInput defaultValue="Jane Doe" placeholder="Name" style={{ marginBottom: 20 }} />
 
       <TextInput
         defaultValue="This TextInput has allowNewLine set to true &amp;. Just press 'Return' once editing the text."
@@ -363,7 +363,7 @@ export default React.createClass({
       <Code value={ advancedExampleCode } style={{ marginTop: 40 }} />
 
       <h4>Disabled Text Input</h4>
-      <TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis."/>
+      <TextInput disabled defaultValue="Maecenas eu placerat ante. Fusce venenatis. Duis tincidunt mi at quam condimentum lobortis condimentum lobortis." />
 
       <Code value={ disabledExampleCode } style={{ marginTop: 40 }} />
 

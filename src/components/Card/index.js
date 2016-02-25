@@ -16,8 +16,13 @@ export default class Card extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    theme: PropTypes.objectOf(PropTypes.string),
+    theme: PropTypes.objectOf(PropTypes.string).isRequired,
     className: PropTypes.string,
+  };
+
+  // to avoid the app breaking
+  static defaultProps = {
+    theme: {}
   };
 
   render(): ReactElement {

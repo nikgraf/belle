@@ -125,7 +125,7 @@ export default React.createClass({
 
       <h2 style={{ marginTop: 0, marginBottom: 40 }}>DatePicker</h2>
 
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }/>
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) } />
 
       <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
@@ -535,7 +535,7 @@ export default React.createClass({
 
       <h3>DatePicker highlighting special day:</h3>
 
-      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
+      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 } />
 
       <Code value={ advanceCodeExample2 } style={{ marginTop: 40 }} />
 

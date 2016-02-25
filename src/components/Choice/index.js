@@ -5,10 +5,6 @@ import React, { Component, PropTypes } from 'react';
  */
 export default class Choice extends Component {
 
-  constructor(properties) {
-    super(properties);
-  }
-
   static displayName = 'Choice';
 
   static propTypes = {

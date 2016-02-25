@@ -23,6 +23,7 @@ module.exports = {
   resolve: {
     alias: {
       belle: path.join(__dirname, '..', 'src'),
+      'belle-classic': path.join(__dirname, '..', 'belle-classic'),
       react: path.join(__dirname, 'node_modules', 'react'),
     },
     extensions: ['', '.js'],

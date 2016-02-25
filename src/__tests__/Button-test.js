@@ -15,14 +15,13 @@ const injectStyle = require('../utils/inject-style');
 
 describe('Button', () => {
   describe('without any properties', () => {
-    let button;
+    const button = TestUtils.renderIntoDocument(
+      <Button>Follow</Button>
+    );
     let buttonNode;
 
     beforeEach(() => {
       injectStyle.injectStyles = jest.genMockFunction();
-      button = TestUtils.renderIntoDocument(
-        <Button>Follow</Button>
-      );
       buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
     });
 

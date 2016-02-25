@@ -14,6 +14,7 @@ const buttonTypes = ['button', 'submit', 'reset'];
  * set to `button`.
  */
 function sanitizeChildProps(properties) {
+  /* eslint-disable no-use-before-define */
   const {
     className,
     style,
@@ -33,6 +34,8 @@ function sanitizeChildProps(properties) {
     onBlur,
     ...childProps,
   } = properties;
+  /* eslint-enable no-use-before-define */
+
   return childProps;
 }
 

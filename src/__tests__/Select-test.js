@@ -170,9 +170,12 @@ describe('Select', () => {
 
   it('should be able to provide a valueLink', () => {
     let wasCalled = false;
+    const callback = () => {
+      wasCalled = true;
+    };
 
     const valueLink = {
-      requestChange: () => wasCalled = true,
+      requestChange: callback,
       value: 'rome',
     };
 

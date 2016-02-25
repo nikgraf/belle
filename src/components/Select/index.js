@@ -49,6 +49,8 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
   if (React.Children.count(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
+
+  return undefined;
 }
 
 /**
@@ -835,6 +837,8 @@ export default class Select extends Component {
             </li>
           );
         }
+
+        return undefined;
       })
     );
   }

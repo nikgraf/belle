@@ -1,7 +1,7 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React, { Component } from 'react';
-import { Card } from 'belle';
+import Card from 'belle-classic/Card';
 import Code from '../Code';
 
 const basicCodeExample = `<!-- basic card example -->
