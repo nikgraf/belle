@@ -83,7 +83,7 @@ const selectStyle = {
   caretToOpenStyle: {
     height: 0,
     width: 0,
-    content: ' ',
+    content: '-', // Avoid this warning: was passed a numeric string value for CSS property `content` (value: ` `)
     position: 'absolute',
     top: 15,
     right: 8,
@@ -95,7 +95,7 @@ const selectStyle = {
   caretToCloseStyle: {
     height: 0,
     width: 0,
-    content: ' ',
+    content: '-', // Avoid this warning: was passed a numeric string value for CSS property `content` (value: ` `)
     position: 'absolute',
     top: 15,
     right: 8,

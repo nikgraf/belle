@@ -121,7 +121,7 @@ export default class Why extends Component {
 
       Try it yourself here:
       <br /><br />
-      <Toggle defaultValue style={{ marginLeft: 12 }}/>
+      <Toggle defaultValue style={{ marginLeft: 12 }} />
 
       <Code value={ basicToggleExample } style={{ marginTop: 20, marginBottom: 20 }} />
 

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
 import cardStyle from '../style/card';
 
 /**
@@ -11,7 +11,7 @@ export default class Card extends Component {
 
   constructor(properties) {
     super(properties);
-    const { style, ...childProps } = properties;
+    const { style, ...childProps } = properties; // eslint-disable-line no-unused-vars
     this.childProps = childProps;
   }
 
@@ -29,7 +29,7 @@ export default class Card extends Component {
    * Update the childProps based on the updated properties passed to the card.
    */
   componentWillReceiveProps(properties) {
-    const { style, ...childProps } = properties;
+    const { style, ...childProps } = properties; // eslint-disable-line no-unused-vars
     this.childProps = childProps;
   }
 

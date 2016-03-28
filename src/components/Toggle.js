@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { injectStyles, removeStyle } from '../utils/inject-style';
-import { omit, has, last, first } from '../utils/helpers';
+import { omit, has, last, first, uniqueId } from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
@@ -79,6 +79,8 @@ function choicePropType(props, propName, componentName) {
   if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
+
+  return undefined;
 }
 
 /**
@@ -97,6 +99,8 @@ function validateChoices(props, propName, componentName) {
       first(props.children).props.value === last(props.children).props.value) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
   }
+
+  return undefined;
 }
 
 /**
@@ -247,11 +251,9 @@ export default class Toggle extends Component {
 
   /**
    * Generates the style-id & inject the focus style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this.styleId = `style-id${id}`;
     updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }

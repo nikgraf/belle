@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../utils/helpers';
+import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren, uniqueId } from '../utils/helpers';
 import style from '../style/combo-box';
 import ComboBoxItem from '../components/ComboBoxItem';
 
@@ -267,14 +267,15 @@ export default class ComboBox extends Component {
         }
       }
     }
+
+    return undefined;
   }
 
   /**
    * Generates the style-id & inject the focus & hover style.
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this._styleId = `style-id${id}`;
     this._caretStyleId = `caretStyle-id${id}`;
     updatePseudoClassStyle(this._styleId, this._caretStyleId, this.props);

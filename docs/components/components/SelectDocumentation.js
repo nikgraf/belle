@@ -674,7 +674,7 @@ export default class SelectDocumentation extends Component {
         >
           Santorini (Special Deal)
         </Option>
-        <Separator style={{ height: 4, padding: 0 }}/>
+        <Separator style={{ height: 4, padding: 0 }} />
         <Option
           value="yosemite"
           style={{
@@ -691,7 +691,7 @@ export default class SelectDocumentation extends Component {
         >
           Yosemite
         </Option>
-        <Separator style={{ height: 4, padding: 0 }}/>
+        <Separator style={{ height: 4, padding: 0 }} />
         <Option
           value="croatia"
           style={{

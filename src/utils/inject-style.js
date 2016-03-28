@@ -44,6 +44,8 @@ function createMarkupOnPseudoClass(pseudoClasses, id, disabled) {
         `.${id}[disabled]:${pseudoClass} {${styleWithImportant}}` :
         `.${id}:${pseudoClass} {${styleWithImportant}}`;
     }
+
+    return undefined;
   });
 }
 

@@ -72,7 +72,7 @@ describe('Button', () => {
     );
 
     const buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
+    expect(buttonNode.getAttribute('style').indexOf('color: rgb(255, 0, 0)') > -1).toBeTruthy();
   });
 
   it('should be able to use a primary button', () => {
