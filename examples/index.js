@@ -17,28 +17,17 @@ window.React = React;
 const App = () => (
   <div style={{ margin: '0 auto', width: 300 }}>
     <h1>Belle Playground</h1>
-
     <CardPlayground />
-
-    {/*
-    <SpinnerPlayground />
-
-    <DatePickerPlayground />
-
-    <TogglePlayground />
-
-    <SelectPlayground />
-
-    <ButtonPlayground />
-
-    <TextInputPlayground />
-
-    <RatingPlayground />
-
-    <ComboBoxPlayground />
-    */
-  }
   </div>
 );
 
 ReactDOM.render(<App />, document.getElementById('react'));
+
+// <SpinnerPlayground />
+// <DatePickerPlayground />
+// <TogglePlayground />
+// <SelectPlayground />
+// <ButtonPlayground />
+// <TextInputPlayground />
+// <RatingPlayground />
+// <ComboBoxPlayground />

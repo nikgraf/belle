@@ -3,6 +3,7 @@
   "plugins": [ "mocha" ],
   "extends": "airbnb",
   "rules": {
+    "react/prefer-stateless-function": 0,
     "max-len": 0,
     "comma-dangle": 0,
     "react/jsx-no-bind": 0, // TODO remove this

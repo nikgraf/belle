@@ -8,7 +8,7 @@ import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 const basicCodeExample = `<!-- basic toggle examples -->
 <Toggle />
 
-<Toggle defaultValue style={{ marginLeft: 20 }}/>`;
+<Toggle defaultValue style={{ marginLeft: 20 }} />`;
 
 const choiceCodeExample = `<!-- toggle with custom choices -->
 <Toggle defaultValue

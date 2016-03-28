@@ -40,7 +40,7 @@ describe('helpers omit method', () => {
   });
 
   it('should not break if object is undefined or null', () => {
-    let obj2;
+    let obj2 = undefined;
     let newObj;
     const keys = ['test1', 'test2'];
     newObj = helpers.omit(obj2, keys);
@@ -137,7 +137,7 @@ describe('helpers filter method', () => {
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate2;
+    let predicate2 = undefined;
     let filteredArr = helpers.filter(arr, predicate2);
     expect(filteredArr.length).toBe(0);
     predicate2 = null;
@@ -175,7 +175,7 @@ describe('helpers map method for arrays', () => {
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate2;
+    let predicate2 = undefined;
     let mapArr = helpers.map(arr, predicate2);
     expect(mapArr.length).toBe(0);
     predicate2 = null;
@@ -236,7 +236,7 @@ describe('helpers find method', () => {
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate2;
+    let predicate2 = undefined;
     let resultObj = helpers.find(arr, predicate2);
     expect(resultObj).toBeFalsy();
     predicate2 = null;
@@ -285,7 +285,7 @@ describe('helpers findIndex method', () => {
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate2;
+    let predicate2 = undefined;
     let resultObj = helpers.findIndex(arr, predicate2);
     expect(resultObj).toBeFalsy();
     predicate2 = null;
@@ -373,7 +373,7 @@ describe('helpers some method', () => {
   });
 
   it('should not break if predicate is undefined or null', () => {
-    let predicate2;
+    let predicate2 = undefined;
     let obj = helpers.some(arr, predicate2);
     expect(obj).toBeFalsy();
     predicate2 = null;

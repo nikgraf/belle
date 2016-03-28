@@ -22,7 +22,7 @@ export default class Card extends Component {
 
   // to avoid the app breaking
   static defaultProps = {
-    theme: {}
+    theme: {},
   };
 
   render(): ReactElement {

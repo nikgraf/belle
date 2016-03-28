@@ -91,12 +91,7 @@ describe('TextInput', () => {
     let wasPressed = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onKeyDown={
-          () => {
-            wasPressed = true;
-          }
-        }
-      />
+      <TextInput onKeyDown={ () => { wasPressed = true; } } />
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
@@ -110,12 +105,7 @@ describe('TextInput', () => {
     let wasChanged = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onUpdate={
-          () => {
-            wasChanged = true;
-          }
-        }
-      />
+      <TextInput onUpdate={ () => { wasChanged = true; } } />
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');

@@ -35,7 +35,6 @@ const selectConfig = {
 
     // In case of a placeholder no option is focused on initially
     let optionIndex;
-
     if (selectComponent.state.selectedValue) {
       optionIndex = findIndexOfSelectedOption(selectComponent);
     } else {

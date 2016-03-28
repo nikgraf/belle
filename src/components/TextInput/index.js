@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import calculateTextareaHeight from '../../utils/calculate-textarea-height';
 import { injectStyles, removeStyle } from '../../utils/inject-style';
 import unionClassNames from '../../utils/union-class-names';
-import { omit, has } from '../../utils/helpers';
+import { omit, has, uniqueId } from '../../utils/helpers';
 import style from './styles';
 
 const newLineRegex = /[\r\n]/g;
@@ -144,11 +144,9 @@ export default class TextInput extends Component {
 
   /**
    * Generates the style-id & inject the focus & hover style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this._styleId = `style-id${id}`;
     updatePseudoClassStyle(this._styleId, this.props);
   }

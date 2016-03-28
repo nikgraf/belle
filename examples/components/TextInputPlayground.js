@@ -8,7 +8,7 @@ function conditionalTextInput(showTextInput) {
     return <TextInput style={{ width: 250 }} defaultValue="This TextInput can be removed." />;
   }
 
-  return <div></div>;
+  return null;
 }
 
 export default React.createClass({

@@ -12,7 +12,7 @@ const advanceCodeExample1 = '<Rating defaultValue={4} disabled></Rating>';
 
 const advanceCodeExample2 = '<Rating defaultValue={4} character={\'✪\'}></Rating>';
 
-const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') }/>
+const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') } />
 
 <a onClick={ this._resetRating }
    style={{

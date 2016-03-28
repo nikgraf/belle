@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { injectStyles, removeAllStyles } from '../../utils/inject-style';
 import unionClassNames from '../../utils/union-class-names';
-import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren } from '../../utils/helpers';
+import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren, uniqueId } from '../../utils/helpers';
 import style from './styles';
 import ComboBoxItem from './ComboBoxItem';
 
@@ -273,10 +273,9 @@ export default class ComboBox extends Component {
 
   /**
    * Generates the style-id & inject the focus & hover style.
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this._styleId = `style-id${id}`;
     this._caretStyleId = `caretStyle-id${id}`;
     updatePseudoClassStyle(this._styleId, this._caretStyleId, this.props);
@@ -573,7 +572,7 @@ export default class ComboBox extends Component {
    * Returns the value of the child with a certain index.
    */
   _getValueForIndex(index) {
-    return this.props.children[index].props.value;
+    return this.filteredOptions[index].props.value;
   }
 
   /**

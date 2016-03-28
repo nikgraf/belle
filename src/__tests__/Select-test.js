@@ -248,7 +248,7 @@ describe('Select', () => {
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(select, 'div')[1];
     expect(selectedAreaNode.hasAttribute('style')).toBeTruthy();
-    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:cross') > -1).toBeTruthy();
+    expect(selectedAreaNode.getAttribute('style').indexOf('cursor: cross') > -1).toBeTruthy();
   });
 
   describe('updating props', () => {

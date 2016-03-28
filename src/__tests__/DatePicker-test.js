@@ -69,13 +69,11 @@ describe('DatePicker', () => {
 
   it('should select / deselect date when space key is pressed', () => {
     let dateSelected;
+    const onUpdate = (obj) => { dateSelected = obj.value; };
+
     const datePicker = TestUtils.renderIntoDocument(
       <DatePicker
-        onUpdate={
-          (obj) => {
-            dateSelected = obj.value;
-          }
-        }
+        onUpdate={ onUpdate }
         className="date_picker_wrapper"
       />
     );

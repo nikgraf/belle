@@ -11,11 +11,11 @@ const basicCodeExample = `<!-- basic spinner example -->
 
 const buttonCodeExample = `<!-- loading button example -->
 <Button primary disabled>
-  Saving <Spinner characterStyle={{ fontSize: 18, color: '#fff' }}/>
+  Saving <Spinner characterStyle={{ fontSize: 18, color: '#fff' }} />
 </Button>
 
 <Button disabled style={{ marginLeft: 10 }}>
-  Saving <Spinner characterStyle={{ fontSize: 18, color: '#C5C4C4' }}/>
+  Saving <Spinner characterStyle={{ fontSize: 18, color: '#C5C4C4' }} />
 </Button>`;
 
 const cardCodeExample = `<!-- loading example -->

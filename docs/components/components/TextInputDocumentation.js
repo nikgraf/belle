@@ -7,7 +7,7 @@ import Code from '../Code';
 import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 
 const exampleCode = `<!-- TextInput with a defaultValue -->
-<TextInput defaultValue="Jane Doe" placeholder="Name"/>
+<TextInput defaultValue="Jane Doe" placeholder="Name" />
 
 <!-- TextInput with allowNewLine set to true -->
 <TextInput defaultValue="This TextInput has allowNewLine set to true. Just press 'Return' once editing the text."
@@ -29,7 +29,7 @@ const advancedExampleCode = `<TextInput minRows={ 3 }
        focusStyle={{
          borderColor: '#53C7F2',
          boxShadow: 'inset 0 1px 2px #CCC, 0 0 8px #53C7F2'
-       }}/>
+       }} />
 
 <p>Two-way data binding: { this.state.customTextInputValue }</p>`;
 
