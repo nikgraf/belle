@@ -9,7 +9,7 @@ import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 const TODAY = new Date();
 const todaydefaultValue = 'new Date(${TODAY.getFullYear()},  ${TODAY.getMonth()}, 15)';
 
-const basicCodeExample = `<DatePicker defaultValue={${todaydefaultValue}}/>`;
+const basicCodeExample = `<DatePicker defaultValue={${todaydefaultValue}} />`;
 
 const htmlStructure = `<div style={ style }>
   <div>
@@ -47,7 +47,7 @@ const advanceCodeExample1 = `
 const advanceCodeExample2 = `
 <DatePicker readOnly
             renderDay={ this.renderDay }
-            defaultMonth={ 12 }/>
+            defaultMonth={ 12 } />
 
 renderDay(day) {
   if (day.getDate() === 25 && day.getMonth() === 11) {
@@ -67,7 +67,7 @@ renderDay(day) {
 
 const advanceCodeExample3 = `
 <DatePicker defaultValue={${todaydefaultValue}}
-            locale={ this.state.selectedLocale }/>`;
+            locale={ this.state.selectedLocale } />`;
 
 const advanceCodeExample4 = `
 <DatePicker defaultValue={${todaydefaultValue}}
@@ -75,13 +75,13 @@ const advanceCodeExample4 = `
 
 const advanceCodeExample5 = `
 <DatePicker defaultValue={${todaydefaultValue}}
-            disabled/>`;
+            disabled />`;
 
 const advanceCodeExample6 = `
 <DatePicker onMonthUpdate={ this.onMonthUpdate }
             defaultMonth={ this.state.selectedMonth }
             defaultYear={ this.state.selectedYear }
-            valueLink={ this.linkState('selectedDate') }/>
+            valueLink={ this.linkState('selectedDate') } />
 
 <div>
   <div>Date: { this.state.selectedDate ?
@@ -125,7 +125,7 @@ export default React.createClass({
 
       <h2 style={{ marginTop: 0, marginBottom: 40 }}>DatePicker</h2>
 
-      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) }/>
+      <DatePicker defaultValue={ new Date(TODAY.getFullYear(), TODAY.getMonth(), 15) } />
 
       <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
@@ -535,7 +535,7 @@ export default React.createClass({
 
       <h3>DatePicker highlighting special day:</h3>
 
-      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 }/>
+      <DatePicker renderDay={ this.renderDay } defaultMonth={ 12 } />
 
       <Code value={ advanceCodeExample2 } style={{ marginTop: 40 }} />
 

@@ -95,7 +95,7 @@ export default class FormComponents extends Component {
 
       <Code value={ reactLinkCode } style={{ marginTop: 20 }} />
 
-      <p>Note:<br/>
+      <p>Note:<br />
         ReactLink is just a thin wrapper and convention around the onUpdate/setState() pattern. It doesn't fundamentally change how data
         flows in your React application.</p>
 

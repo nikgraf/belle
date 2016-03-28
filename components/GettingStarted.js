@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Code from './Code';
 
-const installCommand = `npm install belle`;
+const installCommand = 'npm install belle';
 
 const usageExampleHtml = `<!doctype html>
 <html lang="en">
