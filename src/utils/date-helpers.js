@@ -78,8 +78,8 @@ export const getDateKey = (year, month, day) => `${year}-${month}-${day}`;
  * @returns {date} - the parse date
  */
 export const getDateForDateKey = (dateKey) => {
-  const [year, month, day] = dateKey.split('-');
-  return new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
+  const splittedDate = dateKey.split('-');
+  return new Date(parseInt(splittedDate[0], 10), parseInt(splittedDate[1], 10) - 1, parseInt(splittedDate[2], 10));
 };
 
 /**

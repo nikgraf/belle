@@ -79,6 +79,8 @@ function choicePropType(props, propName, componentName) {
   if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
   }
+
+  return undefined;
 }
 
 /**
@@ -97,6 +99,8 @@ function validateChoices(props, propName, componentName) {
       first(props.children).props.value === last(props.children).props.value) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
   }
+
+  return undefined;
 }
 
 /**

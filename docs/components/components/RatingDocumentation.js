@@ -6,13 +6,13 @@ import Code from '../Code';
 import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-const basicCodeExample = `<Rating defaultValue={3}></Rating>`;
+const basicCodeExample = '<Rating defaultValue={3}></Rating>';
 
-const advanceCodeExample1 = `<Rating defaultValue={4} disabled></Rating>`;
+const advanceCodeExample1 = '<Rating defaultValue={4} disabled></Rating>';
 
-const advanceCodeExample2 = `<Rating defaultValue={4} character={'✪'}></Rating>`;
+const advanceCodeExample2 = '<Rating defaultValue={4} character={\'✪\'}></Rating>';
 
-const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') }/>
+const advanceCodeExample3 = `<Rating valueLink={ this.linkState('customRatingValue') } />
 
 <a onClick={ this._resetRating }
    style={{
@@ -50,7 +50,7 @@ export default React.createClass({
 
       <h2 style={{ marginTop: 0, marginBottom: 40 }}>Rating</h2>
 
-      <Rating defaultValue={3}/>
+      <Rating defaultValue={3} />
 
       <Code value={ basicCodeExample } style={{ marginTop: 40 }} />
 
@@ -383,16 +383,16 @@ export default React.createClass({
       <h3>More Examples</h3>
 
       <h4>Disabled Rating</h4>
-      <Rating defaultValue={4} disabled/>
+      <Rating defaultValue={4} disabled />
       <Code value= { advanceCodeExample1 } style={{ marginTop: 20, marginBottom: 40 }} />
 
       <h4>Rating with a custom Character</h4>
-      <Rating defaultValue={4} character={'✪'}/>
+      <Rating defaultValue={4} character={'✪'} />
       <Code value= { advanceCodeExample2 } style={{ marginTop: 20, marginBottom: 40 }} />
 
       <h4>Controlled Rating Component with a Reset Link</h4>
       <p>Reset rating functionality can be implemented using controlled rating component like this:</p>
-      <Rating valueLink={ this.linkState('customRatingValue') }/>
+      <Rating valueLink={ this.linkState('customRatingValue') } />
       <a
         onClick={ this._resetRating }
         style={{

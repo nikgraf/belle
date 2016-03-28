@@ -24,7 +24,7 @@ describe('Card', () => {
 
   it('should be able to adopt the style of the card', () => {
     const card = TestUtils.renderIntoDocument(
-      <Card style={{ background: '#F00' }}/>
+      <Card style={{ background: '#F00' }} />
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
     expect(divNode.getAttribute('style').indexOf('background: rgb(255, 0, 0)') > -1).toBeTruthy();

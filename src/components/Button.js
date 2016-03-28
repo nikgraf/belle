@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
 import { has, uniqueId } from '../utils/helpers';
 import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import config from '../config/button';
 
-const buttonTypes = ['button', 'submit', 'reset'];
+const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 
 /**
  * Returns an object with properties that are relevant for the button element.
@@ -15,22 +15,22 @@ const buttonTypes = ['button', 'submit', 'reset'];
  */
 function sanitizeChildProps(properties) {
   const {
-    className,
-    style,
-    hoverStyle,
-    focusStyle,
-    activeStyle,
-    disabledStyle,
-    disabledHoverStyle,
-    primary,
-    onTouchStart,
-    onTouchEnd,
-    onTouchCancel,
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onFocus,
-    onBlur,
+    className, // eslint-disable-line no-unused-vars
+    style, // eslint-disable-line no-unused-vars
+    hoverStyle, // eslint-disable-line no-unused-vars
+    focusStyle, // eslint-disable-line no-unused-vars
+    activeStyle, // eslint-disable-line no-unused-vars
+    disabledStyle, // eslint-disable-line no-unused-vars
+    disabledHoverStyle, // eslint-disable-line no-unused-vars
+    primary, // eslint-disable-line no-unused-vars
+    onTouchStart, // eslint-disable-line no-unused-vars
+    onTouchEnd, // eslint-disable-line no-unused-vars
+    onTouchCancel, // eslint-disable-line no-unused-vars
+    onMouseDown, // eslint-disable-line no-unused-vars
+    onMouseEnter, // eslint-disable-line no-unused-vars
+    onMouseLeave, // eslint-disable-line no-unused-vars
+    onFocus, // eslint-disable-line no-unused-vars
+    onBlur, // eslint-disable-line no-unused-vars
     ...childProps,
   } = properties;
   return childProps;

@@ -172,7 +172,10 @@ describe('Select', () => {
     let wasCalled = false;
 
     const valueLink = {
-      requestChange: () => wasCalled = true,
+      requestChange: () => {
+        wasCalled = true;
+      },
+
       value: 'rome',
     };
 

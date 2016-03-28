@@ -15,11 +15,11 @@ export default React.createClass({
         </p>
 
         <Button primary>
-          Saving <Spinner characterStyle={{ fontSize: 18, color: '#fff' }}/>
+          Saving <Spinner characterStyle={{ fontSize: 18, color: '#fff' }} />
         </Button>
 
         <Button style={{ marginLeft: 10 }}>
-          Saving <Spinner characterStyle={{ fontSize: 18 }}/>
+          Saving <Spinner characterStyle={{ fontSize: 18 }} />
         </Button>
 
       </Card>
