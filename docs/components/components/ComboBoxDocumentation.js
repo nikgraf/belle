@@ -187,7 +187,8 @@ const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currenc
   }
 </ComboBox>`;
 
-const dataCodeExampleFourPartOne = `const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
+const dataCodeExampleFourPartOne = `
+const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
 
 const dataCodeExampleFourPartTwo = `<ComboBox enableHint
           filterFunc = { customFilterFunc }
@@ -308,17 +309,17 @@ export default React.createClass({
               <br />
               optional</p>
             <p>
-              This callback is executed every time the combo-box value changes. This could happen when: <br/>
-              1. user selects an option.<br/>
-              2. user types value(function will be called on each keypress).<br/>
-              3. user paste some value.<br/>
-              4. if hints are enabled and user hits right-arrow key on keyboard.<br/>
-              <br/>
-              onUpdate has one argument which is an object containing 4 fields:<br/>
-              1. value, the value of the combo-box.<br/>
-              2. identifier, identifier of the matching option (optional). This is passed only if the options have identifiers and the value of the combo-box exactly matches one of the options.<br/>
-              3. isOptionSelection, true when combo-box is updated by user selecting an option (point:1 above).<br/>
-              4. isMatchingOption, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br/>
+              This callback is executed every time the combo-box value changes. This could happen when: <br />
+              1. user selects an option.<br />
+              2. user types value(function will be called on each keypress).<br />
+              3. user paste some value.<br />
+              4. if hints are enabled and user hits right-arrow key on keyboard.<br />
+              <br />
+              onUpdate has one argument which is an object containing 4 fields:<br />
+              1. value, the value of the combo-box.<br />
+              2. identifier, identifier of the matching option (optional). This is passed only if the options have identifiers and the value of the combo-box exactly matches one of the options.<br />
+              3. isOptionSelection, true when combo-box is updated by user selecting an option (point:1 above).<br />
+              4. isMatchingOption, true when value of combo-box exactly matches one of the options, irrespective of how the user entered it.<br />
             </p>
             <Code value={ onUpdateCode } style={{ marginTop: 40 }} />
           </td>
@@ -392,8 +393,8 @@ export default React.createClass({
             </p>
             <p>
               By default the options to be shown to the user are filtered using simple case-insensitive comparison, to find occurrence of input string in option value.
-              But using  this property developer can provide a custom function for filtering using. The function should expect to receive 2 parameters:<br/>
-              1. String input in the combo-box <br/>
+              But using  this property developer can provide a custom function for filtering using. The function should expect to receive 2 parameters:<br />
+              1. String input in the combo-box <br />
               2. Value of the selected option
             </p>
           </td>

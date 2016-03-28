@@ -61,7 +61,7 @@ describe('TextInput', () => {
 
   it('should re-calculate its height after changing (with value & new lines not allowed)', () => {
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput value="some text"/>
+      <TextInput value="some text" />
     );
 
     textInput._triggerResize = jest.genMockFunction();
@@ -91,7 +91,7 @@ describe('TextInput', () => {
     let wasPressed = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onKeyDown={ () => wasPressed = true }/>
+      <TextInput onKeyDown={ () => { wasPressed = true; } } />
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
@@ -105,7 +105,7 @@ describe('TextInput', () => {
     let wasChanged = false;
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput onUpdate={ () => wasChanged = true }/>
+      <TextInput onUpdate={ () => { wasChanged = true; } } />
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');
@@ -119,12 +119,15 @@ describe('TextInput', () => {
     let wasCalled = false;
 
     const valueLink = {
-      requestChange: () => wasCalled = true,
+      requestChange: () => {
+        wasCalled = true;
+      },
+
       value: 'some text',
     };
 
     const textInput = TestUtils.renderIntoDocument(
-      <TextInput valueLink={ valueLink }/>
+      <TextInput valueLink={ valueLink } />
     );
 
     const textareaNode = TestUtils.findRenderedDOMComponentWithTag(textInput, 'textarea');

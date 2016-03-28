@@ -18,7 +18,7 @@ describe('Separator', () => {
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
     expect(div.hasAttribute('style')).toBeTruthy();
-    expect(div.getAttribute('style').indexOf('color:#666') > -1).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('color: rgb(102, 102, 102)') > -1).toBeTruthy();
   });
 
   it('should be able to overwrite the default styles', () => {
@@ -28,7 +28,7 @@ describe('Separator', () => {
 
     const div = TestUtils.findRenderedDOMComponentWithTag(separator, 'div');
     expect(div.hasAttribute('style')).toBeTruthy();
-    expect(div.getAttribute('style').indexOf('color:#F00') > -1).toBeTruthy();
+    expect(div.getAttribute('style').indexOf('color: rgb(255, 0, 0)') > -1).toBeTruthy();
   });
 
   it('should be able to provide custom properties', () => {

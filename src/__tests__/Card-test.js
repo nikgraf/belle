@@ -18,16 +18,16 @@ describe('Card', () => {
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
     expect(divNode.hasAttribute('style')).toBeTruthy();
-    expect(divNode.getAttribute('style').indexOf('background:#fff') > -1).toBeTruthy();
+
+    expect(divNode.getAttribute('style').indexOf('background: rgb(255, 255, 255)') > -1).toBeTruthy();
   });
 
   it('should be able to adopt the style of the card', () => {
     const card = TestUtils.renderIntoDocument(
-      <Card style={{ background: '#F00' }}/>
+      <Card style={{ background: '#F00' }} />
     );
     const divNode = TestUtils.findRenderedDOMComponentWithTag(card, 'div');
-
-    expect(divNode.getAttribute('style').indexOf('background:#F00') > -1).toBeTruthy();
+    expect(divNode.getAttribute('style').indexOf('background: rgb(255, 0, 0)') > -1).toBeTruthy();
   });
 
   it('should render its children', () => {

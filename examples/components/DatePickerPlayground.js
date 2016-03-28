@@ -34,7 +34,7 @@ export default React.createClass({
         <Card>
           <h3>Default Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker ref="calendar1"/>
+            <DatePicker ref="calendar1" />
           </div>
 
           <h3>DatePicker with min & max</h3>
@@ -48,11 +48,11 @@ export default React.createClass({
 
           <h3>Disabled Calendar Example</h3>
             <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate } disabled/>
+            <DatePicker defaultValue={ selectedDate } disabled />
           </div>
           <h3>Calendar without showing other months dates Example</h3>
             <div style={{ marginBottom: '20px' }}>
-            <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate }/>
+            <DatePicker showOtherMonthDate={ false } defaultValue={ selectedDate } />
           </div>
           <h3>Read-Only active Calendar Example</h3>
           <div style={{ marginBottom: '20px' }}>
@@ -70,11 +70,11 @@ export default React.createClass({
           </div>
           <h3>Calendar in dutch french !!!</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate } locale="fr"/>
+            <DatePicker defaultValue={ selectedDate } locale="fr" />
           </div>
           <h3>Calendar in dutch arabic !!!</h3>
           <div style={{ marginBottom: '20px' }}>
-            <DatePicker defaultValue={ selectedDate } locale="ar"/>
+            <DatePicker defaultValue={ selectedDate } locale="ar" />
           </div>
           <h3>Calendar in dutch hebrew !!!</h3>
           <div style={{ marginBottom: '20px' }}>

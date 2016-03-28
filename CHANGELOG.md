@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.5 - 2016-03-28
+
+### Changed
+- [All Components] Changed internal ID generation to make Belle compatible to React 15.
+
+### Fixed
+- [Combobox] Clicking on an filtered option now picks the correct entry [#269](https://github.com/nikgraf/belle/issues/269)
+
 ## 2.0.4 - 2016-02-16
 
 ### Changed

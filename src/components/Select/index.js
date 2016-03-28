@@ -1,6 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some } from '../../utils/helpers';
+import {
+  omit,
+  filter,
+  filterReactChildren,
+  find,
+  first,
+  flattenReactChildren,
+  isEmpty,
+  findIndex,
+  has,
+  some,
+  last,
+  uniqueId,
+} from '../../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../../utils/union-class-names';
 import { injectStyles, removeStyle } from '../../utils/inject-style';
@@ -49,6 +62,8 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
   if (React.Children.count(placeholders) > 1) {
     return new Error(`Invalid children supplied to \`${componentName}\`, expected only one Placeholder component.`);
   }
+
+  return undefined;
 }
 
 /**
@@ -308,11 +323,9 @@ export default class Select extends Component {
 
   /**
    * Generates the style-id & inject the focus & hover style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._getId();
+    const id = uniqueId();
 
     // Note: To ensure server side rendering creates the same results React's internal
     // id for this element is leveraged.
@@ -763,13 +776,6 @@ export default class Select extends Component {
   }
 
   /**
-   * Returns a in the DOM unique ID based on React's internal id.
-   */
-  _getId() {
-    return this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
-  }
-
-  /**
    * After an option has been selected the menu gets closed and the
    * selection processed.
    *
@@ -835,6 +841,8 @@ export default class Select extends Component {
             </li>
           );
         }
+
+        return null;
       })
     );
   }

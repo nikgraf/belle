@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { has } from '../../utils/helpers';
+import { has, uniqueId } from '../../utils/helpers';
 import buttonStyle from './styles';
 import unionClassNames from '../../utils/union-class-names';
 import { injectStyles, removeStyle } from '../../utils/inject-style';
 import config from './config';
 
-const buttonTypes = ['button', 'submit', 'reset'];
+const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 
 /**
  * Returns an object with properties that are relevant for the button element.
@@ -15,22 +15,22 @@ const buttonTypes = ['button', 'submit', 'reset'];
  */
 function sanitizeChildProps(properties) {
   const {
-    className,
-    style,
-    hoverStyle,
-    focusStyle,
-    activeStyle,
-    disabledStyle,
-    disabledHoverStyle,
-    primary,
-    onTouchStart,
-    onTouchEnd,
-    onTouchCancel,
-    onMouseDown,
-    onMouseEnter,
-    onMouseLeave,
-    onFocus,
-    onBlur,
+    className, // eslint-disable-line no-unused-vars
+    style, // eslint-disable-line no-unused-vars
+    hoverStyle, // eslint-disable-line no-unused-vars
+    focusStyle, // eslint-disable-line no-unused-vars
+    activeStyle, // eslint-disable-line no-unused-vars
+    disabledStyle, // eslint-disable-line no-unused-vars
+    disabledHoverStyle, // eslint-disable-line no-unused-vars
+    primary, // eslint-disable-line no-unused-vars
+    onTouchStart, // eslint-disable-line no-unused-vars
+    onTouchEnd, // eslint-disable-line no-unused-vars
+    onTouchCancel, // eslint-disable-line no-unused-vars
+    onMouseDown, // eslint-disable-line no-unused-vars
+    onMouseEnter, // eslint-disable-line no-unused-vars
+    onMouseLeave, // eslint-disable-line no-unused-vars
+    onFocus, // eslint-disable-line no-unused-vars
+    onBlur, // eslint-disable-line no-unused-vars
     ...childProps,
   } = properties;
   return childProps;
@@ -166,12 +166,9 @@ export default class Button extends Component {
 
   /**
    * Generates the style-id & inject the focus & active style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
-    this.styleId = `style-id${id}`;
+    this.styleId = `style-id${uniqueId()}`;
     updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
 
