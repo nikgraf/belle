@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, last, has, some } from '../utils/helpers';
+import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, has, some, uniqueId } from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
@@ -308,11 +308,9 @@ export default class Select extends Component {
 
   /**
    * Generates the style-id & inject the focus & hover style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._getId();
+    const id = uniqueId();
 
     // Note: To ensure server side rendering creates the same results React's internal
     // id for this element is leveraged.
@@ -760,13 +758,6 @@ export default class Select extends Component {
    */
   _getValueForIndex(index) {
     return this.options[index].props.value;
-  }
-
-  /**
-   * Returns a in the DOM unique ID based on React's internal id.
-   */
-  _getId() {
-    return this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
   }
 
   /**

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { has } from '../utils/helpers';
+import { has, uniqueId } from '../utils/helpers';
 import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
@@ -166,12 +166,9 @@ export default class Button extends Component {
 
   /**
    * Generates the style-id & inject the focus & active style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
-    this.styleId = `style-id${id}`;
+    this.styleId = `style-id${uniqueId()}`;
     updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
 

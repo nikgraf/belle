@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import { has, map, shift, reverse, omit } from '../utils/helpers';
+import { has, map, shift, reverse, omit, uniqueId } from '../utils/helpers';
 import {
   convertDateToDateKey,
   getDateKey,
@@ -363,7 +363,7 @@ export default class DatePicker extends Component {
    * Calls function to inject the pseudo classes into the dom.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this.pseudoStyleIds = {};
     this.pseudoStyleIds.styleId = `wrapper-style-id${id}`;
     this.pseudoStyleIds.prevMonthNavStyleId = `prevMonthNav-style-id${id}`;

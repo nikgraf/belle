@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { canUseDOM } from 'exenv';
-import { omit, has } from '../utils/helpers';
+import { omit, has, uniqueId } from '../utils/helpers';
 import style from '../style/rating.js';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
@@ -161,7 +161,7 @@ export default class Rating extends Component {
    * Apply pseudo class styling to the wrapper div.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this.ratingWrapperStyleId = `rating-wrapper-style-id${id}`;
     updatePseudoClassStyle(this.ratingWrapperStyleId, this.props, this.preventFocusStyleForTouchAndClick);
 

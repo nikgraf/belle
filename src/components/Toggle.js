@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { injectStyles, removeStyle } from '../utils/inject-style';
-import { omit, has, last, first } from '../utils/helpers';
+import { omit, has, last, first, uniqueId } from '../utils/helpers';
 import style from '../style/toggle';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
@@ -247,11 +247,9 @@ export default class Toggle extends Component {
 
   /**
    * Generates the style-id & inject the focus style.
-   *
-   * The style-id is based on React's unique DOM node id.
    */
   componentWillMount() {
-    const id = this._reactInternalInstance._rootNodeID.replace(/[\.\:\$\/\=]/g, '-');
+    const id = uniqueId();
     this.styleId = `style-id${id}`;
     updatePseudoClassStyle(this.styleId, this.props, this.preventFocusStyleForTouchAndClick);
   }
