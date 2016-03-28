@@ -572,7 +572,7 @@ export default class ComboBox extends Component {
    * Returns the value of the child with a certain index.
    */
   _getValueForIndex(index) {
-    return this.props.children[index].props.value;
+    return this.filteredOptions[index].props.value;
   }
 
   /**
