@@ -82,30 +82,6 @@ describe('ComboBox', () => {
     expect(isSelect).toBe(true);
   });
 
-  it('should be able to provide a valueLink', () => {
-    // let wasCalled = false;
-
-    const valueLink = {
-      requestChange: () => undefined,
-      value: 'vie',
-    };
-
-    const combobox = TestUtils.renderIntoDocument(
-      <ComboBox valueLink={ valueLink }>
-        <Option value="vienna">Rome</Option>
-        <Option value="vienna123" className="vienna-option">Vienna</Option>
-      </ComboBox>
-    );
-
-    expect(combobox.filteredOptions.length).toBe(2);
-
-    const viennaOptionNode = TestUtils.scryRenderedDOMComponentsWithClass(combobox, 'vienna-option');
-    TestUtils.Simulate.click(viennaOptionNode);
-
-    // strangely line below is failing
-    // expect(wasCalled).toBeTruthy();
-  });
-
   it('should change the inputValue on selection', () => {
     const combobox = TestUtils.renderIntoDocument(
       <ComboBox defaultValue="vie">
@@ -130,7 +106,7 @@ describe('ComboBox', () => {
 
     const selectedAreaNode = TestUtils.scryRenderedDOMComponentsWithTag(combobox, 'input')[1];
     expect(selectedAreaNode.hasAttribute('style')).toBeTruthy();
-    expect(selectedAreaNode.getAttribute('style').indexOf('cursor:cross') > -1).toBeTruthy();
+    expect(selectedAreaNode.getAttribute('style').indexOf('cursor: cross') > -1).toBeTruthy();
   });
 
   describe('updating props', () => {

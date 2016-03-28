@@ -1,6 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { omit, filter, filterReactChildren, find, first, flattenReactChildren, isEmpty, findIndex, has, some, uniqueId } from '../utils/helpers';
+import {
+  omit,
+  filter,
+  filterReactChildren,
+  find,
+  first,
+  flattenReactChildren,
+  isEmpty,
+  findIndex,
+  has,
+  some,
+  last,
+  uniqueId,
+} from '../utils/helpers';
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
