@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Card, Spinner } from 'belle';
+import Spinner from '../../belle-classic/Spinner';
+import Button from '../../belle-classic/Button';
+import Card from '../../belle-classic/Card';
 
 export default React.createClass({
-
   render() {
     return (
       <Card>
@@ -25,5 +26,4 @@ export default React.createClass({
       </Card>
     );
   },
-
 });

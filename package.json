@@ -89,6 +89,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.3",
-    "exenv": "^1.2.0"
+    "exenv": "^1.2.0",
+    "union-class-names": "^1.0.0"
   }
 }
