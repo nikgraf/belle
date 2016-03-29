@@ -1,7 +1,8 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React from 'react';
-import { Button, Card, Spinner } from 'belle';
+import { Button, Spinner } from 'belle';
+import Card from 'belle-classic/Card';
 import Code from '../Code';
 import { propertyNameStyle, propertyDescriptionStyle } from '../../style';
 

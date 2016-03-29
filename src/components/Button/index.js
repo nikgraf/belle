@@ -14,6 +14,7 @@ const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unu
  * set to `button`.
  */
 function sanitizeChildProps(properties) {
+  /* eslint-disable no-use-before-define */
   const {
     className, // eslint-disable-line no-unused-vars
     style, // eslint-disable-line no-unused-vars
@@ -33,6 +34,8 @@ function sanitizeChildProps(properties) {
     onBlur, // eslint-disable-line no-unused-vars
     ...childProps,
   } = properties;
+  /* eslint-enable no-use-before-define */
+
   return childProps;
 }
 

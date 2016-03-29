@@ -1,7 +1,8 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React, { Component } from 'react';
-import { Card, Toggle } from 'belle';
+import { Toggle } from 'belle';
+import Card from 'belle-classic/Card';
 import Code from '../Code';
 
 const basicToggleExample = `<!-- all the JSX code you need -->

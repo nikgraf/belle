@@ -187,8 +187,7 @@ const dataCodeExampleThreePartTwo = `<ComboBox placeholder = { 'Choose a Currenc
   }
 </ComboBox>`;
 
-const dataCodeExampleFourPartOne = `
-const babyNames = ['Palma', 'Paloma', 'Pamella', 'Paris', 'Patti', 'Paulina', 'Pearl', 'Pearlie'];`;
+const dataCodeExampleFourPartOne = 'const babyNames = [\'Palma\', \'Paloma\', \'Pamella\', \'Paris\', \'Patti\', \'Paulina\', \'Pearl\', \'Pearlie\'];';
 
 const dataCodeExampleFourPartTwo = `<ComboBox enableHint
           filterFunc = { customFilterFunc }

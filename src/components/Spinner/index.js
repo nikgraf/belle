@@ -22,7 +22,7 @@ export default class Spinner extends Component {
   };
 
   render() {
-    const { style, characterProps, characterStyle, ...childProps } = this.props;
+    const { style, characterProps, characterStyle, ...childProps } = this.props; // eslint-disable-line no-use-before-define
     const computedCharStyle = { ...spinnerStyle.characterStyle, ...characterStyle };
     return (
       <span {...childProps} style={{ ...spinnerStyle.style, ...style }}>

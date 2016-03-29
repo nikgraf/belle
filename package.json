@@ -26,7 +26,7 @@
     "react-dom": ">=0.14.0 || ^15.0.0-rc"
   },
   "scripts": {
-    "build": "BABEL_ENV=production node_modules/.bin/babel --out-dir='lib' --ignore='__tests__/*' src",
+    "build": "BABEL_ENV=production ./node_modules/.bin/babel --out-dir='lib' --ignore='__tests__/*' src",
     "prepublish": "npm run build",
     "postpublish": "./scripts/publish_gh_pages.sh",
     "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
@@ -53,10 +53,12 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
     "eslint": "^2.5.3",
     "eslint-config-airbnb": "6.2.0",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",
+    "extract-text-webpack-plugin": "^1.0.1",
     "jest-cli": "^0.9.2",
     "jscs": "^2.11.0",
     "react": "^15.0.0-rc.2",
@@ -65,6 +67,7 @@
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
@@ -85,6 +88,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.3",
     "exenv": "^1.2.0"
   }
 }

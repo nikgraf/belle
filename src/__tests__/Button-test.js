@@ -15,14 +15,13 @@ const injectStyle = require('../utils/inject-style');
 
 describe('Button', () => {
   describe('without any properties', () => {
-    let button;
+    const button = TestUtils.renderIntoDocument(
+      <Button>Follow</Button>
+    );
     let buttonNode;
 
     beforeEach(() => {
       injectStyle.injectStyles = jest.genMockFunction();
-      button = TestUtils.renderIntoDocument(
-        <Button>Follow</Button>
-      );
       buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
     });
 
@@ -32,14 +31,6 @@ describe('Button', () => {
 
     it('should set the type to button by default', () => {
       expect(buttonNode.type).toBe('button');
-    });
-
-    it('should inject styles for active & foucs', () => {
-      expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
-
-      const styles = injectStyle.injectStyles.mock.calls[0][0];
-      expect(styles[0].pseudoClass).toBe('active');
-      expect(styles[2].pseudoClass).toBe('focus');
     });
   });
 

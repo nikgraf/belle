@@ -242,7 +242,14 @@ describe('DatePicker', () => {
   it('should change selectedDate when a day receives mouseDown with button 0', () => {
     let dateSelected;
     const datePicker = TestUtils.renderIntoDocument(
-      <DatePicker dayProps={{ className: 'day_test' }} onUpdate={ (obj) => { dateSelected = obj.value; } } />
+      <DatePicker
+        dayProps={{ className: 'day_test' }}
+        onUpdate={
+          (obj) => {
+            dateSelected = obj.value;
+          }
+        }
+      />
     );
 
     expect(datePicker.state.selectedDate).toBeUndefined();

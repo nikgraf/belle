@@ -1,7 +1,9 @@
-import React from 'react';
-import { Card } from 'belle';
+/* @flow */
 
-export default React.createClass({
+import React, { Component } from 'react';
+import Card from '../../belle-classic/Card';
+
+export default class CardPlayground extends Component {
 
   render() {
     return (
@@ -10,7 +12,12 @@ export default React.createClass({
 
         <Card><p>Looks nice!</p></Card>
 
-        <Card style={{ color: '#2994BB' }} data-custom-attribute={'custom'}>What about another font color?</Card>
+        <Card
+          className="test"
+          data-custom-attribute={'custom'}
+        >
+          What about another font color?
+        </Card>
 
         <Card>
           <div>Looks nice!</div>
@@ -19,5 +26,5 @@ export default React.createClass({
 
       </div>
     );
-  },
-});
+  }
+}
