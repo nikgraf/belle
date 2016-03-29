@@ -1,0 +1,50 @@
+.base {
+  background: rgb(83, 199, 242);
+  border-width: 1px 0px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgb(83, 199, 242);
+  border-bottom-color: rgb(57, 149, 183);
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: rgb(250, 250, 250);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 26px;
+  padding: 8px 14px 6px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: bottom;
+
+  /* animations */
+  transition: border-top 0.1s ease-out, border-bottom 0.1s, color 0.1s;
+  transition-timing-function: ease-out;
+
+  /*
+  To avoid any kind of flickering the user won't get feedback
+  for selecting the button text
+  */
+  user-select: none;
+
+  /* This button can only be pressed */
+  touch-action: manipulation;
+
+  /*
+  Prevent flickering while tapping on WebKit
+  http://stackoverflow.com/a/3516243/837709
+  */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.base:hover, .base:focus {
+}
+
+.base:active {
+}
+
+.base:disabled {
+}
+
+.base:disabled:hover {
+}

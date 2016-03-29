@@ -1,7 +1,6 @@
 /* global jest describe beforeEach it expect */
 
 jest.dontMock('../components/Card');
-jest.dontMock('../utils/inject-style');
 
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
