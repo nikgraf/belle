@@ -54,7 +54,7 @@ const style = {
  */
 export default class Style extends Component {
 
-  render(): ReactElement {
+  render() {
     return (
       <div
         style={ style }

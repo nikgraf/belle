@@ -25,6 +25,7 @@ export default class Button extends Component {
 
   static defaultProps = {
     type: 'button',
+    theme: {},
   };
 
   render() {
