@@ -1,7 +1,8 @@
-import React from 'react';
-import { Button, Card } from 'belle';
+import React, { Component } from 'react';
+import Card from '../../belle-classic/Card';
+import Button from '../../belle-classic/Button';
 
-export default React.createClass({
+export default class ButtonPlayground extends Component {
 
   render() {
     return (
@@ -25,14 +26,7 @@ export default React.createClass({
 
         <h3>Disabled Primary Button</h3>
         <Button disabled primary>Press me …</Button>
-
-        <h3>Colored Buttons</h3>
-        <Button primary hoverStyle={{ color: 'blue' }}>Primary Button</Button>
-
-        <Button primary hoverStyle={{ color: 'red' }}>Primary Button</Button>
-
-        <Button primary hoverStyle={{ color: 'green' }}>Primary Button</Button>
       </Card>
     );
-  },
-});
+  }
+}
