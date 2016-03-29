@@ -38,13 +38,30 @@
 }
 
 .base:hover, .base:focus {
+  background: #82D9F9;
+  border-top: 1px solid #82D9F9;
+  color: #FFF;
+  /* avoid default focus behaviour */
+  outline: 0;
 }
 
 .base:active {
+  background: #4DBEE8;
+  border-bottom: 1px solid #4DBEE8;
+  border-top: 1px solid #3995B7;
+  color: #F5F5F5;
 }
 
 .base:disabled {
+  background: #98DEF8;
+  color: #FAFAFA;
+  border-top: 1px solid #98DEF8;
+  border-bottom: 1px solid #74B4CC;
+  cursor: not-allowed;
 }
 
 .base:disabled:hover {
+  background: #A7E4FB;
+  color: #FFF;
+  border-top: 1px solid #A7E4FB;
 }

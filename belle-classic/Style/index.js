@@ -3,16 +3,13 @@
 import React, { Component } from 'react';
 
 const style = {
-  background: '#53C7F2',
+  background: '#EEEEEE',
   border: 0,
-
-  // boxShadow: '0 1px 0px #3995B7',
-  borderTop: '1px solid #53C7F2',
-  borderBottom: '1px solid #3995B7',
-
+  borderTop: '1px solid #EEEEEE',
+  borderBottom: '1px solid #BDBDBD',
   borderRadius: 2,
   boxSizing: 'border-box',
-  color: '#FAFAFA',
+  color: '#616161',
   cursor: 'pointer',
   display: 'inline-block',
   fontSize: 17,
@@ -21,29 +18,6 @@ const style = {
   textAlign: 'center',
   textDecoration: 'none',
   verticalAlign: 'bottom',
-
-  /* animations */
-  transition: 'border-top 0.1s, border-bottom 0.1s, color 0.1s',
-  transitionTimingFunction: 'ease-out',
-
-  /*
-  To avoid any kind of flickering the user won't get feedback
-  for selecting the button text
-  */
-  WebkitUserSelect: 'none',
-  MozUserSelect: 'none',
-  MsUserSelect: 'none',
-  userSelect: 'none',
-
-  /* This button can only be pressed */
-  MsTouchAction: 'manipulation',
-  touchAction: 'manipulation',
-
-  /*
-  Prevent flickering while tapping on WebKit
-  http://stackoverflow.com/a/3516243/837709
-  */
-  WebkitTapHighlightColor: 'transparent',
 };
 
 /**
