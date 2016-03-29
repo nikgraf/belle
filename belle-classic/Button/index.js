@@ -3,6 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import CoreButton from '../../src/components/Button';
 import defaultTheme from './defaultTheme.css';
+import primaryTheme from './primaryTheme.css';
 
 /**
  * Button component
@@ -26,7 +27,7 @@ export default class Button extends Component {
     if (theme) {
       newTheme = theme;
     } else if (primary) {
-      newTheme = defaultTheme;
+      newTheme = primaryTheme;
     } else {
       newTheme = defaultTheme;
     }
