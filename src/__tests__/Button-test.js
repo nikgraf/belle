@@ -32,14 +32,6 @@ describe('Button', () => {
     it('should set the type to button by default', () => {
       expect(buttonNode.type).toBe('button');
     });
-
-    it('should inject styles for active & foucs', () => {
-      expect(injectStyle.injectStyles.mock.calls.length).toBe(1);
-
-      const styles = injectStyle.injectStyles.mock.calls[0][0];
-      expect(styles[0].pseudoClass).toBe('active');
-      expect(styles[2].pseudoClass).toBe('focus');
-    });
   });
 
   it('should be able to bind onClick', () => {
