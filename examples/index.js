@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CardPlayground from './components/CardPlayground';
 import ButtonPlayground from './components/ButtonPlayground';
+import SpinnerPlayground from './components/SpinnerPlayground';
 
 // import SelectPlayground from './components/SelectPlayground';
-// import SpinnerPlayground from './components/SpinnerPlayground';
 // import TextInputPlayground from './components/TextInputPlayground';
 // import RatingPlayground from './components/RatingPlayground';
 // import ComboBoxPlayground from './components/ComboBoxPlayground';
@@ -22,12 +22,13 @@ const App = () => (
     <ButtonPlayground />
     <CardPlayground />
     <Style />
+    <SpinnerPlayground />
   </div>
 );
 
 ReactDOM.render(<App />, document.getElementById('react'));
 
-// <SpinnerPlayground />
+
 // <DatePickerPlayground />
 // <TogglePlayground />
 // <SelectPlayground />

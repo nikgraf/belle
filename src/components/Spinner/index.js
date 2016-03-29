@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import spinnerStyle from './styles';
+import unionClassNames from 'union-class-names';
 
 const animationDelay = (delay) => ({
   MozAnimationDelay: delay,
@@ -17,22 +17,21 @@ export default class Spinner extends Component {
 
   static propTypes = {
     characterProps: PropTypes.object,
-    characterStyle: PropTypes.object,
-    style: PropTypes.object,
+    theme: PropTypes.objectOf(PropTypes.string).isRequired,
+    className: PropTypes.string,
   };
 
   render() {
-    const { style, characterProps, characterStyle, ...childProps } = this.props; // eslint-disable-line no-use-before-define
-    const computedCharStyle = { ...spinnerStyle.characterStyle, ...characterStyle };
+    const { className, theme, characterProps, ...childProps } = this.props; // eslint-disable-line no-use-before-define
     return (
-      <span {...childProps} style={{ ...spinnerStyle.style, ...style }}>
-        <span {...characterProps} style={ computedCharStyle }>
+      <span {...childProps} className={unionClassNames(theme.base, className)}>
+        <span className={ theme.character } {...characterProps} >
           .
         </span>
-        <span {...characterProps} style={{ ...computedCharStyle, ...animationDelay('400ms') }}>
+        <span {...characterProps} className={ theme.character } {...animationDelay('400ms')}>
           .
         </span>
-        <span {...characterProps} style={{ ...computedCharStyle, ...animationDelay('800ms') }}>
+        <span {...characterProps} className={ theme.character } {...animationDelay('800ms')}>
           .
         </span>
       </span>

@@ -1,0 +1,32 @@
+.base{
+  display: inline-block;
+  font-size: 15px;
+  text-align: center;
+}
+
+.character{
+  color: #666;
+  display: inline-block;
+  webkit-animation: belle-spinner-pulse 2s infinite ease-in-out;
+  o-animation: belle-spinner-pulse 2s infinite ease-in-out;
+  animation: belle-spinner-pulse 2s infinite ease-in-out;
+}
+
+@-webkit-keyframes belle-spinner-pulse { 
+  0%, 90%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes belle-spinner-pulse {
+  0%, 90%, 100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
