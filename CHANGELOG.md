@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.6 - 2016-04-05
+
+### Fixed
+- [Rating] Fixed an issue in Safari where selecting a rating was not possible [#277](https://github.com/nikgraf/belle/issues/277)
+
 ## 2.0.5 - 2016-03-28
 
 ### Changed
