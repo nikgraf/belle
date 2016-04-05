@@ -274,7 +274,7 @@ export default class Rating extends Component {
    * Sets isActive state to true.
    */
   _onMouseDown = (event) => {
-    if (!this.props.disabled && event.buttons === 1) {
+    if (!this.props.disabled && event.button === 0) {
       this.setState({ isActive: true });
       this.preventNextMouseUpTriggerUpdate = false;
     }
