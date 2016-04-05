@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.7 - 2016-04-05
+
+Due connection issues to NPM I republished it.
+
 ## 2.0.6 - 2016-04-05
 
 ### Fixed
