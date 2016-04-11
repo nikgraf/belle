@@ -85,6 +85,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "exenv": "^1.2.0"
+    "exenv": "^1.2.1"
   }
 }
