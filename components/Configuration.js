@@ -313,7 +313,7 @@ export default class Configuration extends Component {
           <li><span style={{ fontWeight: 'bold' }}>monthNames</span>: Array for month names from January to December</li>
           <li><span style={{ fontWeight: 'bold' }}>dayNamesMin</span>: Array for day short names</li>
           <li><span style={{ fontWeight: 'bold' }}>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={{ fontWeight: 'bold' }}>weenEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
+          <li><span style={{ fontWeight: 'bold' }}>weekEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
           <li><span style={{ fontWeight: 'bold' }}>isRTL</span>: The text in that locale is written from right to left</li>
         </ul>
         In case any of these fields is not provided the defaults for English calendar will be used.
