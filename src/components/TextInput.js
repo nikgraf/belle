@@ -29,6 +29,7 @@ function sanitizeChildProps(properties) {
     'focusStyle',
     'disabledStyle',
     'disabledHoverStyle',
+    'allowNewLine',
   ]);
   if (typeof properties.valueLink === 'object') {
     childProps.value = properties.valueLink.value;
