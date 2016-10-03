@@ -7,38 +7,48 @@ import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
 import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
 
+const ratingPropTypes = {
+  defaultValue: PropTypes.oneOf([1, 2, 3, 4, 5]),
+  value: PropTypes.oneOf([1, 2, 3, 4, 5]),
+  valueLink: PropTypes.shape({
+    value: PropTypes.oneOf([1, 2, 3, 4, 5]),
+    requestChange: PropTypes.func.isRequired,
+  }),
+  disabled: PropTypes.bool,
+  tabIndex: PropTypes.number,
+  character: PropTypes.string,
+  characterProps: PropTypes.object,
+  preventFocusStyleForTouchAndClick: PropTypes.bool,
+  'aria-label': PropTypes.string,
+  style: PropTypes.object,
+  className: PropTypes.string,
+  focusStyle: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+  characterStyle: PropTypes.object,
+  activeCharacterStyle: PropTypes.object,
+  hoverCharacterStyle: PropTypes.object,
+  onUpdate: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseMove: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onTouchStart: PropTypes.func,
+  onTouchMove: PropTypes.func,
+  onTouchEnd: PropTypes.func,
+  onTouchCancel: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onKeyDown: PropTypes.func,
+};
+
 /**
  * sanitize properties for the wrapping div.
  */
 function sanitizeWrapperProps(properties) {
-  return omit(properties, [
-    'className',
-    'onKeyDown',
-    'onMouseEnter',
-    'onMouseMove',
-    'onMouseLeave',
-    'onMouseUp',
-    'onMouseDown',
-    'onTouchStart',
-    'onTouchMove',
-    'onTouchEnd',
-    'onTouchCancel',
-    'onBlur',
-    'onFocus',
-    'tabIndex',
-    'aria-label',
-    'aria-valuemax',
-    'aria-valuemin',
-    'aria-valuenow',
-    'aria-disabled',
-    'style',
-    'focusStyle',
-    'disabledStyle',
-    'characterStyle',
-    'activeCharacterStyle',
-    'hoverCharacterStyle',
-    'characterProps',
-  ]);
+  return omit(properties, Object.keys(ratingPropTypes));
 }
 
 /**
@@ -110,42 +120,7 @@ export default class Rating extends Component {
 
   static displayName = 'Rating';
 
-  static propTypes = {
-    defaultValue: PropTypes.oneOf([1, 2, 3, 4, 5]),
-    value: PropTypes.oneOf([1, 2, 3, 4, 5]),
-    valueLink: PropTypes.shape({
-      value: PropTypes.oneOf([1, 2, 3, 4, 5]),
-      requestChange: PropTypes.func.isRequired,
-    }),
-    disabled: PropTypes.bool,
-    tabIndex: PropTypes.number,
-    character: PropTypes.string,
-    characterProps: PropTypes.object,
-    preventFocusStyleForTouchAndClick: PropTypes.bool,
-    'aria-label': PropTypes.string,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    focusStyle: PropTypes.object,
-    disabledStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-    characterStyle: PropTypes.object,
-    activeCharacterStyle: PropTypes.object,
-    hoverCharacterStyle: PropTypes.object,
-    onUpdate: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseMove: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onTouchStart: PropTypes.func,
-    onTouchMove: PropTypes.func,
-    onTouchEnd: PropTypes.func,
-    onTouchCancel: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onKeyDown: PropTypes.func,
-  };
+  static propTypes = ratingPropTypes;
 
   /**
    * Setting default prop values.

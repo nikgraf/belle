@@ -1,11 +1,37 @@
 import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
-import { has, uniqueId } from '../utils/helpers';
+import { has, omit, uniqueId } from '../utils/helpers';
 import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import config from '../config/button';
 
 const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
+
+const buttonPropTypes = {
+  activeStyle: PropTypes.object,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  type: PropTypes.oneOf(buttonTypes),
+  style: PropTypes.object,
+  focusStyle: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+  onTouchStart: PropTypes.func,
+  onTouchEnd: PropTypes.func,
+  onTouchCancel: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  preventFocusStyleForTouchAndClick: PropTypes.bool,
+  primary: PropTypes.bool,
+};
 
 /**
  * Returns an object with properties that are relevant for the button element.
@@ -14,26 +40,7 @@ const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unu
  * set to `button`.
  */
 function sanitizeChildProps(properties) {
-  const {
-    className, // eslint-disable-line no-unused-vars
-    style, // eslint-disable-line no-unused-vars
-    hoverStyle, // eslint-disable-line no-unused-vars
-    focusStyle, // eslint-disable-line no-unused-vars
-    activeStyle, // eslint-disable-line no-unused-vars
-    disabledStyle, // eslint-disable-line no-unused-vars
-    disabledHoverStyle, // eslint-disable-line no-unused-vars
-    primary, // eslint-disable-line no-unused-vars
-    onTouchStart, // eslint-disable-line no-unused-vars
-    onTouchEnd, // eslint-disable-line no-unused-vars
-    onTouchCancel, // eslint-disable-line no-unused-vars
-    onMouseDown, // eslint-disable-line no-unused-vars
-    onMouseEnter, // eslint-disable-line no-unused-vars
-    onMouseLeave, // eslint-disable-line no-unused-vars
-    onFocus, // eslint-disable-line no-unused-vars
-    onBlur, // eslint-disable-line no-unused-vars
-    ...childProps,
-  } = properties;
-  return childProps;
+  return omit(properties, Object.keys(buttonPropTypes));
 }
 
 /**
@@ -132,31 +139,7 @@ export default class Button extends Component {
 
   static displayName = 'Button';
 
-  static propTypes = {
-    activeStyle: PropTypes.object,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    type: PropTypes.oneOf(buttonTypes),
-    style: PropTypes.object,
-    focusStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    disabledStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-    onTouchStart: PropTypes.func,
-    onTouchEnd: PropTypes.func,
-    onTouchCancel: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    preventFocusStyleForTouchAndClick: PropTypes.bool,
-    primary: PropTypes.bool,
-  };
+  static propTypes = buttonPropTypes;
 
   static defaultProps = {
     primary: false,
@@ -375,6 +358,8 @@ export default class Button extends Component {
         onMouseDown={ this._onMouseDown }
         onMouseEnter={ this._onMouseEnter }
         onMouseLeave={ this._onMouseLeave }
+        disabled={ this.props.disabled }
+        type={ this.props.type }
         {...this.state.childProps}
       >
         { this.props.children }

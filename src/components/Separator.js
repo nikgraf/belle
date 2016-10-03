@@ -2,11 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { omit } from '../utils/helpers';
 import style from '../style/separator';
 
+const separatorPropTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  style: PropTypes.object,
+};
+
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProps(properties) {
-  return omit(properties, ['style']);
+  return omit(properties, Object.keys(separatorPropTypes));
 }
 
 /**
@@ -25,13 +33,7 @@ export default class Separator extends Component {
 
   static displayName = 'Separator';
 
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    style: PropTypes.object,
-  };
+  static propTypes = separatorPropTypes;
 
   /**
    * Update the childProperties based on the updated properties passed to the

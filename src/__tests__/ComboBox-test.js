@@ -33,7 +33,7 @@ describe('ComboBox', () => {
       </ComboBox>
     );
 
-    expect(combobox.state.inputValue).toBe(undefined);
+    expect(combobox.state.inputValue).toBe('');
     expect(React.Children.count(combobox.filteredOptions)).toBe(2);
   });
 

@@ -2,18 +2,33 @@ import React, { Component, PropTypes } from 'react';
 import { omit } from '../utils/helpers';
 import style from '../style/option';
 
+const optionPropTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  style: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  selectStyle: PropTypes.object,
+  disabledSelectStyle: PropTypes.object,
+  _isDisplayedAsSelected: PropTypes.bool,
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  identifier: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+};
+
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProps(properties) {
-  return omit(properties, [
-    'style',
-    'hoverStyle',
-    'selectStyle',
-    'disabledSelectStyle',
-    'value',
-    '_isDisplayedAsSelected',
-  ]);
+  return omit(properties, Object.keys(optionPropTypes));
 }
 
 /**
@@ -32,22 +47,7 @@ export default class Option extends Component {
 
   static displayName = 'Option';
 
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    style: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    selectStyle: PropTypes.object,
-    disabledSelectStyle: PropTypes.object,
-    _isDisplayedAsSelected: PropTypes.bool,
-    value: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-  };
+  static propTypes = optionPropTypes;
 
   static contextTypes = {
     isDisabled: PropTypes.bool.isRequired,

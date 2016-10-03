@@ -5,6 +5,45 @@ import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren
 import style from '../style/combo-box';
 import ComboBoxItem from '../components/ComboBoxItem';
 
+const comboBoxPropTypes = {
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  valueLink: PropTypes.shape({
+    value: PropTypes.string,
+    requestChange: PropTypes.func.isRequired,
+  }),
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  wrapperProps: PropTypes.object,
+  menuProps: PropTypes.object,
+  caretProps: PropTypes.object,
+  onUpdate: PropTypes.func,
+  onInputMatch: PropTypes.func,
+  tabIndex: PropTypes.number,
+  onKeyDown: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  className: PropTypes.string,
+  caretClassName: PropTypes.string,
+  style: PropTypes.object,
+  wrapperStyle: PropTypes.object,
+  hintStyle: PropTypes.object,
+  menuStyle: PropTypes.object,
+  focusStyle: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  caretToOpenStyle: PropTypes.object,
+  caretToCloseStyle: PropTypes.object,
+  disabledCaretToOpenStyle: PropTypes.object,
+  maxOptions: PropTypes.number,
+  displayCaret: PropTypes.bool,
+  enableHint: PropTypes.bool,
+  filterFunc: PropTypes.func,
+  'aria-label': PropTypes.string,
+};
+
 /**
  * Update hover style for the specified styleId.
  *
@@ -70,26 +109,7 @@ function sanitizeWrapperProps(properties) {
  * Returns an object with properties that are relevant for the input box.
  */
 function sanitizeInputProps(properties) {
-  return omit(properties, [
-    'ref',
-    'value',
-    'valueLink',
-    'defaultValue',
-    'placeholder',
-    'disabled',
-    'hintStyle',
-    'className',
-    'style',
-    'onUpdate',
-    'onInputMatch',
-    'tabIndex',
-    'onBlur',
-    'onFocus',
-    'onKeyDown',
-    'aria-disabled',
-    'aria-autocomplete',
-    'children',
-  ]);
+  return omit(properties, Object.keys(comboBoxPropTypes));
 }
 
 /**
@@ -147,7 +167,7 @@ export default class ComboBox extends Component {
     this.state = {
       isOpen: false,
       focusedOptionIndex: undefined,
-      inputValue,
+      inputValue: inputValue || '',
       wrapperProps: sanitizeWrapperProps(properties.wrapperProps),
       inputProps: sanitizeInputProps(properties),
       caretProps: sanitizeCaretProps(properties.caretProps),
@@ -159,44 +179,7 @@ export default class ComboBox extends Component {
 
   static displayName = 'ComboBox';
 
-  static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    defaultValue: PropTypes.string,
-    value: PropTypes.string,
-    valueLink: PropTypes.shape({
-      value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired,
-    }),
-    placeholder: PropTypes.string,
-    disabled: PropTypes.bool,
-    wrapperProps: PropTypes.object,
-    menuProps: PropTypes.object,
-    caretProps: PropTypes.object,
-    onUpdate: PropTypes.func,
-    onInputMatch: PropTypes.func,
-    tabIndex: PropTypes.number,
-    onKeyDown: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    className: PropTypes.string,
-    caretClassName: PropTypes.string,
-    style: PropTypes.object,
-    wrapperStyle: PropTypes.object,
-    hintStyle: PropTypes.object,
-    menuStyle: PropTypes.object,
-    focusStyle: PropTypes.object,
-    disabledStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    caretToOpenStyle: PropTypes.object,
-    caretToCloseStyle: PropTypes.object,
-    disabledCaretToOpenStyle: PropTypes.object,
-    maxOptions: PropTypes.number,
-    displayCaret: PropTypes.bool,
-    enableHint: PropTypes.bool,
-    filterFunc: PropTypes.func,
-    'aria-label': PropTypes.string,
-  };
+  static propTypes = comboBoxPropTypes;
 
   static childContextTypes = {
     isDisabled: PropTypes.bool.isRequired,
@@ -290,9 +273,9 @@ export default class ComboBox extends Component {
     };
 
     if (has(properties, 'valueLink')) {
-      newState.inputValue = properties.valueLink.value;
+      newState.inputValue = properties.valueLink.value || '';
     } else if (has(properties, 'value')) {
-      newState.inputValue = properties.value;
+      newState.inputValue = properties.value || '';
     }
 
     if (newState.inputValue) {
@@ -710,6 +693,7 @@ export default class ComboBox extends Component {
           style={ hintStyle }
           value={ hint }
           tabIndex = { -1 }
+          key="style-hint"
           readOnly
         />
 
@@ -726,6 +710,7 @@ export default class ComboBox extends Component {
           onFocus={ this._onFocus }
           onKeyDown={ this._onKeyDown }
           aria-autocomplete="list"
+          key="combo-input"
           {...this.state.inputProps}
         />
         <span

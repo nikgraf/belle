@@ -9,27 +9,98 @@ import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-
 import unionClassNames from '../utils/union-class-names';
 import Choice from '../components/Choice';
 
+/**
+ * Verifies that the children is an array containing only two choices with a
+ * different value.
+ */
+function validateChoices(props, propName, componentName) {
+  const propValue = props[propName];
+  if (!propValue) {
+    return undefined;
+  }
+
+  if (!Array.isArray(propValue) || propValue.length !== 2) {
+    return new Error(`Invalid ${propName} supplied to \`${componentName}\`, expected exactly two Choice components.`);
+  }
+
+  for (let i = 0; i < propValue.length; ++i) {
+    const item = propValue[i];
+    if (!item || !isComponentOfType(Choice, item)) {
+      return new Error(`Invalid ${propName}[${i}] supplied to \`${componentName}\`, expected a Choice component from Belle.`);
+    }
+  }
+
+  if (first(propValue).props.value === last(propValue).props.value) {
+    return new Error(`Invalid ${propName} supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
+  }
+
+  return undefined;
+}
+
+const togglePropTypes = {
+  activeHandleStyle: PropTypes.object,
+  children: validateChoices,
+  className: PropTypes.string,
+  defaultValue: PropTypes.bool,
+  disabled: PropTypes.bool,
+  disabledHandleStyle: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  firstChoiceProps: PropTypes.object,
+  firstChoiceStyle: PropTypes.shape({
+    width: PropTypes.number,
+  }),
+  focusStyle: PropTypes.object,
+  handleProps: PropTypes.shape({
+    onMouseDown: PropTypes.func,
+    onMouseMove: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    onTouchMove: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+  }),
+  handleStyle: PropTypes.shape({
+    height: PropTypes.number,
+    width: PropTypes.number,
+  }),
+  hoverHandleStyle: PropTypes.object,
+  onBlur: PropTypes.func,
+  onUpdate: PropTypes.func,
+  onFocus: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onTouchStart: PropTypes.func,
+  secondChoiceProps: PropTypes.object,
+  secondChoiceStyle: PropTypes.shape({
+    width: PropTypes.number,
+  }),
+  sliderProps: PropTypes.shape({
+    onClick: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    onTouchMove: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onTouchCancel: PropTypes.func,
+  }),
+  sliderStyle: PropTypes.object,
+  sliderWrapperProps: PropTypes.object,
+  sliderWrapperStyle: PropTypes.object,
+  style: PropTypes.shape({
+    width: PropTypes.number,
+  }),
+  value: PropTypes.bool,
+  valueLink: PropTypes.shape({
+    value: PropTypes.bool.isRequired,
+    requestChange: PropTypes.func.isRequired,
+  }),
+  wrapperProps: PropTypes.object,
+};
+
 function sanitizeChildProps(properties) {
-  return omit(properties, [
-    'className',
-    'defaultValue',
-    'firstChoiceProps',
-    'focusStyle',
-    'handleProps',
-    'onFocus',
-    'onBlur',
-    'onUpdate',
-    'onMouseDown',
-    'onMouseLeave',
-    'onMouseUp',
-    'onTouchStart',
-    'secondChoiceProps',
-    'sliderProps',
-    'sliderWrapperProps',
-    'style',
-    'tabIndex',
-    'value',
-  ]);
+  return omit(properties, Object.keys(togglePropTypes));
 }
 
 function sanitizeSliderProps(properties) {
@@ -70,37 +141,6 @@ function sanitizeHandleProps(properties) {
     'ref',
     'style',
   ]);
-}
-
-/**
- * Verifies that the provided property is a Choice from Belle.
- */
-function choicePropType(props, propName, componentName) {
-  if (!(props[propName] && isComponentOfType(Choice, props[propName]))) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected a Choice component from Belle.`);
-  }
-
-  return undefined;
-}
-
-/**
- * Verifies that the children is an array containing only two choices with a
- * different value.
- */
-function validateChoices(props, propName, componentName) {
-  const error = PropTypes.arrayOf(choicePropType)(props, propName, componentName);
-  if (error) return error;
-
-  if (props.children && props.children.length !== 2) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected exactly two Choice components.`);
-  }
-
-  if (props.children &&
-      first(props.children).props.value === last(props.children).props.value) {
-    return new Error(`Invalid children supplied to \`${componentName}\`, expected different value properties for the provided Choice components.`);
-  }
-
-  return undefined;
 }
 
 /**
@@ -183,67 +223,7 @@ export default class Toggle extends Component {
 
   static displayName = 'Toggle';
 
-  static propTypes = {
-    activeHandleStyle: PropTypes.object,
-    children: validateChoices,
-    className: PropTypes.string,
-    defaultValue: PropTypes.bool,
-    disabled: PropTypes.bool,
-    disabledHandleStyle: PropTypes.object,
-    disabledStyle: PropTypes.object,
-    firstChoiceProps: PropTypes.object,
-    firstChoiceStyle: PropTypes.shape({
-      width: PropTypes.number,
-    }),
-    focusStyle: PropTypes.object,
-    handleProps: PropTypes.shape({
-      onMouseDown: PropTypes.func,
-      onMouseMove: PropTypes.func,
-      onMouseUp: PropTypes.func,
-      onMouseLeave: PropTypes.func,
-      onTouchStart: PropTypes.func,
-      onTouchMove: PropTypes.func,
-      onTouchEnd: PropTypes.func,
-      onTouchCancel: PropTypes.func,
-    }),
-    handleStyle: PropTypes.shape({
-      height: PropTypes.number,
-      width: PropTypes.number,
-    }),
-    hoverHandleStyle: PropTypes.object,
-    onBlur: PropTypes.func,
-    onUpdate: PropTypes.func,
-    onFocus: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    onTouchStart: PropTypes.func,
-    secondChoiceProps: PropTypes.object,
-    secondChoiceStyle: PropTypes.shape({
-      width: PropTypes.number,
-    }),
-    sliderProps: PropTypes.shape({
-      onClick: PropTypes.func,
-      onTouchStart: PropTypes.func,
-      onTouchMove: PropTypes.func,
-      onTouchEnd: PropTypes.func,
-      onTouchCancel: PropTypes.func,
-    }),
-    sliderStyle: PropTypes.object,
-    sliderWrapperProps: PropTypes.object,
-    sliderWrapperStyle: PropTypes.object,
-    style: PropTypes.shape({
-      width: PropTypes.number,
-    }),
-    value: PropTypes.bool,
-    valueLink: PropTypes.shape({
-      value: PropTypes.bool.isRequired,
-      requestChange: PropTypes.func.isRequired,
-    }),
-    wrapperProps: PropTypes.object,
-  };
+  static propTypes = togglePropTypes;
 
   static defaultProps = {
     disabled: false,
