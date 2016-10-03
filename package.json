@@ -15,10 +15,10 @@
   "dependencies": {
     "highlight.js": "=9.2.0",
     "history": "^2.0.1",
-    "react": "=15.0.0-rc.2",
-    "react-addons-linked-state-mixin": "^=15.0.0-rc.2",
-    "react-dom": "^=15.0.0-rc.2",
-    "react-router": "=v2.0.1",
+    "react": "^=15.3.2",
+    "react-addons-linked-state-mixin": "^=15.3.2",
+    "react-dom": "^=15.3.2",
+    "react-router": "=v2.5.2",
     "uglify-js": "=2.6.2",
     "underscore": "=1.8.3"
   },

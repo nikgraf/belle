@@ -309,13 +309,15 @@ export default class Configuration extends Component {
 
       <p>
         Localization support exist for date picker component. For date picker following parameters are required to be provided for a locale:
-        <ul>
-          <li><span style={{ fontWeight: 'bold' }}>monthNames</span>: Array for month names from January to December</li>
-          <li><span style={{ fontWeight: 'bold' }}>dayNamesMin</span>: Array for day short names</li>
-          <li><span style={{ fontWeight: 'bold' }}>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={{ fontWeight: 'bold' }}>weekEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
-          <li><span style={{ fontWeight: 'bold' }}>isRTL</span>: The text in that locale is written from right to left</li>
-        </ul>
+      </p>
+      <ul>
+        <li><span style={{ fontWeight: 'bold' }}>monthNames</span>: Array for month names from January to December</li>
+        <li><span style={{ fontWeight: 'bold' }}>dayNamesMin</span>: Array for day short names</li>
+        <li><span style={{ fontWeight: 'bold' }}>firstDay</span>: First day of week (0 for Sunday, 1 for Monday, ...)</li>
+        <li><span style={{ fontWeight: 'bold' }}>weekEnd</span>: Weekend in that locale (0 for Sunday, 1 for Monday, ...)</li>
+        <li><span style={{ fontWeight: 'bold' }}>isRTL</span>: The text in that locale is written from right to left</li>
+      </ul>
+      <p>
         In case any of these fields is not provided the defaults for English calendar will be used.
       </p>
 
