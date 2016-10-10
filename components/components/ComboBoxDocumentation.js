@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
 import React from 'react';
 import { ComboBox, Option } from 'belle';
