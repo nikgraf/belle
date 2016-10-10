@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import React from 'react';
 import { Rating } from 'belle';
 import Code from '../Code';
