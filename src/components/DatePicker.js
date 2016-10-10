@@ -17,25 +17,113 @@ import ActionArea from './ActionArea';
 import DisabledDay from './DisabledDay';
 import Day from './Day';
 
+const datePickerPropTypes = {
+  // value related props
+  defaultValue: PropTypes.instanceOf(Date),
+  value: PropTypes.instanceOf(Date),
+  valueLink: PropTypes.shape({
+    value: PropTypes.instanceOf(Date),
+    requestChange: PropTypes.func.isRequired,
+  }),
+
+  min: PropTypes.instanceOf(Date),
+  max: PropTypes.instanceOf(Date),
+
+  // component config related props
+  locale: PropTypes.string,
+  month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+  defaultMonth: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+  year: PropTypes.number,
+  defaultYear: PropTypes.number,
+  showOtherMonthDate: PropTypes.bool,
+  renderDay: PropTypes.func,
+  tabIndex: PropTypes.number,
+  'aria-label': PropTypes.string,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  preventFocusStyleForTouchAndClick: PropTypes.bool,
+
+  // event callbacks for wrapper
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onTouchStart: PropTypes.func,
+  onTouchEnd: PropTypes.func,
+  onTouchCancel: PropTypes.func,
+
+  // callbacks for change of values
+  onUpdate: PropTypes.func,
+  onMonthUpdate: PropTypes.func,
+
+  // props
+  dayProps: PropTypes.object,
+  navBarProps: PropTypes.object,
+  prevMonthNavProps: PropTypes.object,
+  prevMonthNavIconProps: PropTypes.object,
+  nextMonthNavProps: PropTypes.object,
+  nextMonthNavIconProps: PropTypes.object,
+  monthLabelProps: PropTypes.object,
+  dayLabelProps: PropTypes.object,
+  weekHeaderProps: PropTypes.object,
+  weekGridProps: PropTypes.object,
+
+  // ClassNames
+  className: PropTypes.string,
+
+  // wrapper styles
+  style: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  readOnlyStyle: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  activeStyle: PropTypes.object,
+  focusStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+
+  // navbar styles
+  navBarStyle: PropTypes.object,
+
+  // prevMonthNav styles
+  prevMonthNavStyle: PropTypes.object,
+  prevMonthNavIconStyle: PropTypes.object,
+  hoverPrevMonthNavStyle: PropTypes.object,
+  activePrevMonthNavStyle: PropTypes.object,
+
+  // nextMonthNav styles
+  nextMonthNavStyle: PropTypes.object,
+  nextMonthNavIconStyle: PropTypes.object,
+  hoverNextMonthNavStyle: PropTypes.object,
+  activeNextMonthNavStyle: PropTypes.object,
+
+  weekHeaderStyle: PropTypes.object,
+
+  // monthlbl styles
+  monthLabelStyle: PropTypes.object,
+
+  // daylbl styles
+  dayLabelStyle: PropTypes.object,
+  disabledDayLabelStyle: PropTypes.object,
+  weekendLabelStyle: PropTypes.object,
+
+  // day styles
+  dayStyle: PropTypes.object,
+  disabledDayStyle: PropTypes.object,
+  readOnlyDayStyle: PropTypes.object,
+  activeDayStyle: PropTypes.object,
+  focusDayStyle: PropTypes.object,
+  disabledFocusDayStyle: PropTypes.object,
+  todayStyle: PropTypes.object,
+  selectedDayStyle: PropTypes.object,
+  otherMonthDayStyle: PropTypes.object,
+  weekendStyle: PropTypes.object,
+};
+
 /**
  * Returns an object with properties that are relevant for the wrapping div of the date picker.
  */
 function sanitizeWrapperProps(properties) {
-  return omit(properties, [
-    'tabIndex',
-    'onFocus',
-    'onBlur',
-    'onKeyDown',
-    'onMouseDown',
-    'onMouseUp',
-    'onTouchStart',
-    'onTouchEnd',
-    'onTouchCancel',
-    'aria-label',
-    'disabled',
-    'style',
-    'className',
-  ]);
+  return omit(properties, Object.keys(datePickerPropTypes));
 }
 
 /**
@@ -250,105 +338,7 @@ export default class DatePicker extends Component {
 
   static displayName = 'DatePicker';
 
-  static propTypes = {
-    // value related props
-    defaultValue: PropTypes.instanceOf(Date),
-    value: PropTypes.instanceOf(Date),
-    valueLink: PropTypes.shape({
-      value: PropTypes.instanceOf(Date),
-      requestChange: PropTypes.func.isRequired,
-    }),
-
-    min: PropTypes.instanceOf(Date),
-    max: PropTypes.instanceOf(Date),
-
-    // component config related props
-    locale: PropTypes.string,
-    month: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-    year: PropTypes.number,
-    showOtherMonthDate: PropTypes.bool,
-    renderDay: PropTypes.func,
-    tabIndex: PropTypes.number,
-    'aria-label': PropTypes.string,
-    disabled: PropTypes.bool,
-    readOnly: PropTypes.bool,
-    preventFocusStyleForTouchAndClick: PropTypes.bool,
-
-    // event callbacks for wrapper
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    onTouchStart: PropTypes.func,
-    onTouchEnd: PropTypes.func,
-    onTouchCancel: PropTypes.func,
-
-    // callbacks for change of values
-    onUpdate: PropTypes.func,
-    onMonthUpdate: PropTypes.func,
-
-    // props
-    dayProps: PropTypes.object,
-    navBarProps: PropTypes.object,
-    prevMonthNavProps: PropTypes.object,
-    prevMonthNavIconProps: PropTypes.object,
-    nextMonthNavProps: PropTypes.object,
-    nextMonthNavIconProps: PropTypes.object,
-    monthLabelProps: PropTypes.object,
-    dayLabelProps: PropTypes.object,
-    weekHeaderProps: PropTypes.object,
-    weekGridProps: PropTypes.object,
-
-    // ClassNames
-    className: PropTypes.string,
-
-    // wrapper styles
-    style: PropTypes.object,
-    disabledStyle: PropTypes.object,
-    readOnlyStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    activeStyle: PropTypes.object,
-    focusStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-
-    // navbar styles
-    navBarStyle: PropTypes.object,
-
-    // prevMonthNav styles
-    prevMonthNavStyle: PropTypes.object,
-    prevMonthNavIconStyle: PropTypes.object,
-    hoverPrevMonthNavStyle: PropTypes.object,
-    activePrevMonthNavStyle: PropTypes.object,
-
-    // nextMonthNav styles
-    nextMonthNavStyle: PropTypes.object,
-    nextMonthNavIconStyle: PropTypes.object,
-    hoverNextMonthNavStyle: PropTypes.object,
-    activeNextMonthNavStyle: PropTypes.object,
-
-    weekHeaderStyle: PropTypes.object,
-
-    // monthlbl styles
-    monthLabelStyle: PropTypes.object,
-
-    // daylbl styles
-    dayLabelStyle: PropTypes.object,
-    disabledDayLabelStyle: PropTypes.object,
-    weekendLabelStyle: PropTypes.object,
-
-    // day styles
-    dayStyle: PropTypes.object,
-    disabledDayStyle: PropTypes.object,
-    readOnlyDayStyle: PropTypes.object,
-    activeDayStyle: PropTypes.object,
-    focusDayStyle: PropTypes.object,
-    disabledFocusDayStyle: PropTypes.object,
-    todayStyle: PropTypes.object,
-    selectedDayStyle: PropTypes.object,
-    otherMonthDayStyle: PropTypes.object,
-    weekendStyle: PropTypes.object,
-  };
+  static propTypes = datePickerPropTypes;
 
   static defaultProps = {
     tabIndex: 0,

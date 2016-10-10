@@ -66,6 +66,51 @@ function validateChildrenAreOptionsAndMaximumOnePlaceholder(props, propName, com
   return undefined;
 }
 
+const selectPropTypes = {
+  children: validateChildrenAreOptionsAndMaximumOnePlaceholder,
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.instanceOf(Date),
+  ]),
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  onUpdate: PropTypes.func,
+  valueLink: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    requestChange: PropTypes.func.isRequired,
+  }),
+  className: PropTypes.string,
+  shouldPositionOptions: PropTypes.bool,
+  positionOptions: PropTypes.func,
+  style: PropTypes.object,
+  focusStyle: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  activeStyle: PropTypes.object,
+  wrapperStyle: PropTypes.object,
+  menuStyle: PropTypes.object,
+  caretToOpenStyle: PropTypes.object,
+  caretToCloseStyle: PropTypes.object,
+  wrapperProps: PropTypes.object,
+  menuProps: PropTypes.object,
+  caretProps: PropTypes.object,
+  disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+  disabledCaretToOpenStyle: PropTypes.object,
+  id: PropTypes.string,
+  onClick: PropTypes.func,
+  onTouchCancel: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onTouchEnd: PropTypes.func,
+  onTouchStart: PropTypes.func,
+};
+
 /**
  * Update hover style for the speficied styleId.
  *
@@ -113,36 +158,7 @@ const hasPrevious = (list, currentIndex) => currentIndex - 1 >= 0;
  * the selected option.
  */
 function sanitizeSelectedOptionWrapperProps(properties) {
-  return omit(properties, [
-    'onClick',
-    'style',
-    'className',
-    'ref',
-    'shouldPositionOptions',
-    'positionOptions',
-    'focusStyle',
-    'hoverStyle',
-    'activeStyle',
-    'wrapperStyle',
-    'menuStyle',
-    'caretToOpenStyle',
-    'caretToCloseStyle',
-    'disabledCaretToOpenStyle',
-    'value',
-    'defaultValue',
-    'onUpdate',
-    'valueLink',
-    'role',
-    'aria-expanded',
-    'id',
-    'onTouchStart',
-    'onTouchEnd',
-    'onTouchCancel',
-    'onMouseDown',
-    'onMouseUp',
-    'disabledStyle',
-    'disabledHoverStyle',
-  ]);
+  return omit(properties, Object.keys(selectPropTypes));
 }
 
 /**
@@ -256,50 +272,7 @@ export default class Select extends Component {
 
   static displayName = 'Select';
 
-  static propTypes = {
-    children: validateChildrenAreOptionsAndMaximumOnePlaceholder,
-    value: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.instanceOf(Date),
-    ]),
-    defaultValue: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    onUpdate: PropTypes.func,
-    valueLink: PropTypes.shape({
-      value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired,
-    }),
-    className: PropTypes.string,
-    shouldPositionOptions: PropTypes.bool,
-    positionOptions: PropTypes.func,
-    style: PropTypes.object,
-    focusStyle: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    activeStyle: PropTypes.object,
-    wrapperStyle: PropTypes.object,
-    menuStyle: PropTypes.object,
-    caretToOpenStyle: PropTypes.object,
-    caretToCloseStyle: PropTypes.object,
-    wrapperProps: PropTypes.object,
-    menuProps: PropTypes.object,
-    caretProps: PropTypes.object,
-    disabled: PropTypes.bool,
-    disabledStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-    disabledCaretToOpenStyle: PropTypes.object,
-    id: PropTypes.string,
-    onClick: PropTypes.func,
-    onTouchCancel: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    onTouchEnd: PropTypes.func,
-    onTouchStart: PropTypes.func,
-  };
+  static propTypes = selectPropTypes;
 
   static childContextTypes = {
     isDisabled: PropTypes.bool.isRequired,

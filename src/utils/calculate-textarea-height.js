@@ -1,6 +1,10 @@
 /* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
 
-import { canUseDOM } from 'exenv';
+import { canUseDOM as exenvCanUseDOM } from 'exenv';
+
+// our height calculation logic is not compatible with jsdom
+const isNodeTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+const canUseDOM = exenvCanUseDOM && !isNodeTest;
 
 let hiddenTextarea;
 const computedStyleCache = {};

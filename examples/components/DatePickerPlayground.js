@@ -6,7 +6,7 @@ export default React.createClass({
   _renderDay(day) {
     const date = day.getDate();
     return (
-      <div onMouseDown={::this._onMouseDown}>
+      <div onMouseDown={this._onMouseDown}>
         🎁{ date }
       </div>
     );

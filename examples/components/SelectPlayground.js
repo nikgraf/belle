@@ -28,8 +28,8 @@ export default React.createClass({
       <div>
         <h2>Select</h2>
 
-        <h3>Native Select with value</h3>
-        <select value="B">
+        <h3>Native Select with value (read-only)</h3>
+        <select value="B" readOnly>
           <option value="A">Apple</option>
           <option value="B">Banana</option>
           <option value="C">Cranberry</option>

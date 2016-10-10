@@ -8,6 +8,29 @@ import style from '../style/text-input';
 
 const newLineRegex = /[\r\n]/g;
 
+const textInputPropTypes = {
+  className: PropTypes.string,
+  minHeight: PropTypes.number,
+  maxHeight: PropTypes.number,
+  minRows: PropTypes.number,
+  maxRows: PropTypes.number,
+  style: PropTypes.object,
+  hoverStyle: PropTypes.object,
+  focusStyle: PropTypes.object,
+  allowNewLine: PropTypes.bool,
+  disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
+  disabledHoverStyle: PropTypes.object,
+  onUpdate: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  valueLink: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    requestChange: PropTypes.func.isRequired,
+  }),
+};
+
 /**
  * Returns an object with properties that are relevant for the TextInput's textarea.
  *
@@ -15,21 +38,7 @@ const newLineRegex = /[\r\n]/g;
  * passed down to the textarea, but made available through this component.
  */
 function sanitizeChildProps(properties) {
-  const childProps = omit(properties, [
-    'valueLink',
-    'onUpdate',
-    'onKeyDown',
-    'minHeight',
-    'maxHeight',
-    'minRows',
-    'maxRows',
-    'className',
-    'style',
-    'hoverStyle',
-    'focusStyle',
-    'disabledStyle',
-    'disabledHoverStyle',
-  ]);
+  const childProps = omit(properties, Object.keys(textInputPropTypes));
   if (typeof properties.valueLink === 'object') {
     childProps.value = properties.valueLink.value;
   }
@@ -116,26 +125,7 @@ export default class TextInput extends Component {
 
   static displayName = 'TextInput';
 
-  static propTypes = {
-    className: PropTypes.string,
-    minHeight: PropTypes.number,
-    maxHeight: PropTypes.number,
-    minRows: PropTypes.number,
-    maxRows: PropTypes.number,
-    style: PropTypes.object,
-    hoverStyle: PropTypes.object,
-    focusStyle: PropTypes.object,
-    allowNewLine: PropTypes.bool,
-    disabled: PropTypes.bool,
-    disabledStyle: PropTypes.object,
-    disabledHoverStyle: PropTypes.object,
-    onUpdate: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    valueLink: PropTypes.shape({
-      value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired,
-    }),
-  };
+  static propTypes = textInputPropTypes;
 
   static defaultProps = {
     allowNewLine: false,
@@ -262,6 +252,7 @@ export default class TextInput extends Component {
         className={ unionClassNames(this.props.className, this._styleId) }
         onChange={ this._onChange }
         onKeyDown={ this._onKeyDown }
+        disabled={ this.props.disabled }
         { ...this.textareaProps }
       />
     );

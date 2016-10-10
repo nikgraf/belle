@@ -92,7 +92,7 @@ export default class Why extends Component {
             React Core Team
           </div>
         </div>
-        <div stlye={{ clear: 'both' }}></div>
+        <div style={{ clear: 'both' }}></div>
       </div>
 
       <p>Let’s have a look at two of the components and walk you through some of the details we took care of.</p>

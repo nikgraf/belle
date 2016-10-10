@@ -54,7 +54,7 @@ export default class Home extends Component {
                           marginLeft: 60, }}
             >React Core Team</div>
           </div>
-          <div stlye={{ clear: 'both' }}></div>
+          <div style={{ clear: 'both' }}></div>
         </div>
 
         <h3>Browser Support</h3>

@@ -46,7 +46,7 @@ describe('DatePicker', () => {
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, { key: 'Enter' });
-    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
+    expect(+datePicker.state.selectedDate).toBeGreaterThan(0);
   });
 
   describe('injecting styles', () => {
@@ -84,8 +84,8 @@ describe('DatePicker', () => {
     const dayPickerWrapper = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_wrapper')[0];
     TestUtils.Simulate.focus(dayPickerWrapper);
     TestUtils.Simulate.keyDown(dayPickerWrapper, { key: ' ' });
-    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
-    expect(dateSelected).toBeGreaterThan(0);
+    expect(+datePicker.state.selectedDate).toBeGreaterThan(0);
+    expect(+dateSelected).toBeGreaterThan(0);
 
     // expect(dateSelected.getDay()).toBeGreaterThan(0);
     TestUtils.Simulate.keyDown(dayPickerWrapper, { key: ' ' });
@@ -236,7 +236,7 @@ describe('DatePicker', () => {
     const datePickerDays = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'date_picker_day');
     const firstDay = ReactDOM.findDOMNode(datePickerDays[0]).textContent;
     const secondDay = ReactDOM.findDOMNode(datePickerDays[1]).textContent;
-    expect(firstDay).toBeGreaterThan(secondDay);
+    expect(+firstDay).toBeGreaterThan(+secondDay);
   });
 
   it('should change selectedDate when a day receives mouseDown with button 0', () => {
@@ -251,12 +251,12 @@ describe('DatePicker', () => {
     TestUtils.Simulate.mouseDown(day, { button: 0 });
     TestUtils.Simulate.mouseUp(day, { button: 0 });
     const newDate = datePicker.state.selectedDate;
-    expect(datePicker.state.selectedDate).toBeGreaterThan(0);
+    expect(+datePicker.state.selectedDate).toBeGreaterThan(0);
     expect(dateSelected.getDay()).toBeGreaterThan(0);
     day = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'day_test')[10];
     TestUtils.Simulate.mouseDown(day, { button: 1 });
     TestUtils.Simulate.mouseUp(day, { button: 1 });
-    expect(datePicker.state.selectedDate).toBe(newDate);
+    expect(+datePicker.state.selectedDate).toBe(+newDate);
   });
 
   it('should not change selectedDate in state if component uses value property', () => {

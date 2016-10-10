@@ -1,5 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import actionAreaStyle from '../style/actionArea';
+import { omit } from '../utils/helpers';
+
+const actionAreaPropTypes = {
+  activeStyle: PropTypes.object,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  hoverStyle: PropTypes.object,
+  onTouchStart: PropTypes.func,
+  onTouchEnd: PropTypes.func,
+  onTouchCancel: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+
+  // TODO investigate how we solve mouseUp in other compents (like the right click edgecase)
+  onMouseUp: PropTypes.func,
+  onUpdate: PropTypes.func,
+  style: PropTypes.object,
+};
+
+function sanitizeChildProps(properties) {
+  return omit(properties, Object.keys(actionAreaPropTypes));
+}
 
 /**
  * ActionArea
@@ -16,31 +41,11 @@ export default class ActionArea extends Component {
 
   constructor(properties) {
     super(properties);
-    const { style, ...childProps } = properties; // eslint-disable-line no-unused-vars
-    this.childProps = childProps;
+    this.childProps = sanitizeChildProps(properties);
   }
 
   static displayName = 'ActionArea';
-
-  static propTypes = {
-    activeStyle: PropTypes.object,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    hoverStyle: PropTypes.object,
-    onTouchStart: PropTypes.func,
-    onTouchEnd: PropTypes.func,
-    onTouchCancel: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-
-    // TODO investigate how we solve mouseUp in other compents (like the right click edgecase)
-    onMouseUp: PropTypes.func,
-    onUpdate: PropTypes.func,
-    style: PropTypes.object,
-  };
+  static propTypes = actionAreaPropTypes;
 
   state = {
     // Note: On touch devices mouseEnter is fired while mouseLeave is not.
@@ -58,8 +63,7 @@ export default class ActionArea extends Component {
    * Update the childProps based on the updated properties passed to the card.
    */
   componentWillReceiveProps(properties) {
-    const { style, ...childProps } = properties; // eslint-disable-line no-unused-vars
-    this.childProps = childProps;
+    this.childProps = sanitizeChildProps(properties);
   }
 
   /**
