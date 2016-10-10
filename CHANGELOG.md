@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.8 - 2016-10-17
+
+- [All Components] Fixed various warnings introduced throughout React 15.x
+
 ## 2.0.7 - 2016-04-05
 
 Due connection issues to NPM I republished it.
