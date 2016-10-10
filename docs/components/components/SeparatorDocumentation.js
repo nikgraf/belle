@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import React, { Component } from 'react';
 import { Option, Select, Separator } from 'belle';
 import Code from '../Code';

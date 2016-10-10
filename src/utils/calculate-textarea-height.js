@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import { canUseDOM as exenvCanUseDOM } from 'exenv';
 
 // our height calculation logic is not compatible with jsdom

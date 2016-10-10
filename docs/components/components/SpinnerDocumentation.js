@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import React from 'react';
 import { Button, Card, Spinner } from 'belle';
 import Code from '../Code';

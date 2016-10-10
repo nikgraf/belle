@@ -1,6 +1,6 @@
 {
   "name": "belle",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Configurable React Components with great UX",
   "author": {
     "name": "Nik Graf",
@@ -31,13 +31,9 @@
     "postpublish": "./scripts/publish_gh_pages.sh",
     "test": "BABEL_ENV=test BABEL_JEST_STAGE=0 jest src/",
     "test:watch": "npm run test -- --watch",
-    "lint": "npm run lint:eslint && npm run lint:jscs",
-    "lint:eslint": "eslint --rule 'mocha/no-exclusive-tests:2' ./",
-    "lint:eslint:fix": "eslint --fix --rule 'mocha/no-exclusive-tests:2' ./",
-    "lint:jscs": "jscs ./",
-    "lint:jscs:src": "jscs src",
-    "lint:jscs:examples": "jscs examples --max-old-space-size=4096",
-    "lint:jscs:docs": "jscs docs",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint ./",
+    "lint:eslint:fix": "eslint --fix ./",
     "alex": "alex README.md"
   },
   "devDependencies": {
@@ -55,10 +51,8 @@
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.5.3",
     "eslint-config-airbnb": "6.2.0",
-    "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",
     "jest-cli": "^15.1.1",
-    "jscs": "^2.11.0",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.2",

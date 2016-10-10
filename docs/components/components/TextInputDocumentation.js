@@ -1,5 +1,3 @@
-/* jscs:disable disallowSpacesInsideTemplateStringPlaceholders */
-
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { TextInput } from 'belle';
