@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import actionAreaStyle from '../style/actionArea';
 import { omit } from '../utils/helpers';
+import isTouchDevice from '../utils/is-touch-device';
 
 const actionAreaPropTypes = {
   activeStyle: PropTypes.object,
@@ -130,7 +131,7 @@ export default class ActionArea extends Component {
       this.props.onMouseUp(event);
     }
 
-    if (event.button === 0 && isActive && this.props.onUpdate) {
+    if (event.button === 0 && isActive && this.props.onUpdate && !isTouchDevice) {
       this.props.onUpdate({});
     }
   };

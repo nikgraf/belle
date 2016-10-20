@@ -8,7 +8,7 @@ bundle.js
 .bundle.js
 
 # Belle build with babel
-/lib/
+# /lib/
 
 # Belle docs after npm install
 /docs/css/googlecode.css
