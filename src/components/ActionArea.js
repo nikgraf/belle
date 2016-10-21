@@ -19,6 +19,7 @@ const actionAreaPropTypes = {
   // TODO investigate how we solve mouseUp in other compents (like the right click edgecase)
   onMouseUp: PropTypes.func,
   onUpdate: PropTypes.func,
+  onClick: PropTypes.func,
   style: PropTypes.object,
 };
 
@@ -119,7 +120,6 @@ export default class ActionArea extends Component {
    * In addition the active state is deactivated.
    */
   _onMouseUp = (event) => {
-    const isActive = this.state.isActive;
     if (event.button === 0) {
       this.setState({
         isActive: false,
@@ -128,10 +128,6 @@ export default class ActionArea extends Component {
 
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event);
-    }
-
-    if (event.button === 0 && isActive && this.props.onUpdate) {
-      this.props.onUpdate({});
     }
   };
 
@@ -157,8 +153,6 @@ export default class ActionArea extends Component {
    * sure the next onMouseEnter is ignored.
    */
   _onTouchEnd = () => {
-    const isActive = this.state.isActive;
-
     this.setState({
       isActive: false,
       isIgnoringHover: true,
@@ -166,10 +160,6 @@ export default class ActionArea extends Component {
 
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(event);
-    }
-
-    if (isActive && this.props.onUpdate) {
-      this.props.onUpdate({});
     }
   };
 
@@ -185,6 +175,16 @@ export default class ActionArea extends Component {
 
     if (this.props.onTouchCancel) {
       this.props.onTouchCancel(event);
+    }
+  };
+
+  _onClick = (event) => {
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+
+    if (this.props.onUpdate) {
+      this.props.onUpdate({});
     }
   };
 
@@ -217,6 +217,7 @@ export default class ActionArea extends Component {
         onTouchStart={ this._onTouchStart }
         onTouchEnd={ this._onTouchEnd }
         onTouchCancel={ this._onTouchCancel }
+        onClick={ this._onClick }
         style={ style }
       >
         { this.props.children }

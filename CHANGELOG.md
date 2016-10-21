@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 2.0.9 - 2016-10-21
+
+- [DatePicker, ActionArea] Avoid firing the ActionArea's onUpdate twice on touch devices e.g. next month button & previous month button.
+
 ## 2.0.8 - 2016-10-17
 
 - [All Components] Fixed various warnings introduced throughout React 15.x
