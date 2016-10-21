@@ -406,8 +406,7 @@ describe('DatePicker', () => {
     );
     datePicker.state.month = 5;
     const prevMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'prev_month')[0];
-    TestUtils.Simulate.mouseDown(prevMonth, { button: 0 });
-    TestUtils.Simulate.mouseUp(prevMonth, { button: 0 });
+    TestUtils.Simulate.click(prevMonth);
     expect(datePicker.state.month).toBe(4);
   });
 
@@ -417,8 +416,7 @@ describe('DatePicker', () => {
     );
     datePicker.state.month = 5;
     const nextMonth = TestUtils.scryRenderedDOMComponentsWithClass(datePicker, 'next_month')[0];
-    TestUtils.Simulate.mouseDown(nextMonth, { button: 0 });
-    TestUtils.Simulate.mouseUp(nextMonth, { button: 0 });
+    TestUtils.Simulate.click(nextMonth);
     expect(datePicker.state.month).toBe(6);
   });
 
