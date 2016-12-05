@@ -1,5 +1,5 @@
 import { flatten, mapObject } from '../utils/helpers';
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
+import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 import { canUseDOM } from 'exenv';
 import animations from '../style/animations';
 
