@@ -48,7 +48,7 @@ export default class SelectItem extends Component {
   render() {
     return (
       <li
-        onClick={ this._onClick }
+        onMouseDown={ this._onClick }
         onTouchStart={ this._onTouchStart }
         onTouchMove={ this._onTouchMove }
         onTouchEnd={ this._onTouchEnd }

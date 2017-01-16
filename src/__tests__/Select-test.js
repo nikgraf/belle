@@ -187,7 +187,7 @@ describe('Select', () => {
     );
 
     const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
-    TestUtils.Simulate.click(viennaOptionNode);
+    TestUtils.Simulate.mouseDown(viennaOptionNode);
 
     expect(wasCalled).toBeTruthy();
   });
@@ -203,7 +203,7 @@ describe('Select', () => {
     );
 
     const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
-    TestUtils.Simulate.click(viennaOptionNode);
+    TestUtils.Simulate.mouseDown(viennaOptionNode);
 
     expect(wasCalled).toBeTruthy();
   });
@@ -217,7 +217,7 @@ describe('Select', () => {
     );
 
     const viennaOptionNode = TestUtils.findRenderedDOMComponentWithClass(select, 'vienna-option');
-    TestUtils.Simulate.click(viennaOptionNode);
+    TestUtils.Simulate.mouseDown(viennaOptionNode);
 
     expect(select.state.selectedValue).toBe('vienna');
     expect(select.state.focusedOptionValue).toBe('vienna');
