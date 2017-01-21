@@ -55,7 +55,6 @@ export default class Day extends Component {
   render() {
     return (
       <span
-        style={ this.props.style }
         onMouseEnter={ this._onMouseEnter }
         onMouseLeave={ this._onMouseLeave }
         onMouseDown={ this._onMouseDown }
