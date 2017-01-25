@@ -64,7 +64,6 @@ export default class Day extends Component {
         onTouchEnd={ this._onTouchEnd }
         onTouchCancel={ this._onTouchCancel }
         aria-selected={ this.props.selected }
-        style={ this.props.style }
         role="gridcell"
         {...this.props.dayProps}
       >
