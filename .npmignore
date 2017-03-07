@@ -14,5 +14,8 @@ bundle.js
 # NPM debug
 npm-debug.log
 
+# Lerna
+lerna-debug.log
+
 tests
 docs

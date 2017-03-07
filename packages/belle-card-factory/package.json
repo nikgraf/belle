@@ -1,0 +1,29 @@
+{
+  "name": "belle-card",
+  "version": "0.0.0",
+  "description": "Belle Card",
+  "author": {
+    "name": "Nik Graf",
+    "email": "nik@nikgraf.com",
+    "url": "http://www.nikgraf.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nikgraf/belle.git"
+  },
+  "main": "lib/index.js",
+  "keywords": [
+    "react",
+    "ux",
+    "components",
+    "widget"
+  ],
+  "peerDependencies": {
+    "react": ">=15.4.0",
+    "react-dom": ">=15.4.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "styled-components": "^1.4.4"
+  }
+}
