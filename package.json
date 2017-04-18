@@ -39,7 +39,7 @@
   "devDependencies": {
     "alex": "^2.0.1",
     "babel": "^6.5.2",
-    "babel-cli": "^6.6.5",
+    "babel-cli": "^6.7.5",
     "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.0",
     "babel-jest": "^9.0.3",
