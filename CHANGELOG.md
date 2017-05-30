@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 3.0.2 - 2017-05-30
+
+- Removed duplicate declaration of style property in component Day [#336](https://github.com/nikgraf/belle/pull/336)
+
 ## 3.0.1 - 2017-01-16
 
 - [Select] Fixed issue with Internet Explorer 11. The onBlur event is triggered before the onClick event occurs. Using onMouseDown resolved it. [#333](https://github.com/nikgraf/belle/pull/333)
