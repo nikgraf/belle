@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'belle';
 import { Link } from 'react-router';
 import Column from './Column';
