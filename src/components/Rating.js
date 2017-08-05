@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { canUseDOM } from 'exenv';
 import { omit, has, uniqueId } from '../utils/helpers';
 import style from '../style/rating.js';
