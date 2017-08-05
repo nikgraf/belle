@@ -4,7 +4,7 @@ jest.dontMock('../components/Option');
 jest.dontMock('../style/option');
 
 import React from 'react';
-import TestUtils from 'react-dom/test-utils';
+import Shallow from 'react-test-renderer/shallow';
 
 // Babel would move an import in front of the jest.dontMock. That's why require
 // is used instead of import.
@@ -14,7 +14,7 @@ describe('Option', () => {
   let shallowRenderer;
 
   beforeEach(() => {
-    shallowRenderer = TestUtils.createRenderer();
+    shallowRenderer = new Shallow();
   });
 
   it('should initialise _isDisplayedAsSelected during construction', () => {
