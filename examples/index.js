@@ -11,6 +11,7 @@ import TextInputPlayground from './components/TextInputPlayground';
 import RatingPlayground from './components/RatingPlayground';
 import ComboBoxPlayground from './components/ComboBoxPlayground';
 import TogglePlayground from './components/TogglePlayground';
+import RadioPlayground from './components/RadioPlayground';
 import DatePickerPlayground from './components/DatePickerPlayground';
 
 // TODO create a button to switch between those stylings for testing purposes
@@ -83,6 +84,8 @@ const App = () => (
     <DatePickerPlayground />
 
     <TogglePlayground />
+
+    <RadioPlayground />
 
     <SelectPlayground />
 
