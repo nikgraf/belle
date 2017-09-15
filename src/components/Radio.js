@@ -31,6 +31,11 @@ export default class Radio extends Component {
   static displayName = 'Radio';
   static propTypes = radioPropTypes;
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.checked !== this.state.checked) {
+      this.setState({checked: nextProps.checked});
+    }
+  }
 
   handleChange(event) {
     this.setState({ checked: event.target.checked });
@@ -103,7 +108,8 @@ export default class Radio extends Component {
             name={name}
             value={value}
             onChange={this.handleChange} 
-            style={inputDefaultStyle} 
+            style={inputDefaultStyle}
+            checked={this.state.checked}
           />
           <span style={inputStyle}></span>
         </span>

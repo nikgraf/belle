@@ -1,26 +1,29 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import { Radio, Card } from 'belle';
+import { Radio, Card, RadioGroup } from 'belle';
 
 export default React.createClass({
 
+  getInitialState() {
+    return {
+      value: null
+    }
+  },
+
+  onChange(e) {
+    console.log('current value is ', e.target.value);
+  },
   mixins: [LinkedStateMixin],
 
   render() {
     return (
       <Card>
         <h2>Radio</h2>
-
         <h3>Default radio buttons</h3>
-        <div><Radio name="city" 
-            defaultChecked={true} 
-            onChange={(e) => console.log(e.target.value)}
-            value="Boston"
-        >Boston</Radio></div>
-        <div><Radio name="colors"
-            onChange={(e) => console.log(e.target.value)}
-            value="Red"
-        >Red</Radio></div>
+        <RadioGroup onChange={this.onChange} value={this.state.value}>
+          <Radio value="Boston">Boston</Radio>
+          <Radio value="Rome">Rome</Radio>
+        </RadioGroup>
       </Card>
     );
   },

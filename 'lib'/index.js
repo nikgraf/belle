@@ -56,6 +56,10 @@ var _Radio = require('./components/Radio');
 
 var _Radio2 = _interopRequireDefault(_Radio);
 
+var _RadioGroup = require('./components/RadioGroup');
+
+var _RadioGroup2 = _interopRequireDefault(_RadioGroup);
+
 var _actionArea = require('./style/actionArea');
 
 var _actionArea2 = _interopRequireDefault(_actionArea);
@@ -153,6 +157,7 @@ module.exports = {
   Toggle: _Toggle2.default,
   DatePicker: _DatePicker2.default,
   Radio: _Radio2.default,
+  RadioGroup: _RadioGroup2.default,
   style: {
     actionArea: _actionArea2.default,
     button: _button2.default,

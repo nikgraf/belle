@@ -64,6 +64,13 @@ var Radio = function (_Component) {
   }
 
   _createClass(Radio, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.checked !== this.state.checked) {
+        this.setState({ checked: nextProps.checked });
+      }
+    }
+  }, {
     key: 'handleChange',
     value: function handleChange(event) {
       this.setState({ checked: event.target.checked });
@@ -112,7 +119,8 @@ var Radio = function (_Component) {
             name: name,
             value: value,
             onChange: this.handleChange,
-            style: inputDefaultStyle
+            style: inputDefaultStyle,
+            checked: this.state.checked
           }),
           _react2.default.createElement('span', { style: inputStyle })
         ),

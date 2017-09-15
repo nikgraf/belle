@@ -12,6 +12,7 @@ import Spinner from './components/Spinner';
 import Toggle from './components/Toggle';
 import DatePicker from './components/DatePicker';
 import Radio from './components/Radio';
+import RadioGroup from './components/RadioGroup';
 
 import actionAreaStyle from './style/actionArea';
 import buttonStyle from './style/button';
@@ -51,6 +52,7 @@ module.exports = {
   Toggle,
   DatePicker,
   Radio,
+  RadioGroup,
   style: {
     actionArea: actionAreaStyle,
     button: buttonStyle,
