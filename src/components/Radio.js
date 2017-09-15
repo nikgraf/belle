@@ -1,21 +1,19 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom'
 import style from '../style/radio';
-import config from '../config/radio';
 
 const radioPropTypes = {
   onChange: PropTypes.func,
   defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
-  style:  PropTypes.object,
-  inputStyle:  PropTypes.object,
-  textStyle:  PropTypes.object,
-  inputDefaultStyle:  PropTypes.object,
-  wrapperStyle:  PropTypes.object,
-  wrapperRadioStyle:  PropTypes.object,
-  disabledStyle:  PropTypes.object,
-  wrapperCheckedRadioStyle:  PropTypes.object,
-  inputStyleChecked:  PropTypes.object,
+  style: PropTypes.object,
+  inputStyle: PropTypes.object,
+  textStyle: PropTypes.object,
+  inputDefaultStyle: PropTypes.object,
+  wrapperStyle: PropTypes.object,
+  wrapperRadioStyle: PropTypes.object,
+  disabledStyle: PropTypes.object,
+  wrapperCheckedRadioStyle: PropTypes.object,
+  inputStyleChecked: PropTypes.object,
 };
 
 export default class Radio extends Component {
@@ -33,14 +31,7 @@ export default class Radio extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.checked !== this.state.checked) {
-      this.setState({checked: nextProps.checked});
-    }
-  }
-
-  handleChange(event) {
-    this.setState({ checked: event.target.checked });
-    if (this.props.onChange) {
-      this.props.onChange(event);
+      this.setState({ checked: nextProps.checked });
     }
   }
 
@@ -102,12 +93,12 @@ export default class Radio extends Component {
     return (
       <label style={wrapperStyle}>
         <span style={wrapperRadioStyle}>
-          <input 
-            ref="input" 
-            type="radio" 
+          <input
+            ref="input"
+            type="radio"
             name={name}
             value={value}
-            onChange={this.handleChange} 
+            onChange={this.handleChange}
             style={inputDefaultStyle}
             checked={this.state.checked}
           />
@@ -116,5 +107,12 @@ export default class Radio extends Component {
         {this.props.children !== undefined ? <span style={textStyle}>{this.props.children}</span> : null}
       </label>
     );
+  }
+
+  handleChange(event) {
+    this.setState({ checked: event.target.checked });
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
   }
 }
