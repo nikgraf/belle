@@ -144,8 +144,6 @@ To run the test continuously you can use `npm run test:watch`.
 
 ## Discussion or need help?
 
-Join us at our [Gitter room](https://gitter.im/nikgraf/belle).
-
 In addition you can ask the community by [posting your question to StackOverflow with the **belle** tag.](http://stackoverflow.com/questions/ask?tags=belle).
 
 ## Future Plans
