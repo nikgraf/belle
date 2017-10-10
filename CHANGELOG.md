@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## To Be Released
 
+## 4.0.0 - 2017-10-10
+
+- Support React 15.4.0 [#341](https://github.com/nikgraf/belle/pull/341)
+
 ## 3.0.2 - 2017-05-30
 
 - Removed duplicate declaration of style property in component Day [#336](https://github.com/nikgraf/belle/pull/336)
