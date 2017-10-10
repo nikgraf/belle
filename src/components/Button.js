@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'; // eslint-disable-line no-unused-vars
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import { has, omit, uniqueId } from '../utils/helpers';
 import buttonStyle from '../style/button';
 import unionClassNames from '../utils/union-class-names';

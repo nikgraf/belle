@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import { omit, has, last, first, uniqueId } from '../utils/helpers';

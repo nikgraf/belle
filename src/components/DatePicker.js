@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import { has, map, shift, reverse, omit, uniqueId } from '../utils/helpers';

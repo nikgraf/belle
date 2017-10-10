@@ -23,7 +23,8 @@
   ],
   "peerDependencies": {
     "react": ">=15.4.0",
-    "react-dom": ">=15.4.0"
+    "react-dom": ">=15.4.0",
+    "prop-types": ">=15.4.0"
   },
   "scripts": {
     "build": "BABEL_ENV=production node_modules/.bin/babel --out-dir='lib' --ignore='__tests__/*' src",
@@ -53,9 +54,10 @@
     "eslint-config-airbnb": "6.2.0",
     "eslint-plugin-react": "^4.2.3",
     "jest-cli": "^15.1.1",
+    "prop-types": "^15.5.10",
     "react": "^15.4.1",
-    "react-addons-test-utils": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-test-renderer": "^15.6.1",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.2",
@@ -70,7 +72,7 @@
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/fbjs",
       "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
+      "<rootDir>/node_modules/prop-types",
       "../utils/helpers",
       "../utils/union-class-names",
       "../utils/is-component-of-type"
