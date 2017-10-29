@@ -1,5 +1,4 @@
 const radioStyle = {
-    
   style: {
     display: 'inline-block',
     cursor: 'pointer',
@@ -63,8 +62,5 @@ const radioStyle = {
   inputStyleChecked: {
     backgroundColor: 'rgba(43, 206, 56, 0.8)',
   }
-
 };
-  
 export default radioStyle;
-  

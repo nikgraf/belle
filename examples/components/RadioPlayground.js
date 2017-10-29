@@ -3,17 +3,12 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Radio, Card, RadioGroup } from 'belle';
 
 export default React.createClass({
-
+  mixins: [LinkedStateMixin],
   getInitialState() {
     return {
       value: null
-    }
+    };
   },
-
-  onChange(e) {
-    console.log('current value is ', e.target.value);
-  },
-  mixins: [LinkedStateMixin],
 
   render() {
     return (
@@ -26,5 +21,5 @@ export default React.createClass({
         </RadioGroup>
       </Card>
     );
-  },
+  }
 });

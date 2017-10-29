@@ -14,6 +14,13 @@ const radioPropTypes = {
   disabledStyle: PropTypes.object,
   wrapperCheckedRadioStyle: PropTypes.object,
   inputStyleChecked: PropTypes.object,
+  name: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  _isDisabled: PropTypes.bool,
+  children: PropTypes.node
 };
 
 export default class Radio extends Component {
@@ -39,8 +46,8 @@ export default class Radio extends Component {
     const {
       name,
       value,
-      onFocus,
-      onBlur,
+      _isDisabled,
+      children
     } = this.props;
 
 
@@ -69,7 +76,7 @@ export default class Radio extends Component {
       ...this.props.inputDefaultStyle,
     };
 
-    if (this.props._isDisabled) {
+    if (_isDisabled) {
       inputStyle = {
         ...inputStyle,
         ...style.disabledStyle,
@@ -77,7 +84,7 @@ export default class Radio extends Component {
       };
     }
 
-    if (this.state.checked && !this.props._isDisabled) {
+    if (this.state.checked && !_isDisabled) {
       wrapperRadioStyle = {
         ...wrapperRadioStyle,
         ...style.wrapperCheckedRadioStyle,
@@ -104,7 +111,7 @@ export default class Radio extends Component {
           />
           <span style={inputStyle}></span>
         </span>
-        {this.props.children !== undefined ? <span style={textStyle}>{this.props.children}</span> : null}
+        {children !== undefined ? <span style={textStyle}>{children}</span> : null}
       </label>
     );
   }
