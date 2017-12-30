@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectStyles, removeAllStyles } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren, uniqueId } from '../utils/helpers';
-import style from '../style/combo-box';
+import { comboBoxStyle } from '../style';
 import ComboBoxItem from '../components/ComboBoxItem';
 
 const comboBoxPropTypes = {
@@ -46,7 +46,7 @@ const comboBoxPropTypes = {
 };
 
 /**
- * Update hover style for the specified styleId.
+ * Update hover comboBoxStyle for the specified styleId.
  *
  * @param styleId {string} - a unique id that exists as class attribute in the DOM
  * @param caretStyleId {string} - unique is assigned as class to caret span
@@ -54,19 +54,19 @@ const comboBoxPropTypes = {
  */
 function updatePseudoClassStyle(styleId, caretStyleId, properties) {
   const hoverStyle = {
-    ...style.hoverStyle,
+    ...comboBoxStyle.hoverStyle,
     ...properties.hoverStyle,
   };
   const focusStyle = {
-    ...style.focusStyle,
+    ...comboBoxStyle.focusStyle,
     ...properties.focusStyle,
   };
   const disabledHoverStyle = {
-    ...style.disabledHoverStyle,
+    ...comboBoxStyle.disabledHoverStyle,
     ...properties.disabledHoverStyle,
   };
   const caretFocusStyle = {
-    ...style.caretFocusStyle,
+    ...comboBoxStyle.caretFocusStyle,
   };
 
   const styles = [
@@ -627,19 +627,19 @@ export default class ComboBox extends Component {
 
   render() {
     let inputStyle = {
-      ...style.style,
+      ...comboBoxStyle.style,
       ...this.props.style,
     };
     const hintStyle = {
-      ...style.hintStyle,
+      ...comboBoxStyle.hintStyle,
       ...this.props.hintStyle,
     };
     const wrapperStyle = {
-      ...style.wrapperStyle,
+      ...comboBoxStyle.wrapperStyle,
       ...this.props.wrapperStyle,
     };
     const menuStyle = {
-      ...style.menuStyle,
+      ...comboBoxStyle.menuStyle,
       ...this.props.menuStyle,
     };
 
@@ -651,7 +651,7 @@ export default class ComboBox extends Component {
     if (this.props.disabled) {
       inputStyle = {
         ...inputStyle,
-        ...style.disabledStyle,
+        ...comboBoxStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
     }
@@ -661,19 +661,19 @@ export default class ComboBox extends Component {
     if (this.props.displayCaret) {
       if (this.props.disabled) {
         caretStyle = {
-          ...style.caretToOpenStyle,
+          ...comboBoxStyle.caretToOpenStyle,
           ...this.props.caretToOpenStyle,
-          ...style.disabledCaretToOpenStyle,
+          ...comboBoxStyle.disabledCaretToOpenStyle,
           ...this.props.disabledCaretToOpenStyle,
         };
       } else if (this.state.isOpen) {
         caretStyle = {
-          ...style.caretToCloseStyle,
+          ...comboBoxStyle.caretToCloseStyle,
           ...this.props.caretToCloseStyle,
         };
       } else {
         caretStyle = {
-          ...style.caretToOpenStyle,
+          ...comboBoxStyle.caretToOpenStyle,
           ...this.props.caretToOpenStyle,
         };
       }

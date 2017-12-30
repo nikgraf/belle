@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { canUseDOM } from 'exenv';
 import { omit, has, uniqueId } from '../utils/helpers';
-import style from '../style/rating.js';
+import { ratingStyle } from '../style';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import config from '../config/rating';
@@ -67,11 +67,12 @@ function sanitizeCharacterProps(properties) {
  */
 function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusStyleForTouchAndClick) {
   let ratingFocusStyle;
+  
   if (preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
     ratingFocusStyle = {
-      ...style.focusStyle,
+      ...ratingStyle.focusStyle,
       ...properties.focusStyle,
     };
   }
@@ -541,38 +542,38 @@ export default class Rating extends Component {
     const tabIndex = !this.props.disabled ? this.props.tabIndex : -1;
 
     let characterStyle = {
-      ...style.characterStyle,
+      ...ratingStyle.characterStyle,
       ...this.props.characterStyle,
     };
 
     if (this.state.isActive) {
       characterStyle = {
         ...characterStyle,
-        ...style.activeCharacterStyle,
+        ...ratingStyle.activeCharacterStyle,
         ...this.props.activeCharacterStyle,
       };
     } else if (this.state.isHover) {
       characterStyle = {
         ...characterStyle,
-        ...style.hoverCharacterStyle,
+        ...ratingStyle.hoverCharacterStyle,
         ...this.props.hoverCharacterStyle,
       };
     }
 
     let wrapperStyle = {
-      ...style.style,
+      ...ratingStyle.style,
       ...this.props.style,
     };
     if (this.props.disabled) {
       wrapperStyle = {
         ...wrapperStyle,
-        ...style.disabledStyle,
+        ...ratingStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
       if (this.state.isHover) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.disabledHoverStyle,
+          ...ratingStyle.disabledHoverStyle,
           ...this.props.disabledHoverStyle,
         };
       }
@@ -580,7 +581,7 @@ export default class Rating extends Component {
       if (this.state.isFocus && this.preventFocusStyleForTouchAndClick) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.focusStyle,
+          ...ratingStyle.focusStyle,
           ...this.props.focusStyle,
         };
       }
@@ -588,7 +589,7 @@ export default class Rating extends Component {
       if (this.state.isHover) {
         wrapperStyle = {
           ...wrapperStyle,
-          ...style.hoverStyle,
+          ...ratingStyle.hoverStyle,
           ...this.props.hoverStyle,
         };
       }

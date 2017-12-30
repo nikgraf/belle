@@ -5,7 +5,7 @@ import calculateTextareaHeight from '../utils/calculate-textarea-height';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
 import { omit, has, uniqueId } from '../utils/helpers';
-import style from '../style/text-input';
+import { textInputStyle } from '../style';
 
 const newLineRegex = /[\r\n]/g;
 
@@ -55,15 +55,15 @@ function sanitizeChildProps(properties) {
  */
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = {
-    ...style.hoverStyle,
+    ...textInputStyle.hoverStyle,
     ...properties.hoverStyle,
   };
   const focusStyle = {
-    ...style.focusStyle,
+    ...textInputStyle.focusStyle,
     ...properties.focusStyle,
   };
   const disabledHoverStyle = {
-    ...style.disabledHoverStyle,
+    ...textInputStyle.disabledHoverStyle,
     ...properties.disabledHoverStyle,
   };
 
@@ -233,14 +233,14 @@ export default class TextInput extends Component {
 
   render() {
     let textareaStyle = {
-      ...style.style,
+      ...textInputStyle.style,
       ...this.props.style,
     };
 
     if (this.props.disabled) {
       textareaStyle = {
         ...textareaStyle,
-        ...style.disabledStyle,
+        ...textInputStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
     }

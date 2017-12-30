@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import actionAreaStyle from '../style/actionArea';
+import { actionAreaStyle } from '../style/action-area';
 import { omit } from '../utils/helpers';
 
 const actionAreaPropTypes = {

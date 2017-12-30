@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
-import cardStyle from '../style/card';
+import { cardStyle } from '../style';
 
 /**
  * Card component with a light shadow.

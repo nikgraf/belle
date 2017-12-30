@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import { has, omit, uniqueId } from '../utils/helpers';
-import buttonStyle from '../style/button';
+import { buttonStyle } from '../style';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import config from '../config/button';

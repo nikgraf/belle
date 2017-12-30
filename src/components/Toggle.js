@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import { omit, has, last, first, uniqueId } from '../utils/helpers';
-import style from '../style/toggle';
+import { toggleStyle } from '../style';
 import config from '../config/toggle';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
@@ -156,7 +156,7 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
     focusStyle = { outline: 0 };
   } else {
     focusStyle = {
-      ...style.focusStyle,
+      ...toggleStyle.focusStyle,
       ...properties.focusStyle,
     };
   }
@@ -653,21 +653,21 @@ export default class Toggle extends Component {
   };
 
   _getHandleHeight() {
-    return has(this.props.handleStyle, 'height') ? this.props.handleStyle.height : style.handleStyle.height;
+    return has(this.props.handleStyle, 'height') ? this.props.handleStyle.height : toggleStyle.handleStyle.height;
   }
 
   _getHandleWidth() {
-    return has(this.props.handleStyle, 'width') ? this.props.handleStyle.width : style.handleStyle.width;
+    return has(this.props.handleStyle, 'width') ? this.props.handleStyle.width : toggleStyle.handleStyle.width;
   }
 
   _getSliderOffset() {
-    const firstChoiceWidth = has(this.props.firstChoiceStyle, 'width') ? this.props.firstChoiceStyle.width : style.firstChoiceStyle.width;
+    const firstChoiceWidth = has(this.props.firstChoiceStyle, 'width') ? this.props.firstChoiceStyle.width : toggleStyle.firstChoiceStyle.width;
 
     return firstChoiceWidth - this._getHandleWidth() / 2;
   }
 
   _getToggleWidth() {
-    return has(this.props.style, 'width') ? this.props.style.width : style.style.width;
+    return has(this.props.style, 'width') ? this.props.style.width : toggleStyle.style.width;
   }
 
   _triggerChange(value) {
@@ -774,14 +774,14 @@ export default class Toggle extends Component {
 
   render() {
     let wrapperStyle = {
-      ...style.style,
+      ...toggleStyle.style,
       ...this.props.style,
     };
 
     if (this.isFocused && !this.state.wasFocusedWithClickOrTouch) {
       wrapperStyle = {
         ...wrapperStyle,
-        ...style.focusStyle,
+        ...toggleStyle.focusStyle,
         ...this.props.focusStyle,
       };
     }
@@ -790,14 +790,14 @@ export default class Toggle extends Component {
     let handleStyle;
 
     const sliderWrapperStyle = {
-      ...style.sliderWrapperStyle,
+      ...toggleStyle.sliderWrapperStyle,
       ...this.props.sliderWrapperStyle,
     };
     const defaultSliderOffset = this._getSliderOffset();
 
     if (this.state.isDraggingWithMouse || this.state.isDraggingWithTouch) {
       computedSliderStyle = {
-        ...style.sliderStyle,
+        ...toggleStyle.sliderStyle,
         ...this.props.sliderStyle,
         left: this.state.sliderOffset - defaultSliderOffset,
         transition: 'none',
@@ -806,11 +806,11 @@ export default class Toggle extends Component {
       // right now even when handle is clicked, it momentarily shows this grabbing styles
       // may be this.state.isDraggingWithMouse should be set to true only after mouse movement starts
       const activeStyle = {
-        ...style.activeHandleStyle,
+        ...toggleStyle.activeHandleStyle,
         ...this.props.handleStyle,
       };
       handleStyle = {
-        ...style.handleStyle,
+        ...toggleStyle.handleStyle,
         ...activeStyle,
         ...this.props.activeHandleStyle,
         left: this.state.sliderOffset,
@@ -818,24 +818,24 @@ export default class Toggle extends Component {
       };
     } else {
       handleStyle = {
-        ...style.handleStyle,
+        ...toggleStyle.handleStyle,
         ...this.props.handleStyle,
       };
       computedSliderStyle = {
-        ...style.sliderStyle,
+        ...toggleStyle.sliderStyle,
         left: this.state.value ? 0 : -defaultSliderOffset,
       };
 
       if (this.state.isActive) {
         handleStyle = {
           ...handleStyle,
-          ...style.activeHandleStyle,
+          ...toggleStyle.activeHandleStyle,
           ...this.props.activeHandleStyle,
         };
       } else if (this.state.isHovered) {
         handleStyle = {
           ...handleStyle,
-          ...style.hoverHandleStyle,
+          ...toggleStyle.hoverHandleStyle,
           ...this.props.hoverHandleStyle,
         };
       }
@@ -853,11 +853,11 @@ export default class Toggle extends Component {
     const computedFalseChoice = last(this.props.children) ? last(this.props.children) : '✘';
 
     const computedTrueChoiceStyle = {
-      ...style.firstChoiceStyle,
+      ...toggleStyle.firstChoiceStyle,
       ...this.props.firstChoiceStyle,
     };
     const computedFalseChoiceStyle = {
-      ...style.secondChoiceStyle,
+      ...toggleStyle.secondChoiceStyle,
       ...this.props.secondChoiceStyle,
     };
 
@@ -867,12 +867,12 @@ export default class Toggle extends Component {
       tabIndex = -1;
       wrapperStyle = {
         ...wrapperStyle,
-        ...style.disabledStyle,
+        ...toggleStyle.disabledStyle,
         ...this.props.disabledStyle,
       };
       handleStyle = {
         ...handleStyle,
-        ...style.disabledHandleStyle,
+        ...toggleStyle.disabledHandleStyle,
         ...this.props.disabledHandleStyle,
       };
     }

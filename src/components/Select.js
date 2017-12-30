@@ -18,7 +18,7 @@ import {
 import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
-import style from '../style/select';
+import { selectStyle } from '../style';
 import config from '../config/select';
 import isComponentOfType from '../utils/is-component-of-type';
 import Option from '../components/Option';
@@ -120,11 +120,11 @@ const selectPropTypes = {
  */
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = {
-    ...style.hoverStyle,
+    ...selectStyle.hoverStyle,
     ...properties.hoverStyle,
   };
   const disabledHoverStyle = {
-    ...style.disabledHoverStyle,
+    ...selectStyle.disabledHoverStyle,
     ...properties.disabledHoverStyle,
   };
 
@@ -381,7 +381,7 @@ export default class Select extends Component {
       const childrenPresent = !isEmpty(this.options) || !isEmpty(separators);
       if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
         const menuStyle = {
-          ...style.menuStyle,
+          ...selectStyle.menuStyle,
           ...this.props.menuStyle,
         };
         menuNode.style.display = menuStyle.display;
@@ -823,53 +823,53 @@ export default class Select extends Component {
 
   render() {
     const defaultStyle = {
-      ...style.style,
+      ...selectStyle.style,
       ...this.props.style,
     };
     const hoverStyle = {
       ...defaultStyle,
-      ...style.hoverStyle,
+      ...selectStyle.hoverStyle,
       ...this.props.hoverStyle,
     };
     const focusStyle = {
       ...defaultStyle,
-      ...style.focusStyle,
+      ...selectStyle.focusStyle,
       ...this.props.focusStyle,
     };
     const activeStyle = {
       ...defaultStyle,
-      ...style.activeStyle,
+      ...selectStyle.activeStyle,
       ...this.props.activeStyle,
     };
     const disabledStyle = {
       ...defaultStyle,
-      ...style.disabledStyle,
+      ...selectStyle.disabledStyle,
       ...this.props.disabledStyle,
     };
     const disabledHoverStyle = {
       ...disabledStyle,
-      ...style.disabledHoverStyle,
+      ...selectStyle.disabledHoverStyle,
       ...this.props.disabledHoverStyle,
     };
     const menuStyle = {
-      ...style.menuStyle,
+      ...selectStyle.menuStyle,
       ...this.props.menuStyle,
     };
     const caretToCloseStyle = {
-      ...style.caretToCloseStyle,
+      ...selectStyle.caretToCloseStyle,
       ...this.props.caretToCloseStyle,
     };
     const caretToOpenStyle = {
-      ...style.caretToOpenStyle,
+      ...selectStyle.caretToOpenStyle,
       ...this.props.caretToOpenStyle,
     };
     const disabledCaretToOpenStyle = {
       ...caretToOpenStyle,
-      ...style.disabledCaretToOpenStyle,
+      ...selectStyle.disabledCaretToOpenStyle,
       ...this.props.disabledCaretToOpenStyle,
     };
     const wrapperStyle = {
-      ...style.wrapperStyle,
+      ...selectStyle.wrapperStyle,
       ...this.props.wrapperStyle,
     };
 

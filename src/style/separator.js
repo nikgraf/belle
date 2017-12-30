@@ -1,4 +1,4 @@
-const separatorStyle = {
+export const separatorStyle = {
   style: {
     boxSizing: 'border-box',
     color: '#666',
@@ -6,5 +6,3 @@ const separatorStyle = {
     padding: 10,
   },
 };
-
-export default separatorStyle;

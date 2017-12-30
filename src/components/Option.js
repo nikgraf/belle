@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { omit } from '../utils/helpers';
-import style from '../style/option';
+import { optionStyle } from '../style';
 
 const optionPropTypes = {
   children: PropTypes.oneOfType([
@@ -72,29 +72,29 @@ export default class Option extends Component {
   }
 
   render() {
-    let optionStyle;
+    let innerOptionStyle;
 
     if (this.props._isDisplayedAsSelected) {
-      optionStyle = {
-        ...style.selectStyle,
+      innerOptionStyle = {
+        ...optionStyle.selectStyle,
         ...this.props.selectStyle,
       };
       if (this.context.isDisabled) {
-        optionStyle = {
+        innerOptionStyle = {
           ...optionStyle,
-          ...style.disabledSelectStyle,
+          ...optionStyle.disabledSelectStyle,
           ...this.props.disabledSelectStyle,
         };
       }
     } else {
-      optionStyle = {
-        ...style.style,
+      innerOptionStyle = {
+        ...optionStyle.style,
         ...this.props.style,
       };
       if (this.context.isHoveredValue === this.props.value) {
-        optionStyle = {
+        innerOptionStyle = {
           ...optionStyle,
-          ...style.hoverStyle,
+          ...optionStyle.hoverStyle,
           ...this.props.hoverStyle,
         };
       }
@@ -102,7 +102,7 @@ export default class Option extends Component {
 
     return (
       <div
-        style={ optionStyle }
+        style={ innerOptionStyle }
         {...this.state.childProps}
       >
         { this.props.children }

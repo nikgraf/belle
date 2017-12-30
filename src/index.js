@@ -12,19 +12,21 @@ import Spinner from './components/Spinner';
 import Toggle from './components/Toggle';
 import DatePicker from './components/DatePicker';
 
-import actionAreaStyle from './style/actionArea';
-import buttonStyle from './style/button';
-import cardStyle from './style/card';
-import placeholderStyle from './style/placeholder';
-import optionStyle from './style/option';
-import selectStyle from './style/select';
-import separatorStyle from './style/separator';
-import textInputStyle from './style/text-input';
-import spinnerStyle from './style/spinner';
-import toggleStyle from './style/toggle';
-import ratingStyle from './style/rating';
-import comboBoxStyle from './style/combo-box';
-import datePickerStyle from './style/date-picker';
+import {
+  actionAreaStyle,
+  buttonStyle,
+  cardStyle,
+  comboBoxStyle,
+  datePickerStyle,
+  optionStyle,
+  placeholderStyle,
+  ratingStyle,
+  selectStyle,
+  separatorStyle,
+  spinnerStyle,
+  textInputStyle,
+  toggleStyle
+} from './style';
 
 import selectConfig from './config/select';
 import buttonConfig from './config/button';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { omit } from '../utils/helpers';
-import style from '../style/separator';
+import { separatorStyle } from '../style';
 
 const separatorPropTypes = {
   children: PropTypes.oneOfType([
@@ -46,7 +46,7 @@ export default class Separator extends Component {
 
   render() {
     const computedStyle = {
-      ...style.style,
+      ...separatorStyle.style,
       ...this.props.style,
     };
 
