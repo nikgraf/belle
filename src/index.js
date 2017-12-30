@@ -1,16 +1,16 @@
 import Button from './components/Button';
 import Card from './components/Card';
 import Choice from './components/Choice';
+import ComboBox from './components/ComboBox';
+import DatePicker from './components/DatePicker';
 import Option from './components/Option';
 import Placeholder from './components/Placeholder';
+import Rating from './components/Rating';
 import Select from './components/Select';
 import Separator from './components/Separator';
-import TextInput from './components/TextInput';
-import Rating from './components/Rating';
-import ComboBox from './components/ComboBox';
 import Spinner from './components/Spinner';
+import TextInput from './components/TextInput';
 import Toggle from './components/Toggle';
-import DatePicker from './components/DatePicker';
 
 import {
   actionAreaStyle,
