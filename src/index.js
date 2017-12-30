@@ -28,12 +28,14 @@ import {
   toggleStyle
 } from './style';
 
-import selectConfig from './config/select';
-import buttonConfig from './config/button';
-import ratingConfig from './config/rating';
-import toggleConfig from './config/toggle';
-import i18nConfig from './config/i18n';
-import datePickerConfig from './config/datePicker';
+import {
+  buttonConfig,
+  datePickerConfig,
+  i18nConfig,
+  ratingConfig,
+  selectConfig,
+  toggleConfig
+} from './config';
 
 module.exports = {
   Button,

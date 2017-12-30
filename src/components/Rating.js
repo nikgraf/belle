@@ -5,7 +5,7 @@ import { omit, has, uniqueId } from '../utils/helpers';
 import { ratingStyle } from '../style';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import unionClassNames from '../utils/union-class-names';
-import config from '../config/rating';
+import { ratingConfig } from '../config';
 import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
 
 const ratingPropTypes = {
@@ -117,7 +117,7 @@ export default class Rating extends Component {
       isActive: false,
     };
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : ratingConfig.preventFocusStyleForTouchAndClick;
   }
 
   static displayName = 'Rating';
@@ -162,7 +162,7 @@ export default class Rating extends Component {
 
     this.setState(newState);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : ratingConfig.preventFocusStyleForTouchAndClick;
 
     removeStyle(this.ratingWrapperStyleId);
     updatePseudoClassStyle(this.ratingWrapperStyleId, properties, this.preventFocusStyleForTouchAndClick);

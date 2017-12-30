@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import { omit, has, last, first, uniqueId } from '../utils/helpers';
 import { toggleStyle } from '../style';
-import config from '../config/toggle';
+import { toggleConfig } from '../config';
 import isComponentOfType from '../utils/is-component-of-type.js';
 import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
 import unionClassNames from '../utils/union-class-names';
@@ -219,7 +219,7 @@ export default class Toggle extends Component {
     // would trigger an endless loop.
     this.isFocused = false;
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : toggleConfig.preventFocusStyleForTouchAndClick;
   }
 
   static displayName = 'Toggle';
@@ -257,7 +257,7 @@ export default class Toggle extends Component {
 
     this.setState(newState);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : toggleConfig.preventFocusStyleForTouchAndClick;
 
     removeStyle(this.styleId);
     updatePseudoClassStyle(this.styleId, properties, this.preventFocusStyleForTouchAndClick);

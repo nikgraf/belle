@@ -4,7 +4,7 @@ import { has, omit, uniqueId } from '../utils/helpers';
 import { buttonStyle } from '../style';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
-import config from '../config/button';
+import { buttonConfig } from '../config';
 
 const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 
@@ -110,7 +110,7 @@ export default class Button extends Component {
   constructor(properties) {
     super(properties);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : buttonConfig.preventFocusStyleForTouchAndClick;
 
     this.state = {
       childProps: sanitizeChildProps(properties),
@@ -160,7 +160,7 @@ export default class Button extends Component {
    * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : buttonConfig.preventFocusStyleForTouchAndClick;
 
     this.setState({
       childProps: sanitizeChildProps(properties),

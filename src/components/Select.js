@@ -19,7 +19,7 @@ import { canUseDOM } from 'exenv';
 import unionClassNames from '../utils/union-class-names';
 import { injectStyles, removeStyle } from '../utils/inject-style';
 import { selectStyle } from '../style';
-import config from '../config/select';
+import { selectConfig } from '../config';
 import isComponentOfType from '../utils/is-component-of-type';
 import Option from '../components/Option';
 import Placeholder from '../components/Placeholder';
@@ -345,7 +345,7 @@ export default class Select extends Component {
    * not displayed beofre repositioned.
    */
   componentWillUpdate(nextProperties, nextState) {
-    const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : config.shouldPositionOptions;
+    const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : selectConfig.shouldPositionOptions;
 
     if (shouldPositionOptions) {
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
@@ -362,14 +362,14 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : config.shouldPositionOptions;
+    const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : selectConfig.shouldPositionOptions;
 
     if (shouldPositionOptions && !this.props.disabled) {
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
 
       // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
-        const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
+        const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : selectConfig.positionOptions;
         positionOptions(this);
 
       // restore the old scrollTop position

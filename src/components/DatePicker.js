@@ -13,7 +13,7 @@ import {
   today,
 } from '../utils/date-helpers';
 import { datePickerStyle } from '../style';
-import config from '../config/datePicker';
+import { datePickerConfig } from '../config';
 import ActionArea from './ActionArea';
 import DisabledDay from './DisabledDay';
 import Day from './Day';
@@ -334,7 +334,7 @@ export default class DatePicker extends Component {
     this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
     this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : datePickerConfig.preventFocusStyleForTouchAndClick;
   }
 
   static displayName = 'DatePicker';
@@ -391,7 +391,7 @@ export default class DatePicker extends Component {
     this.weekHeaderProps = sanitizeWeekHeaderProps(properties.weekHeaderProps);
     this.weekGridProps = sanitizeWeekGridProps(properties.weekGridProps);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : datePickerConfig.preventFocusStyleForTouchAndClick;
 
     removeAllStyles(Object.keys(this.pseudoStyleIds));
     updatePseudoClassStyle(this.pseudoStyleIds, properties, this.preventFocusStyleForTouchAndClick);

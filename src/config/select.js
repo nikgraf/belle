@@ -18,7 +18,7 @@ const findIndexOfSelectedOption = (component) => {
   );
 };
 
-const selectConfig = {
+export const selectConfig = {
 
   shouldPositionOptions: true,
 
@@ -99,5 +99,3 @@ const selectConfig = {
     menuNode.style.width = `${menuWidth + newLeft * 2}px`;
   },
 };
-
-export default selectConfig;
