@@ -1,4 +1,3 @@
-console.log('style -> index');
 export { actionAreaStyle } from './action-area';
 export { animations } from './animations';
 export { buttonStyle } from './button';
