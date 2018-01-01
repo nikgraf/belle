@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { filterReactChildren, findIndex } from '../utils/helpers';
+import { isComponentOfType, filterReactChildren, findIndex } from '../utils';
 import Option from '../components/Option';
 import Separator from '../components/Separator';
 

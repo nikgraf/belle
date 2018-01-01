@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import { omit, has, last, first, uniqueId } from '../utils/helpers';
-import { toggleStyle } from '../style';
-import { toggleConfig } from '../config';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { requestAnimationFrame, cancelAnimationFrame } from '../utils/animation-frame-management';
-import unionClassNames from '../utils/union-class-names';
 import Choice from '../components/Choice';
+import { toggleConfig } from '../config';
+import { toggleStyle } from '../style';
+import {
+cancelAnimationFrame,
+first,
+has,
+injectStyles,
+isComponentOfType,
+last,
+omit,
+removeStyle,
+requestAnimationFrame,
+unionClassNames,
+uniqueId,
+} from '../utils';
 
 /**
  * Verifies that the children is an array containing only two choices with a

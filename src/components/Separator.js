@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { omit } from '../utils/helpers';
+import { omit } from '../utils';
 import { separatorStyle } from '../style';
 
 const separatorPropTypes = {

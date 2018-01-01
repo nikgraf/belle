@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectStyles, removeAllStyles } from '../utils/inject-style';
-import unionClassNames from '../utils/union-class-names';
-import { omit, filterReactChildren, has, isEmpty, find, getArrayForReactChildren, uniqueId } from '../utils/helpers';
+import {
+  omit,
+  filterReactChildren,
+  has,
+  isEmpty,
+  find,
+  getArrayForReactChildren,
+  uniqueId,
+  injectStyles,
+  removeAllStyles,
+  unionClassNames
+} from '../utils';
 import { comboBoxStyle } from '../style';
 import ComboBoxItem from '../components/ComboBoxItem';
 

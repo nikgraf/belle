@@ -8,19 +8,20 @@ import {
   find,
   first,
   flattenReactChildren,
+  isComponentOfType,
   isEmpty,
   findIndex,
   has,
   some,
   last,
   uniqueId,
-} from '../utils/helpers';
+  injectStyles,
+  removeStyle,
+  unionClassNames
+} from '../utils';
 import { canUseDOM } from 'exenv';
-import unionClassNames from '../utils/union-class-names';
-import { injectStyles, removeStyle } from '../utils/inject-style';
 import { selectStyle } from '../style';
 import { selectConfig } from '../config';
-import isComponentOfType from '../utils/is-component-of-type';
 import Option from '../components/Option';
 import Placeholder from '../components/Placeholder';
 import Separator from '../components/Separator';

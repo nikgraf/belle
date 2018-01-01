@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectStyles, removeAllStyles } from '../utils/inject-style';
-import unionClassNames from '../utils/union-class-names';
-import { has, map, shift, reverse, omit, uniqueId } from '../utils/helpers';
 import {
+  has, map, shift, reverse, omit, uniqueId, injectStyles, removeAllStyles,
   convertDateToDateKey,
   getDateKey,
   getDateForDateKey,
@@ -11,7 +9,8 @@ import {
   getLastDayForMonth,
   getLocaleData,
   today,
-} from '../utils/date-helpers';
+  unionClassNames
+} from '../utils';
 import { datePickerStyle } from '../style';
 import { datePickerConfig } from '../config';
 import ActionArea from './ActionArea';
