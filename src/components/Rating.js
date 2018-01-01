@@ -73,7 +73,6 @@ function sanitizeCharacterProps(properties) {
  */
 function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusStyleForTouchAndClick) {
   let ratingFocusStyle;
-  
   if (preventFocusStyleForTouchAndClick) {
     ratingFocusStyle = { outline: 0 };
   } else {
@@ -629,11 +628,11 @@ export class Rating extends Component {
       >
         {
          React.Children.map([1, 2, 3, 4, 5], (value) => {
-           const ratingStyle = (currentValue >= value) ? characterStyle : {};
+           const innerRatingStyle = (currentValue >= value) ? characterStyle : {};
            return (
              <span
-               data-belle-value= { value }
-               style={ ratingStyle }
+               data-belle-value = { value }
+               style = { innerRatingStyle }
                {...this.state.characterProps}
              >
                { this.props.character }
