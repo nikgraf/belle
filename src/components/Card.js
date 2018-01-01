@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
+import React, { Component } from 'react';
 import { cardStyle } from '../style';
 
 /**
@@ -8,7 +8,7 @@ import { cardStyle } from '../style';
  * This component will apply any attribute to the div that has been provided as
  * property & is valid for a div.
  */
-export default class Card extends Component {
+export class Card extends Component {
 
   constructor(properties) {
     super(properties);

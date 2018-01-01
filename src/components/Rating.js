@@ -99,7 +99,7 @@ function updatePseudoClassStyle(ratingWrapperStyleId, properties, preventFocusSt
  * The component leverages 5 characters (by default stars) to allow the user to
  * to rate.
  */
-export default class Rating extends Component {
+export class Rating extends Component {
 
   constructor(properties) {
     super(properties);

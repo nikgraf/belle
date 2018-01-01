@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Choice from '../components/Choice';
+import { Choice } from '../components/Choice';
 import { toggleConfig } from '../config';
 import { toggleStyle } from '../style';
 import {
@@ -183,7 +183,7 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
 /**
  * Toggle component
  */
-export default class Toggle extends Component {
+export class Toggle extends Component {
 
   constructor(properties) {
     super(properties);

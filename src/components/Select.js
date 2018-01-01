@@ -22,10 +22,10 @@ import {
 import { canUseDOM } from 'exenv';
 import { selectStyle } from '../style';
 import { selectConfig } from '../config';
-import Option from '../components/Option';
-import Placeholder from '../components/Placeholder';
-import Separator from '../components/Separator';
-import SelectItem from '../components/SelectItem';
+import { Option } from '../components/Option';
+import { Placeholder } from '../components/Placeholder';
+import { Separator } from '../components/Separator';
+import { SelectItem } from '../components/SelectItem';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
@@ -222,7 +222,7 @@ function sanitizeCaretProps(properties) {
  * - Jet Watson: https://github.com/JedWatson/react-select
  * - Instructure React Team: https://github.com/instructure-react/react-select-box
  */
-export default class Select extends Component {
+export class Select extends Component {
 
   /*
    * Initialize the component based on the provided properties.

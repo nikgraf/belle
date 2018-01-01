@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { omit } from '../utils';
+import React, { Component } from 'react';
 import { placeholderStyle } from '../style';
+import { omit } from '../utils';
 
 const placeholderPropTypes = {
   children: PropTypes.oneOfType([
@@ -25,7 +25,7 @@ function sanitizeChildProps(properties) {
  *
  * This component should be used together with Belle's Select.
  */
-export default class Placeholder extends Component {
+export class Placeholder extends Component {
 
   constructor(properties) {
     super(properties);

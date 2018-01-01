@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
-import {
-  has,
-  injectStyles,
-  omit,
-  removeStyle,
-  uniqueId,
-  unionClassNames
-} from '../utils';
-import { buttonStyle } from '../style';
+import React, { Component } from 'react';
 import { buttonConfig } from '../config';
+import { buttonStyle } from '../style';
+import {
+has,
+injectStyles,
+omit,
+removeStyle,
+uniqueId,
+unionClassNames,
+} from '../utils';
 
 const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 
@@ -110,7 +110,7 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
  * - Once a user clicks on the button it will loose focus
  * - By default every button is of type="button" instead of "submit"
  */
-export default class Button extends Component {
+export class Button extends Component {
 
   constructor(properties) {
     super(properties);

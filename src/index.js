@@ -1,16 +1,25 @@
-import Button from './components/Button';
-import Card from './components/Card';
-import Choice from './components/Choice';
-import ComboBox from './components/ComboBox';
-import DatePicker from './components/DatePicker';
-import Option from './components/Option';
-import Placeholder from './components/Placeholder';
-import Rating from './components/Rating';
-import Select from './components/Select';
-import Separator from './components/Separator';
-import Spinner from './components/Spinner';
-import TextInput from './components/TextInput';
-import Toggle from './components/Toggle';
+import { Button } from './components/Button';
+import { Card } from './components/Card';
+import { Choice } from './components/Choice';
+import { ComboBox } from './components/ComboBox';
+import { DatePicker } from './components/DatePicker';
+import { Option } from './components/Option';
+import { Placeholder } from './components/Placeholder';
+import { Rating } from './components/Rating';
+import { Select } from './components/Select';
+import { Separator } from './components/Separator';
+import { Spinner } from './components/Spinner';
+import { TextInput } from './components/TextInput';
+import { Toggle } from './components/Toggle';
+
+import {
+  buttonConfig,
+  datePickerConfig,
+  i18nConfig,
+  ratingConfig,
+  selectConfig,
+  toggleConfig
+} from './config';
 
 import {
   actionAreaStyle,
@@ -27,15 +36,6 @@ import {
   textInputStyle,
   toggleStyle
 } from './style';
-
-import {
-  buttonConfig,
-  datePickerConfig,
-  i18nConfig,
-  ratingConfig,
-  selectConfig,
-  toggleConfig
-} from './config';
 
 module.exports = {
   Button,

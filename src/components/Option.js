@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { omit } from '../utils';
+import React, { Component } from 'react';
 import { optionStyle } from '../style';
+import { omit } from '../utils';
 
 const optionPropTypes = {
   children: PropTypes.oneOfType([
@@ -37,7 +37,7 @@ function sanitizeChildProps(properties) {
  *
  * This component should be used together with Belle's Select.
  */
-export default class Option extends Component {
+export class Option extends Component {
 
   constructor(properties) {
     super(properties);

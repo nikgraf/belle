@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { ComboBoxItem } from '../components/ComboBoxItem';
+import { comboBoxStyle } from '../style';
 import {
   omit,
   filterReactChildren,
@@ -12,8 +14,6 @@ import {
   removeAllStyles,
   unionClassNames
 } from '../utils';
-import { comboBoxStyle } from '../style';
-import ComboBoxItem from '../components/ComboBoxItem';
 
 const comboBoxPropTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
@@ -160,7 +160,7 @@ function filterFunc(inputValue, optionValue) {
 /**
  * ComboBox React Component.
  */
-export default class ComboBox extends Component {
+export class ComboBox extends Component {
 
   constructor(properties) {
     super(properties);

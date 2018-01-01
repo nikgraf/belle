@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 /**
  * Belle internal component to wrap an Option in a ComboBox.
  *
  * This component exists to avoid binding functions in JSX.
  */
-export default class ComboBoxItem extends Component {
+export class ComboBoxItem extends Component {
 
   static displayName = 'ComboBoxItem';
 

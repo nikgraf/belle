@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  has, map, shift, reverse, omit, uniqueId, injectStyles, removeAllStyles,
-  convertDateToDateKey,
-  getDateKey,
-  getDateForDateKey,
-  getWeekArrayForMonth,
-  getLastDayForMonth,
-  getLocaleData,
-  today,
-  unionClassNames
-} from '../utils';
-import { datePickerStyle } from '../style';
+import React, { Component } from 'react';
 import { datePickerConfig } from '../config';
-import ActionArea from './ActionArea';
-import DisabledDay from './DisabledDay';
-import Day from './Day';
+import { datePickerStyle } from '../style';
+import {
+has, map, shift, reverse, omit, uniqueId, injectStyles, removeAllStyles,
+convertDateToDateKey,
+getDateKey,
+getDateForDateKey,
+getWeekArrayForMonth,
+getLastDayForMonth,
+getLocaleData,
+today,
+unionClassNames
+} from '../utils';
+import { ActionArea } from './ActionArea';
+import { Day } from './Day';
+import { DisabledDay } from './DisabledDay';
 
 const datePickerPropTypes = {
   // value related props
@@ -278,7 +278,7 @@ function updatePseudoClassStyle(pseudoStyleIds, properties, preventFocusStyleFor
  * This implementation follows the recommendations proposed here:
  * http://www.w3.org/TR/wai-aria-practices/#datepicker
  */
-export default class DatePicker extends Component {
+export class DatePicker extends Component {
 
   constructor(properties) {
     super(properties);
