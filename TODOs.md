@@ -4,7 +4,7 @@
 
 - fix all tests (refactor/fix-tests)
 
-- build widget-area with widgets
+- build widget-area with widgets  (feature/build-widgets-structure)
 
 - rewrite JavaScript to TypeScript  (feature/switch-to-type-script)
   - convert components to jsx to tsx
