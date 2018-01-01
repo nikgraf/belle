@@ -20,4 +20,4 @@
 ## MINOR TODOs
 
 - structure components like atomic-design approach
--
+- structure examples like in story-book
