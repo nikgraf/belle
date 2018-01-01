@@ -3,6 +3,12 @@
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
+# macOS
+*.DS_Store
+
+# IDE
+.idea
+
 # Browserify cache & build files
 bundle.js
 .bundle.js
