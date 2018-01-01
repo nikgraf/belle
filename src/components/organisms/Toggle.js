@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Choice } from '../components/Choice';
-import { toggleConfig } from '../config';
-import { toggleStyle } from '../style';
+import { toggleConfig } from '../../config';
+import { toggleStyle } from '../../style';
 import {
 cancelAnimationFrame,
 first,
@@ -16,7 +15,8 @@ removeStyle,
 requestAnimationFrame,
 unionClassNames,
 uniqueId,
-} from '../utils';
+} from '../../utils';
+import { Choice } from '../container';
 
 /**
  * Verifies that the children is an array containing only two choices with a

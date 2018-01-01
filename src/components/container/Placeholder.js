@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { placeholderStyle } from '../style';
-import { omit } from '../utils';
+import { placeholderStyle } from '../../style';
+import { omit } from '../../utils';
 
 const placeholderPropTypes = {
   children: PropTypes.oneOfType([

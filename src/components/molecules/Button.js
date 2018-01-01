@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React, { Component } from 'react';
-import { buttonConfig } from '../config';
-import { buttonStyle } from '../style';
+import { buttonConfig } from '../../config';
+import { buttonStyle } from '../../style';
 import {
 has,
 injectStyles,
@@ -9,7 +9,7 @@ omit,
 removeStyle,
 uniqueId,
 unionClassNames,
-} from '../utils';
+} from '../../utils';
 
 const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 

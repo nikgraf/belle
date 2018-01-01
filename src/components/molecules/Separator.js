@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { separatorStyle } from '../style';
-import { omit } from '../utils';
+import { separatorStyle } from '../../style';
+import { omit } from '../../utils';
 
 const separatorPropTypes = {
   children: PropTypes.oneOfType([

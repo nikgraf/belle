@@ -1,8 +1,8 @@
 import { canUseDOM } from 'exenv';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { ratingConfig } from '../config';
-import { ratingStyle } from '../style';
+import { ratingConfig } from '../../config';
+import { ratingStyle } from '../../style';
 import {
 cancelAnimationFrame,
 has,
@@ -12,7 +12,7 @@ removeStyle,
 requestAnimationFrame,
 unionClassNames,
 uniqueId,
-} from '../utils';
+} from '../../utils';
 
 const ratingPropTypes = {
   defaultValue: PropTypes.oneOf([1, 2, 3, 4, 5]),

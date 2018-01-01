@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { ComboBoxItem } from '../components/ComboBoxItem';
-import { comboBoxStyle } from '../style';
+import { ComboBoxItem } from '../molecules';
+import { comboBoxStyle } from '../../style';
 import {
   omit,
   filterReactChildren,
@@ -13,7 +13,7 @@ import {
   injectStyles,
   removeAllStyles,
   unionClassNames
-} from '../utils';
+} from '../../utils';
 
 const comboBoxPropTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),

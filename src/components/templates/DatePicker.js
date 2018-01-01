@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { datePickerConfig } from '../config';
-import { datePickerStyle } from '../style';
+import { datePickerConfig } from '../../config';
+import { datePickerStyle } from '../../style';
 import {
 has, map, shift, reverse, omit, uniqueId, injectStyles, removeAllStyles,
 convertDateToDateKey,
@@ -12,10 +12,12 @@ getLastDayForMonth,
 getLocaleData,
 today,
 unionClassNames
-} from '../utils';
-import { ActionArea } from './ActionArea';
-import { Day } from './Day';
-import { DisabledDay } from './DisabledDay';
+} from '../../utils';
+import { ActionArea } from '../container';
+import {
+  Day,
+  DisabledDay
+} from '../molecules';
 
 const datePickerPropTypes = {
   // value related props

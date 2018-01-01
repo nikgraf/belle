@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import { canUseDOM } from 'exenv';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { selectConfig } from '../../config';
+import { selectStyle } from '../../style';
 import {
   omit,
   filter,
@@ -18,14 +21,15 @@ import {
   injectStyles,
   removeStyle,
   unionClassNames
-} from '../utils';
-import { canUseDOM } from 'exenv';
-import { selectStyle } from '../style';
-import { selectConfig } from '../config';
-import { Option } from '../components/Option';
-import { Placeholder } from '../components/Placeholder';
-import { Separator } from '../components/Separator';
-import { SelectItem } from '../components/SelectItem';
+} from '../../utils';
+import {
+  Option,
+  Placeholder
+} from '../container';
+import {
+  Separator,
+  SelectItem
+} from '../molecules';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.

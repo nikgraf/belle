@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { textInputStyle } from '../style';
+import { textInputStyle } from '../../style';
 import {
 calculateTextareaHeight,
 injectStyles,
@@ -10,7 +10,7 @@ omit,
 has,
 uniqueId,
 unionClassNames
-} from '../utils';
+} from '../../utils';
 
 const newLineRegex = /[\r\n]/g;
 

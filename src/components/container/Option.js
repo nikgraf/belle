@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { optionStyle } from '../style';
-import { omit } from '../utils';
+import { optionStyle } from '../../style';
+import { omit } from '../../utils';
 
 const optionPropTypes = {
   children: PropTypes.oneOfType([
