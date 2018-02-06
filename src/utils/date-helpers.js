@@ -1,4 +1,4 @@
-import i18n from '../config/i18n';
+import { i18nConfig } from '../config';
 
 /**
  * The function will take a month and year value and will return an array of weeks for that month.
@@ -43,7 +43,7 @@ export const getLocaleData = (locale) => {
   const localeResult = {};
   let lData;
   if (locale) {
-    lData = i18n.localeData[locale];
+    lData = i18nConfig.localeData[locale];
   }
 
   const monthNames = [

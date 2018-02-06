@@ -1,4 +1,4 @@
-const buttonStyle = {
+export const buttonStyle = {
 
   style: {
     background: '#EEEEEE',
@@ -144,5 +144,3 @@ const buttonStyle = {
     borderTop: '1px solid #A7E4FB',
   },
 };
-
-export default buttonStyle;

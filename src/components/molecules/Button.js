@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
-import { has, omit, uniqueId } from '../utils/helpers';
-import buttonStyle from '../style/button';
-import unionClassNames from '../utils/union-class-names';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import config from '../config/button';
+import React, { Component } from 'react';
+import { buttonConfig } from '../../config';
+import { buttonStyle } from '../../style';
+import {
+has,
+injectStyles,
+omit,
+removeStyle,
+uniqueId,
+unionClassNames,
+} from '../../utils';
 
 const buttonTypes = ['button', 'submit', 'reset']; // eslint-disable-line no-unused-vars
 
@@ -105,12 +110,12 @@ function updatePseudoClassStyle(styleId, properties, preventFocusStyleForTouchAn
  * - Once a user clicks on the button it will loose focus
  * - By default every button is of type="button" instead of "submit"
  */
-export default class Button extends Component {
+export class Button extends Component {
 
   constructor(properties) {
     super(properties);
 
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : buttonConfig.preventFocusStyleForTouchAndClick;
 
     this.state = {
       childProps: sanitizeChildProps(properties),
@@ -160,7 +165,7 @@ export default class Button extends Component {
    * Update the childProps based on the updated properties of the button.
    */
   componentWillReceiveProps(properties) {
-    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : config.preventFocusStyleForTouchAndClick;
+    this.preventFocusStyleForTouchAndClick = has(properties, 'preventFocusStyleForTouchAndClick') ? properties.preventFocusStyleForTouchAndClick : buttonConfig.preventFocusStyleForTouchAndClick;
 
     this.setState({
       childProps: sanitizeChildProps(properties),

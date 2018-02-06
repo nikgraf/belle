@@ -1,4 +1,4 @@
-const comboBoxStyle = {
+export const comboBoxStyle = {
 
   style: {
 
@@ -154,5 +154,3 @@ const comboBoxStyle = {
     WebkitTapHighlightColor: 'transparent',
   },
 };
-
-export default comboBoxStyle;

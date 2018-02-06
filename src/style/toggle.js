@@ -1,4 +1,4 @@
-const toggleStyle = {
+export const toggleStyle = {
   style: {
     boxSizing: 'border-box',
     borderRadius: 32,
@@ -169,5 +169,3 @@ const toggleStyle = {
     cursor: 'not-allowed',
   },
 };
-
-export default toggleStyle;

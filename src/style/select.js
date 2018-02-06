@@ -1,4 +1,4 @@
-const selectStyle = {
+export const selectStyle = {
   style: {
     borderBottom: '1px solid #CCC',
     boxSizing: 'border-box',
@@ -108,5 +108,3 @@ const selectStyle = {
     borderTop: '6px solid #9F9F9F',
   },
 };
-
-export default selectStyle;

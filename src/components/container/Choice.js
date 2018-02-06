@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 /**
  * Choice component
  */
-export default class Choice extends Component {
+export class Choice extends Component {
 
   static displayName = 'Choice';
 

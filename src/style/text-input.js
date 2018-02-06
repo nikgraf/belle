@@ -1,4 +1,4 @@
-const textInputStyle = {
+export const textInputStyle = {
   style: {
     /* normalize.css v3.0.1 */
     font: 'inherit',
@@ -46,5 +46,3 @@ const textInputStyle = {
     cursor: 'not-allowed',
   },
 };
-
-export default textInputStyle;

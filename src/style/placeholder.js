@@ -1,4 +1,4 @@
-const placeholderStyle = {
+export const placeholderStyle = {
   style: {
     boxSizing: 'border-box',
     color: '#666',
@@ -28,5 +28,3 @@ const placeholderStyle = {
     cursor: 'not-allowed',
   },
 };
-
-export default placeholderStyle;
