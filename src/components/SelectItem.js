@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 /**
  * Belle internal component to wrap an Option in a Select.
  *
  * This component exists to avoid binding functions in JSX.
  */
-export default class SelectItem extends Component {
+export class SelectItem extends Component {
 
   static displayName = 'SelectItem';
 

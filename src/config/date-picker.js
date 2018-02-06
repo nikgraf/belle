@@ -1,3 +1,3 @@
-export const ratingConfig = {
+export const datePickerConfig = {
   preventFocusStyleForTouchAndClick: true,
 };

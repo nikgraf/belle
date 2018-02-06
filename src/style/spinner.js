@@ -1,4 +1,4 @@
-const spinnerStyle = {
+export const spinnerStyle = {
   style: {
     display: 'inline-block',
     fontSize: 15,
@@ -13,5 +13,3 @@ const spinnerStyle = {
     animation: 'belle-spinner-pulse 2s infinite ease-in-out',
   },
 };
-
-export default spinnerStyle;

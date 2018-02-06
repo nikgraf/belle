@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import spinnerStyle from '../style/spinner';
+import React, { Component } from 'react';
+import { spinnerStyle } from '../style';
 
 const animationDelay = (delay) => ({
   MozAnimationDelay: delay,
@@ -12,7 +12,7 @@ const animationDelay = (delay) => ({
 /**
  * Spinner component to be used as loading indicator.
  */
-export default class Spinner extends Component {
+export class Spinner extends Component {
 
   static displayName = 'Spinner';
 

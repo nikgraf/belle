@@ -1,4 +1,4 @@
-const cardStyle = {
+export const cardStyle = {
 
   style: {
     marginBottom: 20,
@@ -9,5 +9,3 @@ const cardStyle = {
     boxSizing: 'border-box',
   },
 };
-
-export default cardStyle;

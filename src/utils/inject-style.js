@@ -1,7 +1,7 @@
-import { flatten, mapObject } from '../utils/helpers';
+import { flatten, mapObject } from '../utils';
 import CSSPropertyOperations from 'react-dom/lib/CSSPropertyOperations';
 import { canUseDOM } from 'exenv';
-import animations from '../style/animations';
+import { animations } from '../style';
 
 let styleElement;
 const styleStorage = {};

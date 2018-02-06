@@ -1,4 +1,4 @@
-const optionStyle = {
+export const optionStyle = {
   style: {
     boxSizing: 'border-box',
     color: '#666',
@@ -56,5 +56,3 @@ const optionStyle = {
     padding: 0,
   },
 };
-
-export default optionStyle;

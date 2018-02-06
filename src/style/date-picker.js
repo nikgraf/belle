@@ -1,4 +1,4 @@
-const datePickerStyle = {
+export const datePickerStyle = {
 
   // wrapper of entire component
   style: {
@@ -243,5 +243,3 @@ const datePickerStyle = {
     color: '#BDBDBD',
   },
 };
-
-export default datePickerStyle;

@@ -1,5 +1,3 @@
-const toggleConfig = {
+export const toggleConfig = {
   preventFocusStyleForTouchAndClick: true,
 };
-
-export default toggleConfig;

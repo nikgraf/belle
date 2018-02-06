@@ -1,4 +1,4 @@
-import { union } from '../utils/helpers';
+import { union } from '../utils';
 
 /**
  * Returns a string containing all classes without duplicates.
@@ -12,7 +12,7 @@ import { union } from '../utils/helpers';
  *
  * Originally inspired by https://github.com/rackt/react-autocomplete/blob/master/lib/union-class-names.js
  */
-export default function unionClassNames(existingClassNames, additionalClassNames) {
+export function unionClassNames(existingClassNames, additionalClassNames) {
   if (!existingClassNames && !additionalClassNames) return '';
   if (!existingClassNames) return additionalClassNames;
   if (!additionalClassNames) return existingClassNames;

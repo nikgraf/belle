@@ -1,4 +1,4 @@
-const i18nConfig = {
+export const i18nConfig = {
 
   localeData: {
     nl: {
@@ -49,5 +49,3 @@ const i18nConfig = {
   },
 
 };
-
-export default i18nConfig;

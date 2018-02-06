@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import actionAreaStyle from '../style/actionArea';
-import { omit } from '../utils/helpers';
+import React, { Component } from 'react';
+import { actionAreaStyle } from '../style/action-area';
+import { omit } from '../utils';
 
 const actionAreaPropTypes = {
   activeStyle: PropTypes.object,
@@ -39,7 +39,7 @@ function sanitizeChildProps(properties) {
  * Note: Use the ActionArea's onUpdate instead of onClick as otherwise on iOS9
  * the ActionArea will trigger onFocus for it's parent with a set tabindex.
  */
-export default class ActionArea extends Component {
+export class ActionArea extends Component {
 
   constructor(properties) {
     super(properties);
