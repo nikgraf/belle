@@ -1,52 +1,72 @@
-import Button from './components/Button';
-import Card from './components/Card';
-import Choice from './components/Choice';
-import Option from './components/Option';
-import Placeholder from './components/Placeholder';
-import Select from './components/Select';
-import Separator from './components/Separator';
-import TextInput from './components/TextInput';
-import Rating from './components/Rating';
-import ComboBox from './components/ComboBox';
-import Spinner from './components/Spinner';
-import Toggle from './components/Toggle';
-import DatePicker from './components/DatePicker';
+import {
+  Spinner,
+  TextInput,
+} from './components/atoms';
+import {
+  Card,
+  Choice,
+  Option,
+  Placeholder,
+} from './components/container';
+import {
+  Button,
+  Separator,
+} from './components/molecules';
+import {
+  ComboBox,
+  Rating,
+  Select,
+  Toggle,
+} from './components/organisms';
+import { DatePicker } from './components/templates';
 
-import actionAreaStyle from './style/actionArea';
-import buttonStyle from './style/button';
-import cardStyle from './style/card';
-import placeholderStyle from './style/placeholder';
-import optionStyle from './style/option';
-import selectStyle from './style/select';
-import separatorStyle from './style/separator';
-import textInputStyle from './style/text-input';
-import spinnerStyle from './style/spinner';
-import toggleStyle from './style/toggle';
-import ratingStyle from './style/rating';
-import comboBoxStyle from './style/combo-box';
-import datePickerStyle from './style/date-picker';
+import {
+  buttonConfig,
+  datePickerConfig,
+  i18nConfig,
+  ratingConfig,
+  selectConfig,
+  toggleConfig
+} from './config';
 
-import selectConfig from './config/select';
-import buttonConfig from './config/button';
-import ratingConfig from './config/rating';
-import toggleConfig from './config/toggle';
-import i18nConfig from './config/i18n';
-import datePickerConfig from './config/datePicker';
+import {
+  actionAreaStyle,
+  buttonStyle,
+  cardStyle,
+  comboBoxStyle,
+  datePickerStyle,
+  optionStyle,
+  placeholderStyle,
+  ratingStyle,
+  selectStyle,
+  separatorStyle,
+  spinnerStyle,
+  textInputStyle,
+  toggleStyle
+} from './style';
 
 module.exports = {
   Button,
   Card,
   Choice,
+  ComboBox,
+  DatePicker,
   Option,
   Placeholder,
+  Rating,
   Select,
   Separator,
-  TextInput,
-  Rating,
-  ComboBox,
   Spinner,
+  TextInput,
   Toggle,
-  DatePicker,
+  config: {
+    button: buttonConfig,
+    datePicker: datePickerConfig,
+    i18n: i18nConfig,
+    rating: ratingConfig,
+    select: selectConfig,
+    toggle: toggleConfig,
+  },
   style: {
     actionArea: actionAreaStyle,
     button: buttonStyle,
@@ -61,13 +81,5 @@ module.exports = {
     spinner: spinnerStyle,
     textInput: textInputStyle,
     toggle: toggleStyle,
-  },
-  config: {
-    select: selectConfig,
-    button: buttonConfig,
-    rating: ratingConfig,
-    toggle: toggleConfig,
-    i18n: i18nConfig,
-    datePicker: datePickerConfig,
   },
 };

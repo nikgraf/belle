@@ -1,8 +1,7 @@
 import ReactDOM from 'react-dom';
-import isComponentOfType from '../utils/is-component-of-type.js';
-import { filterReactChildren, findIndex } from '../utils/helpers';
-import Option from '../components/Option';
-import Separator from '../components/Separator';
+import { isComponentOfType, filterReactChildren, findIndex } from '../utils';
+import { Option } from '../components/container';
+import { Separator } from '../components/molecules';
 
 /**
  * Returns the index of the entry with a certain value from the component's
@@ -18,7 +17,7 @@ const findIndexOfSelectedOption = (component) => {
   );
 };
 
-const selectConfig = {
+export const selectConfig = {
 
   shouldPositionOptions: true,
 
@@ -99,5 +98,3 @@ const selectConfig = {
     menuNode.style.width = `${menuWidth + newLeft * 2}px`;
   },
 };
-
-export default selectConfig;

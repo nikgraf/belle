@@ -1,4 +1,4 @@
-const ratingStyle = {
+export const ratingStyle = {
   style: {
     position: 'relative',
     display: 'inline-block',
@@ -68,5 +68,3 @@ const ratingStyle = {
     top: 1,
   },
 };
-
-export default ratingStyle;

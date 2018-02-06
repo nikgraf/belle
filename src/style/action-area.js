@@ -1,4 +1,4 @@
-const actionAreaStyle = {
+export const actionAreaStyle = {
 
   style: {
     boxSizing: 'border-box',
@@ -54,5 +54,3 @@ const actionAreaStyle = {
     background: '#E0E0E0',
   },
 };
-
-export default actionAreaStyle;

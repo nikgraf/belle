@@ -8,7 +8,7 @@
  * // Checks if the component is an Autocomplete
  * isComponentType(Autocomplete, this.props.children[0]);
  */
-export default function isComponentOfType(classType, reactElement) {
+export function isComponentOfType(classType, reactElement) {
   return reactElement &&
          reactElement.type === classType;
 }

@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import { canUseDOM } from 'exenv';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { selectConfig } from '../../config';
+import { selectStyle } from '../../style';
 import {
   omit,
   filter,
@@ -8,23 +11,25 @@ import {
   find,
   first,
   flattenReactChildren,
+  isComponentOfType,
   isEmpty,
   findIndex,
   has,
   some,
   last,
   uniqueId,
-} from '../utils/helpers';
-import { canUseDOM } from 'exenv';
-import unionClassNames from '../utils/union-class-names';
-import { injectStyles, removeStyle } from '../utils/inject-style';
-import style from '../style/select';
-import config from '../config/select';
-import isComponentOfType from '../utils/is-component-of-type';
-import Option from '../components/Option';
-import Placeholder from '../components/Placeholder';
-import Separator from '../components/Separator';
-import SelectItem from '../components/SelectItem';
+  injectStyles,
+  removeStyle,
+  unionClassNames
+} from '../../utils';
+import {
+  Option,
+  Placeholder
+} from '../container';
+import {
+  Separator,
+  SelectItem
+} from '../molecules';
 
 /**
  * Returns true if the provided property is a Placeholder component from Belle.
@@ -120,11 +125,11 @@ const selectPropTypes = {
  */
 function updatePseudoClassStyle(styleId, properties) {
   const hoverStyle = {
-    ...style.hoverStyle,
+    ...selectStyle.hoverStyle,
     ...properties.hoverStyle,
   };
   const disabledHoverStyle = {
-    ...style.disabledHoverStyle,
+    ...selectStyle.disabledHoverStyle,
     ...properties.disabledHoverStyle,
   };
 
@@ -221,7 +226,7 @@ function sanitizeCaretProps(properties) {
  * - Jet Watson: https://github.com/JedWatson/react-select
  * - Instructure React Team: https://github.com/instructure-react/react-select-box
  */
-export default class Select extends Component {
+export class Select extends Component {
 
   /*
    * Initialize the component based on the provided properties.
@@ -345,7 +350,7 @@ export default class Select extends Component {
    * not displayed beofre repositioned.
    */
   componentWillUpdate(nextProperties, nextState) {
-    const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : config.shouldPositionOptions;
+    const shouldPositionOptions = has(nextProperties, 'shouldPositionOptions') ? nextProperties.shouldPositionOptions : selectConfig.shouldPositionOptions;
 
     if (shouldPositionOptions) {
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
@@ -362,14 +367,14 @@ export default class Select extends Component {
    * repositioned & switched to be visible.
    */
   componentDidUpdate(previousProperties, previousState) {
-    const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : config.shouldPositionOptions;
+    const shouldPositionOptions = has(this.props, 'shouldPositionOptions') ? this.props.shouldPositionOptions : selectConfig.shouldPositionOptions;
 
     if (shouldPositionOptions && !this.props.disabled) {
       const menuNode = ReactDOM.findDOMNode(this.refs.menu);
 
       // the menu was just opened
       if (!previousState.isOpen && this.state.isOpen && this.children && this.children.length > 0) {
-        const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : config.positionOptions;
+        const positionOptions = has(this.props, 'positionOptions') ? this.props.positionOptions : selectConfig.positionOptions;
         positionOptions(this);
 
       // restore the old scrollTop position
@@ -381,7 +386,7 @@ export default class Select extends Component {
       const childrenPresent = !isEmpty(this.options) || !isEmpty(separators);
       if (!previousState.isOpen && this.state.isOpen && childrenPresent) {
         const menuStyle = {
-          ...style.menuStyle,
+          ...selectStyle.menuStyle,
           ...this.props.menuStyle,
         };
         menuNode.style.display = menuStyle.display;
@@ -823,53 +828,53 @@ export default class Select extends Component {
 
   render() {
     const defaultStyle = {
-      ...style.style,
+      ...selectStyle.style,
       ...this.props.style,
     };
     const hoverStyle = {
       ...defaultStyle,
-      ...style.hoverStyle,
+      ...selectStyle.hoverStyle,
       ...this.props.hoverStyle,
     };
     const focusStyle = {
       ...defaultStyle,
-      ...style.focusStyle,
+      ...selectStyle.focusStyle,
       ...this.props.focusStyle,
     };
     const activeStyle = {
       ...defaultStyle,
-      ...style.activeStyle,
+      ...selectStyle.activeStyle,
       ...this.props.activeStyle,
     };
     const disabledStyle = {
       ...defaultStyle,
-      ...style.disabledStyle,
+      ...selectStyle.disabledStyle,
       ...this.props.disabledStyle,
     };
     const disabledHoverStyle = {
       ...disabledStyle,
-      ...style.disabledHoverStyle,
+      ...selectStyle.disabledHoverStyle,
       ...this.props.disabledHoverStyle,
     };
     const menuStyle = {
-      ...style.menuStyle,
+      ...selectStyle.menuStyle,
       ...this.props.menuStyle,
     };
     const caretToCloseStyle = {
-      ...style.caretToCloseStyle,
+      ...selectStyle.caretToCloseStyle,
       ...this.props.caretToCloseStyle,
     };
     const caretToOpenStyle = {
-      ...style.caretToOpenStyle,
+      ...selectStyle.caretToOpenStyle,
       ...this.props.caretToOpenStyle,
     };
     const disabledCaretToOpenStyle = {
       ...caretToOpenStyle,
-      ...style.disabledCaretToOpenStyle,
+      ...selectStyle.disabledCaretToOpenStyle,
       ...this.props.disabledCaretToOpenStyle,
     };
     const wrapperStyle = {
-      ...style.wrapperStyle,
+      ...selectStyle.wrapperStyle,
       ...this.props.wrapperStyle,
     };
 

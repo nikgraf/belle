@@ -1,31 +1,29 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { omit } from '../utils/helpers';
-import style from '../style/placeholder';
+import React, { Component } from 'react';
+import { separatorStyle } from '../../style';
+import { omit } from '../../utils';
 
-const placeholderPropTypes = {
+const separatorPropTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
   style: PropTypes.object,
-  disabledStyle: PropTypes.object,
-  _isDisabled: PropTypes.bool,
 };
 
 /**
  * Returns an object with properties that are relevant for the wrapping div.
  */
 function sanitizeChildProps(properties) {
-  return omit(properties, Object.keys(placeholderPropTypes));
+  return omit(properties, Object.keys(separatorPropTypes));
 }
 
 /**
- * Placeholder component.
+ * Separator component.
  *
  * This component should be used together with Belle's Select.
  */
-export default class Placeholder extends Component {
+export class Separator extends Component {
 
   constructor(properties) {
     super(properties);
@@ -34,34 +32,23 @@ export default class Placeholder extends Component {
     };
   }
 
-  static displayName = 'Placeholder';
+  static displayName = 'Separator';
 
-  static propTypes = placeholderPropTypes;
-
-  static defaultProps = {
-    _isDisabled: false,
-  };
+  static propTypes = separatorPropTypes;
 
   /**
-   * Update the childProps based on the updated properties passed to the
-   * Placeholder.
+   * Update the childProperties based on the updated properties passed to the
+   * Separator.
    */
   componentWillReceiveProps(properties) {
     this.setState({ childProps: sanitizeChildProps(properties) });
   }
 
   render() {
-    let computedStyle = {
-      ...style.style,
+    const computedStyle = {
+      ...separatorStyle.style,
       ...this.props.style,
     };
-    if (this.props._isDisabled) {
-      computedStyle = {
-        ...computedStyle,
-        ...style.disabledStyle,
-        ...this.props.disabledStyle,
-      };
-    }
 
     return (
       <div style={ computedStyle } {...this.state.childProps}>
